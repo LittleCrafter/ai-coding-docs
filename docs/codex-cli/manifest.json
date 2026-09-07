@@ -1,0 +1,165 @@
+{
+  "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
+  "version": "0.153.4",
+  "last_updated": "2026-09-07T00:12:40Z",
+  "files": {
+    "CLA": {
+      "slug": "CLA",
+      "title": "Individual Contributor License Agreement (v1.0, OpenAI)",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/CLA.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/CLA.md",
+      "source_id": "docs/CLA.md",
+      "hash": "3c3fc352c13db113d079a637f338e696e2dc47af53bae3394cf8fb8de6daa562",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "agents_md": {
+      "slug": "agents_md",
+      "title": "AGENTS.md",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/agents_md.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/agents_md.md",
+      "source_id": "docs/agents_md.md",
+      "hash": "56f5b6026b15fad40fe8b1f6f8910b9fccdf66da3b39dd943c91877e2299619e",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "authentication": {
+      "slug": "authentication",
+      "title": "Authentication",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/authentication.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/authentication.md",
+      "source_id": "docs/authentication.md",
+      "hash": "3fe4a065894ac5c1c212432a2c35b9e16a39a79377ea4c9521122a28ae0f7aef",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "config": {
+      "slug": "config",
+      "title": "Configuration",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/config.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
+      "source_id": "docs/config.md",
+      "hash": "745768b4da6cd73e414fc49c5c6ef3d6bf8a0c08289fab23a7dd79776ab31d9d",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "contributing": {
+      "slug": "contributing",
+      "title": "Contributing",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/contributing.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/contributing.md",
+      "source_id": "docs/contributing.md",
+      "hash": "5d56ba55c47f9e5c79286249f4b8b85f3037c64964a2f666564940fa89696df5",
+      "last_updated": "2026-09-07T00:12:40Z"
+    },
+    "example-config": {
+      "slug": "example-config",
+      "title": "Sample configuration",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/example-config.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/example-config.md",
+      "source_id": "docs/example-config.md",
+      "hash": "8c360f977c2f5971b36bbda5721ec51b2604e7013eca46b3d4f51433461909c3",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "exec": {
+      "slug": "exec",
+      "title": "Non-interactive mode",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/exec.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/exec.md",
+      "source_id": "docs/exec.md",
+      "hash": "49eac6fd452d21763683c9f224075d6c5c74ffa28217fbe50c279fa6a543200b",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "execpolicy": {
+      "slug": "execpolicy",
+      "title": "Execution policy",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/execpolicy.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/execpolicy.md",
+      "source_id": "docs/execpolicy.md",
+      "hash": "76b29e8cffcfab00c706e9bbd443e4f4b8c53288968b434e5990af1766132450",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "getting-started": {
+      "slug": "getting-started",
+      "title": "Getting started with Codex CLI",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/getting-started.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/getting-started.md",
+      "source_id": "docs/getting-started.md",
+      "hash": "210187b0199e42d71beabab773f6b8f3c01fe897037df1b16f88dd4efe007e90",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "install": {
+      "slug": "install",
+      "title": "Installing & building",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/install.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/install.md",
+      "source_id": "docs/install.md",
+      "hash": "1126ec733921878a40720e139ba7be88e325ecf9fa5b113de2cc636bc71a1f5a",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "license": {
+      "slug": "license",
+      "title": "License",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/license.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/license.md",
+      "source_id": "docs/license.md",
+      "hash": "8a6646aa38e54ceadd1df95859ecdd763706acfd5573a3ae93902be8c9108164",
+      "last_updated": "2026-09-07T00:12:40Z"
+    },
+    "open-source-fund": {
+      "slug": "open-source-fund",
+      "title": "Codex open source fund",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/open-source-fund.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/open-source-fund.md",
+      "source_id": "docs/open-source-fund.md",
+      "hash": "7dd10179cc0275c1cef77f5ab63e5e0b149aca2868318e7d958dea0d1e42707c",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "sandbox": {
+      "slug": "sandbox",
+      "title": "Sandbox & approvals",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/sandbox.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/sandbox.md",
+      "source_id": "docs/sandbox.md",
+      "hash": "61d4dd0ccda2a0cbbde78832e752cdf56b1eb8cf7a54f1d46b52a2824c911249",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "skills": {
+      "slug": "skills",
+      "title": "Skills",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/skills.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/skills.md",
+      "source_id": "docs/skills.md",
+      "hash": "e59789d09692310bbf94e2ef8db0aaf00d97f2226982c8c5330d2d260583a97d",
+      "last_updated": "2026-07-18T18:10:50Z"
+    },
+    "slash_commands": {
+      "slug": "slash_commands",
+      "title": "Slash commands",
+      "group": "root",
+      "source_url": "https://github.com/openai/codex/blob/main/docs/slash_commands.md",
+      "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/slash_commands.md",
+      "source_id": "docs/slash_commands.md",
+      "hash": "0c063e80ca817a88bc7cd81c11669f73dad1941296142153bdac4dc08a733e69",
+      "last_updated": "2026-07-18T18:10:50Z"
+    }
+  },
+  "fetch_metadata": {
+    "last_fetch_completed": "2026-09-07T00:12:40Z",
+    "fetch_duration_seconds": 5.073,
+    "total_pages_discovered": 15,
+    "pages_fetched_successfully": 15,
+    "pages_failed": 0,
+    "failed_pages": []
+  }
+}

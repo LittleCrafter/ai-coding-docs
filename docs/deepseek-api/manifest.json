@@ -1,0 +1,725 @@
+{
+  "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
+  "version": "—",
+  "last_updated": "2026-09-06T19:04:01Z",
+  "files": {
+    "api/create-chat-completion": {
+      "slug": "api/create-chat-completion",
+      "title": "Chat Completions API",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/create-chat-completion",
+      "source_md_url": "https://api-docs.deepseek.com/api/create-chat-completion",
+      "source_id": "api/create-chat-completion",
+      "hash": "40207ecbc1b3f88e9537ef3e751b7c185cd6590b09bb0204efc189fd2f7bac8d",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "api/create-completion": {
+      "slug": "api/create-completion",
+      "title": "FIM Completion API (Beta)",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/create-completion",
+      "source_md_url": "https://api-docs.deepseek.com/api/create-completion",
+      "source_id": "api/create-completion",
+      "hash": "cc5b68b88008c3269d4d51c9a33a91e218d0dafde8cf7b373c306a6bdc90981e",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "api/create-file": {
+      "slug": "api/create-file",
+      "title": "Upload File",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/create-file",
+      "source_md_url": "https://api-docs.deepseek.com/api/create-file",
+      "source_id": "api/create-file",
+      "hash": "879a2bd54adec5ac0ff52ab0f52fde713efca56f96720c89a40982069c250215",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "api/create-response": {
+      "slug": "api/create-response",
+      "title": "Responses API",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/create-response",
+      "source_md_url": "https://api-docs.deepseek.com/api/create-response",
+      "source_id": "api/create-response",
+      "hash": "efc78425ab4c47b7f42a0481bf0b0a8b129c2001c98daf7ee999d336ce9b2ddc",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "api/deepseek-api": {
+      "slug": "api/deepseek-api",
+      "title": "DeepSeek API",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/deepseek-api",
+      "source_md_url": "https://api-docs.deepseek.com/api/deepseek-api",
+      "source_id": "api/deepseek-api",
+      "hash": "9722084f3ccc6af016b81a66c03f11eff4467e5269820d07223fbf9d6be648cd",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "api/delete-file": {
+      "slug": "api/delete-file",
+      "title": "Delete File",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/delete-file",
+      "source_md_url": "https://api-docs.deepseek.com/api/delete-file",
+      "source_id": "api/delete-file",
+      "hash": "ce0ce099881f9aff3a32f972f22beaceaa418567515e3e1f20cb5dae46f4c1bf",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "api/get-user-balance": {
+      "slug": "api/get-user-balance",
+      "title": "Get User Balance",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/get-user-balance",
+      "source_md_url": "https://api-docs.deepseek.com/api/get-user-balance",
+      "source_id": "api/get-user-balance",
+      "hash": "a81743da81a8748fbcb85a33b816119faf313d64a9ca587f2b55451cfdb0d2ee",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "api/list-files": {
+      "slug": "api/list-files",
+      "title": "List Files",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/list-files",
+      "source_md_url": "https://api-docs.deepseek.com/api/list-files",
+      "source_id": "api/list-files",
+      "hash": "a7b3b6bece446a5775579bf576b150704c94f58215aa18973fe6f99b1044f2ec",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "api/list-models": {
+      "slug": "api/list-models",
+      "title": "Lists Models",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/list-models",
+      "source_md_url": "https://api-docs.deepseek.com/api/list-models",
+      "source_id": "api/list-models",
+      "hash": "b54b0e650332eb2934112579a9f6c4996389f56f343bdf65c5ea56baa49e7c8c",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "api/retrieve-file": {
+      "slug": "api/retrieve-file",
+      "title": "Retrieve File",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/retrieve-file",
+      "source_md_url": "https://api-docs.deepseek.com/api/retrieve-file",
+      "source_id": "api/retrieve-file",
+      "hash": "903068a774cd02e91fa437475f1798bd89ae6b3c36ddaa48dbe828c6834e6bfd",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "api_samples/chat_curl": {
+      "slug": "api_samples/chat_curl",
+      "title": "chat_curl",
+      "group": "api_samples",
+      "source_url": "https://api-docs.deepseek.com/api_samples/chat_curl",
+      "source_md_url": "https://api-docs.deepseek.com/api_samples/chat_curl",
+      "source_id": "api_samples/chat_curl",
+      "hash": "6fcf761b04c1840c27ce709864dd06ea64f9e5f1f551031ab28a3139b92e7033",
+      "last_updated": "2026-07-26T16:27:46Z"
+    },
+    "api_samples/chat_nodejs": {
+      "slug": "api_samples/chat_nodejs",
+      "title": "chat_nodejs",
+      "group": "api_samples",
+      "source_url": "https://api-docs.deepseek.com/api_samples/chat_nodejs",
+      "source_md_url": "https://api-docs.deepseek.com/api_samples/chat_nodejs",
+      "source_id": "api_samples/chat_nodejs",
+      "hash": "340f14353363e5b60eefe0f044ba6df41ee7000b706fb33ed8a86c92911a8b7c",
+      "last_updated": "2026-07-26T16:27:46Z"
+    },
+    "api_samples/chat_python": {
+      "slug": "api_samples/chat_python",
+      "title": "chat_python",
+      "group": "api_samples",
+      "source_url": "https://api-docs.deepseek.com/api_samples/chat_python",
+      "source_md_url": "https://api-docs.deepseek.com/api_samples/chat_python",
+      "source_id": "api_samples/chat_python",
+      "hash": "9d77cdfcb736fd366404f73ee7d4c4cc4165dae21a63836ee582f9d77fb152e6",
+      "last_updated": "2026-07-26T16:27:46Z"
+    },
+    "api_samples/thinking_mode_api_example_non_streaming": {
+      "slug": "api_samples/thinking_mode_api_example_non_streaming",
+      "title": "thinking_mode_api_example_non_streaming",
+      "group": "api_samples",
+      "source_url": "https://api-docs.deepseek.com/api_samples/thinking_mode_api_example_non_streaming",
+      "source_md_url": "https://api-docs.deepseek.com/api_samples/thinking_mode_api_example_non_streaming",
+      "source_id": "api_samples/thinking_mode_api_example_non_streaming",
+      "hash": "29d5004b53f99e54db967ebfd565aefc2adff6031039b66de85a2e7b81e2b319",
+      "last_updated": "2026-07-26T16:27:46Z"
+    },
+    "api_samples/thinking_mode_api_example_streaming": {
+      "slug": "api_samples/thinking_mode_api_example_streaming",
+      "title": "thinking_mode_api_example_streaming",
+      "group": "api_samples",
+      "source_url": "https://api-docs.deepseek.com/api_samples/thinking_mode_api_example_streaming",
+      "source_md_url": "https://api-docs.deepseek.com/api_samples/thinking_mode_api_example_streaming",
+      "source_id": "api_samples/thinking_mode_api_example_streaming",
+      "hash": "fc3ad4d4500d337d42e1da9a5371359393110c6e03e96ac748be4f0c45530cd5",
+      "last_updated": "2026-07-26T16:27:46Z"
+    },
+    "api_samples/thinking_mode_api_example_tool_call": {
+      "slug": "api_samples/thinking_mode_api_example_tool_call",
+      "title": "thinking_mode_api_example_tool_call",
+      "group": "api_samples",
+      "source_url": "https://api-docs.deepseek.com/api_samples/thinking_mode_api_example_tool_call",
+      "source_md_url": "https://api-docs.deepseek.com/api_samples/thinking_mode_api_example_tool_call",
+      "source_id": "api_samples/thinking_mode_api_example_tool_call",
+      "hash": "c8fbf67a12013aa65bc0af52d0d2dc30fb283f26b0a8e976b0b263fbba9b7053",
+      "last_updated": "2026-07-26T16:27:46Z"
+    },
+    "api_samples/thinking_mode_api_example_tool_call_output": {
+      "slug": "api_samples/thinking_mode_api_example_tool_call_output",
+      "title": "thinking_mode_api_example_tool_call_output",
+      "group": "api_samples",
+      "source_url": "https://api-docs.deepseek.com/api_samples/thinking_mode_api_example_tool_call_output",
+      "source_md_url": "https://api-docs.deepseek.com/api_samples/thinking_mode_api_example_tool_call_output",
+      "source_id": "api_samples/thinking_mode_api_example_tool_call_output",
+      "hash": "a40ae02083a0a9efb7c4fa8c87fa6234c7d9830ef88dfd00d57c4a50ea3f1a32",
+      "last_updated": "2026-07-26T16:27:46Z"
+    },
+    "faq": {
+      "slug": "faq",
+      "title": "FAQ",
+      "group": "root",
+      "source_url": "https://api-docs.deepseek.com/faq",
+      "source_md_url": "https://api-docs.deepseek.com/faq",
+      "source_id": "faq",
+      "hash": "a14794658a8572140c81608a90753c4e48cbccb3756ae4a4af97701b0a0079a1",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "guides/anthropic_api": {
+      "slug": "guides/anthropic_api",
+      "title": "Using the Anthropic API",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/anthropic_api",
+      "source_md_url": "https://api-docs.deepseek.com/guides/anthropic_api",
+      "source_id": "guides/anthropic_api",
+      "hash": "260d843ec0293c7a19b49ea2521e1315ae4224cc79218074696d2c69b2716a49",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "guides/chat_prefix_completion": {
+      "slug": "guides/chat_prefix_completion",
+      "title": "Chat Prefix Completion (Beta)",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/chat_prefix_completion",
+      "source_md_url": "https://api-docs.deepseek.com/guides/chat_prefix_completion",
+      "source_id": "guides/chat_prefix_completion",
+      "hash": "881fafd415fabb58034696cae36f9b88653f6abc6b9c1f0470372d9c87020c44",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "guides/coding_agents": {
+      "slug": "guides/coding_agents",
+      "title": "Integrate with AI Tools",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/coding_agents",
+      "source_md_url": "https://api-docs.deepseek.com/guides/coding_agents",
+      "source_id": "guides/coding_agents",
+      "hash": "74a82a1c35d919502f8f842d1a71a09a0af11feaf1d4bb039e40d7c7b0d44a54",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "guides/files_api": {
+      "slug": "guides/files_api",
+      "title": "Files API",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/files_api",
+      "source_md_url": "https://api-docs.deepseek.com/guides/files_api",
+      "source_id": "guides/files_api",
+      "hash": "9549f79ef57d8c6c5add6c8d743e9b0fd1ed138341c122e9e79c17f7479ffcb9",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "guides/fim_completion": {
+      "slug": "guides/fim_completion",
+      "title": "FIM Completion (Beta)",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/fim_completion",
+      "source_md_url": "https://api-docs.deepseek.com/guides/fim_completion",
+      "source_id": "guides/fim_completion",
+      "hash": "80c71c2a7eca2593e5613d78b2efb7665a59c2e76fe2567947ca62fb25ff17cf",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "guides/json_mode": {
+      "slug": "guides/json_mode",
+      "title": "JSON Output",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/json_mode",
+      "source_md_url": "https://api-docs.deepseek.com/guides/json_mode",
+      "source_id": "guides/json_mode",
+      "hash": "8b0ea03e07c1391cb3ed9999f9cc64f9c96f94d4176aac25a025de33259c751a",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "guides/kv_cache": {
+      "slug": "guides/kv_cache",
+      "title": "Context Caching",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/kv_cache",
+      "source_md_url": "https://api-docs.deepseek.com/guides/kv_cache",
+      "source_id": "guides/kv_cache",
+      "hash": "2db791f8cdbd1a4e248e63b6aed0f5802b63b39c47760e87d0c47a96f8b00b4a",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "guides/multi_round_chat": {
+      "slug": "guides/multi_round_chat",
+      "title": "Multi-round Conversation",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/multi_round_chat",
+      "source_md_url": "https://api-docs.deepseek.com/guides/multi_round_chat",
+      "source_id": "guides/multi_round_chat",
+      "hash": "87c35afebf0ef256a72d94878c07654178470f708e66d22c6cf63a9ea60a6b92",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "guides/responses_api": {
+      "slug": "guides/responses_api",
+      "title": "Using the Responses API",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/responses_api",
+      "source_md_url": "https://api-docs.deepseek.com/guides/responses_api",
+      "source_id": "guides/responses_api",
+      "hash": "3da0be0f2d342721a9d2f06d2bbe0a9d8e0d3e25dc9e8c5de7d1d4cd6ce90250",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "guides/thinking_mode": {
+      "slug": "guides/thinking_mode",
+      "title": "Thinking Mode",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/thinking_mode",
+      "source_md_url": "https://api-docs.deepseek.com/guides/thinking_mode",
+      "source_id": "guides/thinking_mode",
+      "hash": "7c3f6f1389f710f8444ba5528dca40ef68d51cb6e5c7367a1fb7ba5a1c6c0a4d",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "guides/tool_calls": {
+      "slug": "guides/tool_calls",
+      "title": "Tool Calls",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/tool_calls",
+      "source_md_url": "https://api-docs.deepseek.com/guides/tool_calls",
+      "source_id": "guides/tool_calls",
+      "hash": "039920c8cd10c910b9d75e2ad46c33c530cb21f5f42f09468f37930392cd35f4",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "guides/vision": {
+      "slug": "guides/vision",
+      "title": "Vision",
+      "group": "guides",
+      "source_url": "https://api-docs.deepseek.com/guides/vision",
+      "source_md_url": "https://api-docs.deepseek.com/guides/vision",
+      "source_id": "guides/vision",
+      "hash": "8bbfaec5480cf3ae6c6dcad311333c4dd98331ee22a6fecbf0e5cb0a0364bd5b",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "index": {
+      "slug": "index",
+      "title": "Your First API Call",
+      "group": "root",
+      "source_url": "https://api-docs.deepseek.com",
+      "source_md_url": "https://api-docs.deepseek.com",
+      "source_id": "index",
+      "hash": "b1f4642edc1efab98c8864639384e2b75054596ad1542659051df926fa67c243",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "news/news0725": {
+      "slug": "news/news0725",
+      "title": "DeepSeek API Upgrade",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news0725",
+      "source_md_url": "https://api-docs.deepseek.com/news/news0725",
+      "source_id": "news/news0725",
+      "hash": "20d7dc092f53c6b80750399c2fda0994c4b6d604582841ad10fa49942f3213ef",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news0802": {
+      "slug": "news/news0802",
+      "title": "DeepSeek API introduces Context Caching on Disk, cutting prices by an order of magnitude",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news0802",
+      "source_md_url": "https://api-docs.deepseek.com/news/news0802",
+      "source_id": "news/news0802",
+      "hash": "8f8731d7d38b94733e3a6b02fcea8fe7310ac6cc832e11b40fe70ee5b952126f",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news0905": {
+      "slug": "news/news0905",
+      "title": "DeepSeek-V2.5: A New Open-Source Model Combining General and Coding Capabilities",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news0905",
+      "source_md_url": "https://api-docs.deepseek.com/news/news0905",
+      "source_id": "news/news0905",
+      "hash": "9fb2843fc6ab9766db99eaa8639d8239cc159f2779e779be0724d51bb9903b0d",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news1120": {
+      "slug": "news/news1120",
+      "title": "🚀 DeepSeek-R1-Lite-Preview is now live: unleashing supercharged reasoning power!",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news1120",
+      "source_md_url": "https://api-docs.deepseek.com/news/news1120",
+      "source_id": "news/news1120",
+      "hash": "469dfea44297e1a28d66feca7affcd5d987b4310ed80fe702d94539f21e723e4",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news1210": {
+      "slug": "news/news1210",
+      "title": "🚀 DeepSeek V2.5: The Grand Finale 🎉",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news1210",
+      "source_md_url": "https://api-docs.deepseek.com/news/news1210",
+      "source_id": "news/news1210",
+      "hash": "37fcc1e152d0e78f99c44f0b5df597f771c821e533025be6751a828405959cde",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news1226": {
+      "slug": "news/news1226",
+      "title": "Your First API Call",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news1226",
+      "source_md_url": "https://api-docs.deepseek.com/news/news1226",
+      "source_id": "news/news1226",
+      "hash": "b1f4642edc1efab98c8864639384e2b75054596ad1542659051df926fa67c243",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "news/news250115": {
+      "slug": "news/news250115",
+      "title": "Introducing DeepSeek App",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news250115",
+      "source_md_url": "https://api-docs.deepseek.com/news/news250115",
+      "source_id": "news/news250115",
+      "hash": "7916eb3aa89e5ae9e93441d1fa9d3f53e1c1340580cf9b47b2c4f40ce92d959d",
+      "last_updated": "2026-07-18T18:24:32Z"
+    },
+    "news/news250120": {
+      "slug": "news/news250120",
+      "title": "Your First API Call",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news250120",
+      "source_md_url": "https://api-docs.deepseek.com/news/news250120",
+      "source_id": "news/news250120",
+      "hash": "b1f4642edc1efab98c8864639384e2b75054596ad1542659051df926fa67c243",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "news/news250325": {
+      "slug": "news/news250325",
+      "title": "DeepSeek-V3-0324 Release",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news250325",
+      "source_md_url": "https://api-docs.deepseek.com/news/news250325",
+      "source_id": "news/news250325",
+      "hash": "4c57940939c00fd1f395eb113013e78c40b220d45557470df976fa1be4f20086",
+      "last_updated": "2026-07-27T01:28:01Z"
+    },
+    "news/news250528": {
+      "slug": "news/news250528",
+      "title": "DeepSeek-R1-0528 Release",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news250528",
+      "source_md_url": "https://api-docs.deepseek.com/news/news250528",
+      "source_id": "news/news250528",
+      "hash": "2b52a25616755071b55c46d49d1c1828781021b5bb459529ccc47b345a0c1e22",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news250821": {
+      "slug": "news/news250821",
+      "title": "DeepSeek-V3.1 Release",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news250821",
+      "source_md_url": "https://api-docs.deepseek.com/news/news250821",
+      "source_id": "news/news250821",
+      "hash": "4c31f02df6e06e652b11482874653fc7625abe73fa13751d91a115a7a1a64fd0",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news250922": {
+      "slug": "news/news250922",
+      "title": "DeepSeek-V3.1-Terminus",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news250922",
+      "source_md_url": "https://api-docs.deepseek.com/news/news250922",
+      "source_id": "news/news250922",
+      "hash": "138b706139ebae899c263fc1c072364768641bd475c8cad0fee7939b16191277",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news250929": {
+      "slug": "news/news250929",
+      "title": "Introducing DeepSeek-V3.2-Exp",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news250929",
+      "source_md_url": "https://api-docs.deepseek.com/news/news250929",
+      "source_id": "news/news250929",
+      "hash": "8ece7286bac6d6a158fb4ce08e637e1b4aa5a644affbeae1626f6223a7897d0c",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news251201": {
+      "slug": "news/news251201",
+      "title": "Your First API Call",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news251201",
+      "source_md_url": "https://api-docs.deepseek.com/news/news251201",
+      "source_id": "news/news251201",
+      "hash": "b1f4642edc1efab98c8864639384e2b75054596ad1542659051df926fa67c243",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "news/news260424": {
+      "slug": "news/news260424",
+      "title": "DeepSeek V4 Preview Release",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news260424",
+      "source_md_url": "https://api-docs.deepseek.com/news/news260424",
+      "source_id": "news/news260424",
+      "hash": "75a3306a5899f549f67ab415870a43860daee7f4fc9b81fb0eaeb46c3f4d2ac2",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "news/news260813": {
+      "slug": "news/news260813",
+      "title": "DeepSeek-V4-Pro GA Release",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news260813",
+      "source_md_url": "https://api-docs.deepseek.com/news/news260813",
+      "source_id": "news/news260813",
+      "hash": "cae8a8b41e2e4d00626e7543ae49844f3a26cffacfd60999e175ac66aa90e448",
+      "last_updated": "2026-08-16T19:47:53Z"
+    },
+    "news/news260821": {
+      "slug": "news/news260821",
+      "title": "DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news260821",
+      "source_md_url": "https://api-docs.deepseek.com/news/news260821",
+      "source_id": "news/news260821",
+      "hash": "aed15a8cf6f368b9a087029624000a5f61d2e8d4f71be1dc6ea8aecbfa97f2a4",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "prompt-library": {
+      "slug": "prompt-library",
+      "title": "提示库",
+      "group": "root",
+      "source_url": "https://api-docs.deepseek.com/prompt-library",
+      "source_md_url": "https://api-docs.deepseek.com/prompt-library",
+      "source_id": "prompt-library",
+      "hash": "d5556422797bfb72b1417c0530adff6fb6ac0401fb1849c889082c3c2e4a1186",
+      "last_updated": "2026-08-02T01:25:23Z"
+    },
+    "quick_start/agent_integrations/astrbot": {
+      "slug": "quick_start/agent_integrations/astrbot",
+      "title": "Integrate with AstrBot",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/astrbot",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/astrbot",
+      "source_id": "quick_start/agent_integrations/astrbot",
+      "hash": "84bf5d342e666ddcb871ec60f9c8518288a9e454eb2bf41f9dc12ae03325fde6",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/claude_code": {
+      "slug": "quick_start/agent_integrations/claude_code",
+      "title": "Integrate with Claude Code",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code",
+      "source_id": "quick_start/agent_integrations/claude_code",
+      "hash": "14909dcd084771c6527e7bc605f9516856966835ce8eeb12e6e162bf3b6dd43b",
+      "last_updated": "2026-08-16T19:47:53Z"
+    },
+    "quick_start/agent_integrations/codex": {
+      "slug": "quick_start/agent_integrations/codex",
+      "title": "Integrate with Codex",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/codex",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/codex",
+      "source_id": "quick_start/agent_integrations/codex",
+      "hash": "7129981b6f2b240df17c4a2d8da887bcb63971acfb6e610738fb3c13ad546c8a",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "quick_start/agent_integrations/copilot_cli": {
+      "slug": "quick_start/agent_integrations/copilot_cli",
+      "title": "Integrate with GitHub Copilot CLI",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/copilot_cli",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/copilot_cli",
+      "source_id": "quick_start/agent_integrations/copilot_cli",
+      "hash": "7731d37e682384824ab5ce0253c73f7e9175481c3af211453b95a267f5e6134c",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/crush": {
+      "slug": "quick_start/agent_integrations/crush",
+      "title": "Integrate with Crush",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/crush",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/crush",
+      "source_id": "quick_start/agent_integrations/crush",
+      "hash": "848005b746b6520c663b1eb472c23c2c41d903f5a4ca2a0afc53b0101d493fd4",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/deepcode": {
+      "slug": "quick_start/agent_integrations/deepcode",
+      "title": "Integrate with Deep Code",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/deepcode",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/deepcode",
+      "source_id": "quick_start/agent_integrations/deepcode",
+      "hash": "aba4b66fe4475cf2c488781eb51a9ce227d394e0d02d27b4cfe7c34a50fcf578",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/github_copilot": {
+      "slug": "quick_start/agent_integrations/github_copilot",
+      "title": "Integrate with GitHub Copilot",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/github_copilot",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/github_copilot",
+      "source_id": "quick_start/agent_integrations/github_copilot",
+      "hash": "2bcc1ac91e2cecd014a0f3e278e3a492e3710a4fadbe31b872a35214ad69b5da",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/hermes": {
+      "slug": "quick_start/agent_integrations/hermes",
+      "title": "Integrate with Hermes Agent",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/hermes",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/hermes",
+      "source_id": "quick_start/agent_integrations/hermes",
+      "hash": "624351a4d9067950c68097e1c83e091e2597bd67730ecfa28b1a37c8cd6ec94f",
+      "last_updated": "2026-08-16T19:47:53Z"
+    },
+    "quick_start/agent_integrations/kilo_code": {
+      "slug": "quick_start/agent_integrations/kilo_code",
+      "title": "Integrate with Kilo Code",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/kilo_code",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/kilo_code",
+      "source_id": "quick_start/agent_integrations/kilo_code",
+      "hash": "72b455ded49a7e78285f8604bb385158de7500e0d814cf01e02021290acd7b82",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/langcli": {
+      "slug": "quick_start/agent_integrations/langcli",
+      "title": "Integrate with Langcli",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/langcli",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/langcli",
+      "source_id": "quick_start/agent_integrations/langcli",
+      "hash": "938e2dc3c09db51a0057ae23516e8ce0785c47e62f5fd72a6afe05c8ca6ae4aa",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/nanobot": {
+      "slug": "quick_start/agent_integrations/nanobot",
+      "title": "Integrating nanobot",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/nanobot",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/nanobot",
+      "source_id": "quick_start/agent_integrations/nanobot",
+      "hash": "be2ea47d923d97e34efcbc2dde96cd89d1638cee0aec73136a593d84c0119072",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/oh_my_pi": {
+      "slug": "quick_start/agent_integrations/oh_my_pi",
+      "title": "Using DeepSeek with Oh My Pi",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/oh_my_pi",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/oh_my_pi",
+      "source_id": "quick_start/agent_integrations/oh_my_pi",
+      "hash": "d6d0792d7bd89409a5c0d3625eb9a068548501e3d5ab5a5c39abb360144afb01",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/openclaw": {
+      "slug": "quick_start/agent_integrations/openclaw",
+      "title": "Integrate with OpenClaw",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/openclaw",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/openclaw",
+      "source_id": "quick_start/agent_integrations/openclaw",
+      "hash": "a340df6927ccb49d762fc80bac92fb9c2ffb0426d10526c3a6e5a9b93db9ab95",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/opencode": {
+      "slug": "quick_start/agent_integrations/opencode",
+      "title": "Integrate with OpenCode",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/opencode",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/opencode",
+      "source_id": "quick_start/agent_integrations/opencode",
+      "hash": "795dd02754dda4be17096cf5a12c128aab0803d5e69ed564f7456e237af7e9ee",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/pi_mono": {
+      "slug": "quick_start/agent_integrations/pi_mono",
+      "title": "Integrate with Pi",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/pi_mono",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/pi_mono",
+      "source_id": "quick_start/agent_integrations/pi_mono",
+      "hash": "0b3f9b7b182415ff9d764a8b25e71b2ddefe1056a5fc17783ddee24d7c3f9914",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/agent_integrations/reasonix": {
+      "slug": "quick_start/agent_integrations/reasonix",
+      "title": "Integrate with Reasonix",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/reasonix",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/reasonix",
+      "source_id": "quick_start/agent_integrations/reasonix",
+      "hash": "06487fb7dc49dee323f24fc27c0a359a2011c74caede6e2131e9562034257692",
+      "last_updated": "2026-08-16T19:47:53Z"
+    },
+    "quick_start/agent_integrations/workbuddy": {
+      "slug": "quick_start/agent_integrations/workbuddy",
+      "title": "Integrate with WorkBuddy/CodeBuddy",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/workbuddy",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/workbuddy",
+      "source_id": "quick_start/agent_integrations/workbuddy",
+      "hash": "fb40750e46fec56afd42e488556cc6e4e57e21b8a47ec86de6e69d4661325b50",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/error_codes": {
+      "slug": "quick_start/error_codes",
+      "title": "Error Codes",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/error_codes",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/error_codes",
+      "source_id": "quick_start/error_codes",
+      "hash": "6b54d1eeea5e2130309f1d093fd3d945ce680d08a3ff37b536a1ea4d5a2cb86f",
+      "last_updated": "2026-08-02T00:45:00Z"
+    },
+    "quick_start/pricing": {
+      "slug": "quick_start/pricing",
+      "title": "Your First API Call",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "source_id": "quick_start/pricing",
+      "hash": "b1f4642edc1efab98c8864639384e2b75054596ad1542659051df926fa67c243",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "quick_start/rate_limit": {
+      "slug": "quick_start/rate_limit",
+      "title": "Rate Limit & Isolation",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/rate_limit",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/rate_limit",
+      "source_id": "quick_start/rate_limit",
+      "hash": "329d97febe8b2258c47c53a399982921ccb5e6c5a85a983bf043b694223190bc",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "quick_start/token_usage": {
+      "slug": "quick_start/token_usage",
+      "title": "Token & Token Usage",
+      "group": "quick_start",
+      "source_url": "https://api-docs.deepseek.com/quick_start/token_usage",
+      "source_md_url": "https://api-docs.deepseek.com/quick_start/token_usage",
+      "source_id": "quick_start/token_usage",
+      "hash": "8a7579ea40eda961d01118c4a55167457a2476d0c39fc87b403e585e912a5eae",
+      "last_updated": "2026-09-06T19:04:01Z"
+    },
+    "updates": {
+      "slug": "updates",
+      "title": "Change Log",
+      "group": "root",
+      "source_url": "https://api-docs.deepseek.com/updates",
+      "source_md_url": "https://api-docs.deepseek.com/updates",
+      "source_id": "updates",
+      "hash": "e637f28adb5ae6ec5d4d86f2263343bc07542dabbf363ababc0a3097bed06452",
+      "last_updated": "2026-09-06T19:04:01Z"
+    }
+  },
+  "fetch_metadata": {
+    "last_fetch_completed": "2026-09-06T19:04:01Z",
+    "fetch_duration_seconds": 28.187,
+    "total_pages_discovered": 71,
+    "pages_fetched_successfully": 71,
+    "pages_failed": 0,
+    "failed_pages": []
+  }
+}

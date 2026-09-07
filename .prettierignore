@@ -1,0 +1,30 @@
+# Files Prettier must never reformat.
+#
+# `docs/` holds *mirrored* documentation: verbatim copies of upstream sources
+# (and machine-generated indexes/manifests/whats-new entries). Reformatting
+# these files would corrupt the mirror — altering content that must remain
+# byte-for-byte identical to its source — and would inject noise into every
+# change-tracking diff, making code reviews harder. The entire directory is
+# therefore excluded to guarantee the integrity of the mirroring pipeline.
+# Only project-owned files at the repository root (README, NOTICE,
+# configuration files) are kept formatted.
+docs/
+
+# Generated lockfile that is not meant to be hand-edited. uv.lock is produced
+# by uv — the only package manager this project uses (there is no
+# package.json, and Prettier itself runs via `npx -y`, which creates no
+# lockfile) — and is committed only for reproducible installs. Reformatting
+# it is pointless: the next `uv lock` or dependency upgrade overwrites any
+# formatting changes, and the churn would only add noise to diffs that makes
+# dependency audits harder. It is excluded to keep diffs clean and focused on
+# actual code changes.
+uv.lock
+
+# Virtualenvs and caches: local-only directories that package managers and the
+# Python runtime create for dependency isolation and bytecode caching. They
+# contain no project source code, are never committed to version control (they
+# belong in .gitignore, not the repository), and are large directory trees that
+# Prettier should never waste time traversing.
+.venv/
+__pycache__/
+node_modules/

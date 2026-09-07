@@ -1,0 +1,61 @@
+# ==============================================================================
+# Pre-commit Configuration — formatting gate
+# ==============================================================================
+# Runs automatically on `git commit` (after `uv run pre-commit install`).
+# Every hook runs in *check* mode, so a commit is BLOCKED whenever a Python or
+# Markdown/JSON/YAML file is not formatted to the project standard -- no
+# unformatted code can be committed. Re-run the formatter, re-stage, and commit
+# again.
+#
+# These local hooks call the exact same tools as the CI workflow
+# (.github/workflows/lint.yml) -- `ruff` (via `uv run`) and `prettier` (via
+# npx) -- so what passes locally passes in CI. Mirrored content under docs/ is
+# never touched: it is excluded here by pattern and in .prettierignore.
+#
+# Version pinning policy:
+#   * ruff: pinned EXACTLY in ONE place -- pyproject.toml's `dev` dependency
+#     group (ruff==0.16.0, resolved through uv.lock). The hooks below invoke
+#     `uv run ruff`, and so do .github/workflows/lint.yml and the Makefile, so
+#     all three automatically run the identical pinned version. Do NOT pin a
+#     ruff version here; that would re-introduce drift.
+#   * prettier: there is no project-local prettier (no package.json), so the
+#     version is pinned at each call site. It must stay in sync in all FOUR
+#     places:
+#       - .pre-commit-config.yaml  (this file, below)
+#       - .github/workflows/lint.yml  (Prettier check step)
+#       - Makefile  (PRETTIER variable)
+#       - README.md  (the npx command shown to contributors)
+#
+# One-time setup (requires uv on PATH; npx/Node for the Prettier hook):
+#   uv run pre-commit install   # wire the git hook into .git/hooks/
+#   (pre-commit itself comes from the pyproject.toml `dev` group -- no
+#   separate `uv tool install` needed.)
+# ==============================================================================
+
+repos:
+  - repo: local
+    hooks:
+      # Ruff: enforce Python formatting + linting under scripts/ and tests/.
+      # Version comes from pyproject.toml's dev group via `uv run` -- see the
+      # pinning policy above.
+      - id: ruff-format
+        name: ruff format (Python)
+        entry: uv run ruff format --check
+        language: system
+        files: \.py$
+      - id: ruff-check
+        name: ruff check (Python)
+        entry: uv run ruff check
+        language: system
+        files: \.py$
+
+      # Prettier: enforce Markdown / JSON / YAML formatting for project-owned
+      # files only (docs/ mirrored content is excluded).
+      # Version pinned in FOUR places -- keep in sync with lint.yml, the
+      # Makefile, and README.md (see the pinning policy above).
+      - id: prettier
+        name: prettier (md/json/yaml)
+        entry: npx -y prettier@3.9.6 --check
+        language: system
+        files: \.(md|json|ya?ml)$
+        exclude: ^docs/

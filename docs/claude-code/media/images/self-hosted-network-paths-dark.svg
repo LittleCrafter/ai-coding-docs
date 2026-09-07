@@ -1,0 +1,45 @@
+<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#C4C4C4"/>
+    </marker>
+  </defs>
+  <rect width="680" height="320" fill="#1A1A1A" rx="6"/>
+
+  
+  <rect x="24" y="24" width="360" height="272" fill="#2C2C2C" stroke="#C4C4C4" stroke-width="1" rx="6"/>
+  <text x="40" y="46" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#C4C4C4">Your network</text>
+
+  
+  <rect x="44" y="64" width="200" height="150" fill="#383838" stroke="#D4A27F" stroke-width="1.5" rx="6"/>
+  <text x="144" y="86" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#F5F5F5">Runner</text>
+  <rect x="60" y="98" width="168" height="32" fill="#2E5A3C" rx="4"/>
+  <text x="144" y="118" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#F5F5F5">Claude Code</text>
+  <rect x="60" y="140" width="168" height="32" fill="#2E5A3C" rx="4"/>
+  <text x="144" y="160" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#F5F5F5">Claude Code</text>
+
+  
+  <rect x="44" y="240" width="200" height="40" fill="#5A4E22" rx="6"/>
+  <text x="144" y="264" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#F5F5F5">Git host</text>
+
+  
+  <rect x="440" y="64" width="216" height="216" fill="#463A5E" rx="6"/>
+  <text x="548" y="90" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="500" fill="#F5F5F5">api.anthropic.com</text>
+  <rect x="456" y="106" width="184" height="36" fill="#2C2C2C" rx="4"/>
+  <text x="548" y="128" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#F5F5F5">Queue</text>
+  <rect x="456" y="154" width="184" height="36" fill="#2C2C2C" rx="4"/>
+  <text x="548" y="176" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#F5F5F5">Session stream</text>
+  <rect x="456" y="202" width="184" height="36" fill="#2C2C2C" rx="4"/>
+  <text x="548" y="224" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#F5F5F5">Inference</text>
+
+  
+  <g stroke="#C4C4C4" stroke-width="1.5" fill="none">
+    <line x1="244" y1="84" x2="450" y2="124" marker-end="url(#arrow)"/>
+    <line x1="228" y1="114" x2="450" y2="172" marker-end="url(#arrow)"/>
+    <line x1="228" y1="156" x2="450" y2="220" marker-end="url(#arrow)"/>
+    <line x1="100" y1="214" x2="100" y2="234" marker-end="url(#arrow)"/>
+    <line x1="180" y1="172" x2="180" y2="234" marker-end="url(#arrow)"/>
+  </g>
+  <text x="340" y="96" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#C4C4C4">polls</text>
+  <text x="92" y="230" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#C4C4C4">clone, push</text>
+</svg>

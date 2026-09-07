@@ -1,0 +1,293 @@
+name: Update docs
+
+# Mirrors documentation for several AI coding tools (Antigravity CLI, Claude
+# Code, Codex CLI, DeepSeek API, Kimi Code, OpenCode) on a schedule and commits any
+# changes (new, modified, removed or renamed pages).
+on:
+  schedule:
+    - cron: "0 */3 * * *" # every 3 hours, at :00 UTC
+  workflow_dispatch: {} # manual "Run workflow" trigger
+
+permissions:
+  contents: write # push the doc updates
+  issues: write # open an issue if the run fails
+
+# Avoid overlapping scheduled/manual runs touching the same branch. The group
+# is scoped per branch (github.ref_name): a manual workflow_dispatch from a
+# feature branch must not block (or be blocked by) the scheduled run on the
+# default branch -- they touch different refs.
+concurrency:
+  group: update-docs-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    # Hard cap on the job. A hung network fetch or git operation would
+    # otherwise sit until GitHub's 6-hour default limit, burning runner
+    # minutes and delaying the failure-issue alert by hours. 30 minutes is
+    # several times a normal full mirror run, so healthy runs never trip it.
+    # Note: a timeout CANCELS the job mid-step, and `if: failure()` does not
+    # match a cancelled run -- so a timeout relies on GitHub's own failure
+    # e-mail notification rather than the deduplicated issue below. That is
+    # accepted deliberately: the issue mechanism exists for source-level
+    # failures (a broken upstream), which are reported via the mirror's exit
+    # code and never involve cancellation.
+    timeout-minutes: 30
+    steps:
+      # Every action is pinned to a full commit SHA (release tag kept as a
+      # trailing comment) so a re-tagged or compromised release cannot change
+      # the code we run. .github/dependabot.yml bumps the pins weekly.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      # Pinned to an exact release commit SHA (v8 made floating tags like @v8
+      # invalid). Dependabot bumps it; see
+      # https://github.com/astral-sh/setup-uv/releases
+      # python-version matches lint.yml ("3.14") so every workflow resolves
+      # the same interpreter the project pins in .python-version.
+      # enable-cache: the schedule fires every 3 hours (8x/day), so caching
+      # uv's package cache across runs meaningfully shortens the setup step
+      # over the course of a week.
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: true
+          python-version: "3.14"
+
+      # Verify the committed lockfile matches pyproject.toml before syncing.
+      # A stale lockfile would silently install a different dependency set
+      # than pyproject.toml describes, making the mirror run on unreviewed
+      # package versions.
+      - name: Check lockfile is current
+        run: uv lock --check
+
+      - name: Install dependencies (frozen lockfile)
+        run: uv sync --frozen
+
+      # A single broken source must not hold the healthy ones hostage:
+      # mirror-docs exits 1 when ANY source fails, but the pipeline's
+      # per-source isolation means the other sources still produced valid,
+      # complete updates on disk. So the exit code is captured instead of
+      # failing the step -- the updates are committed below, and the job is
+      # failed (triggering the failure-issue alert) only AFTER the commit.
+      # A multi-day upstream outage then delays only the broken source
+      # itself, never the publishing of the others.
+      - name: Run the docs mirror
+        id: mirror
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # `set +e` because the workflow shell runs with `-eo pipefail`:
+        # without it, a non-zero mirror exit would abort the step here.
+        run: |
+          set +e
+          uv run mirror-docs
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if [ -z "$(git status --porcelain docs/ README.md)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit & push
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/ README.md
+
+          # Subject: which sources changed + ISO 8601 UTC timestamp (same
+          # format scripts/run_local.sh logs with, so CI commits and local
+          # cron logs read alike).
+          #
+          # The `sources` pipeline below condenses the full staged file list
+          # into the short comma-separated source list used in the commit
+          # subject. Stage by stage:
+          #   1. git diff --cached --name-only -- docs/ README.md lists every staged
+          #      path under docs/ and README.md, one per line (e.g. "docs/kimi-code/cli.md",
+          #      "docs/README.md", "README.md") -- a single source may appear on dozens of
+          #      lines, once per changed page.
+          #   2. sed -E maps each path to its source name:
+          #        s#^docs/README\.md$#index# -- the top-level docs index is not a
+          #          source; label it "index" so the subject reads e.g.
+          #          "update index, kimi-code" instead of a bare "README.md";
+          #        s#^README\.md$#readme# -- the root README table update;
+          #        s#^docs/([^/]+)/.*$#\1# -- a file inside a source folder:
+          #          keep only the folder name ("docs/kimi-code/cli.md" ->
+          #          "kimi-code"); the trailing /.* also collapses deeper
+          #          nesting ("docs/deepseek-api/a/b.md" -> "deepseek-api");
+          #        t -- after a successful substitution, branch to the end of
+          #          the script, skipping the remaining rule for this line
+          #          (an already-mapped name must not be re-processed);
+          #        s#^docs/([^/]+)$#\1# -- defensive fallback for a bare
+          #          "docs/<name>" path with nothing after it (never emitted
+          #          by --name-only today, but keeps the mapping total if the
+          #          docs/ layout ever changes).
+          #      (# is used as the sed delimiter because the patterns are
+          #      full of / characters -- / delimiters would need escaping
+          #      throughout.)
+          #   3. sort -u collapses a source's many per-page lines into one
+          #      entry and alphabetises the list.
+          #   4. awk joins the lines into a single comma-separated string
+          #      ("claude-code, kimi-code") with no trailing comma: the
+          #      separator is printed BEFORE every line except the first
+          #      (NR>1). awk is used instead of `paste -sd,` simply because
+          #      awk is already used for the commit body below and is
+          #      guaranteed present on every runner image.
+          # The `[ -z "$sources" ]` fallback covers the theoretically
+          # impossible empty result (changed=true already implies at least
+          # one staged docs/ path) so the subject is never malformed.
+          sources=$(git diff --cached --name-only -- docs/ README.md \
+                    | sed -E 's#^docs/README\.md$#index#; s#^README\.md$#readme#; s#^docs/([^/]+)/.*$#\1#; t; s#^docs/([^/]+)$#\1#' | sort -u \
+                    | awk 'NR>1{printf ", "} {printf "%s",$0} END{print ""}')
+          [ -z "$sources" ] && sources="docs"
+          subject="docs: update ${sources} - $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+
+          # Body: changed files grouped by Added / Modified / Renamed / Removed.
+          {
+            echo "$subject"
+            echo
+            git diff --cached --name-status -- docs/ README.md | awk -F'\t' '
+              { p = $2
+                if ($1 ~ /^A/) { an++; a = a "  - " p "\n" }
+                else if ($1 ~ /^D/) { dn++; d = d "  - " p "\n" }
+                else if ($1 ~ /^R/) { rn++; r = r "  - " $2 " -> " $3 "\n" }
+                else { mn++; m = m "  - " p "\n" } }
+              END {
+                if (an) { printf "Added (%d):\n%s\n", an, a }
+                if (mn) { printf "Modified (%d):\n%s\n", mn, m }
+                if (rn) { printf "Renamed (%d):\n%s\n", rn, r }
+                if (dn) { printf "Removed (%d):\n%s\n", dn, d } }'
+          } | git commit -F -
+          # actions/checkout leaves the repo in a DETACHED HEAD (it checks
+          # out the commit, not the branch), so a bare `git push` has no
+          # branch to update and fails with "You are not currently on a
+          # branch". Push the detached HEAD explicitly onto the branch this
+          # run was triggered for.
+          #
+          # Pull with rebase first to avoid a transient race: if another
+          # workflow run (or a manual push) lands on the branch between our
+          # checkout and our push, the push would be rejected with a non-fast-
+          # forward error. The schedule fires every 3 hours -- collisions are
+          # rare, but when they happen without this retry logic the mirror
+          # just silently drops its updates. A rebase replay of our (single)
+          # commit on top of the remote tip makes the push succeed without a
+          # merge bubble, keeping the git history linear.
+          #
+          # The pull+push is wrapped in a retry loop with ``git rebase --abort``
+          # recovery: if pull --rebase fails (e.g. merge conflict from two
+          # simultaneous runs touching the same line of the same file), abort
+          # the rebase, wait a few seconds for the other process to finish, and
+          # retry once. If the second attempt also fails, skip the push rather
+          # than failing the whole job -- the next scheduled run (at most 3
+          # hours away) will pick up the changes, and the mirror self-heals.
+          #
+          # A ``pushed`` flag records whether any attempt's push succeeded.
+          # Without it, the case where every rebase succeeds but EVERY push is
+          # rejected (e.g. a branch-protection or permission change upstream)
+          # would end the loop silently -- the "skipping push" warning inside
+          # the loop only covers rebase failures. The post-loop check below
+          # makes a total push failure loud as well.
+          pushed=false
+          for attempt in 1 2; do
+            if git pull --rebase origin "${REF_NAME}"; then
+              if git push origin "HEAD:${REF_NAME}"; then
+                pushed=true
+                break
+              else
+                # The rebase succeeded but the push was rejected (most often a
+                # transient rate limit or a stale remote tip). Without this
+                # else branch the loop would fall through to the next attempt
+                # immediately -- hammering the very transient limit that just
+                # rejected us. Wait the same backoff as the rebase-failure
+                # path below so the retry happens after things have settled.
+                echo "warning: git push attempt ${attempt} failed after successful rebase; backing off before retry"
+                sleep 5
+              fi
+            else
+              echo "warning: git pull --rebase attempt ${attempt} failed"
+              git rebase --abort 2>/dev/null || true
+              if [ "${attempt}" -eq 2 ]; then
+                echo "warning: skipping push after 2 failed rebase attempts; next scheduled run will retry"
+              else
+                sleep 5
+              fi
+            fi
+          done
+          if [ "${pushed}" = false ]; then
+            echo "error: updates were NOT pushed after 2 attempts (push rejected or rebase failed); next scheduled run will retry"
+            # Exit with a non-zero status so the workflow job fails.
+            # This ensures the failure() step below executes and opens a tracking issue.
+            exit 1
+          fi
+
+      # Now that the healthy sources' updates are safely committed, surface
+      # any source-level failure by failing the job. This is what marks the
+      # run red and triggers the deduplicated failure issue below -- one
+      # broken source still pages someone, just without blocking the others.
+      - name: Fail the run if any source failed
+        if: steps.mirror.outputs.exit_code != '0'
+        run: exit 1
+
+      # On failure, notify via a GitHub issue -- but do NOT open a new issue
+      # per failed run: the schedule fires every 3 hours, so a persistent
+      # failure would spam up to 8 issues/day. The title is a FIXED string
+      # (no date) so we can search for an already-open issue with the same
+      # prefix; if one exists we add a comment with the new run link instead,
+      # and only create a fresh issue when none is open (i.e. the previous
+      # one was closed as resolved). The date and run link live in the
+      # body/comment, not the title.
+      - name: Open issue on failure
+        if: failure()
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const title = 'Docs mirror update failed';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const details = [
+              'The scheduled docs mirror update failed.',
+              '',
+              `Date (UTC): ${new Date().toISOString()}`,
+              `Run: ${runUrl}`
+            ].join('\n');
+
+            // Paginate through ALL open issues: a bare listForRepo call only
+            // returns the first `per_page` results, so on a repo with more
+            // than 100 open issues the dedup search could miss an existing
+            // failure issue and open a duplicate.
+            const openIssues = await github.paginate(
+              github.rest.issues.listForRepo,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                per_page: 100
+              }
+            );
+            // listForRepo also returns pull requests; exclude them.
+            const existing = openIssues.find(
+              i => !i.pull_request && i.title.startsWith(title)
+            );
+
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `Failed again.\n\n${details}`
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body: details
+              });
+            }

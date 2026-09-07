@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" width="680" height="330" font-family="system-ui, -apple-system, sans-serif">
+<rect width="680" height="330" rx="6" fill="#F9F9F7"/>
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#757575"/></marker></defs>
+<text x="340" y="28" text-anchor="middle" font-size="15" font-weight="600" fill="#1E1E1E">Which managed source supplies the policy</text>
+<text x="190" y="56" text-anchor="middle" font-size="12" font-weight="600" fill="#757575">Highest priority first</text>
+<rect x="60" y="70" width="260" height="44" rx="6" fill="#E8E8E4" stroke="#757575" stroke-width="1"/>
+<text x="78" y="97" font-size="13" font-weight="600" fill="#1E1E1E">1</text>
+<text x="98" y="90" font-size="12" font-weight="500" fill="#1E1E1E">Remote settings</text>
+<text x="98" y="105" font-size="11" fill="#757575">claude.ai or Claude apps gateway</text>
+<line x1="190" y1="114" x2="190" y2="128" stroke="#757575" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="60" y="128" width="260" height="44" rx="6" fill="#E8E8E4" stroke="#757575" stroke-width="1"/>
+<text x="78" y="155" font-size="13" font-weight="600" fill="#1E1E1E">2</text>
+<text x="98" y="148" font-size="12" font-weight="500" fill="#1E1E1E">MDM or OS policy</text>
+<text x="98" y="163" font-size="11" fill="#757575">plist or HKLM registry</text>
+<line x1="190" y1="172" x2="190" y2="186" stroke="#757575" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="60" y="186" width="260" height="44" rx="6" fill="#E8E8E4" stroke="#757575" stroke-width="1"/>
+<text x="78" y="213" font-size="13" font-weight="600" fill="#1E1E1E">3</text>
+<text x="98" y="206" font-size="12" font-weight="500" fill="#1E1E1E">Managed settings files</text>
+<text x="98" y="221" font-size="11" fill="#757575">managed-settings.json and .d/</text>
+<line x1="190" y1="230" x2="190" y2="244" stroke="#757575" stroke-width="1.5" marker-end="url(#ah)"/>
+<rect x="60" y="244" width="260" height="44" rx="6" fill="#FAFAFA" stroke="#757575" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="78" y="271" font-size="13" font-weight="600" fill="#1E1E1E">4</text>
+<text x="98" y="264" font-size="12" font-weight="500" fill="#1E1E1E">HKCU registry</text>
+<text x="98" y="279" font-size="11" fill="#757575">Windows, user-writable</text>
+<text x="190" y="304" text-anchor="middle" font-size="12" fill="#757575">By default, Claude Code uses the first source</text>
+<text x="190" y="320" text-anchor="middle" font-size="12" fill="#757575">with a policy key; merge combines admin sources</text>
+<rect x="380" y="70" width="240" height="160" rx="6" fill="#FFF8E1"/>
+<text x="394" y="94" font-size="12" font-weight="600" fill="#1E1E1E">Read from every admin source</text>
+<text x="394" y="120" font-size="12" fill="#1E1E1E" font-family="system-ui, -apple-system, sans-serif">sandbox lock keys</text>
+<text x="394" y="144" font-size="12" fill="#1E1E1E" font-family="ui-monospace, monospace">allowAllClaudeAiMcps</text>
+<text x="394" y="168" font-size="12" fill="#1E1E1E" font-family="ui-monospace, monospace">forceRemoteSettingsRefresh</text>
+<text x="394" y="192" font-size="12" fill="#1E1E1E" font-family="system-ui, -apple-system, sans-serif">env, merged per variable</text>
+<text x="394" y="218" font-size="11" fill="#757575">examples; sources 1 to 3, never HKCU</text>
+<path d="M380 150.0 L350 150.0 L350 92 L320 92 M350 150.0 L350 208 L320 208" fill="none" stroke="#757575" stroke-width="1.5" stroke-dasharray="3 3"/>
+</svg>

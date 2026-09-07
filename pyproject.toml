@@ -1,0 +1,122 @@
+[project]
+name = "ai-coding-docs"
+version = "0.2.0"
+description = "Always-up-to-date mirror of AI coding-tool docs (Antigravity CLI, Claude Code, Codex CLI, DeepSeek API, Kimi Code, OpenCode)."
+readme = "README.md"
+# We unify on Python 3.14 as the minimum requirement across the project
+# to ensure access to modern language features.
+requires-python = ">=3.14"
+license = "MIT"
+authors = [
+    { name = "LittleCrafter" },
+]
+keywords = [
+    "documentation",
+    "mirror",
+    "scraper",
+    "ai-coding-tools",
+    "cli",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Documentation",
+]
+dependencies = [
+    # Upper bound <1.0.0: the test suite constructs real httpx exception types
+    # (ConnectError, TimeoutException, DecodingError) to script the fake
+    # client's failure modes, so it depends on their constructor signatures.
+    # Capping at <1.0.0 prevents unexpected test failures from upstream
+    # constructor signature changes in a hypothetical httpx 1.0.
+    "httpx>=0.27,<1.0.0",
+    "beautifulsoup4>=4.12",
+    # Lower-bound 2025.4.15: body_width=0 disables wrapping only since this
+    # release (see the comment in scripts/mirror/core/html_markdown.py::make_converter).
+    "html2text>=2025.4.15",
+]
+
+[project.urls]
+Repository = "https://github.com/LittleCrafter/ai-coding-docs"
+
+[project.scripts]
+mirror-docs = "mirror.cli:main"
+
+[build-system]
+# Upper bound <1 (not <0.13): uv_build releases move in lockstep with uv
+# itself (already past 0.11.x), so a narrow minor cap would start failing
+# builds the day uv_build 0.13 ships. Anything below 1.0 is API-stable
+# enough for this trivial pure-Python package.
+requires = ["uv_build>=0.5,<1"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# The importable package lives under scripts/, not at the repo root.
+module-name = "mirror"
+module-root = "scripts"
+
+# Development-only dependencies (the `dev` group is installed by default with
+# `uv sync`).
+# ruff is pinned EXACTLY and this is the SINGLE source of truth for the ruff
+# version: .github/workflows/lint.yml, .pre-commit-config.yaml, and the
+# Makefile all invoke `uv run ruff`, which resolves ruff from this group via
+# uv.lock -- so local hooks and CI always run the identical tool version.
+[dependency-groups]
+dev = [
+    "pre-commit>=4",
+    # Lower bound 9 + upper bound <10: the lockfile already resolves pytest
+    # 9.1.1 and the suite is green on it; the cap keeps a future pytest 10
+    # from landing unreviewed via a plain `uv lock --upgrade`.
+    "pytest>=9,<10",
+    # pytest-cov backs the CI coverage report (--cov=scripts/mirror); the
+    # cap keeps the plugin's major-version surface stable.
+    "pytest-cov>=5,<7",
+    # pyright runs the static type check over all of scripts/ in CI,
+    # resolved exactly by uv.lock like every other dev tool.
+    "pyright>=1.1.390,<2",
+    "ruff==0.16.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+# Ruff configuration.
+#   * line-length 88 matches ruff's default width and is stated explicitly so
+#     a future change of that default can never silently reformat the tree
+#     differently between CI, the pre-commit hook, and local runs.
+#   * target-version matches requires-python (>=3.14) so ruff flags any
+#     syntax that would not parse on the oldest supported interpreter and
+#     never suggests rewrites that would break there.
+[tool.ruff]
+line-length = 88
+# Align ruff target version with our minimum supported Python version (3.14).
+# A direct consequence worth stating: ruff format applies PEP 758 to
+# multi-exception handlers -- ``except ValueError, TypeError:`` (no parens)
+# is the enforced canonical form BECAUSE the 3.14 floor guarantees it parses.
+# With an ``as`` clause parentheses are REQUIRED by the 3.14 grammar
+# (``except (ValueError, TypeError) as err:``), and ruff keeps them there.
+# Both forms are valid on 3.14 and trigger no lint or type-check warnings;
+# do not "normalize" the unparenthesized form away.
+target-version = "py314"
+
+[tool.ruff.lint]
+# The explicit minimal selection below is a deliberate PIN, not a restatement
+# of ruff's defaults. Ruff applies its implicit default rule set only when no
+# `select` is configured -- and ruff 0.16.0 (2026-07-23) expanded that
+# implicit default from 59 to 413 rules. Pinning E4/E7/E9/F here keeps lint
+# behavior stable across ruff upgrades: a future default-rule expansion cannot
+# suddenly fail CI or the pre-commit hook on code that was previously fine.
+# The tree is currently clean under this pinned selection but NOT under the
+# full 413-rule default set, so widening this selection later is a deliberate,
+# reviewable choice that must come with fixing the violations that the full
+# set reports -- never a side effect of a ruff bump.
+select = ["E4", "E7", "E9", "F"]
+# Explicitly selecting the "E7" prefix also turns on E741 (ambiguous variable
+# name such as `l` or `O`), which ruff's implicit default selection leaves
+# disabled and which this codebase does not treat as an error. Ignoring it
+# keeps the pinned set focused on real defects (syntax errors, undefined
+# names, unused imports) without forcing renames of short local variables.
+ignore = ["E741"]

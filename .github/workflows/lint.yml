@@ -1,0 +1,153 @@
+name: Lint & Test
+
+# Quality gate for pushes and pull requests. Two independent jobs:
+#   * lint - Python (ruff + pyright over all of scripts/) and project-owned
+#            Markdown/YAML/JSON (prettier) stay formatted to the project
+#            standard, so the auto-committing "Update docs" workflow never
+#            fights a formatting drift;
+#   * test - the pytest suite (mirror.core / mirror.sources) must pass, with
+#            a coverage report over scripts/mirror.
+# Shell (.sh) is excluded from prettier (no built-in shell parser), and mirrored
+# content under docs/ is protected by .prettierignore.
+on:
+  # push is restricted to the default branch(es) only. Pushes to a same-repo
+  # pull-request branch are already covered by the pull_request event, so
+  # letting push fire there too would run the lint and test jobs twice for
+  # every update to an open PR.
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+permissions:
+  contents: read
+
+# Cancel superseded runs when the same ref is pushed again in quick
+# succession: only the newest commit's result matters, and the older run's
+# outcome is discarded anyway. This is safe here because the workflow is
+# read-only (it commits nothing and has no external side effects) -- unlike
+# the auto-committing "Update docs" workflow, which must let in-flight runs
+# finish rather than be cancelled mid-push.
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    # Hard cap: ruff and prettier complete in seconds, so 10 minutes is
+    # generous headroom that only trips on a genuine hang.
+    timeout-minutes: 10
+    steps:
+      # Every action is pinned to a full commit SHA (release tag kept as a
+      # trailing comment) so a re-tagged or compromised release cannot change
+      # the code we run. .github/dependabot.yml bumps the pins weekly.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # uv provides the project environment: ruff comes from the pinned dev
+      # group in pyproject.toml via `uv run ruff` (see below).
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: true
+          python-version: "3.14"
+
+      # npx (bundled with Node) runs Prettier without a project package.json.
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "lts/*"
+
+      # Verify the committed lockfile matches pyproject.toml. If this step
+      # fails, someone edited dependencies without regenerating uv.lock --
+      # which means CI and local devs would install different versions.
+      - name: Check lockfile is current
+        run: uv lock --check
+
+      # Install the dev group (ruff is pinned EXACTLY there: ruff==0.16.0)
+      # from the committed lockfile, so CI runs the identical ruff bytes that
+      # the pre-commit hook and `make lint` run locally.
+      - name: Install dependencies (frozen lockfile)
+        run: uv sync --frozen
+
+      # The ruff version has a SINGLE source of truth: the dev group in
+      # pyproject.toml (resolved through uv.lock). `uv run ruff` is used here,
+      # in .pre-commit-config.yaml, and in the Makefile, so no per-call-site
+      # version pins exist that could drift.
+      - name: Ruff format check
+        run: uv run ruff format --check scripts/ tests/
+
+      - name: Ruff lint check
+        run: uv run ruff check scripts/ tests/
+
+      # pyright (static type checking) covers every authored Python module
+      # under scripts/ -- the shared core package (fetch/validation/hashing
+      # mechanics), the pipeline orchestrator, and the source adapters
+      # themselves. The adapters stay duck-typed at runtime, but their static
+      # contract is the Source Protocol in sources/base.py, asserted once at
+      # the registry boundary in pipeline.py -- which keeps a full-package
+      # check clean without per-adapter exemptions. The version comes from
+      # the dev group in pyproject.toml, resolved through uv.lock -- the
+      # same single-source-of-truth convention as ruff.
+      - name: Pyright type check
+        run: uv run pyright scripts/
+
+      # Markdown / YAML / JSON only. Shell (.sh) is intentionally excluded:
+      # Prettier has no built-in shell parser and errors without the
+      # prettier-plugin-sh plugin. Mirrored content under docs/ is protected by
+      # .prettierignore and is never checked or reformatted.
+      # The prettier version is pinned in FOUR places to match: here,
+      # .pre-commit-config.yaml, the Makefile (PRETTIER variable), and
+      # README.md (the npx command shown to contributors).
+      - name: Prettier check
+        run: npx -y prettier@3.9.6 --check "**/*.md" "**/*.{yml,yaml,json}"
+
+      - name: Shell script syntax check
+        run: bash -n scripts/run_local.sh
+
+      # shellcheck ships preinstalled on GitHub-hosted Ubuntu runner images
+      # (see actions/runner-images), so no install step is needed. bash -n
+      # above only catches syntax errors; shellcheck also catches the logical
+      # pitfalls bash -n cannot see (unquoted expansions, useless `cat`s,
+      # masking of exit codes), which matters for run_local.sh because it runs
+      # unattended under cron/systemd where bugs surface only in a log file.
+      # The Makefile's `shell-check` target mirrors this pair of checks, but
+      # skips shellcheck gracefully when it is not installed locally -- CI is
+      # where the shellcheck pass is mandatory.
+      - name: Shellcheck shell script
+        run: shellcheck scripts/run_local.sh
+
+  test:
+    runs-on: ubuntu-latest
+    # The test suite runs in under a minute; 15 minutes is generous headroom
+    # that only trips on a hung test or a stuck uv sync.
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: true
+          # Single interpreter version: the project pins Python 3.14 as its
+          # minimum (requires-python in pyproject.toml), so a matrix with one
+          # entry would add nothing but complexity.
+          python-version: "3.14"
+
+      # Verify the committed lockfile matches pyproject.toml before syncing,
+      # same guard as the lint job -- a stale lockfile would silently install
+      # a different dependency set than pyproject.toml describes.
+      - name: Check lockfile is current
+        run: uv lock --check
+
+      # Project + dev group (pytest, pytest-cov) installed from the committed
+      # lockfile, so the CI environment matches the recorded dependency set
+      # exactly.
+      - name: Install dependencies (frozen lockfile)
+        run: uv sync --frozen
+
+      # The suite runs with a coverage report over scripts/mirror so a drop
+      # in exercised code becomes visible in the job log (there is no
+      # fail-under threshold: the report is a trend signal, not a gate).
+      - name: Run tests
+        run: uv run pytest --cov=scripts/mirror --cov-report=term-missing

@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Tooling caches (ruff/pytest write their caches on every run; ruff
+# also self-ignores via .ruff_cache/.gitignore). Listed explicitly at the repo
+# root so none is ever tracked, regardless of the tool's own behavior.
+# NOTE: pre-commit stores its cache in ~/.cache/pre-commit/ or .git/ by
+# default, not at the repo root -- there is no .pre-commit-cache/ to ignore.
+.ruff_cache/
+.pytest_cache/
+
+# uv
+.venv/
+.python-version.local
+
+# Secrets — never commit env files (templates like .env.example are
+# intentionally NOT exempted; this project has none).
+.env
+.env.*
+
+# Test coverage artifacts
+.coverage
+htmlcov/
+
+# Node (npx caches nothing here, but a stray `npm install` must never
+# become trackable)
+node_modules/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs / runtime artifacts
+*.log
+# The whats-new lock file (``docs/<source>/whats-new/.lock``) is created by
+# ``write_entry`` and intentionally left on disk: it is a single stable path
+# per source (never renamed or removed) so that ``fcntl.flock`` always
+# serializes on the same inode. It is an empty runtime artifact, so ignore it
+# here to keep the tracked output tree free of noise and to avoid accidental
+# ``git add docs/`` commits. The pattern matches only files named exactly
+# ``.lock`` -- deliberately NOT ``*.lock``, which would also ignore the
+# tracked ``uv.lock`` dependency lockfile at the repository root.
+.lock

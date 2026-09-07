@@ -1,0 +1,61 @@
+AI Coding Docs
+Copyright (c) 2026 LittleCrafter (tooling only; see LICENSE)
+
+This repository mirrors public documentation from several third-party sources.
+The mirrored content under docs/ is NOT covered by this repository's MIT
+license; it remains the property of its respective owners and is redistributed
+for offline reference and change-tracking only. Each source folder contains a
+SOURCE.md with its exact attribution.
+
+================================================================================
+THIRD-PARTY DOCUMENTATION ATTRIBUTIONS
+================================================================================
+
+google-antigravity-cli/
+Owner: Google
+Source: https://antigravity.google/docs/cli/overview
+License: Public documentation; no explicit redistribution license.
+Mirrored unmodified. Content (c) Google.
+
+claude-code/
+Owner: Anthropic
+Source: https://code.claude.com/docs/en/
+License: Public documentation; no explicit redistribution license.
+Mirrored unmodified. Content (c) Anthropic.
+
+codex-cli/
+Owner: OpenAI
+Source: https://github.com/openai/codex (docs/)
+License: Apache License 2.0 (see docs/codex-cli/LICENSE and NOTICE).
+Mirrored unmodified. Content (c) 2025 OpenAI.
+
+deepseek-api/
+Owner: DeepSeek
+Source: https://api-docs.deepseek.com
+License: Public documentation; no explicit redistribution license.
+Mirrored from rendered HTML and converted to Markdown. Content
+(c) DeepSeek.
+
+kimi-code/
+Owner: Moonshot AI
+Source: https://github.com/MoonshotAI/kimi-code (docs/en/)
+License: MIT License (see docs/kimi-code/LICENSE).
+Mirrored unmodified. Content (c) 2026 Moonshot AI.
+
+opencode/
+Owner: OpenCode / anomalyco
+Source: https://github.com/anomalyco/opencode (packages/web/src/content/docs/)
+License: MIT License (see docs/opencode/LICENSE).
+Mirrored from MDX and converted to standard Markdown. Content
+(c) the OpenCode authors.
+
+---
+
+## NOTE ON THE SCRAPED SOURCES (Google, Anthropic, DeepSeek)
+
+These three are published documentation without an explicit open-source license
+granting redistribution. They are mirrored here verbatim (or, for DeepSeek,
+faithfully converted from the published HTML) solely for convenient offline
+access and to record how the docs change over time, with full attribution and
+links back to the canonical source. All trademarks belong to their respective
+owners. If you are an owner and would like content removed, please open an issue.
