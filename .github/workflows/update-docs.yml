@@ -41,6 +41,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          ssh-key: ${{ secrets.DOCS_MIRROR_SSH_KEY }}
 
       # Pinned to an exact release commit SHA (v8 made floating tags like @v8
       # invalid). Dependabot bumps it; see
