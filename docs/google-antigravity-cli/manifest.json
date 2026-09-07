@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "1.1.27",
-  "last_updated": "2026-09-07T00:16:27Z",
+  "version": "1.1.13",
+  "last_updated": "2026-09-07T18:28:58Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -365,8 +365,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-07T00:16:27Z",
-    "fetch_duration_seconds": 12.433,
+    "last_fetch_completed": "2026-09-07T18:28:58Z",
+    "fetch_duration_seconds": 12.314,
     "total_pages_discovered": 36,
     "pages_fetched_successfully": 36,
     "pages_failed": 0,
