@@ -36,11 +36,9 @@ The supported actions, target format specifications, and matching algorithms are
 | **`write_file`** | `write_file(/path)` or `write_file(*)` | Same as `read_file`. Implicitly grants `read_file` for the exact same target path. | **Ask** (Auto-allowed in workspace) |
 | **`read_url`** | `read_url(domain)` or `read_url(*)` | Matches hostnames and subdomains (e.g., `google.com` covers `mail.google.com`). Ignores URL path segments. `read_url(*)` matches any domain. | **Ask** |
 | **`execute_url`** | `execute_url(domain)` or `execute_url(*)` | Actuating on web elements (clicking, typing) or driving interactive browser workflows on a domain. | **Ask** |
-| **`command`** | `command(prefix)`, `command(regex)`, or `command(*)` | Matches commands by exact word/token prefix. Each whitespace-separated token is evaluated as an anchored regular expression (`^(?:pattern)$`).  
-  
-For example, `command(npm run (build|lint|test))` matches `npm run build` and `npm run test`. | **Ask** |
-| **`unsandboxed`** | `unsandboxed(prefix)` or `unsandboxed(*)` | Matches commands by exact word/token prefix. Commands matching this grant will be executed outside of container isolation (only applicable when terminal sandboxing is enabled). | **Ask** |
-| **`mcp`** | `mcp(server/tool)` or `mcp(*)` | Matches exact MCP tools or all tools on a specified server (applies to local `mcp` servers and remote connections). `mcp(*)` matches any tool. | **Ask** |
+| **`command`** | `command(prefix)`, `command(regex:pattern)`, or `command(*)` | Matches command prefixes word-by-word literally by default. If you want to use a regular expression, add the `regex:` prefix (for example, `command(regex:npm run (build|lint|test))`). | **Ask** |
+| **`unsandboxed`** | `unsandboxed(prefix)`, `unsandboxed(regex:pattern)`, or `unsandboxed(*)` | Matches command prefixes word-by-word literally by default (or with `regex:`). Commands matching this grant execute outside container isolation when terminal sandboxing is enabled. | **Ask** |
+| **`mcp`** | `mcp(server/tool)`, `mcp(server/*)`, or `mcp(*)` | Matches exact MCP tools or all tools on a specified server (applies to local and remote MCP servers). `mcp(*)` matches any tool. | **Ask** |
 
 ### Global wildcard syntax
 
@@ -54,6 +52,10 @@ Across all supported action types, passing the global wildcard `*` (such as `rea
 ### Cross-platform path normalization
 
 Antigravity ensures your permission rules work flawlessly whether you are developing on macOS, Linux, or Windows. On macOS and Linux, paths use standard forward slashes (`/`). On Windows, Antigravity automatically normalizes paths prior to rule evaluation by stripping drive letters (e.g., `C:`) and converting all backslashes (`\`) to forward slashes (`/`).
+
+### Cross-platform command matching
+
+On Windows shells like PowerShell or Command Prompt, commands that can’t be cleanly split into separate words require an exact match by default. To match a command and its subcommands on Windows, use the `regex:` prefix (for example, `command(regex:git .*)` to allow any `git` command).
 
 * * *
 
@@ -84,7 +86,7 @@ Add these rules to your `~/.gemini/antigravity-cli/settings.json` file:
     "permissions": {
         "allow": [
             "command(git)",
-            "command(npm run (build|lint|test))",
+            "command(regex:npm run (build|lint|test))",
             "unsandboxed(git push)",
             "read_file(/var/log/app)",
             "write_file(src/)",
@@ -93,7 +95,7 @@ Add these rules to your `~/.gemini/antigravity-cli/settings.json` file:
         ],
         "deny": [
             "command(rm -rf)",
-            "command(curl .*)",
+            "command(regex:curl .*)",
             "command(sudo)",
             "write_file(.git/)",
             "write_file(/home/user/.ssh)"

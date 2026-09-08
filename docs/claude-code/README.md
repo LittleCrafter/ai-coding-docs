@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 191
+- **Pages mirrored:** 192
 - **Version:** 2.1.263
-- **Last updated:** 2026-09-07T00:20:33Z
+- **Last updated:** 2026-09-08T18:11:38Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -130,9 +130,9 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Test self-hosted environments end to end | [self-hosted-environments-testing.md](./self-hosted-environments-testing.md) | [source](<https://code.claude.com/docs/en/self-hosted-environments-testing>) |
 | Configure server-managed settings | [server-managed-settings.md](./server-managed-settings.md) | [source](<https://code.claude.com/docs/en/server-managed-settings>) |
 | Manage sessions | [sessions.md](./sessions.md) | [source](<https://code.claude.com/docs/en/sessions>) |
-| Claude Code settings | [settings.md](./settings.md) | [source](<https://code.claude.com/docs/en/settings>) |
+| Settings files and precedence | [settings.md](./settings.md) | [source](<https://code.claude.com/docs/en/settings>) |
 | Example settings files | [settings-example.md](./settings-example.md) | [source](<https://code.claude.com/docs/en/settings-example>) |
-| Claude Code settings reference | [settings-reference.md](./settings-reference.md) | [source](<https://code.claude.com/docs/en/settings-reference>) |
+| All settings | [settings-reference.md](./settings-reference.md) | [source](<https://code.claude.com/docs/en/settings-reference>) |
 | Advanced setup | [setup.md](./setup.md) | [source](<https://code.claude.com/docs/en/setup>) |
 | Extend Claude with skills | [skills.md](./skills.md) | [source](<https://code.claude.com/docs/en/skills>) |
 | Claude Code in Slack | [slack.md](./slack.md) | [source](<https://code.claude.com/docs/en/slack>) |
@@ -146,6 +146,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Find bugs with ultrareview | [ultrareview.md](./ultrareview.md) | [source](<https://code.claude.com/docs/en/ultrareview>) |
 | Voice dictation | [voice-dictation.md](./voice-dictation.md) | [source](<https://code.claude.com/docs/en/voice-dictation>) |
 | Use Claude Code in VS Code | [vs-code.md](./vs-code.md) | [source](<https://code.claude.com/docs/en/vs-code>) |
+| Claude Code on the web changelog | [web-changelog.md](./web-changelog.md) | [source](<https://code.claude.com/docs/en/web-changelog>) |
 | Get started with Claude Code on the web | [web-quickstart.md](./web-quickstart.md) | [source](<https://code.claude.com/docs/en/web-quickstart>) |
 | What's new | [whats-new.md](./whats-new.md) | [source](<https://code.claude.com/docs/en/whats-new>) |
 | Orchestrate subagents at scale with dynamic workflows | [workflows.md](./workflows.md) | [source](<https://code.claude.com/docs/en/workflows>) |

@@ -449,7 +449,11 @@ Grant a tool ahead of time by adding an `action(target)` rule under `permissions
 ```
 {
   "permissions": {
-    "allow": ["command(git)", "command(npm run (build|lint|test))", "write_file(src/)"]
+    "allow": [
+      "command(git)",
+      "command(regex:npm run (build|lint|test))",
+      "write_file(src/)"
+    ]
   }
 }
 ```
