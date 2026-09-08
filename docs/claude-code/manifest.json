@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.263",
-  "last_updated": "2026-09-08T18:11:38Z",
+  "version": "2.1.265",
+  "last_updated": "2026-09-08T23:02:55Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -240,8 +240,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/skills",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/skills.md",
       "source_id": "agent-sdk/skills",
-      "hash": "4aaac25c8c12822fa55aecbfcd49261e5e57008877c61489e7e816996652fe24",
-      "last_updated": "2026-09-06T19:03:25Z"
+      "hash": "2a24a587d9bccdae8ec6a9b512145b3d807746548723b9f1e1e44a7d4dbf95f9",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "agent-sdk/streaming-output": {
       "slug": "agent-sdk/streaming-output",
@@ -450,8 +450,8 @@
       "source_url": "https://code.claude.com/docs/en/changelog",
       "source_md_url": "https://code.claude.com/docs/en/changelog.md",
       "source_id": "changelog",
-      "hash": "7793b8ecddea1dc32fb60d108f24bac81e7c526aeadf29e3c926886fb3bdfb98",
-      "last_updated": "2026-09-06T19:03:25Z"
+      "hash": "3950b06dc82ec56524306c52ff7a48fed5c010cb15fc86c7c40eeb2777f52eee",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "channels": {
       "slug": "channels",
@@ -570,8 +570,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-directory",
       "source_md_url": "https://code.claude.com/docs/en/claude-directory.md",
       "source_id": "claude-directory",
-      "hash": "74ee4a33d8f2703a04aa0946290f8aac58b92aa928a2217bdedb2a56dce0db00",
-      "last_updated": "2026-09-06T19:03:25Z"
+      "hash": "d00af7e2458e3135ff9509781dd35723ab61265cb2674a06916e519d692683f7",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "claude-platform-on-aws": {
       "slug": "claude-platform-on-aws",
@@ -870,8 +870,8 @@
       "source_url": "https://code.claude.com/docs/en/features-overview",
       "source_md_url": "https://code.claude.com/docs/en/features-overview.md",
       "source_id": "features-overview",
-      "hash": "3a2079f10c67b9e4cf8440d358f8aa40af6b44927e873799eea5918907df7233",
-      "last_updated": "2026-09-07T00:20:33Z"
+      "hash": "f0b4dda89dc6ccb08ff6400a73fbced2a989f06a5fc129204e03324596618046",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "fullscreen": {
       "slug": "fullscreen",
@@ -1200,8 +1200,8 @@
       "source_url": "https://code.claude.com/docs/en/output-styles",
       "source_md_url": "https://code.claude.com/docs/en/output-styles.md",
       "source_id": "output-styles",
-      "hash": "0254e1d95b71365a64cc241a6675fbd25a75300ca316900ac1c713cb2052a4e5",
-      "last_updated": "2026-09-06T19:03:25Z"
+      "hash": "5f3f4ad2839b72a7bc46ff496075f400dfd20e151f2f45d71de8f4ef3c9c2913",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "overview": {
       "slug": "overview",
@@ -1310,8 +1310,8 @@
       "source_url": "https://code.claude.com/docs/en/prompt-caching",
       "source_md_url": "https://code.claude.com/docs/en/prompt-caching.md",
       "source_id": "prompt-caching",
-      "hash": "0f2f71ee9c31329de29cb875b2849d0e9d1c3d7e864040c912e2765660af2447",
-      "last_updated": "2026-09-07T00:20:33Z"
+      "hash": "d2927b831c70ce1271471ab6d714a6a8fe085e5e1e5cf12fc8af8ba1633a72fd",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "prompt-library": {
       "slug": "prompt-library",
@@ -1500,8 +1500,8 @@
       "source_url": "https://code.claude.com/docs/en/settings",
       "source_md_url": "https://code.claude.com/docs/en/settings.md",
       "source_id": "settings",
-      "hash": "62c583b4b25781e548d313c3ec24d49af4a2c0e5897a819ef901db68b0337d93",
-      "last_updated": "2026-09-08T18:11:38Z"
+      "hash": "14431041a32764610933f9ee5f397b4af01f0a168bc042d4f280639e9a35f4fa",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "settings-example": {
       "slug": "settings-example",
@@ -1520,8 +1520,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "4c9bd1913cd23629029b76940faa5dcd6c6e80ee628d11ac47b5c379a8073776",
-      "last_updated": "2026-09-08T18:11:38Z"
+      "hash": "b797283d5d153661df0adf438130c09fb4734f826a99af13be7ad52c4232d023",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "setup": {
       "slug": "setup",
@@ -1540,8 +1540,8 @@
       "source_url": "https://code.claude.com/docs/en/skills",
       "source_md_url": "https://code.claude.com/docs/en/skills.md",
       "source_id": "skills",
-      "hash": "7343a4d4291bfc75236613f343859debd749712c380bbaaede9cbd2ebed01496",
-      "last_updated": "2026-09-08T18:11:38Z"
+      "hash": "4322fc1c501aeb2ec600abb656506a96b3726e6c234131c78c0a243eb55024e2",
+      "last_updated": "2026-09-08T23:02:55Z"
     },
     "slack": {
       "slug": "slack",
@@ -1652,16 +1652,6 @@
       "source_id": "vs-code",
       "hash": "f2bbdc54835bffc3a0bd70ab1de4536846a6d4e4d631fd15654d29e4586aaebc",
       "last_updated": "2026-09-07T00:20:33Z"
-    },
-    "web-changelog": {
-      "slug": "web-changelog",
-      "title": "Claude Code on the web changelog",
-      "group": "root",
-      "source_url": "https://code.claude.com/docs/en/web-changelog",
-      "source_md_url": "https://code.claude.com/docs/en/web-changelog.md",
-      "source_id": "web-changelog",
-      "hash": "7c201f21fe5cd76d9a9826eec0e25bf89721157f64d73d742fad8a3917c9e9a4",
-      "last_updated": "2026-09-08T18:11:38Z"
     },
     "web-quickstart": {
       "slug": "web-quickstart",
@@ -1925,10 +1915,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-08T18:11:38Z",
-    "fetch_duration_seconds": 123.361,
-    "total_pages_discovered": 192,
-    "pages_fetched_successfully": 192,
+    "last_fetch_completed": "2026-09-08T23:02:55Z",
+    "fetch_duration_seconds": 66.81,
+    "total_pages_discovered": 191,
+    "pages_fetched_successfully": 191,
     "pages_failed": 0,
     "failed_pages": []
   }

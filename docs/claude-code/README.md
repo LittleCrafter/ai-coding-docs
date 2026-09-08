@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 192
-- **Version:** 2.1.263
-- **Last updated:** 2026-09-08T18:11:38Z
+- **Pages mirrored:** 191
+- **Version:** 2.1.265
+- **Last updated:** 2026-09-08T23:02:55Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -146,7 +146,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Find bugs with ultrareview | [ultrareview.md](./ultrareview.md) | [source](<https://code.claude.com/docs/en/ultrareview>) |
 | Voice dictation | [voice-dictation.md](./voice-dictation.md) | [source](<https://code.claude.com/docs/en/voice-dictation>) |
 | Use Claude Code in VS Code | [vs-code.md](./vs-code.md) | [source](<https://code.claude.com/docs/en/vs-code>) |
-| Claude Code on the web changelog | [web-changelog.md](./web-changelog.md) | [source](<https://code.claude.com/docs/en/web-changelog>) |
 | Get started with Claude Code on the web | [web-quickstart.md](./web-quickstart.md) | [source](<https://code.claude.com/docs/en/web-quickstart>) |
 | What's new | [whats-new.md](./whats-new.md) | [source](<https://code.claude.com/docs/en/whats-new>) |
 | Orchestrate subagents at scale with dynamic workflows | [workflows.md](./workflows.md) | [source](<https://code.claude.com/docs/en/workflows>) |
