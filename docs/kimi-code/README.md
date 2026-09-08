@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 29
 - **Version:** 0.41.0
-- **Last updated:** 2026-09-07T12:16:02Z
+- **Last updated:** 2026-09-08T07:29:59Z
 - **Official docs:** https://www.kimi.com/code/docs/en
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
