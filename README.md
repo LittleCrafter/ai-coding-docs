@@ -12,7 +12,7 @@ Local and always-up-to-date mirror of the documentation for various **AI coding 
 | Source                                                       | Version | Origin                                                           | How it is mirrored                                     | Whats-new |
 | :----------------------------------------------------------- | :-----: | :--------------------------------------------------------------- | :----------------------------------------------------- | :-------: |
 | [**Google Antigravity CLI**](./docs/google-antigravity-cli/) | 1.1.13  | antigravity.google/docs/cli/                                     | scraping (sitemap → `<url>.md`)                        |    ✅     |
-| [**Claude Code**](./docs/claude-code/)                       | 2.1.265 | code.claude.com/docs/en/                                         | scraping (sitemap → `<url>.md`)                        |     —     |
+| [**Claude Code**](./docs/claude-code/)                       | 2.1.266 | code.claude.com/docs/en/                                         | scraping (sitemap → `<url>.md`)                        |     —     |
 | [**Codex CLI**](./docs/codex-cli/)                           | 0.153.4 | github.com/openai/codex (`docs/`)                                | scraping (GitHub tree → `raw.githubusercontent.com`)   |     —     |
 | [**DeepSeek API**](./docs/deepseek-api/)                     |    —    | api-docs.deepseek.com                                            | scraping (HTML → Markdown via `html2text`)             |     —     |
 | [**Kimi Code**](./docs/kimi-code/)                           | 0.41.0  | github.com/MoonshotAI/kimi-code (`docs/en/`)                     | scraping (GitHub tree → `raw.githubusercontent.com`)   |     —     |
