@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "0.41.0",
-  "last_updated": "2026-09-08T18:12:37Z",
+  "version": "0.42.0",
+  "last_updated": "2026-09-09T07:37:47Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -290,13 +290,13 @@
       "source_url": "https://www.kimi.com/code/docs/en/release-notes/changelog",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/release-notes/changelog.md",
       "source_id": "docs/en/release-notes/changelog.md",
-      "hash": "02c069c93936c01d099d455438aa6f207fe4460d3b0e76ceb42365c7ec3cc103",
-      "last_updated": "2026-09-06T19:04:11Z"
+      "hash": "c16f02ec7f8f4dd25a34a86abb2be06b9abb1ac9601feec71cb1a4463304678a",
+      "last_updated": "2026-09-09T07:37:47Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-08T18:12:37Z",
-    "fetch_duration_seconds": 10.556,
+    "last_fetch_completed": "2026-09-09T07:37:47Z",
+    "fetch_duration_seconds": 10.064,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,
