@@ -6,11 +6,11 @@ Use this example configuration as a starting point. It includes most keys Codex 
 
 For explanations and guidance, see:
 
-- [Config basics](https://learn.chatgpt.com/docs/config-file/config-basic)
-- [Advanced Config](https://learn.chatgpt.com/docs/config-file/config-advanced)
-- [Config Reference](https://learn.chatgpt.com/docs/config-file/config-reference)
-- [Sandbox and approvals](https://learn.chatgpt.com/docs/agent-approvals-security#sandbox-and-approvals)
-- [Managed configuration](https://learn.chatgpt.com/docs/enterprise/managed-configuration)
+- [Config basics](./config-file/config-basic.md)
+- [Advanced Config](./config-file/config-advanced.md)
+- [Config Reference](./config-file/config-reference.md)
+- [Sandbox and approvals](./agent-approvals-security.md#sandbox-and-approvals)
+- [Managed configuration](./enterprise/managed-configuration.md)
 
 Use the snippet below as a reference. Copy only the keys and sections you need into `~/.codex/config.toml` (or into a project-scoped `.codex/config.toml`), then adjust values for your setup.
 

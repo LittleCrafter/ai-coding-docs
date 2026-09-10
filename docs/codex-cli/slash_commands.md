@@ -9,7 +9,7 @@ This page catalogs every documented Codex CLI command and flag. Use the interact
 The CLI inherits most defaults from `~/.codex/config.toml`. Any
   `-c key=value` overrides you pass at the command line take
   precedence for that invocation. See [Config
-  basics](https://learn.chatgpt.com/docs/config-file/config-basic#configuration-precedence) for more
+  basics](./config-file/config-basic.md#configuration-precedence) for more
   information.
 
 ## Global flags
@@ -24,7 +24,7 @@ applies `--oss` to `exec`.
 ## Command overview
 
 The Maturity column uses feature maturity labels such as Experimental, Beta,
-  Stable, and Deprecated. See [Feature Maturity](https://learn.chatgpt.com/docs/feature-maturity) for
+  Stable, and Deprecated. See [Feature Maturity](./feature-maturity.md) for
   how to interpret these labels.
 
 <ConfigTable
@@ -269,7 +269,7 @@ with `name`, `root`, and optional `marketplaceSource`; upgrade JSON includes
 ### `codex mcp-server`
 
 `codex mcp-server` is deprecated. Use the [Codex app
-  server](https://learn.chatgpt.com/docs/app-server) instead. To call Codex from Claude Code, use the
+  server](./app-server.md) instead. To call Codex from Claude Code, use the
   [Codex plugin for Claude Code](https://github.com/openai/codex-plugin-cc),
   which uses the app server.
 
@@ -281,7 +281,7 @@ Continue an interactive session by ID or resume the most recent chat. `codex res
 
 If the current working directory differs from the session's saved directory,
 Codex asks which directory to use. Set
-[`tui.resume_cwd`](https://learn.chatgpt.com/docs/config-file/config-reference) to `"current"` or
+[`tui.resume_cwd`](./config-file/config-reference.md) to `"current"` or
 `"session"` to reuse that choice without a prompt. An explicit `--cd` (`-C`)
 override takes precedence over `tui.resume_cwd`.
 
@@ -336,10 +336,10 @@ Check for and apply a Codex CLI update when the installed release supports self-
 
 ## Related resources
 
-- [Codex CLI overview](https://learn.chatgpt.com/docs/codex/cli): installation, upgrades, and quick tips.
-- [Config basics](https://learn.chatgpt.com/docs/config-file/config-basic): persist defaults like the model and provider.
-- [Advanced Config](https://learn.chatgpt.com/docs/config-file/config-advanced): profiles, providers, sandbox tuning, and integrations.
-- [AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md): conceptual overview of Codex agent capabilities and best practices.
+- [Codex CLI overview](./codex/cli.md): installation, upgrades, and quick tips.
+- [Config basics](./config-file/config-basic.md): persist defaults like the model and provider.
+- [Advanced Config](./config-file/config-advanced.md): profiles, providers, sandbox tuning, and integrations.
+- [AGENTS.md](./agent-configuration/agents-md.md): conceptual overview of Codex agent capabilities and best practices.
 
 Slash commands give you fast, keyboard-first control over Codex. Type `/` in
 the composer to open the slash popup, choose a command, and Codex will perform
@@ -535,7 +535,7 @@ Run `/import` from a local TUI session. It's unavailable while a task is running
 in remote sessions, and while connected to the local app-server daemon.
 
 For the desktop app workflow and supported artifact types, see [Import from
-another agent](https://learn.chatgpt.com/docs/import).
+another agent](./import.md).
 
 <a id="clear-the-terminal-and-start-a-new-chat-with-clear"></a>
 <a id="clear-the-terminal-and-start-a-new-task-with-clear"></a>
