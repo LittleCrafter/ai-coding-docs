@@ -1282,6 +1282,181 @@ def test_codex_fetch_markdown_for_llms_page():
     assert digest == fetch.content_hash(md)
 
 
+def test_codex_clean_overview_landing():
+    """<CodexDocsOverviewLanding> components are converted to structured CommonMark
+    outlines with headers, descriptions, recommended guide links, and resolved
+    relative links for section pages."""
+    raw = (
+        "# Administration\n\n"
+        "> Banner text.\n\n"
+        "<CodexDocsOverviewLanding\n"
+        '  title="Administration"\n'
+        '  description="Access and policy boundaries."\n'
+        '  intro="Detailed introduction to boundaries."\n'
+        "  primaryCta={{\n"
+        '    label: "Explore authentication",\n'
+        '    href: "/codex/auth?surface=app",\n'
+        "  }}\n"
+        "  sections={[\n"
+        "    {\n"
+        '      title: "Getting started",\n'
+        '      description: "Start with the rollout guide.",\n'
+        "      pages: [\n"
+        "        {\n"
+        '          title: "Admin rollout guide",\n'
+        '          description: "Plan access and controls.",\n'
+        '          href: "/codex/enterprise/admin-setup",\n'
+        "        },\n"
+        "        {\n"
+        '          title: "External doc",\n'
+        '          description: "Not mirrored.",\n'
+        '          href: "/codex/unmirrored-topic",\n'
+        "        },\n"
+        "      ],\n"
+        "    },\n"
+        "  ]}\n"
+        "/>\n"
+    )
+    known = {"administration", "auth", "enterprise/admin-setup"}
+    cleaned = codex_cli._clean_mdx_components(raw, "administration", known)
+    assert "# Administration" in cleaned
+    assert "Access and policy boundaries." in cleaned
+    assert "Detailed introduction to boundaries." in cleaned
+    assert "> **Recommended:** [Explore authentication](./auth.md)" in cleaned
+    assert "## Getting started" in cleaned
+    assert "Start with the rollout guide." in cleaned
+    assert (
+        "- [Admin rollout guide](./enterprise/admin-setup.md) — Plan access and controls."
+        in cleaned
+    )
+    assert (
+        "- [External doc](https://developers.openai.com/codex/unmirrored-topic) — Not mirrored."
+        in cleaned
+    )
+    assert "<CodexDocsOverviewLanding" not in cleaned
+
+
+def test_codex_clean_file_tree():
+    """<FileTree> components are converted to indented ASCII text directory
+    trees enclosed in code blocks."""
+    raw = (
+        "<FileTree\n"
+        '  class="mt-4"\n'
+        "  tree={[\n"
+        "    {\n"
+        '      name: "AGENTS.md",\n'
+        '      comment: "Repository expectations",\n'
+        "    },\n"
+        "    {\n"
+        '      name: "services/",\n'
+        "      children: [\n"
+        "        {\n"
+        '          name: "payments/",\n'
+        "          children: [\n"
+        '            { name: "README.md" },\n'
+        "          ],\n"
+        "        },\n"
+        "      ],\n"
+        "    },\n"
+        "  ]}\n"
+        "/>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "sample-slug", set())
+    assert "```text" in cleaned
+    assert "AGENTS.md  # Repository expectations" in cleaned
+    assert "services/\n  payments/\n    README.md" in cleaned
+    assert "<FileTree" not in cleaned
+
+
+def test_codex_clean_toggle_section():
+    """<ToggleSection> components are converted to standard HTML details blocks."""
+    raw = (
+        '<ToggleSection title="Detailed comparison">\n'
+        "Here is the collapsible content.\n"
+        "</ToggleSection>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "sample-slug", set())
+    assert (
+        "<details>\n<summary>Detailed comparison</summary>\n\n"
+        "Here is the collapsible content.\n\n</details>" in cleaned
+    )
+    assert "<ToggleSection" not in cleaned
+
+
+def test_codex_unwrap_wrappers_and_strip_badges():
+    """Structural wrappers (<ContentModeSwitch>, <WorkflowSteps>, <Tabs>) are unwrapped,
+    comments are stripped, and visual/interactive badges (<ElevatedRiskBadge>, <ConfigTable>)
+    are removed."""
+    raw = (
+        "{/* prettier-ignore */}\n"
+        "<WorkflowSteps>\n"
+        "1. Step one\n"
+        "2. Step two\n"
+        "</WorkflowSteps>\n\n"
+        '<ContentModeSwitch group="surface" id="cli">\n'
+        "CLI specific instructions <ElevatedRiskBadge />\n"
+        "</ContentModeSwitch>\n\n"
+        "<ConfigTable client:load options={globalFlagOptions} />\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "sample-slug", set())
+    assert "prettier-ignore" not in cleaned
+    assert "1. Step one\n2. Step two" in cleaned
+    assert "<WorkflowSteps>" not in cleaned
+    assert "CLI specific instructions" in cleaned
+    assert "<ContentModeSwitch" not in cleaned
+    assert "<ElevatedRiskBadge" not in cleaned
+    assert "<ConfigTable" not in cleaned
+
+
+def test_codex_clean_model_details_and_pricing_cards():
+    """<ModelDetails> and <PricingCard> components are converted to Markdown
+    sections with feature lists."""
+    raw_model = (
+        "<ModelDetails\n"
+        '  name="gpt-6-astra"\n'
+        '  description="Most capable model."\n'
+        "  data={{\n"
+        "    features: [\n"
+        '      { title: "Codex CLI", value: true },\n'
+        '      { title: "Codex cloud", value: false },\n'
+        "    ],\n"
+        "  }}\n"
+        "/>\n"
+    )
+    cleaned_model = codex_cli._clean_mdx_components(raw_model, "models", set())
+    assert "### `gpt-6-astra`" in cleaned_model
+    assert "Most capable model." in cleaned_model
+    assert "- **Codex CLI**: Supported" in cleaned_model
+    assert "- **Codex cloud**: Not supported" in cleaned_model
+
+    raw_pricing = (
+        "<PricingCard\n"
+        '  name="Plus"\n'
+        '  price="$20"\n'
+        '  interval="/month"\n'
+        '  subtitle="Power focused coding."\n'
+        '  ctaLabel="Get Plus"\n'
+        '  ctaHref="https://chatgpt.com/plans/plus"\n'
+        ">\n"
+        "- Feature 1\n"
+        "- Feature 2\n"
+        "</PricingCard>\n"
+    )
+    cleaned_pricing = codex_cli._clean_mdx_components(raw_pricing, "pricing", set())
+    assert "### Plus ($20/month)" in cleaned_pricing
+    assert "Power focused coding." in cleaned_pricing
+    assert "[Get Plus](https://chatgpt.com/plans/plus)" in cleaned_pricing
+    assert "- Feature 1\n- Feature 2" in cleaned_pricing
+
+
+def test_codex_clean_protects_fenced_code():
+    """Fenced code blocks containing MDX-like syntax or component names remain
+    completely unchanged."""
+    raw = '```markdown\n<ContentModeSwitch group="test">\n<FileTree tree={[]} />\n```\n'
+    cleaned = codex_cli._clean_mdx_components(raw, "slug", set())
+    assert cleaned.strip() == raw.strip()
+
+
 def test_kimi_discover_skips_bare_md_filename_and_guards_zero_pages():
     """Same degenerate-filename skip and zero-page guard as the Codex
     adapter, pinned for the nested Kimi docs tree."""
