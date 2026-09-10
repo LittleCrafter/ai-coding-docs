@@ -30,7 +30,7 @@ claude --version
 Linux / Mac users, run the following commands to configure environment variables for the [DeepSeek Anthropic API](<https://api.deepseek.com/anthropic>). Get your API Key from the [DeepSeek Platform](<https://platform.deepseek.com/api_keys>):
 
 ```text
-export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_AUTH_TOKEN=<your DeepSeek API Key>export ANTHROPIC_MODEL=deepseek-v4-pro[1m]export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4-pro[1m]export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4-pro[1m]export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flashexport CLAUDE_CODE_SUBAGENT_MODEL=deepseek-v4-flashexport CLAUDE_CODE_EFFORT_LEVEL=max
+export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_AUTH_TOKEN=<your DeepSeek API Key>export ANTHROPIC_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-flashexport CLAUDE_CODE_SUBAGENT_MODEL=deepseek-flashexport CLAUDE_CODE_EFFORT_LEVEL=max
 ```
 
  
@@ -38,7 +38,7 @@ export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_AUT
 Windows users, run:
 
 ```text
-$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"$env:ANTHROPIC_AUTH_TOKEN="<your DeepSeek API Key>"$env:ANTHROPIC_MODEL="deepseek-v4-pro[1m]"$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-v4-pro[1m]"$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-v4-pro[1m]"$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-v4-flash"$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-v4-flash"$env:CLAUDE_CODE_EFFORT_LEVEL="max"
+$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"$env:ANTHROPIC_AUTH_TOKEN="<your DeepSeek API Key>"$env:ANTHROPIC_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-flash"$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-flash"$env:CLAUDE_CODE_EFFORT_LEVEL="max"
 ```
 
  
@@ -71,7 +71,7 @@ To avoid compatibility issues, it is strongly recommended to upgrade OpenCode to
 
   * Enter your [DeepSeek API Key](<https://platform.deepseek.com/api_keys>)  
 
-  * Select the DeepSeek-V4-Pro model
+  * Select the DeepSeek-V4.1-Flash model
 
 * * *
 
@@ -105,7 +105,7 @@ After the initial installation, you will automatically enter the setup phase. Us
   * When prompted: `Setup mode` It is recommended to select **QuickStart**.
   * When prompted: `Model/auth provider` Select **DeepSeek**.
   * When prompted: `Enter DeepSeek API key` Enter your [DeepSeek API Key](<https://platform.deepseek.com/api_keys>).
-  * When prompted: `Default model` Navigate to **Enter model** and enter the model name (`deepseek-v4-pro` or `deepseek-v4-flash`).
+  * When prompted: `Default model` Navigate to **Enter model** and enter the model name (`deepseek-flash`).
   * For the remaining configuration (message channels, Skills, etc.), configure as needed. Beginners can select **Skip for now**.
 
 #### 3\. Get Started

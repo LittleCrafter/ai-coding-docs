@@ -61,7 +61,7 @@ The organization that owns the model.
 ```
 
 ```json
-{  "object": "list",  "data": [    {      "id": "deepseek-v4-flash",      "object": "model",      "owned_by": "deepseek"    },    {      "id": "deepseek-v4-pro",      "object": "model",      "owned_by": "deepseek"    }  ]}
+{  "object": "list",  "data": [    {      "id": "deepseek-flash",      "object": "model",      "owned_by": "deepseek"    },    {      "id": "deepseek-v4-pro",      "object": "model",      "owned_by": "deepseek"    }  ]}
 ```
 
 Loading...

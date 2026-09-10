@@ -29,12 +29,12 @@ export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_API
   3. Invoke the API
 
 ```text
-import anthropicclient = anthropic.Anthropic()message = client.messages.create(    model="deepseek-v4-pro",    max_tokens=1000,    system="You are a helpful assistant.",    messages=[        {            "role": "user",            "content": [                {                    "type": "text",                    "text": "Hi, how are you?"                }            ]        }    ])print(message.content)
+import anthropicclient = anthropic.Anthropic()message = client.messages.create(    model="deepseek-flash",    max_tokens=1000,    system="You are a helpful assistant.",    messages=[        {            "role": "user",            "content": [                {                    "type": "text",                    "text": "Hi, how are you?"                }            ]        }    ])print(message.content)
 ```
 
  
 
-**Note:** When you pass an unsupported model name to DeepSeek's Anthropic API, the API backend will automatically map it to the `deepseek-v4-flash` model.
+**Note:** When you pass an unsupported model name to DeepSeek's Anthropic API, the API backend will automatically map it to the `deepseek-flash` model.
 
 * * *
 
@@ -42,8 +42,10 @@ import anthropicclient = anthropic.Anthropic()message = client.messages.create( 
 
 When you use the Anthropic API, we map the Claude model names you pass in:
 
-  * Models starting with claude-opus are mapped to deepseek-v4-pro
-  * Models starting with claude-haiku or claude-sonnet are mapped to deepseek-v4-flash
+  * Models starting with claude-opus are mapped to `deepseek-v4-pro`
+  * Models starting with claude-haiku or claude-sonnet are mapped to `deepseek-flash`
+
+The claude-opus mapping points to `deepseek-v4-pro`, which is billed at the V4 Pro price until 12:00 Beijing Time on September 14, 2026; after that, `deepseek-v4-pro` will also be routed to V4.1 Flash and billed at the Flash price.
 
 With this mapping, when using the developer mode of the new Claude Desktop APP, you can bypass the APP's model name restrictions by simply changing the base_url and api_key to connect to DeepSeek models.
 
@@ -79,7 +81,7 @@ temperature| Fully Supported (range [0.0 ~ 2.0])
 thinking| Supported (`budget_tokens` is ignored)  
 output_config| Only `effort` is supported  
 top_k| Ignored  
-top_p| Fully Supported  
+top_p| Only takes effect in thinking mode (with a lower bound of `0.95`); in non-thinking mode it is fixed at `1.0`  
   
 ### Tool Fields
 

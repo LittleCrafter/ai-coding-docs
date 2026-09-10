@@ -71,7 +71,7 @@ required
 
 **
 
-The contents of the user message. Either a string, or an array of content parts (for image input with the `deepseek-v4-flash-vision-exp` model). See the [Vision guide](</guides/vision>) for details.
+The contents of the user message. Either a string, or an array of content parts (for image input). See the [Vision guide](</guides/vision>) for details.
 
 oneOf
 
@@ -182,9 +182,92 @@ An optional name for the participant. Provides the model information to differen
 
 The role of the messages author, in this case `tool`.
 
-**content** Text content (string)required
+**
 
-The contents of the tool message.
+content
+
+**
+
+object
+
+**
+
+required
+
+**
+
+The contents of the tool message. Either a string, or an array of content parts (for image input). See the [Vision guide](</guides/vision>) for details.
+
+oneOf
+
+    * Text content
+    * Array of content parts
+
+string
+
+  * Array [
+
+oneOf
+
+    * Text content part
+    * Image content part
+    * File content part
+
+**type** stringrequired
+
+**Possible values:** [`text`]
+
+The type of the content part, in this case `text`.
+
+**text** stringrequired
+
+The text content.
+
+**type** stringrequired
+
+**Possible values:** [`image_url`]
+
+The type of the content part, in this case `image_url`.
+
+**
+
+image_url
+
+**
+
+object
+
+required
+
+**url** stringrequired
+
+Either an `http(s)` URL of the image (max 8192 characters) or a base64-encoded data URL (`data:image/jpeg;base64,...`). Supported formats: JPEG, PNG, GIF, and WebP.
+
+**detail** string
+
+**Possible values:** [`low`, `high`, `original`, `auto`]
+
+Controls how the image is processed. `low` downsamples the image to 512x512 (faster, cheaper). `high`, `original`, and `auto` keep the original image.
+
+**type** stringrequired
+
+**Possible values:** [`file`]
+
+The type of the content part, in this case `file`.
+
+**file_id** string
+
+The ID of a file uploaded via the [Files API](</guides/files_api>), of the form `file-api-...`. Mutually exclusive with `file_data`.
+
+**file_data** string
+
+A base64-encoded data URL of the image (`data:image/jpeg;base64,...`). Mutually exclusive with `file_id`.
+
+**filename** string
+
+An optional filename. Only valid together with `file_data`.
+
+  * ]
 
 **tool_call_id** stringrequired
 
@@ -194,9 +277,9 @@ Tool call that this message is responding to.
 
 **model** stringrequired
 
-**Possible values:** [`deepseek-v4-flash`, `deepseek-v4-pro`, `deepseek-v4-flash-vision-exp`]
+**Possible values:** [`deepseek-flash`, `deepseek-v4-pro`]
 
-ID of the model to use.
+ID of the model to use. Use `deepseek-flash` or `deepseek-v4-pro`.
 
 **
 
@@ -220,9 +303,9 @@ If set to `enabled`, then use thinking mode. If set to `disabled`, then use non-
 
 **reasoning_effort** string
 
-**Possible values:** [`low`, `high`, `max`]
+**Possible values:** [`none`, `low`, `high`, `max`]
 
-Controls the reasoning effort of the model. The default effort is `high`. For compatibility, `medium` and `xhigh` are mapped to `high`.
+Controls the thinking mode toggle and the thinking effort. `none` disables thinking mode; `low` / `high` / `max` enable thinking mode. The default effort is `high`. For compatibility with existing software, `minimal` is accepted and mapped to `low`, and `medium` / `xhigh` are accepted and mapped to `high`.
 
 **max_tokens** integernullable
 
@@ -230,7 +313,7 @@ The maximum number of tokens that can be generated in the chat completion.
 
 The total length of input tokens and generated tokens is limited by the model's context length.
 
-For the value range and default value, please refer to the [documentation](</quick_start/pricing>).
+The value must be between 1 and 384K (393216). When not set, the default is 8K in non-thinking mode, 64K in thinking mode (128K with `reasoning_effort` set to `max`). Please refer to the [Models & Pricing](</quick_start/pricing>) page for details.
 
 **
 
@@ -297,7 +380,7 @@ object
 
 nullable
 
-Options for streaming response. Only set this when you set `stream: true`.
+Options for streaming response. Must be set together with `stream: true`; if `stream` is not set to `true`, the API returns a `400` error.
 
 **include_usage** boolean
 
@@ -313,7 +396,7 @@ Either way, the last chunk before the `data: [DONE]` message carries the token u
 
 What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
 
-We generally recommend altering this or `top_p` but not both.
+We generally recommend altering this or `top_p` but not both. Has no effect in thinking mode.
 
 **top_p** numbernullable
 
@@ -323,7 +406,7 @@ We generally recommend altering this or `top_p` but not both.
 
 An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
 
-We generally recommend altering this or `temperature` but not both.
+The value must be greater than 0 and at most 1. We generally recommend altering this or `temperature` but not both. It takes effect in thinking mode, but values below 0.95 are raised to 0.95; in non-thinking mode it is fixed at 1.0 and the value you pass is ignored.
 
 **
 
@@ -335,7 +418,7 @@ object[]
 
 nullable
 
-A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported.
+A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for. Tool names must be unique.
 
   * Array [
 
@@ -361,7 +444,7 @@ A description of what the function does, used by the model to choose when and ho
 
 **name** stringrequired
 
-The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 128.
 
 **
 
@@ -414,6 +497,8 @@ Controls which (if any) tool is called by the model.
 Specifying a particular tool via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
 
 `none` is the default when no tools are present. `auto` is the default if tools are present.
+
+`required` and named tool choices are not supported in thinking mode; the API returns a `400` error. Disable thinking mode first to use them.
 
 oneOf
 
@@ -510,9 +595,9 @@ A list of chat completion choices.
 
 **finish_reason** stringrequired
 
-**Possible values:** [`stop`, `length`, `content_filter`, `tool_calls`, `insufficient_system_resource`]
+**Possible values:** [`stop`, `length`, `content_filter`, `tool_calls`, `insufficient_system_resource`, `aborted`]
 
-The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence, `length` if the maximum number of tokens specified in the request was reached, `content_filter` if content was omitted due to a flag from our content filters, `tool_calls` if the model called a tool, or `insufficient_system_resource` if the request is interrupted due to insufficient resource of the inference system.
+The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence, `length` if the maximum number of tokens specified in the request was reached, `content_filter` if content was omitted due to a flag from our content filters, `tool_calls` if the model called a tool, `insufficient_system_resource` if the request is interrupted due to insufficient resource of the inference system, or `aborted` if the generation was interrupted.
 
 **index** integerrequired
 
@@ -754,6 +839,22 @@ Number of tokens in the generated completion.
 
 Number of tokens in the prompt. It equals prompt_cache_hit_tokens + prompt_cache_miss_tokens.
 
+**
+
+prompt_tokens_details
+
+**
+
+object
+
+required
+
+Breakdown of tokens used in the prompt.
+
+**cached_tokens** integer
+
+Number of tokens in the prompt that hit the context cache. Same as `prompt_cache_hit_tokens`.
+
 **prompt_cache_hit_tokens** integerrequired
 
 Number of tokens in the prompt that hits the context cache.
@@ -781,11 +882,11 @@ Breakdown of tokens used in a completion.
 Tokens generated by the model for reasoning.
 
 ```json
-{  "id": "string",  "choices": [    {      "finish_reason": "stop",      "index": 0,      "message": {        "content": "string",        "reasoning_content": "string",        "tool_calls": [          {            "id": "string",            "type": "function",            "function": {              "name": "string",              "arguments": "string"            }          }        ],        "role": "assistant"      },      "logprobs": {        "content": [          {            "token": "string",            "logprob": 0,            "bytes": [              0            ],            "top_logprobs": [              {                "token": "string",                "logprob": 0,                "bytes": [                  0                ]              }            ]          }        ],        "reasoning_content": [          {            "token": "string",            "logprob": 0,            "bytes": [              0            ],            "top_logprobs": [              {                "token": "string",                "logprob": 0,                "bytes": [                  0                ]              }            ]          }        ]      }    }  ],  "created": 0,  "model": "string",  "system_fingerprint": "string",  "object": "chat.completion",  "usage": {    "completion_tokens": 0,    "prompt_tokens": 0,    "prompt_cache_hit_tokens": 0,    "prompt_cache_miss_tokens": 0,    "total_tokens": 0,    "completion_tokens_details": {      "reasoning_tokens": 0    }  }}
+{  "id": "string",  "choices": [    {      "finish_reason": "stop",      "index": 0,      "message": {        "content": "string",        "reasoning_content": "string",        "tool_calls": [          {            "id": "string",            "type": "function",            "function": {              "name": "string",              "arguments": "string"            }          }        ],        "role": "assistant"      },      "logprobs": {        "content": [          {            "token": "string",            "logprob": 0,            "bytes": [              0            ],            "top_logprobs": [              {                "token": "string",                "logprob": 0,                "bytes": [                  0                ]              }            ]          }        ],        "reasoning_content": [          {            "token": "string",            "logprob": 0,            "bytes": [              0            ],            "top_logprobs": [              {                "token": "string",                "logprob": 0,                "bytes": [                  0                ]              }            ]          }        ]      }    }  ],  "created": 0,  "model": "string",  "system_fingerprint": "string",  "object": "chat.completion",  "usage": {    "completion_tokens": 0,    "prompt_tokens": 0,    "prompt_tokens_details": {      "cached_tokens": 0    },    "prompt_cache_hit_tokens": 0,    "prompt_cache_miss_tokens": 0,    "total_tokens": 0,    "completion_tokens_details": {      "reasoning_tokens": 0    }  }}
 ```
 
 ```json
-{  "id": "930c60df-bf64-41c9-a88e-3ec75f81e00e",  "choices": [    {      "finish_reason": "stop",      "index": 0,      "message": {        "content": "Hello! How can I help you today?",        "role": "assistant"      }    }  ],  "created": 1705651092,  "model": "deepseek-v4-pro",  "object": "chat.completion",  "usage": {    "completion_tokens": 10,    "prompt_tokens": 16,    "total_tokens": 26  }}
+{  "id": "930c60df-bf64-41c9-a88e-3ec75f81e00e",  "choices": [    {      "finish_reason": "stop",      "index": 0,      "message": {        "content": "Hello! How can I help you today?",        "role": "assistant"      },      "logprobs": null    }  ],  "created": 1705651092,  "model": "deepseek-flash",  "object": "chat.completion",  "system_fingerprint": "fp_7a09fdf9c2",  "usage": {    "completion_tokens": 10,    "prompt_tokens": 16,    "total_tokens": 26,    "prompt_tokens_details": {      "cached_tokens": 0    },    "prompt_cache_hit_tokens": 0,    "prompt_cache_miss_tokens": 16  }}
 ```
 
 OK, returns a streamed sequence of `chat completion chunk` objects
@@ -847,6 +948,48 @@ For thinking mode only. The reasoning contents of the assistant message, before 
 **Possible values:** [`assistant`]
 
 The role of the author of this message.
+
+**
+
+tool_calls
+
+**
+
+object[]
+
+The tool calls generated by the model, such as function calls. The first chunk of each tool call carries the `id`, `type` and `function` fields; subsequent chunks only carry the function arguments.
+
+  * Array [
+
+**index** integerrequired
+
+**id** string
+
+The ID of the tool call.
+
+**type** string
+
+**Possible values:** [`function`]
+
+The type of the tool. Currently, only `function` is supported.
+
+**
+
+function
+
+**
+
+object
+
+**name** string
+
+The name of the function to call.
+
+**arguments** string
+
+The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+
+  * ]
 
 **
 
@@ -976,9 +1119,9 @@ A list of integers representing the UTF-8 bytes representation of the token. Use
 
 **finish_reason** stringnullablerequired
 
-**Possible values:** [`stop`, `length`, `content_filter`, `tool_calls`, `insufficient_system_resource`]
+**Possible values:** [`stop`, `length`, `content_filter`, `tool_calls`, `insufficient_system_resource`, `aborted`]
 
-The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence, `length` if the maximum number of tokens specified in the request was reached, `content_filter` if content was omitted due to a flag from our content filters, `tool_calls` if the model called a tool, or `insufficient_system_resource` if the request is interrupted due to insufficient resource of the inference system.
+The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence, `length` if the maximum number of tokens specified in the request was reached, `content_filter` if content was omitted due to a flag from our content filters, `tool_calls` if the model called a tool, `insufficient_system_resource` if the request is interrupted due to insufficient resource of the inference system, or `aborted` if the generation was interrupted.
 
 **index** integerrequired
 
@@ -1007,11 +1150,11 @@ The object type, which is always `chat.completion.chunk`.
   * ]
 
 ```json
-[  {    "id": "string",    "choices": [      {        "delta": {          "content": "string",          "reasoning_content": "string",          "role": "assistant"        },        "logprobs": {          "content": [            {              "token": "string",              "logprob": 0,              "bytes": [                0              ],              "top_logprobs": [                {                  "token": "string",                  "logprob": 0,                  "bytes": [                    0                  ]                }              ]            }          ],          "reasoning_content": [            {              "token": "string",              "logprob": 0,              "bytes": [                0              ],              "top_logprobs": [                {                  "token": "string",                  "logprob": 0,                  "bytes": [                    0                  ]                }              ]            }          ]        },        "finish_reason": "stop",        "index": 0      }    ],    "created": 0,    "model": "string",    "system_fingerprint": "string",    "object": "chat.completion.chunk"  }]
+[  {    "id": "string",    "choices": [      {        "delta": {          "content": "string",          "reasoning_content": "string",          "role": "assistant",          "tool_calls": [            {              "index": 0,              "id": "string",              "type": "function",              "function": {                "name": "string",                "arguments": "string"              }            }          ]        },        "logprobs": {          "content": [            {              "token": "string",              "logprob": 0,              "bytes": [                0              ],              "top_logprobs": [                {                  "token": "string",                  "logprob": 0,                  "bytes": [                    0                  ]                }              ]            }          ],          "reasoning_content": [            {              "token": "string",              "logprob": 0,              "bytes": [                0              ],              "top_logprobs": [                {                  "token": "string",                  "logprob": 0,                  "bytes": [                    0                  ]                }              ]            }          ]        },        "finish_reason": "stop",        "index": 0      }    ],    "created": 0,    "model": "string",    "system_fingerprint": "string",    "object": "chat.completion.chunk"  }]
 ```
 
 ```shell
-data: {"id": "1f633d8bfc032625086f14113c411638", "choices": [{"index": 0, "delta": {"content": "", "role": "assistant"}, "finish_reason": null, "logprobs": null}], "created": 1718345013, "model": "deepseek-v4-pro", "system_fingerprint": "fp_a49d71b8a1", "object": "chat.completion.chunk", "usage": null}data: {"choices": [{"delta": {"content": "Hello", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "!", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " How", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " can", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " I", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " assist", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " you", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " today", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "?", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "", "role": null}, "finish_reason": "stop", "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-v4-pro", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1", "usage": {"completion_tokens": 9, "prompt_tokens": 17, "total_tokens": 26}}data: [DONE]
+data: {"id": "1f633d8bfc032625086f14113c411638", "choices": [{"index": 0, "delta": {"content": "", "role": "assistant"}, "finish_reason": null, "logprobs": null}], "created": 1718345013, "model": "deepseek-flash", "system_fingerprint": "fp_a49d71b8a1", "object": "chat.completion.chunk"}data: {"choices": [{"delta": {"content": "Hello", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "!", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " How", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " can", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " I", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " assist", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " you", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " today", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "?", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "", "role": null}, "finish_reason": "stop", "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1", "usage": {"completion_tokens": 9, "prompt_tokens": 17, "total_tokens": 26, "prompt_tokens_details": {"cached_tokens": 0}, "prompt_cache_hit_tokens": 0, "prompt_cache_miss_tokens": 17}}data: [DONE]
 ```
 
 Loading...

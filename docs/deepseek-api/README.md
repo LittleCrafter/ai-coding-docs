@@ -2,8 +2,8 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 71
-- **Last updated:** 2026-09-09T22:50:31Z
+- **Pages mirrored:** 72
+- **Last updated:** 2026-09-10T07:34:19Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -81,6 +81,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DeepSeek V4 Preview Release | [news/news260424.md](./news/news260424.md) | [source](<https://api-docs.deepseek.com/news/news260424>) |
 | DeepSeek-V4-Pro GA Release | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
 | DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live | [news/news260821.md](./news/news260821.md) | [source](<https://api-docs.deepseek.com/news/news260821>) |
+| DeepSeek-V4.1-Flash: Smarter, Faster, More Efficient | [news/news260910.md](./news/news260910.md) | [source](<https://api-docs.deepseek.com/news/news260910>) |
 
 ## quick_start
 
@@ -104,6 +105,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Integrate with Reasonix | [quick_start/agent_integrations/reasonix.md](./quick_start/agent_integrations/reasonix.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/reasonix>) |
 | Integrate with WorkBuddy/CodeBuddy | [quick_start/agent_integrations/workbuddy.md](./quick_start/agent_integrations/workbuddy.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/workbuddy>) |
 | Error Codes | [quick_start/error_codes.md](./quick_start/error_codes.md) | [source](<https://api-docs.deepseek.com/quick_start/error_codes>) |
-| Your First API Call | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
+| Models &amp; Pricing | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
 | Rate Limit &amp; Isolation | [quick_start/rate_limit.md](./quick_start/rate_limit.md) | [source](<https://api-docs.deepseek.com/quick_start/rate_limit>) |
 | Token &amp; Token Usage | [quick_start/token_usage.md](./quick_start/token_usage.md) | [source](<https://api-docs.deepseek.com/quick_start/token_usage>) |

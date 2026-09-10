@@ -5,7 +5,7 @@ The Files API lets you upload images and reference them later by `file_id`. It i
   * Reuse the same image across multiple requests without re-uploading it.
   * Send images that would otherwise exceed the 48 MiB request body limit or the 32 MiB per-image inline limit (see [Vision: Limits](</guides/vision#limits>)).
 
-Uploaded files are used together with the `deepseek-v4-flash-vision-exp` model. See [Vision](</guides/vision>) for how to reference an uploaded file in a chat request.
+Uploaded files are used together with the `deepseek-flash` model. See [Vision](</guides/vision>) for how to reference an uploaded file in a chat request.
 
 Supported formats: **JPEG, PNG, GIF, and WebP**. The format is detected from the actual file content.
 
@@ -126,7 +126,7 @@ curl -X DELETE https://api.deepseek.com/files/file-api-xxxxxxxxxxxxxxxx \  -H "A
 Reference the returned `file_id` with a `file` content block:
 
 ```python
-response = client.chat.completions.create(    model="deepseek-v4-flash-vision-exp",    messages=[        {            "role": "user",            "content": [                {"type": "text", "text": "What is in this image?"},                {"type": "file", "file_id": "file-api-xxxxxxxxxxxxxxxx"},            ],        }    ],)print(response.choices[0].message.content)
+response = client.chat.completions.create(    model="deepseek-flash",    messages=[        {            "role": "user",            "content": [                {"type": "text", "text": "What is in this image?"},                {"type": "file", "file_id": "file-api-xxxxxxxxxxxxxxxx"},            ],        }    ],)print(response.choices[0].message.content)
 ```
 
  

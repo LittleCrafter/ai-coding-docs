@@ -1,44 +1,50 @@
-# Your First API Call
+# Models & Pricing
 
-The DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.
+The prices listed below are in units of per 1M tokens. A token, the smallest unit of text that the model recognizes, can be a word, a number, or even a punctuation mark. We will bill based on the total number of input and output tokens by the model.
 
-PARAM| VALUE  
----|---  
-base_url (OpenAI)| `https://api.deepseek.com`  
-base_url (Anthropic)| `https://api.deepseek.com/anthropic`  
-api_key| apply for an [API key](<https://platform.deepseek.com/api_keys>)  
-model(1)| `deepseek-v4-flash`  
-`deepseek-v4-pro`  
-`deepseek-v4-flash-vision-exp`  
-  
-(1) The `deepseek-v4-flash` model has been updated to DeepSeek-V4-Flash-0731, and the `deepseek-v4-pro` model has been updated to DeepSeek-V4-Pro-0813. The calling method remains unchanged — simply use `deepseek-v4-flash` or `deepseek-v4-pro` to access the latest version. The newly released `deepseek-v4-flash-vision-exp` is an experimental model that additionally accepts image input; set the model name to `deepseek-v4-flash-vision-exp` to use it, and see [Vision](</guides/vision>) for details.
+* * *
 
-## Integrate with Agent Tools
+## Model Details
 
-DeepSeek Harness is now in developer preview for agent harness developers worldwide. See the [DeepSeek Harness Guide](<https://deepseek-harness.github.io/deepseek-harness/en/guide/quickstart>) for details.
+**MODEL|  deepseek-flash(1)| deepseek-v4-pro(2)  
+---|---|---  
+BASE URL (OpenAI Format)| <https://api.deepseek.com>  
+BASE URL (Anthropic Format)| <https://api.deepseek.com/anthropic>  
+MODEL VERSION| DeepSeek-V4.1-Flash| DeepSeek-V4-Pro-0813  
+THINKING MODE| Supports both non-thinking and thinking (default) modes  
+See [Thinking Mode](</guides/thinking_mode>) for how to switch  
+CONTEXT LENGTH| 1M  
+MAX OUTPUT| MAXIMUM: 384K  
+FEATURES| [Json Output](</guides/json_mode>)| ✓| ✓  
+[Tool Calls](</guides/tool_calls>)| ✓| ✓  
+[Responses API](</guides/responses_api>)| ✓| ✓  
+[Anthropic API](</guides/anthropic_api>)| ✓| ✓  
+[Chat Prefix Completion（Beta）](</guides/chat_prefix_completion>)| ✓| ✓  
+[FIM Completion（Beta）](</guides/fim_completion>)| Non-thinking mode only| Non-thinking mode only  
+[Vision](</guides/vision>)| ✓| Not supported  
+PRICING(3)| 1M INPUT TOKENS  
+(CACHE HIT)| OFF-PEAK| $0.003| $0.022  
+PEAK| $0.006| $0.044  
+1M INPUT TOKENS  
+(CACHE MISS)| OFF-PEAK| $0.15| $0.66  
+PEAK| $0.3| $1.32  
+1M OUTPUT TOKENS| OFF-PEAK| $0.6| $1.98  
+PEAK| $1.2| $3.96  
+Concurrency Limit(4)| 2500| 500  
+**
 
-The DeepSeek API is supported by many popular AI agent and coding assistant tools. If you use tools like Claude Code, GitHub Copilot, or OpenCode, you can use DeepSeek as the backend model directly — no code required.
+(1) Use `deepseek-flash` as the model name. The legacy names `deepseek-v4-flash` and `deepseek-v4-flash-vision-exp` are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.
 
-See the [Agent Integrations Guide](</quick_start/agent_integrations/claude_code>) for details.
+(2) After extensive testing, V4.1 Flash has comprehensively surpassed V4 Pro in performance, cost, speed, and total time, so we plan to retire V4 Pro in an orderly manner. From 12:00 Beijing Time on September 14, 2026, and until V4.1 Pro is released in the future, requests to `deepseek-v4-pro` will all be routed to V4.1 Flash and billed at the V4.1 Flash price.
 
-## Invoke The Chat API
+(3) Off-peak rates are half of the peak rates. Peak hours are 01:00 - 04:00 and 06:00 - 10:00 UTC, Monday through Friday (all other hours are off-peak).
 
-Once you have obtained an API key, you can access the DeepSeek model using the following example scripts in the OpenAI API format. This is a non-stream example, you can set the `stream` parameter to `true` to get stream response.
+(4) For more details on concurrency limits, please refer to [Rate Limit & Isolation](</quick_start/rate_limit>).
 
-For examples using the Anthropic API format, please refer to [Anthropic API](</guides/anthropic_api>).
+* * *
 
-  * curl
-  * python
-  * nodejs
+## Deduction Rules
 
-```bash
-curl https://api.deepseek.com/chat/completions \  -H "Content-Type: application/json" \  -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" \  -d '{        "model": "deepseek-v4-pro",        "messages": [          {"role": "system", "content": "You are a helpful assistant."},          {"role": "user", "content": "Hello!"}        ],        "thinking": {"type": "enabled"},        "reasoning_effort": "high",        "stream": false      }'
-```
+The expense = number of tokens × price. The corresponding fees will be directly deducted from your topped-up balance or granted balance, with a preference for using the granted balance first when both balances are available.
 
-```python
-# Please install OpenAI SDK first: `pip3 install openai`import osfrom openai import OpenAIclient = OpenAI(    api_key=os.environ.get('DEEPSEEK_API_KEY'),    base_url="https://api.deepseek.com")response = client.chat.completions.create(    model="deepseek-v4-pro",    messages=[        {"role": "system", "content": "You are a helpful assistant"},        {"role": "user", "content": "Hello"},    ],    stream=False,    reasoning_effort="high",    extra_body={"thinking": {"type": "enabled"}})print(response.choices[0].message.content)
-```
-
-```javascript
-// Please install OpenAI SDK first: `npm install openai`import OpenAI from "openai";const openai = new OpenAI({        baseURL: 'https://api.deepseek.com',        apiKey: process.env.DEEPSEEK_API_KEY,});async function main() {  const completion = await openai.chat.completions.create({    messages: [{ role: "system", content: "You are a helpful assistant." }],    model: "deepseek-v4-pro",    thinking: {"type": "enabled"},    reasoning_effort: "high",    stream: false,  });  console.log(completion.choices[0].message.content);}main();
-```
+Product prices may vary and DeepSeek reserves the right to adjust them. We recommend topping up based on your actual usage and regularly checking this page for the most recent pricing information.
