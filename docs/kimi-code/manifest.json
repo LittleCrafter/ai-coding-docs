@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.42.0",
-  "last_updated": "2026-09-10T07:34:30Z",
+  "last_updated": "2026-09-10T13:12:15Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -160,8 +160,8 @@
       "source_url": "https://www.kimi.com/code/docs/en/guides/interaction",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/interaction.md",
       "source_id": "docs/en/guides/interaction.md",
-      "hash": "7e795f0ab729636c3de870560d4a8885bfab338ad9163ebba81f6b11ae233774",
-      "last_updated": "2026-09-06T19:04:11Z"
+      "hash": "bec2d1af454825aaae4ff763a09ee2f80d1b4a16a0808f0eae183d4458341e21",
+      "last_updated": "2026-09-10T13:12:15Z"
     },
     "guides/migration": {
       "slug": "guides/migration",
@@ -250,8 +250,8 @@
       "source_url": "https://www.kimi.com/code/docs/en/reference/kimi-command",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/kimi-command.md",
       "source_id": "docs/en/reference/kimi-command.md",
-      "hash": "1e2701e4a3c1f2d2aed353c76a6e07399425223ae29578ced6d2a6956eece600",
-      "last_updated": "2026-09-06T19:04:11Z"
+      "hash": "98a840213803ebfe6951c4cf82d76602ffe0194fdbbded30fc0be08c23a9153e",
+      "last_updated": "2026-09-10T13:12:15Z"
     },
     "reference/server-api": {
       "slug": "reference/server-api",
@@ -280,8 +280,8 @@
       "source_url": "https://www.kimi.com/code/docs/en/reference/tools",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/tools.md",
       "source_id": "docs/en/reference/tools.md",
-      "hash": "85ddf8d17377f5deaca3c7001af014c63742621ab7806b4e45bc246b4a4c8fbe",
-      "last_updated": "2026-09-08T18:12:37Z"
+      "hash": "d0bffac8e4889f43e4013fc5a56ec2c87dd35858d89760d6529556dcbc9cf6e0",
+      "last_updated": "2026-09-10T13:12:15Z"
     },
     "release-notes/changelog": {
       "slug": "release-notes/changelog",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-10T07:34:30Z",
-    "fetch_duration_seconds": 9.995,
+    "last_fetch_completed": "2026-09-10T13:12:15Z",
+    "fetch_duration_seconds": 9.966,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,
