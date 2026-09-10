@@ -9,14 +9,14 @@ Local and always-up-to-date mirror of the documentation for various **AI coding 
 
 <!-- SOURCES_TABLE:START -->
 
-| Source                                                       | Version | Origin                                                           | How it is mirrored                                     | Whats-new |
-| :----------------------------------------------------------- | :-----: | :--------------------------------------------------------------- | :----------------------------------------------------- | :-------: |
-| [**Google Antigravity CLI**](./docs/google-antigravity-cli/) | 1.1.13  | antigravity.google/docs/cli/                                     | scraping (sitemap → `<url>.md`)                        |    ✅     |
-| [**Claude Code**](./docs/claude-code/)                       | 2.1.268 | code.claude.com/docs/en/                                         | scraping (sitemap → `<url>.md`)                        |     —     |
-| [**Codex CLI**](./docs/codex-cli/)                           | 0.154.0 | github.com/openai/codex (`docs/`)                                | scraping (GitHub tree → `raw.githubusercontent.com`)   |     —     |
-| [**DeepSeek API**](./docs/deepseek-api/)                     |    —    | api-docs.deepseek.com                                            | scraping (HTML → Markdown via `html2text`)             |     —     |
-| [**Kimi Code**](./docs/kimi-code/)                           | 0.42.0  | github.com/MoonshotAI/kimi-code (`docs/en/`)                     | scraping (GitHub tree → `raw.githubusercontent.com`)   |     —     |
-| [**OpenCode**](./docs/opencode/)                             | 1.18.30 | github.com/anomalyco/opencode (`packages/web/src/content/docs/`) | scraping (GitHub tree → raw `.mdx` → `.md` conversion) |     —     |
+| Source                                                       | Version | Origin                                                           | How it is mirrored                                       | Whats-new |
+| :----------------------------------------------------------- | :-----: | :--------------------------------------------------------------- | :------------------------------------------------------- | :-------: |
+| [**Google Antigravity CLI**](./docs/google-antigravity-cli/) | 1.1.13  | antigravity.google/docs/cli/                                     | scraping (sitemap → `<url>.md`)                          |    ✅     |
+| [**Claude Code**](./docs/claude-code/)                       | 2.1.268 | code.claude.com/docs/en/                                         | scraping (sitemap → `<url>.md`)                          |     —     |
+| [**Codex CLI**](./docs/codex-cli/)                           | 0.154.0 | github.com/openai/codex (`docs/`)                                | scraping (GitHub tree + developers.openai.com .md twins) |     —     |
+| [**DeepSeek API**](./docs/deepseek-api/)                     |    —    | api-docs.deepseek.com                                            | scraping (HTML → Markdown via `html2text`)               |     —     |
+| [**Kimi Code**](./docs/kimi-code/)                           | 0.42.0  | github.com/MoonshotAI/kimi-code (`docs/en/`)                     | scraping (GitHub tree → `raw.githubusercontent.com`)     |     —     |
+| [**OpenCode**](./docs/opencode/)                             | 1.18.30 | github.com/anomalyco/opencode (`packages/web/src/content/docs/`) | scraping (GitHub tree → raw `.mdx` → `.md` conversion)   |     —     |
 
 <!-- SOURCES_TABLE:END -->
 
