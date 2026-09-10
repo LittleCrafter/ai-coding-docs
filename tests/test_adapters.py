@@ -44,6 +44,7 @@ def test_codex_discover_keeps_only_direct_md_children_of_docs():
             {"type": "tree", "path": "docs"},  # drop: directory entry
         ]
     )
+    client._script.append(_Resp(200, ""))
     pages = codex_cli.discover(client)
     assert [p.slug for p in pages] == ["config", "getting-started"]
     assert all(p.group == "root" for p in pages)
@@ -89,6 +90,7 @@ def test_codex_discover_dedupes_duplicate_tree_paths(capsys):
             blob_entry("docs/setup.md"),
         ]
     )
+    client._script.append(_Resp(200, ""))
     pages = codex_cli.discover(client)
     assert [p.slug for p in pages] == ["config", "setup"]
     err = capsys.readouterr().err
@@ -856,10 +858,10 @@ def test_codex_fetch_markdown_rewrites_root_links_with_anchors():
 
 
 def test_codex_how_mirrored_metadata():
-    """Verify CONFIG.how_mirrored reflects the hybrid scraping approach."""
+    """Verify CONFIG.how_mirrored reflects the expanded discovery approach."""
     assert (
         codex_cli.CONFIG.how_mirrored
-        == "scraping (GitHub tree + developers.openai.com .md twins)"
+        == "scraping (GitHub tree + developers.openai.com/codex/llms.txt)"
     )
 
 
@@ -1079,8 +1081,205 @@ def test_codex_discover_skips_bare_md_filename_and_guards_zero_pages():
     guard must raise rather than return [] -- an empty result would make the
     pipeline delete every mirrored file."""
     client = tree_client([blob_entry("docs/.md")])
+    client._script.append(_Resp(200, ""))
     with pytest.raises(RuntimeError, match="zero-page"):
         codex_cli.discover(client)
+
+
+def test_codex_discover_with_llms_txt(capsys):
+    """Discovery merges direct GitHub repository files and codex/llms.txt pages.
+    Deduplicates against seen slugs (first discovery wins) and assigns correct
+    slugs, groups, and canonical source URLs."""
+    import json
+
+    tree_payload = {
+        "truncated": False,
+        "tree": [
+            blob_entry("docs/config.md"),
+            blob_entry("docs/administration.md"),  # git tree discovery
+        ],
+    }
+    llms_txt_body = (
+        "# Codex Docs\n\n"
+        "- [Record & Replay](https://learn.chatgpt.com/docs/extend/record-and-replay.md)\n"
+        "- [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents.md)\n"
+        "- [Administration](https://learn.chatgpt.com/docs/administration.md)\n"  # duplicate slug: git tree wins
+        "- [External Site](https://other.com/docs/something.md)\n"  # filtered out by domain
+        "- [Text File](https://learn.chatgpt.com/docs/llms-full.txt)\n"  # filtered out (.txt)
+    )
+    client = _FakeClient(
+        [
+            _Resp(200, json.dumps(tree_payload)),
+            _Resp(200, llms_txt_body),
+        ]
+    )
+    pages = codex_cli.discover(client)
+
+    # Slugs are sorted alphabetically
+    assert [p.slug for p in pages] == [
+        "administration",
+        "agent-configuration/subagents",
+        "config",
+        "extend/record-and-replay",
+    ]
+
+    by_slug = {p.slug: p for p in pages}
+
+    # Git tree page
+    assert by_slug["config"].group == "root"
+    assert by_slug["config"].source_id == "docs/config.md"
+
+    # Git tree duplicate of administration won over llms.txt
+    assert by_slug["administration"].group == "root"
+    assert by_slug["administration"].source_id == "docs/administration.md"
+
+    # LLMS nested pages
+    assert by_slug["extend/record-and-replay"].group == "extend"
+    assert (
+        by_slug["extend/record-and-replay"].source_url
+        == "https://learn.chatgpt.com/docs/extend/record-and-replay"
+    )
+    assert (
+        by_slug["extend/record-and-replay"].source_md_url
+        == "https://learn.chatgpt.com/docs/extend/record-and-replay.md"
+    )
+    assert (
+        by_slug["extend/record-and-replay"].source_id == "llms:extend/record-and-replay"
+    )
+
+    assert by_slug["agent-configuration/subagents"].group == "agent-configuration"
+    assert (
+        by_slug["agent-configuration/subagents"].source_url
+        == "https://learn.chatgpt.com/docs/agent-configuration/subagents"
+    )
+    assert (
+        by_slug["agent-configuration/subagents"].source_id
+        == "llms:agent-configuration/subagents"
+    )
+
+    # Check that _KNOWN_SLUGS was populated
+    assert codex_cli._KNOWN_SLUGS == {
+        "administration",
+        "agent-configuration/subagents",
+        "config",
+        "extend/record-and-replay",
+    }
+
+    # Verify duplicate warning on stderr for administration
+    err = capsys.readouterr().err
+    assert "warning:" in err
+    assert "duplicate slug 'administration'" in err
+
+
+def test_codex_discover_llms_txt_fallback_on_error(capsys):
+    """If fetching llms.txt fails (e.g. 404 or network error), a warning is logged
+    to stderr and discovery continues with GitHub repository pages only."""
+    import json
+
+    tree_payload = {
+        "truncated": False,
+        "tree": [
+            blob_entry("docs/config.md"),
+        ],
+    }
+    # 1st call: git tree (200); 2nd call: llms.txt (404)
+    client = _FakeClient(
+        [
+            _Resp(200, json.dumps(tree_payload)),
+            _Resp(404, "Not Found"),
+        ]
+    )
+    pages = codex_cli.discover(client)
+    assert [p.slug for p in pages] == ["config"]
+    assert codex_cli._KNOWN_SLUGS == {"config"}
+
+    err = capsys.readouterr().err
+    assert "warning: failed to fetch llms.txt index" in err
+    assert "continuing with GitHub repository pages only" in err
+
+
+def test_codex_rewrite_cross_links():
+    """Verify _rewrite_cross_links transforms cross-doc URLs to relative paths:
+    - Root-to-nested relative path calculation
+    - Nested-to-nested relative path calculation
+    - Anchor preservation (#anchor)
+    - Untouched external links or links to unknown slugs
+    """
+    known_slugs = {
+        "skills",
+        "extend/record-and-replay",
+        "agent-configuration/subagents",
+    }
+
+    # 1. Root to nested (skills -> ./extend/record-and-replay.md)
+    root_text = (
+        "Check out [Record & Replay](https://learn.chatgpt.com/docs/extend/record-and-replay) "
+        "and [Direct MD](https://developers.openai.com/docs/extend/record-and-replay.md)."
+    )
+    rewritten_root = codex_cli._rewrite_cross_links(
+        root_text, current_slug="skills", known_slugs=known_slugs
+    )
+    assert "[Record & Replay](./extend/record-and-replay.md)" in rewritten_root
+    assert "[Direct MD](./extend/record-and-replay.md)" in rewritten_root
+
+    # 2. Nested to nested (extend/record-and-replay -> ../agent-configuration/subagents.md)
+    nested_text = (
+        "Configure agents via "
+        "[Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)."
+    )
+    rewritten_nested = codex_cli._rewrite_cross_links(
+        nested_text,
+        current_slug="extend/record-and-replay",
+        known_slugs=known_slugs,
+    )
+    assert "[Subagents](../agent-configuration/subagents.md)" in rewritten_nested
+
+    # 3. Anchor preservation (#anchor)
+    anchor_text = (
+        "See [Custom Agents](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agents) "
+        "for more details."
+    )
+    rewritten_anchor = codex_cli._rewrite_cross_links(
+        anchor_text, current_slug="skills", known_slugs=known_slugs
+    )
+    assert (
+        "[Custom Agents](./agent-configuration/subagents.md#custom-agents)"
+        in rewritten_anchor
+    )
+
+    # 4. Untouched: external domains and unknown slugs
+    untouched_text = (
+        "See [External](https://example.com/docs/extend/record-and-replay) and "
+        "[Unknown Page](https://learn.chatgpt.com/docs/unknown/feature#anchor)."
+    )
+    rewritten_untouched = codex_cli._rewrite_cross_links(
+        untouched_text, current_slug="skills", known_slugs=known_slugs
+    )
+    assert rewritten_untouched == untouched_text
+
+
+def test_codex_fetch_markdown_for_llms_page():
+    """Pages discovered via llms.txt are fetched via fetch_validated and have
+    root link and cross-link rewrites applied."""
+    raw_content = (
+        "# Record & Replay\n\n"
+        "See [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents).\n"
+    )
+    client = _FakeClient([_Resp(200, raw_content)])
+    page = Page(
+        slug="extend/record-and-replay",
+        source_url="https://learn.chatgpt.com/docs/extend/record-and-replay",
+        source_md_url="https://learn.chatgpt.com/docs/extend/record-and-replay.md",
+        source_id="llms:extend/record-and-replay",
+        group="extend",
+    )
+    codex_cli._KNOWN_SLUGS.clear()
+    codex_cli._KNOWN_SLUGS.update(
+        {"extend/record-and-replay", "agent-configuration/subagents"}
+    )
+    md, digest = codex_cli.fetch_markdown(client, page)
+    assert "[Subagents](../agent-configuration/subagents.md)" in md
+    assert digest == fetch.content_hash(md)
 
 
 def test_kimi_discover_skips_bare_md_filename_and_guards_zero_pages():
