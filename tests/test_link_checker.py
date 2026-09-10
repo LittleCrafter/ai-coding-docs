@@ -74,6 +74,7 @@ def test_check_file_links_ignores_external_and_anchors(tmp_path: Path):
         "- Javascript: [JS](javascript:void(0))\n"
         "- VSCode extension: [VSCode](vscode:extension/foo)\n"
         "- Cursor extension: [Cursor](cursor:extension/foo)\n"
+        "- Codex deep link: [Codex](codex://settings)\n"
         "- Protocol relative: [CDN](//cdn.example.com/lib.js)\n"
         "- Pure anchor: [Section](#heading)\n"
         "- Multi-hash anchor: [Sub](#sub-heading-1)\n"

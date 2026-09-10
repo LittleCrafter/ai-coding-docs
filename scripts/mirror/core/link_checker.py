@@ -47,6 +47,7 @@ _EXTERNAL_SCHEMES = frozenset(
         "vscodium",
         "windsurf",
         "zed",
+        "codex",
     }
 )
 

@@ -12,7 +12,7 @@ Codex builds an instruction chain when it starts (once per run; in the TUI this 
 2. **Project scope:** Starting at the project root (typically the Git root), Codex walks down to your current working directory. If Codex cannot find a project root, it only checks the current directory. In each directory along the path, it checks for `AGENTS.override.md`, then `AGENTS.md`, then any fallback names in `project_doc_fallback_filenames`. Codex includes at most one file per directory.
 3. **Merge order:** Codex concatenates files from the root down, joining them with blank lines. Files closer to your current directory override earlier guidance because they appear later in the combined prompt.
 
-Codex skips empty files and stops adding files once the combined size reaches the limit defined by `project_doc_max_bytes` (32 KiB by default). For details on these knobs, see [Project instructions discovery](https://learn.chatgpt.com/docs/config-file/config-advanced#project-instructions-discovery). Raise the limit or split instructions across nested directories when you hit the cap.
+Codex skips empty files and stops adding files once the combined size reaches the limit defined by `project_doc_max_bytes` (32 KiB by default). For details on these knobs, see [Project instructions discovery](./config-file/config-advanced.md#project-instructions-discovery). Raise the limit or split instructions across nested directories when you hit the cap.
 
 ## Create global guidance
 
@@ -123,7 +123,7 @@ Here is a sample repository after you add a global file and a payments-specific 
 
 ## Add code review rules
 
-For [Codex code review in GitHub](https://learn.chatgpt.com/docs/third-party/github#customize-what-codex-reviews),
+For [Codex code review in GitHub](./third-party/github.md#customize-what-codex-reviews),
 add a `## Code Review Rules` section to the `AGENTS.md` closest to the code the
 rules govern. Put repository-wide checks at the root and service-specific
 checks in a nested file.
@@ -139,7 +139,7 @@ checks in a nested file.
 
 Keep rules concise, explain the behavior to flag and any safe path or
 exception, and reserve formatting and lint checks for CI. See [Customize what
-Codex reviews](https://learn.chatgpt.com/docs/third-party/github#customize-what-codex-reviews) for
+Codex reviews](./third-party/github.md#customize-what-codex-reviews) for
 setup and rule-writing guidance.
 
 ## Customize fallback filenames
@@ -216,4 +216,4 @@ Expected: The output lists files relative to the custom `.codex` directory.
 ## Next steps
 
 - Visit the official [AGENTS.md](https://agents.md) website for more information.
-- Review [Prompting Codex](https://learn.chatgpt.com/docs/prompting) for conversational patterns that pair well with persistent guidance.
+- Review [Prompting Codex](./prompting.md) for conversational patterns that pair well with persistent guidance.

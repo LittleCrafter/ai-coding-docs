@@ -11,6 +11,10 @@ filter rules whose only effect would be to hide accurate upstream content.
 We list that directory via the GitHub API and download each `.md` from
 raw.githubusercontent.com.
 
+In addition to GitHub repository files, documentation pages listed in the
+upstream `codex/llms.txt` index (on developers.openai.com / learn.chatgpt.com)
+are discovered to mirror comprehensive guides and reference documentation.
+
 For pages that upstream provides as reference stubs pointing to
 `developers.openai.com` or `learn.chatgpt.com`, this adapter resolves them to
 their rich `.md` twins (e.g. `https://developers.openai.com/codex/guides/agents-md.md`),
@@ -20,32 +24,36 @@ referenced sub-guides alongside local sections. If any external twin fetch
 fails, the adapter logs a warning and falls back gracefully to the original
 GitHub text.
 
+Cross-documentation links pointing to known documentation slugs are rewritten
+into local relative Markdown links during fetching.
+
 How discovery works:
 
-* The GitHub "git trees" API returns the repo's entire file tree in a single
+* Step 1: The GitHub "git trees" API returns the repo's entire file tree in a single
   call (``?recursive=1``) as a flat list of entries; each file is a
   ``{"type": "blob", "path": ...}`` object. One API call replaces what would
-  otherwise be a crawl of directory listings. That call -- including its
-  rate-limit error mapping and its truncation guard -- is shared with the
-  Kimi adapter via ``core.github.fetch_git_tree``; this module keeps only
-  the Codex-specific filtering on top of it.
-* We keep only Markdown files that are *direct* children of ``docs/`` -- the
-  CLI docs are a flat folder, so a ``/`` in the remainder of the path means
-  the file belongs to some other area of the repo.
-* Content is downloaded from ``raw.githubusercontent.com`` rather than via
-  the API's blob endpoint: raw file serving is not subject to the API rate
-  limit (60 requests/hour anonymous), which matters because the pipeline
-  fetches every page. The single tree-listing call itself is rate-limited --
-  see ``core/github.py`` for how a token raises that ceiling.
+  otherwise be a crawl of directory listings. We keep only Markdown files that
+  are direct children of ``docs/``.
+* Step 2: The upstream documentation index at ``codex/llms.txt``
+  (``https://developers.openai.com/codex/llms.txt``) is fetched. Bullet links to
+  ``learn.chatgpt.com`` and ``developers.openai.com`` are parsed, filtering for
+  ``.md`` targets, and converted to ``Page`` objects with hierarchical slugs and groups.
+  If the index fetch fails, a warning is logged to stderr and discovery proceeds with
+  GitHub pages.
+* First discovery wins during deduplication using a ``seen`` set. Duplicate slugs
+  trigger a stderr warning.
+* Discovery enforces a zero-page guard raising ``RuntimeError`` if no pages are found.
 
 No whats-new for this source.
 """
 
 from __future__ import annotations
 
+import posixpath
 import re
 import sys
 from typing import TYPE_CHECKING
+from urllib.parse import urlparse
 
 from ..core import fetch
 from ..core.github import fetch_git_tree, fetch_latest_release_tag
@@ -67,6 +75,8 @@ RAW_BASE = f"https://raw.githubusercontent.com/{REPO}/{BRANCH}"
 # as opposed to RAW_BASE which is the machine-facing download URL.
 BLOB_BASE = f"https://github.com/{REPO}/blob/{BRANCH}"
 
+LLMS_TXT_URL = "https://developers.openai.com/codex/llms.txt"
+
 CONFIG = SourceConfig(
     name="codex-cli",
     title="Codex CLI",
@@ -74,7 +84,7 @@ CONFIG = SourceConfig(
     generate_whats_new=False,
     version="0.147.0",
     origin=f"github.com/{REPO} (`docs/`)",
-    how_mirrored="scraping (GitHub tree + developers.openai.com .md twins)",
+    how_mirrored="scraping (GitHub tree + developers.openai.com/codex/llms.txt)",
 )
 
 # Known route discrepancies between upstream GitHub stub links and OpenAI doc twins.
@@ -90,12 +100,25 @@ _STUB_MD_LINK_RE = re.compile(
     r"\[([^\]]*)\]\((https?://(?:developers\.openai\.com|learn\.chatgpt\.com)/[^\s)]+)\)"
 )
 
+# Regex to match markdown bullet links in llms.txt index.
+_LLMS_BULLET_RE = re.compile(r"^-\s+\[([^\]]+)\]\((https?://[^\s)]+)\)", re.MULTILINE)
+
+# Regex to match cross-doc markdown links to learn.chatgpt.com or developers.openai.com.
+_CROSS_DOC_LINK_RE = re.compile(
+    r"\[([^\]]*)\]\((https?://(?:learn\.chatgpt\.com|developers\.openai\.com)/(?:docs|guides)/([^\s)#]+)(#[^\s)]*)?)\)"
+)
+
 # Banner at top of OpenAI docs linking to llms.txt index, stripped from sub-sections
 # in hybrid pages to avoid repetitive clutter.
 _INDEX_BANNER_RE = re.compile(
     r"^>\s*For the complete documentation index, see\s*\[llms\.txt\].*?\n+",
     re.MULTILINE,
 )
+
+_ROOT_LINK_RE = re.compile(r"\]\(\.\./(SECURITY\.md|LICENSE)(#[^)]*)?\)")
+
+# Maintained and populated during discover() to record all known slugs for cross-link rewriting.
+_KNOWN_SLUGS: set[str] = set()
 
 
 def normalize_route(url: str) -> str:
@@ -301,29 +324,25 @@ def get_version(client: httpx.Client) -> str | None:
 
 
 def discover(client: httpx.Client) -> list[Page]:
-    """Discover all CLI docs pages from the repo's git tree.
+    """Discover CLI docs from the repo git tree and codex/llms.txt.
 
-    Lists the full tree of ``openai/codex@main`` in one API call (via
-    ``core.github.fetch_git_tree``, which also enforces the rate-limit and
-    truncation safety guards) and keeps Markdown files that are direct
-    children of ``docs/``. The slug is the filename without ``.md``
-    (e.g. ``docs/config.md`` -> ``"config"``), and ``source_id`` is the full
-    repo path, which is stable across content edits and therefore serves as
-    the pipeline's rename-detection key. Slugs are deduplicated with a
-    ``seen`` set (first entry wins, later duplicates are skipped with a
-    stderr warning) as defense in depth against duplicate paths in the git
-    tree listing.
-
-    Raises ``RuntimeError`` when discovery finds zero pages: an empty result
-    would make the pipeline diff "nothing discovered" against the previous
-    manifest and delete every mirrored file, so a total filter miss (e.g.
-    the upstream moved its docs out of ``docs/``) must be a loud error, not
-    silent data loss.
+    1. Lists the full tree of ``openai/codex@main`` in one API call (via
+       ``core.github.fetch_git_tree``) and keeps Markdown files that are direct
+       children of ``docs/``.
+    2. Fetches the ``codex/llms.txt`` index from developers.openai.com.
+       If the request fails, logs a warning and proceeds with GitHub pages only.
+       Filters bullet links to allowed domains, normalizes paths to slugs and groups,
+       and constructs Page objects.
+    3. Deduplicates pages by slug (first discovery wins; later duplicates log a warning).
+    4. Updates the module-level ``_KNOWN_SLUGS`` set.
+    5. Raises ``RuntimeError`` when discovery finds zero pages (zero-page guard).
     """
     tree = fetch_git_tree(client, repo=REPO, branch=BRANCH)
 
     pages: list[Page] = []
     seen: set[str] = set()
+
+    # Step 1: GitHub Repository Files (direct Markdown children of docs/)
     for entry in tree:
         if entry.get("type") != "blob":
             continue
@@ -350,23 +369,124 @@ def discover(client: httpx.Client) -> list[Page]:
         )
         if page is not None:
             pages.append(page)
+
+    # Step 2: codex/llms.txt Documentation Pages
+    try:
+        llms_text = fetch.get_with_retry(client, LLMS_TXT_URL)
+    except Exception as exc:
+        print(
+            f"  warning: failed to fetch llms.txt index ({exc}); "
+            "continuing with GitHub repository pages only",
+            file=sys.stderr,
+        )
+        llms_text = ""
+
+    if llms_text:
+        for match in _LLMS_BULLET_RE.finditer(llms_text):
+            raw_url = match.group(2).strip()
+
+            parsed = urlparse(raw_url)
+            if parsed.netloc not in ("learn.chatgpt.com", "developers.openai.com"):
+                continue
+
+            clean_path = parsed.path
+            if not clean_path.endswith(".md") or not clean_path.startswith("/docs/"):
+                continue
+
+            slug = clean_path[len("/docs/") : -3]
+            if not slug:
+                continue
+
+            if slug in seen:
+                warn_duplicate_slug(slug, raw_url)
+                continue
+            seen.add(slug)
+
+            group = slug.split("/", 1)[0] if "/" in slug else "root"
+            canonical_path = clean_path[:-3]
+            source_url = f"{parsed.scheme}://{parsed.netloc}{canonical_path}"
+            source_md_url = f"{parsed.scheme}://{parsed.netloc}{clean_path}"
+            source_id = f"llms:{slug}"
+
+            page = try_make_page(
+                raw_url,
+                slug=slug,
+                source_url=source_url,
+                source_md_url=source_md_url,
+                source_id=source_id,
+                group=group,
+            )
+            if page is not None:
+                pages.append(page)
+
     pages.sort(key=lambda p: p.slug)
     if not pages:
         raise RuntimeError(
             f"No Markdown files found directly under {DOCS_PREFIX!r}/ in "
-            f"{REPO}@{BRANCH}. A zero-page discovery would delete all "
-            "mirrored files. If the upstream moved its docs tree, update "
-            "DOCS_PREFIX in this source module."
+            f"{REPO}@{BRANCH} or via {LLMS_TXT_URL}. A zero-page discovery would "
+            "delete all mirrored files."
         )
+
+    _KNOWN_SLUGS.clear()
+    _KNOWN_SLUGS.update(p.slug for p in pages)
     return pages
 
 
-def _rewrite_root_link(match: re.Match[str]) -> str:
+def _rewrite_cross_links(
+    text: str,
+    current_slug: str,
+    known_slugs: set[str] | None = None,
+) -> str:
+    """Rewrite absolute documentation links pointing to known slugs to relative Markdown links.
+
+    Matches links pointing to learn.chatgpt.com/docs/..., learn.chatgpt.com/guides/...,
+    or developers.openai.com/(docs|guides)/..., normalizes the target path to a potential
+    slug, and checks if the slug is present in `known_slugs` (defaulting to `_KNOWN_SLUGS`).
+    If found, rewrites the target as a relative link with `./` prefix if needed and
+    preserves any anchor fragment. Unmatched or unknown links are left intact.
+    """
+    if known_slugs is None:
+        known_slugs = _KNOWN_SLUGS
+
+    def replace(match: re.Match[str]) -> str:
+        link_text = match.group(1)
+        raw_target = match.group(3)
+        anchor = match.group(4) or ""
+
+        # Normalize target path to potential slug, stripping query params and .md
+        target_path = raw_target.split("?", 1)[0]
+        if target_path.endswith(".md"):
+            target_path = target_path[:-3]
+        target_slug = target_path.strip("/")
+
+        # Check against known slugs, including guides/ prefix fallback for /guides/ routes
+        if target_slug not in known_slugs:
+            if f"guides/{target_slug}" in known_slugs:
+                target_slug = f"guides/{target_slug}"
+            else:
+                return match.group(0)
+
+        current_dir = posixpath.dirname(current_slug) or "."
+        rel_path = posixpath.relpath(f"{target_slug}.md", current_dir)
+        if not rel_path.startswith((".", "/")):
+            rel_path = f"./{rel_path}"
+        new_target = f"{rel_path}{anchor}"
+        return f"[{link_text}]({new_target})"
+
+    return _CROSS_DOC_LINK_RE.sub(replace, text)
+
+
+def _rewrite_root_link(text_or_match: str | re.Match[str]) -> str:
     """Rebuild a matched ``](../<file>#anchor)`` link as its canonical GitHub URL.
 
+    Accepts either a ``re.Match`` object when used as a ``re.sub`` replacement function,
+    or a ``str`` to perform the replacement directly on the input text.
     The optional ``#anchor`` fragment is preserved verbatim so section links
     such as ``../SECURITY.md#policy`` keep resolving after the rewrite.
     """
+    if isinstance(text_or_match, str):
+        return _ROOT_LINK_RE.sub(_rewrite_root_link, text_or_match)
+    match = text_or_match
     return (
         f"](https://github.com/{REPO}/blob/{BRANCH}/{match.group(1)}"
         f"{match.group(2) or ''})"
@@ -374,35 +494,38 @@ def _rewrite_root_link(match: re.Match[str]) -> str:
 
 
 def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
-    """Fetch raw markdown from GitHub and resolve reference stubs to .md twins.
+    """Fetch raw markdown from upstream and resolve reference stubs to .md twins.
 
-    1. Fetches raw Markdown from GitHub (`page.source_md_url`).
-    2. Detects reference stubs pointing to developers.openai.com or
-       learn.chatgpt.com.
-    3. Resolves pure stubs and hybrid composite pages (such as `config.md`)
-       by fetching their `.md` twin endpoints with route normalization and
-       anchor stripping.
-    4. Falls back gracefully to original text with a stderr warning if the
-       external fetch fails (network errors, 404s, etc.).
-    5. Rewrites relative links pointing to repository root files outside docs/
-       (`../SECURITY.md` and `../LICENSE`, with or without `#anchor`) to
-       canonical upstream GitHub URLs, preserving any anchor.
+    1. For pages discovered via llms.txt (or not served from raw.githubusercontent.com),
+       fetches validated markdown directly from `page.source_md_url`.
+    2. For GitHub pages:
+       - Fetches raw Markdown from GitHub (`page.source_md_url`).
+       - Resolves pure reference stubs and hybrid composite pages (such as `config.md`)
+         by fetching their `.md` twin endpoints with route normalization and anchor stripping.
+       - Falls back gracefully to original text with a stderr warning if the external fetch fails.
+    3. Rewrites relative links pointing to repository root files outside docs/
+       (`../SECURITY.md` and `../LICENSE`, with or without `#anchor`) to canonical upstream GitHub URLs.
+    4. Rewrites cross-documentation absolute links to relative links for known slugs.
+    5. Returns `(text, content_hash(text))`.
     """
-    raw_text, _ = fetch.fetch_validated(client, page.source_md_url)
-
-    if _STUB_MD_LINK_RE.search(raw_text):
-        if _is_pure_stub(raw_text):
-            match = _STUB_MD_LINK_RE.search(raw_text)
-            assert match is not None
-            text = _fetch_pure_stub(client, raw_text, page, match)
-        else:
-            text = _fetch_hybrid_page(client, raw_text, page)
-    else:
+    if (
+        page.source_id.startswith("llms:")
+        or "raw.githubusercontent.com" not in page.source_md_url
+    ):
+        raw_text, _ = fetch.fetch_validated(client, page.source_md_url)
         text = raw_text
+    else:
+        raw_text, _ = fetch.fetch_validated(client, page.source_md_url)
+        if _STUB_MD_LINK_RE.search(raw_text):
+            if _is_pure_stub(raw_text):
+                match = _STUB_MD_LINK_RE.search(raw_text)
+                assert match is not None
+                text = _fetch_pure_stub(client, raw_text, page, match)
+            else:
+                text = _fetch_hybrid_page(client, raw_text, page)
+        else:
+            text = raw_text
 
-    text = re.sub(
-        r"\]\(\.\./(SECURITY\.md|LICENSE)(#[^)]*)?\)",
-        _rewrite_root_link,
-        text,
-    )
+    text = _rewrite_root_link(text)
+    text = _rewrite_cross_links(text, page.slug)
     return text, fetch.content_hash(text)

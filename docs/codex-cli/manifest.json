@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.154.0",
-  "last_updated": "2026-09-10T22:55:15Z",
+  "last_updated": "2026-09-10T23:17:02Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -13,6 +13,66 @@
       "hash": "3c3fc352c13db113d079a637f338e696e2dc47af53bae3394cf8fb8de6daa562",
       "last_updated": "2026-07-18T18:10:50Z"
     },
+    "administration": {
+      "slug": "administration",
+      "title": "Administration",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/administration",
+      "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
+      "source_id": "llms:administration",
+      "hash": "018c2634f36f28c33df47f484b07b51a9180c57b6deea4154d2a3828f0d597e3",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "agent-approvals-security": {
+      "slug": "agent-approvals-security",
+      "title": "Agent approvals & security",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/agent-approvals-security",
+      "source_md_url": "https://learn.chatgpt.com/docs/agent-approvals-security.md",
+      "source_id": "llms:agent-approvals-security",
+      "hash": "ff68be878b21863d568dcd69e4347dd2a5324e92c818cec0d103d6e3e8cbcd72",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "agent-configuration/agents-md": {
+      "slug": "agent-configuration/agents-md",
+      "title": "Custom instructions with AGENTS.md",
+      "group": "agent-configuration",
+      "source_url": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+      "source_md_url": "https://learn.chatgpt.com/docs/agent-configuration/agents-md.md",
+      "source_id": "llms:agent-configuration/agents-md",
+      "hash": "361daee014a78173f29aebc9b6f150855962e9423f5583817a6e36c309f3ef5d",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "agent-configuration/rules": {
+      "slug": "agent-configuration/rules",
+      "title": "Rules",
+      "group": "agent-configuration",
+      "source_url": "https://learn.chatgpt.com/docs/agent-configuration/rules",
+      "source_md_url": "https://learn.chatgpt.com/docs/agent-configuration/rules.md",
+      "source_id": "llms:agent-configuration/rules",
+      "hash": "0b3dd986c828c7d5bf00889096e6f66c80d7c77527424a308a22ed50d5da2896",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "agent-configuration/speed": {
+      "slug": "agent-configuration/speed",
+      "title": "Speed",
+      "group": "agent-configuration",
+      "source_url": "https://learn.chatgpt.com/docs/agent-configuration/speed",
+      "source_md_url": "https://learn.chatgpt.com/docs/agent-configuration/speed.md",
+      "source_id": "llms:agent-configuration/speed",
+      "hash": "3ab44653c3433bf5ff1d7cb9e08587c2568e746b56da5d661758897a4a4cbd38",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "agent-configuration/subagents": {
+      "slug": "agent-configuration/subagents",
+      "title": "Subagents",
+      "group": "agent-configuration",
+      "source_url": "https://learn.chatgpt.com/docs/agent-configuration/subagents",
+      "source_md_url": "https://learn.chatgpt.com/docs/agent-configuration/subagents.md",
+      "source_id": "llms:agent-configuration/subagents",
+      "hash": "dece992e06acec6c73dcf2b65ddb727b4a0cb7b9fc7ccbcd5f90b736dc56e60e",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
     "agents_md": {
       "slug": "agents_md",
       "title": "Custom instructions with AGENTS.md",
@@ -20,8 +80,68 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/agents_md.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/agents_md.md",
       "source_id": "docs/agents_md.md",
-      "hash": "9d1f87a2d1cb55b4782b95abe710692b35b9659789c2db31a22c7074a3383e8e",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "6abc2fc1714a945c3dc5171b9bc3b0b62e482a20946bbbf2c90388cd094f6326",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "amazon-bedrock": {
+      "slug": "amazon-bedrock",
+      "title": "Use ChatGPT Work and Codex with Amazon Bedrock",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/amazon-bedrock",
+      "source_md_url": "https://learn.chatgpt.com/docs/amazon-bedrock.md",
+      "source_id": "llms:amazon-bedrock",
+      "hash": "acfb6f719ba6c5e2065d1baf88bd13222d9efd7d7d74538efa156eb4bd233859",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "app": {
+      "slug": "app",
+      "title": "ChatGPT desktop app",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/app",
+      "source_md_url": "https://learn.chatgpt.com/docs/app.md",
+      "source_id": "llms:app",
+      "hash": "a59dd8e4c57050de68cd55237ee1c1b81cef58e466d529025a9f4bdcb510699d",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "app-server": {
+      "slug": "app-server",
+      "title": "Codex App Server",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/app-server",
+      "source_md_url": "https://learn.chatgpt.com/docs/app-server.md",
+      "source_id": "llms:app-server",
+      "hash": "f36513459b3d789f75812de55adcbe90e1bde9b44f911beef4065d8aa6e9b869",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "appshots": {
+      "slug": "appshots",
+      "title": "Appshots",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/appshots",
+      "source_md_url": "https://learn.chatgpt.com/docs/appshots.md",
+      "source_id": "llms:appshots",
+      "hash": "44d1edaba2ee7efb990885bb66908881c433b59d52934bbde0339d10a0c7140b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "artifacts-viewer": {
+      "slug": "artifacts-viewer",
+      "title": "Work with files",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/artifacts-viewer",
+      "source_md_url": "https://learn.chatgpt.com/docs/artifacts-viewer.md",
+      "source_id": "llms:artifacts-viewer",
+      "hash": "faaaddf25dcc4506fe125b67395923580294223ab1696fef8057b7f234c670cc",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "auth": {
+      "slug": "auth",
+      "title": "Authentication",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/auth",
+      "source_md_url": "https://learn.chatgpt.com/docs/auth.md",
+      "source_id": "llms:auth",
+      "hash": "9578771bade6b27246e39c4b3e304cb190624b8cd0cd626c27c80b6245d54159",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "authentication": {
       "slug": "authentication",
@@ -30,8 +150,148 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/authentication.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/authentication.md",
       "source_id": "docs/authentication.md",
-      "hash": "1203cb8b22c421c0af9125dd2b70c475993028468d8f5359ad91ad2c40075677",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "9578771bade6b27246e39c4b3e304cb190624b8cd0cd626c27c80b6245d54159",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "automations": {
+      "slug": "automations",
+      "title": "Scheduled tasks",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/automations",
+      "source_md_url": "https://learn.chatgpt.com/docs/automations.md",
+      "source_id": "llms:automations",
+      "hash": "73f09a7469c175eec7919df75ff58232b3e3d51610ed04e1d8b4ce845f09b817",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "browser": {
+      "slug": "browser",
+      "title": "Browser",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/browser",
+      "source_md_url": "https://learn.chatgpt.com/docs/browser.md",
+      "source_id": "llms:browser",
+      "hash": "ebe3952967aecdb095c81697603e4b5039a4ad83693a7f17649b642123d41fb3",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "build-plugins": {
+      "slug": "build-plugins",
+      "title": "Build plugins",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/build-plugins",
+      "source_md_url": "https://learn.chatgpt.com/docs/build-plugins.md",
+      "source_id": "llms:build-plugins",
+      "hash": "7837b80aec9dbac04a92cdd74ea93ffe92c05c2fbc66676627aeaef8fcb8249b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "build-skills": {
+      "slug": "build-skills",
+      "title": "Build skills",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/build-skills",
+      "source_md_url": "https://learn.chatgpt.com/docs/build-skills.md",
+      "source_id": "llms:build-skills",
+      "hash": "22c86515af87f5b628bfb32bbae740871b20990bd63f4e540dad8429da049ac0",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "chrome-extension": {
+      "slug": "chrome-extension",
+      "title": "Browser extension",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/chrome-extension",
+      "source_md_url": "https://learn.chatgpt.com/docs/chrome-extension.md",
+      "source_id": "llms:chrome-extension",
+      "hash": "6bb7a7b3d953f9dbd13dc0ecd4a606ec2686c88ad967bdf04f6d515ddbeefa09",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "cli-customization": {
+      "slug": "cli-customization",
+      "title": "CLI customization",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/cli-customization",
+      "source_md_url": "https://learn.chatgpt.com/docs/cli-customization.md",
+      "source_id": "llms:cli-customization",
+      "hash": "f17ef94ed99be603eef0fb540e6b200eadbca82959107767f3e0dd16716e5586",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "cloud": {
+      "slug": "cloud",
+      "title": "Codex cloud",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/cloud",
+      "source_md_url": "https://learn.chatgpt.com/docs/cloud.md",
+      "source_id": "llms:cloud",
+      "hash": "586716dfc57fc0a6c62af775155b63010f106d3d788e86aedd9479d661e42eba",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "cloud/internet-access": {
+      "slug": "cloud/internet-access",
+      "title": "Agent internet access",
+      "group": "cloud",
+      "source_url": "https://learn.chatgpt.com/docs/cloud/internet-access",
+      "source_md_url": "https://learn.chatgpt.com/docs/cloud/internet-access.md",
+      "source_id": "llms:cloud/internet-access",
+      "hash": "cdc5b96c300f010b06392b390213a0656f7b796ec1eef3ad92e662363275b1d9",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "code-review": {
+      "slug": "code-review",
+      "title": "Code review",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/code-review",
+      "source_md_url": "https://learn.chatgpt.com/docs/code-review.md",
+      "source_id": "llms:code-review",
+      "hash": "acb1f3f39a0d714ab7399a1ec8b574c8d49059f0e343873ac83fb28697049d8c",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "codex-manual": {
+      "slug": "codex-manual",
+      "title": "Codex Manual",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/codex-manual",
+      "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
+      "source_id": "llms:codex-manual",
+      "hash": "116310d6ea68fb8836e97f9683b1c0e08a5fd33de4ee57db25d5904f3b56c363",
+      "last_updated": "2026-09-10T23:17:02Z"
+    },
+    "codex-sdk": {
+      "slug": "codex-sdk",
+      "title": "Codex SDK",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/codex-sdk",
+      "source_md_url": "https://learn.chatgpt.com/docs/codex-sdk.md",
+      "source_id": "llms:codex-sdk",
+      "hash": "06bf98f7760ae9fd50f889530ed4d224acf7096bec744a02da382d2231fdd6a3",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "codex/cli": {
+      "slug": "codex/cli",
+      "title": "Codex CLI",
+      "group": "codex",
+      "source_url": "https://learn.chatgpt.com/docs/codex/cli",
+      "source_md_url": "https://learn.chatgpt.com/docs/codex/cli.md",
+      "source_id": "llms:codex/cli",
+      "hash": "22a1b09be47397e0f0266bacd1cd47d6d30fe172bf6d5257178ec234df889d51",
+      "last_updated": "2026-09-10T23:17:02Z"
+    },
+    "codex/ide": {
+      "slug": "codex/ide",
+      "title": "Codex IDE extension",
+      "group": "codex",
+      "source_url": "https://learn.chatgpt.com/docs/codex/ide",
+      "source_md_url": "https://learn.chatgpt.com/docs/codex/ide.md",
+      "source_id": "llms:codex/ide",
+      "hash": "e50009bea86c31f6156a2b1569a91ac4a424462b8ec21b3110c68e96d63a7a50",
+      "last_updated": "2026-09-10T23:17:02Z"
+    },
+    "computer-use": {
+      "slug": "computer-use",
+      "title": "Computer Use",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/computer-use",
+      "source_md_url": "https://learn.chatgpt.com/docs/computer-use.md",
+      "source_id": "llms:computer-use",
+      "hash": "d17add677cd56ed4bd5af481f1f1f733cc395e375fb3625ca37f5c5ff83e6e14",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "config": {
       "slug": "config",
@@ -40,8 +300,68 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/config.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
       "source_id": "docs/config.md",
-      "hash": "2b585b5ee8fd6e4173c4b5fd88b20b49ee571ae60d9ef7aa66483dcbb32c0120",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "a4f02447d50dcb047dbcd240a00876a33cb8469e9f0a5b7b3e89a695225f58ac",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "config-file/config-advanced": {
+      "slug": "config-file/config-advanced",
+      "title": "Advanced Configuration",
+      "group": "config-file",
+      "source_url": "https://learn.chatgpt.com/docs/config-file/config-advanced",
+      "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-advanced.md",
+      "source_id": "llms:config-file/config-advanced",
+      "hash": "0e1dbe2451e66aa56774e34d2baaa61751ccf90b2a74ada149104aea865f3db2",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "config-file/config-basic": {
+      "slug": "config-file/config-basic",
+      "title": "Config basics",
+      "group": "config-file",
+      "source_url": "https://learn.chatgpt.com/docs/config-file/config-basic",
+      "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-basic.md",
+      "source_id": "llms:config-file/config-basic",
+      "hash": "e0d214352945a387db155f1a337ae824f553651723b23892c3865db9fee33533",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "config-file/config-reference": {
+      "slug": "config-file/config-reference",
+      "title": "Configuration Reference",
+      "group": "config-file",
+      "source_url": "https://learn.chatgpt.com/docs/config-file/config-reference",
+      "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-reference.md",
+      "source_id": "llms:config-file/config-reference",
+      "hash": "6cdbd704a4d2714fe16b9af6a17a6a74f73515571890a2a6110a7502816b2e6e",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "config-file/config-sample": {
+      "slug": "config-file/config-sample",
+      "title": "Sample Configuration",
+      "group": "config-file",
+      "source_url": "https://learn.chatgpt.com/docs/config-file/config-sample",
+      "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-sample.md",
+      "source_id": "llms:config-file/config-sample",
+      "hash": "cd2319af8753a832f65d70923783c815a984b874768401ab080fa916f9c45b7b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "config-file/environment-variables": {
+      "slug": "config-file/environment-variables",
+      "title": "Environment variables",
+      "group": "config-file",
+      "source_url": "https://learn.chatgpt.com/docs/config-file/environment-variables",
+      "source_md_url": "https://learn.chatgpt.com/docs/config-file/environment-variables.md",
+      "source_id": "llms:config-file/environment-variables",
+      "hash": "4e7bc9f522ccdad7c51a16fba16fcf32d8f0414b6c1520a53a95e40927c29c8d",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "configuration": {
+      "slug": "configuration",
+      "title": "Configuration",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/configuration",
+      "source_md_url": "https://learn.chatgpt.com/docs/configuration.md",
+      "source_id": "llms:configuration",
+      "hash": "2da49e5820a94b99d862609020ddc4f8daa9e8a638859e7db525a9cd5c328f30",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "contributing": {
       "slug": "contributing",
@@ -53,6 +373,406 @@
       "hash": "5d56ba55c47f9e5c79286249f4b8b85f3037c64964a2f666564940fa89696df5",
       "last_updated": "2026-09-07T00:12:40Z"
     },
+    "custom-prompts": {
+      "slug": "custom-prompts",
+      "title": "Custom Prompts",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/custom-prompts",
+      "source_md_url": "https://learn.chatgpt.com/docs/custom-prompts.md",
+      "source_id": "llms:custom-prompts",
+      "hash": "7641b691c08de03fece763e42d887dc21bad5c122485a677870e30ab4a229270",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "customization/computer-history": {
+      "slug": "customization/computer-history",
+      "title": "Computer History",
+      "group": "customization",
+      "source_url": "https://learn.chatgpt.com/docs/customization/computer-history",
+      "source_md_url": "https://learn.chatgpt.com/docs/customization/computer-history.md",
+      "source_id": "llms:customization/computer-history",
+      "hash": "6a6585918f0e88c7e3dc728e73cfd06b5da33083d67e82db623f4b7fa2e97d88",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "customization/memories": {
+      "slug": "customization/memories",
+      "title": "Memories",
+      "group": "customization",
+      "source_url": "https://learn.chatgpt.com/docs/customization/memories",
+      "source_md_url": "https://learn.chatgpt.com/docs/customization/memories.md",
+      "source_id": "llms:customization/memories",
+      "hash": "4586bc1ffe487ddd0869ffb84660930889d3d37102bfad0ab17dfc37270e1a06",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "customization/overview": {
+      "slug": "customization/overview",
+      "title": "Customization",
+      "group": "customization",
+      "source_url": "https://learn.chatgpt.com/docs/customization/overview",
+      "source_md_url": "https://learn.chatgpt.com/docs/customization/overview.md",
+      "source_id": "llms:customization/overview",
+      "hash": "0ed5260896c8f226010c30f4086cd0862fa097e3762ac81df093f8293b113915",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "cyber-safety": {
+      "slug": "cyber-safety",
+      "title": "Models and Trusted Access",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/cyber-safety",
+      "source_md_url": "https://learn.chatgpt.com/docs/cyber-safety.md",
+      "source_id": "llms:cyber-safety",
+      "hash": "769208ee2c842e3a0e473232599864961b247a071239704f3c56db70d2b705e7",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "cyber-safety/recommended-configuration": {
+      "slug": "cyber-safety/recommended-configuration",
+      "title": "Recommended configuration",
+      "group": "cyber-safety",
+      "source_url": "https://learn.chatgpt.com/docs/cyber-safety/recommended-configuration",
+      "source_md_url": "https://learn.chatgpt.com/docs/cyber-safety/recommended-configuration.md",
+      "source_id": "llms:cyber-safety/recommended-configuration",
+      "hash": "140e67b88a0b68c317d1e0111131babc591180b711d097153d30634e465894ca",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "developer-commands": {
+      "slug": "developer-commands",
+      "title": "Developer commands",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/developer-commands",
+      "source_md_url": "https://learn.chatgpt.com/docs/developer-commands.md",
+      "source_id": "llms:developer-commands",
+      "hash": "f032b1860c78e2a322dc91ea8f0f0e528c779ace34815d9834b480f19de530d1",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "developer-settings": {
+      "slug": "developer-settings",
+      "title": "Developer settings",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/developer-settings",
+      "source_md_url": "https://learn.chatgpt.com/docs/developer-settings.md",
+      "source_id": "llms:developer-settings",
+      "hash": "56b38959e4b51600c1f763abe6fa2954bb2ade2202f9227779da63245d3b7693",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "developers": {
+      "slug": "developers",
+      "title": "Developers",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/developers",
+      "source_md_url": "https://learn.chatgpt.com/docs/developers.md",
+      "source_id": "llms:developers",
+      "hash": "01992dfa6523195b3a33f27239f295812e29448dc1effa131a1a8107bdcd6d11",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/access-tokens": {
+      "slug": "enterprise/access-tokens",
+      "title": "Access tokens",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/access-tokens",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/access-tokens.md",
+      "source_id": "llms:enterprise/access-tokens",
+      "hash": "6315748906cde819c5d76ce86d337b5a8eb689fb007c0cbc2c47b92aaccf0205",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/admin-plugin": {
+      "slug": "enterprise/admin-plugin",
+      "title": "Using the Admin plugin in ChatGPT Work",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/admin-plugin",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/admin-plugin.md",
+      "source_id": "llms:enterprise/admin-plugin",
+      "hash": "0aafe55fa30afff95848afb0e9d96bf3a02ad7add3894de80b14f95e447aacc3",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/admin-setup": {
+      "slug": "enterprise/admin-setup",
+      "title": "Admin rollout guide",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/admin-setup",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/admin-setup.md",
+      "source_id": "llms:enterprise/admin-setup",
+      "hash": "b4e9795ba80d9680e70bcaab5b1cbb70d4d3456a803c85a26e8a96f2b7ed8d2c",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/analytics-api": {
+      "slug": "enterprise/analytics-api",
+      "title": "Analytics API",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/analytics-api",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/analytics-api.md",
+      "source_id": "llms:enterprise/analytics-api",
+      "hash": "dedf0b21b8cd4957f8339990ae775d6b7d5dd9d750b598bd4c063b23c161acc4",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/apps-and-connectors": {
+      "slug": "enterprise/apps-and-connectors",
+      "title": "Plugin controls",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/apps-and-connectors",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/apps-and-connectors.md",
+      "source_id": "llms:enterprise/apps-and-connectors",
+      "hash": "8c85ff6e1fa1e58e65acd61288c0dcfc3844f17fd715f8f39b8bb8c0b1cb8178",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/chatgpt-work-cloud-security": {
+      "slug": "enterprise/chatgpt-work-cloud-security",
+      "title": "ChatGPT Work cloud security",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-cloud-security",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-cloud-security.md",
+      "source_id": "llms:enterprise/chatgpt-work-cloud-security",
+      "hash": "403ac2df3cce2aba35e20f5b7dc517f642e84f7d5e74c3bca35057b44a6a836b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/chatgpt-work-local-security": {
+      "slug": "enterprise/chatgpt-work-local-security",
+      "title": "ChatGPT Work local security",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-local-security",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-local-security.md",
+      "source_id": "llms:enterprise/chatgpt-work-local-security",
+      "hash": "8e0121d292c8b485ca2c379ffc3c5d7e7edb6aaeacb914a952e8f4b1532142af",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/chatgpt-work-overview": {
+      "slug": "enterprise/chatgpt-work-overview",
+      "title": "ChatGPT Work Overview",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-overview",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-overview.md",
+      "source_id": "llms:enterprise/chatgpt-work-overview",
+      "hash": "fa16a5451627ecb31c9748964ae9b61fc354a89973634a0e60d9321a0ca5d34d",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/chatgpt-work-usage-and-cost": {
+      "slug": "enterprise/chatgpt-work-usage-and-cost",
+      "title": "ChatGPT Work: usage and cost",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-usage-and-cost",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-usage-and-cost.md",
+      "source_id": "llms:enterprise/chatgpt-work-usage-and-cost",
+      "hash": "1b87d44a3c239542e74c050c50c08cda5aa26526c3542568c637b5c0dd69a066",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/compliance-api": {
+      "slug": "enterprise/compliance-api",
+      "title": "Compliance API and audit events",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/compliance-api",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/compliance-api.md",
+      "source_id": "llms:enterprise/compliance-api",
+      "hash": "83bc1c379a39d7f11815ff59cac2d8903666a4043e49d4438994aac11304f535",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/governance": {
+      "slug": "enterprise/governance",
+      "title": "Governance",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/governance",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/governance.md",
+      "source_id": "llms:enterprise/governance",
+      "hash": "f1364246515e493653e97120a4c7c2d5ca3112755da16a7493dc8191dbe5f727",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/gpts-and-sharing": {
+      "slug": "enterprise/gpts-and-sharing",
+      "title": "GPTs and Sharing",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/gpts-and-sharing",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/gpts-and-sharing.md",
+      "source_id": "llms:enterprise/gpts-and-sharing",
+      "hash": "3052dc3a4e3dfcea5f1c4a670f79de955e393424dc2ebbd0cfa9a667ab52b9b5",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/groups-and-provisioning": {
+      "slug": "enterprise/groups-and-provisioning",
+      "title": "Groups and provisioning",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/groups-and-provisioning",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/groups-and-provisioning.md",
+      "source_id": "llms:enterprise/groups-and-provisioning",
+      "hash": "f2ec3522de04fb1e44583b75568e6e199a7881919fde66f010913c7bf2dda9cc",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/manage-app-updates": {
+      "slug": "enterprise/manage-app-updates",
+      "title": "Manage app updates",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/manage-app-updates",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/manage-app-updates.md",
+      "source_id": "llms:enterprise/manage-app-updates",
+      "hash": "0b57dfdcfd68984a52b52c5fc2383ee8fa84880661088f291b9215a2f4e3f07b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/managed-configuration": {
+      "slug": "enterprise/managed-configuration",
+      "title": "Managed configuration",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration.md",
+      "source_id": "llms:enterprise/managed-configuration",
+      "hash": "3ff683751fd357be9538a77237f7c0ef556dea1d420821d83b72bef2581f94e1",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/plugin-management": {
+      "slug": "enterprise/plugin-management",
+      "title": "Plugin management",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/plugin-management",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/plugin-management.md",
+      "source_id": "llms:enterprise/plugin-management",
+      "hash": "2330c6840ac61b0aae305e2629283cc486614e5ab6412a045adc0c7b528a11c6",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/prisma-airs": {
+      "slug": "enterprise/prisma-airs",
+      "title": "Prisma AIRS",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/prisma-airs",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/prisma-airs.md",
+      "source_id": "llms:enterprise/prisma-airs",
+      "hash": "4451522b12aec6d5bf345c3469b06f559514ee40ccd1cedb704d195ecca8a628",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/roles-and-workspace-permissions": {
+      "slug": "enterprise/roles-and-workspace-permissions",
+      "title": "Roles and workspace permissions",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/roles-and-workspace-permissions",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/roles-and-workspace-permissions.md",
+      "source_id": "llms:enterprise/roles-and-workspace-permissions",
+      "hash": "ba51245596b0eedf7d6772c24a12bde82f8b8d80ad1d95d3c561767855d7cbbc",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/service-accounts": {
+      "slug": "enterprise/service-accounts",
+      "title": "Service accounts",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/service-accounts",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/service-accounts.md",
+      "source_id": "llms:enterprise/service-accounts",
+      "hash": "40607151e46d60c5799333f378fc4465a247a42037a7ff43fb7355264a0e965b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/skills": {
+      "slug": "enterprise/skills",
+      "title": "Skill controls",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/skills",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/skills.md",
+      "source_id": "llms:enterprise/skills",
+      "hash": "9e9018dd5a23f46e911e580419b163b52a2f30c3c60866bb1fdec21f3a6477cb",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/usage-limits": {
+      "slug": "enterprise/usage-limits",
+      "title": "ChatGPT usage limits and spend controls",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/usage-limits",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/usage-limits.md",
+      "source_id": "llms:enterprise/usage-limits",
+      "hash": "0f737fe3c7fd9e2b5b506c9bbc5f77e36c8b557fa076e7d84b54d1e3728ef46e",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/user-lifecycle": {
+      "slug": "enterprise/user-lifecycle",
+      "title": "User lifecycle management",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/user-lifecycle",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/user-lifecycle.md",
+      "source_id": "llms:enterprise/user-lifecycle",
+      "hash": "f2c27b753f0c0650b67e6a1a09bef944a9f428df88153b16c6902f45e29ae0fc",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/windows-deployment": {
+      "slug": "enterprise/windows-deployment",
+      "title": "Deploy the Windows app",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/windows-deployment",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/windows-deployment.md",
+      "source_id": "llms:enterprise/windows-deployment",
+      "hash": "a7591bc6b35d439a3596d5c5777d58f7fe2cf028221452fdcb9606ff73810ca2",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/work-admin-faq": {
+      "slug": "enterprise/work-admin-faq",
+      "title": "ChatGPT Work admin FAQ",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/work-admin-faq",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/work-admin-faq.md",
+      "source_id": "llms:enterprise/work-admin-faq",
+      "hash": "ba384eb27055effb8e5e0dfa734ade9e2d4b6ebaa8cd26eb40d22532f511c656",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/workload-identity": {
+      "slug": "enterprise/workload-identity",
+      "title": "Workload identity federation",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/workload-identity",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/workload-identity.md",
+      "source_id": "llms:enterprise/workload-identity",
+      "hash": "d858bbb8e6d94d541c83f9fff70bd3bab2669fe17b50a01e7978348ac5c2cb98",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/workspace-analytics": {
+      "slug": "enterprise/workspace-analytics",
+      "title": "Workspace analytics",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/workspace-analytics",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/workspace-analytics.md",
+      "source_id": "llms:enterprise/workspace-analytics",
+      "hash": "1a0bd0c4e76b3b32f98a37a7bb44a1425f0dd71f0bfcad5a9d153d390696ff22",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "enterprise/workspace-model-availability": {
+      "slug": "enterprise/workspace-model-availability",
+      "title": "Workspace model availability",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/workspace-model-availability",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/workspace-model-availability.md",
+      "source_id": "llms:enterprise/workspace-model-availability",
+      "hash": "6a33eded1d8154cf5a559cc873fe5d5b44f74cd72e1b76d615f6cb398a9800fb",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "environments/cloud-environment": {
+      "slug": "environments/cloud-environment",
+      "title": "Cloud environments",
+      "group": "environments",
+      "source_url": "https://learn.chatgpt.com/docs/environments/cloud-environment",
+      "source_md_url": "https://learn.chatgpt.com/docs/environments/cloud-environment.md",
+      "source_id": "llms:environments/cloud-environment",
+      "hash": "9e05cee40a2c0995cc2626d0396e6703f971fd4ed971d6b67cfd1ab14ed8a306",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "environments/git-worktrees": {
+      "slug": "environments/git-worktrees",
+      "title": "Worktrees",
+      "group": "environments",
+      "source_url": "https://learn.chatgpt.com/docs/environments/git-worktrees",
+      "source_md_url": "https://learn.chatgpt.com/docs/environments/git-worktrees.md",
+      "source_id": "llms:environments/git-worktrees",
+      "hash": "0e7972ecad817102e4d544fa6d68c17c589632ca08e25edf42a81093930f4696",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "environments/local-environment": {
+      "slug": "environments/local-environment",
+      "title": "Local environments",
+      "group": "environments",
+      "source_url": "https://learn.chatgpt.com/docs/environments/local-environment",
+      "source_md_url": "https://learn.chatgpt.com/docs/environments/local-environment.md",
+      "source_id": "llms:environments/local-environment",
+      "hash": "9087f62bef09aa1944e00e847cd64f0118b4948f8f42e125d494db8233a65b5f",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "environments/modes": {
+      "slug": "environments/modes",
+      "title": "Codex environments",
+      "group": "environments",
+      "source_url": "https://learn.chatgpt.com/docs/environments/modes",
+      "source_md_url": "https://learn.chatgpt.com/docs/environments/modes.md",
+      "source_id": "llms:environments/modes",
+      "hash": "3d07643fea281a8a985c5400eddd91d05af9e7db94dbc24ad23f6eb5d265f5aa",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
     "example-config": {
       "slug": "example-config",
       "title": "Sample Configuration",
@@ -60,8 +780,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/example-config.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/example-config.md",
       "source_id": "docs/example-config.md",
-      "hash": "9d4b0d2fd7375e93e214b6a4d396ebb878806810d99cdf9d800926f345f27884",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "a33fc06145b495903083488f46c2eb7c7955f1cbd1d9782a9e15465216d0afef",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "exec": {
       "slug": "exec",
@@ -70,8 +790,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/exec.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/exec.md",
       "source_id": "docs/exec.md",
-      "hash": "cd4a99999324ff8a1c73e08a767126cea7c5db0bc977adc5f44eee0285b41fd8",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "ecc47cd95379c427ef1f782afeea13b335e6a9adb350d4a6ea0bf44ee885e4fa",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "execpolicy": {
       "slug": "execpolicy",
@@ -80,8 +800,78 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/execpolicy.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/execpolicy.md",
       "source_id": "docs/execpolicy.md",
-      "hash": "04c837d168686d94e4fce70cac20e40fa6e5a7bc07047938dc699edcd546d5d3",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "0bbb96fb6a592b9f4d2c845f2967621e672e73426cd690207c50b2bd270774a8",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "extend/mcp": {
+      "slug": "extend/mcp",
+      "title": "Model Context Protocol",
+      "group": "extend",
+      "source_url": "https://learn.chatgpt.com/docs/extend/mcp",
+      "source_md_url": "https://learn.chatgpt.com/docs/extend/mcp.md",
+      "source_id": "llms:extend/mcp",
+      "hash": "4364ec894f7cc10f078279c9aa381f32b8d69ed4435beb68f2d41f5b5f48b2e2",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "extend/record-and-replay": {
+      "slug": "extend/record-and-replay",
+      "title": "Record & Replay",
+      "group": "extend",
+      "source_url": "https://learn.chatgpt.com/docs/extend/record-and-replay",
+      "source_md_url": "https://learn.chatgpt.com/docs/extend/record-and-replay.md",
+      "source_id": "llms:extend/record-and-replay",
+      "hash": "36f40000558f2bf2d52fb7b24bf75b1daf2f94d58d7ec2e3a384403814cbe757",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "feature-maturity": {
+      "slug": "feature-maturity",
+      "title": "Feature Maturity",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/feature-maturity",
+      "source_md_url": "https://learn.chatgpt.com/docs/feature-maturity.md",
+      "source_id": "llms:feature-maturity",
+      "hash": "9b773769ae13afc594c3c5fd28327009667f0a8fade51e261ead9c02c3109e6e",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "features": {
+      "slug": "features",
+      "title": "Features",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/features",
+      "source_md_url": "https://learn.chatgpt.com/docs/features.md",
+      "source_id": "llms:features",
+      "hash": "04fc49e634c8a1c208d15bdebcf0303138a955231be7e0b48292e38fd892170b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "features/codex-micro": {
+      "slug": "features/codex-micro",
+      "title": "Codex Micro",
+      "group": "features",
+      "source_url": "https://learn.chatgpt.com/docs/features/codex-micro",
+      "source_md_url": "https://learn.chatgpt.com/docs/features/codex-micro.md",
+      "source_id": "llms:features/codex-micro",
+      "hash": "5324ce0987446a9e0861374eaeca44d388445dea7cde46f9c0b329bef4f70ec4",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "features/voice": {
+      "slug": "features/voice",
+      "title": "ChatGPT Voice",
+      "group": "features",
+      "source_url": "https://learn.chatgpt.com/docs/features/voice",
+      "source_md_url": "https://learn.chatgpt.com/docs/features/voice.md",
+      "source_id": "llms:features/voice",
+      "hash": "2e5ef39ff1e49b00b68ec24da020e9ba485c47729c9f02be50bd954e3a74ad0c",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "get-started-with-work": {
+      "slug": "get-started-with-work",
+      "title": "Get started with ChatGPT Work",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/get-started-with-work",
+      "source_md_url": "https://learn.chatgpt.com/docs/get-started-with-work.md",
+      "source_id": "llms:get-started-with-work",
+      "hash": "d41d5fa6823aeafd58cfc57df4917a796e6bfd7ee0e23252f3fbd6844e172df3",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "getting-started": {
       "slug": "getting-started",
@@ -90,8 +880,68 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/getting-started.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/getting-started.md",
       "source_id": "docs/getting-started.md",
-      "hash": "4592869a38de248eef8c623816032bc34787c7797fcf7a64e41d860da83d1a5e",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "0829d331113b9ecc4388b1bda5d0159db27c250f214467e94995815deadbd6a7",
+      "last_updated": "2026-09-10T23:17:02Z"
+    },
+    "github-action": {
+      "slug": "github-action",
+      "title": "Codex GitHub Action",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/github-action",
+      "source_md_url": "https://learn.chatgpt.com/docs/github-action.md",
+      "source_id": "llms:github-action",
+      "hash": "96f1a7755729936ccbedda66199db2bfffe9151e70e780195f59ca5f8d8ad621",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "glossary": {
+      "slug": "glossary",
+      "title": "Glossary",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/glossary",
+      "source_md_url": "https://learn.chatgpt.com/docs/glossary.md",
+      "source_id": "llms:glossary",
+      "hash": "4a7e381f6ca5c12ef939991461223a38c615152a2d0e7e19bcc12a94cebd4d23",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "hooks": {
+      "slug": "hooks",
+      "title": "Hooks",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/hooks",
+      "source_md_url": "https://learn.chatgpt.com/docs/hooks.md",
+      "source_id": "llms:hooks",
+      "hash": "6b4c549c4f1df78e802f289151e54f7677128b8a9929912afb7e8ecd975d2ce9",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "image-generation": {
+      "slug": "image-generation",
+      "title": "Image generation",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/image-generation",
+      "source_md_url": "https://learn.chatgpt.com/docs/image-generation.md",
+      "source_id": "llms:image-generation",
+      "hash": "425270f9aaabcbb0c2b8cea7d8436bf6f3b5a83685d7ba2e72f1664bdb9244f9",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "image-inputs": {
+      "slug": "image-inputs",
+      "title": "Image inputs",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/image-inputs",
+      "source_md_url": "https://learn.chatgpt.com/docs/image-inputs.md",
+      "source_id": "llms:image-inputs",
+      "hash": "0666e3ca3af491496ab42f5928a659120a2639d80595ad580db28f1b7850515f",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "import": {
+      "slug": "import",
+      "title": "Import from another agent",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/import",
+      "source_md_url": "https://learn.chatgpt.com/docs/import.md",
+      "source_id": "llms:import",
+      "hash": "ccefe813bbbd8cf200b41ce5f6f2ef7a93972fae4930267a99d08ffd45b67e1f",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "install": {
       "slug": "install",
@@ -103,6 +953,16 @@
       "hash": "1126ec733921878a40720e139ba7be88e325ecf9fa5b113de2cc636bc71a1f5a",
       "last_updated": "2026-07-18T18:10:50Z"
     },
+    "integrated-terminal": {
+      "slug": "integrated-terminal",
+      "title": "Integrated terminal",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/integrated-terminal",
+      "source_md_url": "https://learn.chatgpt.com/docs/integrated-terminal.md",
+      "source_id": "llms:integrated-terminal",
+      "hash": "a0484eb24a2a2a9ed2ab67e0921fc9d0c0667796a46eb754d17d6552ba8140f5",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
     "license": {
       "slug": "license",
       "title": "License",
@@ -112,6 +972,76 @@
       "source_id": "docs/license.md",
       "hash": "8a6646aa38e54ceadd1df95859ecdd763706acfd5573a3ae93902be8c9108164",
       "last_updated": "2026-09-07T00:12:40Z"
+    },
+    "linux/linux-app": {
+      "slug": "linux/linux-app",
+      "title": "ChatGPT desktop app for Linux",
+      "group": "linux",
+      "source_url": "https://learn.chatgpt.com/docs/linux/linux-app",
+      "source_md_url": "https://learn.chatgpt.com/docs/linux/linux-app.md",
+      "source_id": "llms:linux/linux-app",
+      "hash": "f272cab3d9681667f3e5e652ece601ce562c380ba779acc647d397d26db7d46b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "long-running-work": {
+      "slug": "long-running-work",
+      "title": "Long-running work",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/long-running-work",
+      "source_md_url": "https://learn.chatgpt.com/docs/long-running-work.md",
+      "source_id": "llms:long-running-work",
+      "hash": "24f1916a77c23a8f72645e69f5458cf0f4c4508b8d33b3979f2ae64908f0eb18",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "mcp-server": {
+      "slug": "mcp-server",
+      "title": "Use Codex with the Agents SDK",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/mcp-server",
+      "source_md_url": "https://learn.chatgpt.com/docs/mcp-server.md",
+      "source_id": "llms:mcp-server",
+      "hash": "851b989eada423ab37956df3c3ec89d13bd78d0f5c368aaf9258bfacec977149",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "models": {
+      "slug": "models",
+      "title": "Models",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/models",
+      "source_md_url": "https://learn.chatgpt.com/docs/models.md",
+      "source_id": "llms:models",
+      "hash": "65d46c470caf08ccbc1f468dd4024eba97ed69398019161c53df581ed8503391",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "non-interactive-mode": {
+      "slug": "non-interactive-mode",
+      "title": "Non-interactive mode",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/non-interactive-mode",
+      "source_md_url": "https://learn.chatgpt.com/docs/non-interactive-mode.md",
+      "source_id": "llms:non-interactive-mode",
+      "hash": "ecc47cd95379c427ef1f782afeea13b335e6a9adb350d4a6ea0bf44ee885e4fa",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "notifications": {
+      "slug": "notifications",
+      "title": "Notifications",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/notifications",
+      "source_md_url": "https://learn.chatgpt.com/docs/notifications.md",
+      "source_id": "llms:notifications",
+      "hash": "6eda24084609a3474457100a1b9fd1143de0158e22114efdf6d7a647123c4a63",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "open-source": {
+      "slug": "open-source",
+      "title": "Open Source",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/open-source",
+      "source_md_url": "https://learn.chatgpt.com/docs/open-source.md",
+      "source_id": "llms:open-source",
+      "hash": "1bd29ea9f6d4148fb7a01d528f4985dc20ec25f109ac500b9f109a032afd399f",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "open-source-fund": {
       "slug": "open-source-fund",
@@ -123,6 +1053,146 @@
       "hash": "7dd10179cc0275c1cef77f5ab63e5e0b149aca2868318e7d958dea0d1e42707c",
       "last_updated": "2026-07-18T18:10:50Z"
     },
+    "permission-modes": {
+      "slug": "permission-modes",
+      "title": "Permissions",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/permission-modes",
+      "source_md_url": "https://learn.chatgpt.com/docs/permission-modes.md",
+      "source_id": "llms:permission-modes",
+      "hash": "792327a74308fb184d3bef32f8a53ff4d5fe3dcaf509fc991226a62c715408f0",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "permissions": {
+      "slug": "permissions",
+      "title": "Permissions",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/permissions",
+      "source_md_url": "https://learn.chatgpt.com/docs/permissions.md",
+      "source_id": "llms:permissions",
+      "hash": "9f850c1a4b4752673b52ce3c39e826fb7e51fedeb0ea8a2241a848dfef79ad91",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "personalize": {
+      "slug": "personalize",
+      "title": "Personalize ChatGPT",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/personalize",
+      "source_md_url": "https://learn.chatgpt.com/docs/personalize.md",
+      "source_id": "llms:personalize",
+      "hash": "04e98ba92c0477e4089df58b9d62728552100be826d6d37a6c2dfa7b28a78121",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "pets": {
+      "slug": "pets",
+      "title": "Pets",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/pets",
+      "source_md_url": "https://learn.chatgpt.com/docs/pets.md",
+      "source_id": "llms:pets",
+      "hash": "b9f351b1e378abd8ecc90a3ef64a6e8d49b2119e443bc2b020383df12fac2fa5",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "plugins": {
+      "slug": "plugins",
+      "title": "Plugins",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/plugins",
+      "source_md_url": "https://learn.chatgpt.com/docs/plugins.md",
+      "source_id": "llms:plugins",
+      "hash": "0c8907012ab04c31cfc87cf351f60ef146be2ce677370e078cc94dc5a9b756d3",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "pricing": {
+      "slug": "pricing",
+      "title": "Pricing",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/pricing",
+      "source_md_url": "https://learn.chatgpt.com/docs/pricing.md",
+      "source_id": "llms:pricing",
+      "hash": "889cd2ace808b2dc8a5e6589e94e7c30bc03d43044680edc0be057b926320078",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "projects": {
+      "slug": "projects",
+      "title": "Projects and chats",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/projects",
+      "source_md_url": "https://learn.chatgpt.com/docs/projects.md",
+      "source_id": "llms:projects",
+      "hash": "11eafa156e700f21176b973d00128457ca0bfee86ee1304cefd40a4b7907632f",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "prompting": {
+      "slug": "prompting",
+      "title": "Prompting",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/prompting",
+      "source_md_url": "https://learn.chatgpt.com/docs/prompting.md",
+      "source_id": "llms:prompting",
+      "hash": "602843ea5cc1f1d8e08332a2e1632bf34aebd728fa91d0b136200244eb16ef9d",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "quickstart": {
+      "slug": "quickstart",
+      "title": "Quickstart",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/quickstart",
+      "source_md_url": "https://learn.chatgpt.com/docs/quickstart.md",
+      "source_id": "llms:quickstart",
+      "hash": "1a88203403ca4bdc1405abd1151c9ff05c922022fe4152be047ac266db92898d",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "reference/commands": {
+      "slug": "reference/commands",
+      "title": "Commands",
+      "group": "reference",
+      "source_url": "https://learn.chatgpt.com/docs/reference/commands",
+      "source_md_url": "https://learn.chatgpt.com/docs/reference/commands.md",
+      "source_id": "llms:reference/commands",
+      "hash": "f7ed36cb19a1be13e515f6226d92d2bceeebdc7ec54362c29f8f4e73c6ff2e85",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "reference/settings": {
+      "slug": "reference/settings",
+      "title": "Settings",
+      "group": "reference",
+      "source_url": "https://learn.chatgpt.com/docs/reference/settings",
+      "source_md_url": "https://learn.chatgpt.com/docs/reference/settings.md",
+      "source_id": "llms:reference/settings",
+      "hash": "9c7123a62fc3263d0145d8aed152f7474c7d5ec2ea063db1860760cdec84b6a3",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "reference/troubleshooting": {
+      "slug": "reference/troubleshooting",
+      "title": "Troubleshooting",
+      "group": "reference",
+      "source_url": "https://learn.chatgpt.com/docs/reference/troubleshooting",
+      "source_md_url": "https://learn.chatgpt.com/docs/reference/troubleshooting.md",
+      "source_id": "llms:reference/troubleshooting",
+      "hash": "b70b019ea459bf3d5ab7ef73ada7f52c34b319442a93f112aa98d9ee38038e5b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "remote": {
+      "slug": "remote",
+      "title": "Codex Remote",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/remote",
+      "source_md_url": "https://learn.chatgpt.com/docs/remote.md",
+      "source_id": "llms:remote",
+      "hash": "246b381b307331dc438f79762c5bea4bcce977c62ac1144a286a1f72efdf709c",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "remote-connections": {
+      "slug": "remote-connections",
+      "title": "Remote connections",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/remote-connections",
+      "source_md_url": "https://learn.chatgpt.com/docs/remote-connections.md",
+      "source_id": "llms:remote-connections",
+      "hash": "50b06a60108d0d774bc5cc944455b1c132964efc96c7526d0ee082f2ae068fec",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
     "sandbox": {
       "slug": "sandbox",
       "title": "Codex Security",
@@ -130,8 +1200,278 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/sandbox.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/sandbox.md",
       "source_id": "docs/sandbox.md",
-      "hash": "9c4841d3448f00017ecc9d4cd2cdde5c3c89b55a07c45dfae1548b3da7c848bf",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "e58af444be9956431d74a1de7237177e7631483c2abdb2846973828dac5a7b59",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "sandboxing": {
+      "slug": "sandboxing",
+      "title": "Sandbox",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/sandboxing",
+      "source_md_url": "https://learn.chatgpt.com/docs/sandboxing.md",
+      "source_id": "llms:sandboxing",
+      "hash": "c1ec7de62bcb658a602db21eedf74f3dd78cf8c1646d35005229bc2495c99cac",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "sandboxing/auto-review": {
+      "slug": "sandboxing/auto-review",
+      "title": "Auto-review",
+      "group": "sandboxing",
+      "source_url": "https://learn.chatgpt.com/docs/sandboxing/auto-review",
+      "source_md_url": "https://learn.chatgpt.com/docs/sandboxing/auto-review.md",
+      "source_id": "llms:sandboxing/auto-review",
+      "hash": "63b6e89163d922a0152cb2abb167743ef2d61a398cee90aaa364890e94fd1e20",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security": {
+      "slug": "security",
+      "title": "Codex Security",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/security",
+      "source_md_url": "https://learn.chatgpt.com/docs/security.md",
+      "source_id": "llms:security",
+      "hash": "e58af444be9956431d74a1de7237177e7631483c2abdb2846973828dac5a7b59",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security-administration": {
+      "slug": "security-administration",
+      "title": "Security",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/security-administration",
+      "source_md_url": "https://learn.chatgpt.com/docs/security-administration.md",
+      "source_id": "llms:security-administration",
+      "hash": "6d03c70d8c6125cd21a5d3e68b5a421dd26af9a36a49cdba96cbf7bca3e442ed",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/cli": {
+      "slug": "security/cli",
+      "title": "Codex Security CLI quickstart",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/cli",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/cli.md",
+      "source_id": "llms:security/cli",
+      "hash": "0bc8e656054a52b6f4062cfd84543d6e7e0cb563f8968fad1c6424f7d2068147",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/cli/bulk-scans": {
+      "slug": "security/cli/bulk-scans",
+      "title": "Run bulk security scans",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/cli/bulk-scans",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/cli/bulk-scans.md",
+      "source_id": "llms:security/cli/bulk-scans",
+      "hash": "e4d174161dda4ece8ed69b8faa1acc92e2d657afd6e3ab3c8c6ab114d9393259",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/cli/ci": {
+      "slug": "security/cli/ci",
+      "title": "Run Codex Security in CI",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/cli/ci",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/cli/ci.md",
+      "source_id": "llms:security/cli/ci",
+      "hash": "2bf895fee22ba1c1d23785eadb3143b56dfd91e354f7b66625c42960ba3268d7",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/cli/ci/gitlab": {
+      "slug": "security/cli/ci/gitlab",
+      "title": "Run Codex Security in GitLab CI/CD",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/cli/ci/gitlab",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/cli/ci/gitlab.md",
+      "source_id": "llms:security/cli/ci/gitlab",
+      "hash": "fc0cd3614d308aa8e1e5e8a1e9193fd4445e5579a561fcb1402337cda0a3d927",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/cli/faq": {
+      "slug": "security/cli/faq",
+      "title": "Codex Security CLI FAQ",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/cli/faq",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/cli/faq.md",
+      "source_id": "llms:security/cli/faq",
+      "hash": "8e5efea611abbc1242c4c5ca06c1e48bfe301b5e448c84a8c362998568f424f6",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/cli/reference": {
+      "slug": "security/cli/reference",
+      "title": "Codex Security CLI reference",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/cli/reference",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/cli/reference.md",
+      "source_id": "llms:security/cli/reference",
+      "hash": "d5fc907a7b3abee7aa6e6dfee6965c859d2079fd403e0c6b846b36da3fe3ec9b",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/faq": {
+      "slug": "security/faq",
+      "title": "Codex Security cloud FAQ",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/faq",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/faq.md",
+      "source_id": "llms:security/faq",
+      "hash": "b7edbbfdbbd306f1bc5933cd4a8f39a7f85f7dedfebeab43f18b61334f08e749",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin": {
+      "slug": "security/plugin",
+      "title": "Codex Security plugin quickstart",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin.md",
+      "source_id": "llms:security/plugin",
+      "hash": "56d7b8a3ef856fa7f87ce6f7efe0400bb77ed9623df542318c7be1d90a29d4e9",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/changelog": {
+      "slug": "security/plugin/changelog",
+      "title": "Codex Security plugin changelog",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/changelog",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/changelog.md",
+      "source_id": "llms:security/plugin/changelog",
+      "hash": "8e61b761e23e2223290dbc72b415fa453d4a5725882335c243661006366fc852",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/code-changes": {
+      "slug": "security/plugin/code-changes",
+      "title": "Review code changes for security",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/code-changes",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/code-changes.md",
+      "source_id": "llms:security/plugin/code-changes",
+      "hash": "fb63089d30d31be04a4faf34e034e0dee0ee2c7e67e926398b9508d7e55d52fe",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/deep-scans": {
+      "slug": "security/plugin/deep-scans",
+      "title": "Run a deep security scan",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/deep-scans",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/deep-scans.md",
+      "source_id": "llms:security/plugin/deep-scans",
+      "hash": "1ade24000b4119794aa90cd57443fe9c502686d9bbbd4a9876a0808be4647384",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/export-findings": {
+      "slug": "security/plugin/export-findings",
+      "title": "Export and track security findings",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/export-findings",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/export-findings.md",
+      "source_id": "llms:security/plugin/export-findings",
+      "hash": "8a7c62d5a426a234d09beb163fe24fe1ad49293d11c9a21641e394174517bf01",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/fix-findings": {
+      "slug": "security/plugin/fix-findings",
+      "title": "Fix and verify security findings",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/fix-findings",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/fix-findings.md",
+      "source_id": "llms:security/plugin/fix-findings",
+      "hash": "134596e073558743f8c6019d4381e345b6d795b1b7c6d2c1e3988251e096bcca",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/scans": {
+      "slug": "security/plugin/scans",
+      "title": "Run a Codex Security scan",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/scans",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/scans.md",
+      "source_id": "llms:security/plugin/scans",
+      "hash": "83c3f6dab0b1ff125b3fcf54e875ce57aff44aa3552cf8d59af01403e68eddcf",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/security-hardening": {
+      "slug": "security/plugin/security-hardening",
+      "title": "Propose security hardening",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/security-hardening",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/security-hardening.md",
+      "source_id": "llms:security/plugin/security-hardening",
+      "hash": "230f03e72f38bf12d29204dfc0469037f90bf0875a802a207b351accb29ad7db",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/triage-backlog": {
+      "slug": "security/plugin/triage-backlog",
+      "title": "Triage a backlog",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/triage-backlog",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/triage-backlog.md",
+      "source_id": "llms:security/plugin/triage-backlog",
+      "hash": "111b8d4db94180d907c548078ca95f96d8380129b9a778f924c0cd21bfcd1eda",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/vulnerability-reports": {
+      "slug": "security/plugin/vulnerability-reports",
+      "title": "Write vulnerability reports",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/vulnerability-reports",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/vulnerability-reports.md",
+      "source_id": "llms:security/plugin/vulnerability-reports",
+      "hash": "29a6793690bbb6bcca0230746826e1053f7191154ef0180f9a14268258c70457",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/plugin/workbench": {
+      "slug": "security/plugin/workbench",
+      "title": "Use the Codex Security workbench",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/plugin/workbench",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/workbench.md",
+      "source_id": "llms:security/plugin/workbench",
+      "hash": "9432a981406f34c7702cd54f725169828ac34119f9af23d9c876b038f9e776b0",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/sdk": {
+      "slug": "security/sdk",
+      "title": "Codex Security TypeScript SDK",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/sdk",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/sdk.md",
+      "source_id": "llms:security/sdk",
+      "hash": "93ff026ec61a61bc1040dd005fd6a7c4d631189494e2233dc3c9febf45a25bf0",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/security-review": {
+      "slug": "security/security-review",
+      "title": "Security Review",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/security-review",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/security-review.md",
+      "source_id": "llms:security/security-review",
+      "hash": "d6421bb543e493380dba8cba53284b944359837b4d9666f60e6ca6a836689448",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/setup": {
+      "slug": "security/setup",
+      "title": "Codex Security cloud setup",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/setup",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/setup.md",
+      "source_id": "llms:security/setup",
+      "hash": "913dada2c0576baa659d9dbace046e3e53914783eb51a50107e66a6febe1be37",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "security/threat-model": {
+      "slug": "security/threat-model",
+      "title": "Improving the threat model",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/threat-model",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/threat-model.md",
+      "source_id": "llms:security/threat-model",
+      "hash": "7ad2c73be7a482c1f94855fb451ea62cc52751d832905942c31c8bec349e29a1",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "sites": {
+      "slug": "sites",
+      "title": "Sites",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/sites",
+      "source_md_url": "https://learn.chatgpt.com/docs/sites.md",
+      "source_id": "llms:sites",
+      "hash": "990c0bb5de6d546fa26ee0976d4b328be434240f348c3a669cdbde6ca22c01d6",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "skills": {
       "slug": "skills",
@@ -140,8 +1480,18 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/skills.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/skills.md",
       "source_id": "docs/skills.md",
-      "hash": "d15791562748e64a53dfec534b8558aa522e732cec0fdedcf7257fa4ef486a20",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "22c86515af87f5b628bfb32bbae740871b20990bd63f4e540dad8429da049ac0",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "skills-and-plugins": {
+      "slug": "skills-and-plugins",
+      "title": "Skills & Plugins",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/skills-and-plugins",
+      "source_md_url": "https://learn.chatgpt.com/docs/skills-and-plugins.md",
+      "source_id": "llms:skills-and-plugins",
+      "hash": "b36c9a0daeaa53adc38c6b27e0c9a2d2554a723ff4c9f3803174874b73a78fc5",
+      "last_updated": "2026-09-10T23:15:02Z"
     },
     "slash_commands": {
       "slug": "slash_commands",
@@ -150,15 +1500,145 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/slash_commands.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/slash_commands.md",
       "source_id": "docs/slash_commands.md",
-      "hash": "4a0f20f3d779c89dea64f81e7bd03ddb49317f4bba472bd58bf4bc89f1285148",
-      "last_updated": "2026-09-10T22:55:15Z"
+      "hash": "e1b6514d52788b621bd1c07e12f14f30b2d6c07c3dbd6c6e8314170aa1d4d8f1",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "third-party/github": {
+      "slug": "third-party/github",
+      "title": "Review GitHub pull requests with Codex",
+      "group": "third-party",
+      "source_url": "https://learn.chatgpt.com/docs/third-party/github",
+      "source_md_url": "https://learn.chatgpt.com/docs/third-party/github.md",
+      "source_id": "llms:third-party/github",
+      "hash": "622a6032440b7fb8f848247684843d28a22f1e4bf554ceb31c86f89ece1eecfe",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "third-party/gitlab": {
+      "slug": "third-party/gitlab",
+      "title": "Review GitLab merge requests with Codex",
+      "group": "third-party",
+      "source_url": "https://learn.chatgpt.com/docs/third-party/gitlab",
+      "source_md_url": "https://learn.chatgpt.com/docs/third-party/gitlab.md",
+      "source_id": "llms:third-party/gitlab",
+      "hash": "1086c5582581c5b94743e0d3042bcf092d7247c46fc0fbbe627109bd6cf2c2dd",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "third-party/linear": {
+      "slug": "third-party/linear",
+      "title": "Use Codex in Linear",
+      "group": "third-party",
+      "source_url": "https://learn.chatgpt.com/docs/third-party/linear",
+      "source_md_url": "https://learn.chatgpt.com/docs/third-party/linear.md",
+      "source_id": "llms:third-party/linear",
+      "hash": "ea8698bff73d9e7ba7fe6b2ed1d47f3e3fd170dcc385a2165e7db8fdbf180527",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "third-party/slack": {
+      "slug": "third-party/slack",
+      "title": "Use Codex in Slack",
+      "group": "third-party",
+      "source_url": "https://learn.chatgpt.com/docs/third-party/slack",
+      "source_md_url": "https://learn.chatgpt.com/docs/third-party/slack.md",
+      "source_id": "llms:third-party/slack",
+      "hash": "62ce3bbefbfc8c9eecb4a64af9229c70017db9a2fa1e5ccf699f2a045573b82c",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "use-chatgpt": {
+      "slug": "use-chatgpt",
+      "title": "Use ChatGPT",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/use-chatgpt",
+      "source_md_url": "https://learn.chatgpt.com/docs/use-chatgpt.md",
+      "source_id": "llms:use-chatgpt",
+      "hash": "217e882df1a3287cf6a0950dc438f4b39fd9e95b5c147281dab2fefea53b96f1",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "visualizations": {
+      "slug": "visualizations",
+      "title": "Visualizations",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/visualizations",
+      "source_md_url": "https://learn.chatgpt.com/docs/visualizations.md",
+      "source_id": "llms:visualizations",
+      "hash": "5295c2eab7f81cbc2d5c01e0c21ccd4cf841a30656a0e4f62f23e480c113e38a",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "web": {
+      "slug": "web",
+      "title": "ChatGPT on the web",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/web",
+      "source_md_url": "https://learn.chatgpt.com/docs/web.md",
+      "source_id": "llms:web",
+      "hash": "dbdeecd2a6e2816bb4d494ea934c2efaf5878a214757d7980a18f8e719fbd250",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "web-search": {
+      "slug": "web-search",
+      "title": "Web search",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/web-search",
+      "source_md_url": "https://learn.chatgpt.com/docs/web-search.md",
+      "source_id": "llms:web-search",
+      "hash": "fdd88c2f9e4f5505b9dec08ec4f12d9068fac8d5f77b599f188858a910d5089c",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "webmcp": {
+      "slug": "webmcp",
+      "title": "Site tools",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/webmcp",
+      "source_md_url": "https://learn.chatgpt.com/docs/webmcp.md",
+      "source_id": "llms:webmcp",
+      "hash": "76326cbfd16449a3800cd0b43e7d1352e26a08df463eab2feec5e5d04439f06c",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "whats-new": {
+      "slug": "whats-new",
+      "title": "What's new",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/whats-new",
+      "source_md_url": "https://learn.chatgpt.com/docs/whats-new.md",
+      "source_id": "llms:whats-new",
+      "hash": "f940ae28834553442cde7c353470244ba24c4961a4015331e9a1034b6d3ee05c",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "windows/windows-app": {
+      "slug": "windows/windows-app",
+      "title": "ChatGPT desktop app for Windows",
+      "group": "windows",
+      "source_url": "https://learn.chatgpt.com/docs/windows/windows-app",
+      "source_md_url": "https://learn.chatgpt.com/docs/windows/windows-app.md",
+      "source_id": "llms:windows/windows-app",
+      "hash": "e5a140f3a6528310d41d6b516a25d726af582f4e4f88354644fdba8ed71f776f",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "windows/windows-sandbox": {
+      "slug": "windows/windows-sandbox",
+      "title": "Windows sandbox",
+      "group": "windows",
+      "source_url": "https://learn.chatgpt.com/docs/windows/windows-sandbox",
+      "source_md_url": "https://learn.chatgpt.com/docs/windows/windows-sandbox.md",
+      "source_id": "llms:windows/windows-sandbox",
+      "hash": "99cf193568b89e6bd3cd4849546ec5b7ab9e04a709c7afdab86be1b65de191ff",
+      "last_updated": "2026-09-10T23:15:02Z"
+    },
+    "windows/wsl": {
+      "slug": "windows/wsl",
+      "title": "WSL",
+      "group": "windows",
+      "source_url": "https://learn.chatgpt.com/docs/windows/wsl",
+      "source_md_url": "https://learn.chatgpt.com/docs/windows/wsl.md",
+      "source_id": "llms:windows/wsl",
+      "hash": "bb303f8488affdb5fbf8edc643ba5d4aa3b269a0fee8ec237e1ab185de596d92",
+      "last_updated": "2026-09-10T23:15:02Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-10T22:55:15Z",
-    "fetch_duration_seconds": 5.428,
-    "total_pages_discovered": 15,
-    "pages_fetched_successfully": 15,
+    "last_fetch_completed": "2026-09-10T23:17:02Z",
+    "fetch_duration_seconds": 56.914,
+    "total_pages_discovered": 163,
+    "pages_fetched_successfully": 163,
     "pages_failed": 0,
     "failed_pages": []
   }

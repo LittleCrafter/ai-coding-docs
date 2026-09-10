@@ -9,7 +9,7 @@ Inspect code, make changes, run commands, and automate repeatable work without l
 ### Start here
 
 - [Install Codex](#getting-started)
-- [CLI reference](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
+- [CLI reference](./developer-commands.md)
 
 ### Why use Codex CLI
 
@@ -95,7 +95,7 @@ brew upgrade --cask codex
 
 Open a project directory and run `codex`. The first time you run Codex, choose **Sign in with ChatGPT** or another available sign-in method.
 
-[Review authentication options](https://learn.chatgpt.com/docs/auth)
+[Review authentication options](./auth.md)
 
 ### 3. Start your first task
 
@@ -109,34 +109,34 @@ Create Git checkpoints before and after a task so you can revert changes. See th
 
 ### Next steps
 
-- [Explore the CLI reference](https://learn.chatgpt.com/docs/developer-commands?surface=cli)
-- [Configure Codex](https://learn.chatgpt.com/docs/configuration?surface=cli)
-- [Automate with codex exec](https://learn.chatgpt.com/docs/non-interactive-mode)
+- [Explore the CLI reference](./developer-commands.md)
+- [Configure Codex](./configuration.md)
+- [Automate with codex exec](./non-interactive-mode.md)
 
 ## See what Codex CLI can do
 
 Use one focused terminal loop for interactive work, automation, review, and delegation.
 
-- [Keep the coding loop in your terminal](https://learn.chatgpt.com/docs/developer-commands?surface=cli): Start Codex in a repository to explore unfamiliar code, plan a change, edit files, and run your local development tools. Steer the active turn, inspect commands and diffs as they appear, and keep follow-up work in the same session.
-- [Use skills and plugins](https://learn.chatgpt.com/docs/skills-and-plugins?surface=cli): Package repeatable instructions as skills, then add plugins to connect Codex to your team's tools and data without leaving the CLI.
-- [Review changes before they ship](https://learn.chatgpt.com/docs/code-review?surface=cli): Run a dedicated review against uncommitted changes, a commit, or a base branch. Codex reports prioritized findings without modifying your working tree, so you can address risks before you commit or open a pull request.
+- [Keep the coding loop in your terminal](./developer-commands.md): Start Codex in a repository to explore unfamiliar code, plan a change, edit files, and run your local development tools. Steer the active turn, inspect commands and diffs as they appear, and keep follow-up work in the same session.
+- [Use skills and plugins](./skills-and-plugins.md): Package repeatable instructions as skills, then add plugins to connect Codex to your team's tools and data without leaving the CLI.
+- [Review changes before they ship](./code-review.md): Run a dedicated review against uncommitted changes, a commit, or a base branch. Codex reports prioritized findings without modifying your working tree, so you can address risks before you commit or open a pull request.
 
 ## Build a terminal workflow around Codex
 
 Learn about the CLI features you can use to resume sessions, add visual and web context, split up complex work, and connect Codex to your development tools.
 
-- [**Return to a saved chat**](https://learn.chatgpt.com/docs/developer-commands?surface=cli#codex-resume) — `codex resume`: Reopen a recent chat from the current repository, or search across local chats when you need to return to older work.
-- [**Bring visual context into the prompt**](https://learn.chatgpt.com/docs/image-inputs?surface=cli) — `codex --image`: Pass an error screenshot, architecture diagram, or design reference with the first prompt, or paste an image into the interactive composer.
-- [**Split up a larger investigation**](https://learn.chatgpt.com/docs/agent-configuration/subagents) — `subagents`: Ask Codex to delegate focused work to specialized agents, then bring their findings back into the main terminal session.
-- [**Search for current context**](https://learn.chatgpt.com/docs/web-search?surface=cli) — `codex --search`: Switch a run to live web search when a task depends on current releases, documentation, or external behavior. Search activity stays visible in the transcript.
-- [**Move work to Codex cloud**](https://learn.chatgpt.com/docs/cloud#use-codex-cloud-from-the-cli) — `codex cloud`: Browse active and completed chats, submit work to a configured environment, and apply the result to your local repository from the terminal.
-- [**Connect external tools with MCP**](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) — `codex mcp`: Add local or remote MCP servers, authenticate when needed, and inspect the tools available to the current session before Codex uses them.
-- [**Set the boundaries for each run**](https://learn.chatgpt.com/docs/agent-approvals-security) — `/permissions`: Choose when Codex can edit files or run commands without asking, and inspect the active sandbox and writable roots before you continue.
-- [**Fit Codex to your terminal**](https://learn.chatgpt.com/docs/cli-customization) — `codex completion`: Generate completions for your shell, choose a syntax theme, and open longer prompts in the editor configured by VISUAL or EDITOR.
+- [**Return to a saved chat**](./developer-commands.md#codex-resume) — `codex resume`: Reopen a recent chat from the current repository, or search across local chats when you need to return to older work.
+- [**Bring visual context into the prompt**](./image-inputs.md) — `codex --image`: Pass an error screenshot, architecture diagram, or design reference with the first prompt, or paste an image into the interactive composer.
+- [**Split up a larger investigation**](./agent-configuration/subagents.md) — `subagents`: Ask Codex to delegate focused work to specialized agents, then bring their findings back into the main terminal session.
+- [**Search for current context**](./web-search.md) — `codex --search`: Switch a run to live web search when a task depends on current releases, documentation, or external behavior. Search activity stays visible in the transcript.
+- [**Move work to Codex cloud**](./cloud.md#use-codex-cloud-from-the-cli) — `codex cloud`: Browse active and completed chats, submit work to a configured environment, and apply the result to your local repository from the terminal.
+- [**Connect external tools with MCP**](./extend/mcp.md) — `codex mcp`: Add local or remote MCP servers, authenticate when needed, and inspect the tools available to the current session before Codex uses them.
+- [**Set the boundaries for each run**](./agent-approvals-security.md) — `/permissions`: Choose when Codex can edit files or run commands without asking, and inspect the active sandbox and writable roots before you continue.
+- [**Fit Codex to your terminal**](./cli-customization.md) — `codex completion`: Generate completions for your shell, choose a syntax theme, and open longer prompts in the editor configured by VISUAL or EDITOR.
 
 ## Use Codex CLI when…
 
-- [You work from the terminal](https://learn.chatgpt.com/docs/developer-commands?surface=cli): Explore, edit, and run a repository in one focused loop.
-- [You need scripting or CI](https://learn.chatgpt.com/docs/non-interactive-mode): Run a non-interactive command in a repeatable workflow.
-- [You want a local code review](https://learn.chatgpt.com/docs/code-review?surface=cli): Inspect changes before you commit or open a pull request.
-- [You want to hand work to the cloud](https://learn.chatgpt.com/docs/cloud#use-codex-cloud-from-the-cli): Launch a cloud chat and return to the terminal later.
+- [You work from the terminal](./developer-commands.md): Explore, edit, and run a repository in one focused loop.
+- [You need scripting or CI](./non-interactive-mode.md): Run a non-interactive command in a repeatable workflow.
+- [You want a local code review](./code-review.md): Inspect changes before you commit or open a pull request.
+- [You want to hand work to the cloud](./cloud.md#use-codex-cloud-from-the-cli): Launch a cloud chat and return to the terminal later.
