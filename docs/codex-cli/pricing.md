@@ -7,49 +7,27 @@
 
 <h2 class="sr-only">Pricing options</h2>
 
-<ContentSwitcher
-  id="codex-pricing-plans"
-  initialValue="individual"
-  options={[
-    {
-      label: "Individual",
-      value: "individual",
-    },
-    {
-      label: "Business / Enterprise",
-      value: "business-enterprise",
-    },
-  ]}
->
   
 
     
 
-      <PricingCard
-        name="Free"
-        subtitle="Explore Codex capabilities on quick coding tasks."
-        price="$0"
-        interval="/month"
-        ctaLabel="Get Free"
-        ctaHref="https://chatgpt.com/plans/free/"
-      />
-      <PricingCard
-        name="Go"
-        subtitle="Use Codex for lightweight coding tasks."
-        price="$8"
-        interval="/month"
-        ctaLabel="Get Go"
-        ctaHref="https://chatgpt.com/plans/go"
-      />
-      <PricingCard
-        name="Plus"
-        subtitle="Power a few focused coding sessions each week."
-        price="$20"
-        interval="/month"
-        ctaLabel="Get Plus"
-        ctaHref="https://chatgpt.com/explore/plus?utm_internal_source=openai_developers_codex"
-      >
-        - Codex on the web, in the CLI, in the IDE extension, and on iOS
+      ### Free ($0/month)
+
+Explore Codex capabilities on quick coding tasks.
+
+[Get Free](https://chatgpt.com/plans/free/)
+      ### Go ($8/month)
+
+Use Codex for lightweight coding tasks.
+
+[Get Go](https://chatgpt.com/plans/go)
+      ### Plus ($20/month)
+
+Power a few focused coding sessions each week.
+
+[Get Plus](https://chatgpt.com/explore/plus?utm_internal_source=openai_developers_codex)
+
+- Codex on the web, in the CLI, in the IDE extension, and on iOS
         - Cloud-based integrations like automatic code review and Slack
           integration
         - The GPT-5.6 model family, including Sol, Terra, and Luna
@@ -58,61 +36,44 @@
         - Flexibly extend usage with [ChatGPT credits](#credits-overview)
         - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
           Plus plan
-      </PricingCard>
-      <PricingCard
-        name="Pro"
-        subtitle="Choose 5x or 20x higher rate limits than Plus."
-        priceEyebrow="From"
-        price="$100"
-        interval="/month"
-        ctaLabel="Get Pro"
-        ctaHref="https://chatgpt.com/explore/pro?utm_internal_source=openai_developers_codex"
-        highlight="Everything in Plus and:"
-        footnoteLabel="*Learn more about limits on both tiers."
-        footnoteHref="https://help.openai.com/en/articles/9793128-about-chatgpt-pro-plans"
-      >
-        - Access to GPT-5.3-Codex-Spark (research preview), a fast Codex model
+      ### Pro ($100/month)
+
+Choose 5x or 20x higher rate limits than Plus.
+
+[Get Pro](https://chatgpt.com/explore/pro?utm_internal_source=openai_developers_codex)
+
+- Access to GPT-5.3-Codex-Spark (research preview), a fast Codex model
           for day-to-day coding tasks
         - 5x or 20x more Codex usage than Plus*
         - Unlimited ChatGPT Voice on the $200/month tier; tasks still draw from
           your Codex usage budget
         - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
           Pro plan
-      </PricingCard>
-      <PricingCard
-        name="API Key"
-        subtitle="Great for automation in shared environments like CI."
-        price=""
-        interval=""
-        ctaLabel="Learn more"
-        ctaHref="/codex/auth"
-        highlight=""
-      >
-        - Codex in the CLI, SDK, or IDE extension
+      ### API Key
+
+Great for automation in shared environments like CI.
+
+[Learn more](/codex/auth)
+
+- Codex in the CLI, SDK, or IDE extension
         - No cloud-based features (GitHub code review, Slack, etc.)
         - Model availability follows the API models available to your key
         - Pay for Codex usage based on [API pricing](https://developers.openai.com/api/docs/pricing)
-      </PricingCard>
     
 
-
   
-
 
   
 
     
 
-      <PricingCard
-        name="Business"
-        subtitle="Bring Codex into your startup or growing business."
-        price="$20"
-        interval="/ user / month*"
-        ctaLabel="Get Business"
-        ctaHref="https://chatgpt.com/team-sign-up"
-        footnoteLabel="*2+ users, billed annually. $25 per user per month when billed monthly."
-      >
-        - Access ChatGPT and Codex across desktop and mobile apps
+      ### Business ($20/ user / month*)
+
+Bring Codex into your startup or growing business.
+
+[Get Business](https://chatgpt.com/team-sign-up)
+
+- Access ChatGPT and Codex across desktop and mobile apps
         - Larger virtual machines to run cloud chats faster
         - Flexibly extend usage with [ChatGPT credits](#credits-overview)
         - A secure, dedicated workspace with essential admin controls, SAML SSO,
@@ -121,16 +82,13 @@
           more](https://openai.com/business-data/)
         - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
           Business plan
-      </PricingCard>
-      <PricingCard
-        name="Enterprise & Edu"
-        subtitle="Unlock Codex for your entire organization with enterprise-grade functionality."
-        interval=""
-        ctaLabel="Contact sales"
-        ctaHref="https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_codex"
-        highlight="Everything in Business and:"
-      >
-        - Priority request processing
+      ### Enterprise & Edu
+
+Unlock Codex for your entire organization with enterprise-grade functionality.
+
+[Contact sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_codex)
+
+- Priority request processing
         - Enterprise-level security and controls, including SCIM, EKM, user
           analytics, domain verification, and role-based access control
           ([RBAC](https://help.openai.com/en/articles/11750701-rbac))
@@ -139,33 +97,23 @@
         - Data retention and data residency controls
         - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
           Enterprise plan
-      </PricingCard>
     
 
-
     
 
-      <PricingCard
-        class="codex-pricing-card--span-two"
-        name="API Key"
-        subtitle="Great for automation in shared environments like CI."
-        price=""
-        interval=""
-        ctaLabel="Learn more"
-        ctaHref="/codex/auth"
-        highlight=""
-      >
-        - Codex in the CLI, SDK, or IDE extension
+      ### API Key
+
+Great for automation in shared environments like CI.
+
+[Learn more](/codex/auth)
+
+- Codex in the CLI, SDK, or IDE extension
         - No cloud-based features (GitHub code review, Slack, etc.)
         - Model availability follows the API models available to your key
         - Pay for Codex usage based on [API pricing](https://developers.openai.com/api/docs/pricing)
-      </PricingCard>
     
 
-
   
-
-</ContentSwitcher>
 
 ## Invite friends and coworkers
 
@@ -216,17 +164,11 @@ Choose the GPT-5.6 model that best fits your work:
   classification, extraction, support, background automation, and focused coding
   tasks.
 
-
-
-
 The estimates below show local messages per five-hour period. Cloud chats on
 ChatGPT plans use GPT-5.6 Sol and may use more of your allowance than local
 messages. These estimates are not fixed message limits; check your
 [usage dashboard](#where-can-i-see-my-current-usage-limits) for current limits
 and reset times.
-
-
-
 
 <TableWrapper class="w-full min-w-[46rem]">
   <thead class="whitespace-nowrap">
@@ -448,8 +390,6 @@ card until we migrate you to the new token-based pricing. For more information,
 [contact OpenAI
 sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_codex).
 
-
-
   <table>
     <thead>
       <tr>
@@ -561,8 +501,6 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
       </tr>
     </tfoot>
   </table>
-
-
 
 _GPT-5.6 Sol’s promotional pricing is available at least through November 21, 2026._
 
@@ -1355,7 +1293,6 @@ efficiently](./prompting.md#use-work-efficiently).
 >
   <sup>*</sup> Feature is currently limited to only specific regions. Check the
   individual feature documentation to learn more about geo restrictions.
-
 
 <div
   id="codex-plan-plugin-limits"

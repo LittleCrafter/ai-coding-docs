@@ -2,7 +2,7 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-<VideoPlayer src="https://cdn.openai.com/devhub/superapp-video-v1.mp4" />
+[Video Demo](https://cdn.openai.com/devhub/superapp-video-v1.mp4)
 
 <a id="introducing-work-mode"></a>
 
@@ -29,7 +29,7 @@ an experience designed for everyday work.
 
 ## What to try first
 
-<VideoPlayer src="https://cdn.openai.com/devhub/videos-learn/selectnoonboarding.mp4" />
+[Video Demo](https://cdn.openai.com/devhub/videos-learn/selectnoonboarding.mp4)
 
 First, switch to **Work**. Then choose your first task.
 Good tasks have a clear outcome, a few source materials, and an output you can
@@ -53,15 +53,9 @@ Here are three common use cases you can get started with:
 Use ChatGPT Work to turn notes, docs, research, or meeting materials into a structured
 deck.
 
-
   
 
 > Illustration: A presentation created in ChatGPT Work
-
-
-
-
-
 
 **Example prompt:**
 
@@ -74,15 +68,9 @@ Review the attached source materials and create an eight-slide presentation for 
 Use ChatGPT Work to turn notes, files, or research into a spreadsheet that compares
 options and helps you make a decision.
 
-
   
 
 > Illustration: A comparison spreadsheet created in ChatGPT Work
-
-
-
-
-
 
 **Example prompt:**
 
@@ -95,15 +83,9 @@ Create a spreadsheet comparing the options for [decision]. Use the attached note
 Use scheduled tasks when you want ChatGPT Work to repeat, monitor, or refresh something
 over time.
 
-
   
 
 > Illustration: A recurring update scheduled in ChatGPT Work
-
-
-
-
-
 
 **Example prompt:**
 
@@ -132,8 +114,6 @@ review or approval.
 
 **Instead of:** Make me a presentation about our customer research.
 
-
-
 **Example prompt:**
 
 ```text
@@ -144,13 +124,9 @@ Learn more about [prompting for ChatGPT Work](./prompting.md#prompting-for-work)
 
 ## Add plugins for more context and better outputs
 
-
   
 
 > Illustration: The plugins library in ChatGPT Work
-
-
-
 
 Plugins connect ChatGPT Work to tools your team uses, like Slack, Google Drive,
 SharePoint, email, calendars, customer relationship management systems, and

@@ -56,7 +56,6 @@ Choose the model Codex uses by default in the CLI and IDE.
 model = "gpt-5.6"
 ```
 
-
 #### Approval prompts
 
 Control when Codex pauses to ask before running generated commands.

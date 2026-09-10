@@ -13,36 +13,20 @@ Sites lets ChatGPT create, host, refine, and share websites, web apps, and games
 Use Sites when you want to turn a prompt or compatible existing project into a
 hosted experience without setting up a separate deployment workflow.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 Open **Sites** in the ChatGPT desktop app. You can start a site from a prompt or
 from a compatible local project, then return to the Sites view to manage it.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 Use Sites in ChatGPT on the web to create and manage hosted sites. Select
 **More** > **Sites**, or go directly to
 [chatgpt.com/sites](https://chatgpt.com/sites), to find Sites you've created.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 Sites doesn't have a standalone Codex CLI management view. Use ChatGPT web or
 the desktop app to create, save, deploy, and manage a Sites project. You can
 still use Codex CLI to edit and test a local project before publishing it.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 Sites doesn't have a standalone IDE extension management view. Use ChatGPT web
 or the desktop app for Sites operations, and use the IDE extension to edit and
 test the local source project.
-
-</ContentModeSwitch>
 
 Every Sites deployment URL is a production deployment. If you want to review a
   build before it becomes live, ask ChatGPT to save a version without deploying
@@ -52,8 +36,6 @@ Every Sites deployment URL is a production deployment. If you want to review a
 
 In ChatGPT, include the word "website" in your prompt or mention `@Sites` to
 start the Sites workflow explicitly.
-
-<WorkflowSteps variant="headings">
 
 1. Describe the Site
 
@@ -75,15 +57,9 @@ start the Sites workflow explicitly.
    Return to **Sites** to reopen or refine the Site. When it's ready, choose who
    can visit it and share the resulting link.
 
-</WorkflowSteps>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 In the preview, select **Edit**. Under **Describe website edits**, describe the
 changes you want. Use **Screenshot** or **Add files and more** when additional
 context would help.
-
-</ContentModeSwitch>
 
 ## Prompt Sites for common tasks
 
@@ -97,16 +73,12 @@ Require people to sign in with their workspace account, and keep the request
 data saved between visits.
 ```
 
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 For an existing project, ask Sites to prepare and publish the current app:
 
 ```text
 Deploy this project with Sites. Check whether it is compatible, make any
 required changes, and give me the deployment URL.
 ```
-
-</ContentModeSwitch>
 
 When a site needs durable application data or uploaded files, say so in the
 request:
@@ -126,31 +98,15 @@ Site without adding an analytics SDK. The analytics view shows total unique
 visitors and page views, plus both metrics over time. Change the date range or
 granularity to inspect a different period.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 Open **Sites**, find the Site, then select **More actions** > **Analytics**.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 Go to [chatgpt.com/sites](https://chatgpt.com/sites), find the Site, then select
 **More actions** > **Analytics**.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="cli,ide">
-
 Sites doesn't have a standalone analytics view in the CLI or IDE extension. Open
 the Site in ChatGPT on the web or in the desktop app to review its analytics.
 
-</ContentModeSwitch>
-
-
-
 > Illustration: Interactive Sites analytics dashboard showing unique visitors and page views over seven days.
-
-
 
 Analytics is currently available for Sites that aren't owned by an Enterprise
   workspace.
@@ -168,7 +124,8 @@ Ask Sites to add the sign-in experience:
 Add Sign in with ChatGPT to this public Site. Keep the Site available to signed-out visitors. Show a Sign in with ChatGPT action when someone is signed out. After they sign in, greet them with their full name when available, or their email address otherwise. Add a Sign out action, and keep authorization decisions in server-side code.
 ```
 
-<ToggleSection title="How it works">
+<details>
+<summary>How it works</summary>
 
 Sites handles the sign-in and sign-out flows through platform-provided paths,
 then returns the visitor to your Site:
@@ -188,14 +145,12 @@ these request headers:
 Keep authorization decisions in server-side code, and don't depend on
 name-split headers.
 
-</ToggleSection>
+</details>
 
 ## Understand projects, versions, and deployments
 
 A Site is a persistent hosted output that you can reopen, refine, configure,
 and share from **Sites** in ChatGPT.
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 A Sites project links a local source project to hosting managed through Sites.
 Sites stores that linkage and optional storage binding names in
@@ -213,17 +168,9 @@ file storage can contain:
 }
 ```
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 A Site appears in your Sites list even after the ChatGPT Work chat that created it ends.
 You don't need a local project or manifest to start a Site on the web. A Site is
 separate from a ChatGPT Project.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 Sites publishing has two separate stages:
 
@@ -236,8 +183,6 @@ Sites publishing has two separate stages:
 
 Ask ChatGPT to list or inspect saved versions when you need to identify a
 previous deployment candidate.
-
-</ContentModeSwitch>
 
 ## Choose a supported site shape
 
@@ -298,8 +243,6 @@ it public. You can invite viewers outside your workspace, or share a private
 Site from a personal account. The feature is rolling out to Sites users on
 Plus, Pro, Business, and Enterprise plans.
 
-<WorkflowSteps>
-
 1. Open a Site you own and select **Share**.
 2. To keep the Site private, set **Who has access** to **Only those invited**.
 3. Enter the viewer's email address under **Search for people or groups**, or
@@ -308,8 +251,6 @@ Plus, Pro, Business, and Enterprise plans.
    **Invite**.
 5. Confirm that the viewer appears in the saved access list. Share the Site's
    link and ask them to sign in with the account that received access.
-
-</WorkflowSteps>
 
 External viewers can open and use the Site. They don't become workspace
 members or Site editors, and can't edit or publish the Site. The invitation
@@ -335,8 +276,6 @@ owner can invite active members of the same workspace as editors.
 Editors can read the Site's live database data. Invite only people you trust
 with the Site's code and data.
 
-<WorkflowSteps>
-
 1. Open the Site and select **Share**.
 2. Under **Add people or groups**, find and select a workspace member. They
    are added as a visitor.
@@ -345,8 +284,6 @@ with the Site's code and data.
    Sites view.
 4. The editor can open the Site, make changes, save versions, and publish
    updates after the owner has published the Site for the first time.
-
-</WorkflowSteps>
 
 The Site owner manages editor access and can promote an existing visitor to
 editor, change an editor to **Can view**, or remove their access. Co-editing
@@ -367,14 +304,8 @@ Open **Sites**, then open the Site's settings to add, update, or remove hosted
 environment variables and secrets. Keep secret values out of prompts, attached
 files, and Site content.
 
-<ContentModeSwitch group="codex-surface" id="web">
-
 Go to [chatgpt.com/sites](https://chatgpt.com/sites), find the Site, then select
 **More actions** > **Settings**.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 Don't store these values in `.openai/hosting.json`. Keep local `.env` and
 `.env.example` files aligned with the keys needed for local development, and
@@ -383,8 +314,6 @@ don't commit secret values.
 When you add, update, or remove hosted environment values, ask ChatGPT to
 redeploy the approved saved version so the next deployment uses the updated
 configuration.
-
-</ContentModeSwitch>
 
 ## Change a Site URL
 
@@ -444,12 +373,8 @@ Before you share a Site:
 - Choose the narrowest sharing option that fits the intended audience.
 - Open the shared Site and confirm that the intended audience can visit it.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 For a Site built from a local project, also review the source changes and any
 database migrations in the Codex [review pane](./code-review.md).
-
-</ContentModeSwitch>
 
 ## Take down or delete a Site
 
@@ -494,25 +419,15 @@ for the current limits and policy links.
 
 ## Related documentation
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 - [ChatGPT desktop app](./app.md) introduces app navigation, projects, and chats.
 - [Review and ship changes](./code-review.md) explains how to inspect source
   changes before publishing them.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="cli,ide">
 
 - [Projects and chats](./projects.md) explains how folder and workspace
   context carries across chats.
 - [Review and ship changes](./code-review.md) explains the review workflow for
   each Codex client.
 - [Sandboxing](./sandboxing.md) explains the local execution boundary.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 - [Open Sites in ChatGPT](https://chatgpt.com/sites) to return to Sites you've
   created.
@@ -521,4 +436,3 @@ for the current limits and policy links.
 - [Work with files](./artifacts-viewer.md) explains how to review
   generated files in ChatGPT web.
 
-</ContentModeSwitch>

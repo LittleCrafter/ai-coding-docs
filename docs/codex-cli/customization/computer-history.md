@@ -27,11 +27,7 @@ create summaries you can review and delete. It does not include screenshots in
 your history or record audio, and private-mode web browsing activity is never
 included.
 
-
-
 > Illustration: Computer History timeline showing activity summaries, contributing apps, and suggested skills and automations
-
-
 
 ## How Computer History helps
 
@@ -41,16 +37,10 @@ Codex can use the history to identify that source and then read it directly.
 
 <section class="feature-grid mt-4">
 
-
-
-
 ### Pick up where you left off
 
 Ask what you were doing before a break without reconstructing every open app,
 document, and next step.
-
-
-
 
 <ComputerHistoryThreadDemo client:load scenario="resume" />
 
@@ -58,16 +48,10 @@ document, and next step.
 
 <section class="feature-grid inverse">
 
-
-
-
 ### Find recent work
 
 Refer to a document, conversation, or task the way you remember it. Computer
 History can use the activity timeline to identify the source you mean.
-
-
-
 
 <ComputerHistoryThreadDemo client:load scenario="find" />
 
@@ -75,17 +59,11 @@ History can use the activity timeline to identify the source you mean.
 
 <section class="feature-grid">
 
-
-
-
 ### Reuse workflows
 
 When Computer History notices repeatable work, a timeline entry can suggest a
 skill or automation. Review the suggestion, then ask Codex to create it from the
 recorded workflow.
-
-
-
 
 <ComputerHistoryThreadDemo client:load scenario="workflow" />
 
@@ -236,16 +214,8 @@ Markdown files that you can read and modify. Those files are stored
 under `$CODEX_HOME/memories/extensions/skysight/`, which typically resolves to
 `~/.codex/memories/extensions/skysight/`.
 
-
-
-  <Alert
-    client:load
-    color="danger"
-    variant="soft"
-    description="Computer History files can contain sensitive information. They are not encrypted by Computer History, and other programs running as your macOS user may be able to access them. Protect your Mac account and exclude sources you do not want included."
-  />
-
-
+  > [!NOTE]
+> Computer History files can contain sensitive information. They are not encrypted by Computer History, and other programs running as your macOS user may be able to access them. Protect your Mac account and exclude sources you do not want included.
 
 ### What data gets shared with OpenAI?
 

@@ -6,15 +6,10 @@ Pets are optional animated companions for following work. Where a pet appears
 and what it shows depend on the interface you use. Choosing a pet changes its
 appearance, not how ChatGPT completes tasks.
 
-
-
   
 
     <CodexPetsDemo client:load mobileAlignment="left" />
   
-
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 ## Use a floating pet
 
@@ -73,10 +68,6 @@ They don't automatically sync to ChatGPT web.
 Pets respect your operating system's reduced motion setting. When reduced
 motion is enabled, the pet uses a still frame instead of sprite animation.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 ## Choose a pet on the web
 
 If Pets are available for your account and workspace, open **Settings >
@@ -91,10 +82,6 @@ desktop app's floating overlay, activity tray, or `/pet` command.
 Select **Upload pet** to add a custom sprite sheet. The file must be a
 transparent PNG or WebP, exactly 1536 × 1872 pixels, and no larger than 20 MiB.
 You can edit, download, refresh, or delete uploaded pets from the same setting.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 ## Choose a terminal pet
 
@@ -112,19 +99,10 @@ provide the desktop app's multiple-chat activity tray.
 Terminal pets require iTerm2 3.6 or later, or a terminal with Kitty graphics or
 Sixel support. They are unavailable inside tmux and Zellij.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 ## Pets in the IDE extension
 
 The Codex IDE extension doesn't provide a pet picker or floating pet overlay.
 Use the ChatGPT desktop app or Codex CLI when you want to use your own pet.
-
-</ContentModeSwitch>
-
-
-
 
 ## Related docs
 

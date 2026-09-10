@@ -15,11 +15,7 @@ leaving the keyboard.
 
 > Illustration: Interactive Codex Micro keyboard with illuminated Agent Keys, customizable Command Keys, a dial, and an analog stick
 
-
   
-
-
-
 
 ## Set up Codex Micro
 
@@ -108,24 +104,20 @@ assignments**, an Agent Key can trigger an action instead.
 
 Codex Micro comes with six actions in its default layout:
 
-
-
   
-
 
 |                            Key                            | Default action                           |
 | :-------------------------------------------------------: | ---------------------------------------- |
-|  <CodexMicroTableKeycap keycapId="FAST" label="Fast" />   | Turn Fast mode on or off.                |
-| <CodexMicroTableKeycap keycapId="APPR" label="Approve" /> | Approve the current request.             |
-| <CodexMicroTableKeycap keycapId="REJ" label="Decline" />  | Decline the current request.             |
-|  <CodexMicroTableKeycap keycapId="SPLIT" label="Fork" />  | Continue the current chat in a new chat. |
-|   <CodexMicroTableKeycap keycapId="MIC" label="Mic" />    | Start push-to-talk.                      |
-| <CodexMicroTableKeycap keycapId="CODEX" label="Codex" />  | Send the message in the composer.        |
+|  **Fast**   | Turn Fast mode on or off.                |
+| **Approve** | Approve the current request.             |
+| **Decline**  | Decline the current request.             |
+|  **Fork**  | Continue the current chat in a new chat. |
+|   **Mic**    | Start push-to-talk.                      |
+| **Codex**  | Send the message in the composer.        |
 
   
 
   
-
 
 The Mic key uses your computer's microphone. Codex Micro doesn't have a
 microphone of its own. By default, it uses **Push to talk**: hold the key while
@@ -154,15 +146,9 @@ assignments without changing the Agent Key mode or custom chat assignments.
 
   
 
-
-
-
 ## Use the analog stick and dial
 
-
-
   
-
 
 The analog stick moves freely in any direction. When you push it far enough
 from the center, ChatGPT turns the movement into one of four directional
@@ -175,7 +161,6 @@ direction in the device settings.
 
   
 
-
 | Direction | Default action             |
 | --------- | -------------------------- |
 | Up        | Turn Plan mode on or off.  |
@@ -184,9 +169,6 @@ direction in the device settings.
 | Left      | Go back in app history.    |
 
   
-
-
-
 
 The dial uses **Composer navigation** by default. Turn it to move through
 composer controls and options, then press it to open or select the focused
@@ -207,14 +189,10 @@ Pressing and holding the dial opens the device settings in every mode except
 
 ## Adjust lighting
 
-{/* vale Microsoft.Auto = NO */}
-
 In the device settings, adjust **Brightness** and choose an **Auto-dim**
 interval from 30 seconds to one hour, or turn automatic dimming off. The lights
 come back on when you use the Micro or an Agent Key changes status. By default,
 the lights turn off after three minutes.
-
-{/* vale Microsoft.Auto = YES */}
 
 When the Micro reports its battery status, you can see it in the device settings
 and beside the Micro icon in the sidebar.
@@ -247,15 +225,11 @@ ChatGPT retries automatically when it detects a Micro but can't connect or loses
 communication. If the problem continues, reconnect the Micro and check whether
 a keyboard utility or security tool blocks access to it.
 
-{/* vale Vale.Spelling = NO */}
-
 On macOS, Work Louder notes that Karabiner and Logitech Options+ can interfere
 with Micro communication when those apps have Input Monitoring permission. To
 test for interference, quit the keyboard utility or temporarily turn off its
 Input Monitoring access, then reconnect the Micro. If your organization manages
 your computer, ask your IT administrator to check the device rules.
-
-{/* vale Vale.Spelling = YES */}
 
 ### Get more Work Louder help
 

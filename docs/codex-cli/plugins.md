@@ -19,31 +19,17 @@ Plugins marked **Desktop only** require the ChatGPT desktop app. You can discove
 but you must open the ChatGPT desktop app to install and use them. They aren't
 available on mobile.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 Open the **Plugins** tab to browse and install plugins. After installation, you
 can use plugins in Chat or Work in ChatGPT, or in Codex. Installed plugins can
 add skills and MCP tools to new chats.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 Open the **Plugins** tab to browse and install plugins. After installation, you
 can use plugins in Chat or Work. A plugin can prompt you to connect an external
 service before its tools become available.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 In Codex CLI, enter `/plugins` to open the plugin browser. Install a plugin from
 a configured marketplace, then start a new session before using its bundled
 skills or tools.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
 
 <a id="plugin-directory-in-the-ide-extension"></a>
 
@@ -51,8 +37,6 @@ skills or tools.
 
 Plugins aren't available in the IDE extension. To browse and install plugins
 for Codex, use the ChatGPT desktop app or Codex CLI.
-
-</ContentModeSwitch>
 
 Extend what ChatGPT and Codex can do, for example:
 
@@ -94,28 +78,14 @@ If the plugin needs custom UI, use the
 
 <a id="plugin-directory-in-the-codex-app"></a>
 
-<ContentModeSwitch group="codex-surface" ids="app,web">
-
 ### Universal plugin directory
 
 ChatGPT and Codex use the same public plugin catalog. On the web or in the
 ChatGPT desktop app, open the **Plugins** tab to browse and install plugins.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
-
   
 
 > Illustration: Plugins Directory in the ChatGPT desktop app
-
-
-
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,web">
 
 The Plugins Directory organizes plugins into tabs:
 
@@ -134,8 +104,6 @@ requirements.
 
 Once you open the Plugins Directory:
 
-<WorkflowSteps>
-
 1. Search or browse for a plugin, then open its details.
 2. Select the plus button to install the plugin.
 3. If the plugin needs an MCP server connection, connect it when prompted. Some plugins
@@ -143,8 +111,6 @@ Once you open the Plugins Directory:
    use them.
 4. After installation, start a new chat and ask ChatGPT or Codex to use the
    plugin.
-
-</WorkflowSteps>
 
 ### Connect supported partners with Sign in with ChatGPT
 
@@ -160,23 +126,9 @@ permissions as a separate step before using the connection.
 
 After you install a plugin, you can use it directly in the prompt window:
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
-
   
 
 > Illustration: Installed plugin on the Plugins page
-
-
-
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,web">
-
-
 
   
 
@@ -197,7 +149,6 @@ Describe the task directly
 
   
 
-
   
 
     
@@ -217,13 +168,6 @@ Choose a specific plugin
 
   
 
-
-
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
 ### Use Apple Messages from Codex
 
 The Apple Messages plugin is available on all plans in the ChatGPT desktop app
@@ -235,15 +179,11 @@ doesn't work in regular ChatGPT chats.
 For this release, the Messages plugin is included only in the Apple Silicon
 (arm64) build of the ChatGPT desktop app.
 
-<WorkflowSteps>
-
 1. Open **Plugins**, find the Apple Messages plugin, and install it.
 2. Start a new Codex or ChatGPT Work chat and ask it to find, summarize, draft,
    or send a message.
 3. Grant the requested macOS permissions before ChatGPT reads Messages.
 4. Review the message and its recipients before allowing a send.
-
-</WorkflowSteps>
 
 By default, ChatGPT sends messages only after you approve the message and its
 recipients. Choose **Allow once** to approve only that send. If you select
@@ -269,10 +209,6 @@ web or mobile, Codex CLI, or the IDE extension.
 In managed workspaces, administrators can disable Apple Messages through the
 existing Computer Use control.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 <a id="plugin-directory-in-codex-cli"></a>
 
 ### Plugin browser in Codex CLI
@@ -284,24 +220,16 @@ codex
 /plugins
 ```
 
-
   
 
 > Illustration: Plugins list in Codex CLI
-
-
-
 
 The CLI plugin browser groups plugins by marketplace. Use the marketplace tabs
 to switch sources, open a plugin to inspect details, install or uninstall
 marketplace entries, and press <kbd>Space</kbd> on an installed plugin to turn it
 on or off.
 
-</ContentModeSwitch>
-
 <a id="api-key-availability"></a>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli">
 
 ### API key availability
 
@@ -312,25 +240,15 @@ app. Some plugins aren't available with API key authentication because their
 connection flows require unsupported OAuth capabilities. Review plugin usage
 on the [Platform Usage page](https://platform.openai.com/usage).
 
-</ContentModeSwitch>
-
 ### How permissions and data sharing work
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 In ChatGPT on the web, Chat and Work use the workspace permissions and tools
 available to that chat. MCP servers still require their own sign-in and access.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli">
 
 When a plugin capability runs through a Codex host, the host's [sandbox and
 approval policy](./agent-approvals-security.md) applies.
 Connections to external services use that service's own authentication and
 access controls.
-
-</ContentModeSwitch>
 
 - Bundled skills become available when you start a new chat or CLI session
   after installation.

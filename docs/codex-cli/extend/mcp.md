@@ -11,8 +11,6 @@ clients can also connect directly to MCP servers and share their configuration.
 
 <a id="supported-mcp-features"></a>
 
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 The ChatGPT desktop app, Codex CLI, and IDE extension support MCP servers and
 share MCP configuration for the same Codex host.
 
@@ -40,10 +38,6 @@ The ChatGPT desktop app, Codex CLI, and IDE extension share this configuration.
 Once you configure your MCP servers, you can switch among those clients without
 redoing setup.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
 ### Configure in the ChatGPT desktop app
 
 1. Open **Settings**, then select **MCP servers**.
@@ -56,10 +50,6 @@ The server list shows which servers are enabled and which require OAuth. Select
 **Authenticate** when an OAuth server requires sign-in. In the composer, type `/mcp`
 to view connected servers.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 ## Use MCP-backed tools in ChatGPT web
 
 In a hosted ChatGPT Work chat, install a [plugin](../plugins.md) to use its
@@ -70,10 +60,6 @@ are available.
 ChatGPT web doesn't read local Codex configuration files or expose the local
 Codex command menu. Open the **Plugins** tab to browse and manage available
 tools.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 ### Configure with the CLI
 
@@ -99,10 +85,6 @@ commands, run `codex mcp --help`. For a server that supports OAuth, run
 
 In the `codex` TUI, use `/mcp` to see your active MCP servers.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 ### Configure in the IDE extension
 
 1. Open the gear menu, then select **MCP servers**.
@@ -114,10 +96,6 @@ In the `codex` TUI, use `/mcp` to see your active MCP servers.
 The MCP server list shows which servers are enabled and which require OAuth.
 Select **Authenticate** when an OAuth server requires sign-in.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 ### Configure with config.toml
 
 For more fine-grained control, edit `~/.codex/config.toml` or a project-scoped
@@ -126,11 +104,7 @@ for a searchable list of every supported MCP option.
 
 Configure each MCP server with a `[mcp_servers.<server-name>]` table in the configuration file.
 
-</ContentModeSwitch>
-
 <a id="stdio-servers"></a>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 #### STDIO servers
 
@@ -152,11 +126,7 @@ String entries and `source = "local"` read from Codex's local environment.
 `source = "remote"` reads from the remote executor environment and requires
 remote MCP stdio.
 
-</ContentModeSwitch>
-
 <a id="streamable-http-servers"></a>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 #### Streamable HTTP servers
 
@@ -450,4 +420,3 @@ The list of MCP servers keeps growing. Here are a few common ones:
 - [Sentry](https://docs.sentry.io/product/sentry-mcp/#codex): Access Sentry logs.
 - [GitHub](https://github.com/github/github-mcp-server): Manage GitHub beyond what `git` supports (for example, pull requests and issues).
 
-</ContentModeSwitch>

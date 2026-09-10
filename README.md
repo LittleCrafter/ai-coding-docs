@@ -34,12 +34,12 @@ Each source discovers its pages in its own way, but the pipeline is shared: **di
 
 - **Antigravity CLI** — the site serves `<url>.md` for each page; we discover the `/docs/cli/` pages via the sitemap.
 - **Claude Code** — the site serves `<url>.md` for each page; we use the sitemap.
-- **Codex CLI** — the documentation is already Markdown in the public `openai/codex` repository (`docs/`); we list the folder via the GitHub API and download via raw.
+- **Codex CLI** — dual discovery mirrors both GitHub repository files (`openai/codex@main:docs/`) and the full documentation catalog from `https://developers.openai.com/codex/llms.txt`. Reference stubs are resolved to rich `.md` twins, hybrid configuration guides are assembled dynamically, cross-documentation links are rewritten to local relative paths, and custom Astro/MDX components (overview landing pages, file trees, toggle sections, model details, pricing cards) are converted to clean CommonMark outlines and code blocks.
 - **DeepSeek API** — the site is Docusaurus (HTML only, no `.md` or public repository); we discover pages via the sitemap and convert the content to Markdown with `html2text`. Guide/FAQ pages come out clean; tables and the API reference (`api/*`) remain a bit raw.
 - **Kimi Code** — the documentation is already Markdown in the public `MoonshotAI/kimi-code` repository (`docs/en/`); we list the tree via the GitHub API and download via raw.
 - **OpenCode** — the documentation is MDX in the public `anomalyco/opencode` repository (`packages/web/src/content/docs/`); we list the tree via the GitHub API, download via raw, and convert MDX components (imports, callouts, JSX wrappers) to clean standard Markdown.
 
-No headless browser is used. DeepSeek API is converted from HTML; OpenCode is converted from MDX (JSX components stripped, callouts mapped to GitHub Alerts); all other sources already expose ready-made Markdown.
+No headless browser is used. DeepSeek API is converted from HTML; OpenCode and Codex CLI are converted from MDX / Astro components (JSX components converted to standard Markdown headings, lists, tables, code blocks, or callouts); all other sources already expose ready-made Markdown.
 
 **Media assets**: Google Antigravity CLI, Claude Code, Kimi Code, and OpenCode mirror the images and diagrams their pages reference. Each referenced asset is downloaded into the source's own asset directory, in-page references are rewritten so they resolve locally, downloads are hashed and cached (only changed bytes are rewritten), and assets no longer referenced by any page are automatically pruned:
 

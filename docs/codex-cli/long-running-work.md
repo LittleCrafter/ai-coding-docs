@@ -7,14 +7,8 @@ and definition of done. Keep related work in the same chat so
 ChatGPT can use the same context to choose the next step and decide when the
 work is complete.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 In the ChatGPT desktop app, enter `/goal` to start Goal mode. The progress row
 lets you pause, resume, edit, or clear the goal while ChatGPT works.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 For hosted long-running work in ChatGPT web, use ChatGPT Work and put the
 outcome, constraints, and review criteria directly in your prompt.
@@ -25,41 +19,21 @@ parallel, and avoid giving two tasks write access to the same connected source.
 For related work, keep the chats and source files together in a
 [project](./projects.md).
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 In an interactive Codex CLI session, enter `/goal` to start Goal mode. Continue
 the same session to steer the work or ask for a status update.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
 
 In the IDE extension chat, enter `/goal` to start Goal mode for the open
 workspace. Continue the same chat to steer the task while it runs.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
-
   
 
 > Illustration: ChatGPT desktop app goal progress controls above the composer
-
-
-
-
-</ContentModeSwitch>
 
 <a id="start-a-goal"></a>
 <a id="define-what-done-means"></a>
 <a id="steer-a-running-goal"></a>
 <a id="run-goals-in-parallel"></a>
 <a id="related-docs"></a>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ## Start a goal
 
@@ -70,10 +44,6 @@ task.
 If the outcome is still unclear, start with `/plan`. Ask ChatGPT to interview you,
 identify constraints, and turn the result into a goal with measurable success
 criteria. Then start the refined goal with `/goal`.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,web,cli,ide">
 
 ## Define what done means
 
@@ -93,10 +63,6 @@ Migrate this codebase from JavaScript to TypeScript. Preserve existing behavior,
 compile in strict mode without explicit `any` types, and make the full test suite pass.
 ```
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
 ## Steer a running goal
 
 In the ChatGPT desktop app, the goal progress row appears above the composer. Use it to
@@ -107,10 +73,6 @@ Use a side chat when you want a status recap or an explanation without
 interrupting the main chat. Pause the goal before you expect to lose
 connectivity, then resume it when you're ready for ChatGPT to continue.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 <a id="steer-a-running-task"></a>
 
 ## Steer running work
@@ -119,38 +81,22 @@ Continue in the same chat to add context, adjust constraints, or ask
 for a status recap. Start a separate chat when another task can run
 independently.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 ## Steer a running goal
 
 Send a follow-up message in the same interactive session to add context or
 adjust constraints. Ask for a status recap when you want Codex to summarize
 progress before it continues.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 ## Steer a running goal
 
 Continue in the same IDE chat to add context, adjust constraints, or ask for a
 status recap. Keep the workspace available while the goal is running.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 Starting a goal doesn't grant ChatGPT broader access. It keeps the same
 [sandbox and approval policy](./sandboxing.md) and pauses when it
 needs a decision. With [automatic approval
 reviews](./sandboxing/auto-review.md), a separate reviewer can
 evaluate eligible requests without expanding those boundaries.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ## Run goals in parallel
 
@@ -159,18 +105,10 @@ concurrently, but avoid letting two chats change the same files. Use
 [worktrees](./environments/git-worktrees.md) to give parallel coding chats separate
 checkouts.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
 For local work, turn on **Prevent sleep while running** in settings so your Mac
 stays awake. Use [Pets](./pets.md) or [system
 notifications](./notifications.md) to see when a chat needs input
 or is ready for review.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ## Related docs
 
@@ -178,14 +116,9 @@ or is ready for review.
 - [Goal mode and prompting](./prompting.md#goal-mode)
 - [Git worktrees](./environments/git-worktrees.md)
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 ## Related docs
 
 - [Projects and chats](./projects.md)
 - [Scheduled tasks](./automations.md)
 - [Sandbox and permissions](./sandboxing.md)
 
-</ContentModeSwitch>

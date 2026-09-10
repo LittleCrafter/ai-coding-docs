@@ -5,22 +5,12 @@
 ChatGPT includes a first-party web search tool. Treat all web results as
 untrusted input.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 In the ChatGPT desktop app, ask for current information in a chat. ChatGPT records
 search activity with the other tool calls in the transcript.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 In ChatGPT web, ask for current information or sources. Search results and
 citations appear in the chat when ChatGPT uses web search. Workspace
 settings can limit whether search is available.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 In the CLI, pass `--search` to fetch live results for one run:
 
@@ -31,17 +21,9 @@ codex --search "Summarize the latest release notes for this dependency"
 Searches appear as `web_search` items in the interactive transcript and in
 `codex exec --json` output.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 In the IDE extension, ask Codex to search while you work in the editor. The
 extension uses the connected Codex host's search mode. Search activity appears
 in the chat transcript.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ## Configure local web search
 
@@ -85,11 +67,6 @@ Setting this provider capability doesn't enable the feature: the provider,
 selected model, and runtime must also support standalone search. Workspace and
 managed search restrictions still apply.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 For network boundaries that apply to Codex cloud environments, see [Internet
 access](./cloud/internet-access.md).
 
-</ContentModeSwitch>

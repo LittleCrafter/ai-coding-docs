@@ -81,11 +81,7 @@ codex
 
 ## Troubleshooting and FAQ
 
-
-
 ### Large repositories feel slow in WSL
-
-
 
 - Make sure you're not working under `/mnt/c`. Move the repository to WSL (for example, `~/code/...`).
 - Increase memory and CPU for WSL if needed; update WSL to the latest version:
@@ -94,15 +90,7 @@ codex
   wsl --shutdown
 ```
 
-
-
-
-
-
-
 ### VS Code in WSL cannot find codex
-
-
 
 Verify the binary exists and is on `PATH` inside WSL:
 

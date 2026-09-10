@@ -22,13 +22,9 @@ ChatGPT on the web, desktop, and mobile.
 In the ChatGPT desktop app, open **Skills** in the sidebar to view and explore skills
 created across your projects.
 
-
   
 
 > Illustration: Skills picker showing available skills in the ChatGPT desktop app
-
-
-
 
 Skills use **progressive disclosure** to manage context efficiently. ChatGPT and
 Codex start with each skill's name and description, then load the full
@@ -44,44 +40,15 @@ This budget applies only to the initial skills list. When Codex selects a skill,
 
 A skill is a directory with a `SKILL.md` file plus optional scripts and references. The `SKILL.md` file must include `name` and `description`.
 
-<FileTree
-  class="mt-4"
-  tree={[
-    {
-      name: "my-skill/",
-      open: true,
-      children: [
-        {
-          name: "SKILL.md",
-          comment: "Required: instructions + metadata",
-        },
-        {
-          name: "scripts/",
-          comment: "Optional: executable code",
-        },
-        {
-          name: "references/",
-          comment: "Optional: documentation",
-        },
-        {
-          name: "assets/",
-          comment: "Optional: templates, resources",
-        },
-        {
-          name: "agents/",
-          open: true,
-          children: [
-            {
-              name: "openai.yaml",
-              comment: "Optional: appearance and dependencies",
-            },
-          ],
-        },
-      ],
-    },
-
-]}
-/>
+```text
+my-skill/
+  SKILL.md  # Required: instructions + metadata
+  scripts/  # Optional: executable code
+  references/  # Optional: documentation
+  assets/  # Optional: templates, resources
+  agents/
+    openai.yaml  # Optional: appearance and dependencies
+```
 
 <a id="how-codex-uses-skills"></a>
 

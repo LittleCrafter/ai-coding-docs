@@ -2,8 +2,6 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 Use a project to organize related chats and give ChatGPT the context it needs.
 The **Projects** view in the ChatGPT desktop app includes ChatGPT projects and
 local projects that connect to folders on your computer.
@@ -13,10 +11,6 @@ local projects that connect to folders on your computer.
 Create a project when work will continue over time, produce more than one
 output, or depend on the same files and sources. Start a chat without a project
 when the work is self-contained and doesn't need shared project context.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 Use a project to keep related chats, files, instructions, and sources together.
 The same project can contain chats started with Chat or ChatGPT Work.
@@ -35,28 +29,16 @@ your computer, so upload or connect the sources you want ChatGPT to use.
 With either option, start a new chat from the project to use its shared files and
 instructions, then return to it under **Chats**.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 Codex CLI treats the directory where you start it as the project for the chat.
 Run `codex` from the directory you want Codex to work in, or pass
 `--cd <directory>` (`-C`) to set it explicitly. The CLI doesn't expose the
 ChatGPT Projects view.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 The IDE extension treats the folder or workspace open in your IDE as the local
 project. In a multi-root workspace, select the workspace root for the chat. The
 extension doesn't expose the ChatGPT Projects view from the web or desktop app.
 
-</ContentModeSwitch>
-
 <a id="work-in-a-project"></a>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 ## Work in a project
 
@@ -68,17 +50,9 @@ collection of source files or a codebase.
 Start a separate chat for each distinct outcome so its messages and results stay
 focused while the project keeps related work organized.
 
-
   
 
 > Illustration: ChatGPT desktop app showing multiple projects in the sidebar and chats in the main pane
-
-
-
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 ## Work in a project
 
@@ -87,10 +61,6 @@ instructions, and connected sources. Use Chat for a quick chat or
 ChatGPT Work for a larger deliverable; both appear as chats in the project's
 **Chats** section. Start a separate chat for each distinct outcome so its
 messages and results stay focused while the project preserves shared context.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 ## Work in a project directory
 
@@ -101,10 +71,6 @@ Codex is open, or run `codex resume`, to continue a saved chat.
 The chat keeps its transcript and recorded working directory, while Codex reads
 files from the current working tree. Keep durable project guidance in
 `AGENTS.md` or checked-in documentation so it is available to future chats.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
 
 ## Work in a workspace
 
@@ -117,12 +83,8 @@ The current selection and open files provide context for the current turn. Keep
 durable project guidance in `AGENTS.md` or checked-in documentation so it is
 available to future chats.
 
-</ContentModeSwitch>
-
 <a id="manage-project-threads"></a>
 <a id="organize-projects-and-chats"></a>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 <a id="organize-projects-and-tasks"></a>
 
@@ -148,10 +110,6 @@ where the project or chat appears in the sidebar.
 
 Restore archived chats from **Settings > Archived chats**.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 <a id="organize-projects-and-tasks-1"></a>
 
 ## Organize projects and chats
@@ -172,17 +130,9 @@ Keep active work visible and move finished work out of the way:
 Pinning doesn't add context or change what ChatGPT can access. It only changes
 where the project or chat appears in the sidebar.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 Restore archived chats from **Settings > Data Controls > Archived chats**.
 
-</ContentModeSwitch>
-
 <a id="use-local-projects-for-folders-and-codebases"></a>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 ## Use local projects for folders and codebases
 
@@ -217,10 +167,7 @@ attached.
 Projects and worktrees organize work, but the [sandbox](./sandboxing.md)
 enforces what local commands can read, change, or access over the network.
 
-</ContentModeSwitch>
-
 <a id="start-without-a-project"></a>
-<ContentModeSwitch group="codex-surface" id="app">
 
 <a id="start-a-task-without-a-project"></a>
 
@@ -229,10 +176,6 @@ enforces what local commands can read, change, or access over the network.
 Select **New chat** when the work is self-contained and doesn't need shared
 project files, instructions, or folder access. Create a project first when
 several chats will depend on the same context.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 <a id="start-a-task-without-a-project-1"></a>
 
@@ -246,11 +189,8 @@ If the work grows, move it into a project and use clear chat names for each
 outcome. A project can hold parallel chats for research, drafting, review, and
 follow-up without mixing every message into one context.
 
-</ContentModeSwitch>
-
 <a id="start-a-chat"></a>
 <a id="start-a-standalone-chat"></a>
-<ContentModeSwitch group="codex-surface" id="app">
 
 <a id="use-quick-chat-for-a-quick-conversation"></a>
 
@@ -266,11 +206,7 @@ also press
 From **New chat**, you can open an existing ChatGPT chat and add it to a Codex
 chat.
 
-</ContentModeSwitch>
-
 ## Bring in other tools and context
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 - Attach files or [image inputs](./image-inputs.md) directly to a chat
   when they apply only to that request.
@@ -281,10 +217,6 @@ chat.
 - Use [memories](./customization/memories.md), where available, to carry useful context from
   past work into future chats.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 - Pass [image inputs](./image-inputs.md) to a chat when visual context applies
   only to that request.
 - Install [plugins](./plugins.md) to bring in context and actions from other
@@ -294,20 +226,12 @@ chat.
 - Use [memories](./customization/memories.md), where available, to carry useful context from
   past work into future chats.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 - Reference open files or select code in the editor to add context for the
   current turn.
 - Configure [MCP](./extend/mcp.md) servers when your organization or developer setup
   exposes tools through Model Context Protocol.
 - Use [memories](./customization/memories.md) from the connected Codex host, where
   available, to carry useful context into future chats.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 - Add files and connected sources to the project's **Sources** section when they
   should be available across its chats.
@@ -317,8 +241,6 @@ chat.
   actions from other services.
 - Use [memories](./customization/memories.md), where available, to carry useful context from
   past work into future chats.
-
-</ContentModeSwitch>
 
 ## Next steps
 

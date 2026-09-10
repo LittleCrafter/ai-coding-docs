@@ -28,10 +28,7 @@ Codex uses API token pricing instead, and ChatGPT credit multipliers don't
 apply. API Priority processing has its own billing rate; for GPT-5.6, it costs
 2x the Standard API token rate.
 
-<VideoPlayer
-  src="/videos/codex/fast-mode-demo.mp4"
-  class="[&_video]:mx-auto [&_video]:max-h-[400px] [&_video]:max-w-full [&_video]:w-auto"
-/>
+[Video Demo](https://developers.openai.com/videos/codex/fast-mode-demo.mp4)
 
 ## Codex-Spark
 

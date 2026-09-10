@@ -22,8 +22,6 @@ Open an accepted finding from **Findings** or a completed scan in **Scans**.
 Review its evidence, then use **Patch** to generate, review, apply, and verify
 one focused fix.
 
-<WorkflowSteps variant="headings">
-
 1. Generate a focused patch
 
    Open the finding, select the **Patch** tab, and select **Generate patch**.
@@ -57,15 +55,8 @@ one focused fix.
    results, and remaining proof gap, then close the finding with an accurate
    reason or keep it open for more work.
 
-</WorkflowSteps>
-
 <figure className="not-prose my-8">
-  <CodexScreenshot
-    alt="Native Codex Security workbench showing the generated patch for an accepted finding"
-    lightSrc={fixFindingPatch.src}
-    darkSrc={fixFindingPatchDark.src}
-    maxHeight="460px"
-  />
+  
   <figcaption className="mt-3 text-sm text-secondary">
     Review the generated security fix before applying it to your checkout.
   </figcaption>

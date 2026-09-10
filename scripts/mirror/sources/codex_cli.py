@@ -49,6 +49,7 @@ No whats-new for this source.
 
 from __future__ import annotations
 
+import json
 import posixpath
 import re
 import sys
@@ -493,6 +494,642 @@ def _rewrite_root_link(text_or_match: str | re.Match[str]) -> str:
     )
 
 
+def _protect_fenced_code(text: str) -> tuple[str, list[str]]:
+    """Protect fenced code blocks by replacing them with unique placeholder tokens.
+
+    Shields code examples (in ``` or ~~~ fences) from subsequent MDX transformations,
+    such as component tag stripping or link rewriting, and returns the protected
+    text alongside the list of original code block strings.
+    """
+    code_blocks: list[str] = []
+
+    def repl(match: re.Match[str]) -> str:
+        code_blocks.append(match.group(0))
+        return f"<!--__FENCED_CODE_BLOCK_{len(code_blocks) - 1}__-->"
+
+    fenced_re = re.compile(r"(```[^\n]*\n.*?```|~~~[^\n]*\n.*?~~~)", re.DOTALL)
+    return fenced_re.sub(repl, text), code_blocks
+
+
+def _restore_fenced_code(text: str, code_blocks: list[str]) -> str:
+    """Restore previously protected fenced code blocks from placeholder tokens."""
+    for i, block in enumerate(code_blocks):
+        text = text.replace(f"<!--__FENCED_CODE_BLOCK_{i}__-->", block)
+    return text
+
+
+def _tokenize_js_props(raw_props: str) -> list[tuple[str, str]]:
+    """Tokenize JavaScript object and array literals embedded in JSX component props.
+
+    Recognizes quoted strings, numbers, punctuation (braces, brackets, colons, commas),
+    operators (equals), and identifiers or keyword values.
+    """
+    tokens: list[tuple[str, str]] = []
+    token_re = re.compile(
+        r"""
+        (?P<STRING>"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*') |
+        (?P<LBRACE>\{) |
+        (?P<RBRACE>\}) |
+        (?P<LBRACKET>\[) |
+        (?P<RBRACKET>\]) |
+        (?P<COLON>:) |
+        (?P<COMMA>,) |
+        (?P<EQUALS>=) |
+        (?P<WORD>[a-zA-Z_$][a-zA-Z0-9_$-]*) |
+        (?P<NUMBER>-?\d+(?:\.\d+)?)
+        """,
+        re.VERBOSE,
+    )
+    for match in token_re.finditer(raw_props):
+        kind = match.lastgroup
+        assert kind is not None
+        val = match.group(kind)
+        tokens.append((kind, val))
+    return tokens
+
+
+class _JSParser:
+    """Recursive-descent parser for JavaScript literal values in component attributes."""
+
+    def __init__(self, tokens: list[tuple[str, str]]) -> None:
+        self.tokens = tokens
+        self.pos = 0
+
+    def peek(self) -> tuple[str | None, str | None]:
+        """Return the next token without advancing the parser position."""
+        if self.pos < len(self.tokens):
+            return self.tokens[self.pos]
+        return (None, None)
+
+    def next(self) -> tuple[str | None, str | None]:
+        """Return the next token and advance the parser position."""
+        tok = self.peek()
+        self.pos += 1
+        return tok
+
+    def parse_value(self) -> object:
+        """Parse a single JavaScript literal value (string, number, boolean, array, or object)."""
+        kind, val = self.peek()
+        if kind == "STRING" and val is not None:
+            self.next()
+            if val.startswith("'"):
+                val = val[1:-1].replace("\\'", "'").replace('"', '\\"')
+                return val
+            return json.loads(val)
+        if kind == "NUMBER" and val is not None:
+            self.next()
+            return float(val) if "." in val else int(val)
+        if kind == "WORD" and val is not None:
+            self.next()
+            if val == "true":
+                return True
+            if val == "false":
+                return False
+            if val == "null":
+                return None
+            return val
+        if kind == "LBRACE":
+            return self.parse_object()
+        if kind == "LBRACKET":
+            return self.parse_array()
+        raise ValueError(f"Unexpected token {kind}: {val} at position {self.pos}")
+
+    def parse_object(self) -> dict[str, object]:
+        """Parse a JavaScript object literal enclosed in curly braces."""
+        self.next()
+        obj: dict[str, object] = {}
+        while self.pos < len(self.tokens):
+            kind, val = self.peek()
+            if kind == "RBRACE":
+                self.next()
+                return obj
+            if kind == "COMMA":
+                self.next()
+                continue
+            if kind in ("WORD", "STRING") and val is not None:
+                self.next()
+                key = val if kind == "WORD" else json.loads(val)
+                c_kind, _ = self.peek()
+                if c_kind == "COLON":
+                    self.next()
+                    obj[key] = self.parse_value()
+                else:
+                    obj[key] = True
+            else:
+                raise ValueError(f"Unexpected token in object {kind}: {val}")
+        return obj
+
+    def parse_array(self) -> list[object]:
+        """Parse a JavaScript array literal enclosed in square brackets."""
+        self.next()
+        arr: list[object] = []
+        while self.pos < len(self.tokens):
+            kind, _ = self.peek()
+            if kind == "RBRACKET":
+                self.next()
+                return arr
+            if kind == "COMMA":
+                self.next()
+                continue
+            arr.append(self.parse_value())
+        return arr
+
+    def parse_jsx_props(self) -> dict[str, object]:
+        """Parse top-level JSX attributes from token stream into a Python dictionary."""
+        props: dict[str, object] = {}
+        while self.pos < len(self.tokens):
+            kind, val = self.peek()
+            if kind == "WORD" and val is not None:
+                prop_name = val
+                self.next()
+                eq_kind, _ = self.peek()
+                if eq_kind == "EQUALS":
+                    self.next()
+                    v_kind, _ = self.peek()
+                    if v_kind == "STRING":
+                        props[prop_name] = self.parse_value()
+                    elif v_kind == "LBRACE":
+                        self.next()
+                        props[prop_name] = self.parse_value()
+                        r_kind, _ = self.peek()
+                        if r_kind == "RBRACE":
+                            self.next()
+                    else:
+                        props[prop_name] = self.parse_value()
+                else:
+                    props[prop_name] = True
+            else:
+                self.next()
+        return props
+
+
+def _resolve_internal_href(
+    href: str,
+    current_slug: str,
+    known_slugs: set[str],
+) -> str:
+    """Resolve an internal documentation href to a relative Markdown link.
+
+    Normalizes `/codex/...` or `/docs/...` paths to potential page slugs and looks
+    them up in `known_slugs`. When found, returns a relative Markdown path with
+    appropriate directory traversal (`../` or `./`) and preserves URL anchors.
+    If the target is external or unknown, falls back to the canonical upstream URL.
+    """
+    href_clean, _, query = href.partition("?")
+    href_path, _, anchor = href_clean.partition("#")
+
+    if href_path.startswith("/codex/"):
+        slug = href_path[len("/codex/") :]
+    elif href_path.startswith("/docs/"):
+        slug = href_path[len("/docs/") :]
+    elif href_path.startswith("/"):
+        slug = href_path[1:]
+    else:
+        slug = href_path
+
+    slug = slug.rstrip("/")
+    if slug.endswith(".md"):
+        slug = slug[:-3]
+
+    matched_slug: str | None = None
+    if slug in known_slugs:
+        matched_slug = slug
+    elif f"guides/{slug}" in known_slugs:
+        matched_slug = f"guides/{slug}"
+    elif slug.split("/")[-1].replace("-", "_") in known_slugs:
+        matched_slug = slug.split("/")[-1].replace("-", "_")
+    elif slug.replace("-", "_") in known_slugs:
+        matched_slug = slug.replace("-", "_")
+
+    if matched_slug is not None:
+        current_dir = posixpath.dirname(current_slug) or "."
+        rel_target = posixpath.relpath(f"{matched_slug}.md", current_dir)
+        if not rel_target.startswith((".", "/")):
+            rel_target = f"./{rel_target}"
+        if anchor:
+            rel_target = f"{rel_target}#{anchor}"
+        return rel_target
+
+    anchor_part = f"#{anchor}" if anchor else ""
+    query_part = f"?{query}" if query else ""
+    if href.startswith(("http://", "https://")):
+        return href
+    return f"https://developers.openai.com{href_path}{query_part}{anchor_part}"
+
+
+def _convert_overview_landing(
+    text: str,
+    current_slug: str,
+    known_slugs: set[str],
+) -> str:
+    """Convert <CodexDocsOverviewLanding> components into standard CommonMark outlines.
+
+    Extracts title, intro, primary call-to-action guide, and grouped topic sections,
+    producing structured headings and bulleted guide lists with relative Markdown links.
+    """
+    overview_re = re.compile(
+        r"<CodexDocsOverviewLanding\b([^>]*?)(?:/>|>(.*?)</CodexDocsOverviewLanding>)",
+        re.DOTALL,
+    )
+
+    def repl(match: re.Match[str]) -> str:
+        raw_props = match.group(1)
+        tokens = _tokenize_js_props(raw_props)
+        parser = _JSParser(tokens)
+        try:
+            props = parser.parse_jsx_props()
+        except Exception:
+            return match.group(0)
+
+        parts: list[str] = []
+        title = props.get("title")
+        description = props.get("description")
+        intro = props.get("intro")
+        primary_cta = props.get("primaryCta")
+        sections = props.get("sections", [])
+
+        # Ensure top-level H1 heading exists if not already present in the preceding text
+        if not re.search(r"^#\s+", text[: match.start()], re.MULTILINE) and title:
+            parts.append(f"# {title}\n")
+
+        if description and isinstance(description, str):
+            parts.append(f"{description}\n")
+        if intro and isinstance(intro, str) and intro != description:
+            parts.append(f"{intro}\n")
+
+        if isinstance(primary_cta, dict) and "href" in primary_cta:
+            cta_label = str(primary_cta.get("label", "Primary guide"))
+            cta_href = _resolve_internal_href(
+                str(primary_cta["href"]), current_slug, known_slugs
+            )
+            parts.append(f"> **Recommended:** [{cta_label}]({cta_href})\n")
+
+        if isinstance(sections, list):
+            for sec in sections:
+                if not isinstance(sec, dict):
+                    continue
+                sec_title = str(sec.get("title", ""))
+                sec_desc = sec.get("description", "")
+                pages = sec.get("pages", [])
+
+                parts.append(f"## {sec_title}\n")
+                if sec_desc and isinstance(sec_desc, str):
+                    parts.append(f"{sec_desc}\n")
+
+                if isinstance(pages, list):
+                    for page in pages:
+                        if not isinstance(page, dict):
+                            continue
+                        p_title = str(page.get("title", ""))
+                        p_desc = page.get("description", "")
+                        p_href = page.get("href", "")
+                        resolved_link = (
+                            _resolve_internal_href(
+                                str(p_href), current_slug, known_slugs
+                            )
+                            if p_href
+                            else ""
+                        )
+
+                        if resolved_link and p_title:
+                            item = f"- [{p_title}]({resolved_link})"
+                        elif p_title:
+                            item = f"- {p_title}"
+                        else:
+                            continue
+
+                        if p_desc and isinstance(p_desc, str):
+                            item += f" — {p_desc}"
+                        parts.append(f"{item}")
+                parts.append("")
+
+        return "\n".join(parts).strip()
+
+    return overview_re.sub(repl, text)
+
+
+def _render_tree_items(items: list[object], indent: int = 0) -> list[str]:
+    """Recursively format FileTree hierarchy entries into indented text lines."""
+    lines: list[str] = []
+    prefix = "  " * indent
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        name = str(item.get("name", ""))
+        comment = item.get("comment", "")
+        line = f"{prefix}{name}"
+        if comment and isinstance(comment, str):
+            line += f"  # {comment}"
+        lines.append(line)
+        children = item.get("children")
+        if isinstance(children, list):
+            lines.extend(_render_tree_items(children, indent + 1))
+    return lines
+
+
+def _convert_file_trees(text: str) -> str:
+    """Convert <FileTree> components into indented ASCII directory trees in code blocks."""
+    filetree_re = re.compile(r"<FileTree\b([^>]*?)(?:/>|>(.*?)</FileTree>)", re.DOTALL)
+
+    def repl(match: re.Match[str]) -> str:
+        raw_props = match.group(1)
+        tokens = _tokenize_js_props(raw_props)
+        parser = _JSParser(tokens)
+        try:
+            props = parser.parse_jsx_props()
+        except Exception:
+            return match.group(0)
+        tree = props.get("tree", [])
+        if not isinstance(tree, list):
+            return ""
+        rendered_lines = _render_tree_items(tree)
+        tree_body = "\n".join(rendered_lines)
+        return f"```text\n{tree_body}\n```"
+
+    return filetree_re.sub(repl, text)
+
+
+def _convert_toggle_sections(text: str) -> str:
+    """Convert <ToggleSection> components into standard HTML details blocks."""
+    toggle_re = re.compile(
+        r"""<ToggleSection\s+title=["']([^"']+)["']\s*>(.*?)</ToggleSection>""",
+        re.DOTALL,
+    )
+
+    def repl(match: re.Match[str]) -> str:
+        title = match.group(1).strip()
+        body = match.group(2).strip()
+        return f"<details>\n<summary>{title}</summary>\n\n{body}\n\n</details>"
+
+    return toggle_re.sub(repl, text)
+
+
+def _convert_pricing_cards(text: str) -> str:
+    """Convert <PricingCard> components into structured Markdown sub-headings and lists."""
+    pricing_re = re.compile(
+        r"<PricingCard\b([^>]*?)(?:/>|>(.*?)</PricingCard>)", re.DOTALL
+    )
+
+    def repl(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        body = (match.group(2) or "").strip()
+        name_m = re.search(r'name="([^"]+)"', raw)
+        price_m = re.search(r'price="([^"]+)"', raw)
+        interval_m = re.search(r'interval="([^"]+)"', raw)
+        subtitle_m = re.search(r'subtitle="([^"]+)"', raw)
+        cta_label_m = re.search(r'ctaLabel="([^"]+)"', raw)
+        cta_href_m = re.search(r'ctaHref="([^"]+)"', raw)
+
+        name = name_m.group(1) if name_m else "Plan"
+        price = price_m.group(1) if price_m else ""
+        interval = interval_m.group(1) if interval_m else ""
+        subtitle = subtitle_m.group(1) if subtitle_m else ""
+        cta_label = cta_label_m.group(1) if cta_label_m else ""
+        cta_href = cta_href_m.group(1) if cta_href_m else ""
+
+        title = f"### {name}"
+        if price:
+            title += f" ({price}{interval})"
+
+        parts = [title]
+        if subtitle:
+            parts.append(subtitle)
+        if cta_label and cta_href:
+            parts.append(f"[{cta_label}]({cta_href})")
+        if body:
+            parts.append(body)
+
+        return "\n\n".join(parts)
+
+    return pricing_re.sub(repl, text)
+
+
+def _convert_model_details(text: str) -> str:
+    """Convert <ModelDetails> components into Markdown sub-headings and feature lists."""
+    model_re = re.compile(
+        r"<ModelDetails\b([^>]*?)(?:/>|>(.*?)</ModelDetails>)", re.DOTALL
+    )
+
+    def repl(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        toks = _tokenize_js_props(raw)
+        parser = _JSParser(toks)
+        props = parser.parse_jsx_props()
+        name = props.get("name", "")
+        description = props.get("description", "")
+        data = props.get("data", {})
+        features = data.get("features", []) if isinstance(data, dict) else []
+
+        parts: list[str] = []
+        if name:
+            parts.append(f"### `{name}`\n")
+        if description and isinstance(description, str):
+            parts.append(f"{description}\n")
+
+        feat_lines: list[str] = []
+        if isinstance(features, list):
+            for feat in features:
+                if not isinstance(feat, dict):
+                    continue
+                f_title = str(feat.get("title", ""))
+                f_val = feat.get("value")
+                if f_val is True:
+                    feat_lines.append(f"- **{f_title}**: Supported")
+                elif f_val is False:
+                    feat_lines.append(f"- **{f_title}**: Not supported")
+                elif f_val:
+                    feat_lines.append(f"- **{f_title}**: {f_val}")
+        if feat_lines:
+            parts.append("\n".join(feat_lines))
+
+        return "\n\n".join(parts)
+
+    return model_re.sub(repl, text)
+
+
+def _clean_mdx_components(
+    text: str,
+    current_slug: str,
+    known_slugs: set[str] | None = None,
+) -> str:
+    """Transform custom Astro/MDX components into standard CommonMark.
+
+    1. Shields fenced code blocks from modification.
+    2. Removes JSX comments ({/* ... */}).
+    3. Converts <CodexDocsOverviewLanding> components into structured outlines.
+    4. Converts <FileTree> components into indented ASCII directory trees in code blocks.
+    5. Converts <ToggleSection> components into HTML <details> blocks.
+    6. Converts <ModelDetails> and <PricingCard> components into Markdown sections.
+    7. Converts callout components (<WarningTip>, <Alert>, <CodexCallout>) into blockquotes.
+    8. Converts inline components (<CtaPillLink>, <ButtonLink>, <CodexMicroTableKeycap>).
+    9. Converts media components (<VideoPlayer>, <CodexScreenshot>).
+    10. Unwraps container tags (<ContentModeSwitch>, <WorkflowSteps>, <Tabs>, <TabItem>, <ContentSwitcher>).
+    11. Strips decorative badges and client-interactive tags (<ElevatedRiskBadge>, <ConfigTable>, etc.).
+    12. Normalizes whitespace and restores shielded code blocks.
+    """
+    if known_slugs is None:
+        known_slugs = _KNOWN_SLUGS
+
+    protected_text, code_blocks = _protect_fenced_code(text)
+
+    # Strip JSX comments {/* ... */}
+    cleaned = re.sub(r"\{\s*/\*.*?\*/\s*\}", "", protected_text, flags=re.DOTALL)
+
+    # Component conversions
+    cleaned = _convert_overview_landing(cleaned, current_slug, known_slugs)
+    cleaned = _convert_file_trees(cleaned)
+    cleaned = _convert_toggle_sections(cleaned)
+    cleaned = _convert_model_details(cleaned)
+    cleaned = _convert_pricing_cards(cleaned)
+
+    # Unwrap structural containers
+    cleaned = re.sub(
+        r"</?(?:ContentModeSwitch|WorkflowSteps|Tabs|TabItem|ContentSwitcher)\b[^>]*>",
+        "",
+        cleaned,
+    )
+
+    # Convert WarningTip to GitHub alert blockquote
+    def warning_tip_repl(match: re.Match[str]) -> str:
+        inner = match.group(1).strip()
+        lines = [f"> {line}" if line else ">" for line in inner.splitlines()]
+        return "> [!WARNING]\n" + "\n".join(lines)
+
+    cleaned = re.sub(
+        r"<WarningTip\b[^>]*>(.*?)</WarningTip>",
+        warning_tip_repl,
+        cleaned,
+        flags=re.DOTALL,
+    )
+
+    # Convert Alert to blockquote
+    def alert_repl(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        desc_m = re.search(r'description="([^"]+)"', raw)
+        desc = desc_m.group(1) if desc_m else ""
+        return f"> [!NOTE]\n> {desc}" if desc else ""
+
+    cleaned = re.sub(
+        r"<Alert\b([^>]*?)(?:/>|>(.*?)</Alert>)",
+        alert_repl,
+        cleaned,
+        flags=re.DOTALL,
+    )
+
+    # Convert CtaPillLink to Markdown link
+    def cta_pill_repl(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        href_m = re.search(r'href="([^"]+)"', raw)
+        label_m = re.search(r'label="([^"]+)"', raw)
+        if href_m and label_m:
+            href = _resolve_internal_href(href_m.group(1), current_slug, known_slugs)
+            return f"[{label_m.group(1)}]({href})"
+        return ""
+
+    cleaned = re.sub(
+        r"<CtaPillLink\b([^>]*?)(?:/>|>(.*?)</CtaPillLink>)",
+        cta_pill_repl,
+        cleaned,
+        flags=re.DOTALL,
+    )
+
+    # Convert ButtonLink to Markdown link
+    def button_link_repl(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        btn_text = match.group(2).strip()
+        href_m = re.search(r'href="([^"]+)"', raw)
+        if href_m:
+            href = _resolve_internal_href(href_m.group(1), current_slug, known_slugs)
+            return f"[{btn_text}]({href})"
+        return btn_text
+
+    cleaned = re.sub(
+        r"<ButtonLink\b([^>]*?)>(.*?)</ButtonLink>",
+        button_link_repl,
+        cleaned,
+        flags=re.DOTALL,
+    )
+
+    # Convert CodexCallout to blockquote
+    def callout_repl(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        href_m = re.search(r'href="([^"]+)"', raw)
+        title_m = re.search(r'title="([^"]+)"', raw)
+        desc_m = re.search(r'description="([^"]+)"', raw)
+        title = title_m.group(1) if title_m else ""
+        desc = desc_m.group(1) if desc_m else ""
+        href = (
+            _resolve_internal_href(href_m.group(1), current_slug, known_slugs)
+            if href_m
+            else ""
+        )
+        if title and href:
+            return f"> **[{title}]({href})**\n>\n> {desc}"
+        return ""
+
+    cleaned = re.sub(
+        r"<CodexCallout\b([^>]*?)(?:/>|>(.*?)</CodexCallout>)",
+        callout_repl,
+        cleaned,
+        flags=re.DOTALL,
+    )
+
+    # Convert CodexMicroTableKeycap to bold text
+    cleaned = re.sub(
+        r'<CodexMicroTableKeycap\b[^>]*label="([^"]+)"[^>]*?/?>',
+        r"**\1**",
+        cleaned,
+    )
+
+    # Convert VideoPlayer to Markdown video link
+    def video_repl(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        src_m = re.search(r'src="([^"]+)"', raw)
+        if src_m:
+            src = src_m.group(1)
+            video_url = (
+                f"https://developers.openai.com{src}" if src.startswith("/") else src
+            )
+            return f"[Video Demo]({video_url})"
+        return ""
+
+    cleaned = re.sub(
+        r"<VideoPlayer\b([^>]*?)(?:/>|>(.*?)</VideoPlayer>)",
+        video_repl,
+        cleaned,
+        flags=re.DOTALL,
+    )
+
+    # Convert CodexScreenshot to Markdown image
+    def screenshot_repl(match: re.Match[str]) -> str:
+        raw = match.group(1)
+        src_m = re.search(r'src="([^"]+)"', raw)
+        alt_m = re.search(r'alt="([^"]+)"', raw)
+        src = src_m.group(1) if src_m else ""
+        alt = alt_m.group(1) if alt_m else "Screenshot"
+        img_url = f"https://developers.openai.com{src}" if src.startswith("/") else src
+        return f"![{alt}]({img_url})" if src else ""
+
+    cleaned = re.sub(
+        r"<CodexScreenshot\b([^>]*?)(?:/>|>(.*?)</CodexScreenshot>)",
+        screenshot_repl,
+        cleaned,
+        flags=re.DOTALL,
+    )
+
+    # Strip visual-only and client-interactive tags
+    cleaned = re.sub(
+        r"<(?:ElevatedRiskBadge|CodexModelSwitcher|CodexAppDownloadCta|ConfigTable)\b[^>]*?/?>",
+        "",
+        cleaned,
+    )
+
+    # Normalize excess blank lines
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+
+    return _restore_fenced_code(cleaned, code_blocks)
+
+
 def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
     """Fetch raw markdown from upstream and resolve reference stubs to .md twins.
 
@@ -503,10 +1140,13 @@ def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
        - Resolves pure reference stubs and hybrid composite pages (such as `config.md`)
          by fetching their `.md` twin endpoints with route normalization and anchor stripping.
        - Falls back gracefully to original text with a stderr warning if the external fetch fails.
-    3. Rewrites relative links pointing to repository root files outside docs/
+    3. Cleans custom Astro and MDX components (converting overview landing pages,
+       rendering file trees as ASCII code blocks, unwrapping surface switches,
+       converting toggle sections to collapsible HTML, and stripping visual badges).
+    4. Rewrites relative links pointing to repository root files outside docs/
        (`../SECURITY.md` and `../LICENSE`, with or without `#anchor`) to canonical upstream GitHub URLs.
-    4. Rewrites cross-documentation absolute links to relative links for known slugs.
-    5. Returns `(text, content_hash(text))`.
+    5. Rewrites cross-documentation absolute links to relative links for known slugs.
+    6. Returns `(text, content_hash(text))`.
     """
     if (
         page.source_id.startswith("llms:")
@@ -526,6 +1166,7 @@ def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
         else:
             text = raw_text
 
+    text = _clean_mdx_components(text, page.slug)
     text = _rewrite_root_link(text)
     text = _rewrite_cross_links(text, page.slug)
     return text, fetch.content_hash(text)

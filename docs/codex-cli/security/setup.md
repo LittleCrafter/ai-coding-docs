@@ -18,35 +18,20 @@ Codex Security cloud scans GitHub repositories connected through
 
 Go to [Codex environments](https://chatgpt.com/codex/settings/environments) and check whether the repository already has an environment. If it doesn't, create one there before continuing.
 
-<CtaPillLink
-  href="https://chatgpt.com/codex/settings/environments"
-  label="Open environments"
-  icon="external"
-  class="my-8"
-/>
-
-
+[Open environments](https://chatgpt.com/codex/settings/environments)
 
   
     
 
 > Illustration: Codex environments
 
-
   
-
-
 
 ## 2. New security scan
 
 After the environment exists, go to [Create a security scan](https://chatgpt.com/codex/security/scans/new) and choose the repository you just connected.
 
-<CtaPillLink
-  href="https://chatgpt.com/codex/security/scans/new"
-  label="Create a security scan"
-  icon="external"
-  class="my-8"
-/>
+[Create a security scan](https://chatgpt.com/codex/security/scans/new)
 
 Codex Security scans repositories from newest commits backward first. It uses this to build and refresh scan context as new commits come in.
 
@@ -59,17 +44,12 @@ To configure a repository:
 5. Choose a **history window**. Longer windows provide more context, but backfill takes longer.
 6. Click **Create**.
 
-
-
   
     
 
 > Illustration: Create a security scan
 
-
   
-
-
 
 ## 3. Initial scans can take a while
 
@@ -82,24 +62,14 @@ Initial scan setup is automatic and thorough. This can take a few hours. Don’t
 
 ## 4. Review scans and improve the threat model
 
-<CtaPillLink
-  href="https://chatgpt.com/codex/security/scans"
-  label="Review scans"
-  icon="external"
-  class="my-8"
-/>
-
-
+[Review scans](https://chatgpt.com/codex/security/scans)
 
   
     
 
 > Illustration: Threat model editor in Codex Security
 
-
   
-
-
 
 When the initial scan finishes, open the scan and review the threat model that was generated.
 After initial findings appear, update the threat model so it matches your architecture, trust boundaries, and business context.
@@ -117,25 +87,16 @@ For a deeper explanation of threat models and how they affect criticality and tr
 
 After the initial backfill completes, review findings from the **Findings** view.
 
-<CtaPillLink
-  href="https://chatgpt.com/codex/security/findings"
-  label="Open findings"
-  icon="external"
-  class="my-8"
-/>
+[Open findings](https://chatgpt.com/codex/security/findings)
 
 You can use two views:
 
 - **Recommended Findings**: an evolving top 10 list of the most critical issues in the repo
 - **All Findings**: a sortable, filterable table of findings across the repository
 
-
   
 
 > Illustration: Recommended findings view
-
-
-
 
 Click a finding to open its detail page, which includes:
 
@@ -148,12 +109,7 @@ Click a finding to open its detail page, which includes:
 
 You can review each finding and create a PR directly from the finding detail page.
 
-<CtaPillLink
-  href="https://chatgpt.com/codex/security/findings"
-  label="Review findings and create a PR"
-  icon="external"
-  class="my-8"
-/>
+[Review findings and create a PR](https://chatgpt.com/codex/security/findings)
 
 ## Related docs
 

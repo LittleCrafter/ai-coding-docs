@@ -22,8 +22,6 @@ best when the steps are stable and the success criteria are clear.
 
 ## Start a recording
 
-<WorkflowSteps>
-
 1. In the ChatGPT desktop app, select ChatGPT and turn on Work in the switcher, or select Codex. Then open **Plugins**.
 2. Open the **+** menu.
 3. Select **Record a skill**.
@@ -33,8 +31,6 @@ best when the steps are stable and the success criteria are clear.
 6. Perform the workflow on your Mac.
 7. When you are done, stop recording from the menu bar or overlay, or tell the
    chat that you are done.
-
-</WorkflowSteps>
 
 During recording, ChatGPT or Codex observes the actions and window content
 needed to learn the workflow. Recording continues until you stop it. Keep the

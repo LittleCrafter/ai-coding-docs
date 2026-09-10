@@ -69,11 +69,7 @@ assigned seat types.
 The following example shows combined **Codex and Work Local** controls and a
 separate **Access tokens** section:
 
-
-
 > Illustration: ChatGPT Permissions & roles showing Codex and Work Local access, personal access tokens, and the access token expiration limit.
-
-
 
 For current prerequisites and supported identity patterns, see
 [Identity and provisioning](https://help.openai.com/en/articles/9672121)
@@ -249,11 +245,7 @@ so explicitly revoke credentials that must lose access permanently.
 The **Access tokens** page identifies each token's creator and status. Use
 **Revoke** to remove access from active tokens:
 
-
-
 > Illustration: ChatGPT Access tokens showing token names, their creators and status, and the Revoke action.
-
-
 
 1. Have a workspace owner or admin open
    [Access tokens](https://chatgpt.com/admin/access-tokens).
@@ -283,11 +275,7 @@ name and choose the shortest credential lifetime allowed by your organization's
 policy. If **Scopes** appears, select **Codex** and avoid permissions the
 workflow doesn't require. The following example shows the scoped interface:
 
-
-
 > Illustration: ChatGPT Create access token dialog showing Name, Scopes with Codex selected, Expiration, and the Create action.
-
-
 
 Workspace owners and admins can revoke any token in their workspace. A member
 with access-token permission can revoke only tokens they created. For current

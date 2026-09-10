@@ -86,7 +86,7 @@ Safety monitoring evaluates model behavior during a task.
 already require approval before those actions run. An action approved by
 automatic approval review can still be part of a task that monitoring later pauses.
 
-## Network access <ElevatedRiskBadge class="ml-2" />
+## Network access 
 
 For Codex cloud, see [agent internet access](./cloud/internet-access.md) to enable full internet access or a domain allow list.
 
@@ -349,7 +349,7 @@ can constrain it with `allowed_approvals_reviewers`.
 | Safe read-only browsing        | `--sandbox read-only --ask-for-approval on-request`                                                                                 | Codex can read files and run commands within the read-only sandbox. Actions outside the sandbox can require approval.                            |
 | Read-only non-interactive (CI) | `--sandbox read-only --ask-for-approval never`                                                                                      | Codex can read files and run commands within the read-only sandbox; it never asks for approval.                                                  |
 | Auto-review mode               | `--sandbox workspace-write --ask-for-approval on-request -c approvals_reviewer=auto_review` or `approvals_reviewer = "auto_review"` | Same sandbox boundary as standard on-request mode, but eligible approval requests are reviewed by Auto-review instead of surfacing to the user.  |
-| Dangerous full access          | `--dangerously-bypass-approvals-and-sandbox` (alias: `--yolo`)                                                                      | <ElevatedRiskBadge /> No sandbox; no approvals _(not recommended)_                                                                               |
+| Dangerous full access          | `--dangerously-bypass-approvals-and-sandbox` (alias: `--yolo`)                                                                      |  No sandbox; no approvals _(not recommended)_                                                                               |
 
 For non-interactive runs, use `codex exec --sandbox workspace-write`; Codex keeps older `codex exec --full-auto` invocations as a deprecated compatibility path and prints a warning.
 

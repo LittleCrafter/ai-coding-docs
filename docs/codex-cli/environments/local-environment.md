@@ -32,22 +32,13 @@ If your setup is platform-specific, define setup scripts for macOS, Windows, or 
 
 <section class="feature-grid">
 
-
-
 Use actions to define common tasks like starting your app's development server or running your test suite. These actions appear in the ChatGPT desktop app top bar for quick access. The actions run within the app's [integrated terminal](../integrated-terminal.md).
 
 Actions are helpful to keep you from typing common actions like triggering a build for your project or starting a development server. For one-off quick debugging you can use the integrated terminal directly.
 
-
-
-
-
   
 
 > Illustration: Project actions list shown in ChatGPT desktop app settings
-
-
-
 
 </section>
 
@@ -63,12 +54,6 @@ To identify your actions, choose an icon associated with each action.
 
 ## Use built-in Git tools
 
-
-
-
-
-
-
 In Codex, the ChatGPT desktop app provides common Git controls alongside each
 local project and worktree. The diff pane shows changes in the current checkout
 and lets you add inline comments for Codex to address. You can stage or revert individual
@@ -78,10 +63,5 @@ a pull request without leaving the app.
 Use the [integrated terminal](../integrated-terminal.md) for Git
 operations that aren't exposed in the app. To isolate concurrent changes from
 your local checkout, start the task in a [worktree](./git-worktrees.md).
-
-
-
-
-
 
 > Illustration: Codex environment summary panel

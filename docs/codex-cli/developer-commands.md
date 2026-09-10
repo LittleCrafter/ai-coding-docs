@@ -2,16 +2,10 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-<ContentModeSwitch group="codex-surface" id="web">
-
 ChatGPT web has its own composer command menu. Type `/` to see the actions
 available in the current chat. It doesn't expose the ChatGPT desktop app or CLI
 command set; the Codex slash commands, CLI subcommands, and flags in this
 reference don't apply to ChatGPT web.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 ## ChatGPT desktop app commands
 
@@ -22,10 +16,6 @@ skills, scheduled tasks, plugins, and pets.
 The [Slash commands](https://learn.chatgpt.com/docs/reference/slash-commands) page covers the commands
 available from the app composer, including `/feedback`, `/goal`, `/init`,
 `/mcp`, `/plan`, `/review`, and `/status`.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 ## How to read this reference
 
@@ -39,8 +29,6 @@ The CLI inherits most defaults from `~/.codex/config.toml`. Any
 
 ## Global flags
 
-<ConfigTable client:load options={globalFlagOptions} />
-
 These options apply to the base `codex` command. Most propagate to commands;
 see the notes above or the relevant command help for exceptions. For propagated
 flags, follow the relevant command help. For example, `codex exec --oss ...`
@@ -51,13 +39,6 @@ applies `--oss` to `exec`.
 The Maturity column uses feature maturity labels such as Experimental, Beta,
   Stable, and Deprecated. See [Feature Maturity](./feature-maturity.md) for
   how to interpret these labels.
-
-<ConfigTable
-  client:load
-  options={commandOverview}
-  secondColumnTitle="Maturity"
-  secondColumnVariant="maturity"
-/>
 
 ## Command details
 
@@ -70,8 +51,6 @@ Use `--remote ws://host:port` or `--remote wss://host:port` to connect the TUI t
 ### `codex app-server`
 
 Launch the Codex app server locally. This is primarily for development and debugging and may change without notice.
-
-<ConfigTable client:load options={appServerOptions} />
 
 `codex app-server --listen stdio://` keeps the default JSONL-over-stdio behavior, and `codex app-server --stdio` is an alias for that transport. `--listen ws://IP:PORT` enables WebSocket transport for app-server clients. The server accepts `ws://` listen URLs; use TLS termination or a secure proxy when clients connect with `wss://`. Use `--listen unix://` to accept WebSocket handshakes on Codex's default Unix socket, or `--listen unix:///absolute/path.sock` to choose a socket path. If you generate schemas for client bindings, add `--experimental` to include gated fields and methods.
 
@@ -100,8 +79,6 @@ Launch the ChatGPT desktop app from the terminal on macOS or Windows. On macOS,
 Codex can open a specific workspace path; on Windows, Codex prints the path to
 open.
 
-<ConfigTable client:load options={appOptions} />
-
 `codex app` opens an installed ChatGPT desktop app, or starts the installer when
 the app is missing. On macOS, Codex opens the provided workspace path; on
 Windows, it prints the path to open after installation.
@@ -110,15 +87,11 @@ Windows, it prints the path to open after installation.
 
 Send one message through app-server's V2 thread/turn flow using the built-in app-server test client.
 
-<ConfigTable client:load options={debugAppServerSendMessageV2Options} />
-
 This debug flow initializes with `experimentalApi: true`, starts a thread, sends a turn, and streams server notifications. Use it to reproduce and inspect app-server protocol behavior locally.
 
 ### `codex debug models`
 
 Print the raw model catalog Codex sees as JSON.
-
-<ConfigTable client:load options={debugModelsOptions} />
 
 Use `--bundled` when you want to inspect only the catalog bundled with the current binary, without refreshing from the remote models endpoint.
 
@@ -127,13 +100,9 @@ Use `--bundled` when you want to inspect only the catalog bundled with the curre
 Render the exact model-visible prompt input list as JSON. Use this when
 debugging instruction discovery, session context, or prompt construction.
 
-<ConfigTable client:load options={debugPromptInputOptions} />
-
 ### `codex apply`
 
 Apply the most recent diff from a Codex cloud chat to your local repository. You must authenticate and have access to the chat.
-
-<ConfigTable client:load options={applyOptions} />
 
 Codex prints the patched files and exits non-zero if `git apply` fails (for example, due to conflicts).
 
@@ -141,8 +110,6 @@ Codex prints the patched files and exits non-zero if `git apply` fails (for exam
 
 Run a code review non-interactively. Choose exactly one review target, or pass
 custom review instructions as a prompt.
-
-<ConfigTable client:load options={reviewOptions} />
 
 `--uncommitted`, `--base`, `--commit`, and a custom `PROMPT` conflict with one
 another. Use `--title` only with `--commit`.
@@ -158,8 +125,6 @@ codex archive <SESSION>
 codex unarchive <SESSION>
 ```
 
-<ConfigTable client:load options={archiveOptions} />
-
 ### `codex delete`
 
 Permanently delete a saved interactive session by session ID or session name.
@@ -171,8 +136,6 @@ codex delete <SESSION>
 codex delete <SESSION_UUID> --force
 ```
 
-<ConfigTable client:load options={deleteOptions} />
-
 Use `--force` only with a session UUID. Named sessions still require
 confirmation so Codex doesn't delete a repeated or ambiguous name without a prompt.
 
@@ -180,23 +143,17 @@ confirmation so Codex doesn't delete a repeated or ambiguous name without a prom
 
 Interact with Codex cloud chats from the terminal. The default command opens an interactive picker; `codex cloud exec` submits a task directly, and `codex cloud list` returns recent chats for scripting or quick inspection.
 
-<ConfigTable client:load options={cloudExecOptions} />
-
 Authentication follows the same credentials as the main CLI. Codex exits non-zero if the task submission fails.
 
 #### `codex cloud list`
 
 List recent cloud chats with optional filtering and pagination.
 
-<ConfigTable client:load options={cloudListOptions} />
-
 Plain-text output prints a task URL followed by status details. Use `--json` for automation. The JSON payload contains a `tasks` array plus an optional `cursor` value. Each task includes `id`, `url`, `title`, `status`, `updated_at`, `environment_id`, `environment_label`, `summary`, `is_review`, and `attempt_total`.
 
 ### `codex completion`
 
 Generate shell completion scripts and redirect the output to the appropriate location, for example `codex completion zsh > "${fpath[1]}/_codex"`.
-
-<ConfigTable client:load options={completionOptions} />
 
 ### `codex doctor`
 
@@ -205,37 +162,25 @@ while investigating a broken Codex installation. The report checks installation,
 configuration, authentication, runtime, Git, terminal, app-server, and thread
 inventory health.
 
-<ConfigTable client:load options={doctorOptions} />
-
 ### `codex features`
 
 Manage feature flags stored in `$CODEX_HOME/config.toml`. The `enable` and
 `disable` commands persist changes so they apply to future sessions. The
 `features` subcommand doesn't accept `--profile`.
 
-<ConfigTable client:load options={featuresOptions} />
-
 ### `codex exec`
 
 Use `codex exec` (or the short form `codex e`) for scripted or CI-style runs that should finish without human interaction.
 
-<ConfigTable client:load options={execOptions} />
-
 Codex writes formatted output by default. Add `--json` to receive newline-delimited JSON events (one per state change). The optional `resume` subcommand lets you continue non-interactive tasks. Use `--last` to pick the most recent session from the current working directory, or add `--all` to search across all sessions:
-
-<ConfigTable client:load options={execResumeOptions} />
 
 ### `codex execpolicy`
 
 Check `execpolicy` rule files before you save them. `codex execpolicy check` accepts one or more `--rules` flags (for example, files under `~/.codex/rules`) and emits JSON showing the strictest decision and any matching rules. Add `--pretty` to format the output. The `execpolicy` command is currently in preview.
 
-<ConfigTable client:load options={execpolicyOptions} />
-
 ### `codex login`
 
 Authenticate the CLI with a ChatGPT account, API key, or access token. With no flags, Codex opens a browser for the ChatGPT OAuth flow.
-
-<ConfigTable client:load options={loginOptions} />
 
 `codex login status` exits with `0` when credentials are present, which is helpful in automation scripts.
 
@@ -247,19 +192,13 @@ Remove saved credentials for both API key and ChatGPT authentication. This comma
 
 Manage Model Context Protocol server entries stored in `~/.codex/config.toml`.
 
-<ConfigTable client:load options={mcpCommands} />
-
 The `add` subcommand supports both stdio and streamable HTTP transports:
-
-<ConfigTable client:load options={mcpAddOptions} />
 
 OAuth actions (`login`, `logout`) only work with streamable HTTP servers (and only when the server supports OAuth).
 
 ### `codex plugin`
 
 Install, list, and remove plugins from configured marketplaces.
-
-<ConfigTable client:load options={pluginCommands} />
 
 `codex plugin add --json` prints `pluginId`, `name`, `marketplaceName`,
 `version`, `installedPath`, and `authPolicy`. `codex plugin list --json` prints
@@ -272,8 +211,6 @@ marketplace source type and value. `codex plugin remove --json` prints
 ### `codex plugin marketplace`
 
 Manage plugin marketplace sources that Codex can browse and install from.
-
-<ConfigTable client:load options={marketplaceCommands} />
 
 `codex plugin marketplace add` accepts GitHub shorthand such as `owner/repo` or
 `owner/repo@ref`, HTTP or HTTPS Git URLs, SSH Git URLs, and local marketplace
@@ -310,8 +247,6 @@ Codex asks which directory to use. Set
 `"session"` to reuse that choice without a prompt. An explicit `--cd` (`-C`)
 override takes precedence over `tui.resume_cwd`.
 
-<ConfigTable client:load options={resumeOptions} />
-
 ### `codex fork`
 
 Fork a previous interactive session into a new chat. By default, `codex fork` opens the session picker; add `--last` to fork your most recent session instead.
@@ -319,23 +254,15 @@ Fork a previous interactive session into a new chat. By default, `codex fork` op
 When the current and saved session directories differ, `codex fork` uses the
 same working-directory prompt and `tui.resume_cwd` setting as `codex resume`.
 
-<ConfigTable client:load options={forkOptions} />
-
 ### `codex sandbox`
 
 Use the sandbox helper to run a command under the same policies Codex uses internally.
 
 #### macOS seatbelt
 
-<ConfigTable client:load options={sandboxMacOptions} />
-
 #### Linux Landlock
 
-<ConfigTable client:load options={sandboxLinuxOptions} />
-
 #### Windows
-
-<ConfigTable client:load options={sandboxWindowsOptions} />
 
 ### `codex update`
 
@@ -946,10 +873,6 @@ Expected: Codex clears local credentials for the current user session.
 
 Expected: Codex exits immediately. Save or commit any important work first.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 Use these commands to control Codex from the VS Code Command Palette. You can also bind them to keyboard shortcuts.
 
 ## Assign a key binding
@@ -1007,4 +930,3 @@ Slash commands let you control Codex without leaving the composer. Use them to c
 | `/status`            | Show the chat ID, context usage, and rate limits.                                       |
 | `/worktree`          | Run the chat in a new Git worktree.                                                     |
 
-</ContentModeSwitch>

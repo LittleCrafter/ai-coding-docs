@@ -2,13 +2,10 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-{/* vale alex.Condescending = NO */}
-
 ## Go from idea to useful result
 
 ChatGPT is an AI agent that you communicate with in natural language:
 
-<WorkflowSteps>
 1. Start with a question, an idea, rough notes, a file, or a task you need to
    complete.
 
@@ -20,8 +17,6 @@ ChatGPT is an AI agent that you communicate with in natural language:
 
 4. Review the result, correct the direction, and ask for changes. You don't need
    a perfect first prompt or special commands.
-
-</WorkflowSteps>
 
 ## Choose how you want to work
 
@@ -50,11 +45,7 @@ practices.
 ChatGPT Work can plan a task, gather context, use tools, and carry the work
 through to a result you can review.
 
-
-
 > Illustration: ChatGPT Work comparing vendors and producing a spreadsheet you can review.
-
-
 
 Ask it to:
 
@@ -119,7 +110,8 @@ prefer Codex, you can keep using it for research, documents, presentations, and
 other knowledge work. When both are available to you, the desktop app changes
 the interface and how the agent presents its work.
 
-<ToggleSection title="Detailed comparison">
+<details>
+<summary>Detailed comparison</summary>
 
 | Difference          | ChatGPT in Desktop app                                                 | Codex in Desktop app                                              |
 | ------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------- |
@@ -130,7 +122,7 @@ the interface and how the agent presents its work.
 | Agent communication | Prefers nontechnical language and finished outputs                     | Can include technical and implementation details                  |
 | Pull requests pane  | Not available when using ChatGPT Work                                  | Available when enabled                                            |
 
-</ToggleSection>
+</details>
 
 ### Talk to ChatGPT naturally
 
@@ -138,8 +130,6 @@ Write as if you were explaining the request to a helpful colleague. State what
 you want to accomplish, add the details that change the answer, and describe the
 format you need. Your first prompt is only a starting point—you can add context
 or refine the result with follow-up messages.
-
-
 
 **Start simple:**
 
@@ -204,11 +194,7 @@ as Google Drive, SharePoint, Salesforce, or Gong. Use them when a task depends
 on information outside the chat, actions in another system, or a
 repeatable workflow.
 
-
-
 > Illustration: ChatGPT plugin directory showing connected tools such as Google Drive, Slack, and SharePoint.
-
-
 
 Plugin availability depends on your plan, workspace settings, and the plugin
 itself. Learn more about [skills and plugins](./skills-and-plugins.md).
@@ -287,11 +273,8 @@ Legal, financial, medical, security, and other high-stakes decisions require
 
 ## Next steps
 
-
 a]:min-w-0 [&>a]:no-underline">
   [Open the quickstart
-
-
 
         <OpenBook />
       
@@ -300,16 +283,12 @@ a]:min-w-0 [&>a]:no-underline">
 
 [Learn about prompting
 
-
-
       <Chat />
     
 
     Write useful prompts for questions, finished work, and coding tasks.](./prompting.md)
 
   [Personalize ChatGPT
-
-
 
         <Settings />
       

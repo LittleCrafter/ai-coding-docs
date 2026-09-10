@@ -4,8 +4,6 @@
 
 Use this guide to understand how the Admin plugin supports common administration work, prepare for a task, and try prompts for key use cases with the right approvals and context.
 
-
-
 [Watch: Admin plugin in ChatGPT Work](https://www.youtube.com/watch?v=29SyCndnMZs)
 
 ## 1. Understand what the Admin plugin is for

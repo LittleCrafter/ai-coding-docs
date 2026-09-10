@@ -2,12 +2,7 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
-
-
   
-
 
 ## Choose a model
 
@@ -25,18 +20,9 @@ making it useful for larger tasks that can be split across subagents.
 
   
 
-  <CodexModelSwitcher client:visible className="lg:mt-7" />
-
-
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
-
-
   
 
+  
 
 ## Choose a model
 
@@ -55,18 +41,9 @@ making it useful for larger tasks that can be split across subagents.
 
   
 
-  <CodexModelSwitcher client:visible className="lg:mt-7" />
-
-
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
-
-
   
 
+  
 
 ## Choose a model
 
@@ -78,13 +55,11 @@ reasoning effort. You can also choose a model when you launch Codex with
 codex --model gpt-5.6
 ```
 
-
 The same option works with non-interactive runs. For example:
 
 ```bash
 codex exec -m gpt-5.6 "Review the current changes"
 ```
-
 
 Higher reasoning effort can improve results for complex tasks, but it takes
 longer and uses more tokens. Start with the default effort and increase it when
@@ -102,16 +77,7 @@ making it useful for larger tasks that can be split across subagents.
     className="lg:mt-7 lg:justify-self-end"
   />
 
-
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
-
-
   
-
 
 ## Choose a model
 
@@ -129,11 +95,7 @@ making it useful for larger tasks that can be split across subagents.
 
   
 
-  <CodexModelSwitcher client:visible forceDark className="lg:mt-7" />
-
-
-
-</ContentModeSwitch>
+  
 
 <a id="recommended-models"></a>
 <a id="other-models"></a>
@@ -142,195 +104,69 @@ making it useful for larger tasks that can be split across subagents.
 <a id="choose-a-model-for-cloud-tasks"></a>
 <a id="gpt-6-astra"></a>
 
-<ContentModeSwitch group="codex-surface" ids="app,web,cli,ide">
-
 ## Recommended models
 
 <a id="app-compare-models"></a>
 
+  ### `gpt-6-astra`
 
+Our most capable model for complex work across code, apps, and research, combining advanced reasoning, computer use, and stronger judgment.
 
-  <ModelDetails
-    client:load
-    name="gpt-6-astra"
-    slug="gpt-6-astra"
-    imageLabel="Astra"
-    wallpaperUrl="/images/api/models/gpt-6-astra-texture.webp"
-    description="Our most capable model for complex work across code, apps, and research, combining advanced reasoning, computer use, and stronger judgment."
-    data={{
-      features: [
-        {
-          title: "Capability",
-          value: "",
-          icons: [
-            "openai.SparklesFilled",
-            "openai.SparklesFilled",
-            "openai.SparklesFilled",
-            "openai.SparklesFilled",
-            "openai.SparklesFilled",
-          ],
-        },
-        {
-          title: "Speed",
-          value: "",
-          icons: ["openai.Flash", "openai.Flash"],
-        },
-        { title: "ChatGPT desktop app", value: true },
-        { title: "ChatGPT web", value: true },
-        { title: "Codex CLI", value: true },
-        { title: "Codex IDE extension", value: true },
-        { title: "Codex cloud", value: false },
-        { title: "ChatGPT Credits", value: true },
-        { title: "API Access", value: true },
-      ],
-    }}
-  />
+- **ChatGPT desktop app**: Supported
+- **ChatGPT web**: Supported
+- **Codex CLI**: Supported
+- **Codex IDE extension**: Supported
+- **Codex cloud**: Not supported
+- **ChatGPT Credits**: Supported
+- **API Access**: Supported
 
-<ModelDetails
-  client:load
-  name="gpt-5.6-sol"
-  slug="gpt-5.6-sol"
-  imageLabel="5.6 Sol"
-  wallpaperUrl="/images/api/models/gpt-5.6-sol.webp"
-  description="The most capable GPT-5.6 model for complex coding, computer use, research, and cybersecurity."
-  data={{
-    features: [
-      {
-        title: "Capability",
-        value: "",
-        icons: [
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-        ],
-      },
-      {
-        title: "Speed",
-        value: "",
-        icons: ["openai.Flash", "openai.Flash"],
-      },
-      { title: "ChatGPT desktop app", value: true },
-      { title: "ChatGPT web", value: true },
-      { title: "Codex CLI", value: true },
-      { title: "Codex IDE extension", value: true },
-      { title: "Codex cloud", value: true },
-      { title: "ChatGPT Credits", value: true },
-      { title: "API Access", value: true },
-    ],
-  }}
-/>
+### `gpt-5.6-sol`
 
-<ModelDetails
-  client:load
-  name="gpt-5.6-terra"
-  slug="gpt-5.6-terra"
-  imageLabel="5.6 Terra"
-  wallpaperUrl="/images/api/models/gpt-5.6-terra.webp"
-  description="Balanced GPT-5.6 model for everyday work, with performance competitive with GPT-5.5 at a lower cost."
-  data={{
-    features: [
-      {
-        title: "Capability",
-        value: "",
-        icons: [
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-        ],
-      },
-      {
-        title: "Speed",
-        value: "",
-        icons: ["openai.Flash", "openai.Flash", "openai.Flash"],
-      },
-      { title: "ChatGPT desktop app", value: true },
-      { title: "ChatGPT web", value: true },
-      { title: "Codex CLI", value: true },
-      { title: "Codex IDE extension", value: true },
-      { title: "Codex cloud", value: false },
-      { title: "ChatGPT Credits", value: true },
-      { title: "API Access", value: true },
-    ],
-  }}
-/>
+The most capable GPT-5.6 model for complex coding, computer use, research, and cybersecurity.
 
-<ModelDetails
-  client:load
-  name="gpt-5.6-luna"
-  slug="gpt-5.6-luna"
-  imageLabel="5.6 Luna"
-  wallpaperUrl="/images/api/models/gpt-5.6-luna.webp"
-  description="Fast and affordable GPT-5.6 model that delivers strong capability at the lowest cost in the family."
-  data={{
-    features: [
-      {
-        title: "Capability",
-        value: "",
-        icons: [
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-          "openai.SparklesFilled",
-        ],
-      },
-      {
-        title: "Speed",
-        value: "",
-        icons: ["openai.Flash", "openai.Flash", "openai.Flash", "openai.Flash"],
-      },
-      { title: "ChatGPT desktop app", value: true },
-      { title: "ChatGPT web", value: true },
-      { title: "Codex CLI", value: true },
-      { title: "Codex IDE extension", value: true },
-      { title: "Codex cloud", value: false },
-      { title: "ChatGPT Credits", value: true },
-      { title: "API Access", value: true },
-    ],
-  }}
-/>
+- **ChatGPT desktop app**: Supported
+- **ChatGPT web**: Supported
+- **Codex CLI**: Supported
+- **Codex IDE extension**: Supported
+- **Codex cloud**: Supported
+- **ChatGPT Credits**: Supported
+- **API Access**: Supported
 
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-  <ModelDetails
-    client:load
-    name="gpt-5.3-codex-spark"
-    slug="gpt-5.3-codex-spark"
-    imageLabel="5.3 Codex Spark"
-    wallpaperUrl="/images/codex/codex-wallpaper-2.webp"
-    description="Text-only research preview model optimized for near-instant, real-time coding iteration. Available to ChatGPT Pro users."
-    data={{
-      features: [
-        {
-          title: "Capability",
-          value: "",
-          icons: ["openai.SparklesFilled", "openai.SparklesFilled"],
-        },
-        {
-          title: "Speed",
-          value: "",
-          icons: [
-            "openai.Flash",
-            "openai.Flash",
-            "openai.Flash",
-            "openai.Flash",
-            "openai.Flash",
-          ],
-        },
-        { title: "ChatGPT desktop app", value: true },
-        { title: "ChatGPT web", value: false },
-        { title: "Codex CLI", value: true },
-        { title: "Codex IDE extension", value: true },
-        { title: "Codex cloud", value: false },
-        { title: "ChatGPT Credits", value: false },
-        { title: "API Access", value: false },
-      ],
-    }}
-  />
-</ContentModeSwitch>
+### `gpt-5.6-terra`
 
+Balanced GPT-5.6 model for everyday work, with performance competitive with GPT-5.5 at a lower cost.
 
+- **ChatGPT desktop app**: Supported
+- **ChatGPT web**: Supported
+- **Codex CLI**: Supported
+- **Codex IDE extension**: Supported
+- **Codex cloud**: Not supported
+- **ChatGPT Credits**: Supported
+- **API Access**: Supported
 
+### `gpt-5.6-luna`
+
+Fast and affordable GPT-5.6 model that delivers strong capability at the lowest cost in the family.
+
+- **ChatGPT desktop app**: Supported
+- **ChatGPT web**: Supported
+- **Codex CLI**: Supported
+- **Codex IDE extension**: Supported
+- **Codex cloud**: Not supported
+- **ChatGPT Credits**: Supported
+- **API Access**: Supported
+
+  ### `gpt-5.3-codex-spark`
+
+Text-only research preview model optimized for near-instant, real-time coding iteration. Available to ChatGPT Pro users.
+
+- **ChatGPT desktop app**: Supported
+- **ChatGPT web**: Not supported
+- **Codex CLI**: Supported
+- **Codex IDE extension**: Supported
+- **Codex cloud**: Not supported
+- **ChatGPT Credits**: Not supported
+- **API Access**: Not supported
 
 Availability depends on the rollout, your sign-in method, and your client.
 See [pricing](./pricing.md) for plan access and usage, and
@@ -342,16 +178,10 @@ Start with the default Power setting available to your account. Move toward
   Open **Advanced** when you want `gpt-5.6-luna` or a specific model, reasoning
   effort, or speed.
 
-<ContentModeSwitch group="codex-surface" ids="app,web">
-
 The picker illustrations show GPT-5.6 controls. For eligible Pro, Business
 ($100), and Enterprise accounts, the Astra rollout updates the Power options
 to Terra Light, Sol Light, Sol Medium, Astra Light, Astra Medium, and Astra
 Extra High. Options can differ by plan and rollout stage.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ### Experimental context management
 
@@ -365,8 +195,6 @@ To opt in, set `features.context_management.experimental_mode = true` in your
 `config.toml`, then start a new task. See the [configuration reference](./config-file/config-reference.md)
 for the setting and [configuration basics](./config-file/config-basic.md)
 for the file location. Workspace requirements still apply.
-
-</ContentModeSwitch>
 
 <a id="choosing-sol-terra-and-luna"></a>
 
@@ -421,10 +249,6 @@ work into meaningful parts. Most tasks do not need Max or Ultra.
 If Ultra doesn't appear in the desktop app's model slider, go to
 **Settings** > **Configuration**, then turn on **Ultra in model picker slider**.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 ## Other models
 
 When you sign in with ChatGPT, Codex works best with the recommended models listed above.
@@ -437,116 +261,46 @@ When you sign in with ChatGPT, Codex works best with the recommended models list
   scheduled tasks. The OpenAI API and Codex authenticated with your own API key
   aren't affected.
 
-<ToggleSection title="View other models">
-  
+<details>
+<summary>View other models</summary>
 
-    <ModelDetails
-      client:load
-      name="gpt-5.5"
-      slug="gpt-5.5"
-      imageLabel="5.5"
-      wallpaperUrl="/images/api/models/gpt-5.5.jpg"
-      description="Previous-generation flagship model for complex coding, computer use, knowledge work, and research workflows."
-      data={{
-        features: [
-          {
-            title: "Capability",
-            value: "",
-            icons: [
-              "openai.SparklesFilled",
-              "openai.SparklesFilled",
-              "openai.SparklesFilled",
-              "openai.SparklesFilled",
-            ],
-          },
-          {
-            title: "Speed",
-            value: "",
-            icons: ["openai.Flash", "openai.Flash", "openai.Flash"],
-          },
-          { title: "ChatGPT desktop app", value: true },
-          { title: "ChatGPT web", value: true },
-          { title: "Codex CLI", value: true },
-          { title: "Codex IDE extension", value: true },
-          { title: "Codex cloud", value: false },
-          { title: "ChatGPT Credits", value: true },
-          { title: "API Access", value: true },
-        ],
-      }}
-    />
+### `gpt-5.5`
 
-    <ModelDetails
-      client:load
-      name="gpt-5.4"
-      slug="gpt-5.4"
-      imageLabel="5.4"
-      wallpaperUrl="/images/api/models/gpt-5.4.jpg"
-      description="Flagship model for professional work with strong coding, reasoning, tool use, and agentic workflow capabilities."
-      data={{
-        features: [
-          {
-            title: "Capability",
-            value: "",
-            icons: [
-              "openai.SparklesFilled",
-              "openai.SparklesFilled",
-              "openai.SparklesFilled",
-            ],
-          },
-          {
-            title: "Speed",
-            value: "",
-            icons: ["openai.Flash", "openai.Flash", "openai.Flash"],
-          },
-          { title: "ChatGPT desktop app", value: true },
-          { title: "ChatGPT web", value: true },
-          { title: "Codex CLI", value: true },
-          { title: "Codex IDE extension", value: true },
-          { title: "Codex cloud", value: false },
-          { title: "ChatGPT Credits", value: true },
-          { title: "API Access", value: true },
-        ],
-      }}
-    />
+Previous-generation flagship model for complex coding, computer use, knowledge work, and research workflows.
 
-    <ModelDetails
-      client:load
-      name="gpt-5.4-mini"
-      slug="gpt-5.4-mini"
-      imageLabel="5.4 Mini"
-      wallpaperUrl="/images/api/models/gpt-5-mini.jpg"
-      description="Fast, efficient mini model for responsive coding tasks and subagents."
-      data={{
-        features: [
-          {
-            title: "Capability",
-            value: "",
-            icons: ["openai.SparklesFilled", "openai.SparklesFilled"],
-          },
-          {
-            title: "Speed",
-            value: "",
-            icons: [
-              "openai.Flash",
-              "openai.Flash",
-              "openai.Flash",
-              "openai.Flash",
-            ],
-          },
-          { title: "ChatGPT desktop app", value: true },
-          { title: "ChatGPT web", value: true },
-          { title: "Codex CLI", value: true },
-          { title: "Codex IDE extension", value: true },
-          { title: "Codex cloud", value: false },
-          { title: "ChatGPT Credits", value: true },
-          { title: "API Access", value: true },
-        ],
-      }}
-    />
+- **ChatGPT desktop app**: Supported
+- **ChatGPT web**: Supported
+- **Codex CLI**: Supported
+- **Codex IDE extension**: Supported
+- **Codex cloud**: Not supported
+- **ChatGPT Credits**: Supported
+- **API Access**: Supported
 
-  
+    ### `gpt-5.4`
 
-</ToggleSection>
+Flagship model for professional work with strong coding, reasoning, tool use, and agentic workflow capabilities.
+
+- **ChatGPT desktop app**: Supported
+- **ChatGPT web**: Supported
+- **Codex CLI**: Supported
+- **Codex IDE extension**: Supported
+- **Codex cloud**: Not supported
+- **ChatGPT Credits**: Supported
+- **API Access**: Supported
+
+    ### `gpt-5.4-mini`
+
+Fast, efficient mini model for responsive coding tasks and subagents.
+
+- **ChatGPT desktop app**: Supported
+- **ChatGPT web**: Supported
+- **Codex CLI**: Supported
+- **Codex IDE extension**: Supported
+- **Codex cloud**: Not supported
+- **ChatGPT Credits**: Supported
+- **API Access**: Supported
+
+</details>
 
 You can also point Codex at any model and provider that supports either the [Chat Completions](https://platform.openai.com/docs/api-reference/chat) or [Responses APIs](https://platform.openai.com/docs/api-reference/responses) to fit your specific use case.
 
@@ -579,9 +333,7 @@ ChatGPT desktop app, Codex CLI, or IDE extension uses a recommended model.
 model = "gpt-5.6"
 ```
 
-
 ## Choose a model for cloud chats
 
 Currently, you can't change the default model for Codex cloud chats.
 
-</ContentModeSwitch>

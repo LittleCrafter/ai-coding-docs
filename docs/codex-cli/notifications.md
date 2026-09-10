@@ -5,8 +5,6 @@
 Notifications let you know when work needs attention. Their controls and
 delivery channels vary by surface.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 ## Configure desktop notifications
 
 Open [**Settings**](codex://settings) to choose whether turn-completion alerts
@@ -37,10 +35,6 @@ activity while you work in other apps. It can show when a chat is **Running**,
 See [Pets](./pets.md) to choose a pet, understand its status, or
 create your own.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 ## Configure web notifications
 
 Open **Settings > Notifications** to manage the notification categories and
@@ -48,20 +42,12 @@ channels available to your account. Depending on the category and account,
 channels can include push, email, or SMS. Use **Manage tasks** from the task
 notification settings to open **Scheduled**.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 ## Configure CLI notifications
 
 For terminal and external notifications, see
 [Notifications](./config-file/config-advanced.md#notifications) in the
 advanced configuration guide. You can choose when the TUI emits a notification
 and whether Codex runs an external program when a turn completes.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
 
 <a id="follow-task-activity-in-the-ide"></a>
 
@@ -72,8 +58,6 @@ chat open to follow its activity. To run an external program when a turn
 completes, configure `notify` on the connected Codex host. See
 [Notifications](./config-file/config-advanced.md#notifications) in the
 advanced configuration guide.
-
-</ContentModeSwitch>
 
 ## Related docs
 

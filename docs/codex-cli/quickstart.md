@@ -8,28 +8,13 @@ ChatGPT is available across different surfaces, including the
 [ChatGPT desktop app](./app.md) and [ChatGPT on the web](./web.md). Choose
 the option that fits your work.
 
-
-
 > Illustration: Cards compare the ChatGPT desktop app and ChatGPT on the web
-
-
 
 If you're a developer and want to use Codex in your terminal or code editor,
   try [Codex CLI](./codex/cli.md) or the [Codex IDE extension](./codex/ide.md).
 
 ## Setup
 
-{/* prettier-ignore */}
-<Tabs
-  id="codex-quickstart-setup"
-  param="setup"
-  defaultTab="web"
-  size="md"
-  tabs={[
-    { id: "app", label: "Desktop" },
-    { id: "web", label: "Web" },
-  ]}
->
   
 
 The ChatGPT desktop app is available for macOS, Windows, and Linux. Use it for
@@ -37,12 +22,11 @@ projects, local files, longer tasks, and quick chats. For supported Linux
 distributions and package installation, see the
 [Linux desktop app guide](./linux/linux-app.md).
 
-<WorkflowSteps variant="headings">
 1. <h3 id="setup-app-install">Install the ChatGPT desktop app</h3>
 
     Choose the version for your operating system:
 
-    <CodexAppDownloadCta client:load className="mb-4" />
+    
 
 2.  <h3 id="setup-app-sign-in">Open the ChatGPT desktop app and sign in</h3>
 
@@ -59,9 +43,7 @@ distributions and package installation, see the
 
             
 
-
           
-
 
                 - For research, analysis, or deliverables such as documents, presentations,
                   spreadsheets, and Sites, select **ChatGPT**, then switch to **Work** at the
@@ -76,11 +58,9 @@ distributions and package installation, see the
 
               
 
-
           <ChatGPTModeDropdown client:visible />
 
     
-
 
 5.  <h3 id="setup-app-send-message">Send your first message</h3>
 
@@ -108,16 +88,12 @@ Inspect this app, identify one high-impact usability improvement, implement it, 
 
 Explore more [use cases](https://learn.chatgpt.com/use-cases).
 
-</WorkflowSteps>
-
   
-
 
   
 
 ChatGPT is available on the web and includes Chat and ChatGPT Work.
 
-<WorkflowSteps variant="headings">
 1. <h3 id="setup-web-sign-in">Open ChatGPT and sign in</h3>
 
 Go to [chatgpt.com](https://chatgpt.com) and sign in with your ChatGPT account.
@@ -126,9 +102,7 @@ Go to [chatgpt.com](https://chatgpt.com) and sign in with your ChatGPT account.
 
             
 
-
           
-
 
                 - Select **Chat** to ask questions, explore ideas, and work through a topic
                   conversationally.
@@ -139,11 +113,9 @@ Go to [chatgpt.com](https://chatgpt.com) and sign in with your ChatGPT account.
 
               
 
-
           <ChatWorkSegmentPicker client:visible />
 
     
-
 
 3.  <h3 id="setup-web-select-workspace">Select where ChatGPT should work</h3>
 
@@ -173,27 +145,16 @@ Every weekday at 8:00 a.m., review my connected calendar and recent messages, th
 Help me plan my event. Ask me about the occasion, guests, date, location, budget, and anything else you need. Then create a timeline, budget, invitation copy, and checklist, and publish a Site I can use to invite guests and collect RSVPs.
 ```
 
-</WorkflowSteps>
-
   
-
-
-</Tabs>
-
-
 
 ## Next steps
 [Learn more about the ChatGPT desktop app
-
-
 
       <OpenBook />
     
 
     Use the ChatGPT desktop app to work with your local projects.](./app.md)
 [Import your setup
-
-
 
       <CompareArrows />
     

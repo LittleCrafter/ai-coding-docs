@@ -2,16 +2,10 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-<ContentModeSwitch group="codex-surface" id="web">
-
 ChatGPT web stores product and workspace preferences in ChatGPT settings. ChatGPT Work
 chats run in a managed environment and don't read local Codex
 configuration files. Use the controls your workspace exposes in ChatGPT
 settings; workspace administrators may manage some settings for you.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 The general [Settings](./reference/settings.md) page covers app preferences,
 including profile, keyboard shortcuts, notifications, appearance,
@@ -67,10 +61,6 @@ the Chrome DevTools Protocol for performance profiling and deeper browser
 debugging. If your organization has disabled full CDP access, you can't enable
 it locally. See [Developer mode](./browser.md#app-developer-mode) for setup,
 risk, approval, and administrator requirements.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 Codex CLI reads your personal defaults from `~/.codex/config.toml`. Add a
 `.codex/config.toml` file to a trusted project or subfolder when you need
@@ -141,10 +131,6 @@ workflows, see [CLI customization](./cli-customization.md).
 - [Sample configuration](./config-file/config-sample.md) provides a complete example file.
 - [Environment variables](./config-file/environment-variables.md) documents variables used by the CLI and installer.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 The Codex IDE extension has two settings layers:
 
 - **Codex settings** control agent behavior shared with Codex CLI, including the
@@ -194,4 +180,3 @@ The `chatgpt.*` keys above belong to the IDE extension and don't go in
 basics](./config-file/config-basic.md), [Advanced configuration](./config-file/config-advanced.md),
 and the [Configuration reference](./config-file/config-reference.md).
 
-</ContentModeSwitch>

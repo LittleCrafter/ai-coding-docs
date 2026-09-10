@@ -6,8 +6,6 @@
 
 <a id="sign-in-with-chatgpt"></a>
 
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 Codex supports two ways for a person to sign in when using OpenAI models:
 
 - Sign in with ChatGPT for subscription access
@@ -37,64 +35,36 @@ to plan those controls.
 
 When you sign in with ChatGPT from the ChatGPT desktop app, Codex CLI, or IDE extension, the sign-in flow opens a browser window. After you sign in, the browser returns your credentials to Codex.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 ### ChatGPT web
 
 Open [ChatGPT](https://chatgpt.com), sign in, and choose the workspace where you
 want to work. ChatGPT web keeps the authenticated session in your browser.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 #### ChatGPT desktop app
 
 On the signed-out screen, select **Continue to sign in**, then complete the
 browser flow.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 #### Codex CLI
 
 Run `codex login`, then complete the browser flow. This is the default
 authentication path when no valid session is available.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
 
 #### IDE extension
 
 On the signed-out screen, select **Sign in with ChatGPT**, then complete the
 browser flow.
 
-</ContentModeSwitch>
-
 <a id="sign-in-with-an-api-key"></a>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ### Sign in with an API key
 
 You can also sign in to the ChatGPT desktop app, Codex CLI, or IDE extension with an API key. Get your API key from the [OpenAI dashboard](https://platform.openai.com/api-keys).
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
 #### ChatGPT desktop app
 
 On the signed-out screen, select **Sign in another way**, enter your key, then
 select **Continue**.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 #### Codex CLI
 
@@ -104,18 +74,10 @@ Pipe the key to `codex login` through stdin:
 printenv OPENAI_API_KEY | codex login --with-api-key
 ```
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 #### IDE extension
 
 On the signed-out screen, select **Use API Key**, enter your key, then select
 **OK**.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 OpenAI bills API key usage through your OpenAI Platform account at standard API rates. See the [API pricing page](https://openai.com/api/pricing/).
 
@@ -135,41 +97,21 @@ included ChatGPT plan credits.
 Use API key authentication for programmatic Codex CLI workflows, such as CI/CD
 jobs. Don't expose Codex execution in untrusted or public environments.
 
-</ContentModeSwitch>
-
 ### Check authentication or sign out
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 Open the profile menu to confirm the active account and workspace. To end the
 ChatGPT web session in that browser, select **Log out**.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
 Open the profile menu to see the active account or API key status. Select
 **Log out** to clear the current credentials.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 Run `codex login status` to see the active authentication method. For stored
 authentication, run `codex logout` to clear the current credentials. When
 the process selects workload identity, Codex rejects `codex login` and
 `codex logout` because the process environment controls authentication.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 Open the profile menu to see the active account or API key status. Select
 **Log out** to clear the current credentials.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ### Use Codex access tokens for enterprise automation
 
@@ -190,19 +132,11 @@ workload tokens, use
 [workload identity federation](./enterprise/workload-identity.md)
 instead of storing an OpenAI credential.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 If your environment already provides a Codex access token, pipe it to the CLI:
 
 ```shell
 printenv CODEX_ACCESS_TOKEN | codex login --with-access-token
 ```
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ## Secure your Codex cloud account
 
@@ -222,11 +156,7 @@ If you log in using an email and password, you must set up MFA on your account b
 
 If your account supports more than one login method and one of them is email and password, you must set up MFA before accessing Codex, even if you sign in another way.
 
-</ContentModeSwitch>
-
 <a id="login-caching"></a>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ## Login caching
 
@@ -236,12 +166,8 @@ Codex caches login details locally in a plaintext file at `~/.codex/auth.json` o
 
 For sign in with ChatGPT sessions, Codex refreshes tokens automatically during use before they expire, so active sessions usually continue without requiring another browser login.
 
-</ContentModeSwitch>
-
 <a id="credential-storage"></a>
 <a id="enforce-a-login-method-or-workspace"></a>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ## Credential storage
 
@@ -285,10 +211,6 @@ If the active credentials don't match the configured restrictions, Codex logs th
 These settings can also be supplied through legacy managed configuration.
 For admin-enforced login restrictions, see
 [Manage authentication locally](./enterprise/managed-configuration.md#manage-authentication-locally).
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 ## Login diagnostics
 
@@ -382,10 +304,6 @@ ssh -L 1455:localhost:1455 user@remote
 
 2. In that SSH session, run `codex login` and follow the printed address on your local machine.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 ## Alternative model providers
 
 When you define a [custom model provider](./config-file/config-advanced.md#custom-model-providers) in your configuration file, you can choose one of these authentication methods:
@@ -394,4 +312,3 @@ When you define a [custom model provider](./config-file/config-advanced.md#custo
 - **Environment variable authentication**: Set `env_key = "<ENV_VARIABLE_NAME>"` to use a provider-specific API key from the local environment variable named `<ENV_VARIABLE_NAME>`.
 - **No authentication**: If you don't set `requires_openai_auth` (or set it to `false`) and you don't set `env_key`, Codex assumes the provider doesn't require authentication. This is useful for local models.
 
-</ContentModeSwitch>

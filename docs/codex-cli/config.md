@@ -51,7 +51,6 @@ Choose the model Codex uses by default in the CLI and IDE.
 model = "gpt-5.6"
 ```
 
-
 ##### Approval prompts
 Control when Codex pauses to ask before running generated commands.
 
@@ -1037,122 +1036,7 @@ Remove the setting or choose a supported policy. Project entries with
 [Migrate from the retired `untrusted` approval policy](./agent-approvals-security.md#migrate-from-the-retired-untrusted-approval-policy)
 for examples and approval tradeoffs.
 
-<ConfigTable
-  options={[
-    {
-      key: "model",
-      type: "string",
-      description: "Model to use (e.g., `gpt-5.5`).",
-    },
-    {
-      key: "review_model",
-      type: "string",
-      description:
-        "Optional model override used by `/review` (defaults to the current session model).",
-    },
-    {
-      key: "model_provider",
-      type: "string",
-      description: "Provider id from `model_providers` (default: `openai`).",
-    },
-    {
-      key: "openai_base_url",
-      type: "string",
-      description:
-        "Base URL override for the built-in `openai` model provider.",
-    },
-    {
-      key: "model_context_window",
-      type: "number",
-      description: "Context window tokens available to the active model.",
-    },
-    {
-      key: "model_auto_compact_token_limit",
-      type: "number",
-      description:
-        "Token threshold that triggers automatic history compaction (unset uses model defaults).",
-    },
-    {
-      key: "model_auto_compact_token_limit_scope",
-      type: "total | body_after_prefix",
-      description:
-        "Controls whether the auto-compaction threshold counts the full active context (`total`, the default) or only growth after the carried compaction-window prefix (`body_after_prefix`).",
-    },
-    {
-      key: "model_catalog_json",
-      type: "string (path)",
-      description:
-        "Optional path to a JSON model catalog loaded on startup. A selected `$CODEX_HOME/profile-name.config.toml` profile file can override this per profile.",
-    },
-    {
-      key: "oss_provider",
-      type: "lmstudio | ollama",
-      description:
-        "Default local provider used when running with `--oss` (defaults to prompting if unset).",
-    },
-    {
-      key: "approval_policy",
-      type: "on-request | never | { granular = { sandbox_approval = bool, rules = bool, mcp_elicitations = bool, request_permissions = bool, skill_approval = bool } }",
-      description:
-        "Controls when Codex pauses for approval before executing commands. You can also use `approval_policy = { granular = { ... } }` to allow or auto-reject specific prompt categories while keeping other prompts interactive. `untrusted` is unsupported, and `on-failure` is deprecated; use `on-request` for interactive runs or `never` for non-interactive runs.",
-    },
-    {
-      key: "approval_policy.granular.sandbox_approval",
-      type: "boolean",
-      description:
-        "When `true`, sandbox escalation approval prompts are allowed to surface.",
-    },
-    {
-      key: "approval_policy.granular.rules",
-      type: "boolean",
-      description:
-        "When `true`, approvals triggered by execpolicy `prompt` rules are allowed to surface.",
-    },
-    {
-      key: "approval_policy.granular.mcp_elicitations",
-      type: "boolean",
-      description:
-        "When `true`, MCP elicitation prompts are allowed to surface instead of being auto-rejected.",
-    },
-    {
-      key: "approval_policy.granular.request_permissions",
-      type: "boolean",
-      description:
-        "When `true`, prompts from the `request_permissions` tool are allowed to surface.",
-    },
-    {
-      key: "approval_policy.granular.skill_approval",
-      type: "boolean",
-      description:
-        "When `true`, skill-script approval prompts are allowed to surface.",
-    },
-    {
-      key: "approvals_reviewer",
-      type: "user | auto_review",
-      description:
-        "Who reviews eligible approval prompts under `on-request` or granular approval policies. Defaults to `user`; `auto_review` uses the reviewer subagent. This setting doesn't change sandboxing or review actions already allowed inside the sandbox.",
-    },
-    {
-      key: "auto_review.policy",
-      type: "string",
-      description:
-        "Local Markdown policy instructions for automatic review. Managed `guardian_policy_config` takes precedence. Blank values are ignored.",
-    },
-    {
-      key: "allow_login_shell",
-      type: "boolean",
-      description:
-        "Allow shell-based tools to use login-shell semantics. Defaults to `true`; when `false`, `login = true` requests are rejected and omitted `login` defaults to non-login shells.",
-    },
-    {
-      key: "sandbox_mode",
-      type: "read-only | workspace-write | danger-full-access",
-      description:
-        "Sandbox policy for filesystem and network access during command execution.",
-    },
-    {
-      key: "sandbox_workspace_write.writable_roots",
-      type: "array<string>",
+",
       description:
         'Additional writable roots when `sandbox_mode = "workspace-write"`.',
     },
@@ -2812,37 +2696,7 @@ the same policy source, but normal feature, approval, and other policy checks
 still apply. Where managed requirements and `config.toml` both apply, a `deny`
 from either one wins.
 
-<ConfigTable
-  options={[
-    {
-      key: "sqlite_home",
-      type: "string (path)",
-      description:
-        "Enforce the directory where Codex stores SQLite-backed runtime state.",
-    },
-    {
-      key: "log_dir",
-      type: "string (path)",
-      description: "Enforce the directory where Codex writes local log files.",
-    },
-    {
-      key: "model_catalog_json",
-      type: "string (path)",
-      description: "Enforce the JSON model catalog Codex uses at startup.",
-    },
-    {
-      key: "check_for_update_on_startup",
-      type: "boolean",
-      description: "Enforce whether Codex checks for updates when it starts.",
-    },
-    {
-      key: "allow_login_shell",
-      type: "boolean",
-      description: "Enforce whether shell tools can start a login shell.",
-    },
-    {
-      key: "allowed_login_methods",
-      type: "array<string>",
+",
       description:
         "Allow `chatgpt`, `api`, or both. If omitted, this setting doesn't restrict login methods. If set, the list must contain at least one method. `api` permits API authentication, including Amazon Bedrock. Set through the local system requirements file or macOS MDM. Cloud-managed values are ignored.",
     },

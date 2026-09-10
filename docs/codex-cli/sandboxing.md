@@ -2,8 +2,6 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 The sandbox is the boundary that lets the agent act autonomously without giving it
 unrestricted access to your machine. When a local chat runs commands in the
 **ChatGPT desktop app**, **Codex CLI**, or **IDE extension**, those commands run inside a
@@ -55,16 +53,7 @@ Linux sandbox implementation when you run in WSL2.
 
 On **Linux and WSL2**, install `bubblewrap` with your package manager first:
 
-<Tabs
-  id="codex-sandboxing-prerequisites"
-  param="sandbox-os"
-  tabs={[
-    { id: "ubuntu-debian", label: "Ubuntu/Debian" },
-    { id: "fedora", label: "Fedora" },
-  ]}
->
   
-
 
 ```bash
 sudo apt install bubblewrap
@@ -72,17 +61,13 @@ sudo apt install bubblewrap
 
   
 
-
   
-
 
 ```bash
 sudo dnf install bubblewrap
 ```
 
   
-
-</Tabs>
 
 Codex uses the first `bwrap` executable it finds on `PATH`. If no `bwrap`
 executable is available, Codex falls back to a bundled helper, but that helper
@@ -125,11 +110,7 @@ the AppArmor unprivileged user namespace restriction with:
 sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 ```
 
-</ContentModeSwitch>
-
 ## How permissions work
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 Use the permissions control for your surface to change how Codex handles local
 actions.
@@ -140,10 +121,6 @@ approval offers different scopes, such as approving once or for the session,
 choose the narrowest scope that lets the task continue. Keep the project
 boundary as the default; use separate projects or worktrees instead of
 broadening access across unrelated repositories.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 ChatGPT Work runs code and shell commands in a managed, isolated environment.
 Workspace policy and tool-specific controls determine which capabilities are
@@ -158,10 +135,6 @@ Changes take effect after the current code or shell run finishes and Work
 refreshes its execution environment. ChatGPT web doesn't expose the local
 Codex sandbox or approval-mode selector.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
-
 In the ChatGPT desktop app, use the permissions control beneath the composer.
 Depending on your configuration, the menu can include **Ask for approval**,
 **Approve for me** for eligible approval requests, **Full access**, and named or
@@ -169,40 +142,23 @@ custom permissions profiles.
 
 <PermissionModeSelectorDemo client:load />
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 In the CLI, enter
 [`/permissions`](./developer-commands.md#cli-update-permissions-with-permissions)
 to open the permissions picker and change the active permissions profile.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
 
 In the IDE extension, use the permissions control beneath the composer.
 Depending on your configuration, the menu can include **Ask for approval**,
 **Approve for me** for eligible approval requests, **Full access**, and named or
 custom permissions profiles.
 
-
-
   
     
 
 > Illustration: Codex approval mode selector in the IDE extension
 
-
   
 
-
-
-</ContentModeSwitch>
-
 <a id="configure-defaults"></a>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 ## Configure defaults
 
@@ -274,4 +230,3 @@ behavior, and troubleshooting, see [Windows](./windows/windows-sandbox.md). For 
 requirements and organization-level constraints on sandboxing and approvals, see
 [Agent approvals & security](./agent-approvals-security.md).
 
-</ContentModeSwitch>
