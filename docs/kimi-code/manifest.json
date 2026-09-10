@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.42.0",
-  "last_updated": "2026-09-10T13:12:15Z",
+  "last_updated": "2026-09-10T17:58:30Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -140,8 +140,8 @@
       "source_url": "https://www.kimi.com/code/docs/en/guides/goals",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/goals.md",
       "source_id": "docs/en/guides/goals.md",
-      "hash": "b499bee467ad166b69066455cb7f0118ba2bdc7fced912393f7c7d108e1cff2f",
-      "last_updated": "2026-09-06T19:04:11Z"
+      "hash": "572c81e4ed15ca3d9e0c90c0280657cea58313a9128e0be78a4ffd64d853e9de",
+      "last_updated": "2026-09-10T17:58:30Z"
     },
     "guides/ides": {
       "slug": "guides/ides",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-10T13:12:15Z",
-    "fetch_duration_seconds": 9.966,
+    "last_fetch_completed": "2026-09-10T17:58:30Z",
+    "fetch_duration_seconds": 10.237,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,
