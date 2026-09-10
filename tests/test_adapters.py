@@ -855,7 +855,221 @@ def test_codex_fetch_markdown_rewrites_root_links_with_anchors():
     assert digest == fetch.content_hash(md)
 
 
-# --- zero-page guards + degenerate-filename skips -----------------------------
+def test_codex_how_mirrored_metadata():
+    """Verify CONFIG.how_mirrored reflects the hybrid scraping approach."""
+    assert (
+        codex_cli.CONFIG.how_mirrored
+        == "scraping (GitHub tree + developers.openai.com .md twins)"
+    )
+
+
+def test_codex_normalize_route_and_md_twin_url():
+    """Route normalization and anchor stripping for Codex CLI stub endpoints."""
+    # Anchor is stripped and .md appended
+    url = "https://developers.openai.com/codex/cli/features#running-in-interactive-mode"
+    assert codex_cli.to_md_twin_url(url) == (
+        "https://developers.openai.com/codex/cli/features.md"
+    )
+
+    # Route rewrite: codex/execpolicy -> codex/exec-policy
+    assert codex_cli.to_md_twin_url(
+        "https://developers.openai.com/codex/execpolicy"
+    ) == ("https://developers.openai.com/codex/exec-policy.md")
+    assert codex_cli.to_md_twin_url(
+        "https://developers.openai.com/codex/execpolicy#rules"
+    ) == ("https://developers.openai.com/codex/exec-policy.md")
+
+    # learn.chatgpt.com domain support
+    assert codex_cli.to_md_twin_url("https://learn.chatgpt.com/codex/execpolicy") == (
+        "https://learn.chatgpt.com/codex/exec-policy.md"
+    )
+
+    # Already ending with .md
+    assert codex_cli.to_md_twin_url(
+        "https://developers.openai.com/codex/guides/agents-md.md"
+    ) == ("https://developers.openai.com/codex/guides/agents-md.md")
+
+
+def test_codex_fetch_markdown_resolves_pure_stub():
+    """A pure stub pointing to developers.openai.com fetches the rich .md twin.
+    If the remote twin lacks an H1, the stub's heading is preserved."""
+    stub_raw = (
+        "# AGENTS.md\n\n"
+        "For information about AGENTS.md, see "
+        "[this documentation](https://developers.openai.com/codex/guides/agents-md).\n"
+    )
+    rich_twin = (
+        "> For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt).\n\n"
+        "Codex reads `AGENTS.md` files before doing any work.\n\n"
+        "## How Codex discovers guidance\n\n"
+        "Precedence order details here.\n"
+    )
+    # 1st response: GitHub raw stub; 2nd response: rich .md twin
+    client = _FakeClient([_Resp(200, stub_raw), _Resp(200, rich_twin)])
+    page = Page(
+        slug="agents_md",
+        source_url="https://github.com/openai/codex/blob/main/docs/agents_md.md",
+        source_md_url="https://raw.githubusercontent.com/openai/codex/main/docs/agents_md.md",
+        source_id="docs/agents_md.md",
+        group="root",
+    )
+    md, digest = codex_cli.fetch_markdown(client, page)
+    # Heading # AGENTS.md is retained because rich_twin lacked an H1
+    assert md.startswith("# AGENTS.md\n\n")
+    assert "Codex reads `AGENTS.md` files before doing any work." in md
+    assert "## How Codex discovers guidance" in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_codex_fetch_markdown_resolves_pure_stub_with_remote_h1():
+    """When the remote .md twin already contains an H1 heading, it is kept
+    without duplicating the stub's heading."""
+    stub_raw = (
+        "# Authentication\n\n"
+        "For information about Codex CLI authentication, see "
+        "[this documentation](https://developers.openai.com/codex/auth).\n"
+    )
+    rich_twin = (
+        "# Authentication\n\n"
+        "> For the complete documentation index...\n\n"
+        "## OpenAI authentication\n\n"
+        "Codex supports two ways for a person to sign in.\n"
+    )
+    client = _FakeClient([_Resp(200, stub_raw), _Resp(200, rich_twin)])
+    page = Page(
+        slug="authentication",
+        source_url="https://github.com/openai/codex/blob/main/docs/authentication.md",
+        source_md_url="https://raw.githubusercontent.com/openai/codex/main/docs/authentication.md",
+        source_id="docs/authentication.md",
+        group="root",
+    )
+    md, digest = codex_cli.fetch_markdown(client, page)
+    # Exactly one "# Authentication" heading
+    assert md.count("# Authentication") == 1
+    assert "## OpenAI authentication" in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_codex_fetch_markdown_fallback_on_error(capsys):
+    """If the external .md twin fetch fails (e.g. 404), a warning is logged
+    to stderr and fetch_markdown gracefully falls back to the original GitHub text."""
+    stub_raw = (
+        "# AGENTS.md\n\n"
+        "For information about AGENTS.md, see "
+        "[this documentation](https://developers.openai.com/codex/guides/agents-md).\n"
+    )
+    # 1st response: 200 (GitHub); 2nd response: 404 (developers.openai.com)
+    client = _FakeClient([_Resp(200, stub_raw), _Resp(404, "Not Found")])
+    page = Page(
+        slug="agents_md",
+        source_url="https://github.com/openai/codex/blob/main/docs/agents_md.md",
+        source_md_url="https://raw.githubusercontent.com/openai/codex/main/docs/agents_md.md",
+        source_id="docs/agents_md.md",
+        group="root",
+    )
+    md, digest = codex_cli.fetch_markdown(client, page)
+    # Gracefully returns the original stub text
+    assert md == stub_raw
+    assert digest == fetch.content_hash(stub_raw)
+
+    err = capsys.readouterr().err
+    assert "warning:" in err
+    assert "failed to fetch rich docs from" in err
+    assert "agents_md" in err
+
+
+def test_codex_fetch_markdown_resolves_hybrid_page():
+    """Hybrid pages like config.md with multiple stub links and local sections
+    are combined into a composite document with demoted subheadings."""
+    config_raw = (
+        "# Configuration\n\n"
+        "For basic configuration instructions, see [this documentation](https://developers.openai.com/codex/config-basic).\n\n"
+        "For advanced configuration instructions, see [this documentation](https://developers.openai.com/codex/config-advanced).\n\n"
+        "## Lifecycle hooks\n\n"
+        "Admins can set top-level allow_managed_hooks_only = true in requirements.toml.\n"
+    )
+    basic_twin = (
+        "Codex reads configuration details from more than one location.\n\n"
+        "## Codex configuration file\n\n"
+        "User-level config at ~/.codex/config.toml.\n"
+    )
+    advanced_twin = (
+        "# Advanced Configuration\n\n"
+        "Use these options when you need more control.\n\n"
+        "## Profiles\n\n"
+        "Profiles let you save named configurations.\n"
+    )
+    client = _FakeClient(
+        [
+            _Resp(200, config_raw),
+            _Resp(200, basic_twin),
+            _Resp(200, advanced_twin),
+        ]
+    )
+    page = Page(
+        slug="config",
+        source_url="https://github.com/openai/codex/blob/main/docs/config.md",
+        source_md_url="https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
+        source_id="docs/config.md",
+        group="root",
+    )
+    md, digest = codex_cli.fetch_markdown(client, page)
+
+    # Top heading # Configuration remains
+    assert md.startswith("# Configuration\n\n")
+    # Basic config section derived and demoted
+    assert "## Basic Configuration" in md
+    assert "### Codex configuration file" in md
+    # Advanced config demoted from # to ##, and ## Profiles demoted to ### Profiles
+    assert "## Advanced Configuration" in md
+    assert "### Profiles" in md
+    # Local section preserved
+    assert "## Lifecycle hooks" in md
+    assert "allow_managed_hooks_only = true" in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_codex_fetch_markdown_hybrid_page_partial_fallback(capsys):
+    """If one subpage fetch fails in a hybrid page, that link is preserved as fallback
+    while successful subpages are still resolved."""
+    config_raw = (
+        "# Configuration\n\n"
+        "For basic configuration instructions, see [this documentation](https://developers.openai.com/codex/config-basic).\n\n"
+        "For advanced configuration instructions, see [this documentation](https://developers.openai.com/codex/config-advanced).\n\n"
+        "## Lifecycle hooks\n\n"
+        "Local section text.\n"
+    )
+    basic_twin = "## Basic info\n\nBasic setup details.\n"
+    # Basic succeeds, advanced 404s
+    client = _FakeClient(
+        [
+            _Resp(200, config_raw),
+            _Resp(200, basic_twin),
+            _Resp(404, "Not Found"),
+        ]
+    )
+    page = Page(
+        slug="config",
+        source_url="https://github.com/openai/codex/blob/main/docs/config.md",
+        source_md_url="https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
+        source_id="docs/config.md",
+        group="root",
+    )
+    md, digest = codex_cli.fetch_markdown(client, page)
+
+    # Basic section resolved
+    assert "Basic setup details." in md
+    # Advanced section preserved as fallback link
+    assert (
+        "For advanced configuration instructions, see [this documentation]"
+        "(https://developers.openai.com/codex/config-advanced)." in md
+    )
+    # Local section preserved
+    assert "## Lifecycle hooks" in md
+
+    err = capsys.readouterr().err
+    assert "warning:" in err
+    assert "failed to fetch rich docs" in err
 
 
 def test_codex_discover_skips_bare_md_filename_and_guards_zero_pages():
