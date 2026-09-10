@@ -31,8 +31,6 @@ Worktrees only work in projects that are part of a Git repository since they use
 
 Worktrees require a Git repository. Make sure the project you selected lives in one.
 
-<WorkflowSteps variant="headings">
-
 1.  Select "Worktree"
 
     In the new chat view, select **Worktree** under the composer.
@@ -50,8 +48,6 @@ Worktrees require a Git repository. Make sure the project you selected lives in 
 
     When you're ready, you can either keep working directly on the worktree or hand the chat off to your local checkout. Handing off to or from Local moves your chat _and_ code so you can continue in the other checkout.
 
-</WorkflowSteps>
-
 ## Working between Local and Worktree
 
 Worktrees look and feel much like your local checkout. The difference is where they fit into your flow. You can think of Local as the foreground and Worktree as the background. Handoff lets you move a chat between them.
@@ -65,31 +61,15 @@ In practice, there are two common paths:
 
 ### Option 1: Working on the worktree
 
-
-
-
-
-
-
 If you want to stay exclusively on the worktree with your changes, turn your worktree into a branch using the **Create branch here** button in the chat header.
 
 From here you can commit your changes, push your branch to your remote repository, and open a pull request on GitHub.
 
 You can open your IDE to the worktree using the "Open" button in the header, use the integrated terminal, or anything else that you need to do from the worktree directory.
 
-
-
-
-
   
 
 > Illustration: Worktree chat view with branch controls and worktree details
-
-
-
-
-
-
 
 Remember, if you create a branch on a worktree, you can't check it out in any other worktree, including your local checkout.
 
@@ -99,12 +79,6 @@ Remember, if you create a branch on a worktree, you can't check it out in any ot
 
 ### Option 2: Handing a chat off to Local
 
-
-
-
-
-
-
 If you want to bring a chat into the foreground, select **Hand off** in the chat header and move it to **Local**.
 
 This path works well when you want to read the changes in your usual IDE window, run your existing development server, or validate the work in the same environment you already use day to day.
@@ -113,19 +87,9 @@ Codex handles the Git steps required to move the chat safely between the worktre
 
 Each chat keeps the same associated worktree over time. If you hand the chat back to a worktree later, Codex returns it to that same background environment so you can pick up where you left off.
 
-
-
-
-
   
 
 > Illustration: Handoff dialog moving a chat from a worktree to Local
-
-
-
-
-
-
 
 You can also go the other direction. If you're already working in Local and want to free up the foreground, use **Hand off** to move the chat to a worktree. This is useful when you want Codex to keep working in the background while you switch your attention back to something else locally.
 
@@ -172,14 +136,16 @@ To resolve this, you would need to check out another branch instead of `feature/
 
 If you plan on checking out the branch locally, use Handoff to move the chat into Local instead of trying to keep the same branch checked out in both places at once.
 
-<ToggleSection title="Why this limitation exists">
+<details>
+<summary>Why this limitation exists</summary>
+
 Git prevents the same branch from being checked out in more than one worktree at a time because a branch represents a single mutable reference (`refs/heads/<name>`) whose meaning is “the current checked-out state” of a working tree.
 
 When a branch is checked out, Git treats its HEAD as owned by that worktree and expects operations like commits, resets, rebases, and merges to advance that reference in a well-defined, serialized way. Allowing multiple worktrees to simultaneously check out the same branch would create ambiguity and race conditions around which worktree’s operations update the branch reference, potentially leading to lost commits, inconsistent indexes, or unclear conflict resolution.
 
 By enforcing a one-branch-per-worktree rule, Git guarantees that each branch has a single authoritative working copy, while still allowing other worktrees to safely reference the same commits via detached HEADs or separate branches.
 
-</ToggleSection>
+</details>
 
 ### Worktree cleanup
 
@@ -202,27 +168,36 @@ Before deleting a Codex-managed worktree, Codex saves a snapshot of the work on 
 
 ## Frequently asked questions
 
-<ToggleSection title="Can I control where worktrees are created?">
-  Yes. Codex creates managed worktrees under `$CODEX_HOME/worktrees` by
+<details>
+<summary>Can I control where worktrees are created?</summary>
+
+Yes. Codex creates managed worktrees under `$CODEX_HOME/worktrees` by
   default. To choose another location, open **Settings > Worktrees** and change
   **Worktree root**.
-</ToggleSection>
+
+</details>
 
 <a id="can-i-move-a-chat-between-local-and-worktree"></a>
 
-<ToggleSection title="Can I move a chat between Local and Worktree?">
-  Yes. Use **Hand off** in the chat header to move a chat between your local
+<details>
+<summary>Can I move a chat between Local and Worktree?</summary>
+
+Yes. Use **Hand off** in the chat header to move a chat between your local
   checkout and a worktree. Codex handles the Git operations needed to move the
   chat safely between environments. If you hand a chat back to a worktree later,
   Codex returns it to the same associated worktree.
-</ToggleSection>
+
+</details>
 
 <a id="what-happens-to-chats-if-a-worktree-is-deleted"></a>
 
-<ToggleSection title="What happens to chats if a worktree is deleted?">
-  Chats can remain in your history even if the underlying worktree directory is
+<details>
+<summary>What happens to chats if a worktree is deleted?</summary>
+
+Chats can remain in your history even if the underlying worktree directory is
   deleted. For Codex-managed worktrees, Codex saves a snapshot before deleting
   the worktree and offers to restore it if you reopen the associated chat.
   Permanent worktrees are not automatically deleted when you archive their
   chats.
-</ToggleSection>
+
+</details>

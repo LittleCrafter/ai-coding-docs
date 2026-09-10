@@ -23,16 +23,8 @@ ChatGPT can also switch between tools as a task requires, using plugins when a
 dedicated integration is available, your browser when it needs signed-in browser
 context, and the built-in browser for localhost.
 
-
-
-  <Alert
-    client:load
-    color="warning"
-    variant="soft"
-    description="Treat page content as untrusted context, and review the website before allowing ChatGPT to continue."
-  />
-
-
+  > [!NOTE]
+> Treat page content as untrusted context, and review the website before allowing ChatGPT to continue.
 
 <a id="use-chatgpt-from-chrome"></a>
 
@@ -53,11 +45,7 @@ The panel stays with the tab where you opened it. Chats you start in side chat
 are available in the ChatGPT app, and you can open recent ChatGPT chats in
 the side chat, so you can continue work in either place.
 
-
-
 > Illustration: ChatGPT open beside the current Chrome tab.
-
-
 
 ## Bring tabs and selected text into a chat
 
@@ -98,11 +86,7 @@ in the main list.
 The browser's toggle in **Computer Use** controls whether it appears in the
 `@`-mention menu. Select **Manage** to change website permissions instead.
 
-
-
 > Illustration: Computer Use settings showing Google Chrome connected through the Chrome extension.
-
-
 
 <a id="start-a-chrome-task-from-chatgpt"></a>
 
@@ -144,13 +128,13 @@ Removing a domain from the allowlist means ChatGPT asks again before using it.
 Removing a domain from the blocklist means ChatGPT can ask again instead of
 treating the domain as blocked.
 
-#### Allow for all sites <ElevatedRiskBadge class="ml-2" />
+#### Allow for all sites 
 
 If you select **Allow for all sites**, ChatGPT no longer asks for confirmation
 before using websites. Only choose this option if you trust ChatGPT to use any
 website open in the browser.
 
-#### Browser history <ElevatedRiskBadge class="ml-2" />
+#### Browser history 
 
 Browser history can include sensitive telemetry, internal URLs, search terms,
 and activity from browser sessions on signed-in devices. If you allow ChatGPT to

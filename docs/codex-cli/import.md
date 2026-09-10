@@ -13,17 +13,11 @@ imported work in sync with automatic updates.
 
 Importing doesn't change or delete your existing agent setup.
 
-
-
 > Illustration: ChatGPT import screen for choosing other AI apps to import from.
-
-
 
 ## Start an import
 
 ### Import in the desktop app
-
-<WorkflowSteps>
 
 1. In the ChatGPT desktop app, open **Settings > Import**. If **Import** isn't
    available as a settings section yet, open **General** and find **Import other
@@ -32,8 +26,6 @@ Importing doesn't change or delete your existing agent setup.
 3. Choose the agents you want to import from, then select **Continue**.
 4. On **Select items to import**, choose what to bring over, then select **Continue**.
 5. After the import finishes, open an imported project or chat to continue working.
-
-</WorkflowSteps>
 
 ### Keep imported work in sync
 
@@ -54,11 +46,7 @@ isn't available during a running task, in a remote session, or while connected
 to a local app-server daemon. See [CLI slash
 commands](./developer-commands.md#cli-import-claude-code-or-cursor-setup-with-import).
 
-
-
 > Illustration: ChatGPT import screen for selecting setup, projects, and recent chats to import.
-
-
 
 ## How importing works
 

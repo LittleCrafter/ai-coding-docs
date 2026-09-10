@@ -37,8 +37,6 @@ For a large monorepo, start with one meaningful product or service boundary.
 For the best scan quality, use `gpt-5.6-sol`
 with `xhigh` reasoning effort.
 
-<WorkflowSteps>
-
 1. Select **Codebase** and leave **Deep scan** off.
 2. Confirm the selected repository, current branch, and latest revision.
 3. Set **Scan area** to the entire repository or choose one folder.
@@ -47,8 +45,6 @@ with `xhigh` reasoning effort.
    names attacker-controlled inputs, trust boundaries, sensitive actions, or a
    specific area to prioritize.
 6. Select **Start scan**.
-
-</WorkflowSteps>
 
 Add `SECURITY.md` to the repository root for persistent security guidance.
 Describe the threat model, security invariants, reportable finding criteria,
@@ -97,12 +93,7 @@ Review the result in this order:
 5. Select one accepted finding before starting a fix.
 
 <figure className="not-prose my-8">
-  <CodexScreenshot
-    alt="Codex Security finding showing its severity, validation status, root cause, and attack path"
-    lightSrc={findingAttackPath.src}
-    darkSrc={findingAttackPathDark.src}
-    maxHeight="520px"
-  />
+  
   <figcaption className="mt-3 text-sm text-secondary">
     Review the finding's severity, validation status, root cause, and attack
     path.

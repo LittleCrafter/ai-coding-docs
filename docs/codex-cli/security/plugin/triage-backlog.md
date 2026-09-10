@@ -76,8 +76,6 @@ Use $codex-security:triage-finding to import and triage [code scanning, Dependab
 
 The workflow proceeds in this order:
 
-<WorkflowSteps variant="headings">
-
 1. Collect and organize the findings
 
    Codex retrieves any requested issue or GitHub content, preserves source
@@ -101,8 +99,6 @@ The workflow proceeds in this order:
 
    Codex assigns a verdict and confidence to every finding. It ranks
    `confirmed` and `needs_review` findings by exploitability in separate queues.
-
-</WorkflowSteps>
 
 ## Review the results
 

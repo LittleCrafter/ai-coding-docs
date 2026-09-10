@@ -7,12 +7,7 @@ engineering teams find, confirm, and fix vulnerabilities. Use it in
 Codex, from your terminal, through the TypeScript SDK, or with connected GitHub
 repositories.
 
-<CtaPillLink
-  href="https://chatgpt.com/plugins/share/676aca3811d54fa7bcdef5255236b3c4"
-  label="Install plugin in ChatGPT"
-  icon="external"
-  class="mb-8 mt-2"
-/>
+[Install plugin in ChatGPT](https://chatgpt.com/plugins/share/676aca3811d54fa7bcdef5255236b3c4)
 
 For a prescriptive first local scan, start with the [Codex Security plugin
 quickstart](./security/plugin.md).

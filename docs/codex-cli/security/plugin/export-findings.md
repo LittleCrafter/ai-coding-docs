@@ -38,12 +38,7 @@ Choose the format that fits your destination:
 | SARIF  | Send findings to tools that support the SARIF interchange format. |
 
 <figure className="not-prose my-8">
-  <CodexScreenshot
-    alt="Completed Codex Security scan showing the real coverage, findings, manifest, Markdown, and SARIF artifacts"
-    lightSrc={exportFindingsFormats.src}
-    darkSrc={exportFindingsFormatsDark.src}
-    maxHeight="360px"
-  />
+  
   <figcaption className="mt-3 text-sm text-secondary">
     Open the coverage, findings, scan manifest, Markdown report, or SARIF
     artifact from a completed scan.
@@ -55,12 +50,7 @@ editor. The editor depends on your system settings; the example below shows the
 generated report contents.
 
 <figure className="not-prose my-8">
-  <CodexScreenshot
-    alt="Example generated security report showing the scan scope, threat model, and validated findings"
-    lightSrc={exportFindingsReport.src}
-    darkSrc={exportFindingsReportDark.src}
-    maxHeight="600px"
-  />
+  
   <figcaption className="mt-3 text-sm text-secondary">
     Review the scan scope, threat model, validated findings, and detailed report
     links in the generated Markdown report.
@@ -129,8 +119,6 @@ Draft advisories require one finding from a sealed `git_revision` scan, the
 
 ## Review the proposed write
 
-<WorkflowSteps>
-
 1. Confirm the finding ID and fingerprint came from the intended sealed scan.
 2. Confirm the provider, exact Linear team, GitHub repository, Jira project, or
    advisory repository, and the live destination visibility.
@@ -140,8 +128,6 @@ Draft advisories require one finding from a sealed `git_revision` scan, the
    shouldn't expose.
 5. Approve only that exact payload. A changed destination, visibility, finding
    set, or body requires a new preview.
-
-</WorkflowSteps>
 
 Sensitive findings should go to a private destination. Creating an issue in an
 internal or public GitHub repository requires an explicit visibility warning

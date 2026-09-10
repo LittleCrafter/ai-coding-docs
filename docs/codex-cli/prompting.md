@@ -77,8 +77,6 @@ in the composer to choose a specific plugin.
 
 [Learn about plugins
 
-
-
       <Plugin />
     
 
@@ -91,8 +89,6 @@ as custom instructions. Keep details that matter only to the current chat in the
 prompt.
 
 [Review personalization settings
-
-
 
       <Settings />
     
@@ -191,13 +187,9 @@ In the ChatGPT desktop app, press <kbd>Ctrl+Shift+D</kbd> while the composer is
 visible, then start talking. ChatGPT transcribes your speech into the composer
 so you can review and edit it before sending the prompt.
 
-
   
 
 > Illustration: Voice dictation indicator in the composer with a transcribed prompt
-
-
-
 
 <a id="threads"></a>
 <a id="chats"></a>
@@ -341,8 +333,6 @@ Use this when you are onboarding, inheriting a service, or trying to reason abou
 
 #### IDE extension workflow (fastest for local exploration)
 
-<WorkflowSteps>
-
 1. Open the most relevant files.
 2. Select the code you care about (optional but recommended).
 3. Prompt Codex:
@@ -356,8 +346,6 @@ Use this when you are onboarding, inheriting a service, or trying to reason abou
    - one or two "gotchas" to watch for when changing this
 ```
 
-</WorkflowSteps>
-
 Verification:
 
 - Ask for a diagram or checklist you can verify:
@@ -367,8 +355,6 @@ Summarize the request flow as a numbered list of steps. Then list the files invo
 ```
 
 #### CLI workflow (good when you want a transcript + shell commands)
-
-<WorkflowSteps>
 
 1. Start an interactive session:
 
@@ -382,8 +368,6 @@ Summarize the request flow as a numbered list of steps. Then list the files invo
    I need to understand the protocol used by this service. Read @foo.ts @schema.ts and explain the schema and request/response flow. Focus on required vs optional fields and backward compatibility rules.
 ```
 
-</WorkflowSteps>
-
 Context notes:
 
 - You can use `@` in the composer to insert file paths from the workspace, or `/mention` to attach a specific file.
@@ -393,8 +377,6 @@ Context notes:
 Use this when you have a failing behavior you can reproduce locally.
 
 #### CLI workflow (tight loop with reproduction and verification)
-
-<WorkflowSteps>
 
 1. Start Codex at the repo root:
 
@@ -421,8 +403,6 @@ Use this when you have a failing behavior you can reproduce locally.
    Start by reproducing the bug locally, then propose a patch and run checks.
 ```
 
-</WorkflowSteps>
-
 Context notes:
 
 - Supplied by you: the repro steps and constraints (these matter more than a high-level description).
@@ -439,8 +419,6 @@ After the fix, run lint + the smallest relevant test suite. Report the commands 
 
 #### IDE extension workflow
 
-<WorkflowSteps>
-
 1. Open the file where you think the bug lives, plus its nearest caller.
 2. Prompt Codex:
 
@@ -448,15 +426,11 @@ After the fix, run lint + the smallest relevant test suite. Report the commands 
    Find the bug causing "Saved" to show without persisting changes. After proposing the fix, tell me how to verify it in the UI.
 ```
 
-</WorkflowSteps>
-
 ### Write a test
 
 Use this when you want to define the exact scope to test.
 
 #### IDE extension workflow (selection-based)
-
-<WorkflowSteps>
 
 1. Open the file with the function.
 2. Select the lines that define the function. Choose "Add to Codex Thread" from command palette to add these lines to the context.
@@ -466,15 +440,11 @@ Use this when you want to define the exact scope to test.
    Write a unit test for this function. Follow conventions used in other tests.
 ```
 
-</WorkflowSteps>
-
 Context notes:
 
 - Supplied by "Add to Codex Thread" command: the selected lines (this is the "line number" scope), plus open files.
 
 #### CLI workflow (path + line range described in prompt)
-
-<WorkflowSteps>
 
 1. Start Codex:
 
@@ -488,15 +458,11 @@ Context notes:
    Add a test for the invert_list function in @transform.ts. Cover the happy path plus edge cases.
 ```
 
-</WorkflowSteps>
-
 ### Prototype from a screenshot
 
 Use this when you want to turn a design mock, screenshot, or UI reference into a working prototype.
 
 #### CLI workflow (image + prompt)
-
-<WorkflowSteps>
 
 1. Save your screenshot locally (for example `./specs/ui.png`).
 2. Run Codex:
@@ -522,8 +488,6 @@ Use this when you want to turn a design mock, screenshot, or UI reference into a
    - README.md with instructions to run it locally
 ```
 
-</WorkflowSteps>
-
 Context notes:
 
 - The image provides visual requirements, but you still need to specify the implementation constraints (framework, routing, component style).
@@ -539,8 +503,6 @@ Start the dev server and tell me the local URL/route to view the prototype.
 
 #### IDE extension workflow (image + existing files)
 
-<WorkflowSteps>
-
 1. Attach the image in the Codex chat (drag-and-drop or paste).
 2. Prompt Codex:
 
@@ -549,15 +511,11 @@ Start the dev server and tell me the local URL/route to view the prototype.
    Follow design and visual patterns from other files in this project.
 ```
 
-</WorkflowSteps>
-
 ### Iterate on UI with live updates
 
 Use this when you want a tight "design → tweak → refresh → tweak" loop while Codex edits code.
 
 #### CLI workflow (run Vite, then iterate with small prompts)
-
-<WorkflowSteps>
 
 1. Start Codex:
 
@@ -595,8 +553,6 @@ Use this when you want a tight "design → tweak → refresh → tweak" loop whi
    Keep the layout, but simplify colors and remove any redundant borders.
 ```
 
-</WorkflowSteps>
-
 Verification:
 
 - Review changes in the browser as Codex updates the code.
@@ -608,8 +564,6 @@ Verification:
 Use this when you want to design an approach with local context, then delegate the long implementation to a cloud chat that can run in parallel.
 
 #### Local planning (IDE)
-
-<WorkflowSteps>
 
 1. Make sure your current work is committed or at least stashed so you can compare changes cleanly.
 2. Ask Codex to produce a refactor plan. If you have the `$plan` skill available, invoke it explicitly:
@@ -636,15 +590,11 @@ Use this when you want to design an approach with local context, then delegate t
    - include a rollback strategy
 ```
 
-</WorkflowSteps>
-
 Context notes:
 
 - Planning works best when Codex can scan the current code locally (entrypoints, module boundaries, dependency graph hints).
 
 #### Cloud delegation (IDE → Cloud)
-
-<WorkflowSteps>
 
 1. If you haven't already done so, set up a [Codex cloud environment](./environments/cloud-environment.md).
 2. Click on the cloud icon beneath the prompt composer and select your cloud environment.
@@ -660,8 +610,6 @@ Context notes:
 
 6. Iterate on additional milestones of the plan.
 
-</WorkflowSteps>
-
 Tasks delegated to the cloud run in isolated environments. Internet access is
 off during the agent phase unless you enable it for the environment. Learn more
 about [cloud internet access](./cloud/internet-access.md).
@@ -671,8 +619,6 @@ about [cloud internet access](./cloud/internet-access.md).
 Use this when you want a second set of eyes before committing or creating a PR.
 
 #### CLI workflow (review your working tree)
-
-<WorkflowSteps>
 
 1. Start Codex:
 
@@ -692,8 +638,6 @@ Use this when you want a second set of eyes before committing or creating a PR.
    /review Focus on edge cases and security issues
 ```
 
-</WorkflowSteps>
-
 Verification:
 
 - Apply fixes based on review feedback, then rerun `/review` to confirm you resolved the issues.
@@ -705,8 +649,6 @@ Use this when you want review feedback without pulling the branch locally.
 Before you can use this, enable Codex **Code review** on your repository. See [Code review](./third-party/github.md).
 
 #### GitHub workflow (comment-driven)
-
-<WorkflowSteps>
 
 1. Open the pull request on GitHub.
 2. Leave a comment that tags Codex with explicit focus areas:
@@ -721,15 +663,11 @@ Before you can use this, enable Codex **Code review** on your repository. See [C
    @codex review for security vulnerabilities and security concerns
 ```
 
-</WorkflowSteps>
-
 ### Update documentation
 
 Use this when you need an accurate, clear documentation change.
 
 #### IDE or CLI workflow (local edits + local validation)
-
-<WorkflowSteps>
 
 1. Identify the doc file(s) to change and open them (IDE) or `@` mention them (IDE or CLI).
 2. Prompt Codex with scope and validation requirements:
@@ -739,8 +677,6 @@ Use this when you need an accurate, clear documentation change.
 ```
 
 3. After Codex drafts the changes, review the documentation and iterate as needed.
-
-</WorkflowSteps>
 
 Verification:
 

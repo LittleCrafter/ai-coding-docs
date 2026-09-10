@@ -42,11 +42,7 @@ Examples:
 3. Allow macOS permissions if ChatGPT asks.
 4. Ask ChatGPT to perform a task with the appshot.
 
-
-
 > Illustration: ChatGPT chat composer with an Appshot attachment and follow-up prompt
-
-
 
 By default, ChatGPT starts a new chat for the appshot. If you interacted with a
 chat in the last 60 seconds, ChatGPT adds the appshot to that recent

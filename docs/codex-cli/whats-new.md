@@ -46,8 +46,6 @@ enable it.
 
 Availability depends on rollout and workspace settings.
 
-
-
 **Prompt:**
 
 ```text
@@ -67,8 +65,6 @@ feedback without polling on a fixed cadence.
 Event-triggered tasks are available in ChatGPT on the web and mobile for
 eligible plans. Connect the relevant app and approve its requested access first. In managed
 workspaces, administrators can control access.
-
-
 
 **Prompt:**
 
@@ -95,8 +91,6 @@ notes](https://learn.chatgpt.com/docs/changelog#codex-2026-08-25-event-triggers)
 
 - **Unified pinned threads:** Keep your [pinned chats](./projects.md#app-organize-projects-and-chats) in sync between desktop and iOS.
 
-
-
 **Prompt:**
 
 ```text
@@ -104,8 +98,6 @@ Find the latest Messages conversation about tomorrow's launch, summarize the ope
 ```
 
 [Read the August 20 release notes](https://learn.chatgpt.com/docs/changelog#codex-2026-08-20-app).
-
-
 
 > Shared threads in Codex and ChatGPT Work let you show the process behind your build with a read-only link
 
@@ -157,15 +149,11 @@ Pro, Business, and Enterprise customers. Business and Enterprise
 administrators must first enable access. Initial availability excludes the
 European Union, Switzerland, and the United Kingdom.
 
-
-
 **Prompt:**
 
 ```text
 Find the document and Slack thread I was reviewing earlier, then summarize the decisions I still need to act on.
 ```
-
-
 
 [Watch: Computer History in ChatGPT](https://www.youtube.com/watch?v=W-HhMUe9hOg)
 
@@ -179,8 +167,6 @@ processors.
 Sign in with your ChatGPT account to work with projects, local files, and
 Codex. Some features, including Computer Use, aren't yet available in the
 Linux preview.
-
-
 
 > Now in preview: The ChatGPT desktop app for Linux.
 
@@ -198,8 +184,6 @@ Claude Code or Cursor into your local session.
 
 [Read the August 11 desktop and CLI release
 notes](https://learn.chatgpt.com/docs/changelog#codex-2026-08-11-app).
-
-
 
 > You can now keep your work from other agents in sync with ChatGPT Work and Codex.
 
@@ -219,8 +203,6 @@ approved identity, workspace or organization, model, and product surface.
 [Read the August 10 Daybreak
 announcement](https://learn.chatgpt.com/docs/changelog#codex-2026-08-10-daybreak).
 
-
-
 > We’re expanding our cybersecurity initiative Daybreak
 
 [View @OpenAI on X](https://x.com/OpenAI/status/2086864365379010729) (2026-08-10)
@@ -233,8 +215,6 @@ announcement](https://learn.chatgpt.com/docs/changelog#codex-2026-08-10-daybreak
 [ChatGPT Projects](./projects.md). Ask questions about a document during a
 voice conversation, or continue a project using its recent chats, sources, and
 instructions.
-
-
 
 **Prompt:**
 
@@ -301,8 +281,6 @@ review](./sandboxing/auto-review.md) for eligible requests without expanding
 filesystem or network permissions. Amazon Bedrock sessions also gain cached
 web search and remote conversation compaction.
 
-
-
 [Watch: Introducing Agent Plugins](https://www.youtube.com/watch?v=UaeWJK_vv-Y)
 
 ### Follow and resume deeper security scans
@@ -329,8 +307,6 @@ The feature is available in research preview to eligible ChatGPT Enterprise,
 Business, Edu, and Pro customers. It isn't available on Plus, and usage limits
 can apply.
 
-
-
 > Now in research preview: Codex Security Review
 
 [View @OpenAIDevs on X](https://x.com/OpenAIDevs/status/2085482310636560830) (2026-08-06)
@@ -343,8 +319,6 @@ GPT-5.6 Terra now costs 20% less, and GPT-5.6 Luna costs 80% less. Input,
 cached input, and output rates decreased by the same proportions. The updated
 [usage limits and rates](./pricing.md) make Terra a stronger fit for everyday
 work and Luna especially useful for focused coding and high-volume tasks.
-
-
 
 > Starting today, we are reducing prices for GPT-5.6 Luna by 80% and GPT-5.6 Terra by 20%
 
@@ -363,8 +337,6 @@ or select **Ask ChatGPT** from a page's context menu. Review and approve
 requests to use browser history before ChatGPT includes that information in a
 task.
 
-
-
 > In Side Chat, ask about a YouTube video, reference your open tabs, or highlight text on a page and ask away.
 
 [View @ChatGPT on X](https://x.com/ChatGPT/status/2082970812584432115) (2026-07-30)
@@ -376,8 +348,6 @@ folder](./projects.md#use-local-projects-for-folders-and-codebases), the
 desktop app shows every repository and the lines changed in each one. Select
 **Review** to inspect their diffs together without switching between separate
 review views.
-
-
 
 **Prompt:**
 
@@ -392,8 +362,6 @@ Open a generated image in the expanded viewer, then switch between
 versions you want to keep, and ask for targeted edits without leaving the chat.
 Learn more about [image generation](./image-generation.md).
 
-
-
 > ImageGen in Codex just got a new lightbox and canvas.
 
 [View @OpenAIDevs on X](https://x.com/OpenAIDevs/status/2082944138635595782) (2026-07-30)
@@ -406,8 +374,6 @@ to open the view.
 
 [Read the July 30 desktop release
 notes](https://learn.chatgpt.com/docs/changelog#codex-2026-07-30-app).
-
-
 
 > The new Activity view in the ChatGPT desktop app brings together conversations that need your attention
 
@@ -437,8 +403,6 @@ across ChatGPT, ChatGPT Work, and Codex for research and coding workflows.
 The program covers ChatGPT access, not OpenAI API credits. Eligibility requires
 [institutional verification and a qualifying research
 paper](https://help.openai.com/en/articles/20001406).
-
-
 
 [Watch: We're giving 100,000 academic researchers free access to our frontier models](https://www.youtube.com/watch?v=MLehRytu9Zo)
 
@@ -481,8 +445,6 @@ The [Codex Security TypeScript SDK](./security/sdk.md) also lets you build
 scanning, progress reporting, cost controls, and cancellation into your own
 tools. The package is public, but running scans still requires Codex Security
 access. Some full-repository scans also require Trusted Access for Cyber.
-
-
 
 > You can now use it to scan repositories, track findings across runs, verify fixes, and add security checks to CI/CD.
 
@@ -541,8 +503,6 @@ your frontmost window when **Screen context** is on.
 Voice is available with Plus, Pro, Business, Edu, and Enterprise plans in the
 desktop app and through [Remote on iOS](./remote-connections.md#set-up-mobile-access).
 
-
-
 [Watch: Building with ChatGPT Voice](https://www.youtube.com/watch?v=E0ZMOschrTU)
 
 ### Work across multiple folders in one local project
@@ -556,8 +516,6 @@ Open **Edit project** to [add folders and choose the primary
 folder](./projects.md#use-local-projects-for-folders-and-codebases).
 
 [Read the July 23 release notes](https://learn.chatgpt.com/docs/changelog#codex-2026-07-23-app).
-
-
 
 > Local projects can now include related code, docs, and reference files from multiple folders.
 
@@ -577,8 +535,6 @@ developer workflows.
 desktop](./use-chatgpt.md#compare-chatgpt-work-and-codex-on-desktop) to choose the
 view that fits your task.
 
-
-
 **Prompt:**
 
 ```text
@@ -593,8 +549,6 @@ surface for Codex in the ChatGPT desktop app. Its Agent Keys show the status of
 up to six chats and switch between them. Customizable Command Keys, an analog
 stick, and a dial can trigger common actions or skills, start push-to-talk, and
 adjust reasoning effort without leaving the keyboard.
-
-
 
 [Watch: Introducing the Codex Micro](https://www.youtube.com/watch?v=m8uUUUsMD3Y)
 
@@ -631,15 +585,11 @@ important actions.
 by running once, on a schedule, when an event occurs, or while monitoring for
 changes.
 
-
-
 **Prompt:**
 
 ```text
 Create a launch brief from the attached research and campaign template. Show me the plan and flag missing information before you build the final document, then adapt the approved brief into assets for three markets.
 ```
-
-
 
 [Watch: Meet ChatGPT Work](https://www.youtube.com/watch?v=yRc5HcGJ-Cs)
 
@@ -651,8 +601,6 @@ extension. Sol is the flagship for complex coding, computer use, research, and
 security work. Terra balances capability and cost for everyday work, while Luna
 is the fastest, lowest-cost option. The default **Power** setting uses Sol with
 medium reasoning.
-
-
 
 [Watch: Meet GPT-5.6](https://www.youtube.com/watch?v=-MPGU2a67Ls)
 
@@ -670,8 +618,6 @@ view, use the Codex logo as the app icon, and access desktop Codex projects from
 the ChatGPT mobile app. The updated desktop app is available globally on every
 ChatGPT plan, including Free.
 
-
-
 [Watch: Codex for Engineering teams](https://www.youtube.com/watch?v=Ga792ftrBu4)
 
 ## June 15–19, 2026
@@ -683,8 +629,6 @@ Codex a workflow on macOS and turn the demonstration into a reusable skill. Use
 it for repetitive tasks that are easier to show than describe, then refine the
 generated skill and replay it with new inputs. Initial availability excludes
 the EEA, the United Kingdom, and Switzerland, and requires Computer Use.
-
-
 
 [Watch: Record & Replay in Codex](https://www.youtube.com/watch?v=ZK3JhU73W18)
 
@@ -729,23 +673,15 @@ explicit approval before it uses that access on a website.
 Browser use is also up to twice as fast because CDP and DOM snapshot
 optimizations reduce browser round trips.
 
-
   
 
 > Illustration: Codex Browser settings with Developer mode enabled
-
-
-
-
-
 
 **Prompt:**
 
 ```text
 Use @Browser to reproduce the slow checkout. Inspect the network timing and console errors, fix the cause, and verify the result.
 ```
-
-
 
 [Watch: Debug web apps with browser use in Codex](https://www.youtube.com/watch?v=bhgYFRZLyKI)
 
@@ -777,15 +713,11 @@ dedicated entry point in ChatGPT on the web and desktop, where you can return to
 projects and manage hosted environment values and secrets without assembling a
 separate deployment stack.
 
-
-
 **Prompt:**
 
 ```text
 Build a responsive launch dashboard from this project with Sites. Validate it at mobile and desktop sizes, then save a version for review. Do not deploy it until I approve the saved version.
 ```
-
-
 
 [Watch: Introducing Sites in Codex](https://www.youtube.com/watch?v=VRvC5smyzso)
 
@@ -799,8 +731,6 @@ app added terminal placement controls and activity insights in the profile
 view.
 
 [Read all June 2026 release notes](https://learn.chatgpt.com/docs/changelog#month-2026-06).
-
-
 
 > OpenAI models and Codex, now in your AWS workflows.
 
@@ -818,8 +748,6 @@ Windows. In the ChatGPT mobile app, open **Remote** to start work on a Windows
 device, or use a Mac running the ChatGPT desktop app and check progress from
 elsewhere.
 
-
-
 **Prompt:**
 
 ```text
@@ -835,8 +763,6 @@ background subagents.
 Read the [May 25 iOS](https://learn.chatgpt.com/docs/changelog#codex-2026-05-25-mobile) and
 [May 29 app](https://learn.chatgpt.com/docs/changelog#codex-2026-05-28-app) release notes.
 
-
-
 [Watch: Windows Computer Use and mobile access for Codex](https://www.youtube.com/watch?v=MPIAB-8VmCo)
 
 ## May 18–22, 2026
@@ -848,15 +774,11 @@ screenshot and available text when you press both Command keys. Codex gets
 working context from design tools, dashboards, documents, and other apps
 without requiring you to copy, paste, or describe what's on screen.
 
-
-
 **Prompt:**
 
 ```text
 Use this appshot as the visual reference. Match the selected screen in the app, then open a preview and compare spacing, typography, and color.
 ```
-
-
 
 [Watch: Introducing Appshots in Codex](https://www.youtube.com/watch?v=QKYbGCvNpFo)
 
@@ -871,8 +793,6 @@ continue approved computer-use work after a Mac locks, including through
 
 [Read the May 21 launch notes](https://learn.chatgpt.com/docs/changelog#codex-2026-05-21).
 
-
-
 [Watch: Run long tasks in Codex using goals](https://www.youtube.com/watch?v=rgh0hMYPcd0)
 
 ## May 11–15, 2026
@@ -884,8 +804,6 @@ desktop app. Because work runs on the connected host, your projects, files,
 credentials, plugins, skills, and configuration remain available when you
 continue from your phone. See [Remote connections](./remote-connections.md)
 to set up a host and pick up work from another device.
-
-
 
 > Now in preview: Codex in the ChatGPT mobile app.
 
@@ -901,8 +819,6 @@ managed setup and controls for Codex.
 
 [Read the May 14 launch notes](https://learn.chatgpt.com/docs/changelog#codex-2026-05-13-app).
 
-
-
 > Codex is getting easier to automate and customize around your code.
 
 [View @OpenAIDevs on X](https://x.com/OpenAIDevs/status/2055032115964870838) (2026-05-14)
@@ -915,8 +831,6 @@ The [Chrome extension](./chrome-extension.md) can work in
 parallel across tabs in the background without taking over your browser. You
 control which websites Codex can use, making it practical to combine research,
 data entry, and verification across web apps in one task.
-
-
 
 **Prompt:**
 
@@ -933,8 +847,6 @@ Read the [May 5 app](https://learn.chatgpt.com/docs/changelog#codex-2026-05-05-a
 [May 5 access-token](https://learn.chatgpt.com/docs/changelog#codex-2026-05-05), and
 [Codex for Chrome](https://learn.chatgpt.com/docs/changelog#codex-2026-05-07) launch notes.
 
-
-
 [Watch: Codex can now use Chrome directly on macOS and Windows](https://www.youtube.com/watch?v=b6Mxcv1pyBU)
 
 ## April 20–24, 2026
@@ -944,8 +856,6 @@ Read the [May 5 app](https://learn.chatgpt.com/docs/changelog#codex-2026-05-05-a
 [GPT-5.5](./models.md) arrived in Codex as the recommended model for most
 tasks, with strengths across implementation, debugging, testing, computer use,
 research, and finished knowledge-work outputs.
-
-
 
 [Watch: Introducing GPT-5.5](https://www.youtube.com/watch?v=blGtYq9mL18)
 
@@ -957,8 +867,6 @@ reproduce issues and verify fixes. Eligible approval requests can also go
 through [automatic approval review](./sandboxing/auto-review.md),
 which shows the review status and risk before the action runs.
 
-
-
 **Prompt:**
 
 ```text
@@ -966,8 +874,6 @@ Use @Browser to open the local app, reproduce the checkout failure, fix it, and 
 ```
 
 [Read the April 23 launch notes](https://learn.chatgpt.com/docs/changelog#codex-2026-04-23).
-
-
 
 > With GPT-5.5, Codex now gets more of the job done across the browser, files, docs, and your computer.
 
@@ -982,15 +888,9 @@ comments, while [Computer Use](./computer-use.md) let Codex see and
 operate macOS apps. Together, they made visual implementation and end-to-end
 verification part of the same task as the code change.
 
-
   
 
 > Illustration: ChatGPT desktop app with a local web page open in the built-in browser
-
-
-
-
-
 
 [Watch: Codex for (almost) everything](https://www.youtube.com/watch?v=Lm7-yFZ5fZQ)
 
@@ -1005,8 +905,6 @@ pull-request context, richer file previews, and [Memories](./customization/memor
 work that spans chats.
 
 [Read the April 16 Codex app release notes](https://learn.chatgpt.com/docs/changelog#codex-2026-04-16-app).
-
-
 
 > Automations can now run in the same thread, so Codex can pick up where it left off
 
@@ -1038,8 +936,6 @@ Read the [task search](https://learn.chatgpt.com/docs/changelog#codex-2026-03-24
 [plugins launch](https://learn.chatgpt.com/docs/changelog#codex-2026-03-25), and
 [Codex app](https://learn.chatgpt.com/docs/changelog#codex-2026-03-25-app) release notes.
 
-
-
 > Plugins in Codex? We got you.
 
 [View @OpenAIDevs on X](https://x.com/OpenAIDevs/status/2037604273434018259) (2026-03-27)
@@ -1057,8 +953,6 @@ Read the [GPT-5.4 mini](https://learn.chatgpt.com/docs/changelog#codex-2026-03-1
 [chat control](https://learn.chatgpt.com/docs/changelog#codex-2026-03-18-app), and
 [skill menu](https://learn.chatgpt.com/docs/changelog#codex-2026-03-19-app) release notes.
 
-
-
 > GPT-5.4 mini is more than 2x faster than GPT-5 mini. Optimized for coding, computer use, multimodal understanding, and subagents.
 
 [View @OpenAIDevs on X](https://x.com/OpenAIDevs/status/2033953815834333608) (2026-03-17)
@@ -1072,15 +966,9 @@ with an explicit model and reasoning level. Reusable templates made common
 tasks faster to configure, and custom themes made the workspace easier to
 personalize.
 
-
   
 
 > Illustration: Scheduled task settings in the ChatGPT desktop app
-
-
-
-
-
 
 > Automations are now GA.
 
@@ -1091,8 +979,6 @@ personalize.
 Codex also learned to read the [integrated terminal](./integrated-terminal.md#run-and-validate-your-project)
 for the current chat. It could inspect a running development server or build
 output directly instead of asking you to paste it.
-
-
 
 **Prompt:**
 
@@ -1111,15 +997,9 @@ The Codex app launched on [Windows](./windows/windows-app.md) with native PowerS
 and sandbox support, plus worktrees, scheduled tasks, and skills. WSL remained
 available for developers who preferred a Linux environment.
 
-
   
 
 > Illustration: Codex app running natively on Windows
-
-
-
-
-
 
 [Watch: The Codex app is now on Windows](https://www.youtube.com/watch?v=8hNcRChDrNk)
 
@@ -1149,8 +1029,6 @@ Read the [Spark](https://learn.chatgpt.com/docs/changelog#codex-2026-02-12) and
 [Codex app](https://learn.chatgpt.com/docs/changelog#codex-2026-02-12-app) release notes, or see the
 current [model guide](./models.md).
 
-
-
 > Introducing GPT-5.3-Codex-Spark, our ultra-fast model purpose built for real-time coding.
 
 [View @OpenAIDevs on X](https://x.com/OpenAIDevs/status/2022009906329739681) (2026-02-12)
@@ -1163,15 +1041,9 @@ The Codex app launched as a desktop workspace for parallel project chats,
 built-in Git review, worktrees, skills, scheduled tasks, and voice dictation.
 Those capabilities now live in Codex in the [ChatGPT desktop app](./app.md).
 
-
   
 
 > Illustration: The original Codex app showing parallel project chats on macOS
-
-
-
-
-
 
 [Watch: Introducing the Codex app](https://www.youtube.com/watch?v=HFM3se4lNiw)
 

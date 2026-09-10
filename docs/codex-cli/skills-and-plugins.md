@@ -6,8 +6,6 @@ Skills and plugins help ChatGPT and Codex complete repeatable work with the
 right instructions, resources, and tools. They reduce the need to paste the
 same prompt, template, requirements, or process into every chat.
 
-
-
 [Watch: Plugins in ChatGPT](https://www.youtube.com/watch?v=pKwRNdDtai0)
 
 - A **skill** packages instructions and supporting resources for a specific
@@ -69,8 +67,6 @@ To build a useful skill:
 For more details on building skills, see our dedicated guide below.
 
 [Build skills
-
-
 
       <Tools />
     

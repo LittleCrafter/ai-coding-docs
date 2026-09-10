@@ -2,8 +2,6 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-{/* vale Microsoft.FirstPerson = NO */}
-
 ## Permission modes
 
 Permissions control how ChatGPT (in the desktop app) and Codex (in the CLI or IDE) handle local actions, such as editing files, running commands, and using the internet. The mode you choose sets the boundary
@@ -26,11 +24,7 @@ When you're using the ChatGPT desktop app for the first time, you need to enable
 **Permissions**. Enabling a mode makes it available in the menu; it doesn't
 select the mode or change an existing chat.
 
-
-
 > Illustration: Permission visibility controls showing Default permissions, automatic review, and Full access.
-
-
 
 The available modes can depend on your local configuration and your
   organization's requirements. A mode that isn't allowed appears disabled.

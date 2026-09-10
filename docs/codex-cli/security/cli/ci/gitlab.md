@@ -126,11 +126,7 @@ codex-security-gate:
     - exit "$(cat codex-security-artifacts/scan-exit-code.txt)"
 ```
 
-
-
 > Illustration: GitLab pipeline scans a committed diff, publishes a SARIF report, and restores the scan result in a policy gate
-
-
 
 Review every change to `.gitlab-ci.yml` before running a secret-bearing job.
 The minimal example intentionally omits full scans and remediation.

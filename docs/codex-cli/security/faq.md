@@ -5,9 +5,6 @@
 This FAQ covers Codex Security cloud. For local scans and workflows that run in
 a Codex task, see the [Codex Security plugin quickstart](./plugin.md).
 
-{/* vale Microsoft.Auto = NO */}
-{/* vale Vale.Spelling = NO */}
-
 ## Getting started
 
 ### What is Codex Security?
@@ -111,5 +108,3 @@ Auto-validation is the phase that tries to reproduce a suspected issue in an iso
 
 The finding remains unvalidated. Logs and reports still capture what was attempted so engineers can retry, investigate further, or adjust the reproduction steps.
 
-{/* vale Microsoft.Auto = YES */}
-{/* vale Vale.Spelling = YES */}

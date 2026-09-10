@@ -10,8 +10,6 @@ Choose your platform to see its default shortcuts. Some shortcuts appear only wh
 
 ### macOS
 
-
-
 | General | Shortcut |
 | --- | --- |
 | Open command menu | **⌘+⇧+P** or **⌘+K** |
@@ -91,8 +89,6 @@ Choose your platform to see its default shortcuts. Some shortcuts appear only wh
 
 ### Windows
 
-
-
 | General | Shortcut |
 | --- | --- |
 | Open command menu | **Ctrl+Shift+P** or **Ctrl+K** |
@@ -169,8 +165,6 @@ Choose your platform to see its default shortcuts. Some shortcuts appear only wh
 | Copy working directory (Codex only) | **Ctrl+Shift+C** |
 
 ### Linux
-
-
 
 | General | Shortcut |
 | --- | --- |

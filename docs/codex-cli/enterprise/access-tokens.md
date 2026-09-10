@@ -58,13 +58,9 @@ the user's local Codex permission.
 For the relationship between these controls, see
 [Roles and workspace permissions](./roles-and-workspace-permissions.md).
 
-
   
 
 > Illustration: Access token access permission in ChatGPT workspace RBAC settings
-
-
-
 
 1. Have a workspace owner open
    [Workspace settings > Permissions & roles](https://chatgpt.com/admin/permissions).
@@ -93,13 +89,9 @@ If the **Access tokens** section appears, set **Access token expiration limit**
 there. Otherwise, look for that setting in **Codex and Work Local** or
 **Codex Local**.
 
-
   
 
 > Illustration: Access token expiration limit in ChatGPT workspace permissions settings
-
-
-
 
 The limit applies to new access tokens. Existing tokens keep their current validity window.
 
@@ -111,23 +103,15 @@ scopes, and choose an appropriate validity window.
 1. Go to [Access tokens](https://chatgpt.com/admin/access-tokens).
 2. Select **Create**.
 
-
   
 
 > Illustration: Access tokens page with the Create button
 
-
-
-
 3. Enter a descriptive name, such as `release-ci` or `nightly-docs-check`.
-
 
   
 
 > Illustration: Create access token modal with fields for name and expiration
-
-
-
 
 4. If the dialog shows **Scopes**, select **Codex**. Select **Workspace
    Agents** only if the same workflow also needs to trigger a workspace agent.

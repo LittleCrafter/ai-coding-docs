@@ -6,8 +6,6 @@ Ask ChatGPT to generate or edit images. Use image generation for UI assets,
 banners, backgrounds, illustrations, sprite sheets, and placeholders you want
 to create alongside code or in a ChatGPT chat.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 Ask for an image from the app composer. Add a reference image when you want
 ChatGPT to transform an existing asset or use it as visual guidance.
 
@@ -22,37 +20,21 @@ images. Select **Multi-select** to choose the images you want to include, then
 send your comments and any additional editing instructions in the same chat.
 Describe what should change and what should remain the same.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 Ask for an image in a ChatGPT web chat. Attach a reference image to the
 composer when you want ChatGPT to edit it or use it as visual guidance.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 Describe the image in an interactive session or include `$imagegen` to invoke
 the image generation skill explicitly. Attach an existing image with `-i` or
 `--image` when it should guide the result.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 Ask for an image from the extension chat. Drag a reference image into
 the composer while holding <kbd>Shift</kbd> when Codex should edit or build on
 an existing asset.
-
-</ContentModeSwitch>
 
 ## Generate or edit an image
 
 Describe the image in natural language. Add a reference image when you want
 ChatGPT to transform or extend an existing asset.
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 Include `$imagegen` in your prompt to invoke the image generation skill
 explicitly.
@@ -63,17 +45,9 @@ average than similar turns without image generation, depending on image quality
 and size. For larger batches, set `OPENAI_API_KEY` in your environment and ask
 ChatGPT to generate images through the API so API pricing applies.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 Image availability and usage limits in ChatGPT web depend on your plan and
 workspace settings. For programmatic image generation, use the [Image
 generation API](https://developers.openai.com/api/docs/guides/image-generation).
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,web">
 
 ## Write effective image prompts
 
@@ -90,8 +64,6 @@ Prefer concrete visual language over broad reactions. For example, describe
 where light comes from instead of asking for “beautiful lighting.” Repeat any
 requirement that must stay fixed.
 
-
-
 **Example prompt:**
 
 ```text
@@ -107,8 +79,6 @@ area.
 
 When editing an existing image, say exactly what should change and what must
 stay the same.
-
-
 
 **Example prompt:**
 
@@ -127,8 +97,6 @@ another defines the style, layout, or other visual direction. Identify each
 image by order and explain how the images relate. Use spatial terms such as
 foreground, background, left, and right when combining elements.
 
-
-
 **Example prompt:**
 
 ```text
@@ -141,8 +109,6 @@ Keep in-image text short and specify it precisely. Put the exact text in
 quotation marks, preserve the capitalization you want, and describe its font
 style, size, color, and placement. For an uncommon name, spell out the letters
 when accuracy matters. State whether any other text is allowed.
-
-
 
 **Example prompt:**
 
@@ -171,12 +137,8 @@ the asset in a design tool when needed.
   organization's guidelines and [OpenAI's usage
   policies](https://openai.com/policies/usage-policies/).
 
-</ContentModeSwitch>
-
 ## Related docs
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 - [Codex pricing](./pricing.md#image-generation-usage-limits)
 - [Image inputs](./image-inputs.md)
 - [Image generation API guide](https://developers.openai.com/api/docs/guides/image-generation)
@@ -185,16 +147,10 @@ the asset in a design tool when needed.
 
 [Image generation gallery
 
-
-
       <Images />
     
 
     Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 - [Image inputs](./image-inputs.md)
 - [Image generation API guide](https://developers.openai.com/api/docs/guides/image-generation)
@@ -203,16 +159,10 @@ the asset in a design tool when needed.
 
 [Image generation gallery
 
-
-
       <Images />
     
 
     Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="cli,ide">
 
 - [Codex pricing](./pricing.md#image-generation-usage-limits)
 - [Image inputs](./image-inputs.md)
@@ -221,11 +171,8 @@ the asset in a design tool when needed.
 
 [Image generation gallery
 
-
-
       <Images />
     
 
     Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
 
-</ContentModeSwitch>

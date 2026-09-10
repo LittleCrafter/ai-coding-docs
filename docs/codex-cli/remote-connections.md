@@ -24,17 +24,12 @@ The next sections cover opening **Remote** in the ChatGPT mobile app to access a
 desktop host. To connect Codex to a project on an SSH host, see
 [connect to an SSH host](#connect-to-an-ssh-host).
 
-
-
   
     
 
 > Illustration: Remote setup screen in the ChatGPT mobile app
 
-
   
-
-
 
 <a id="before-you-set-up-mobile-access"></a>
 
@@ -73,8 +68,6 @@ Existing connections used since June 8, 2026, remain paired. If you haven't
   used an existing connection since June 8, 2026, update both apps and pair the
   devices again.
 
-<WorkflowSteps variant="headings">
-
 1. Start Remote setup.
 
    Open the ChatGPT desktop app on the host. Go to **Settings** >
@@ -99,13 +92,7 @@ Existing connections used since June 8, 2026, remain paired. If you haven't
    devices. You can also choose whether to keep the computer awake, enable
    Computer Use, or install the Chrome extension.
 
-</WorkflowSteps>
-
-
-
 > Illustration: Connections controls for allowing devices to control this Mac and keeping it awake.
-
-
 
 ## Choose what to connect
 
@@ -117,8 +104,6 @@ computer or SSH host when you need continuous access or a different environment.
 <Desktop width={17} height={17} />
 
 Your laptop or desktop
-
-
 
 Connect the Mac or Windows PC where the desktop app is already installed. This
 gives remote access to the same projects, chats, credentials, plugins, and local
@@ -144,8 +129,6 @@ dedicate the host desktop to the task.
 
 A dedicated always-on computer
 
-
-
 Use a dedicated always-on Mac or Windows PC when you want ChatGPT to stay
 reachable for longer-running work.
 
@@ -157,8 +140,6 @@ Codex should use on that machine.
 <Terminal width={17} height={17} />
 
 A remote development environment
-
-
 
 Use an SSH host or managed remote development environment when the project
 already lives in a remote environment. Connect the desktop app host to that
@@ -201,11 +182,7 @@ On a Mac or Windows device where the feature is available, use **Settings >
 Connections > Control other devices** to add the other host. A device can allow
 remote access and control another device at the same time.
 
-
-
 > Illustration: Connections setup card for controlling another device from this Mac.
-
-
 
 ## Connect to an SSH host
 
@@ -216,8 +193,6 @@ read files, and write changes on the remote host.
 Keep the remote host configured with the same security expectations you use for
 normal SSH access: trusted keys, least-privilege accounts, and no
 unauthenticated public listeners.
-
-<WorkflowSteps variant="headings">
 
 1. Add the host to your SSH config so Codex can auto-discover it.
 
@@ -246,13 +221,7 @@ unauthenticated public listeners.
 4. In the app, open **Settings > Connections**, add or enable the SSH host, then
    choose a remote project folder.
 
-</WorkflowSteps>
-
-
-
 > Illustration: Connections SSH list with three remote hosts.
-
-
 
 <a id="hand-off-a-thread-between-hosts"></a>
 <a id="hand-off-a-chat-between-hosts"></a>

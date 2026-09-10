@@ -33,8 +33,6 @@ in the local checkout.
 
 ## Confirm the change in setup
 
-<WorkflowSteps>
-
 1. Select **Changes**.
 2. Confirm the checked-out repository, current branch, and latest commit.
 3. Under **Changes to review**, choose:
@@ -43,8 +41,6 @@ in the local checkout.
    - A base and head revision for a branch or pull-request range.
 4. Confirm that the summary describes the change you intended to review.
 5. Select **Start scan**.
-
-</WorkflowSteps>
 
 Codex doesn't check out another branch or switch the selected working tree. If
 a requested revision isn't available locally, fetch it before the review or
@@ -148,19 +144,7 @@ Scan results can include sensitive vulnerability details. Keep artifacts
 private, and publish findings only after reviewing the audience, content, and
 required approvals.
 
-<Tabs
-  id="codex-security-ci-examples"
-  param="ci"
-  defaultTab="github"
-  tabs={[
-    { id: "github", label: "GitHub Actions" },
-    { id: "gitlab", label: "GitLab CI/CD" },
-    { id: "azure", label: "Azure Pipelines" },
-    { id: "jenkins", label: "Jenkins" },
-  ]}
->
   
-
 
 ```yaml
 name: Codex Security review
@@ -210,9 +194,7 @@ jobs:
 
   
 
-
   
-
 
 Create a masked `CODEX_SECURITY_API_KEY` CI/CD variable and review the scan
 artifacts privately before sharing findings.
@@ -251,9 +233,7 @@ codex-security-review:
 
   
 
-
   
-
 
 ```yaml
 trigger: none
@@ -296,9 +276,7 @@ pipeline on pull requests.
 
   
 
-
   
-
 
 ```groovy
 pipeline {
@@ -357,8 +335,6 @@ pipeline {
 ```
 
   
-
-</Tabs>
 
 The examples skip forked pull requests. Run credentialed jobs only from a
 protected pipeline definition and only for contributors trusted with the scan

@@ -82,8 +82,6 @@ The scan covers the entire selected folder.
 For the best scan quality, use `gpt-5.6-sol`
 with `xhigh` reasoning effort.
 
-<WorkflowSteps>
-
 1. Select **Codebase** and turn on **Deep scan**.
 2. Confirm that the repository or selected folder is the code you intended to
    scan.
@@ -91,8 +89,6 @@ with `xhigh` reasoning effort.
 4. Open **Additional context** for concrete attack vectors, sensitive
    application areas, or repository context that the code can't reveal.
 5. Select **Start scan**.
-
-</WorkflowSteps>
 
 Deep scan workers inherit your selected model and reasoning settings. Each
 worker runs a complete standard scan, and Codex Security aggregates the
@@ -102,12 +98,7 @@ changelog](./changelog.md) before you update the plugin or
 start a long-running scan.
 
 <figure className="not-prose my-8">
-  <CodexScreenshot
-    alt="Native Codex Security workbench showing a deep scan and its active review phase"
-    lightSrc={deepScanProgress.src}
-    darkSrc={deepScanProgressDark.src}
-    maxHeight="520px"
-  />
+  
   <figcaption className="mt-3 text-sm text-secondary">
     Track the active deep-scan phase and inspect its Codex activity before
     reviewing the completed result.

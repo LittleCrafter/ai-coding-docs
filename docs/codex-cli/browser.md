@@ -2,12 +2,8 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-<ContentModeSwitch group="codex-surface" ids="cli,ide">
-
 Browser isn't available in Codex CLI or the Codex IDE extension. Open the
   ChatGPT desktop app to use the built-in browser.
-
-</ContentModeSwitch>
 
 Browser lets ChatGPT open websites, gather current information, and take action
 while you stay in control. Use it to compare options, complete a multi-step task
@@ -26,8 +22,6 @@ uploads, downloads, and developer access. See
 
 Treat page content as untrusted context. Review the site and proposed action
 before sharing sensitive information or allowing ChatGPT to act.
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
 
 The built-in browser in the ChatGPT desktop app gives you and ChatGPT a shared
 view of websites and local web apps inside a chat. Use it to preview a page,
@@ -51,13 +45,9 @@ Open the built-in browser from the toolbar, by clicking a URL, by navigating
 manually, or by pressing <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>
 (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> on Windows).
 
-
   
 
 > Illustration: ChatGPT desktop app showing a browser comment on a local web app preview
-
-
-
 
 ## Search from the address bar
 
@@ -150,9 +140,6 @@ it stays inside the chart bounds.
 
 <section class="feature-grid">
 
-
-
-
 ### Styling feedback
 
 When you add an annotation to a section on the page, select **Adjust** next to
@@ -160,16 +147,9 @@ the text input to give ChatGPT more granular style feedback. You can change
 values such as font, text, spacing, and color, preview the result on the page,
 and then send the annotation with a clearer target.
 
-
-
-
-
   
 
 > Illustration: ChatGPT desktop app showing built-in browser annotation style controls
-
-
-
 
 </section>
 
@@ -188,9 +168,6 @@ For repository changes, use the [review pane](./code-review.md) to
 inspect the changes and leave comments.
 
 <section class="feature-grid">
-
-
-
 
 ## Developer mode
 
@@ -221,22 +198,11 @@ This app is slow. Use @Browser to capture a performance trace and inspect
 network traffic, then identify the bottleneck.
 ```
 
-
-
-
-
   
 
 > Illustration: ChatGPT desktop app Browser settings showing Developer mode with full CDP access enabled
 
-
-
-
 </section>
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 ## Use ChatGPT Work to get things done across the web
 
@@ -341,4 +307,3 @@ To clear browser data, go to **Settings** > **Cloud browser** > **Browser data**
 
 During rollout, the browser might not appear immediately even when your plan supports it.
 
-</ContentModeSwitch>

@@ -84,42 +84,17 @@ Codex stops searching once it reaches your current directory, so place overrides
 
 Here is a sample repository after you add a global file and a payments-specific override:
 
-<FileTree
-  class="mt-4"
-  tree={[
-    {
-      name: "AGENTS.md",
-      comment: "Repository expectations",
-      highlight: true,
-    },
-    {
-      name: "services/",
-      open: true,
-      children: [
-        {
-          name: "payments/",
-          open: true,
-          children: [
-            {
-              name: "AGENTS.md",
-              comment: "Ignored because an override exists",
-            },
-            {
-              name: "AGENTS.override.md",
-              comment: "Payments service rules",
-              highlight: true,
-            },
-            { name: "README.md" },
-          ],
-        },
-        {
-          name: "search/",
-          children: [{ name: "AGENTS.md" }, { name: "…", placeholder: true }],
-        },
-      ],
-    },
-  ]}
-/>
+```text
+AGENTS.md  # Repository expectations
+services/
+  payments/
+    AGENTS.md  # Ignored because an override exists
+    AGENTS.override.md  # Payments service rules
+    README.md
+  search/
+    AGENTS.md
+    …
+```
 
 ## Add code review rules
 
@@ -160,35 +135,14 @@ Now Codex checks each directory in this order: `AGENTS.override.md`, `AGENTS.md`
 
 With the fallback list in place, Codex treats the alternate files as instructions:
 
-<FileTree
-  class="mt-4"
-  tree={[
-    {
-      name: "TEAM_GUIDE.md",
-      comment: "Detected via fallback list",
-      highlight: true,
-    },
-    {
-      name: ".agents.md",
-      comment: "Fallback file in root",
-    },
-    {
-      name: "support/",
-      open: true,
-      children: [
-        {
-          name: "AGENTS.override.md",
-          comment: "Overrides fallback guidance",
-          highlight: true,
-        },
-        {
-          name: "playbooks/",
-          children: [{ name: "…", placeholder: true }],
-        },
-      ],
-    },
-  ]}
-/>
+```text
+TEAM_GUIDE.md  # Detected via fallback list
+.agents.md  # Fallback file in root
+support/
+  AGENTS.override.md  # Overrides fallback guidance
+  playbooks/
+    …
+```
 
 Set the `CODEX_HOME` environment variable when you want a different profile, such as a project-specific automation user:
 

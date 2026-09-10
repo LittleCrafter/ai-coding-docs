@@ -19,8 +19,6 @@ If **Security** doesn't appear, confirm that **Codex** is selected and the
 For the best scan quality, use `gpt-5.6-sol`
 with `xhigh` reasoning effort.
 
-<WorkflowSteps>
-
 1. Open **Scans** and select **+ Scan**.
 2. Select an existing repository or choose another folder.
 3. Choose **Codebase** to scan a repository or **Changes** to review a
@@ -34,15 +32,8 @@ with `xhigh` reasoning effort.
    relevant attack vectors, focus areas, or other security context.
 8. Select **Start scan**.
 
-</WorkflowSteps>
-
 <figure className="not-prose my-8">
-  <CodexScreenshot
-    alt="Codex Security workbench showing the setup for a new repository scan"
-    lightSrc={scanOverview.src}
-    darkSrc={scanOverviewDark.src}
-    maxHeight="520px"
-  />
+  
   <figcaption className="mt-3 text-sm text-secondary">
     Choose a repository and configure a scan in the Security workbench.
   </figcaption>
@@ -67,12 +58,7 @@ When the scan completes, open its results to review the target, revision,
 findings, coverage, and available report artifacts.
 
 <figure className="not-prose my-8">
-  <CodexScreenshot
-    alt="Completed Codex Security scan showing findings, scan coverage, and report artifacts"
-    lightSrc={findingsWorkspace.src}
-    darkSrc={findingsWorkspaceDark.src}
-    maxHeight="520px"
-  />
+  
   <figcaption className="mt-3 text-sm text-secondary">
     Review findings, severity, scan coverage, and artifacts after a scan
     completes.

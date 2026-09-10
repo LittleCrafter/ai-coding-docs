@@ -11,8 +11,6 @@ act on.
 The Visualizations preview is rolling out. Availability can depend on your
   plan, platform, account, and workspace settings.
 
-<ContentModeSwitch group="codex-surface" id="app">
-
 The Visualizations preview is rolling out in the ChatGPT desktop app. When
 **Visualize** is available, type `@` in the composer, start entering
 `Visualize`, and select **Visualize** under **Plugins**. The composer adds a
@@ -21,22 +19,12 @@ The Visualizations preview is rolling out in the ChatGPT desktop app. When
 If **Visualize** doesn't appear, use ChatGPT on the web or try again after the
 preview reaches your account.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 In a supported Chat or ChatGPT Work chat, type `@` in the composer,
 start entering `Visualize`, and select **Visualize** under **Plugins**. Its
 description is **Create visualizations and interactive tools**. The composer
 adds a **Visualize** tag before your request.
 
 You can also type `@Visualize` and select the matching suggestion.
-
-</ContentModeSwitch>
-
-
-
-
 
 ## Check availability
 
@@ -71,8 +59,6 @@ Ask for the smallest format that fits the job:
 A strong request names the outcome, source material, question, and useful
 interactions. Try this example:
 
-
-
 **Prompt:**
 
 ```text
@@ -89,11 +75,7 @@ These examples reproduce three visualizations from the GPT-5.6 launch page.
 Use their controls to see how a focused prompt can become an interactive
 explanation, lab, or teaching tool.
 
-
-
 > Illustration: Three interactive ChatGPT visualization examples: a spirograph with adjustable geometry, a wave interference lab with a movable probe, and a tokenizer explainer with editable text and tokenization steps.
-
-
 
 ## Refine and continue
 

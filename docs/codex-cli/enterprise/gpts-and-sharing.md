@@ -17,9 +17,8 @@ Allow GPT builders to use approved workspace apps or configure actions that inte
 
 Restrict GPT actions to approved external domains to control which third-party APIs GPTs created in your workspace can access. If no domains are allowed, custom GPT actions cannot execute.
 
-<WarningTip>
-  Domain approval does not replace API authentication or user authorization.
-</WarningTip>
+> [!WARNING]
+> Domain approval does not replace API authentication or user authorization.
 
 ## Managing GPTs
 

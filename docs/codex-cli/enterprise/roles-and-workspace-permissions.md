@@ -55,8 +55,6 @@ Custom roles define which supported features a member can use. They don't
 replace seat or plan eligibility, grant permissions in a connected system, or
 change local runtime requirements.
 
-
-
   <iframe
     src="https://player.vimeo.com/video/1215495812"
     title="Role-based access control walkthrough"
@@ -66,8 +64,6 @@ change local runtime requirements.
     referrerPolicy="strict-origin-when-cross-origin"
     class="h-full w-full border-0"
   ></iframe>
-
-
 
 ### Set the workspace default, then create targeted custom roles
 

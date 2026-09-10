@@ -14,11 +14,7 @@ by default. You can also use ChatGPT Voice through
 your phone with a desktop host. Availability also depends on rollout status and
 workspace settings. See [feature availability](../pricing.md#feature-availability).
 
-
-
 > Illustration: Interactive ChatGPT Voice conversation with microphone and speaker controls.
-
-
 
 ## Start talking
 

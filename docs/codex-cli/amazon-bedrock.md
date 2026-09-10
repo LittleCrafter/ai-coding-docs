@@ -155,8 +155,10 @@ Fast Mode isn't available with Amazon Bedrock. Fast Mode uses priority
   processing, and the initial Amazon Bedrock offering supports on-demand
   inference only.
 
-<ToggleSection title="Detailed feature availability">
-  <CodexPlanFeatureMatrix
+<details>
+<summary>Detailed feature availability</summary>
+
+<CodexPlanFeatureMatrix
     client:load
     data={{
       plans: [
@@ -621,9 +623,8 @@ Fast Mode isn't available with Amazon Bedrock. Fast Mode uses priority
     require ChatGPT authentication, including Codex Security, are available.
     Plugins that require ChatGPT authentication, connectors, or cloud-hosted
     sharing aren't available.
-  
 
-</ToggleSection>
+</details>
 
 ## Troubleshooting
 

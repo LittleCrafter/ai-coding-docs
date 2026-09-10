@@ -49,11 +49,7 @@ choose **Recently used** to open **Sources** and review those calls.
 In this example, expand **Available site tools** to inspect the tools provided
 by [Margin](https://margin-local-docs.openai.chatgpt.site).
 
-
-
 > Illustration: ChatGPT's built-in browser showing the Site tools menu for Margin, with 10 available tools.
-
-
 
 Tools belong to the page that provides them. Closing or navigating away from a
 page can make its tools unavailable. If no suitable tool is available, the
@@ -64,8 +60,6 @@ agent may still be able to use its regular browser capabilities.
 ChatGPT Learn and OpenAI Developers offer site tools for finding and reading
 documentation. Select **Open in ChatGPT** in the composer to open Learn in the
 desktop app's browser beside a new chat with this prompt ready to send.
-
-
 
 **Prompt:**
 

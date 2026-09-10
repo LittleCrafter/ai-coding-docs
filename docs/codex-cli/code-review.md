@@ -6,15 +6,9 @@ Use ChatGPT or Codex to inspect code changes before you commit or push them.
 
 ## Start a review
 
-<ContentModeSwitch group="codex-surface" id="web">
-
 In ChatGPT Work, upload the code you want reviewed or make it available through
 an installed source [plugin](./plugins.md). In your prompt, identify the pull
 request, branch, commit, files, and review criteria.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 ### Review in the app
 
@@ -28,17 +22,9 @@ prioritized findings without changing your working tree.
 The review pane requires a project inside a Git repository. If your project
 isn't a Git repository yet, the app prompts you to create one.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 Type `/review` to open the CLI review presets. Codex starts a dedicated reviewer
 that reads the selected diff and reports prioritized, actionable findings
 without changing your working tree.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
 
 Type `/review` in the IDE extension composer. Choose **Review against a base
 branch** or **Review uncommitted changes**. Codex reports prioritized findings
@@ -47,19 +33,11 @@ without changing your working tree.
 The `/review` command appears only when the open project is inside a Git
 repository.
 
-</ContentModeSwitch>
-
 ## Choose a review scope
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 Name the pull request, branch, commit, or files to inspect in your prompt. To
 review local files that aren't available through an installed source plugin,
 upload them to the chat.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 ### What changes it shows
 
@@ -84,10 +62,6 @@ repositories. The repository selector shows **All repos** for that view. Other
 review scopes, such as **Unstaged**, **Staged**, and **Branch**, apply to the
 repository you select.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
-
 Choose one of these `/review` scopes:
 
 - **Review against a base branch** finds the merge base and reviews your branch diff.
@@ -95,27 +69,15 @@ Choose one of these `/review` scopes:
 - **Review a commit** reviews the exact change set for a selected commit.
 - **Custom review instructions** focuses the review on criteria you provide.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 Choose one of these `/review` scopes:
 
 - **Review against a base branch** compares your current branch with a branch you select.
 - **Review uncommitted changes** reviews the changes in your working tree.
 
-</ContentModeSwitch>
-
 ## Work with review results
-
-<ContentModeSwitch group="codex-surface" id="web">
 
 Review findings appear in the web chat. Ask for evidence, request a
 narrower follow-up review, or ask ChatGPT to prepare revised files.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 ### Code review results
 
@@ -125,47 +87,23 @@ Reviews run in the current chat by default. Under **Settings** > **General** >
 **Code review**, choose **Detached** to start a separate review chat. See
 [developer settings](./developer-settings.md#app-code-review).
 
-
   
 
 > Illustration: Inline code review comments displayed in the review pane
-
-
-
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="cli">
 
 The review appears as a turn in the transcript. Set `review_model` in
 `config.toml` when you want reviews to use a different model from the current
 session.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="ide">
-
 By default, the review runs in the current chat. Set `chatgpt.reviewDelivery` to
 `detached` when you want `/review` to start a separate review chat. See the
 [IDE extension settings reference](./developer-settings.md#ide-editor-settings-reference).
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="web">
-
 If you ask ChatGPT to prepare revised files, the tools and workspace
 permissions available to the chat still apply.
 
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" ids="app,cli,ide">
-
 If you ask Codex to apply the fixes it finds, your normal [sandbox and approval
 settings](./sandboxing.md) apply.
-
-</ContentModeSwitch>
-
-<ContentModeSwitch group="codex-surface" id="app">
 
 ## Navigating the review pane
 
@@ -238,4 +176,3 @@ Git can represent both staged and unstaged changes in the same file. When that
 happens, the pane can show the same file in both views. That's normal Git
 behavior.
 
-</ContentModeSwitch>

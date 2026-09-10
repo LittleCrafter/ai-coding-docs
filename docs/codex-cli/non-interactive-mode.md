@@ -154,7 +154,9 @@ CODEX_API_KEY=<api-key> codex exec --json "triage open bug reports"
 You can use `CODEX_API_KEY` with `codex exec`, `codex review`, the TypeScript
 SDK, and `codex exec-server --remote`.
 
-<ToggleSection title="Use ChatGPT-managed auth in CI/CD (advanced)">
+<details>
+<summary>Use ChatGPT-managed auth in CI/CD (advanced)</summary>
+
 Read this if you need to run CI/CD jobs with a Codex user account instead of an
 API key, such as enterprise teams using ChatGPT-managed Codex access on trusted
 runners or users who need ChatGPT/Codex rate limits instead of API key usage.
@@ -173,7 +175,7 @@ between runs.
 
 See [Maintain Codex account auth in CI/CD (advanced)](https://learn.chatgpt.com/docs/auth/ci-cd-auth).
 
-</ToggleSection>
+</details>
 
 ## Resume a non-interactive session
 
@@ -337,7 +339,8 @@ npm test 2>&1 \
   | tee test-summary.md
 ```
 
-<ToggleSection title="More prompt-plus-stdin examples">
+<details>
+<summary>More prompt-plus-stdin examples</summary>
 
 ### Summarize logs
 
@@ -371,7 +374,7 @@ gh run view 123456 --log \
   | gh pr comment 789 --body-file -
 ```
 
-</ToggleSection>
+</details>
 
 ### Use `codex exec -` when stdin is the prompt
 

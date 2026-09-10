@@ -77,13 +77,12 @@ workspaces.
 
 ## Step 2: Manage capabilities
 
-<WarningTip>
-  Making an MCP server or plugin available in ChatGPT doesn't grant access to
-  files, records, or actions in the connected service. Before troubleshooting or
-  expanding access, check the member's workspace role and approved action
-  settings. Then confirm the authenticated account or shared connection has the
-  expected permissions in the connected service.
-</WarningTip>
+> [!WARNING]
+> Making an MCP server or plugin available in ChatGPT doesn't grant access to
+>   files, records, or actions in the connected service. Before troubleshooting or
+>   expanding access, check the member's workspace role and approved action
+>   settings. Then confirm the authenticated account or shared connection has the
+>   expected permissions in the connected service.
 
 Plugins in ChatGPT and Codex can include MCP server connections that search, retrieve, sync,
 or act on external systems. Plugin availability and the access and actions
