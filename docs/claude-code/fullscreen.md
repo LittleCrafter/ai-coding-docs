@@ -29,7 +29,7 @@ Claude Code carries these into the relaunched session:
   * If you rewound to before your first message, Claude Code relaunches with an empty conversation
 * Your [permission mode](./permission-modes.md) and [effort level](./model-config.md#adjust-effort-level)
 * The model you last picked with [`/model`](./model-config.md#setting-your-model)
-* Rules you passed with [`--allowed-tools` or `--disallowed-tools`](./cli-reference.md#cli-flags), and your `--agent`, `--agents`, and `--append-system-prompt` flags
+* Rules you passed with [`--allowed-tools` or `--disallowed-tools`](./cli-reference.md#cli-flags), and your `--agent`, `--agents`, `--append-system-prompt`, and `--system-prompt-snapshot` flags
 
 Claude Code declines to relaunch if the session has a restriction it can't pass to the restarted process. Restrictions it can't pass include:
 
