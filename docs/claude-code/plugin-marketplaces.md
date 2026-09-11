@@ -1159,7 +1159,7 @@ Earlier versions of Claude Code ignore the `renames` field and report `plugin-no
 
 ## Validation and testing
 
-Test your marketplace before sharing.
+Test your marketplace before sharing. Validation checks file structure; to test whether a plugin changes what Claude does on realistic prompts, run its eval suite with [`claude plugin eval`](./plugin-evals.md) before you publish a new version.
 
 From your marketplace directory, validate the JSON syntax:
 

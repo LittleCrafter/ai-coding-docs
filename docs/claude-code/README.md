@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 191
-- **Version:** 2.1.268
-- **Last updated:** 2026-09-11T17:58:39Z
+- **Pages mirrored:** 192
+- **Version:** 2.1.269
+- **Last updated:** 2026-09-11T20:15:37Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -106,6 +106,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Configure permissions | [permissions.md](./permissions.md) | [source](<https://code.claude.com/docs/en/permissions>) |
 | Platforms and integrations | [platforms.md](./platforms.md) | [source](<https://code.claude.com/docs/en/platforms>) |
 | Constrain plugin dependency versions | [plugin-dependencies.md](./plugin-dependencies.md) | [source](<https://code.claude.com/docs/en/plugin-dependencies>) |
+| Test plugins with evals | [plugin-evals.md](./plugin-evals.md) | [source](<https://code.claude.com/docs/en/plugin-evals>) |
 | Recommend your plugin from your CLI | [plugin-hints.md](./plugin-hints.md) | [source](<https://code.claude.com/docs/en/plugin-hints>) |
 | Create and distribute a plugin marketplace | [plugin-marketplaces.md](./plugin-marketplaces.md) | [source](<https://code.claude.com/docs/en/plugin-marketplaces>) |
 | Recommend plugins for your org | [plugin-relevance.md](./plugin-relevance.md) | [source](<https://code.claude.com/docs/en/plugin-relevance>) |

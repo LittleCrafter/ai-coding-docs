@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.268",
-  "last_updated": "2026-09-11T17:58:39Z",
+  "version": "2.1.269",
+  "last_updated": "2026-09-11T20:15:37Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -450,8 +450,8 @@
       "source_url": "https://code.claude.com/docs/en/changelog",
       "source_md_url": "https://code.claude.com/docs/en/changelog.md",
       "source_id": "changelog",
-      "hash": "626ad55b17f5460156ae41e591fcb1af7c31dd696ef160002c44b87a47965ba9",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "7246f1bc1e4f003711d69f7ced8d557990a00d63ca4c1ed3093702aa6dc385de",
+      "last_updated": "2026-09-11T20:15:37Z"
     },
     "channels": {
       "slug": "channels",
@@ -840,8 +840,8 @@
       "source_url": "https://code.claude.com/docs/en/errors",
       "source_md_url": "https://code.claude.com/docs/en/errors.md",
       "source_id": "errors",
-      "hash": "337581770bdf141095c35f4ee29ffc0acf14f09d1cde483bb622c60082933023",
-      "last_updated": "2026-09-11T17:58:39Z"
+      "hash": "93951694c670212c73f14022e027f8de848b4bc120f02b5b9ebb0c07a0c9196b",
+      "last_updated": "2026-09-11T20:15:37Z"
     },
     "fast-mode": {
       "slug": "fast-mode",
@@ -1253,6 +1253,16 @@
       "hash": "f9134ba2e82fd9a780b604e7ab0ab5f9ec4f04f01a95d58d8b384404be834336",
       "last_updated": "2026-09-11T01:50:12Z"
     },
+    "plugin-evals": {
+      "slug": "plugin-evals",
+      "title": "Test plugins with evals",
+      "group": "root",
+      "source_url": "https://code.claude.com/docs/en/plugin-evals",
+      "source_md_url": "https://code.claude.com/docs/en/plugin-evals.md",
+      "source_id": "plugin-evals",
+      "hash": "28a97dd2dcba52e8641623f011bccb21d54e5289b3d1584c74979edf0f5b6bf6",
+      "last_updated": "2026-09-11T20:15:37Z"
+    },
     "plugin-hints": {
       "slug": "plugin-hints",
       "title": "Recommend your plugin from your CLI",
@@ -1270,8 +1280,8 @@
       "source_url": "https://code.claude.com/docs/en/plugin-marketplaces",
       "source_md_url": "https://code.claude.com/docs/en/plugin-marketplaces.md",
       "source_id": "plugin-marketplaces",
-      "hash": "687817642643c39a68d99fc3b9184121470ac113ef700d0bcd50b06c277ee16e",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "0d80f9e6e3bf8a857910fa342c5db7529c81d37b91932251bde37104156322d1",
+      "last_updated": "2026-09-11T20:15:37Z"
     },
     "plugin-relevance": {
       "slug": "plugin-relevance",
@@ -1290,8 +1300,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins",
       "source_md_url": "https://code.claude.com/docs/en/plugins.md",
       "source_id": "plugins",
-      "hash": "4e531f97952d387789aa7ca25443bed24801816234840660933445dd1588be7e",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "f872554159362c632064da9b76f0670b9f6ad192ba094575e8f3bfbe215a5211",
+      "last_updated": "2026-09-11T20:15:37Z"
     },
     "plugins-reference": {
       "slug": "plugins-reference",
@@ -1300,8 +1310,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins-reference",
       "source_md_url": "https://code.claude.com/docs/en/plugins-reference.md",
       "source_id": "plugins-reference",
-      "hash": "b9795be8c94e727a710ab015754a3cf31913656fc104e19e448b13db40dbd93b",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "9c1d9c082f90d47f4ac93b62163d49db3b84bbf3b05a093f434ff2d135d8f924",
+      "last_updated": "2026-09-11T20:15:37Z"
     },
     "prompt-caching": {
       "slug": "prompt-caching",
@@ -1540,8 +1550,8 @@
       "source_url": "https://code.claude.com/docs/en/skills",
       "source_md_url": "https://code.claude.com/docs/en/skills.md",
       "source_id": "skills",
-      "hash": "6dd3a324c66306729b82c0ef06ca7abe0332ef7fed2ddf67b2935ef41610b30e",
-      "last_updated": "2026-09-11T17:58:39Z"
+      "hash": "098f7931a1c94af6ebd79e06ad322d0a612beefd9ab1a1d3cf910d927b806b73",
+      "last_updated": "2026-09-11T20:15:37Z"
     },
     "slack": {
       "slug": "slack",
@@ -1915,10 +1925,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-11T17:58:39Z",
-    "fetch_duration_seconds": 68.822,
-    "total_pages_discovered": 191,
-    "pages_fetched_successfully": 191,
+    "last_fetch_completed": "2026-09-11T20:15:37Z",
+    "fetch_duration_seconds": 68.673,
+    "total_pages_discovered": 192,
+    "pages_fetched_successfully": 192,
     "pages_failed": 0,
     "failed_pages": []
   }

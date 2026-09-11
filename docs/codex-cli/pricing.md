@@ -324,6 +324,12 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         <td style="text-align:center">30 credits</td>
       </tr>
       <tr>
+        <td>GPT-Rosalind-Research</td>
+        <td style="text-align:center">125 credits</td>
+        <td style="text-align:center">12.5 credits</td>
+        <td style="text-align:center">625 credits</td>
+      </tr>
+      <tr>
         <td>GPT-5.5</td>
         <td style="text-align:center">125 credits</td>
         <td style="text-align:center">12.50 credits</td>
