@@ -9,6 +9,7 @@ deletes mirrored files.
 
 from __future__ import annotations
 
+import re
 
 import pytest
 from conftest import _FakeClient, _Resp, blob_entry, tree_client
@@ -867,11 +868,18 @@ def test_codex_fetch_markdown_rewrites_root_links_with_anchors():
 
 
 def test_codex_how_mirrored_metadata():
-    """Verify CONFIG.how_mirrored reflects the expanded discovery approach."""
-    assert (
-        codex_cli.CONFIG.how_mirrored
-        == "scraping (GitHub tree + developers.openai.com/codex/llms.txt)"
-    )
+    """Verify CONFIG metadata names both origins of the mirrored corpus.
+
+    Most pages come from the documentation index (served by learn.chatgpt.com)
+    and the rest from the repository's own ``docs/`` tree, so the generated
+    tables in the root README and the per-source index must say both -- a
+    description that mentions only the repository hides where the majority of
+    the pages come from (and, with them, which license governs them).
+    """
+    assert "learn.chatgpt.com" in codex_cli.CONFIG.how_mirrored
+    assert "openai/codex" in codex_cli.CONFIG.how_mirrored
+    assert "learn.chatgpt.com" in codex_cli.CONFIG.origin
+    assert "github.com/openai/codex" in codex_cli.CONFIG.origin
 
 
 def test_codex_normalize_route_and_md_twin_url():
@@ -1464,6 +1472,905 @@ def test_codex_clean_protects_fenced_code():
     raw = '```markdown\n<ContentModeSwitch group="test">\n<FileTree tree={[]} />\n```\n'
     cleaned = codex_cli._clean_mdx_components(raw, "slug", set())
     assert cleaned.strip() == raw.strip()
+
+
+def test_codex_clean_config_table_keeps_data_after_multiline_tag():
+    """A <ConfigTable> renders as a Markdown table, and none of its entries are
+    lost to a multi-line opening tag.
+
+    The regression this pins: the opening tag spans many lines and its data
+    contains ``>`` characters (``type: "array<string>"``). A tag matcher that
+    stops at the first ``>`` -- or that treats ``/>`` inside the data as the end
+    of the tag -- silently deletes every entry before that character, which took
+    documented configuration keys such as ``model`` and ``approval_policy`` out
+    of the mirrored reference. Every entry of both tables must survive, and the
+    tag itself must be gone.
+    """
+    raw = (
+        "# Configuration Reference\n\n"
+        "<ConfigTable\n"
+        "  options={[\n"
+        "    {\n"
+        '      key: "model",\n'
+        '      type: "string",\n'
+        '      description: "Model to use (e.g., `gpt-5.5`).",\n'
+        "    },\n"
+        "    {\n"
+        '      key: "allowed_sandbox_modes",\n'
+        '      type: "array<string>",\n'
+        '      description: "Allowed values for `sandbox_mode`.",\n'
+        "    },\n"
+        "    {\n"
+        '      key: "sandbox_workspace_write.network_access",\n'
+        '      type: "boolean",\n'
+        '      description: "Allow outbound network access (`a | b`).",\n'
+        "    },\n"
+        "  ]}\n"
+        "  client:load\n"
+        "/>\n"
+        "\nAfter the table.\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(
+        raw, "config-file/config-reference", set()
+    )
+    assert "<ConfigTable" not in cleaned
+    assert "client:load" not in cleaned
+    assert "| Key | Type | Description |" in cleaned
+    # Every entry is present, including the ones that follow a `>` in the data.
+    assert "| `model` | `string` | Model to use (e.g., `gpt-5.5`). |" in cleaned
+    assert (
+        "| `allowed_sandbox_modes` | `array<string>` | Allowed values for `sandbox_mode`. |"
+        in cleaned
+    )
+    # A pipe inside a value is escaped so it cannot split the row into columns.
+    assert r"(`a \| b`)" in cleaned
+    assert "After the table." in cleaned
+
+
+def test_codex_clean_glossary_table_links_terms():
+    """A <GlossaryTable> becomes a term/applies-to/definition table whose terms
+    link to the mirrored page when it exists and to the upstream URL when not."""
+    raw = (
+        "<GlossaryTable\n"
+        "  client:load\n"
+        '  searchPlaceholder="Filter by term"\n'
+        "  options={[\n"
+        "    {\n"
+        '      key: "Agent",\n'
+        '      href: "/codex/agent-configuration/subagents",\n'
+        '      appliesTo: "Desktop app, CLI",\n'
+        '      description: "The Codex agent that completes a task.",\n'
+        "    },\n"
+        "    {\n"
+        '      key: "Appshot",\n'
+        '      href: "/codex/appshots",\n'
+        '      appliesTo: "Desktop app",\n'
+        '      description: "Snapshot of the frontmost app window.",\n'
+        "    },\n"
+        "  ]}\n"
+        "/>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(
+        raw, "glossary", {"agent-configuration/subagents"}
+    )
+    assert "<GlossaryTable" not in cleaned
+    assert "| Term | Applies to | Definition |" in cleaned
+    assert (
+        "| [Agent](./agent-configuration/subagents.md) | Desktop app, CLI | "
+        "The Codex agent that completes a task. |" in cleaned
+    )
+    assert (
+        "| [Appshot](https://developers.openai.com/codex/appshots) | Desktop app | "
+        "Snapshot of the frontmost app window. |" in cleaned
+    )
+
+
+def test_codex_clean_plan_feature_matrix_renders_availability():
+    """A <CodexPlanFeatureMatrix> becomes one table per section, with a column
+    per plan and one row per capability."""
+    raw = (
+        "## Feature availability\n\n"
+        "<CodexPlanFeatureMatrix\n"
+        "  client:load\n"
+        "  data={{\n"
+        "    plans: [\n"
+        '      { id: "plus", shortLabel: "Plus", label: "ChatGPT Plus" },\n'
+        '      { id: "api", shortLabel: "API Key", label: "API Key" },\n'
+        "    ],\n"
+        "    sections: [\n"
+        "      {\n"
+        '        title: "Access and surfaces",\n'
+        "        features: [\n"
+        "          {\n"
+        '            name: "Codex cloud",\n'
+        '            href: "/codex/cloud",\n'
+        '            availability: { plus: "available", api: "unavailable" },\n'
+        "          },\n"
+        "          {\n"
+        '            name: "Codex IDE extension",\n'
+        '            href: "/codex/ide",\n'
+        '            availability: { plus: "limited", api: "unavailable" },\n'
+        "          },\n"
+        "        ],\n"
+        "      },\n"
+        "    ],\n"
+        "  }}\n"
+        "/>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "pricing", {"cloud"})
+    assert "<CodexPlanFeatureMatrix" not in cleaned
+    assert "### Access and surfaces" in cleaned
+    assert "| Feature | ChatGPT Plus | API Key |" in cleaned
+    assert "| [Codex cloud](./cloud.md) | Yes | No |" in cleaned
+    assert (
+        "| [Codex IDE extension](https://developers.openai.com/codex/ide) | Limited | No |"
+        in cleaned
+    )
+
+
+def test_codex_clean_collection_list_and_prompt_component():
+    """<CodexCollectionList> becomes a bulleted link list and <PromptComponent>
+    becomes a fenced block holding the prompt verbatim."""
+    raw = (
+        "## More use cases\n\n"
+        "<CodexCollectionList\n"
+        "  slugs={[\n"
+        '    "productivity-and-collaboration",\n'
+        '    "data-science",\n'
+        "  ]}\n"
+        "/>\n"
+        "\n"
+        "<PromptComponent\n"
+        "prompt={`Summarize the review feedback in / and prepare a plan.`}\n"
+        "/>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "get-started-with-work", set())
+    assert "<CodexCollectionList" not in cleaned
+    assert "<PromptComponent" not in cleaned
+    assert (
+        "- [Productivity and collaboration]"
+        "(https://learn.chatgpt.com/use-cases/collections/"
+        "productivity-and-collaboration)" in cleaned
+    )
+    assert (
+        "- [Data science]"
+        "(https://learn.chatgpt.com/use-cases/collections/data-science)" in cleaned
+    )
+    assert (
+        "```text\nSummarize the review feedback in / and prepare a plan.\n```"
+        in cleaned
+    )
+
+
+def test_codex_clean_table_wrapper_becomes_markdown_table():
+    """A <TableWrapper> around a plain HTML table becomes a Markdown table with
+    the same header, alignment, and cells."""
+    raw = (
+        '<TableWrapper class="w-full min-w-[46rem]">\n'
+        "  <thead>\n"
+        "    <tr>\n"
+        '      <th scope="col">Model</th>\n'
+        '      <th scope="col" style="text-align:center">Plus</th>\n'
+        "    </tr>\n"
+        "  </thead>\n"
+        "  <tbody>\n"
+        "    <tr>\n"
+        "      <td>GPT-6 Astra</td>\n"
+        '      <td style="text-align:center">5-45</td>\n'
+        "    </tr>\n"
+        "  </tbody>\n"
+        "</TableWrapper>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "pricing", set())
+    assert "<TableWrapper" not in cleaned
+    assert "<td>" not in cleaned and "<tr>" not in cleaned
+    assert "| Model | Plus |" in cleaned
+    assert "| --- | :---: |" in cleaned
+    assert "| GPT-6 Astra | 5-45 |" in cleaned
+
+
+def test_codex_clean_table_cell_keeps_a_greater_than_in_its_attributes():
+    """A ``>`` inside a cell attribute does not truncate the cell.
+
+    The regression this pins: the cell was delimited with ``[^>]*``, so an
+    attribute value such as ``title="a > b"`` ended the cell tag early and the
+    cell came back as the tail of its own attribute marker plus whatever text
+    followed it, with the leading content gone.
+    """
+    raw = (
+        "<TableWrapper>\n"
+        "<thead>\n"
+        '<tr><th scope="col">Col</th></tr>\n'
+        "</thead>\n"
+        "<tbody>\n"
+        '<tr><td title="a > b">value</td></tr>\n'
+        "</tbody>\n"
+        "</TableWrapper>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "config", set())
+    assert "| value |" in cleaned
+    assert 'b">' not in cleaned
+
+
+def test_codex_clean_flattens_a_table_nested_in_a_cell():
+    """A table nested inside a cell is flattened into the text of that cell.
+
+    The wrapper is only used around plain tables, and a nested one has no
+    Markdown equivalent: its row markup belongs to the cell that holds it, so
+    the cell text is what survives. This pins that the nested rows are not
+    emitted as rows of the outer table.
+    """
+    raw = (
+        "<TableWrapper>\n"
+        "<thead>\n"
+        '<tr><th scope="col">Outer</th></tr>\n'
+        "</thead>\n"
+        "<tbody>\n"
+        "<tr><td>before <table><tr><td>inner</td></tr></table> after</td></tr>\n"
+        "</tbody>\n"
+        "</TableWrapper>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "config", set())
+    assert "| Outer |" in cleaned
+    assert "inner" in cleaned
+    assert "| inner |" not in cleaned
+
+
+def test_codex_clean_strips_visual_components_only_when_self_closing():
+    """Decorative components are removed line-bounded, leaving no orphan
+    ``client:*`` directive behind, while a container use of the same name is
+    kept so its Markdown body cannot be deleted by mistake."""
+    raw = (
+        "# Models\n"
+        "\n"
+        "  <CodexReasoningLevelTerminal\n"
+        "    client:load\n"
+        '    className="lg:mt-7 lg:justify-self-end"\n'
+        "  />\n"
+        "\n"
+        "<CodexModelSwitcher client:visible forceDark />\n"
+        "\n"
+        "Select <Settings /> to open settings.\n"
+        "\n"
+        "<ElevatedRiskBadge>\n"
+        "This body carries documentation.\n"
+        "</ElevatedRiskBadge>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "models", set())
+    assert "<CodexReasoningLevelTerminal" not in cleaned
+    assert "<CodexModelSwitcher" not in cleaned
+    assert "<Settings" not in cleaned
+    assert "client:" not in cleaned
+    assert "Select  to open settings." in cleaned
+    # The container form is NOT stripped: its body is content.
+    assert "This body carries documentation." in cleaned
+
+
+def test_codex_clean_labels_surfaces_and_emits_anchors():
+    """Each <ContentModeSwitch> variant is labeled with its surface and every
+    heading inside it gets the surface-prefixed anchor upstream links use."""
+    raw = (
+        "# Models\n"
+        "\n"
+        '<ContentModeSwitch group="codex-surface" id="app">\n'
+        "\n"
+        "## Choose a model\n"
+        "\n"
+        "In the desktop app, use the model switcher.\n"
+        "\n"
+        "</ContentModeSwitch>\n"
+        "\n"
+        '<ContentModeSwitch group="codex-surface" id="cli">\n'
+        "\n"
+        "## Choose a model\n"
+        "\n"
+        "In a CLI session, use `/model`.\n"
+        "\n"
+        "</ContentModeSwitch>\n"
+        "\n"
+        '<ContentModeSwitch group="codex-surface" ids="app,cli,ide">\n'
+        "\n"
+        "## Recommended models\n"
+        "\n"
+        "Recommendations for every surface.\n"
+        "\n"
+        "</ContentModeSwitch>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "models", set())
+    assert "<ContentModeSwitch" not in cleaned
+    # Each surface-only variant is labeled; the shared variant is not.
+    assert "**Surface: Desktop app**" in cleaned
+    assert "**Surface: CLI**" in cleaned
+    assert cleaned.count("**Surface:") == 2
+    # Surface-prefixed anchors resolve on every surface the section applies to.
+    assert '<a id="app-choose-a-model"></a>' in cleaned
+    assert '<a id="cli-choose-a-model"></a>' in cleaned
+    assert '<a id="app-recommended-models"></a>' in cleaned
+    assert '<a id="cli-recommended-models"></a>' in cleaned
+    assert '<a id="ide-recommended-models"></a>' in cleaned
+    # The heading text itself is untouched.
+    assert cleaned.count("## Choose a model") == 2
+
+
+def test_codex_clean_numbers_repeated_surface_anchors():
+    """A page that repeats a surface section keeps one anchor per id.
+
+    Upstream repeats whole sections, so the same surface-and-heading pair can
+    occur twice on a page and would emit two anchors with one id. The first
+    occurrence keeps the plain id, which is the one upstream links point at;
+    the repeats are numbered so every id on the page stays unique.
+    """
+    raw = (
+        '<ContentModeSwitch group="codex-surface" id="cli">\n'
+        "\n"
+        "#### Sign in\n"
+        "\n"
+        "First copy.\n"
+        "\n"
+        "</ContentModeSwitch>\n"
+        "\n"
+        '<ContentModeSwitch group="codex-surface" id="cli">\n'
+        "\n"
+        "#### Sign in\n"
+        "\n"
+        "Second copy.\n"
+        "\n"
+        "</ContentModeSwitch>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "auth", set())
+    assert cleaned.count('<a id="cli-sign-in"></a>') == 1
+    assert cleaned.count('<a id="cli-sign-in-2"></a>') == 1
+    assert "First copy." in cleaned and "Second copy." in cleaned
+
+
+def test_codex_clean_nested_content_mode_switches():
+    """A surface switch nested inside another one is converted too, instead of
+    being kept verbatim as part of the outer section's body."""
+    raw = (
+        '<ContentModeSwitch group="codex-surface" ids="app,web,cli,ide">\n'
+        "\n"
+        "## Recommended models\n"
+        "\n"
+        '<ContentModeSwitch group="codex-surface" id="app">\n'
+        "\n"
+        "### Compare models\n"
+        "\n"
+        "Open the compare view.\n"
+        "\n"
+        "</ContentModeSwitch>\n"
+        "\n"
+        "</ContentModeSwitch>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "models", set())
+    assert "<ContentModeSwitch" not in cleaned
+    assert '<a id="app-compare-models"></a>' in cleaned
+    assert '<a id="ide-recommended-models"></a>' in cleaned
+    assert "Open the compare view." in cleaned
+
+
+def test_codex_clean_deindents_component_output():
+    """A component indented by its MDX container renders at column zero, so its
+    headings are headings instead of four-space indented code blocks."""
+    raw = (
+        '<ToggleSection title="View other models">\n'
+        "  \n"
+        "\n"
+        "    <ModelDetails\n"
+        '      name="gpt-5.4"\n'
+        '      description="Previous-generation flagship model."\n'
+        "      data={{\n"
+        "        features: [\n"
+        '          { title: "Codex CLI", value: true },\n'
+        "        ],\n"
+        "      }}\n"
+        "    />\n"
+        "\n"
+        "    <ModelDetails\n"
+        '      name="gpt-5.4-mini"\n'
+        '      description="Fast, efficient mini model."\n'
+        "      data={{ features: [] }}\n"
+        "    />\n"
+        "</ToggleSection>\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "models", set())
+    # Both headings -- the first one and the one that follows a sibling
+    # component -- start at column zero.
+    assert "\n### `gpt-5.4`\n" in cleaned
+    assert "\n### `gpt-5.4-mini`\n" in cleaned
+    assert re.search(r"^[ \t]+#{1,6} ", cleaned, re.MULTILINE) is None
+
+
+def test_codex_clean_model_details_survives_unparseable_props():
+    """A component whose props the small JS parser cannot read is kept verbatim
+    instead of raising and carrying the whole page forward stale."""
+    raw = '<ModelDetails\n  name="broken"\n  data={ : }\n/>\n'
+    cleaned = codex_cli._clean_mdx_components(raw, "models", set())
+    assert "<ModelDetails" in cleaned
+
+
+def test_codex_clean_keeps_unreadable_components_around_convertible_ones():
+    """A component with unreadable props is preserved exactly, whatever the
+    conversions of the components around it were.
+
+    The regression this pins: the inline converters restored the component by
+    slicing the enclosing variable, which still held the text from *before* the
+    pass that had already rewritten an earlier component of the same name. The
+    restored text then came from the wrong offsets -- on a mixed page the first
+    ``<Alert>`` converted, and the second one came back as a fragment of its
+    own tag plus a duplicated paragraph, losing the component.
+    """
+    raw = (
+        "Before.\n"
+        "\n"
+        '<Alert description="Convertible note." />\n'
+        "\n"
+        '<Alert onClick={() => doThing()} description="Unreadable." />\n'
+        "\n"
+        "After.\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "slug", set())
+    # The readable component converted, and only once.
+    assert "> [!NOTE]\n> Convertible note." in cleaned
+    assert cleaned.count("> [!NOTE]") == 1
+    # The unreadable one survived whole, with no duplicated tail.
+    assert '<Alert onClick={() => doThing()} description="Unreadable." />' in cleaned
+    assert cleaned.count("Before.") == 1
+    assert cleaned.count("After.") == 1
+    assert "\n\n\n" not in cleaned
+
+
+def test_codex_clean_keeps_unreadable_inline_components_verbatim():
+    """The same restoration guard on the remaining inline converters: an
+    unreadable component is left byte for byte as upstream wrote it, including
+    when a convertible sibling of the same name precedes it in the page.
+
+    The sibling is what makes the second pass necessary, and the second pass is
+    where the stale slice used to return a run of characters belonging to the
+    already-converted text instead of the component.
+    """
+    for convertible, unreadable in (
+        (
+            '<CtaPillLink href="/codex/start" label="Start" />',
+            '<CtaPillLink href={() => go()} label="Go" />',
+        ),
+        (
+            '<ButtonLink href="/codex/start">Start</ButtonLink>',
+            "<ButtonLink href={() => go()}>Go</ButtonLink>",
+        ),
+        (
+            '<CodexCallout title="Guide" href="/codex/start" description="Text." />',
+            '<CodexCallout title="Broken" href={() => go()} />',
+        ),
+    ):
+        raw = f"{convertible}\n\n{unreadable}\n"
+        cleaned = codex_cli._clean_mdx_components(raw, "slug", set())
+        assert unreadable in cleaned
+        assert convertible not in cleaned
+
+
+def test_codex_clean_skips_an_unterminated_tag_and_converts_the_next_one():
+    """An opening tag with no closing quote is left as-is, and a later
+    occurrence of the same component is still converted.
+
+    The regression this pins: the scan stopped at the first tag it could not
+    delimit, so every later occurrence of that component name in the document
+    was abandoned with it -- one malformed tag upstream silently removed all
+    the well-formed ones from the page.
+    """
+    raw = (
+        "Before.\n"
+        "\n"
+        "<Alert description='unterminated\n"
+        "\n"
+        "More text about the alert.\n"
+        "\n"
+        '<Alert description="valid note" />\n'
+        "\n"
+        "After.\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "slug", set())
+    assert "> [!NOTE]\n> valid note" in cleaned
+    # The malformed tag itself is kept verbatim, and nothing was duplicated.
+    assert "<Alert description='unterminated" in cleaned
+    assert cleaned.count("More text about the alert.") == 1
+
+
+def test_codex_clean_does_not_let_an_unterminated_tag_swallow_its_sibling():
+    """An unquoted ``>`` inside an unterminated tag's props does not consume the
+    next component of the same name.
+
+    A scan that runs past its own tag boundary reads the *next* ``<Alert ...>``
+    as the end of the first one, so that component would come back as a
+    fragment of the broken tag's text and lose its own conversion.
+    """
+    raw = (
+        '<Alert description="unterminated\n'
+        "\n"
+        "Prose between the two tags.\n"
+        "\n"
+        '<Alert description="valid note" />\n'
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "slug", set())
+    assert "> [!NOTE]\n> valid note" in cleaned
+    assert "Prose between the two tags." in cleaned
+
+
+def test_codex_clean_many_unterminated_tags_completes_quickly():
+    """A document of unterminated tags is scanned in linear time.
+
+    Every tag is malformed on purpose, which is the shape that made the scan
+    quadratic: each tag walked to the end of the document, so the work grew
+    with the square of the page size. The bound is what keeps the mirror from
+    stalling on a broken upstream page, and it is generous enough that only a
+    return to quadratic behavior can trip it (the linear scan is two orders of
+    magnitude below it).
+    """
+    import time
+
+    unterminated = '<Alert description="x"\n' * 20000
+    unclosed = '<Alert description="x">\n' * 20000
+    for text in (unterminated, unclosed):
+        start = time.perf_counter()
+        cleaned = codex_cli._clean_mdx_components(text, "slug", set())
+        assert time.perf_counter() - start < 5
+        # Nothing was converted away, and the malformed tags are still there.
+        assert cleaned.count("<Alert") == 20000
+
+
+def test_codex_clean_collapses_whitespace_only_lines():
+    """Lines holding nothing but the indentation of a removed component are
+    collapsed to empty, keeping the mirrored page diff-clean."""
+    raw = (
+        "# Quickstart\n"
+        "\n"
+        "                Learn more about [ChatGPT](./use-chatgpt.md).\n"
+        "\n"
+        "              \n"
+        "\n"
+        "          <ChatGPTModeDropdown client:visible />\n"
+        "\n"
+        "    \n"
+        "\n"
+        "Next step text.\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "quickstart", {"use-chatgpt"})
+    assert re.search(r"^[ \t]+$", cleaned, re.MULTILINE) is None
+    assert "Next step text." in cleaned
+
+
+def test_codex_fetch_markdown_strips_frontmatter_and_keeps_title(capsys):
+    """Astro frontmatter is dropped from the mirrored body, and its title is
+    re-emitted as an H1 so the manifest keeps the page's real title."""
+    raw = (
+        "---\n"
+        'title: "Codex Manual"\n'
+        "hidden: true\n"
+        "---\n"
+        "\n"
+        "> For the complete documentation index, see [llms.txt](/llms.txt).\n"
+        "\n"
+        "## Find By Topic\n"
+        "\n"
+        "Reference text.\n"
+    )
+    client = _FakeClient([_Resp(200, raw)])
+    page = Page(
+        slug="codex-manual",
+        source_url="https://learn.chatgpt.com/docs/codex-manual",
+        source_md_url="https://learn.chatgpt.com/docs/codex-manual.md",
+        source_id="llms:codex-manual",
+        group="root",
+    )
+    md, digest = codex_cli.fetch_markdown(client, page)
+    assert not md.startswith("---")
+    assert "hidden: true" not in md
+    assert md.startswith("# Codex Manual\n")
+    assert fetch.extract_title(md, fallback="fallback") == "Codex Manual"
+    # The site-absolute index link is routed through the link resolution.
+    assert "[llms.txt](https://developers.openai.com/llms.txt)" in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_codex_strip_frontmatter_keeps_a_leading_thematic_break():
+    """A document that opens with a thematic break keeps its content.
+
+    The regression this pins: the block between two ``---`` lines was dropped
+    whenever the document *started* with one, so a page written as a rule, a
+    blank line, a section, and another rule lost that middle section -- the
+    visible text went to the body while the source's own middle block was
+    deleted. Only a block that reads as YAML (keys from its first line on) is
+    frontmatter.
+    """
+    raw = "---\n\nIMPORTANT SECTION CONTENT\n\n---\n\nRest of doc.\n"
+    assert codex_cli._strip_frontmatter(raw) == raw
+
+    # A real frontmatter block is still dropped, with its title kept as the H1.
+    frontmatter = '---\ntitle: "Codex Manual"\nhidden: true\n---\n\nBody text.\n'
+    stripped = codex_cli._strip_frontmatter(frontmatter)
+    assert stripped.startswith("# Codex Manual\n")
+    assert "hidden: true" not in stripped
+    assert "Body text." in stripped
+
+    # A rule at the top followed by more rules is prose throughout.
+    rules = "---\n\nSection A\n\n---\n\nSection B\n\n---\n\nSection C\n"
+    assert codex_cli._strip_frontmatter(rules) == rules
+
+
+def test_codex_fetch_markdown_keeps_long_fences_and_their_examples():
+    """A fence longer than three characters shields its whole content.
+
+    The regression this pins: the shielding regex closed a block at the first
+    three-character run inside it, so a four-backtick example documenting
+    three-backtick fences ended early. Everything after that inner run -- the
+    example's second half, the component tags shown in it, and the links it
+    demonstrates -- was then converted as if it were page text. The link
+    rewrites run after the shielding pass, so they are covered here too.
+    """
+    raw = (
+        "# Page\n"
+        "\n"
+        "````markdown\n"
+        "Example:\n"
+        "\n"
+        "```bash\n"
+        "codex exec\n"
+        "```\n"
+        "\n"
+        '<Alert description="Do not convert me." />\n'
+        "\n"
+        "[cross](/codex/quickstart) and [root](../SECURITY.md)\n"
+        "````\n"
+        "\n"
+        "Prose link: [cross](/codex/quickstart).\n"
+    )
+    client = _FakeClient([_Resp(200, raw)])
+    page = Page(
+        slug="config",
+        source_url="https://learn.chatgpt.com/docs/config",
+        source_md_url="https://learn.chatgpt.com/docs/config.md",
+        source_id="llms:config",
+        group="root",
+    )
+    codex_cli._KNOWN_SLUGS.clear()
+    codex_cli._KNOWN_SLUGS.update({"config", "quickstart"})
+    md, digest = codex_cli.fetch_markdown(client, page)
+    # The example block reached the page exactly as upstream wrote it.
+    fenced = raw.split("````markdown\n", 1)[1].rsplit("````", 1)[0]
+    assert fenced in md
+    assert '<Alert description="Do not convert me." />' in md
+    assert "> [!NOTE]" not in md
+    assert "[cross](/codex/quickstart)" in md
+    assert "[root](../SECURITY.md)" in md
+    # The same link written as prose is still rewritten.
+    assert "[cross](./quickstart.md)" in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_codex_fetch_markdown_rewrites_body_site_absolute_links():
+    """Links written in a page's prose as site-absolute paths resolve to the
+    mirrored file when it exists and to the upstream URL when it does not."""
+    raw = (
+        "# Auto review\n"
+        "\n"
+        "Configure [`[auto_review].policy`]"
+        "(/codex/config-file/config-advanced#approval-policies-and-sandbox-modes).\n"
+        "\n"
+        "See [Learn more](/codex/not-mirrored-topic).\n"
+    )
+    client = _FakeClient([_Resp(200, raw)])
+    page = Page(
+        slug="sandboxing/auto-review",
+        source_url="https://learn.chatgpt.com/docs/sandboxing/auto-review",
+        source_md_url="https://learn.chatgpt.com/docs/sandboxing/auto-review.md",
+        source_id="llms:sandboxing/auto-review",
+        group="sandboxing",
+    )
+    codex_cli._KNOWN_SLUGS.clear()
+    codex_cli._KNOWN_SLUGS.update(
+        {"sandboxing/auto-review", "config-file/config-advanced"}
+    )
+    md, digest = codex_cli.fetch_markdown(client, page)
+    assert (
+        "[`[auto_review].policy`](../config-file/config-advanced.md"
+        "#approval-policies-and-sandbox-modes)" in md
+    )
+    assert "[Learn more](https://developers.openai.com/codex/not-mirrored-topic)" in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_codex_discover_skips_stub_with_mirrored_twin(capsys):
+    """A GitHub reference stub whose rich twin is discovered as its own page is
+    not mirrored, and the skip is recorded as a redirect for link rewriting."""
+    import json
+
+    tree_payload = {
+        "truncated": False,
+        "tree": [
+            blob_entry("docs/skills.md"),
+            blob_entry("docs/config.md"),
+        ],
+    }
+    llms_txt_body = (
+        "# Codex Docs\n\n"
+        "- [Build skills](https://learn.chatgpt.com/docs/build-skills.md)\n"
+    )
+    client = _FakeClient(
+        [
+            _Resp(200, json.dumps(tree_payload)),
+            _Resp(200, llms_txt_body),
+        ]
+    )
+    pages = codex_cli.discover(client)
+
+    # The stub is gone; the page that carries its content stays.
+    assert [p.slug for p in pages] == ["build-skills", "config"]
+    assert codex_cli._SLUG_REDIRECTS == {"skills": "build-skills"}
+    err = capsys.readouterr().err
+    assert "skipping reference stub 'skills'" in err
+    assert "mirrored as 'build-skills'" in err
+
+    # A stub whose twin is NOT discovered is mirrored as before: dropping it
+    # would lose the document when the documentation index is unavailable.
+    client = _FakeClient(
+        [
+            _Resp(200, json.dumps(tree_payload)),
+            _Resp(404, "Not Found"),
+        ]
+    )
+    pages = codex_cli.discover(client)
+    assert [p.slug for p in pages] == ["config", "skills"]
+    assert codex_cli._SLUG_REDIRECTS == {}
+
+
+def test_codex_stub_twin_table_matches_mirrored_pairs():
+    """The stub/twin table only names pages whose content upstream publishes
+    twice: the GitHub reference stub, and the guide it points at."""
+    assert codex_cli.STUB_TWIN_SLUGS == {
+        "authentication": "auth",
+        "sandbox": "security",
+        "exec": "non-interactive-mode",
+        "skills": "build-skills",
+    }
+
+
+def test_codex_links_follow_stub_redirects(monkeypatch):
+    """Every internal reference shape that can name a skipped stub slug is
+    repointed at the mirrored twin."""
+    monkeypatch.setattr(codex_cli, "_SLUG_REDIRECTS", {"skills": "build-skills"})
+    known = {"build-skills", "enterprise/skills", "guides/build-skills"}
+    # Site-absolute reference (component href or body-link resolution path).
+    assert (
+        codex_cli._resolve_internal_href(
+            "/codex/skills#where-to-save-skills", "import", known
+        )
+        == "./build-skills.md#where-to-save-skills"
+    )
+    # Absolute cross-documentation link.
+    assert (
+        codex_cli._rewrite_cross_links(
+            "See [Skills](https://learn.chatgpt.com/docs/skills#where-to-save-skills).",
+            "import",
+            known,
+        )
+        == "See [Skills](./build-skills.md#where-to-save-skills)."
+    )
+    # Relative link from a nested page, traversing back up to the root.
+    assert (
+        codex_cli._rewrite_body_links(
+            "[Skills](../skills.md)", "enterprise/skills", known
+        )
+        == "[Skills](../build-skills.md)"
+    )
+    # A link that names no skipped slug is left alone.
+    assert (
+        codex_cli._rewrite_body_links("[Skills](./build-skills.md)", "import", known)
+        == "[Skills](./build-skills.md)"
+    )
+
+
+def test_codex_clean_has_no_component_remnants():
+    """Representative converted output carries no MDX component tag and no
+    orphan client directive.
+
+    This is the guard that fails loudly if a future upstream adds a component,
+    or changes one of these into a shape the converters do not recognize: the
+    page would keep raw JSX instead of degrading quietly.
+    """
+    raw = (
+        "# Sample\n"
+        "\n"
+        "<CodexDocsOverviewLanding\n"
+        '  title="Sample"\n'
+        '  primaryCta={{ label: "Start", href: "/codex/start" }}\n'
+        "  sections={[\n"
+        '    { title: "Guides", pages: [ { title: "Start", href: "/codex/start" }, ] },\n'
+        "  ]}\n"
+        "/>\n"
+        "\n"
+        '<WorkflowSteps variant="headings">\n'
+        "1. First step\n"
+        "2. Second step\n"
+        "</WorkflowSteps>\n"
+        "\n"
+        '<ContentModeSwitch group="codex-surface" id="cli">\n'
+        "## Run it\n"
+        "</ContentModeSwitch>\n"
+        "\n"
+        "<FileTree tree={[ { name: 'AGENTS.md' } ]} />\n"
+        "\n"
+        "<ModelDetails\n"
+        '  name="gpt-6"\n'
+        '  description="Most capable model."\n'
+        "  data={{ features: [ { title: 'CLI', value: true } ] }}\n"
+        "/>\n"
+        "\n"
+        "<PricingCard\n"
+        '  name="Plus"\n'
+        '  price="$20"\n'
+        '  interval="/month"\n'
+        ">\n"
+        "- Feature\n"
+        "</PricingCard>\n"
+        "\n"
+        '<ToggleSection title="Details">\n'
+        "Body text.\n"
+        "</ToggleSection>\n"
+        "\n"
+        "<ConfigTable client:load options={[ { key: 'model', type: 'string' } ]} />\n"
+        "\n"
+        "<GlossaryTable client:load options={[ { key: 'Agent', description: 'Text.' } ]} />\n"
+        "\n"
+        "<CodexPlanFeatureMatrix\n"
+        "  client:load\n"
+        "  data={{ plans: [ { id: 'plus', label: 'Plus' } ],"
+        " sections: [ { title: 'S', features:"
+        " [ { name: 'F', availability: { plus: 'available' } } ] } ] }}\n"
+        "/>\n"
+        "\n"
+        '<CodexCollectionList slugs={[ "data-science" ]} />\n'
+        "\n"
+        "<PromptComponent prompt={`Do the thing.`} />\n"
+        "\n"
+        '<TableWrapper class="w-full"><thead><tr><th>A</th></tr></thead>'
+        "<tbody><tr><td>B</td></tr></tbody></TableWrapper>\n"
+        "\n"
+        "<WarningTip>\nCareful.\n</WarningTip>\n"
+        "\n"
+        '<Alert client:load description="Note text." />\n'
+        "\n"
+        '<CtaPillLink href="/codex/start" label="Start" />\n'
+        "\n"
+        '<ButtonLink href="/codex/start">Start</ButtonLink>\n'
+        "\n"
+        '<CodexCallout title="Guide" description="Text." href="/codex/start" />\n'
+        "\n"
+        '<CodexMicroTableKeycap label="Cmd" />\n'
+        "\n"
+        '<VideoPlayer src="https://cdn.openai.com/demo.mp4" />\n'
+        "\n"
+        '<CodexScreenshot src="/images/shot.png" alt="Shot" />\n'
+        "\n"
+        '<CodexReasoningLevelTerminal client:load className="mt-4" />\n'
+        "\n"
+        "Closing prose.\n"
+    )
+    cleaned = codex_cli._clean_mdx_components(raw, "sample", {"start"})
+    assert re.search(r"<[A-Z][A-Za-z]*\b", cleaned) is None
+    assert re.search(r"^\s*client:\S*\s*$", cleaned, re.MULTILINE) is None
+    assert re.search(r"^[ \t]+$", cleaned, re.MULTILINE) is None
+    # The conversions actually produced content rather than deleting it.
+    assert "1. First step\n2. Second step" in cleaned
+    assert "AGENTS.md" in cleaned
+    assert "| Key | Type | Description |" in cleaned
+    assert "| A |" in cleaned and "| B |" in cleaned
+    assert "Careful." in cleaned
+    assert "- Feature" in cleaned
+
+
+def test_codex_version_fallback_matches_current_release():
+    """The static version fallback is the release the mirror currently tracks;
+    it is only used when the GitHub release lookup fails."""
+    assert codex_cli.CONFIG.version == "0.154.0"
 
 
 def test_kimi_discover_skips_bare_md_filename_and_guards_zero_pages():

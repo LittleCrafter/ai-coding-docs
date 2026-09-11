@@ -6,8 +6,12 @@ Ask ChatGPT to generate or edit images. Use image generation for UI assets,
 banners, backgrounds, illustrations, sprite sheets, and placeholders you want
 to create alongside code or in a ChatGPT chat.
 
+**Surface: Desktop app**
+
 Ask for an image from the app composer. Add a reference image when you want
 ChatGPT to transform an existing asset or use it as visual guidance.
+
+<a id="app-review-and-edit-generated-images"></a>
 
 ### Review and edit generated images
 
@@ -20,12 +24,18 @@ images. Select **Multi-select** to choose the images you want to include, then
 send your comments and any additional editing instructions in the same chat.
 Describe what should change and what should remain the same.
 
+**Surface: Web**
+
 Ask for an image in a ChatGPT web chat. Attach a reference image to the
 composer when you want ChatGPT to edit it or use it as visual guidance.
+
+**Surface: CLI**
 
 Describe the image in an interactive session or include `$imagegen` to invoke
 the image generation skill explicitly. Attach an existing image with `-i` or
 `--image` when it should guide the result.
+
+**Surface: IDE extension**
 
 Ask for an image from the extension chat. Drag a reference image into
 the composer while holding <kbd>Shift</kbd> when Codex should edit or build on
@@ -45,9 +55,14 @@ average than similar turns without image generation, depending on image quality
 and size. For larger batches, set `OPENAI_API_KEY` in your environment and ask
 ChatGPT to generate images through the API so API pricing applies.
 
+**Surface: Web**
+
 Image availability and usage limits in ChatGPT web depend on your plan and
 workspace settings. For programmatic image generation, use the [Image
 generation API](https://developers.openai.com/api/docs/guides/image-generation).
+
+<a id="app-write-effective-image-prompts"></a>
+<a id="web-write-effective-image-prompts"></a>
 
 ## Write effective image prompts
 
@@ -70,6 +85,9 @@ requirement that must stay fixed.
 Create a clean editorial illustration for an employee onboarding guide. Show a person organizing a project at a desk with a laptop, notebook, and simple progress checklist. Use soft daylight from a window on the left, restrained colors, and a modern, approachable style. Keep the background minimal. Do not include logos, text, or futuristic imagery.
 ```
 
+<a id="app-refine-the-result"></a>
+<a id="web-refine-the-result"></a>
+
 ## Refine the result
 
 Start with the core idea, then make small, targeted revisions. Adjust one
@@ -90,6 +108,9 @@ For broader revisions, keep the feedback direct and actionable: make the image
 brighter, reduce the color saturation, simplify the background, or keep the
 composition while changing the style.
 
+<a id="app-use-multiple-reference-images"></a>
+<a id="web-use-multiple-reference-images"></a>
+
 ## Use multiple reference images
 
 Use a small set of reference images when one image defines the content and
@@ -102,6 +123,9 @@ foreground, background, left, and right when combining elements.
 ```text
 Image 1 is the product photo to edit. Image 2 is the style reference. Keep the product, camera angle, layout, and objects from image 1, but apply the clean line work, muted palette, and soft shadows from image 2. Keep the product centered and leave the upper-right corner clear for later copy.
 ```
+
+<a id="app-add-text-to-an-image"></a>
+<a id="web-add-text-to-an-image"></a>
 
 ## Add text to an image
 
@@ -116,6 +140,9 @@ when accuracy matters. State whether any other text is allowed.
 Add only the title “SPRING WORKSHOP” in large, bold, white sans-serif letters, centered in the top third of the image. Keep the title on one line. Do not add any other text or change the underlying image.
 ```
 
+<a id="app-create-infographics-and-dense-layouts"></a>
+<a id="web-create-infographics-and-dense-layouts"></a>
+
 ## Create infographics and dense layouts
 
 Image generation can help draft explainers, posters, labeled diagrams,
@@ -123,6 +150,9 @@ timelines, and other information-rich visuals. Describe the information
 hierarchy and layout, keep labels concise, and request sharp text rendering.
 For dense copy or production-critical typography, review every word and finish
 the asset in a design tool when needed.
+
+<a id="app-additional-considerations"></a>
+<a id="web-additional-considerations"></a>
 
 ## Additional considerations
 
@@ -139,6 +169,8 @@ the asset in a design tool when needed.
 
 ## Related docs
 
+**Surface: Desktop app**
+
 - [Codex pricing](./pricing.md#image-generation-usage-limits)
 - [Image inputs](./image-inputs.md)
 - [Image generation API guide](https://developers.openai.com/api/docs/guides/image-generation)
@@ -147,10 +179,9 @@ the asset in a design tool when needed.
 
 [Image generation gallery
 
-      <Images />
-    
-
     Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
+
+**Surface: Web**
 
 - [Image inputs](./image-inputs.md)
 - [Image generation API guide](https://developers.openai.com/api/docs/guides/image-generation)
@@ -158,9 +189,6 @@ the asset in a design tool when needed.
 - [Creating images with ChatGPT](https://openai.com/academy/image-generation/)
 
 [Image generation gallery
-
-      <Images />
-    
 
     Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
 
@@ -171,8 +199,4 @@ the asset in a design tool when needed.
 
 [Image generation gallery
 
-      <Images />
-    
-
     Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
-

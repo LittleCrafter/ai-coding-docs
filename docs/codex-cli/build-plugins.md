@@ -28,8 +28,6 @@ connect to an external service, or distribute a stable capability to a team.
 For the fastest setup, use the built-in `@plugin-creator` skill in ChatGPT Work
 mode or `$plugin-creator` in Codex.
 
-  
-
 > Illustration: Plugin creator skill in ChatGPT
 
 Describe the outcome, the skills or MCP server to include, and whether you want
@@ -46,8 +44,6 @@ manifest, organizes the plugin folder, and can add the plugin to a local
 marketplace. This scaffold differs from the portable root `plugin.json` format
 used in the manual example. See the [scaffold layout](https://developers.openai.com/plugins/build/plugins#plugin-creator-output)
 for optional files and directories.
-
-  
 
 > Illustration: Invoking the plugin creator skill
 

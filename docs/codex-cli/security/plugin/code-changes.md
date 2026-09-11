@@ -144,8 +144,6 @@ Scan results can include sensitive vulnerability details. Keep artifacts
 private, and publish findings only after reviewing the audience, content, and
 required approvals.
 
-  
-
 ```yaml
 name: Codex Security review
 
@@ -192,10 +190,6 @@ jobs:
           path: ${{ runner.temp }}/codex-security/codex-security-scans
 ```
 
-  
-
-  
-
 Create a masked `CODEX_SECURITY_API_KEY` CI/CD variable and review the scan
 artifacts privately before sharing findings.
 
@@ -230,10 +224,6 @@ codex-security-review:
     paths:
       - codex-security-artifacts.tar.gz
 ```
-
-  
-
-  
 
 ```yaml
 trigger: none
@@ -273,10 +263,6 @@ steps:
 
 For Azure Repos, configure a **Build validation** branch policy to run the
 pipeline on pull requests.
-
-  
-
-  
 
 ```groovy
 pipeline {
@@ -333,8 +319,6 @@ pipeline {
   }
 }
 ```
-
-  
 
 The examples skip forked pull requests. Run credentialed jobs only from a
 protected pipeline definition and only for contributors trusted with the scan

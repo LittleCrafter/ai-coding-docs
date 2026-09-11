@@ -13,16 +13,24 @@ Sites lets ChatGPT create, host, refine, and share websites, web apps, and games
 Use Sites when you want to turn a prompt or compatible existing project into a
 hosted experience without setting up a separate deployment workflow.
 
+**Surface: Desktop app**
+
 Open **Sites** in the ChatGPT desktop app. You can start a site from a prompt or
 from a compatible local project, then return to the Sites view to manage it.
+
+**Surface: Web**
 
 Use Sites in ChatGPT on the web to create and manage hosted sites. Select
 **More** > **Sites**, or go directly to
 [chatgpt.com/sites](https://chatgpt.com/sites), to find Sites you've created.
 
+**Surface: CLI**
+
 Sites doesn't have a standalone Codex CLI management view. Use ChatGPT web or
 the desktop app to create, save, deploy, and manage a Sites project. You can
 still use Codex CLI to edit and test a local project before publishing it.
+
+**Surface: IDE extension**
 
 Sites doesn't have a standalone IDE extension management view. Use ChatGPT web
 or the desktop app for Sites operations, and use the IDE extension to edit and
@@ -56,6 +64,8 @@ start the Sites workflow explicitly.
 
    Return to **Sites** to reopen or refine the Site. When it's ready, choose who
    can visit it and share the resulting link.
+
+**Surface: Web**
 
 In the preview, select **Edit**. Under **Describe website edits**, describe the
 changes you want. Use **Screenshot** or **Add files and more** when additional
@@ -98,7 +108,11 @@ Site without adding an analytics SDK. The analytics view shows total unique
 visitors and page views, plus both metrics over time. Change the date range or
 granularity to inspect a different period.
 
+**Surface: Desktop app**
+
 Open **Sites**, find the Site, then select **More actions** > **Analytics**.
+
+**Surface: Web**
 
 Go to [chatgpt.com/sites](https://chatgpt.com/sites), find the Site, then select
 **More actions** > **Analytics**.
@@ -167,6 +181,8 @@ file storage can contain:
   "r2": null
 }
 ```
+
+**Surface: Web**
 
 A Site appears in your Sites list even after the ChatGPT Work chat that created it ends.
 You don't need a local project or manifest to start a Site on the web. A Site is
@@ -304,6 +320,8 @@ Open **Sites**, then open the Site's settings to add, update, or remove hosted
 environment variables and secrets. Keep secret values out of prompts, attached
 files, and Site content.
 
+**Surface: Web**
+
 Go to [chatgpt.com/sites](https://chatgpt.com/sites), find the Site, then select
 **More actions** > **Settings**.
 
@@ -373,6 +391,8 @@ Before you share a Site:
 - Choose the narrowest sharing option that fits the intended audience.
 - Open the shared Site and confirm that the intended audience can visit it.
 
+**Surface: Desktop app**
+
 For a Site built from a local project, also review the source changes and any
 database migrations in the Codex [review pane](./code-review.md).
 
@@ -419,6 +439,8 @@ for the current limits and policy links.
 
 ## Related documentation
 
+**Surface: Desktop app**
+
 - [ChatGPT desktop app](./app.md) introduces app navigation, projects, and chats.
 - [Review and ship changes](./code-review.md) explains how to inspect source
   changes before publishing them.
@@ -429,10 +451,11 @@ for the current limits and policy links.
   each Codex client.
 - [Sandboxing](./sandboxing.md) explains the local execution boundary.
 
+**Surface: Web**
+
 - [Open Sites in ChatGPT](https://chatgpt.com/sites) to return to Sites you've
   created.
 - [Projects and chats](./projects.md) explains how to keep
   related chats and source files together.
 - [Work with files](./artifacts-viewer.md) explains how to review
   generated files in ChatGPT web.
-

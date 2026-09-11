@@ -2,9 +2,13 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
+**Surface: Desktop app**
+
 Use a project to organize related chats and give ChatGPT the context it needs.
 The **Projects** view in the ChatGPT desktop app includes ChatGPT projects and
 local projects that connect to folders on your computer.
+
+<a id="app-choose-a-project-or-start-without-one"></a>
 
 ## Choose a project or start without one
 
@@ -12,8 +16,12 @@ Create a project when work will continue over time, produce more than one
 output, or depend on the same files and sources. Start a chat without a project
 when the work is self-contained and doesn't need shared project context.
 
+**Surface: Web**
+
 Use a project to keep related chats, files, instructions, and sources together.
 The same project can contain chats started with Chat or ChatGPT Work.
+
+<a id="web-choose-a-project-or-chat-without-one"></a>
 
 ## Choose a project or chat without one
 
@@ -29,16 +37,24 @@ your computer, so upload or connect the sources you want ChatGPT to use.
 With either option, start a new chat from the project to use its shared files and
 instructions, then return to it under **Chats**.
 
+**Surface: CLI**
+
 Codex CLI treats the directory where you start it as the project for the chat.
 Run `codex` from the directory you want Codex to work in, or pass
 `--cd <directory>` (`-C`) to set it explicitly. The CLI doesn't expose the
 ChatGPT Projects view.
+
+**Surface: IDE extension**
 
 The IDE extension treats the folder or workspace open in your IDE as the local
 project. In a multi-root workspace, select the workspace root for the chat. The
 extension doesn't expose the ChatGPT Projects view from the web or desktop app.
 
 <a id="work-in-a-project"></a>
+
+**Surface: Desktop app**
+
+<a id="app-work-in-a-project"></a>
 
 ## Work in a project
 
@@ -50,9 +66,11 @@ collection of source files or a codebase.
 Start a separate chat for each distinct outcome so its messages and results stay
 focused while the project keeps related work organized.
 
-  
-
 > Illustration: ChatGPT desktop app showing multiple projects in the sidebar and chats in the main pane
+
+**Surface: Web**
+
+<a id="web-work-in-a-project"></a>
 
 ## Work in a project
 
@@ -61,6 +79,10 @@ instructions, and connected sources. Use Chat for a quick chat or
 ChatGPT Work for a larger deliverable; both appear as chats in the project's
 **Chats** section. Start a separate chat for each distinct outcome so its
 messages and results stay focused while the project preserves shared context.
+
+**Surface: CLI**
+
+<a id="cli-work-in-a-project-directory"></a>
 
 ## Work in a project directory
 
@@ -71,6 +93,10 @@ Codex is open, or run `codex resume`, to continue a saved chat.
 The chat keeps its transcript and recorded working directory, while Codex reads
 files from the current working tree. Keep durable project guidance in
 `AGENTS.md` or checked-in documentation so it is available to future chats.
+
+**Surface: IDE extension**
+
+<a id="ide-work-in-a-workspace"></a>
 
 ## Work in a workspace
 
@@ -86,7 +112,11 @@ available to future chats.
 <a id="manage-project-threads"></a>
 <a id="organize-projects-and-chats"></a>
 
+**Surface: Desktop app**
+
 <a id="organize-projects-and-tasks"></a>
+
+<a id="app-organize-projects-and-chats"></a>
 
 ## Organize projects and chats
 
@@ -110,7 +140,11 @@ where the project or chat appears in the sidebar.
 
 Restore archived chats from **Settings > Archived chats**.
 
+**Surface: Web**
+
 <a id="organize-projects-and-tasks-1"></a>
+
+<a id="web-organize-projects-and-chats"></a>
 
 ## Organize projects and chats
 
@@ -130,9 +164,15 @@ Keep active work visible and move finished work out of the way:
 Pinning doesn't add context or change what ChatGPT can access. It only changes
 where the project or chat appears in the sidebar.
 
+**Surface: Web**
+
 Restore archived chats from **Settings > Data Controls > Archived chats**.
 
 <a id="use-local-projects-for-folders-and-codebases"></a>
+
+**Surface: Desktop app**
+
+<a id="app-use-local-projects-for-folders-and-codebases"></a>
 
 ## Use local projects for folders and codebases
 
@@ -168,8 +208,11 @@ Projects and worktrees organize work, but the [sandbox](./sandboxing.md)
 enforces what local commands can read, change, or access over the network.
 
 <a id="start-without-a-project"></a>
+**Surface: Desktop app**
 
 <a id="start-a-task-without-a-project"></a>
+
+<a id="app-start-a-chat-without-a-project"></a>
 
 ## Start a chat without a project
 
@@ -177,7 +220,11 @@ Select **New chat** when the work is self-contained and doesn't need shared
 project files, instructions, or folder access. Create a project first when
 several chats will depend on the same context.
 
+**Surface: Web**
+
 <a id="start-a-task-without-a-project-1"></a>
+
+<a id="web-start-a-chat-without-a-project"></a>
 
 ## Start a chat without a project
 
@@ -191,8 +238,11 @@ follow-up without mixing every message into one context.
 
 <a id="start-a-chat"></a>
 <a id="start-a-standalone-chat"></a>
+**Surface: Desktop app**
 
 <a id="use-quick-chat-for-a-quick-conversation"></a>
+
+<a id="app-use-quick-chat-for-a-quick-question"></a>
 
 ## Use Quick chat for a quick question
 
@@ -208,6 +258,8 @@ chat.
 
 ## Bring in other tools and context
 
+**Surface: Desktop app**
+
 - Attach files or [image inputs](./image-inputs.md) directly to a chat
   when they apply only to that request.
 - Install [plugins](./plugins.md) to bring in context and actions from other
@@ -216,6 +268,8 @@ chat.
   exposes tools through Model Context Protocol.
 - Use [memories](./customization/memories.md), where available, to carry useful context from
   past work into future chats.
+
+**Surface: CLI**
 
 - Pass [image inputs](./image-inputs.md) to a chat when visual context applies
   only to that request.
@@ -226,12 +280,16 @@ chat.
 - Use [memories](./customization/memories.md), where available, to carry useful context from
   past work into future chats.
 
+**Surface: IDE extension**
+
 - Reference open files or select code in the editor to add context for the
   current turn.
 - Configure [MCP](./extend/mcp.md) servers when your organization or developer setup
   exposes tools through Model Context Protocol.
 - Use [memories](./customization/memories.md) from the connected Codex host, where
   available, to carry useful context into future chats.
+
+**Surface: Web**
 
 - Add files and connected sources to the project's **Sources** section when they
   should be available across its chats.

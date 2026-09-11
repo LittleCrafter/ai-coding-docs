@@ -5,6 +5,10 @@
 Notifications let you know when work needs attention. Their controls and
 delivery channels vary by surface.
 
+**Surface: Desktop app**
+
+<a id="app-configure-desktop-notifications"></a>
+
 ## Configure desktop notifications
 
 Open [**Settings**](codex://settings) to choose whether turn-completion alerts
@@ -12,6 +16,8 @@ appear never, only while ChatGPT is in the background, or always. Separate
 controls let you turn permission and question notifications on or off. Your
 operating system may ask you to grant notification permission to the ChatGPT
 desktop app.
+
+<a id="app-follow-chats-in-activity-view"></a>
 
 ### Follow chats in Activity view
 
@@ -26,6 +32,8 @@ surface, the options can include **Work**, **Chat**, **Pinned**, and
 
 <a id="follow-task-activity-with-a-pet"></a>
 
+<a id="app-follow-chat-activity-with-a-pet"></a>
+
 ### Follow chat activity with a pet
 
 In the ChatGPT desktop app, a floating pet is another way to follow chat
@@ -35,12 +43,20 @@ activity while you work in other apps. It can show when a chat is **Running**,
 See [Pets](./pets.md) to choose a pet, understand its status, or
 create your own.
 
+**Surface: Web**
+
+<a id="web-configure-web-notifications"></a>
+
 ## Configure web notifications
 
 Open **Settings > Notifications** to manage the notification categories and
 channels available to your account. Depending on the category and account,
 channels can include push, email, or SMS. Use **Manage tasks** from the task
 notification settings to open **Scheduled**.
+
+**Surface: CLI**
+
+<a id="cli-configure-cli-notifications"></a>
 
 ## Configure CLI notifications
 
@@ -49,7 +65,11 @@ For terminal and external notifications, see
 advanced configuration guide. You can choose when the TUI emits a notification
 and whether Codex runs an external program when a turn completes.
 
+**Surface: IDE extension**
+
 <a id="follow-task-activity-in-the-ide"></a>
+
+<a id="ide-follow-chat-activity-in-the-ide"></a>
 
 ## Follow chat activity in the IDE
 

@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 163
+- **Pages mirrored:** 159
 - **Version:** 0.154.0
-- **Last updated:** 2026-09-10T23:35:40Z
+- **Last updated:** 2026-09-11T01:17:26Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -22,7 +22,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Appshots | [appshots.md](./appshots.md) | [source](<https://learn.chatgpt.com/docs/appshots>) |
 | Work with files | [artifacts-viewer.md](./artifacts-viewer.md) | [source](<https://learn.chatgpt.com/docs/artifacts-viewer>) |
 | Authentication | [auth.md](./auth.md) | [source](<https://learn.chatgpt.com/docs/auth>) |
-| Authentication | [authentication.md](./authentication.md) | [source](<https://github.com/openai/codex/blob/main/docs/authentication.md>) |
 | Scheduled tasks | [automations.md](./automations.md) | [source](<https://learn.chatgpt.com/docs/automations>) |
 | Browser | [browser.md](./browser.md) | [source](<https://learn.chatgpt.com/docs/browser>) |
 | Build plugins | [build-plugins.md](./build-plugins.md) | [source](<https://learn.chatgpt.com/docs/build-plugins>) |
@@ -43,7 +42,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Developer settings | [developer-settings.md](./developer-settings.md) | [source](<https://learn.chatgpt.com/docs/developer-settings>) |
 | Developers | [developers.md](./developers.md) | [source](<https://learn.chatgpt.com/docs/developers>) |
 | Sample Configuration | [example-config.md](./example-config.md) | [source](<https://github.com/openai/codex/blob/main/docs/example-config.md>) |
-| Non-interactive mode | [exec.md](./exec.md) | [source](<https://github.com/openai/codex/blob/main/docs/exec.md>) |
 | Rules | [execpolicy.md](./execpolicy.md) | [source](<https://github.com/openai/codex/blob/main/docs/execpolicy.md>) |
 | Feature Maturity | [feature-maturity.md](./feature-maturity.md) | [source](<https://learn.chatgpt.com/docs/feature-maturity>) |
 | Features | [features.md](./features.md) | [source](<https://learn.chatgpt.com/docs/features>) |
@@ -76,12 +74,10 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Quickstart | [quickstart.md](./quickstart.md) | [source](<https://learn.chatgpt.com/docs/quickstart>) |
 | Codex Remote | [remote.md](./remote.md) | [source](<https://learn.chatgpt.com/docs/remote>) |
 | Remote connections | [remote-connections.md](./remote-connections.md) | [source](<https://learn.chatgpt.com/docs/remote-connections>) |
-| Codex Security | [sandbox.md](./sandbox.md) | [source](<https://github.com/openai/codex/blob/main/docs/sandbox.md>) |
 | Sandbox | [sandboxing.md](./sandboxing.md) | [source](<https://learn.chatgpt.com/docs/sandboxing>) |
 | Codex Security | [security.md](./security.md) | [source](<https://learn.chatgpt.com/docs/security>) |
 | Security | [security-administration.md](./security-administration.md) | [source](<https://learn.chatgpt.com/docs/security-administration>) |
 | Sites | [sites.md](./sites.md) | [source](<https://learn.chatgpt.com/docs/sites>) |
-| Build skills | [skills.md](./skills.md) | [source](<https://github.com/openai/codex/blob/main/docs/skills.md>) |
 | Skills &amp; Plugins | [skills-and-plugins.md](./skills-and-plugins.md) | [source](<https://learn.chatgpt.com/docs/skills-and-plugins>) |
 | Developer commands | [slash_commands.md](./slash_commands.md) | [source](<https://github.com/openai/codex/blob/main/docs/slash_commands.md>) |
 | Use ChatGPT | [use-chatgpt.md](./use-chatgpt.md) | [source](<https://learn.chatgpt.com/docs/use-chatgpt>) |

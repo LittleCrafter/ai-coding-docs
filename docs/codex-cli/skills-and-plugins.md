@@ -68,9 +68,6 @@ For more details on building skills, see our dedicated guide below.
 
 [Build skills
 
-      <Tools />
-    
-
     Create, test, and share reusable skills with ChatGPT and Codex.](./build-skills.md)
 
 ## Use plugins for tools and shared workflows

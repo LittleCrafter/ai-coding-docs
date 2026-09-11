@@ -24,12 +24,7 @@ The next sections cover opening **Remote** in the ChatGPT mobile app to access a
 desktop host. To connect Codex to a project on an SSH host, see
 [connect to an SSH host](#connect-to-an-ssh-host).
 
-  
-    
-
 > Illustration: Remote setup screen in the ChatGPT mobile app
-
-  
 
 <a id="before-you-set-up-mobile-access"></a>
 
@@ -101,8 +96,6 @@ computer or SSH host when you need continuous access or a different environment.
 
 ### 
 
-<Desktop width={17} height={17} />
-
 Your laptop or desktop
 
 Connect the Mac or Windows PC where the desktop app is already installed. This
@@ -125,8 +118,6 @@ dedicate the host desktop to the task.
 
 ### 
 
-<Storage width={17} height={17} />
-
 A dedicated always-on computer
 
 Use a dedicated always-on Mac or Windows PC when you want ChatGPT to stay
@@ -136,8 +127,6 @@ Install the projects, credentials, MCP servers, skills, and tools ChatGPT or
 Codex should use on that machine.
 
 ### 
-
-<Terminal width={17} height={17} />
 
 A remote development environment
 

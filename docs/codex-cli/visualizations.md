@@ -11,6 +11,8 @@ act on.
 The Visualizations preview is rolling out. Availability can depend on your
   plan, platform, account, and workspace settings.
 
+**Surface: Desktop app**
+
 The Visualizations preview is rolling out in the ChatGPT desktop app. When
 **Visualize** is available, type `@` in the composer, start entering
 `Visualize`, and select **Visualize** under **Plugins**. The composer adds a
@@ -18,6 +20,8 @@ The Visualizations preview is rolling out in the ChatGPT desktop app. When
 
 If **Visualize** doesn't appear, use ChatGPT on the web or try again after the
 preview reaches your account.
+
+**Surface: Web**
 
 In a supported Chat or ChatGPT Work chat, type `@` in the composer,
 start entering `Visualize`, and select **Visualize** under **Plugins**. Its

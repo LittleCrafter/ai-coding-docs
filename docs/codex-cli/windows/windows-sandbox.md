@@ -13,8 +13,6 @@ The app can run natively in PowerShell with a Windows sandbox instead of
 requiring WSL or a virtual machine. This keeps Codex in Windows-native
 workflows while enforcing bounded filesystem and network permissions.
 
-  
-
 > Illustration: ChatGPT desktop app Windows sandbox setup prompt above the message composer
 
   > **[Use the ChatGPT desktop app on Windows](./windows-app.md)**

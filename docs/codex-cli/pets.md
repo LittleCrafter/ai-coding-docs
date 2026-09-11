@@ -6,15 +6,16 @@ Pets are optional animated companions for following work. Where a pet appears
 and what it shows depend on the interface you use. Choosing a pet changes its
 appearance, not how ChatGPT completes tasks.
 
-  
+**Surface: Desktop app**
 
-    <CodexPetsDemo client:load mobileAlignment="left" />
-  
+<a id="app-use-a-floating-pet"></a>
 
 ## Use a floating pet
 
 In the ChatGPT desktop app, a pet can float above other app windows and help
 you follow activity across your chats.
+
+<a id="app-choose-and-wake-a-pet"></a>
 
 ### Choose and wake a pet
 
@@ -28,6 +29,8 @@ Select **Tuck Away Pet** in **Settings > Pets** or the command menu, or enter
 when you reopen the app.
 
 When you select a custom pet, it also appears in your **Profile** view.
+
+<a id="app-understand-pet-status"></a>
 
 ### Understand pet status
 
@@ -46,10 +49,14 @@ Select the pet to return to ChatGPT, or select an activity to open its chat.
 The activity tray is separate from [system
 notifications](./notifications.md).
 
+<a id="app-follow-computer-use"></a>
+
 ### Follow Computer Use
 
 On macOS, the [Computer Use](./computer-use.md) picture-in-picture window can
 attach to an awake pet. Move the pet, and the window follows.
+
+<a id="app-create-a-custom-pet"></a>
 
 ### Create a custom pet
 
@@ -63,10 +70,16 @@ attach to an awake pet. Move the pet, and the window follows.
 Custom pets created in the desktop app are stored locally on your computer.
 They don't automatically sync to ChatGPT web.
 
+<a id="app-reduce-animation"></a>
+
 ### Reduce animation
 
 Pets respect your operating system's reduced motion setting. When reduced
 motion is enabled, the pet uses a still frame instead of sprite animation.
+
+**Surface: Web**
+
+<a id="web-choose-a-pet-on-the-web"></a>
 
 ## Choose a pet on the web
 
@@ -77,11 +90,17 @@ Personalization > Pet > Select pet**. Choose a built-in pet, or choose
 A web pet appears inside supported ChatGPT Work chats. It doesn't provide the
 desktop app's floating overlay, activity tray, or `/pet` command.
 
+<a id="web-upload-a-custom-pet"></a>
+
 ### Upload a custom pet
 
 Select **Upload pet** to add a custom sprite sheet. The file must be a
 transparent PNG or WebP, exactly 1536 × 1872 pixels, and no larger than 20 MiB.
 You can edit, download, refresh, or delete uploaded pets from the same setting.
+
+**Surface: CLI**
+
+<a id="cli-choose-a-terminal-pet"></a>
 
 ## Choose a terminal pet
 
@@ -98,6 +117,10 @@ provide the desktop app's multiple-chat activity tray.
 
 Terminal pets require iTerm2 3.6 or later, or a terminal with Kitty graphics or
 Sixel support. They are unavailable inside tmux and Zellij.
+
+**Surface: IDE extension**
+
+<a id="ide-pets-in-the-ide-extension"></a>
 
 ## Pets in the IDE extension
 

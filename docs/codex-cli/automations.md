@@ -9,18 +9,26 @@ scheduled tasks with [skills](./build-skills.md) for more complex work.
 
 [Watch: Schedule tasks with ChatGPT](https://www.youtube.com/watch?v=CToxp125mhc)
 
+**Surface: Desktop app**
+
 In the ChatGPT desktop app, scheduled tasks can work with local projects and
 run in the project directory or an isolated worktree. Keep the computer on and
 the app running when a scheduled task needs local files.
+
+**Surface: Web**
 
 When scheduled tasks are enabled for your workspace, create them from Chat or
 ChatGPT Work on the web and manage their runs from **Scheduled**. Web tasks
 can use uploaded context and connected tools, but they can't work directly in
 a folder on your computer.
 
+**Surface: CLI**
+
 Codex CLI doesn't provide the Scheduled management interface. Use ChatGPT web
 or the desktop app to create and manage scheduled tasks. The CLI can help you
 prepare and test a prompt, skill, or script first.
+
+**Surface: IDE extension**
 
 The IDE extension doesn't provide the Scheduled management interface. Use
 ChatGPT web or the desktop app to create and manage scheduled tasks. The IDE
@@ -46,6 +54,10 @@ first.
 <a id="combining-automations-with-skills-to-fix-your-own-bugs"></a>
 <a id="combining-scheduled-tasks-with-skills-to-fix-your-own-bugs"></a>
 
+**Surface: Web**
+
+<a id="web-manage-scheduled-tasks-on-the-web"></a>
+
 ## Manage scheduled tasks on the web
 
 Open **Scheduled** to review task status and recent runs. Use a standalone scheduled task
@@ -62,6 +74,8 @@ project, upload, or connected service.
 Before you schedule a task, test its prompt in a regular web chat.
 Review the first few runs, then adjust the prompt, tools, or cadence if the
 results are too broad or need additional context.
+
+<a id="web-trigger-tasks-from-app-events"></a>
 
 ## Trigger tasks from app events
 
@@ -97,6 +111,8 @@ Availability depends on your plan and workspace settings. In managed
 workspaces, administrators can control access with the **Allow event-triggered
 scheduled tasks** permission.
 
+**Surface: Desktop app**
+
 For example, schedule a task to evaluate telemetry errors and submit fixes,
 or to create reports about recent codebase changes. For ongoing work that
 should keep using the same context, [schedule a task inside an existing chat](#schedule-a-task-inside-a-chat).
@@ -124,6 +140,8 @@ update it before those models retire on August 31, 2026. Replace `gpt-5.4` with
 Scheduled tasks run unattended with your default sandbox settings. Start with the
 narrowest access that lets the task succeed, and grant network or broader file
 access only when required. [Understand sandboxing](./sandboxing.md).
+
+<a id="app-manage-scheduled-tasks"></a>
 
 ## Manage scheduled tasks
 
@@ -157,6 +175,9 @@ To keep scheduled tasks maintainable and shareable across teams, use
 Select or invoke a specific skill in the task prompt when the workflow shouldn't
 rely on automatic tool selection.
 
+<a id="app-ask-chatgpt-to-create-or-update-scheduled-tasks"></a>
+<a id="web-ask-chatgpt-to-create-or-update-scheduled-tasks"></a>
+
 ## Ask ChatGPT to create or update scheduled tasks
 
 You can create and update scheduled tasks from a ChatGPT or Codex chat.
@@ -172,6 +193,9 @@ a project on a recurring schedule.
 Skills can also create or update scheduled tasks. For example, a skill for
 babysitting a pull request could set up a scheduled task that checks the
 PR status with the GitHub plugin and fixes new review feedback.
+
+<a id="app-schedule-a-task-inside-a-chat"></a>
+<a id="web-schedule-a-task-inside-a-chat"></a>
 
 ## Schedule a task inside a chat
 
@@ -200,6 +224,9 @@ When you schedule a task inside a chat, make the prompt durable. It should descr
 what ChatGPT should do on each scheduled run, how to decide whether there is
 anything important to report, and when to stop or ask you for input.
 
+<a id="app-test-scheduled-tasks"></a>
+<a id="web-test-scheduled-tasks"></a>
+
 ## Test scheduled tasks
 
 Before you schedule a task, test the prompt manually in a regular chat
@@ -212,14 +239,20 @@ first. This helps you confirm:
 When you start scheduling runs, review the first few outputs and adjust the
 prompt or cadence as needed.
 
+**Surface: Desktop app**
+
 In the ChatGPT desktop app, you can explicitly trigger a skill in a scheduled
 task prompt by using `$skill-name`.
+
+<a id="app-worktree-cleanup-for-scheduled-tasks"></a>
 
 ## Worktree cleanup for scheduled tasks
 
 If you choose worktrees for Git repositories, frequent schedules can create
 many worktrees over time. Archive scheduled runs you no longer need, and avoid
 pinning runs unless you intend to keep their worktrees.
+
+<a id="app-permissions-and-security-model"></a>
 
 ## Permissions and security model
 
@@ -252,7 +285,11 @@ allows it. If admin requirements disallow `approval_policy = "never"`,
 scheduled tasks fall back to the approval behavior of your selected permission
 mode.
 
+<a id="app-examples"></a>
+
 ## Examples
+
+<a id="app-automatically-create-new-skills"></a>
 
 ### Automatically create new skills
 
@@ -265,6 +302,8 @@ Definitely don't feel like you need to update any- only if there's a good reason
 
 Let me know if you make any.
 ```
+
+<a id="app-stay-up-to-date-with-your-project"></a>
 
 ### Stay up-to-date with your project
 
@@ -294,6 +333,8 @@ Scope rules:
 - Use `gh` to fetch PR titles and descriptions if it helps.
   Also feel free to pull PR reviews and comments
 ```
+
+<a id="app-combining-scheduled-tasks-with-skills-to-fix-your-own-bugs"></a>
 
 ### Combining scheduled tasks with skills to fix your own bugs
 
@@ -354,4 +395,3 @@ Afterward, create a new scheduled task:
 ```markdown
 Check my commits from the last 24h and submit a $recent-code-bugfix.
 ```
-

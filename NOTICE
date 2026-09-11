@@ -27,11 +27,26 @@ rewritten to the copies stored alongside this content. Content (c) Anthropic.
 
 codex-cli/
 Owner: OpenAI
-Source: https://github.com/openai/codex (docs/)
-License: Apache License 2.0 (see docs/codex-cli/LICENSE and NOTICE).
-Modified: mirrored from the repository's Markdown, with Astro/MDX components
-converted to standard Markdown and cross-documentation links rewritten to
-local relative paths. Content (c) 2025 OpenAI.
+Source: two origins, in one folder. Most of its pages (148 of 159) are the
+documentation catalogue published at https://learn.chatgpt.com/docs/ and
+listed in https://developers.openai.com/codex/llms.txt; the remaining files
+are the versioned Markdown under docs/ in https://github.com/openai/codex
+(the Contributor License Agreement, the license page, the contributing
+guide, the configuration reference, and the other repository guides).
+License: Apache License 2.0 (see docs/codex-cli/LICENSE and
+docs/codex-cli/NOTICE, the upstream license and notice files, included in
+this folder verbatim). Those two files are the only ones there that are
+byte-identical to upstream, and they cover the files mirrored from the
+repository; the pages mirrored from the documentation catalogue are
+reproduced from their published form. Content (c) OpenAI.
+Modified: every mirrored page is converted to plain Markdown. MDX components
+become standard Markdown (headings, lists, tables, code blocks, blockquotes),
+a leading frontmatter block is replaced by its title as a heading,
+cross-documentation links are rewritten to local relative paths, and
+reference stubs whose guide is published separately are not mirrored so each
+document appears once. Which changes apply to which file -- including the
+pages assembled from both origins -- is stated in docs/codex-cli/SOURCE.md,
+next to the license and the notice.
 
 deepseek-api/
 Owner: DeepSeek

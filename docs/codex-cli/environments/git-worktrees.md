@@ -67,8 +67,6 @@ From here you can commit your changes, push your branch to your remote repositor
 
 You can open your IDE to the worktree using the "Open" button in the header, use the integrated terminal, or anything else that you need to do from the worktree directory.
 
-  
-
 > Illustration: Worktree chat view with branch controls and worktree details
 
 Remember, if you create a branch on a worktree, you can't check it out in any other worktree, including your local checkout.
@@ -86,8 +84,6 @@ This path works well when you want to read the changes in your usual IDE window,
 Codex handles the Git steps required to move the chat safely between the worktree and your local checkout.
 
 Each chat keeps the same associated worktree over time. If you hand the chat back to a worktree later, Codex returns it to that same background environment so you can pick up where you left off.
-
-  
 
 > Illustration: Handoff dialog moving a chat from a worktree to Local
 
@@ -172,8 +168,8 @@ Before deleting a Codex-managed worktree, Codex saves a snapshot of the work on 
 <summary>Can I control where worktrees are created?</summary>
 
 Yes. Codex creates managed worktrees under `$CODEX_HOME/worktrees` by
-  default. To choose another location, open **Settings > Worktrees** and change
-  **Worktree root**.
+default. To choose another location, open **Settings > Worktrees** and change
+**Worktree root**.
 
 </details>
 
@@ -183,9 +179,9 @@ Yes. Codex creates managed worktrees under `$CODEX_HOME/worktrees` by
 <summary>Can I move a chat between Local and Worktree?</summary>
 
 Yes. Use **Hand off** in the chat header to move a chat between your local
-  checkout and a worktree. Codex handles the Git operations needed to move the
-  chat safely between environments. If you hand a chat back to a worktree later,
-  Codex returns it to the same associated worktree.
+checkout and a worktree. Codex handles the Git operations needed to move the
+chat safely between environments. If you hand a chat back to a worktree later,
+Codex returns it to the same associated worktree.
 
 </details>
 
@@ -195,9 +191,9 @@ Yes. Use **Hand off** in the chat header to move a chat between your local
 <summary>What happens to chats if a worktree is deleted?</summary>
 
 Chats can remain in your history even if the underlying worktree directory is
-  deleted. For Codex-managed worktrees, Codex saves a snapshot before deleting
-  the worktree and offers to restore it if you reopen the associated chat.
-  Permanent worktrees are not automatically deleted when you archive their
-  chats.
+deleted. For Codex-managed worktrees, Codex saves a snapshot before deleting
+the worktree and offers to restore it if you reopen the associated chat.
+Permanent worktrees are not automatically deleted when you archive their
+chats.
 
 </details>

@@ -11,22 +11,32 @@ Keep required team guidance in `AGENTS.md` or checked-in documentation. Treat
 memories as a helpful recall layer, not as the only source for rules that must
 always apply.
 
+**Surface: Desktop app**
+
 In the ChatGPT desktop app, use `/memories` to choose whether a chat can use
 local memories or contribute to future memories. Manage the feature from
 **Settings > Personalization** when you need to turn it on or off.
 
+**Surface: Web**
+
 Manage ChatGPT memory from **Settings > Personalization**. ChatGPT Work uses
 the memory settings available to your account and workspace; it doesn't use a
 local Codex memory store or local memory controls.
+
+**Surface: CLI**
 
 In Codex CLI, use `/memories` in an interactive session to control whether the
 current chat can use existing local memories or become an input for future
 memories. See [Configure local memories](#configure-local-memories) if the
 command isn't available.
 
+**Surface: IDE extension**
+
 The IDE extension uses the connected Codex host's local memory store. When
 memories are enabled for that host, use the same chat-level controls as Codex
 CLI.
+
+**Surface: Desktop app**
 
 [Computer History](./computer-history.md) is a macOS desktop
 feature that turns activity across allowed apps and websites into memories and
@@ -38,6 +48,10 @@ a timeline that ChatGPT and Codex can reference.
 <a id="control-memories-per-chat"></a>
 <a id="control-memories-per-task"></a>
 <a id="review-memories"></a>
+
+<a id="app-how-local-codex-memories-work"></a>
+<a id="cli-how-local-codex-memories-work"></a>
+<a id="ide-how-local-codex-memories-work"></a>
 
 ## How local Codex memories work
 
@@ -54,6 +68,10 @@ Memory generation can also skip a background pass when your Codex rate-limit
 remaining percentage is below the configured threshold, so Codex doesn't spend
 quota when you're near a limit.
 
+<a id="app-local-memory-storage"></a>
+<a id="cli-local-memory-storage"></a>
+<a id="ide-local-memory-storage"></a>
+
 ## Local memory storage
 
 Codex stores memories under your Codex home directory. By default, that's
@@ -69,6 +87,10 @@ hand as your primary control surface.
 
 <a id="control-local-memories-per-task"></a>
 
+<a id="app-control-local-memories-per-chat"></a>
+<a id="cli-control-local-memories-per-chat"></a>
+<a id="ide-control-local-memories-per-chat"></a>
+
 ## Control local memories per chat
 
 In the ChatGPT desktop app and Codex TUI, use `/memories` to control memory behavior for
@@ -78,6 +100,10 @@ generate future memories.
 
 Chat-level choices don't change your global memory settings.
 
+<a id="app-review-local-memories"></a>
+<a id="cli-review-local-memories"></a>
+<a id="ide-review-local-memories"></a>
+
 ## Review local memories
 
 Don't store secrets in memories. Codex redacts secrets from generated memory
@@ -86,6 +112,10 @@ directory or generated memory artifacts.
 
 <a id="enable-memories"></a>
 <a id="configuration"></a>
+
+<a id="app-configure-local-memories"></a>
+<a id="cli-configure-local-memories"></a>
+<a id="ide-configure-local-memories"></a>
 
 ## Configure local memories
 
@@ -119,4 +149,3 @@ Common memory-specific settings include:
   extraction.
 - `memories.consolidation_model`: overrides the model used for global memory
   consolidation.
-

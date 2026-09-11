@@ -53,8 +53,6 @@ Here are three common use cases you can get started with:
 Use ChatGPT Work to turn notes, docs, research, or meeting materials into a structured
 deck.
 
-  
-
 > Illustration: A presentation created in ChatGPT Work
 
 **Example prompt:**
@@ -68,8 +66,6 @@ Review the attached source materials and create an eight-slide presentation for 
 Use ChatGPT Work to turn notes, files, or research into a spreadsheet that compares
 options and helps you make a decision.
 
-  
-
 > Illustration: A comparison spreadsheet created in ChatGPT Work
 
 **Example prompt:**
@@ -82,8 +78,6 @@ Create a spreadsheet comparing the options for [decision]. Use the attached note
 
 Use scheduled tasks when you want ChatGPT Work to repeat, monitor, or refresh something
 over time.
-
-  
 
 > Illustration: A recurring update scheduled in ChatGPT Work
 
@@ -123,8 +117,6 @@ Review the attached interview notes and survey results. Create an eight-slide pr
 Learn more about [prompting for ChatGPT Work](./prompting.md#prompting-for-work).
 
 ## Add plugins for more context and better outputs
-
-  
 
 > Illustration: The plugins library in ChatGPT Work
 
@@ -169,14 +161,10 @@ findings before continuing. See [safety monitoring and paused tasks](./agent-app
 
 Explore practical ChatGPT Work workflows for common teams and tasks.
 
-<CodexCollectionList
-  slugs={[
-    "productivity-and-collaboration",
-    "business-operations",
-    "data-science",
-    "finance",
-    "sales",
-    "life-sciences",
-    "education",
-  ]}
-/>
+- [Productivity and collaboration](https://learn.chatgpt.com/use-cases/collections/productivity-and-collaboration)
+- [Business operations](https://learn.chatgpt.com/use-cases/collections/business-operations)
+- [Data science](https://learn.chatgpt.com/use-cases/collections/data-science)
+- [Finance](https://learn.chatgpt.com/use-cases/collections/finance)
+- [Sales](https://learn.chatgpt.com/use-cases/collections/sales)
+- [Life sciences](https://learn.chatgpt.com/use-cases/collections/life-sciences)
+- [Education](https://learn.chatgpt.com/use-cases/collections/education)

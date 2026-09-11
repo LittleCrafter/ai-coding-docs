@@ -22,8 +22,6 @@ ChatGPT on the web, desktop, and mobile.
 In the ChatGPT desktop app, open **Skills** in the sidebar to view and explore skills
 created across your projects.
 
-  
-
 > Illustration: Skills picker showing available skills in the ChatGPT desktop app
 
 Skills use **progressive disclosure** to manage context efficiently. ChatGPT and

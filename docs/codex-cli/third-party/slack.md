@@ -4,12 +4,7 @@
 
 Use Codex in Slack to kick off coding work from channels and threads. Mention `@Codex` with a prompt, and Codex creates a cloud chat and replies with the results.
 
-  
-    
-
 > Illustration: Codex Slack integration in action
-
-  
 
 ## Set up the Slack app
 

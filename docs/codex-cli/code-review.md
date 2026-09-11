@@ -6,9 +6,15 @@ Use ChatGPT or Codex to inspect code changes before you commit or push them.
 
 ## Start a review
 
+**Surface: Web**
+
 In ChatGPT Work, upload the code you want reviewed or make it available through
 an installed source [plugin](./plugins.md). In your prompt, identify the pull
 request, branch, commit, files, and review criteria.
+
+**Surface: Desktop app**
+
+<a id="app-review-in-the-app"></a>
 
 ### Review in the app
 
@@ -22,9 +28,13 @@ prioritized findings without changing your working tree.
 The review pane requires a project inside a Git repository. If your project
 isn't a Git repository yet, the app prompts you to create one.
 
+**Surface: CLI**
+
 Type `/review` to open the CLI review presets. Codex starts a dedicated reviewer
 that reads the selected diff and reports prioritized, actionable findings
 without changing your working tree.
+
+**Surface: IDE extension**
 
 Type `/review` in the IDE extension composer. Choose **Review against a base
 branch** or **Review uncommitted changes**. Codex reports prioritized findings
@@ -35,9 +45,15 @@ repository.
 
 ## Choose a review scope
 
+**Surface: Web**
+
 Name the pull request, branch, commit, or files to inspect in your prompt. To
 review local files that aren't available through an installed source plugin,
 upload them to the chat.
+
+**Surface: Desktop app**
+
+<a id="app-what-changes-it-shows"></a>
 
 ### What changes it shows
 
@@ -48,6 +64,8 @@ other uncommitted changes in the repository.
 By default, the review pane shows **Unstaged** changes. Use **Staged** for the
 Git index, **Commit** for a selected commit, **Branch** for the diff against your
 base branch, or **Last turn** for the most recent assistant turn.
+
+<a id="app-review-multiple-repositories"></a>
 
 ### Review multiple repositories
 
@@ -62,12 +80,16 @@ repositories. The repository selector shows **All repos** for that view. Other
 review scopes, such as **Unstaged**, **Staged**, and **Branch**, apply to the
 repository you select.
 
+**Surface: CLI**
+
 Choose one of these `/review` scopes:
 
 - **Review against a base branch** finds the merge base and reviews your branch diff.
 - **Review uncommitted changes** includes staged, unstaged, and untracked files.
 - **Review a commit** reviews the exact change set for a selected commit.
 - **Custom review instructions** focuses the review on criteria you provide.
+
+**Surface: IDE extension**
 
 Choose one of these `/review` scopes:
 
@@ -76,8 +98,14 @@ Choose one of these `/review` scopes:
 
 ## Work with review results
 
+**Surface: Web**
+
 Review findings appear in the web chat. Ask for evidence, request a
 narrower follow-up review, or ask ChatGPT to prepare revised files.
+
+**Surface: Desktop app**
+
+<a id="app-code-review-results"></a>
 
 ### Code review results
 
@@ -87,23 +115,31 @@ Reviews run in the current chat by default. Under **Settings** > **General** >
 **Code review**, choose **Detached** to start a separate review chat. See
 [developer settings](./developer-settings.md#app-code-review).
 
-  
-
 > Illustration: Inline code review comments displayed in the review pane
+
+**Surface: CLI**
 
 The review appears as a turn in the transcript. Set `review_model` in
 `config.toml` when you want reviews to use a different model from the current
 session.
 
+**Surface: IDE extension**
+
 By default, the review runs in the current chat. Set `chatgpt.reviewDelivery` to
 `detached` when you want `/review` to start a separate review chat. See the
 [IDE extension settings reference](./developer-settings.md#ide-editor-settings-reference).
+
+**Surface: Web**
 
 If you ask ChatGPT to prepare revised files, the tools and workspace
 permissions available to the chat still apply.
 
 If you ask Codex to apply the fixes it finds, your normal [sandbox and approval
 settings](./sandboxing.md) apply.
+
+**Surface: Desktop app**
+
+<a id="app-navigating-the-review-pane"></a>
 
 ## Navigating the review pane
 
@@ -112,6 +148,8 @@ settings](./sandboxing.md) apply.
 - Clicking the file name background expands or collapses the diff.
 - Clicking a single line while holding <kbd>Cmd</kbd> pressed opens the line in your chosen editor.
 - If you're happy with a change, you can [stage it or revert changes](#staging-and-reverting-files) you don't want.
+
+<a id="app-inline-comments-for-feedback"></a>
 
 ## Inline comments for feedback
 
@@ -132,6 +170,8 @@ a general instruction.
 Codex treats inline comments as review guidance. After leaving comments, send a
 follow-up message that makes your intent explicit, for example, “Address the
 inline comments and keep the scope minimal.”
+
+<a id="app-pull-request-reviews"></a>
 
 ## Pull request reviews
 
@@ -156,6 +196,8 @@ Use this flow when you want to keep the full fix loop in one place:
 
 For GitHub-triggered reviews, see [Use Codex in GitHub](./third-party/github.md).
 
+<a id="app-staging-and-reverting-files"></a>
+
 ## Staging and reverting files
 
 The review pane includes Git actions so you can shape the diff before you
@@ -170,9 +212,10 @@ You can stage, unstage, or revert changes at these levels:
 Use staging when you want to accept part of the work, and revert when you want
 to discard it.
 
+<a id="app-staged-and-unstaged-states"></a>
+
 ### Staged and unstaged states
 
 Git can represent both staged and unstaged changes in the same file. When that
 happens, the pane can show the same file in both views. That's normal Git
 behavior.
-

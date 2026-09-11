@@ -16,6 +16,10 @@ Sandboxing and approvals are different controls that work together. The
   sandbox defines technical boundaries. The approval policy decides when the
   agent must stop and ask before crossing them.
 
+<a id="app-what-the-sandbox-does"></a>
+<a id="cli-what-the-sandbox-does"></a>
+<a id="ide-what-the-sandbox-does"></a>
+
 ## What the sandbox does
 
 The sandbox applies to spawned commands, not just to built-in file
@@ -26,6 +30,10 @@ Codex uses platform-native enforcement on each OS. The implementation differs
 between macOS, Linux, WSL2, and native Windows, but the idea is the same across
 surfaces: give the agent a bounded place to work so routine tasks can run
 autonomously inside clear limits.
+
+<a id="app-why-it-matters"></a>
+<a id="cli-why-it-matters"></a>
+<a id="ide-why-it-matters"></a>
 
 ## Why it matters
 
@@ -38,9 +46,17 @@ trusting the agent's intentions; you are trusting that the agent is operating
 inside enforced limits. That makes it easier to let the agent work independently
 while still knowing when it will stop and ask for help.
 
+<a id="app-getting-started"></a>
+<a id="cli-getting-started"></a>
+<a id="ide-getting-started"></a>
+
 ## Getting started
 
 The default permissions mode applies sandboxing automatically.
+
+<a id="app-prerequisites"></a>
+<a id="cli-prerequisites"></a>
+<a id="ide-prerequisites"></a>
 
 ### Prerequisites
 
@@ -53,21 +69,13 @@ Linux sandbox implementation when you run in WSL2.
 
 On **Linux and WSL2**, install `bubblewrap` with your package manager first:
 
-  
-
 ```bash
 sudo apt install bubblewrap
 ```
 
-  
-
-  
-
 ```bash
 sudo dnf install bubblewrap
 ```
-
-  
 
 Codex uses the first `bwrap` executable it finds on `PATH`. If no `bwrap`
 executable is available, Codex falls back to a bundled helper, but that helper
@@ -122,6 +130,8 @@ choose the narrowest scope that lets the task continue. Keep the project
 boundary as the default; use separate projects or worktrees instead of
 broadening access across unrelated repositories.
 
+**Surface: Web**
+
 ChatGPT Work runs code and shell commands in a managed, isolated environment.
 Workspace policy and tool-specific controls determine which capabilities are
 available. When the setting is available, use **Settings > Data controls > Work
@@ -135,30 +145,33 @@ Changes take effect after the current code or shell run finishes and Work
 refreshes its execution environment. ChatGPT web doesn't expose the local
 Codex sandbox or approval-mode selector.
 
+**Surface: Desktop app**
+
 In the ChatGPT desktop app, use the permissions control beneath the composer.
 Depending on your configuration, the menu can include **Ask for approval**,
 **Approve for me** for eligible approval requests, **Full access**, and named or
 custom permissions profiles.
 
-<PermissionModeSelectorDemo client:load />
+**Surface: CLI**
 
 In the CLI, enter
 [`/permissions`](./developer-commands.md#cli-update-permissions-with-permissions)
 to open the permissions picker and change the active permissions profile.
+
+**Surface: IDE extension**
 
 In the IDE extension, use the permissions control beneath the composer.
 Depending on your configuration, the menu can include **Ask for approval**,
 **Approve for me** for eligible approval requests, **Full access**, and named or
 custom permissions profiles.
 
-  
-    
-
 > Illustration: Codex approval mode selector in the IDE extension
 
-  
-
 <a id="configure-defaults"></a>
+
+<a id="app-configure-defaults"></a>
+<a id="cli-configure-defaults"></a>
+<a id="ide-configure-defaults"></a>
 
 ## Configure defaults
 
@@ -229,4 +242,3 @@ Platform details live in the platform-specific docs. For native Windows setup,
 behavior, and troubleshooting, see [Windows](./windows/windows-sandbox.md). For admin
 requirements and organization-level constraints on sandboxing and approvals, see
 [Agent approvals & security](./agent-approvals-security.md).
-

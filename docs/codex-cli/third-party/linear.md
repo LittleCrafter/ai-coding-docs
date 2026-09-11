@@ -22,23 +22,13 @@ You can delegate in two ways:
 
 After you install the integration, you can assign issues to Codex the same way you assign them to teammates. Codex starts work and posts updates back to the issue.
 
-  
-    
-
 > Illustration: Assigning Codex to a Linear issue
-
-  
 
 ### Mention `@Codex` in comments
 
 You can also mention `@Codex` in comment threads to delegate work or ask questions. After Codex replies, follow up in the thread to continue the same chat.
 
-  
-    
-
 > Illustration: Mentioning Codex in a Linear issue comment
-
-  
 
 After Codex starts working on an issue, it [chooses an environment and repo](#how-codex-chooses-an-environment-and-repo) to work in.
 To pin a specific repo, include it in your comment, for example: `@Codex fix this in openai/codex`.
@@ -68,12 +58,7 @@ You can assign issues to Codex automatically using triage rules:
 Linear assigns new issues that enter triage to Codex automatically.
 When you use triage rules, Codex runs chats using the account of the issue creator.
 
-  
-    
-
 > Illustration: Linear triage rule automatically assigning issues to Codex
-
-  
 
 ## Data usage, privacy, and security
 

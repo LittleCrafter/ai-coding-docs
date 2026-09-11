@@ -27,35 +27,20 @@ GitHub push or admin permission for its settings.
 2. Go to [Codex settings](https://chatgpt.com/codex/settings/code-review).
 3. Turn on **Code review** for your repository.
 
-  
-    
-
 > Illustration: Codex settings showing the Code review toggle
-
-  
 
 ## Request a Codex review
 
 1. In a pull request comment, mention `@codex review`.
 2. Wait for Codex to react (👀) and post a review.
 
-  
-    
-
 > Illustration: A pull request comment with @codex review
-
-  
 
 Codex posts a review on the pull request, just like a teammate would. In
 GitHub, Codex flags only P0 and P1 issues so review comments stay focused on
 high-priority risks.
 
-  
-    
-
 > Illustration: Example Codex code review on a pull request
-
-  
 
 ## Enable automatic reviews
 

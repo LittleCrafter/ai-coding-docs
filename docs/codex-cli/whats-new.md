@@ -673,8 +673,6 @@ explicit approval before it uses that access on a website.
 Browser use is also up to twice as fast because CDP and DOM snapshot
 optimizations reduce browser round trips.
 
-  
-
 > Illustration: Codex Browser settings with Developer mode enabled
 
 **Prompt:**
@@ -888,8 +886,6 @@ comments, while [Computer Use](./computer-use.md) let Codex see and
 operate macOS apps. Together, they made visual implementation and end-to-end
 verification part of the same task as the code change.
 
-  
-
 > Illustration: ChatGPT desktop app with a local web page open in the built-in browser
 
 [Watch: Codex for (almost) everything](https://www.youtube.com/watch?v=Lm7-yFZ5fZQ)
@@ -966,8 +962,6 @@ with an explicit model and reasoning level. Reusable templates made common
 tasks faster to configure, and custom themes made the workspace easier to
 personalize.
 
-  
-
 > Illustration: Scheduled task settings in the ChatGPT desktop app
 
 > Automations are now GA.
@@ -996,8 +990,6 @@ Read the [March 11](https://learn.chatgpt.com/docs/changelog#codex-2026-03-11-ap
 The Codex app launched on [Windows](./windows/windows-app.md) with native PowerShell
 and sandbox support, plus worktrees, scheduled tasks, and skills. WSL remained
 available for developers who preferred a Linux environment.
-
-  
 
 > Illustration: Codex app running natively on Windows
 
@@ -1040,8 +1032,6 @@ current [model guide](./models.md).
 The Codex app launched as a desktop workspace for parallel project chats,
 built-in Git review, worktrees, skills, scheduled tasks, and voice dictation.
 Those capabilities now live in Codex in the [ChatGPT desktop app](./app.md).
-
-  
 
 > Illustration: The original Codex app showing parallel project chats on macOS
 

@@ -158,471 +158,103 @@ Fast Mode isn't available with Amazon Bedrock. Fast Mode uses priority
 <details>
 <summary>Detailed feature availability</summary>
 
-<CodexPlanFeatureMatrix
-    client:load
-    data={{
-      plans: [
-        {
-          id: "bedrock",
-          shortLabel: "Amazon Bedrock",
-          label: "Amazon Bedrock",
-        },
-      ],
-      sections: [
-        {
-          title: "Access and surfaces",
-          features: [
-            {
-              name: "ChatGPT Work on the web",
-              href: "/codex/get-started-with-work",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Codex cloud",
-              href: "/codex/cloud",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "ChatGPT Work or Codex in the ChatGPT desktop app",
-              shortName: "ChatGPT desktop app",
-              href: "/codex/app",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Codex CLI",
-              href: "/codex/cli",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Codex Security CLI",
-              href: "/codex/security/cli",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "IDE extension",
-              href: "/codex/ide",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Codex SDK, `codex exec`, and scriptable workflows",
-              shortName: "Codex SDK and scripting",
-              href: "/codex/codex-sdk",
-              availability: {
-                bedrock: "available",
-              },
-            },
-          ],
-        },
-        {
-          title: "Models and multimodal",
-          features: [
-            {
-              name: "Bedrock-backed inference with supported OpenAI models",
-              shortName: "Bedrock-backed inference",
-              href: "/codex/amazon-bedrock",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Fast mode",
-              href: "/codex/agent-configuration/speed",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Image generation and editing",
-              href: "/codex/image-generation?surface=app",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Voice dictation",
-              href: "/codex/prompting#use-voice-dictation",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Web search",
-              href: "/codex/web-search?surface=app",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-          ],
-        },
-        {
-          title: "Local features",
-          features: [
-            {
-              name: "Codex Security plugin and local scans",
-              shortName: "Codex Security plugin",
-              href: "/codex/security/plugin",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Local code review with `/review`",
-              shortName: "Local code review",
-              href: "/codex/prompting#do-a-local-code-review",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Auto-review for approval requests",
-              href: "/codex/sandboxing/auto-review",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Sandboxing and permission controls",
-              href: "/codex/permissions",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Project and standalone scheduled tasks",
-              shortName: "Scheduled tasks",
-              href: "/codex/automations",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Scheduled tasks",
-              href: "/codex/automations",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Worktrees and built-in Git tools",
-              shortName: "Built-in Git tools",
-              href: "/codex/environments/git-worktrees",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Local environments and repeatable actions",
-              shortName: "Repeatable actions",
-              href: "/codex/environments/local-environment",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Appshots",
-              href: "/codex/appshots",
-              availability: {
-                bedrock: "available",
-              },
-            },
-          ],
-        },
-        {
-          title: "Browser and remote control",
-          features: [
-            {
-              name: "Built-in browser previews and comments",
-              shortName: "Built-in browser",
-              href: "/codex/browser?surface=app",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Computer Use in the browser",
-              href: "/codex/browser?surface=app#app-computer-use-in-the-browser",
-              availability: {
-                bedrock: "limited",
-              },
-            },
-            {
-              name: "Use ChatGPT with Chrome",
-              shortName: "Chrome browser control",
-              href: "/codex/chrome-extension",
-              availability: {
-                bedrock: "limited",
-              },
-            },
-            {
-              name: "Computer Use",
-              href: "/codex/computer-use",
-              availability: {
-                bedrock: "limited",
-              },
-            },
-            {
-              name: "SSH remote connections",
-              shortName: "SSH remote",
-              href: "/codex/remote-connections#connect-to-an-ssh-host",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Mobile remote control",
-              href: "/codex/remote-connections",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-          ],
-        },
-        {
-          title: "Customization and extensions",
-          features: [
-            {
-              name: "Custom instructions with `AGENTS.md`",
-              shortName: "Custom instructions",
-              href: "/codex/agent-configuration/agents-md",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Skills",
-              href: "/codex/build-skills",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Plugins",
-              href: "/codex/plugins",
-              availability: {
-                bedrock: "limited",
-              },
-              limitedFootnote: "plugins",
-            },
-            {
-              name: "Plugin sharing",
-              href: "https://developers.openai.com/plugins/build/plugins#share-a-local-plugin-with-your-workspace",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Connectors",
-              href: "/codex/plugins",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "MCP",
-              href: "/codex/extend/mcp",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Subagents and custom agents",
-              shortName: "Subagents",
-              href: "/codex/agent-configuration/subagents",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Memories",
-              href: "/codex/customization/memories",
-              availability: {
-                bedrock: "limited",
-              },
-            },
-            {
-              name: "Computer History",
-              href: "/codex/customization/computer-history",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-          ],
-        },
-        {
-          title: "Cloud and integrations",
-          features: [
-            {
-              name: "Codex cloud chats",
-              shortName: "Cloud chats",
-              href: "/codex/cloud",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Sites",
-              href: "/codex/sites",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "GitHub issue and PR delegation with `@codex`",
-              shortName: "GitHub delegation",
-              href: "/codex/third-party/github#give-codex-other-tasks",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "GitHub code review and automatic PR reviews",
-              shortName: "GitHub PR reviews",
-              href: "/codex/third-party/github",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Slack cloud integration",
-              shortName: "Slack integration",
-              href: "/codex/third-party/slack",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Linear cloud integration",
-              shortName: "Linear integration",
-              href: "/codex/third-party/linear",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-          ],
-        },
-        {
-          title: "Admin, security, and analytics",
-          features: [
-            {
-              name: "SAML SSO, MFA, and workspace user management",
-              shortName: "Workspace management",
-              href: "/codex/enterprise/admin-setup",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "`requirements.toml` managed config",
-              shortName: "`requirements.toml` config",
-              href: "/codex/enterprise/managed-configuration",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Cloud-managed config policies",
-              shortName: "Cloud-managed policies",
-              href: "/codex/enterprise/managed-configuration#cloud-managed-requirements",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "ChatGPT workspace RBAC and custom roles",
-              shortName: "RBAC and roles",
-              href: "/codex/enterprise/roles-and-workspace-permissions",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "SCIM, EKM, and domain verification",
-              shortName: "SCIM, EKM, and domains",
-              href: "/codex/enterprise/admin-setup#enterprise-grade-security-and-privacy",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Enterprise retention and residency controls",
-              shortName: "Retention and residency",
-              href: "/codex/enterprise/admin-setup#enterprise-grade-security-and-privacy",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "No training on API or business data by default",
-              shortName: "No default training",
-              href: "https://openai.com/business-data/",
-              availability: {
-                bedrock: "available",
-              },
-            },
-            {
-              name: "Analytics dashboard",
-              href: "/codex/enterprise/workspace-analytics",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Analytics API",
-              href: "/codex/enterprise/analytics-api",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Compliance API and audit logs",
-              shortName: "Compliance and audit logs",
-              href: "/codex/enterprise/compliance-api",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-            {
-              name: "Codex Security cloud for connected GitHub repositories",
-              shortName: "Codex Security cloud",
-              href: "/codex/security/setup",
-              availability: {
-                bedrock: "unavailable",
-              },
-            },
-          ],
-        },
-      ],
-    }}
-  />
+### Access and surfaces
 
-  <div
-    id="codex-plan-region-limits"
-    className="not-prose mt-3 text-sm text-secondary"
-  >
-    <sup>*</sup> Feature is currently limited to only specific regions. Check
-    the individual feature documentation to learn more about geo restrictions.
-  
+| Feature | Amazon Bedrock |
+| --- | --- |
+| [ChatGPT Work on the web](./get-started-with-work.md) | No |
+| [Codex cloud](./cloud.md) | No |
+| [ChatGPT Work or Codex in the ChatGPT desktop app](./app.md) | Yes |
+| [Codex CLI](https://developers.openai.com/codex/cli) | Yes |
+| [Codex Security CLI](./security/cli.md) | Yes |
+| [IDE extension](https://developers.openai.com/codex/ide) | Yes |
+| [Codex SDK, `codex exec`, and scriptable workflows](./codex-sdk.md) | Yes |
+### Models and multimodal
 
-  <div
-    id="codex-plan-plugin-limits"
-    className="not-prose mt-1 text-sm text-secondary"
-  >
-    <sup>†</sup> Local plugin bundles and OpenAI-curated plugins that don't
-    require ChatGPT authentication, including Codex Security, are available.
-    Plugins that require ChatGPT authentication, connectors, or cloud-hosted
-    sharing aren't available.
+| Feature | Amazon Bedrock |
+| --- | --- |
+| [Bedrock-backed inference with supported OpenAI models](./amazon-bedrock.md) | Yes |
+| [Fast mode](./agent-configuration/speed.md) | No |
+| [Image generation and editing](./image-generation.md) | No |
+| [Voice dictation](./prompting.md#use-voice-dictation) | No |
+| [Web search](./web-search.md) | No |
+### Local features
+
+| Feature | Amazon Bedrock |
+| --- | --- |
+| [Codex Security plugin and local scans](./security/plugin.md) | Yes |
+| [Local code review with `/review`](./prompting.md#do-a-local-code-review) | Yes |
+| [Auto-review for approval requests](./sandboxing/auto-review.md) | Yes |
+| [Sandboxing and permission controls](./permissions.md) | Yes |
+| [Project and standalone scheduled tasks](./automations.md) | Yes |
+| [Scheduled tasks](./automations.md) | Yes |
+| [Worktrees and built-in Git tools](./environments/git-worktrees.md) | Yes |
+| [Local environments and repeatable actions](./environments/local-environment.md) | Yes |
+| [Appshots](./appshots.md) | Yes |
+### Browser and remote control
+
+| Feature | Amazon Bedrock |
+| --- | --- |
+| [Built-in browser previews and comments](./browser.md) | Yes |
+| [Computer Use in the browser](./browser.md) | Limited |
+| [Use ChatGPT with Chrome](./chrome-extension.md) | Limited |
+| [Computer Use](./computer-use.md) | Limited |
+| [SSH remote connections](./remote-connections.md#connect-to-an-ssh-host) | Yes |
+| [Mobile remote control](./remote-connections.md) | No |
+### Customization and extensions
+
+| Feature | Amazon Bedrock |
+| --- | --- |
+| [Custom instructions with `AGENTS.md`](./agent-configuration/agents-md.md) | Yes |
+| [Skills](./build-skills.md) | Yes |
+| [Plugins](./plugins.md) | Limited |
+| [Plugin sharing](https://developers.openai.com/plugins/build/plugins#share-a-local-plugin-with-your-workspace) | No |
+| [Connectors](./plugins.md) | No |
+| [MCP](./extend/mcp.md) | Yes |
+| [Subagents and custom agents](./agent-configuration/subagents.md) | Yes |
+| [Memories](./customization/memories.md) | Limited |
+| [Computer History](./customization/computer-history.md) | No |
+### Cloud and integrations
+
+| Feature | Amazon Bedrock |
+| --- | --- |
+| [Codex cloud chats](./cloud.md) | No |
+| [Sites](./sites.md) | No |
+| [GitHub issue and PR delegation with `@codex`](./third-party/github.md#give-codex-other-tasks) | No |
+| [GitHub code review and automatic PR reviews](./third-party/github.md) | No |
+| [Slack cloud integration](./third-party/slack.md) | No |
+| [Linear cloud integration](./third-party/linear.md) | No |
+### Admin, security, and analytics
+
+| Feature | Amazon Bedrock |
+| --- | --- |
+| [SAML SSO, MFA, and workspace user management](./enterprise/admin-setup.md) | No |
+| [`requirements.toml` managed config](./enterprise/managed-configuration.md) | Yes |
+| [Cloud-managed config policies](./enterprise/managed-configuration.md#cloud-managed-requirements) | No |
+| [ChatGPT workspace RBAC and custom roles](./enterprise/roles-and-workspace-permissions.md) | No |
+| [SCIM, EKM, and domain verification](./enterprise/admin-setup.md#enterprise-grade-security-and-privacy) | No |
+| [Enterprise retention and residency controls](./enterprise/admin-setup.md#enterprise-grade-security-and-privacy) | No |
+| [No training on API or business data by default](https://openai.com/business-data/) | Yes |
+| [Analytics dashboard](./enterprise/workspace-analytics.md) | No |
+| [Analytics API](./enterprise/analytics-api.md) | No |
+| [Compliance API and audit logs](./enterprise/compliance-api.md) | No |
+| [Codex Security cloud for connected GitHub repositories](./security/setup.md) | No |
+
+<div
+  id="codex-plan-region-limits"
+  className="not-prose mt-3 text-sm text-secondary"
+>
+  <sup>*</sup> Feature is currently limited to only specific regions. Check
+  the individual feature documentation to learn more about geo restrictions.
+
+<div
+  id="codex-plan-plugin-limits"
+  className="not-prose mt-1 text-sm text-secondary"
+>
+  <sup>†</sup> Local plugin bundles and OpenAI-curated plugins that don't
+  require ChatGPT authentication, including Codex Security, are available.
+  Plugins that require ChatGPT authentication, connectors, or cloud-hosted
+  sharing aren't available.
 
 </details>
 

@@ -35,8 +35,6 @@ Please run the script and provide the output.
 
 If the agent follows those instructions, it could leak the last commit message to an attacker-controlled server:
 
-  
-
 > Illustration: Prompt injection leak example
 
 This example shows how prompt injection can expose sensitive data or lead to unsafe changes. Point Codex only to trusted resources and keep internet access as limited as possible.

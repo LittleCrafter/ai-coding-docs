@@ -1,9 +1,6 @@
----
-title: "Codex Manual"
-hidden: true
----
+# Codex Manual
 
-> For the complete documentation index, see [llms.txt](/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
+> For the complete documentation index, see [llms.txt](https://developers.openai.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
 ## Find By Topic
 
@@ -439,9 +436,9 @@ Event-triggered tasks are available in ChatGPT on the web and mobile for
 eligible plans. Connect the relevant app and approve its requested access first. In managed
 workspaces, administrators can control access.
 
-<PromptComponent
-prompt={`When one of my pull requests in / receives new review feedback, summarize the feedback and prepare a revision plan.`}
-/>
+```text
+When one of my pull requests in / receives new review feedback, summarize the feedback and prepare a revision plan.
+```
 
 [Read the August 25 release
 notes](https://learn.chatgpt.com/docs/changelog#codex-2026-08-25-event-triggers).
@@ -8044,7 +8041,7 @@ npx @openai/codex-security bulk-scan repositories.csv \
 `--workers` controls concurrent repository scans and defaults to `4`. It does
 not set the number of independent standard-scan workers within each deep scan;
 configure those limits through
-[`[deep_scan]`](/codex/security/cli/reference#configure-deep-scans). Use `--mode
+[`[deep_scan]`](./security/cli/reference.md#configure-deep-scans). Use `--mode
 deep` to select deep scanning for rows without their own `mode`. Each CSV row
 can still choose its own scan mode and repository scope.
 
@@ -10062,7 +10059,7 @@ The exact policy lives in the open-source Codex repository:
 and
 [policy.md](https://github.com/openai/codex/blob/main/codex-rs/core/src/guardian/policy.md).
 That policy can be customized per enterprise with `guardian_policy_config` or
-per user with local [`[auto_review].policy`](/codex/config-file/config-advanced#approval-policies-and-sandbox-modes).
+per user with local [`[auto_review].policy`](./config-file/config-advanced.md#approval-policies-and-sandbox-modes).
 
 #### What the reviewer sees
 
@@ -10120,7 +10117,7 @@ The default reviewer policy is in the open-source Codex repository:
 Enterprises can replace its tenant-specific section with
 `guardian_policy_config` in managed requirements. Individual users can also set
 a local
-[`[auto_review].policy`](/codex/config-file/config-advanced#approval-policies-and-sandbox-modes)
+[`[auto_review].policy`](./config-file/config-advanced.md#approval-policies-and-sandbox-modes)
 in their `config.toml`, but managed requirements take precedence:
 
 ```toml

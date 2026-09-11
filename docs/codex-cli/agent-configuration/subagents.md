@@ -12,6 +12,8 @@ configurations and instructions for different tasks.
 
 ## Availability
 
+**Surface: Web**
+
 ChatGPT Work exposes subagent workflows and activity to eligible accounts.
 
 <a id="custom-agents"></a>
@@ -22,11 +24,15 @@ appears in the ChatGPT desktop app, Codex CLI, and the IDE extension.
 Because each subagent does its own model and tool work, subagent workflows
 consume more tokens than comparable single-agent runs.
 
+**Surface: Web**
+
 In ChatGPT Work, ask ChatGPT to delegate independent work to subagents. The
 agents run in ChatGPT's hosted environment, and the chat shows their
 activity and results. At most intelligence levels, ask for delegation
 explicitly. With Ultra, ChatGPT can proactively delegate work when parallel
 agents would materially improve speed or quality.
+
+**Surface: Desktop app**
 
 Ask Codex in an app chat to delegate independent parts of the work to
 subagents. Current local Codex releases delegate when you ask directly or when
@@ -34,10 +40,14 @@ applicable `AGENTS.md` or skill instructions request it. The app surfaces each
 subagent thread so you can inspect its work and the summary returned to the main
 chat.
 
+**Surface: CLI**
+
 Ask Codex in an interactive CLI session to use subagents. Codex can also follow
 applicable `AGENTS.md` or skill instructions that request delegation. Use
 `/agent` to inspect and switch between agent threads while they run. The main
 thread collects the subagent results into its final response.
+
+**Surface: IDE extension**
 
 Ask Codex in an IDE chat to delegate independent parts of the work to subagents.
 Codex can also follow applicable `AGENTS.md` or skill instructions that request
@@ -83,6 +93,8 @@ Codex uses a few related terms in subagent workflows:
 
 ## Triggering subagent workflows
 
+**Surface: Web**
+
 At most intelligence levels, ask for subagents or parallel agent work
 directly. Ultra enables proactive delegation, so ChatGPT can delegate suitable
 independent work without a separate request.
@@ -106,6 +118,8 @@ Review this branch with parallel subagents. Spawn one subagent for security risk
 ## Choosing models and reasoning
 
 Different agents need different model and reasoning settings.
+
+**Surface: Web**
 
 In ChatGPT Work, choose a model and an intelligence level from the composer.
 Available intelligence levels can include **Light**, **Medium**, **High**,
@@ -131,11 +145,19 @@ For most tasks in Codex, start with
   `gpt-5.6-terra` when you want
   a faster, lower-cost option for lighter subagent work.
 
+<a id="app-model-choice"></a>
+<a id="cli-model-choice"></a>
+<a id="ide-model-choice"></a>
+
 ### Model choice
 
 - **`gpt-5.6`**: Start here for demanding agents. It's strongest for ambiguous, multi-step work that needs planning, tool use, validation, and follow-through across a larger context.
 - **`gpt-5.6-terra`**: Use for agents that favor speed and efficiency over depth, such as exploration, read-heavy scans, large-file review, or processing supporting documents. It works well for parallel workers that return distilled results to the main agent.
 - **`gpt-5.6-luna`**: Use for fast, narrowly scoped agents handling clear, repeatable, or high-volume work.
+
+<a id="app-reasoning-effort-model_reasoning_effort"></a>
+<a id="cli-reasoning-effort-model_reasoning_effort"></a>
+<a id="ide-reasoning-effort-model_reasoning_effort"></a>
 
 ### Reasoning effort (`model_reasoning_effort`)
 
@@ -158,6 +180,8 @@ agent threads.
 When many agents are running, Codex waits until all requested results are
 available, then returns a consolidated response.
 
+**Surface: Web**
+
 At most intelligence levels, ChatGPT spawns agents after a direct request. With
 Ultra, ChatGPT can also delegate proactively when parallel work is useful.
 
@@ -178,10 +202,14 @@ I would like to review the following points on the current PR (this branch vs ma
 
 ## Managing subagents
 
+**Surface: Web**
+
 Open **Subagents** to see read-only **Active** and **Done** lists. Select a
 completed subagent to inspect its details and result. The web sidebar reports
 subagent activity; it doesn't provide controls to stop or steer an individual
 subagent.
+
+**Surface: Desktop app**
 
 - Open a subagent thread from the activity shown in the main thread to inspect
   its work.
@@ -192,8 +220,12 @@ subagent.
 
 > Illustration: Codex desktop Subagents panel with no active subagents and three completed audits.
 
+**Surface: CLI**
+
 - Use `/agent` in the CLI to switch between active agent threads and inspect the ongoing thread.
 - Ask Codex directly to steer a running subagent, stop it, or close completed agent threads.
+
+**Surface: IDE extension**
 
 - When the background-agent panel is available, expand it to inspect status,
   stop active subagents, or open a subagent thread.
@@ -204,13 +236,19 @@ subagent.
 
 Subagents inherit your current sandbox policy.
 
+**Surface: Web**
+
 ChatGPT Work runs subagents in its hosted environment and doesn't expose a
 local Codex sandbox or approval-mode control. Subagents use the tools available
 to the parent chat. Website and connector permissions remain
 tool-specific.
 
+**Surface: Desktop app**
+
 Subagents inherit the permission mode selected beneath the composer. Choose the
 permission mode for the parent turn before you ask Codex to delegate work.
+
+**Surface: CLI**
 
 In interactive CLI sessions, approval requests can surface from inactive agent
 threads even while you are looking at the main thread. The approval overlay
@@ -226,10 +264,16 @@ child. That includes sandbox and approval choices you set interactively during
 the session, such as `/permissions` changes or `--yolo`, even if the selected
 custom agent file sets different defaults.
 
+**Surface: IDE extension**
+
 Subagents inherit the permission mode selected beneath the composer. Choose
 the permission mode for the parent turn before you ask Codex to delegate work.
 
 You can also override the sandbox configuration for individual [custom agents](#custom-agents), such as explicitly marking one to work in read-only mode.
+
+<a id="app-custom-agents"></a>
+<a id="cli-custom-agents"></a>
+<a id="ide-custom-agents"></a>
 
 ## Custom agents
 
@@ -266,6 +310,10 @@ different one. Other session settings, such as `sandbox_mode`, `mcp_servers`,
 and `skills.config`, inherit from the parent when the custom agent file omits
 them.
 
+<a id="app-global-settings"></a>
+<a id="cli-global-settings"></a>
+<a id="ide-global-settings"></a>
+
 ### Global settings
 
 Global subagent settings still live under `[agents]` in your [configuration](../config-file/config-basic.md#configuration-precedence).
@@ -286,6 +334,10 @@ Global subagent settings still live under `[agents]` in your [configuration](../
 - `agents.interrupt_message` defaults to `true`. Set it to `false` to omit the model-visible interruption message from the agent's context.
 - If a custom agent name matches a built-in agent such as `explorer`, your custom agent takes precedence.
 
+<a id="app-custom-agent-file-schema"></a>
+<a id="cli-custom-agent-file-schema"></a>
+<a id="ide-custom-agent-file-schema"></a>
+
 ### Custom agent file schema
 
 | Field                    | Type   | Required | Purpose                                                         |
@@ -300,11 +352,19 @@ Codex identifies the custom agent by its `name` field. Matching the filename to
 the agent name is the simplest convention, but the `name` field is the source
 of truth.
 
+<a id="app-example-custom-agents"></a>
+<a id="cli-example-custom-agents"></a>
+<a id="ide-example-custom-agents"></a>
+
 ### Example custom agents
 
 The best custom agents are narrow and opinionated. Give each one clear job, a
 tool surface that matches that job, and instructions that keep it from
 drifting into adjacent work.
+
+<a id="app-example-1-pr-review"></a>
+<a id="cli-example-1-pr-review"></a>
+<a id="ide-example-1-pr-review"></a>
 
 #### Example 1: PR review
 
@@ -375,6 +435,10 @@ This setup works well for prompts like:
 Review this branch against main. Have pr_explorer map the affected code paths, reviewer find real risks, and docs_researcher verify the framework APIs that the patch relies on.
 ```
 
+<a id="app-example-2-frontend-integration-debugging"></a>
+<a id="cli-example-2-frontend-integration-debugging"></a>
+<a id="ide-example-2-frontend-integration-debugging"></a>
+
 #### Example 2: Frontend integration debugging
 
 This pattern is useful for UI regressions, flaky browser flows, or integration bugs that cross application code and the running product.
@@ -441,4 +505,3 @@ This setup works well for prompts like:
 ```text
 Investigate why the settings modal fails to save. Have browser_debugger reproduce it, code_mapper trace the responsible code path, and ui_fixer implement the smallest fix once the failure mode is clear.
 ```
-
