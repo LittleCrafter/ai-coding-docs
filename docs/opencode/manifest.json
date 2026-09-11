@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.18.30",
-  "last_updated": "2026-09-11T03:26:48Z",
+  "last_updated": "2026-09-11T05:53:06Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -170,8 +170,8 @@
       "source_url": "https://opencode.ai/docs/mcp-servers",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/mcp-servers.mdx",
       "source_id": "packages/web/src/content/docs/mcp-servers.mdx",
-      "hash": "89c97bbc6d0bd6dcb0d02818f44364fb224d1fc7b298c33ae84196a059a71f73",
-      "last_updated": "2026-09-11T03:07:15Z"
+      "hash": "6c5f77422ae087a7c941b460f861bae4e10e48456604d058954bf956cc25c5ef",
+      "last_updated": "2026-09-11T05:53:06Z"
     },
     "models": {
       "slug": "models",
@@ -210,8 +210,8 @@
       "source_url": "https://opencode.ai/docs/plugins",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/plugins.mdx",
       "source_id": "packages/web/src/content/docs/plugins.mdx",
-      "hash": "9a37e1addf3321511009267ed092a2c8b1ae9dc9d9f6ed62ab174cefbf8b0d0e",
-      "last_updated": "2026-09-11T03:07:15Z"
+      "hash": "5cd593bacc8f4740c1bd4fdf21e376bea0285d8cbc74476ad87930a82e683485",
+      "last_updated": "2026-09-11T05:53:06Z"
     },
     "policies": {
       "slug": "policies",
@@ -365,8 +365,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-11T03:26:48Z",
-    "fetch_duration_seconds": 12.422,
+    "last_fetch_completed": "2026-09-11T05:53:06Z",
+    "fetch_duration_seconds": 12.406,
     "total_pages_discovered": 36,
     "pages_fetched_successfully": 36,
     "pages_failed": 0,

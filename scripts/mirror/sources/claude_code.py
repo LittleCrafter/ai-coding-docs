@@ -2075,6 +2075,11 @@ def _resolve_docs_href(href: str, current_slug: str, known_slugs: set[str]) -> s
     relative -- is returned unchanged: it names no upstream documentation page,
     and prefixing it with the documentation origin would turn a working link
     into a broken one.
+
+    A query string is dropped on every branch, mirrored and upstream alike:
+    only the path up to the ``?`` names the page, and the upstream fallback is
+    rebuilt from the slug that path produced, so the parameters are not
+    carried over.
     """
     path, _, anchor = href.partition("#")
     path = path.split("?", 1)[0].rstrip("/")

@@ -1780,6 +1780,75 @@ def _iter_site_links(text: str) -> Iterator[re.Match[str]]:
         pos = closer = match.end()
 
 
+# A Markdown link written out as a FULL URL on the documentation site's own
+# origin (``](https://opencode.ai/docs/config/)``).  Upstream writes most
+# cross-references site-absolute and a few this way; both name the same page,
+# so both have to resolve the same way -- a link that keeps the site's host
+# sends a reader of the mirror to the network for a page that is already on
+# disk beside it.
+#
+# Only destinations under the documentation route are matched, and only on
+# the site's own origin: another host that happens to carry a ``/docs/`` path
+# is a different site, and a path outside the documentation tree (the site
+# root, a marketing page) names no page of the mirror.  The bare origin
+# ``https://opencode.ai`` is therefore left alone as well -- it addresses the
+# site, and the mirror has no file to put in its place.
+#
+# Same BACKTRACKING HAZARD as the pattern above, and the same answer: this
+# pattern is ONLY ever applied through ``_iter_origin_links``, never via
+# ``re.sub``.
+_ORIGIN_DOCS_LINK_RE = re.compile(
+    # ``DOCS_ROUTE`` without its leading slash: the origin and that slash are
+    # consumed by the literal head, so the captured group is the route exactly
+    # as ``_resolve_site_href`` expects it -- the form its caller's pattern
+    # produces for a site-absolute link.
+    rf"\]\({re.escape(SITE_URL)}/(?P<href>{DOCS_ROUTE[1:]}(?:/[^)\s]*)?)\)"
+)
+
+
+def _iter_origin_links(text: str) -> Iterator[re.Match[str]]:
+    """Yield every full-origin ``](https://opencode.ai/docs...)`` link in *text*.
+
+    Semantics-identical to ``_ORIGIN_DOCS_LINK_RE.finditer(text)`` but LINEAR
+    on adversarial input, by the same decomposition as
+    :func:`_iter_site_links`: ``str.find`` for the pattern's literal head, a
+    ``str.find(")")`` to bound the attempt to one link's worth of text, and
+    the pattern itself for the match (so the group semantics, and the
+    rejection of every destination the pattern does not describe, come from
+    the pattern rather than from a reimplementation of it).
+
+    The literal head searched for is the whole ``](https://opencode.ai/``
+    prefix the pattern requires, so no position that cannot start a match is
+    handed to the regex engine.  The monotonicity argument of
+    :func:`_iter_site_links` applies unchanged: the candidate cursor and the
+    parenthesis cursor only move forward, and the loop stops at the first
+    candidate with no ``)`` after it, because no later candidate can have one
+    either.
+    """
+    prefix = f"]({SITE_URL}/"
+    pos = 0
+    closer = -1  # cached first ")" at or after the candidate cursor
+    while True:
+        start = text.find(prefix, pos)
+        if start == -1:
+            break
+        if closer < start + 2:
+            closer = text.find(")", start + 2)
+            if closer == -1:
+                # No ")" anywhere after this candidate -- and therefore
+                # after ANY later one either (see the docstring).
+                break
+        match = _ORIGIN_DOCS_LINK_RE.match(text, start, closer + 1)
+        if match is None:
+            # The destination does not continue the way the pattern needs
+            # (a path outside the documentation tree, say), so this
+            # candidate is not a link.  A later one starts after it.
+            pos = start + 1
+            continue
+        yield match
+        pos = closer = match.end()
+
+
 # Slugs of the pages discovered by the current run; populated by ``discover``
 # and read by the link pass in ``fetch_markdown``.  The pipeline discovers
 # every page of a source before it fetches the first one, so the set is
@@ -1805,8 +1874,9 @@ def _resolve_site_href(href: str, current_slug: str, known_slugs: set[str]) -> s
     The anchor is preserved on every branch.  A fragment is resolved by the
     reader's browser against whichever document the link lands on, so it keeps
     working whether that document is a mirrored file or the upstream page.  A
-    query string is kept on the upstream branches and dropped on the mirrored
-    one: a mirrored file is a static document with nothing to parameterise.
+    query string is kept verbatim on every upstream branch -- it still selects
+    what the site would have selected -- and dropped on the mirrored one: a
+    mirrored file is a static document with nothing to parameterise.
     """
     if href in ("", "/"):
         return f"{SITE_URL}/"
@@ -1814,6 +1884,10 @@ def _resolve_site_href(href: str, current_slug: str, known_slugs: set[str]) -> s
     path, _, anchor = href.partition("#")
     suffix = f"#{anchor}" if anchor else ""
     path, _, query = path.partition("?")
+    # Rebuilt with its own leading "?" so that appending it cannot glue the
+    # parameters onto the path (``/pricing`` + ``plan=pro`` used to read
+    # ``/pricingplan=pro``).
+    query_suffix = f"?{query}" if query else ""
     # The caller's pattern consumes the leading slash, so every branch below
     # works on the path as the site sees it -- leading slash included -- which
     # is also what the upstream URL is built from.
@@ -1826,10 +1900,10 @@ def _resolve_site_href(href: str, current_slug: str, known_slugs: set[str]) -> s
         slug = path[len(DOCS_ROUTE) :].strip("/")
         upstream = f"{SITE_URL}{path.rstrip('/')}"
     else:
-        return f"{SITE_URL}{path}{query}{suffix}"
+        return f"{SITE_URL}{path}{query_suffix}{suffix}"
 
     if slug not in known_slugs:
-        return f"{upstream}{suffix}"
+        return f"{upstream}{query_suffix}{suffix}"
 
     # ``current_slug`` is the on-disk path of the page being rewritten, so the
     # relative path is derived the same way whatever depth the page sits at.
@@ -1843,34 +1917,72 @@ def _resolve_site_href(href: str, current_slug: str, known_slugs: set[str]) -> s
 def _rewrite_site_links(
     text: str, current_slug: str, known_slugs: set[str] | None = None
 ) -> str:
-    """Repoint every site-absolute link in *text* at something that resolves.
+    """Repoint every reference to the documentation site at something that resolves.
 
-    Each ``](/...)`` destination is routed through :func:`_resolve_site_href`.
-    Only links are touched: an external URL, a mail address, an anchor, or a
-    relative path does not match the pattern and is returned unchanged, so this
-    pass can never break a link that already worked.
+    Two spellings of the same reference are routed through
+    :func:`_resolve_site_href`: the site-absolute one (``](/docs/tui)``) and
+    the full URL on the site's own origin
+    (``](https://opencode.ai/docs/tui)``).  Both address a page of the site,
+    so both become a relative ``.md`` link when this run mirrors that page and
+    the page's upstream URL when it does not.  Localising the full URL matters
+    as much as rewriting the site-absolute form: a reader of the mirror would
+    otherwise leave it for a page that is already on disk beside the page they
+    are reading.
+
+    Only links are touched: an external URL, a mail address, an anchor, a
+    relative path, or a URL on another host does not match either pattern and
+    is returned unchanged, so this pass can never break a link that already
+    worked.
 
     Fenced code blocks are shielded for the duration of the pass, because a
     code sample is not prose: a snippet that shows a documentation URL must
     keep showing exactly what it showed.  The pass is idempotent -- its output
-    holds relative ``.md`` links and absolute ``https://`` URLs, neither of
-    which matches the site-absolute pattern, so a second application is a
-    no-op.
+    holds relative ``.md`` links and absolute upstream URLs, and the first
+    pass has already localised every full URL it could, so a second
+    application is a no-op.
     """
     if known_slugs is None:
         known_slugs = _KNOWN_SLUGS
 
     protected, blocks = _protect_fenced_code(text)
+    # The full-origin pass runs first: it turns a mirrored page's URL into a
+    # relative link and leaves every other URL alone, so the site-absolute
+    # scan that follows sees only the links still to be resolved, and neither
+    # pass can undo the other's work.
+    protected = _rewrite_link_targets(
+        protected, _iter_origin_links(protected), current_slug, known_slugs
+    )
+    protected = _rewrite_link_targets(
+        protected, _iter_site_links(protected), current_slug, known_slugs
+    )
+    return _restore_fenced_code(protected, blocks)
+
+
+def _rewrite_link_targets(
+    text: str,
+    matches: Iterator[re.Match[str]],
+    current_slug: str,
+    known_slugs: set[str],
+) -> str:
+    """Replace the destination of every link in *matches* with its resolved form.
+
+    The substitution half of the link pass: the scanner names the links in
+    document order, each destination goes through
+    :func:`_resolve_site_href`, and everything between two links is copied
+    through byte for byte.  Copying is what confines the pass to the links the
+    scanner proved -- the rest of the page is never re-examined, so text that
+    merely resembles a link cannot be rewritten by accident.
+    """
     out: list[str] = []
     pos = 0
-    for match in _iter_site_links(protected):
-        out.append(protected[pos : match.start()])
+    for match in matches:
+        out.append(text[pos : match.start()])
         out.append(
             f"]({_resolve_site_href(match.group('href'), current_slug, known_slugs)})"
         )
         pos = match.end()
-    out.append(protected[pos:])
-    return _restore_fenced_code("".join(out), blocks)
+    out.append(text[pos:])
+    return "".join(out)
 
 
 # ---------------------------------------------------------------------------

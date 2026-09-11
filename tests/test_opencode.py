@@ -1900,12 +1900,67 @@ def test_rewrite_site_links_makes_other_absolute_paths_upstream():
     assert _rewrite("[Zen](/zen)") == "[Zen](https://opencode.ai/zen)"
 
 
+def test_rewrite_site_links_localizes_urls_on_the_site_origin():
+    """Upstream writes most cross-references site-absolute and a few as full
+    URLs on its own origin. Both name the same page, so both resolve the same
+    way: a link that keeps the site's host sends a reader of the mirror to the
+    network for a page that is already on disk beside the page they are
+    reading.
+
+    Only destinations under the documentation route are localised. The bare
+    origin addresses the site itself and a path outside the docs tree
+    addresses something the mirror does not hold; both keep their URL, which
+    is the destination that resolves for them."""
+    assert _rewrite("[Config](https://opencode.ai/docs/config/)") == (
+        "[Config](./config.md)"
+    )
+    assert _rewrite("[Tui](https://opencode.ai/docs/tui#attention)") == (
+        "[Tui](./tui.md#attention)"
+    )
+    assert _rewrite("[Home](https://opencode.ai/docs)") == "[Home](./intro.md)"
+
+    for text in (
+        "[Site](https://opencode.ai/)",
+        "[Zen](https://opencode.ai/zen)",
+        "[Schema](https://opencode.ai/config.json)",
+        "[Other](https://example.com/docs/config)",
+        "[Unmirrored](https://opencode.ai/docs/ja/cli)",
+        "<https://opencode.ai/docs/config>",
+    ):
+        assert _rewrite(text) == text
+
+
+def test_rewrite_site_links_keeps_a_query_string_on_the_upstream_branches():
+    """A query string selects what the site would have selected, so it is
+    carried verbatim on both upstream branches -- a path outside the docs tree
+    and a documentation route this run does not mirror -- and it is rebuilt
+    with its own ``?`` so that it cannot be glued onto the path. A mirrored
+    target is a static file with nothing left to parameterise, so its query is
+    dropped along with the site it belonged to."""
+    assert _rewrite("[Zen](/zen?plan=pro)") == (
+        "[Zen](https://opencode.ai/zen?plan=pro)"
+    )
+    assert _rewrite("[Pricing](/pricing?plan=pro)") == (
+        "[Pricing](https://opencode.ai/pricing?plan=pro)"
+    )
+    assert _rewrite("[Japanese](/docs/ja/cli?plan=pro)") == (
+        "[Japanese](https://opencode.ai/docs/ja/cli?plan=pro)"
+    )
+    assert _rewrite("[Zen](/zen?plan=pro#x)") == (
+        "[Zen](https://opencode.ai/zen?plan=pro#x)"
+    )
+    assert _rewrite("[Config](/docs/config?plan=pro)") == "[Config](./config.md)"
+    assert _rewrite("[Tui](/docs/tui?plan=pro#attention)") == (
+        "[Tui](./tui.md#attention)"
+    )
+
+
 def test_rewrite_site_links_leaves_every_other_link_alone():
-    """Only site-absolute paths are touched: an external URL, an intra-page
-    anchor, a relative path, an autolink and an asset reference all already
-    resolve, and rewriting them would be breaking links to fix links."""
+    """Only references to the documentation site are touched: an external URL,
+    an intra-page anchor, a relative path, an autolink and an asset reference
+    all already resolve, and rewriting them would be breaking links to fix
+    links."""
     text = (
-        "[Site](https://opencode.ai/docs/config) "
         "[Other](https://example.com/docs/x) "
         "[Section](#permissions) "
         "[Sibling](./tui.md#attention) "

@@ -539,12 +539,13 @@ def validate_markdown(text: str) -> bool:
 
 
 # Fenced code block stripping, in either CommonMark fence style: an opening
-# fence of three backticks or three tildes (optionally followed by an info
-# string on the same line), a body of any number of lines, and a matching
-# closing fence of the SAME style (the exact same fence string plus optional
-# trailing spaces/tabs). Used by `extract_title` to strip code blocks before
-# scanning for headings, so a heading-shaped line inside a code sample is
-# never mistaken for the document title.
+# fence line (three or more backticks, or three or more tildes, optionally
+# followed by an info string on the same line), a body of any number of lines,
+# and a closing fence line of the SAME style -- a bare fence of that style
+# plus optional trailing spaces/tabs, whose exact length this scan fixes at
+# three characters (see the closing-fence rule below). Used by `extract_title`
+# to strip code blocks before scanning for headings, so a heading-shaped line
+# inside a code sample is never mistaken for the document title.
 #
 # Both fence styles are handled in ONE left-to-right pass (see
 # `_strip_fenced_code_blocks`): a ``~~~`` line *inside* a backtick block is
@@ -552,11 +553,26 @@ def validate_markdown(text: str) -> bool:
 # opens first wins -- exactly like CommonMark's own left-to-right parse.
 #
 # The closing-fence rule is deliberately STRICTER than CommonMark, which
-# accepts any run of the same character at least as long as the opener: here
-# the closer must be the very same fence string. Every document this scan
-# runs on comes from a converter that closes a block with a byte-identical
-# fence, so the strict form costs nothing and keeps the two fence styles
-# unambiguous against each other.
+# accepts any run of the same character at least as long as the opener. Here
+# the closer is a bare THREE-character fence of the opener's style -- exactly
+# three fence characters followed by nothing but spaces or tabs, see
+# `_is_fence_closer` -- whatever the length of the opening run. Nearly every
+# block in the mirrored corpus is opened with three fence characters, so the
+# closer is the one fence string a bare line can carry, and recognising it by
+# that single string keeps the two fence styles unambiguous against each
+# other.
+#
+# An opening run LONGER than three characters is the one case where this rule
+# reads a document differently from CommonMark. A four-backtick opener -- what
+# a page documenting fenced code blocks writes in order to show a
+# three-backtick fence inside one -- is a four-character run to CommonMark and
+# only ever closes at a four-backtick line, while this scan reads the opener
+# as the three-character fence it starts with and so closes it at the first
+# bare three-backtick line inside it, leaving the rest of that sample to be
+# read as ordinary text. Two mirrored pages contain such a block and both
+# carry their own title above it, so the title this scan reports is that
+# page's title either way; the shorter reading is knowingly left in place
+# rather than made to carry the opener's fence length around.
 #
 # Line starts are recognised only after ``\n`` (never after a bare ``\r`` or
 # a Unicode line separator), matching the behaviour of a MULTILINE ``^``
@@ -582,12 +598,12 @@ def validate_markdown(text: str) -> bool:
 # number of times, and the closer lookup per opener is a ``bisect`` over a
 # precomputed index list (O(log n)) rather than a re-scan of the tail.
 def _is_fence_closer(line: str, fence: str) -> bool:
-    """Return True when *line* is a valid closing fence for *fence*.
+    """Return True when *line* closes a block fenced with *fence*.
 
-    The rule is the exact-fence one described in the comment above: the line
-    must be the three-character fence string followed by nothing but spaces
-    or tabs. A longer fence run (e.g. four backticks) is NOT a closer for a
-    three-backtick opener, and a trailing carriage return is NOT tolerated.
+    The rule is the fixed-three-character one described in the comment above:
+    the line must be exactly the three-character fence string followed by
+    nothing but spaces or tabs. A longer run (four backticks, say) is NOT a
+    closer, and a trailing carriage return is NOT tolerated.
     """
     return line.startswith(fence) and all(c in " \t" for c in line[len(fence) :])
 

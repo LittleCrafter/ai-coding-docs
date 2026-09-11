@@ -11,8 +11,10 @@
   the page's heading, imports are removed, Starlight `:::` callouts become
   GitHub Alerts, JSX wrappers are removed while preserving inner text, the
   content a `<Tabs>` container indented is re-indented to the column that
-  container sat at, and the site-absolute `/docs/...` cross-references are
-  rewritten to local links.
+  container sat at, cross-references written as site-absolute `/docs/...`
+  paths or as full `https://opencode.ai/docs/...` URLs are rewritten to local
+  links, and references to the repository's media files are rewritten to the
+  copies stored alongside this content (under `./assets/`).
 
 Content © the OpenCode authors. Licensed under the MIT License; the license is
 included alongside this content as required by its terms.

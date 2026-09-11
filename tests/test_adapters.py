@@ -2463,6 +2463,145 @@ def test_codex_rewrite_cross_links():
     assert rewritten_untouched == untouched_text
 
 
+def test_codex_rewrite_cross_links_keeps_the_link_text_rule():
+    """The cross-documentation pattern opens with the link text, so the scan
+    has to recover where a match begins rather than assume it begins at the
+    destination it searched for. The rule it recovers is the pattern's own:
+    the text between ``[`` and ``]`` may not contain a ``]``, so the match
+    starts at the leftmost ``[`` of the run that ends at the destination -- a
+    ``[`` inside the link text is link text, not a second link.
+
+    A ``]`` directly before the destination leaves that run empty, and the
+    pattern has no link text to open with: ``](url)`` and ``[a]b](url)`` are
+    therefore not links, exactly as the pattern reads them. Rewriting either
+    one would invent a link the page does not have."""
+    known = {"sdk"}
+    url = "https://learn.chatgpt.com/docs/sdk"
+
+    # The leftmost "[" of the run opens the link, so "[draft" is link text.
+    rewritten = codex_cli._rewrite_cross_links(
+        f"[Report [draft]({url})", "index", known
+    )
+    assert rewritten == "[Report [draft](./sdk.md)"
+
+    # The "]" here ends the run, so there is no "[" between it and the
+    # destination: both spellings are copied through unchanged.
+    for text in (f"[Report [draft]]({url})", f"[a]b]({url})", f"]({url})"):
+        assert codex_cli._rewrite_cross_links(text, "index", known) == text
+
+
+def test_codex_link_passes_are_linear_on_unterminated_candidates():
+    """A page that repeats a link's head without ever closing a destination
+    must be rewritten in linear time. Each pattern's greedy destination class
+    used to expand to end-of-string from every candidate, fail, and let the
+    engine retry the whole scan from the next one -- quadratic, several
+    seconds on these inputs, and the passes run on raw Markdown fetched from
+    the network. The scan now stops at the first candidate that has no ``)``
+    after it, because no later candidate can have one either.
+
+    The bound is far above the cost of the linear walk and far below the cost
+    of the quadratic one, so it measures the shape of the scan rather than
+    the speed of the machine it runs on."""
+    known = {"config"}
+    cases = {
+        "site-absolute": "](/docs",
+        "relative .md": "](./config.md",
+        "cross-documentation": "[a](https://learn.chatgpt.com/docs/",
+    }
+    for name, unit in cases.items():
+        text = unit * 8000
+        started = time.monotonic()
+        assert codex_cli._rewrite_body_links(text, "index", known) == text
+        assert codex_cli._rewrite_cross_links(text, "index", known) == text
+        elapsed = time.monotonic() - started
+        assert elapsed < 2.0, (
+            f"rewriting {len(text)} characters of {name} candidates took {elapsed:.2f}s"
+        )
+
+
+def test_codex_link_passes_grow_linearly_with_the_candidate_count():
+    """Doubling the number of links in a page must not quadruple the time a
+    pass takes: the scan visits each candidate a bounded number of times, so
+    the cost grows in proportion to the document, where a scan that
+    re-examined the document tail per candidate grows with its square.
+
+    Both shapes are measured. A destination that is never closed leaves the
+    linear scan almost nothing to do, because it stops at the first candidate
+    with no ``)`` after it, while the quadratic form paid a scan of the whole
+    remaining document per candidate; that measurement is therefore taken
+    against a floor, so a pass that is merely fast is not reported as a growth
+    factor. A well-formed link costs real work per candidate, which is what
+    makes the growth of the scan itself visible.
+
+    Each size is timed three times and the CHEAPEST run is kept, so a
+    scheduling hiccup on a loaded machine cannot inflate a measurement; the
+    threshold sits between the factor a linear scan shows (about 2) and the
+    one a quadratic scan shows (about 4)."""
+    known = {"sdk"}
+    # (name, pass, one candidate, count of candidates in the smaller input).
+    # An unclosed input is a candidate head repeated with NOTHING to end its
+    # destination -- no closing parenthesis to find, and no whitespace either,
+    # since a space is what would stop the old destination class early.
+    passes = (
+        (
+            "unclosed site-absolute",
+            codex_cli._rewrite_body_links,
+            "](/docs",
+            1000,
+        ),
+        (
+            "unclosed relative .md",
+            codex_cli._rewrite_body_links,
+            "](./sdk.md",
+            1000,
+        ),
+        (
+            "unclosed cross-documentation",
+            codex_cli._rewrite_cross_links,
+            "[A](https://learn.chatgpt.com/docs/sdk",
+            1000,
+        ),
+        (
+            "site-absolute",
+            codex_cli._rewrite_body_links,
+            "[A](/docs/sdk) and [B](/docs/other) and ",
+            10000,
+        ),
+        (
+            "relative .md",
+            codex_cli._rewrite_body_links,
+            "[A](./sdk.md) and [B](./other.md) and ",
+            10000,
+        ),
+        (
+            "cross-documentation",
+            codex_cli._rewrite_cross_links,
+            "[A](https://learn.chatgpt.com/docs/sdk) and ",
+            10000,
+        ),
+    )
+    # Below this, the measurement reads the timer rather than the pass.
+    floor = 0.001
+
+    def cheapest(rewrite, text: str) -> float:
+        """Return the fastest of three runs of *rewrite* over *text*."""
+        best = float("inf")
+        for _ in range(3):
+            started = time.monotonic()
+            rewrite(text, "index", known)
+            best = min(best, time.monotonic() - started)
+        return best
+
+    for name, rewrite, unit, small_count in passes:
+        small = cheapest(rewrite, unit * small_count)
+        large = cheapest(rewrite, unit * (small_count * 2))
+        assert large < max(small, floor) * 3.0, (
+            f"{name} pass took {small * 1000:.1f}ms for {small_count} candidates "
+            f"and {large * 1000:.1f}ms for {small_count * 2} -- a quadratic "
+            f"scan would quadruple where this one should double"
+        )
+
+
 def test_codex_fetch_markdown_for_llms_page():
     """Pages discovered via llms.txt are fetched via fetch_validated and have
     root link and cross-link rewrites applied."""

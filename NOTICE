@@ -68,8 +68,9 @@ opencode/
 Owner: OpenCode / anomalyco
 Source: https://github.com/anomalyco/opencode (packages/web/src/content/docs/)
 License: MIT License (see docs/opencode/LICENSE).
-Mirrored from MDX and converted to standard Markdown. Content
-(c) the OpenCode authors.
+Mirrored from MDX and converted to standard Markdown; references to the
+repository's media files are rewritten to the copies stored alongside this
+content. Content (c) the OpenCode authors.
 
 ---
 

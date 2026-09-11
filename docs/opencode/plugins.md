@@ -328,7 +328,7 @@ export const MyPlugin = async ({ client }) => {
 }
 ```
 
-Levels: `debug`, `info`, `warn`, `error`. See [SDK documentation](https://opencode.ai/docs/sdk) for details.
+Levels: `debug`, `info`, `warn`, `error`. See [SDK documentation](./sdk.md) for details.
 
 ---
 

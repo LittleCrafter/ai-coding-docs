@@ -13,6 +13,7 @@ from __future__ import annotations
 import time
 
 from mirror.core import fenced_code
+from mirror.core.html_markdown import iter_code_block_spans
 
 
 def _simple_spans(text: str):
@@ -72,6 +73,50 @@ def test_iter_indented_fence_spans_bound_is_configurable():
     text = "   ```\n   x\n   ```\n"
     assert len(list(fenced_code.iter_indented_fence_spans(text, max_indent=3))) == 1
     assert list(fenced_code.iter_indented_fence_spans(text, max_indent=0)) == []
+
+
+# Documents the zero-indent equivalence is checked against: every shape whose
+# line accounting could disagree with the shared scanner's, one per entry.
+_ZERO_INDENT_CORPUS = {
+    "empty": "",
+    "no fences": "just prose\nand more prose",
+    "one block": "before\n```python\ncode\n```\nafter",
+    "two blocks": "a\n```\nfirst\n```\nb\n~~~\nsecond\n~~~\nc",
+    "no trailing newline": "a\n```\nunterminated",
+    "opener on the last line": "a\n```",
+    "unclosed fence": "a\n```python\ncode without a closer\n",
+    "tilde fences": "a\n~~~\nbody\n~~~\nb\n~~~~\nbody\n~~~~\nc",
+    "four-backtick fences": "a\n````\n```\ninner\n```\n````\nb",
+    "blank lines inside": "a\n```\n\n\n```\nb",
+    "info string": 'a\n```json title="x"\n{}\n```\nb',
+    "three-space indent": "1. step\n\n   ```sh\n   x\n   ```\n",
+    "four-space indent": "    ```sh\n    x\n    ```\n",
+    "tab indent": "1. step\n\n\t```sh\n\tx\n\t```\n",
+    "crlf line endings": "a\r\n```\r\nx\r\n```\r\nb\r\n",
+    "bare carriage return": "a\r```\rx\r```\rb",
+    "fence characters only": "```\n```\n~~~\n~~~\n",
+    "a close with no opener": "a\n```\nb",
+    "runs of fence characters": "a\n`````\nx\n`````\nb",
+}
+
+
+def test_iter_indented_fence_spans_with_no_indent_matches_the_shared_scanner():
+    """At a zero indent bound the de-indented copy the wrapper scans IS the
+    document it was handed, so the wrapper has to report exactly the spans the
+    shared column-zero scanner reports -- same starts, same ends, nothing
+    gained and nothing lost. That equality is what lets a caller ask for the
+    shared rule through this scanner instead of a second copy of it, and it is
+    what the per-line offset mapping has to preserve: a line accounting that
+    drifted by one byte would move every span after it.
+
+    The corpus holds the shapes whose line accounting is easiest to get wrong:
+    a tab or a carriage return changes what a line contains without changing
+    how many lines there are, and an unclosed or last-line fence changes which
+    lines are part of a block at all."""
+    for name, text in _ZERO_INDENT_CORPUS.items():
+        assert list(fenced_code.iter_indented_fence_spans(text, 0)) == list(
+            iter_code_block_spans(text)
+        ), f"spans disagree on the {name!r} document"
 
 
 # --- protect_fenced_code / restore_fenced_code ----------------------------------

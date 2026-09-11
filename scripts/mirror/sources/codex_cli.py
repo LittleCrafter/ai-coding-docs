@@ -132,6 +132,18 @@ _STUB_MD_LINK_RE = re.compile(
 _LLMS_BULLET_RE = re.compile(r"^-\s+\[([^\]]+)\]\((https?://[^\s)]+)\)", re.MULTILINE)
 
 # Regex to match cross-doc markdown links to learn.chatgpt.com or developers.openai.com.
+#
+# BACKTRACKING HAZARD (why this is only applied through `_iter_link_matches`,
+# never via `re.sub`): the greedy `[^\s)#]+` destination class expands to
+# end-of-string from every candidate, fails to find its `)`, and the engine
+# then retries the whole scan from the next candidate -- one full scan of the
+# remaining document per candidate, the classic 4x-per-2x quadratic signature
+# (measured on `"[a](https://learn.chatgpt.com/docs/"` repeated: 3.3/13.2/53.2
+# s for 2/4/8 thousand copies). The pass runs on raw Markdown fetched from the
+# network, so this is a remotely-triggerable hang. `_iter_link_matches` keeps
+# this pattern for the actual matching (so group semantics are untouched) but
+# drives it with a linear `str.find` scan -- see that function for the
+# monotonicity argument.
 _CROSS_DOC_LINK_RE = re.compile(
     r"\[([^\]]*)\]\((https?://(?:learn\.chatgpt\.com|developers\.openai\.com)/(?:docs|guides)/([^\s)#]+)(#[^\s)]*)?)\)"
 )
@@ -224,10 +236,27 @@ _BLANK_WHITESPACE_LINE_RE = re.compile(r"^[ \t]+$", re.MULTILINE)
 # Markdown link whose target is site-absolute (``/codex/...``) rather than a
 # full URL; the resolution helper turns it into a relative link or an upstream
 # URL.
+#
+# BACKTRACKING HAZARD (why this is only applied through `_iter_link_matches`,
+# never via `re.sub`): the greedy `[^)\s]*` destination class expands to
+# end-of-string from every candidate, fails to find its `)`, and the engine
+# then retries the whole scan from the next candidate -- one full scan of the
+# remaining document per candidate, the classic 4x-per-2x quadratic signature
+# (measured: 0.05/0.21/0.84/3.38 s for 1/2/4/8 thousand copies of
+# `](/docs`). The pass runs on raw Markdown fetched from the network, so this
+# is a remotely-triggerable hang. `_iter_link_matches` keeps this pattern for
+# the actual matching (so group semantics are untouched) but drives it with a
+# linear `str.find` scan -- see that function for the monotonicity argument.
 _SITE_ABSOLUTE_LINK_RE = re.compile(r"\]\((?P<href>/(?!/)[^)\s]*)\)")
 
 # Relative Markdown link with a ``.md`` target, used to repoint references to a
 # slug that was skipped in favor of its twin.
+#
+# Same BACKTRACKING HAZARD as the pattern above -- the destination class
+# `[^)\s#]*` scans to end-of-string from every candidate and backtracks one
+# character at a time looking for the `.md` its `)` must follow (measured:
+# 0.06/0.25/0.98/3.92 s for 1/2/4/8 thousand copies of `](./x.md`) -- so this
+# pattern is likewise only ever applied through `_iter_link_matches`.
 _RELATIVE_MD_LINK_RE = re.compile(
     r"\]\((?P<href>(?!\w+:)(?!/)(?P<path>[^)\s#]*\.md)(?P<anchor>#[^)\s]*)?)\)"
 )
@@ -615,6 +644,123 @@ def _redirect_slug(slug: str) -> str:
     return slug
 
 
+def _iter_link_matches(
+    text: str,
+    pattern: re.Pattern[str],
+    candidate: str,
+    *,
+    starts_at_link_text: bool = False,
+) -> Iterator[re.Match[str]]:
+    """Yield every match of *pattern* in *text*, in document order.
+
+    Semantics-identical to ``pattern.finditer(text)`` but LINEAR on adversarial
+    input (see the hazard comment on each pattern above). The scan is
+    decomposed into:
+
+    1. ``str.find(candidate, ...)`` to locate the next candidate -- a literal
+       the pattern requires, so no position that cannot match is ever handed
+       to the regex engine. Each pattern is given the tightest such literal:
+       ``](/`` for the site-absolute pattern, whose head that is, and ``](``
+       for the relative-``.md`` pattern, whose head is a lookahead and so has
+       no longer common literal.
+    2. ``str.find(")", ...)`` to locate the first closing parenthesis after
+       it. Every destination class in the patterns excludes ``)``, so a match
+       can only ever end at that first parenthesis; passing its position to
+       the engine as ``endpos`` is what bounds each attempt to one link's
+       worth of text instead of letting it scan to end-of-string and
+       backtrack one character at a time.
+    3. ``pattern.match`` on the proven window, so the groups are produced by
+       the original pattern itself, not reimplemented.
+
+    *starts_at_link_text* selects where a match begins. The patterns applied
+    to a page's body start at the ``](`` the candidate names, so the candidate
+    position IS the match start. The cross-documentation pattern does not: it
+    opens with the link TEXT (``\\[([^\\]]*)\\]``) and only then reaches the
+    destination. For it, the match start is recovered from the pattern's own
+    link-text rule: the text between the ``[`` and the ``]`` may not contain a
+    ``]``, so the match starts at the leftmost ``[`` in the run of
+    ``]``-free text that ends at the candidate. That ``[`` is not part of the
+    destination the candidate pinned down, which is why it is searched for
+    separately rather than assumed; the match itself, groups included, is
+    still produced by the pattern.
+
+    LINEAR-TIME ARGUMENT: every ``str.find``/``str.rfind`` above resumes where
+    an earlier one stopped. The candidate cursor only moves forward, each
+    iteration resuming the parenthesis search at or after the candidate it is
+    about to prove, and the ``]``/``[`` searches of an iteration are bounded
+    by the region between the previous iteration's candidate and this one --
+    a region no later iteration reaches back into, because the cursor that
+    delimits it only ever advances. Each character of the document is
+    therefore examined a bounded number of times, and each ``pattern.match``
+    is confined to one link's worth of text. When no closing parenthesis
+    exists, the loop STOPS rather than retrying from the next candidate: a
+    ``)`` for any later link would sit after this candidate too and would have
+    been found, so no later link can match either.
+    """
+    pos = 0
+    closer = -1  # cached first ")" at or after the candidate cursor
+    while True:
+        found = text.find(candidate, pos)
+        if found == -1:
+            break
+        if closer < found + 2:
+            closer = text.find(")", found + 2)
+            if closer == -1:
+                # No ")" anywhere after this candidate -- and therefore after
+                # ANY later one either (see the docstring).
+                break
+        start = found
+        if starts_at_link_text:
+            # ``rfind`` answers -1 when the cursor's own text holds no "]",
+            # in which case the run starts at the cursor -- using 0 instead
+            # would put the run's start before every match already consumed
+            # and re-match one of them forever.
+            bracket = text.rfind("]", pos, found)
+            run_start = pos if bracket == -1 else bracket + 1
+            start = text.find("[", run_start, found)
+            if start == -1:
+                # No "[" before the destination in this run, so the pattern
+                # cannot match here. A later candidate starts after it.
+                pos = found + 1
+                continue
+        match = pattern.match(text, start, closer + 1)
+        if match is None:
+            # The destination does not continue the way the pattern needs
+            # (a different host, a space before the closer), so this
+            # candidate is not a link. A later one starts after it.
+            pos = found + 1
+            continue
+        yield match
+        pos = closer = match.end()
+
+
+def _splice_matches(
+    text: str,
+    matches: Iterator[re.Match[str]],
+    replacement: Callable[[re.Match[str]], str],
+) -> str:
+    """Rebuild *text*, replacing each of *matches* with *replacement* of it.
+
+    The substitution half of a link pass: the caller's scanner names the
+    matches in document order, *replacement* answers what each one becomes,
+    and everything between two matches is copied through byte for byte --
+    which is what keeps a rewrite confined to the links the scanner proved,
+    instead of re-examining the rest of the page.
+
+    The caller may return ``match.group(0)`` to leave a match as it was; that
+    is the same string the copy would have produced, so the two are
+    interchangeable.
+    """
+    out: list[str] = []
+    pos = 0
+    for match in matches:
+        out.append(text[pos : match.start()])
+        out.append(replacement(match))
+        pos = match.end()
+    out.append(text[pos:])
+    return "".join(out)
+
+
 def _rewrite_cross_links(
     text: str,
     current_slug: str,
@@ -628,6 +774,13 @@ def _rewrite_cross_links(
     If found, rewrites the target as a relative link with `./` prefix if needed and
     preserves any anchor fragment. A slug that was skipped in favor of its twin
     resolves through that redirect. Unmatched or unknown links are left intact.
+
+    The matches come from :func:`_iter_link_matches` rather than from a
+    ``re.sub`` over the pattern: the pass runs on raw Markdown fetched from
+    the network, and the pattern's greedy destination class is quadratic on
+    input that repeats its head without a closing parenthesis (see the hazard
+    comment on the pattern). Links the pattern rejects -- another host, an
+    unknown slug -- are copied through unchanged.
     """
     if known_slugs is None:
         known_slugs = _KNOWN_SLUGS
@@ -661,7 +814,13 @@ def _rewrite_cross_links(
         new_target = f"{rel_path}{anchor}"
         return f"[{link_text}]({new_target})"
 
-    return _CROSS_DOC_LINK_RE.sub(replace, text)
+    return _splice_matches(
+        text,
+        _iter_link_matches(
+            text, _CROSS_DOC_LINK_RE, "](http", starts_at_link_text=True
+        ),
+        replace,
+    )
 
 
 def _rewrite_body_links(
@@ -680,6 +839,17 @@ def _rewrite_body_links(
       target is mirrored, the upstream URL when it is not.
     * **relative links to a skipped stub** (``./skills.md``). The stub is not
       mirrored, so the link is repointed at the twin that replaced it.
+
+    Both shapes are found by :func:`_iter_link_matches`, not by a ``re.sub``
+    over their patterns: the pass runs on raw Markdown fetched from the
+    network, and each pattern's greedy destination class is quadratic on
+    input that repeats its head without a closing parenthesis (see the hazard
+    comments on the patterns). The two passes are applied in turn because they
+    answer different questions -- which page a site-absolute link should point
+    at, and which file a reference to a skipped stub should point at -- and
+    neither can undo the other: the second pass only repoints a link whose
+    target is a stub this run skipped, and the first resolves such a target
+    through its redirect already.
     """
     if known_slugs is None:
         known_slugs = _KNOWN_SLUGS
@@ -701,8 +871,16 @@ def _rewrite_body_links(
             rel_path = f"./{rel_path}"
         return f"]({rel_path}{anchor})"
 
-    text = _SITE_ABSOLUTE_LINK_RE.sub(site_absolute_replace, text)
-    return _RELATIVE_MD_LINK_RE.sub(relative_redirect_replace, text)
+    text = _splice_matches(
+        text,
+        _iter_link_matches(text, _SITE_ABSOLUTE_LINK_RE, "](/"),
+        site_absolute_replace,
+    )
+    return _splice_matches(
+        text,
+        _iter_link_matches(text, _RELATIVE_MD_LINK_RE, "]("),
+        relative_redirect_replace,
+    )
 
 
 def _rewrite_root_link(text_or_match: str | re.Match[str]) -> str:
@@ -1321,6 +1499,15 @@ def _resolve_internal_href(
     also use (``/plugins/build/plugins``, ``/workspace-agents/authentication``),
     and matching those by their last path segment would silently repoint a link
     at a different page of the mirror.
+
+    A slug that is not mirrored under its own name is retried under three
+    further spellings, in order: with a ``guides/`` prefix, as its last path
+    segment alone, and with hyphens replaced by underscores. They cover the
+    two origins this module mirrors under one folder -- the documentation
+    catalogue names a page ``agents-md`` while the repository file for it is
+    ``agents_md.md`` -- while staying conservative: a spelling is only used
+    when it names a page this run mirrors, so an unknown reference still falls
+    through to its upstream URL.
     """
     href_clean, _, query = href.partition("?")
     href_path, _, anchor = href_clean.partition("#")
