@@ -1,7 +1,6 @@
----
-title: ACP Support
-description: Use OpenCode in any ACP-compatible editor.
----
+# ACP Support
+
+Use OpenCode in any ACP-compatible editor.
 
 OpenCode supports the [Agent Client Protocol](https://agentclientprotocol.com) or (ACP), allowing you to use it directly in compatible editors and IDEs.
 

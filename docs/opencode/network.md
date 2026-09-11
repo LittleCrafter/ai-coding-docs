@@ -1,7 +1,6 @@
----
-title: Network
-description: Configure proxies and custom certificates.
----
+# Network
+
+Configure proxies and custom certificates.
 
 OpenCode supports standard proxy environment variables and custom certificates for enterprise network environments.
 
@@ -25,7 +24,7 @@ export NO_PROXY=localhost,127.0.0.1
 > [!CAUTION]
 > The TUI communicates with a local HTTP server. You must bypass the proxy for this connection to prevent routing loops.
 
-You can configure the server's port and hostname using [CLI flags](/docs/cli#run).
+You can configure the server's port and hostname using [CLI flags](./cli.md#run).
 
 ---
 

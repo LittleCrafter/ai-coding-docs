@@ -1,7 +1,6 @@
----
-title: Enterprise
-description: Using OpenCode securely in your organization.
----
+# Enterprise
+
+Using OpenCode securely in your organization.
 
 OpenCode Enterprise is for organizations that want to ensure that their code and data never leaves their infrastructure. It can do this by using a centralized config that integrates with your SSO and internal AI gateway.
 
@@ -17,7 +16,7 @@ To get started with OpenCode Enterprise:
 
 ## Trial
 
-OpenCode is open source and does not store any of your code or context data, so your developers can simply [get started](/docs/) and carry out a trial.
+OpenCode is open source and does not store any of your code or context data, so your developers can simply [get started](./intro.md) and carry out a trial.
 
 ---
 
@@ -47,7 +46,7 @@ We recommend you disable this for your trial.
 }
 ```
 
-[Learn more about sharing](/docs/share).
+[Learn more about sharing](./share.md).
 
 ---
 

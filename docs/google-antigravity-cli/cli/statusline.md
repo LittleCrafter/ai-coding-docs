@@ -4,7 +4,7 @@ Define custom scripting configurations and format dynamic JSON state payloads to
 
 Note
 
-To toggle the status line on/off or configure it from the TUI, see the **[Status Line Command](/docs/cli/commands/statusline)**.
+To toggle the status line on/off or configure it from the TUI, see the **[Status Line Command](./commands/statusline.md)**.
 
 ## Overview
 
@@ -59,7 +59,7 @@ The JSON payload piped to your script contains the following top-level fields:
 | `task_count` | int | Number of running background tasks. |
 | `terminal_width` | int | Live width of the interactive terminal. |
 | `execution_mode` | string | Current active prompt execution mode (e.g., `planning`, `fast`). |
-| `vim` | object | Vim editing state: `mode` is `NORMAL`, `INSERT`, `VISUAL`, or `VISUAL LINE`. Present only when [Vim editor mode](/docs/cli/vim-editor-mode) is enabled. |
+| `vim` | object | Vim editing state: `mode` is `NORMAL`, `INSERT`, `VISUAL`, or `VISUAL LINE`. Present only when [Vim editor mode](./vim-editor-mode.md) is enabled. |
 
 ### JSON payload example
 
@@ -132,7 +132,7 @@ chmod +x ~/.gemini/antigravity-cli/statusline.sh
 
 ## See also
 
-*   **[Status Line Command](/docs/cli/commands/statusline)**: Toggle status line elements interactively.
-*   **[Terminal Title Customization](/docs/cli/title)**: Configure dynamic window titles.
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Manage secure directory permissions.
+*   **[Status Line Command](./commands/statusline.md)**: Toggle status line elements interactively.
+*   **[Terminal Title Customization](./title.md)**: Configure dynamic window titles.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions & Sandbox](./sandbox.md)**: Manage secure directory permissions.

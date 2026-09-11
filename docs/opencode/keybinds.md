@@ -1,7 +1,6 @@
----
-title: Keybinds
-description: Customize your keybinds.
----
+# Keybinds
+
+Customize your keybinds.
 
 OpenCode has a list of keybinds that you can customize through `tui.json`.
 

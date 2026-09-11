@@ -1,7 +1,6 @@
----
-title: Zen
-description: Curated list of models provided by OpenCode.
----
+# Zen
+
+Curated list of models provided by OpenCode.
 
 OpenCode Zen is a list of tested and verified models provided by the OpenCode team.
 
@@ -125,7 +124,7 @@ You can also access our models through the following API endpoints.
 | Nemotron 3.5 Lightning Free     | nemotron-3.5-lightning-free     | `https://opencode.ai/zen/v1/chat/completions`             | `@ai-sdk/openai-compatible` |
 | Muse Spark 1.3 Contributor Free | muse-spark-1.3-contributor-free | `https://opencode.ai/zen/v1/responses`                    | `@ai-sdk/openai`            |
 
-The [model id](/docs/config/#models) in your OpenCode config
+The [model id](./config.md#models) in your OpenCode config
 uses the format `opencode/<model-id>`. For example, for GPT 5.5, you would
 use `opencode/gpt-5.5` in your config.
 
@@ -231,7 +230,7 @@ We support a pay-as-you-go model. Below are the prices **per 1M tokens**.
 
 **DeepSeek V4 Flash Vision Exp:** Images are converted into tokens based on their dimensions and billed as input tokens alongside text tokens. [Learn more](https://api-docs.deepseek.com/quick_start/pricing/).
 
-You may notice [low-cost models](/docs/config/#models), such as Haiku, Nano, or Flash, in your usage history. OpenCode uses these models to generate session titles.
+You may notice [low-cost models](./config.md#models), such as Haiku, Nano, or Flash, in your usage history. OpenCode uses these models to generate session titles.
 
 > [!NOTE]
 > Credit card fees are passed along at cost (4.4% + $0.30 per transaction); we don't charge anything beyond that.

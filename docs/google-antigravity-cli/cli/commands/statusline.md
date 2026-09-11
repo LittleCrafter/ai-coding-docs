@@ -6,7 +6,7 @@ Toggle the TUI status line or configure a custom rendering command.
 
 The `/statusline` command allows you to quickly enable or disable the status line at the bottom of your TUI, or configure a custom shell command to render it dynamically, without manually editing your settings file.
 
-For details on how to write custom status line scripts and the JSON state payload schema, see the conceptual **[Status Line Customization Guide](/docs/cli/statusline)**.
+For details on how to write custom status line scripts and the JSON state payload schema, see the conceptual **[Status Line Customization Guide](../statusline.md)**.
 
 ## Usage
 
@@ -61,6 +61,6 @@ To view the quick command reference:
 
 ## Next steps
 
-*   **[Status Line Guide](/docs/cli/statusline)**: Learn how to write custom scripts and handle the JSON payload.
-*   **[Window Title Command](/docs/cli/commands/title)**: Configure dynamic terminal window titles.
-*   **[CLI Reference](/docs/cli/reference)**: See all available slash commands.
+*   **[Status Line Guide](../statusline.md)**: Learn how to write custom scripts and handle the JSON payload.
+*   **[Window Title Command](./title.md)**: Configure dynamic terminal window titles.
+*   **[CLI Reference](../reference.md)**: See all available slash commands.

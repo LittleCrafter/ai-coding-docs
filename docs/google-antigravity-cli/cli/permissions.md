@@ -1,6 +1,6 @@
 # Permissions
 
-Secure your local workstation, restrict absolute file paths, configure custom allow/deny/ask policies, and manage interactive approvals. You can also manage these rules interactively using the **[Permissions Command](/docs/cli/commands/permissions)**.
+Secure your local workstation, restrict absolute file paths, configure custom allow/deny/ask policies, and manage interactive approvals. You can also manage these rules interactively using the **[Permissions Command](./commands/permissions.md)**.
 
 ## Fine-grained permissions
 
@@ -107,7 +107,7 @@ Add these rules to your `~/.gemini/antigravity-cli/settings.json` file:
 
 ## See also
 
-*   **[Permissions Command](/docs/cli/commands/permissions)**: Manage rules interactively in the TUI.
-*   **[Sandbox Customization](/docs/cli/sandbox)**: Enforce OS-level container isolation boundaries.
-*   **[Plugins & Skills](/docs/cli/plugins)**: Create your own custom skills slash commands.
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions Command](./commands/permissions.md)**: Manage rules interactively in the TUI.
+*   **[Sandbox Customization](./sandbox.md)**: Enforce OS-level container isolation boundaries.
+*   **[Plugins & Skills](./plugins.md)**: Create your own custom skills slash commands.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys and buffers.

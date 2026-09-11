@@ -118,6 +118,6 @@ When you use the `-c` / `--continue` flag, the CLI resolves the target session u
 
 ## See also
 
-*   **[Managing Conversations](/docs/cli/conversations)**: Learn about workspace scoping and branching with `/fork`.
-*   **[CLI Reference](/docs/cli/reference)**: See all available slash commands and default keybindings.
-*   **[Settings & Keybindings](/docs/cli/settings)**: Configure rendering modes and customize keyboard shortcuts.
+*   **[Managing Conversations](../conversations.md)**: Learn about workspace scoping and branching with `/fork`.
+*   **[CLI Reference](../reference.md)**: See all available slash commands and default keybindings.
+*   **[Settings & Keybindings](../settings.md)**: Configure rendering modes and customize keyboard shortcuts.

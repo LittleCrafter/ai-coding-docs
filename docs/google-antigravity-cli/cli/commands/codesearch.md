@@ -97,6 +97,6 @@ This makes Code Search a fast way to find relevant code and hand the agent targe
 
 ## Next steps
 
-*   **[CLI Features](/docs/cli/features)**: Explore the rest of the interactive TUI capabilities.
-*   **[Prompting Guide](/docs/cli/prompting)**: Learn how to direct the agent to search and edit code for you.
-*   **[Resume Command (/resume)](/docs/cli/commands/resume)**: Navigate and manage your past conversations.
+*   **[CLI Features](../features.md)**: Explore the rest of the interactive TUI capabilities.
+*   **[Prompting Guide](../prompting.md)**: Learn how to direct the agent to search and edit code for you.
+*   **[Resume Command (/resume)](./resume.md)**: Navigate and manage your past conversations.

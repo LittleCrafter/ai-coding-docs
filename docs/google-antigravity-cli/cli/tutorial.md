@@ -17,7 +17,7 @@ This guide walks you through a rapid onboarding exercise. You will direct an aut
     
     Note
     
-    **First Launch**: If running `agy` for the first time, follow the terminal instructions to complete silent authentication. See [Installation & Auth](/docs/cli/install) for troubleshooting details.
+    **First Launch**: If running `agy` for the first time, follow the terminal instructions to complete silent authentication. See [Installation & Auth](./install.md) for troubleshooting details.
     
 2.  **Prompt the agent to generate a Python scraping script**
     
@@ -56,6 +56,6 @@ This guide walks you through a rapid onboarding exercise. You will direct an aut
 
 Now that you have executed your first agent-assisted workflow, learn how to configure the CLI and master core concepts:
 
-*   **[Installation & Auth](/docs/cli/install)**: Detailed instructions on installing `agy` and setting up SSH profiles.
-*   **[Prompting & Interaction](/docs/cli/prompting)**: Best practices for multiline inputs, pasting media files, and active interrupt controls.
-*   **[Reviewing Artifacts](/docs/cli/artifacts)**: Deep dive into the “Trust through Transparency” architectural pattern.
+*   **[Installation & Auth](./install.md)**: Detailed instructions on installing `agy` and setting up SSH profiles.
+*   **[Prompting & Interaction](./prompting.md)**: Best practices for multiline inputs, pasting media files, and active interrupt controls.
+*   **[Reviewing Artifacts](./artifacts.md)**: Deep dive into the “Trust through Transparency” architectural pattern.

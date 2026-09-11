@@ -1,7 +1,6 @@
----
-title: Config
-description: Using the OpenCode JSON config.
----
+# Config
+
+Using the OpenCode JSON config.
 
 You can configure OpenCode using a JSON config file.
 
@@ -288,7 +287,7 @@ Use `OPENCODE_TUI_CONFIG` to point to a custom TUI config file.
 
 When `cursor.style` is `"default"`, the terminal default cursor is restored, so `cursor.blinking` has no effect.
 
-Set `attention.enabled` to turn on TUI desktop notifications and sounds. See [TUI attention](/docs/tui#attention).
+Set `attention.enabled` to turn on TUI desktop notifications and sounds. See [TUI attention](./tui.md#attention).
 
 Legacy `theme`, `keybinds`, and `tui` keys in `opencode.json` are deprecated and automatically migrated when possible.
 
@@ -319,7 +318,7 @@ Available options:
 - `mdnsDomain` - Custom domain name for mDNS service. Defaults to `opencode.local`. Useful for running multiple instances on the same network.
 - `cors` - Additional origins to allow for CORS when using the HTTP server from a browser-based client. Values must be full origins (scheme + host + optional port), eg `https://app.example.com`.
 
-[Learn more about the server here](/docs/server).
+[Learn more about the server here](./server.md).
 
 ---
 
@@ -352,7 +351,7 @@ You can manage the tools an LLM can use through the `tools` option.
 }
 ```
 
-[Learn more about tools here](/docs/tools).
+[Learn more about tools here](./tools.md).
 
 ---
 
@@ -393,7 +392,7 @@ Provider options can include `timeout`, `headerTimeout`, `chunkTimeout`, and `se
 - `chunkTimeout` - Timeout in milliseconds between streamed response chunks (default: 300000, or 5 minutes). If no chunk arrives in time, the request is aborted. Set to `false` to disable.
 - `setCacheKey` - Ensure a cache key is always set for designated provider.
 
-You can also configure [local models](/docs/models#local). [Learn more](/docs/models).
+You can also configure [local models](./models.md#local). [Learn more](./models.md).
 
 ---
 
@@ -416,7 +415,7 @@ Use the `experimental.policies` option to allow or deny OpenCode actions on conf
 }
 ```
 
-[Learn more about policies here](/docs/policies).
+[Learn more about policies here](./policies.md).
 
 ---
 
@@ -477,9 +476,9 @@ Amazon Bedrock supports AWS-specific configuration:
 - `endpoint` - Custom endpoint URL for VPC endpoints. This is an alias for the generic `baseURL` option using AWS-specific terminology. If both are specified, `endpoint` takes precedence.
 
 > [!NOTE]
-> Bearer tokens (`AWS_BEARER_TOKEN_BEDROCK` or `/connect`) take precedence over profile-based authentication. See [authentication precedence](/docs/providers#authentication-precedence) for details.
+> Bearer tokens (`AWS_BEARER_TOKEN_BEDROCK` or `/connect`) take precedence over profile-based authentication. See [authentication precedence](./providers.md#authentication-precedence) for details.
 
-[Learn more about Amazon Bedrock configuration](/docs/providers#amazon-bedrock).
+[Learn more about Amazon Bedrock configuration](./providers.md#amazon-bedrock).
 
 ---
 
@@ -494,7 +493,7 @@ Set your UI theme in `tui.json`.
 }
 ```
 
-[Learn more here](/docs/themes).
+[Learn more here](./themes.md).
 
 ---
 
@@ -520,7 +519,7 @@ You can configure specialized agents for specific tasks through the `agent` opti
 }
 ```
 
-You can also define agents using markdown files in `~/.config/opencode/agents/` or `.opencode/agents/`. [Learn more here](/docs/agents).
+You can also define agents using markdown files in `~/.config/opencode/agents/` or `.opencode/agents/`. [Learn more here](./agents.md).
 
 ---
 
@@ -535,7 +534,7 @@ You can set the default agent using the `default_agent` option. This determines 
 }
 ```
 
-The default agent must be a primary agent (not a subagent). This can be a built-in agent like `"build"` or `"plan"`, or a [custom agent](/docs/agents) you've defined. If the specified agent doesn't exist or is a subagent, OpenCode will fall back to `"build"` with a warning.
+The default agent must be a primary agent (not a subagent). This can be a built-in agent like `"build"` or `"plan"`, or a [custom agent](./agents.md) you've defined. If the specified agent doesn't exist or is a subagent, OpenCode will fall back to `"build"` with a warning.
 
 This setting applies across all interfaces: TUI, CLI (`opencode run`), desktop app, and GitHub Action.
 
@@ -558,7 +557,7 @@ The default is `1`, which allows primary agents to launch subagents but prevents
 
 ### Sharing
 
-You can configure the [share](/docs/share) feature through the `share` option.
+You can configure the [share](./share.md) feature through the `share` option.
 
 ```json title="opencode.json"
 {
@@ -599,7 +598,7 @@ You can configure custom commands for repetitive tasks through the `command` opt
 }
 ```
 
-You can also define commands using markdown files in `~/.config/opencode/commands/` or `.opencode/commands/`. [Learn more here](/docs/commands).
+You can also define commands using markdown files in `~/.config/opencode/commands/` or `.opencode/commands/`. [Learn more here](./commands.md).
 
 ---
 
@@ -618,7 +617,7 @@ Customize TUI keyboard shortcuts in `tui.json` with `keybinds`.
 
 `keybinds` is merged with built-in defaults, so you only need to configure the shortcuts you want to change.
 
-[Learn more here](/docs/keybinds).
+[Learn more here](./keybinds.md).
 
 ---
 
@@ -686,7 +685,7 @@ Use an object to keep built-ins enabled while configuring overrides or custom fo
 }
 ```
 
-[Learn more about formatters here](/docs/formatters).
+[Learn more about formatters here](./formatters.md).
 
 ---
 
@@ -714,7 +713,7 @@ Use an object to keep built-ins enabled while configuring overrides or custom LS
 }
 ```
 
-[Learn more about LSP servers here](/docs/lsp).
+[Learn more about LSP servers here](./lsp.md).
 
 ---
 
@@ -734,7 +733,7 @@ For example, to ensure that the `edit` and `bash` tools require user approval:
 }
 ```
 
-[Learn more about permissions here](/docs/permissions).
+[Learn more about permissions here](./permissions.md).
 
 ---
 
@@ -787,13 +786,13 @@ You can configure MCP servers you want to use through the `mcp` option.
 }
 ```
 
-[Learn more here](/docs/mcp-servers).
+[Learn more here](./mcp-servers.md).
 
 ---
 
 ### Plugins
 
-[Plugins](/docs/plugins) extend OpenCode with custom tools, hooks, and integrations.
+[Plugins](./plugins.md) extend OpenCode with custom tools, hooks, and integrations.
 
 Place plugin files in `.opencode/plugins/` or `~/.config/opencode/plugins/`. You can also load plugins from npm through the `plugin` option.
 
@@ -804,7 +803,7 @@ Place plugin files in `.opencode/plugins/` or `~/.config/opencode/plugins/`. You
 }
 ```
 
-[Learn more here](/docs/plugins).
+[Learn more here](./plugins.md).
 
 ---
 
@@ -820,7 +819,7 @@ You can configure the instructions for the model you're using through the `instr
 ```
 
 This takes an array of paths and glob patterns to instruction files. [Learn more
-about rules here](/docs/rules).
+about rules here](./rules.md).
 
 ---
 

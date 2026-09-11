@@ -4,7 +4,7 @@ Control whether Antigravity CLI pauses to ask before modifying files or executin
 
 ## Before you begin
 
-*   [Install Antigravity CLI](/docs/cli/install)
+*   [Install Antigravity CLI](./install.md)
 *   Have an active project repository with source code to edit
 
 ## Available modes
@@ -133,6 +133,6 @@ agy --mode=plan
 
 ## Next steps
 
-*   [Permissions](/docs/cli/permissions): Configure fine-grained tool approval rules and wildcard matching
-*   [Settings, Rendering & Keybindings](/docs/cli/settings): Customize configuration overrides and interactive preferences
-*   [Background Tasks & Subagents](/docs/cli/subagents): Manage parallel subagent execution and asynchronous task queues
+*   [Permissions](./permissions.md): Configure fine-grained tool approval rules and wildcard matching
+*   [Settings, Rendering & Keybindings](./settings.md): Customize configuration overrides and interactive preferences
+*   [Background Tasks & Subagents](./subagents.md): Manage parallel subagent execution and asynchronous task queues

@@ -9,16 +9,16 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | Command | Category | Alias | Execution Purpose |
 | :-- | :-- | :-- | :-- |
 | **`/add-dir <path>`** | Utilities | — | Add a directory path to the active workspace. |
-| **[`/agents`](/docs/cli/commands/agents)** | Tools & Tasks | — | Open the [Agent Manager Panel](/docs/cli/commands/agents) to switch custom agents and monitor background subagents. |
-| **[`/boost`](/docs/boost)** `<task>` | Reasoning | — | Run on-demand multi-agent deep reasoning loops. |
+| **[`/agents`](./commands/agents.md)** | Tools & Tasks | — | Open the [Agent Manager Panel](./commands/agents.md) to switch custom agents and monitor background subagents. |
+| **[`/boost`](https://antigravity.google/docs/boost)** `<task>` | Reasoning | — | Run on-demand multi-agent deep reasoning loops. |
 | **`/artifact`** | Tools & Tasks | — | Open the Artifact Review Panel. |
 | **`/btw <query>`** | Utilities | — | Ask a side question in the background without interrupting the main conversation. |
 | **`/clear`** | Utilities | `/new` | Clear the terminal and reset active conversation contexts. |
 | **`/config`** | Configurations | `/settings` | Open the interactive Settings Editor Overlay. |
 | **`/context`** | Utilities | — | Open the context usage visualization panel. |
 | **`/copy`** | Utilities | — | Copy the last agent response to the system clipboard. |
-| **[`/credits`](/docs/cli/commands/credits)** | Account | — | View remaining G1 credits and purchase links. |
-| **[`/diff`](/docs/cli/commands/diff)** | Utilities | — | Open the [Interactive Diff Viewer](/docs/cli/commands/diff) to view changes, turns, and commits. |
+| **[`/credits`](./commands/credits.md)** | Account | — | View remaining G1 credits and purchase links. |
+| **[`/diff`](./commands/diff.md)** | Utilities | — | Open the [Interactive Diff Viewer](./commands/diff.md) to view changes, turns, and commits. |
 | **`/exit`** | Core | `/quit` | Close the TUI session and restore your host shell. |
 | **`/fast`** | Configurations | — | Enable fast mode (bypass reasoning plans) for quick actions. |
 | **`/feedback`** | Utilities | — | Open the feedback submission panel. |
@@ -30,18 +30,18 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **`/mcp`** | Tools & Tasks | — | Open the Model Context Protocol (MCP) server manager. |
 | **`/model`** | Configurations | — | Choose your preferred reasoning model (persists across sessions). |
 | **`/open <path>`** | Utilities | — | Force the path to open inside your default system editor. |
-| **[`/permissions`](/docs/cli/commands/permissions)** | Configurations | — | Open the interactive tool permissions manager panel. |
+| **[`/permissions`](./commands/permissions.md)** | Configurations | — | Open the interactive tool permissions manager panel. |
 | **`/planning`** | Configurations | — | Enable multi-turn plan generation mode for complex engineering tasks. |
 | **`/rename <name>`** | Conversations | — | Rename the current session thread. |
-| **[`/resume`](/docs/cli/commands/resume)** | Conversations | `/switch`, `/conversation` | Open the [conversation picker overlay](/docs/cli/commands/resume) to select and load previous threads. |
+| **[`/resume`](./commands/resume.md)** | Conversations | `/switch`, `/conversation` | Open the [conversation picker overlay](./commands/resume.md) to select and load previous threads. |
 | **`/rewind`** | Conversations | `/undo` | Roll back your conversation history to a previous message. |
 | **`/skills`** | Tools & Tasks | — | Browse loaded local and global Agent Skills. |
-| **[`/statusline`](/docs/cli/commands/statusline)** | Configurations | — | Open the Status Bar customization overlay. |
+| **[`/statusline`](./commands/statusline.md)** | Configurations | — | Open the Status Bar customization overlay. |
 | **`/tasks`** | Tools & Tasks | — | Open the Task Manager Panel to monitor background shell execution logs. |
-| **[`/teamwork-preview`](/docs/teamwork)** `<task>` | Reasoning | `/teamwork` | Launch [collaborative multi-agent teams](/docs/teamwork) for long-horizon projects (paid plans). |
-| **[`/title`](/docs/cli/commands/title) \[on/off\]** | Configurations | — | Toggle or set terminal window title updates. |
-| **[`/usage`](/docs/cli/commands/usage)** | Utilities | `/quota` | Display model quota usage. |
-| **[`/voice`](/docs/cli/commands/voice)** | Utilities | `/record` | Dictate a prompt using your microphone. |
+| **[`/teamwork-preview`](https://antigravity.google/docs/teamwork)** `<task>` | Reasoning | `/teamwork` | Launch [collaborative multi-agent teams](https://antigravity.google/docs/teamwork) for long-horizon projects (paid plans). |
+| **[`/title`](./commands/title.md) \[on/off\]** | Configurations | — | Toggle or set terminal window title updates. |
+| **[`/usage`](./commands/usage.md)** | Utilities | `/quota` | Display model quota usage. |
+| **[`/voice`](./commands/voice.md)** | Utilities | `/record` | Dictate a prompt using your microphone. |
 
 ## Default keybindings
 
@@ -77,7 +77,7 @@ These keys are active when writing instructions inside the prompt box.
 | **`Ctrl+Z`** | `prompt.undo_text` | Reverts the last edit. |
 | **`Ctrl+Shift+Z`** | `prompt.redo_text` | Redoes the last undone text operation. |
 | **`Ctrl+D`** | `—` | Forward delete (only when the prompt box is non-empty). |
-| **`F5`** | `voice.start_dictation` | Starts or stops [voice dictation](/docs/cli/commands/voice). |
+| **`F5`** | `voice.start_dictation` | Starts or stops [voice dictation](./commands/voice.md). |
 
 ### Navigation & scrolling
 
@@ -127,7 +127,7 @@ Primary settings key names, data types, system defaults, and expected parameters
 | **`showTips`** | boolean | `true` | Displays helpful agentic tips above the prompt panel during generation turns. |
 | **`showFeedbackSurvey`** | boolean | `true` | Displays periodic quality feedback surveys upon active task completions. |
 | **`editor`** | string | `"auto"` | Target text editor utility: `"auto"` (consults system `$EDITOR`), `"vim"`, `"emacs"`, or custom text labels. |
-| **`editorMode`** | string | `"default"` | Prompt editing model: `"default"` (flat text editing) or `"vim"` (modal editing). Distinct from `editor`, which selects an external program. See [Vim Editor Mode](/docs/cli/vim-editor-mode). |
+| **`editorMode`** | string | `"default"` | Prompt editing model: `"default"` (flat text editing) or `"vim"` (modal editing). Distinct from `editor`, which selects an external program. See [Vim Editor Mode](./vim-editor-mode.md). |
 | **`vimInsertFirst`** | boolean | `false` | Starts Vim editing in Insert mode and makes a bare `Enter` submit. Requires `editorMode` set to `"vim"`. |
 | **`allowNonWorkspaceAccess`** | boolean | `false` | Permits the agent’s file read and write tools to navigate outside recognized Git/workspace roots. |
 | **`enableTerminalSandbox`** | boolean | `false` | Restricts all local execution commands launched by agents to OS containment rings. |
@@ -140,6 +140,6 @@ Primary settings key names, data types, system defaults, and expected parameters
 
 Learn how to safely deploy permission policies, sandboxes, and customize plugins:
 
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Enforce command-line containment rules.
-*   **[Plugins & Skills](/docs/cli/plugins)**: Create your own custom skills slash commands.
-*   **[Installation & Auth](/docs/cli/install)**: Update your CLI install.
+*   **[Permissions & Sandbox](./sandbox.md)**: Enforce command-line containment rules.
+*   **[Plugins & Skills](./plugins.md)**: Create your own custom skills slash commands.
+*   **[Installation & Auth](./install.md)**: Update your CLI install.

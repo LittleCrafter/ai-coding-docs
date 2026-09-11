@@ -1,9 +1,8 @@
----
-title: CLI
-description: OpenCode CLI options and commands.
----
+# CLI
 
-The OpenCode CLI by default starts the [TUI](/docs/tui) when run without any arguments.
+OpenCode CLI options and commands.
+
+The OpenCode CLI by default starts the [TUI](./tui.md) when run without any arguments.
 
 ```bash
 opencode
@@ -198,7 +197,7 @@ Install the GitHub agent in your repository.
 opencode github install
 ```
 
-This sets up the necessary GitHub Actions workflow and guides you through the configuration process. [Learn more](/docs/github).
+This sets up the necessary GitHub Actions workflow and guides you through the configuration process. [Learn more](./github.md).
 
 ---
 
@@ -311,7 +310,7 @@ opencode models [provider]
 
 This command displays all models available across your configured providers in the format `provider/model`.
 
-This is useful for figuring out the exact model name to use in [your config](/docs/config/).
+This is useful for figuring out the exact model name to use in [your config](./config.md).
 
 You can optionally pass a provider ID to filter models by that provider.
 
@@ -385,7 +384,7 @@ opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
 
 ### serve
 
-Start a headless OpenCode server for API access. Check out the [server docs](/docs/server) for the full HTTP interface.
+Start a headless OpenCode server for API access. Check out the [server docs](./server.md) for the full HTTP interface.
 
 ```bash
 opencode serve

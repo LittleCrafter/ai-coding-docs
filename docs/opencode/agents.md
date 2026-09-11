@@ -1,7 +1,6 @@
----
-title: Agents
-description: Configure and use specialized agents.
----
+# Agents
+
+Configure and use specialized agents.
 
 Agents are specialized AI assistants that can be configured for specific tasks and workflows. They allow you to create focused tools with custom prompts, models, and tool access.
 
@@ -350,7 +349,7 @@ This path is relative to where the config file is located. So this works for bot
 Use the `model` config to override the model for this agent. Useful for using different models optimized for different tasks. For example, a faster model for planning, a more capable model for implementation.
 
 > [!TIP]
-> If you don’t specify a model, primary agents use the [model globally configured](/docs/config#models) while subagents will use the model of the primary agent that invoked the subagent.
+> If you don’t specify a model, primary agents use the [model globally configured](./config.md#models) while subagents will use the model of the primary agent that invoked the subagent.
 
 ```json title="opencode.json"
 {
@@ -362,7 +361,7 @@ Use the `model` config to override the model for this agent. Useful for using di
 }
 ```
 
-The model ID in your OpenCode config uses the format `provider/model-id`. For example, if you're using [OpenCode Zen](/docs/zen), you would use `opencode/gpt-5.1-codex` for GPT 5.1 Codex.
+The model ID in your OpenCode config uses the format `provider/model-id`. For example, if you're using [OpenCode Zen](./zen.md), you would use `opencode/gpt-5.1-codex` for GPT 5.1 Codex.
 
 ---
 
@@ -410,7 +409,7 @@ You can also use wildcards in legacy `tools` entries to control multiple tools a
 }
 ```
 
-[Learn more about tools](/docs/tools).
+[Learn more about tools](./tools.md).
 
 ---
 
@@ -547,7 +546,7 @@ Since the last matching rule takes precedence, put the `*` wildcard first and sp
 }
 ```
 
-[Learn more about permissions](/docs/permissions).
+[Learn more about permissions](./permissions.md).
 
 ---
 

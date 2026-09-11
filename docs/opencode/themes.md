@@ -1,7 +1,6 @@
----
-title: Themes
-description: Select a built-in theme or define your own.
----
+# Themes
+
+Select a built-in theme or define your own.
 
 With OpenCode you can select from one of several built-in themes, use a theme that adapts to your terminal theme, or define your own custom theme.
 

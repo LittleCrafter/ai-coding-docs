@@ -7,10 +7,10 @@ Vim editor mode replaces the editing model in every multi-line input surface of 
 | Surface | What you edit there |
 | :-- | :-- |
 | The prompt box | Your message to the agent, including multi-line prompts and slash commands. |
-| The comment editor in [`/diff`](/docs/cli/commands/diff) | Review comments you leave on a changed file. |
-| The comment editor in the artifact review panel | Feedback on a generated [artifact](/docs/cli/artifacts) before you accept it. |
+| The comment editor in [`/diff`](./commands/diff.md) | Review comments you leave on a changed file. |
+| The comment editor in the artifact review panel | Feedback on a generated [artifact](./artifacts.md) before you accept it. |
 
-It also adds a `vim` tab to the help overlay and a mode badge to the [status line](/docs/cli/statusline).
+It also adds a `vim` tab to the help overlay and a mode badge to the [status line](./statusline.md).
 
 ## Enable Vim editor mode
 
@@ -42,7 +42,7 @@ Set `editorMode` in your configuration profile:
 
 The CLI loads this file from `~/.gemini/antigravity-cli/settings.json` at startup. `editorMode` accepts `"default"` and `"vim"`. `vimInsertFirst` controls which mode each new prompt starts in and applies only when `editorMode` is `"vim"`; see [Start in Insert mode](#start-in-insert-mode).
 
-> **Note:** `editorMode` is unrelated to the [`editor` setting](/docs/cli/settings). `editor` picks the external program that `Ctrl+G` launches, so setting `editor` to `"vim"` opens Vim in a separate window and does nothing to the prompt. `editorMode` is the one that controls modal editing inside the CLI prompt itself.
+> **Note:** `editorMode` is unrelated to the [`editor` setting](./settings.md). `editor` picks the external program that `Ctrl+G` launches, so setting `editor` to `"vim"` opens Vim in a separate window and does nothing to the prompt. `editorMode` is the one that controls modal editing inside the CLI prompt itself.
 
 ## Switch between modes
 
@@ -243,7 +243,7 @@ Setting `vimInsertFirst` to `true` achieves the same submit behavior without edi
 
 ## Show the mode in a custom status line
 
-A [custom status line](/docs/cli/statusline) replaces the built-in one, and the mode badge goes with it. You have two ways to get the mode back.
+A [custom status line](./statusline.md) replaces the built-in one, and the mode badge goes with it. You have two ways to get the mode back.
 
 Keep the built-in line and stack your script underneath it:
 
@@ -281,6 +281,6 @@ echo "$input" | jq -r '.model.display_name'
 
 ## Next steps
 
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Configure the rest of your preferences and remap keys.
-*   **[Status Line Customization](/docs/cli/statusline)**: Control what the status line reports alongside the Vim mode badge.
-*   **[CLI Reference](/docs/cli/reference)**: Look up every configuration key and default keybinding.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Configure the rest of your preferences and remap keys.
+*   **[Status Line Customization](./statusline.md)**: Control what the status line reports alongside the Vim mode badge.
+*   **[CLI Reference](./reference.md)**: Look up every configuration key and default keybinding.

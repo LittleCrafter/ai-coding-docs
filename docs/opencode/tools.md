@@ -1,11 +1,10 @@
----
-title: Tools
-description: Manage the tools an LLM can use.
----
+# Tools
 
-Tools allow the LLM to perform actions in your codebase. OpenCode comes with a set of built-in tools, but you can extend it with [custom tools](/docs/custom-tools) or [MCP servers](/docs/mcp-servers).
+Manage the tools an LLM can use.
 
-By default, all tools are **enabled** and don't need permission to run. You can control tool behavior through [permissions](/docs/permissions).
+Tools allow the LLM to perform actions in your codebase. OpenCode comes with a set of built-in tools, but you can extend it with [custom tools](./custom-tools.md) or [MCP servers](./mcp-servers.md).
+
+By default, all tools are **enabled** and don't need permission to run. You can control tool behavior through [permissions](./permissions.md).
 
 ---
 
@@ -35,7 +34,7 @@ You can also use wildcards to control multiple tools at once. For example, to re
 }
 ```
 
-[Learn more](/docs/permissions) about configuring permissions.
+[Learn more](./permissions.md) about configuring permissions.
 
 ---
 
@@ -168,7 +167,7 @@ Interact with your configured LSP servers to get code intelligence features like
 
 Supported operations include `goToDefinition`, `findReferences`, `hover`, `documentSymbol`, `workspaceSymbol`, `goToImplementation`, `prepareCallHierarchy`, `incomingCalls`, and `outgoingCalls`.
 
-To configure which LSP servers are available for your project, see [LSP Servers](/docs/lsp).
+To configure which LSP servers are available for your project, see [LSP Servers](./lsp.md).
 
 ---
 
@@ -198,7 +197,7 @@ When handling `tool.execute.before` or `tool.execute.after` hooks, check `input.
 
 ### skill
 
-Load a [skill](/docs/skills) (a `SKILL.md` file) and return its content in the conversation.
+Load a [skill](./skills.md) (a `SKILL.md` file) and return its content in the conversation.
 
 ```json title="opencode.json" {4}
 {
@@ -227,7 +226,7 @@ Manage todo lists during coding sessions.
 Creates and updates task lists to track progress during complex operations. The LLM uses this to organize multi-step tasks.
 
 > [!NOTE]
-> This tool is disabled for subagents by default, but you can enable it manually. [Learn more](/docs/agents/#permissions)
+> This tool is disabled for subagents by default, but you can enable it manually. [Learn more](./agents.md#permissions)
 
 ---
 
@@ -310,7 +309,7 @@ Each question includes a header, the question text, and a list of options. Users
 
 Custom tools let you define your own functions that the LLM can call. These are defined in your config file and can execute arbitrary code.
 
-[Learn more](/docs/custom-tools) about creating custom tools.
+[Learn more](./custom-tools.md) about creating custom tools.
 
 ---
 
@@ -318,7 +317,7 @@ Custom tools let you define your own functions that the LLM can call. These are 
 
 MCP (Model Context Protocol) servers allow you to integrate external tools and services. This includes database access, API integrations, and third-party services.
 
-[Learn more](/docs/mcp-servers) about configuring MCP servers.
+[Learn more](./mcp-servers.md) about configuring MCP servers.
 
 ---
 

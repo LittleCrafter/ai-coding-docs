@@ -2,7 +2,7 @@
 
 Antigravity supports the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), an open standard that lets AI agents and editors securely connect to local developer tools, databases, file parsers, and external remote APIs. This integration provides the AI model with real-time context and execution capabilities beyond your immediate workspace.
 
-In this guide, you’ll learn how to connect and configure MCP servers across Antigravity products. You can also skip to information for MCP servers in [Antigravity 2.0](/docs/mcp#antigravity-20), [Antigravity IDE](/docs/mcp#antigravity-ide), [Antigravity CLI](/docs/mcp#antigravity-cli), or [Antigravity SDK](/docs/mcp#antigravity-sdk).
+In this guide, you’ll learn how to connect and configure MCP servers across Antigravity products. You can also skip to information for MCP servers in [Antigravity 2.0](https://antigravity.google/docs/mcp#antigravity-20), [Antigravity IDE](https://antigravity.google/docs/mcp#antigravity-ide), [Antigravity CLI](https://antigravity.google/docs/mcp#antigravity-cli), or [Antigravity SDK](https://antigravity.google/docs/mcp#antigravity-sdk).
 
 ## What is MCP?
 
@@ -60,7 +60,7 @@ To connect to a custom MCP server not listed in the store:
 1.  Click **…** at the top of the editor’s agent side panel and select **MCP Servers**.
 2.  Click **Manage MCP Servers**.
 3.  Click **View raw config**.
-4.  Modify the `mcp_config.json` file with your custom [MCP server configuration](/docs/mcp#mcp-configuration-structure).
+4.  Modify the `mcp_config.json` file with your custom [MCP server configuration](https://antigravity.google/docs/mcp#mcp-configuration-structure).
 
 The configuration file is located globally at `~/.gemini/config/mcp_config.json` (or locally in your workspace under `.agents/mcp_config.json`).
 
@@ -82,7 +82,7 @@ Unlike legacy setups, Antigravity CLI separates MCP definitions into dedicated, 
 *   **Global server setups:** Configured in `~/.gemini/config/mcp_config.json`.
 *   **Workspace local setups:** Configured in your active project under `.agents/mcp_config.json`.
 
-You can modify these files directly with your custom [MCP server configuration](/docs/mcp#mcp-configuration-structure).
+You can modify these files directly with your custom [MCP server configuration](https://antigravity.google/docs/mcp#mcp-configuration-structure).
 
 Note
 
@@ -90,7 +90,7 @@ Note
 
 ## Antigravity SDK
 
-In Python applications built using the [Antigravity SDK](/docs/sdk/overview), MCP servers (`stdio`, `SSE`, or `HTTP`) can be connected programmatically under a unified execution pipeline alongside built-in tools and custom Python functions.
+In Python applications built using the [Antigravity SDK](https://antigravity.google/docs/sdk/overview), MCP servers (`stdio`, `SSE`, or `HTTP`) can be connected programmatically under a unified execution pipeline alongside built-in tools and custom Python functions.
 
 The SDK automatically discovers servers configured in your workspace’s `.agents/mcp_config.json` file. You can also instantiate agents with local configurations directly:
 
@@ -212,7 +212,7 @@ https://antigravity.google/oauth-callback
 
 When connecting to an OAuth-enabled server:
 
-1.  Open [**Agent Settings**](/docs/settings) with `Cmd+,` (Mac) or `Ctrl+,` (Windows/Linux).
+1.  Open [**Agent Settings**](https://antigravity.google/docs/settings) with `Cmd+,` (Mac) or `Ctrl+,` (Windows/Linux).
     
 2.  Navigate to the **Customizations** tab and click the **Authenticate** button next to the server.
     
@@ -252,7 +252,7 @@ For remote servers that require custom HTTP headers (e.g. API keys or bearer tok
 
 ## MCP Permissions and Access Control
 
-Access to Model Context Protocol tools and resources is governed by Antigravity’s [permissions system](/docs/permissions). By default, unconfigured MCP tools run in **Ask** mode, requiring your approval before execution. You can allow specific tools or entire servers in your policy configuration:
+Access to Model Context Protocol tools and resources is governed by Antigravity’s [permissions system](https://antigravity.google/docs/permissions). By default, unconfigured MCP tools run in **Ask** mode, requiring your approval before execution. You can allow specific tools or entire servers in your policy configuration:
 
 *   `mcp(server/tool)`: Matches a specific tool on a specific server.
 *   `mcp(server/*)`: Matches all tools on a specified server.

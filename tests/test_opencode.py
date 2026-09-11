@@ -3,11 +3,29 @@
 from __future__ import annotations
 
 
+import time
+
 import pytest
 from conftest import _FakeClient, _Resp, blob_entry, tree_client
 from mirror.core import fetch
 from mirror.core.page import Page
 from mirror.sources import opencode
+
+
+@pytest.fixture(autouse=True)
+def _restore_known_slugs():
+    """Snapshot and restore ``_KNOWN_SLUGS`` around every test in this module.
+
+    The set is module-level state shared between the discovery hook and the
+    link pass. A test that discovers pages, or that seeds the set to give the
+    rewrite something to resolve against, would otherwise leave that state
+    behind for every test that runs after it -- including the ones that assert
+    on the set's exact contents.
+    """
+    saved = set(opencode._KNOWN_SLUGS)
+    yield
+    opencode._KNOWN_SLUGS.clear()
+    opencode._KNOWN_SLUGS.update(saved)
 
 
 # --- Discovery: tree-entry filtering ------------------------------------------
@@ -38,7 +56,11 @@ def test_discover_keeps_english_mdx_under_docs_prefix():
 
 def test_discover_maps_root_index_to_intro():
     """Root ``index.mdx`` must map to slug ``"intro"``, and its group must
-    be ``"root"`` -- this is the landing / home page."""
+    be ``"root"`` -- this is the landing / home page.
+
+    Its ``source_url`` is the docs root, not ``/docs/intro``: ``intro`` is
+    the landing LAYOUT, and the site serves the page at the docs root, so
+    appending the slug would record a URL that 404s."""
     prefix = "packages/web/src/content/docs"
     client = tree_client([blob_entry(f"{prefix}/index.mdx")])
     pages = opencode.discover(client)
@@ -46,8 +68,26 @@ def test_discover_maps_root_index_to_intro():
     page = pages[0]
     assert page.slug == "intro"
     assert page.group == "root"
-    assert page.source_url == "https://opencode.ai/docs/intro"
+    assert page.source_url == "https://opencode.ai/docs"
     assert page.source_id == f"{prefix}/index.mdx"
+
+
+def test_discover_locale_landing_source_url_is_the_locale_root(monkeypatch):
+    """A locale's landing page is served at that locale's root, exactly like
+    the English one is served at the docs root: ``pt-br/intro`` must record
+    ``/docs/pt-br``, not the 404ing ``/docs/pt-br/intro``. Every other
+    locale page keeps the plain ``<base>/<slug>`` shape."""
+    monkeypatch.setattr(opencode.config, "ACTIVE_LOCALES", ("pt-br",))
+    prefix = "packages/web/src/content/docs"
+    client = tree_client(
+        [
+            blob_entry(f"{prefix}/pt-br/index.mdx"),
+            blob_entry(f"{prefix}/pt-br/cli.mdx"),
+        ]
+    )
+    pages = {p.slug: p for p in opencode.discover(client)}
+    assert pages["pt-br/intro"].source_url == "https://opencode.ai/docs/pt-br"
+    assert pages["pt-br/cli"].source_url == "https://opencode.ai/docs/pt-br/cli"
 
 
 def test_discover_maps_root_readme_to_intro():
@@ -485,7 +525,8 @@ This is a guide.
     md = opencode._mdx_to_md(mdx)
     assert "import" not in md
     assert "export" not in md
-    assert "title: Getting Started" in md  # frontmatter preserved
+    assert "title: Getting Started" not in md  # frontmatter stripped
+    assert md.startswith("# Getting Started\n")  # ... its title re-emitted
     assert "## Overview" in md
     assert "This is a guide." in md
 
@@ -523,7 +564,8 @@ This is a guide.
     # ... while the continuation lines survive as literal text.
     assert "Tabs" in md
     assert 'bar: "baz"' in md
-    assert "title: Getting Started" in md
+    assert "title: Getting Started" not in md
+    assert md.startswith("# Getting Started\n")
     assert "## Overview" in md
     assert "This is a guide." in md
 
@@ -744,6 +786,282 @@ Done.
         assert tag not in md
 
 
+def test_mdx_to_md_dedents_fences_a_top_level_container_indented():
+    """Upstream indents the content of every ``<TabItem>`` to wherever the
+    surrounding MDX put it. At four columns or more CommonMark stops reading
+    the line as a fence and parses it as an indented code block instead --
+    the ``` line then shows up as literal text in the mirrored page. A
+    container standing on its own carries no indentation of its own, so its
+    fences belong at column zero."""
+    mdx = """## Editor setup
+
+<Tabs>
+  <TabItem label="Linux/macOS">
+    ```bash
+    export EDITOR=nano
+    export EDITOR=vim
+    ```
+
+    To make it permanent, add this to your shell profile.
+
+  </TabItem>
+</Tabs>
+
+Done.
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "**Linux/macOS**" in md
+    assert "```bash\nexport EDITOR=nano\nexport EDITOR=vim\n```\n" in md, md
+    assert "    ```" not in md
+
+
+def test_mdx_to_md_keeps_fences_at_the_list_item_a_container_nests_in():
+    """A ``<Tabs>`` written inside a list item indents its content to that
+    item, and its fences belong at the item's content column once the
+    container is unwrapped -- pulling them to column zero would lift a sample
+    out of the list it documents. Upstream indents the tabs inconsistently,
+    so each fence is shifted by its own indentation and all of them land on
+    the same column."""
+    mdx = """- **Using Node.js**
+
+        <Tabs>
+
+      <TabItem label="npm">
+      ```bash
+      npm install -g opencode-ai
+      ```
+
+          </TabItem>
+
+        <TabItem label="Bun">
+        ```bash
+        bun install -g opencode-ai
+        ```
+
+          </TabItem>
+
+  </Tabs>
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "**npm**" in md
+    assert "**Bun**" in md
+    # Both samples sit at the list item's content column (two), whatever the
+    # container had indented them to.
+    assert "  ```bash\n  npm install -g opencode-ai\n  ```\n" in md, md
+    assert "  ```bash\n  bun install -g opencode-ai\n  ```\n" in md, md
+    assert "      ```" not in md and "        ```" not in md
+
+
+def test_mdx_to_md_leaves_a_list_items_own_fence_alone():
+    """A fence a list item writes directly carries the indentation the list
+    gave it, which is what keeps the sample inside the item. It was never
+    indented by a container, so no unwrapping can make that indentation
+    meaningless -- and dedenting it would break the list apart, restarting
+    the numbering of the items that follow."""
+    mdx = """2. Subagents can be invoked:
+   - Manually by **@ mentioning** a subagent in your message. For example.
+
+     ```txt frame="none"
+     @general help me search for this function
+     ```
+
+3. **Navigation between sessions**: use `session_child_first`.
+"""
+    assert opencode._mdx_to_md(mdx) == mdx
+
+
+def test_mdx_to_md_keeps_a_jsx_like_sample_inside_a_list_item():
+    """A sample a list item indents is still a fence to CommonMark (up to
+    three columns), so the JSX strip must not reach inside it. The sample
+    below shows the ``<TAB>`` key the reader is told to press; stripping it
+    as if it were MDX wiring emptied the code block in the mirrored page,
+    leaving a fence pair with nothing between it."""
+    mdx = (
+        "1. **Create a plan**\n"
+        "\n"
+        "   Switch to it using the **Tab** key.\n"
+        "\n"
+        '   ```bash frame="none" title="Switch to Plan mode"\n'
+        "   <TAB>\n"
+        "   ```\n"
+        "\n"
+        "   Now describe what you want.\n"
+    )
+    assert opencode._mdx_to_md(mdx) == mdx
+
+
+def test_mdx_to_md_keeps_imports_and_jsx_inside_an_indented_sample():
+    """The shield covers an indented fence for the same reason it covers a
+    column-zero one: a sample that quotes an ``import`` line or a JSX tag is
+    real code, whatever column the list item put it at. Only the sample is
+    shielded -- the prose around it is still converted."""
+    mdx = (
+        "- A snippet:\n"
+        "\n"
+        "  ```tsx\n"
+        "  import { Card } from '@/components';\n"
+        '  <Card title="x" />\n'
+        "  ```\n"
+    )
+    assert opencode._mdx_to_md(mdx) == mdx
+
+
+@pytest.mark.parametrize("indent", [0, 1, 2, 3, 4])
+def test_iter_fence_spans_stops_at_the_commonmark_indent_limit(indent: int):
+    """The widened shield stops exactly where CommonMark stops calling a
+    fence a fence: up to three columns of indentation is a sample inside a
+    list item, four is an indented code block whose ``` line renders as
+    literal text. Shielding the latter would protect page content from the
+    JSX strip that is supposed to convert it."""
+    text = " " * indent + "```\nvalue\n" + " " * indent + "```\n"
+    spans = list(opencode._iter_fence_spans(text))
+    assert bool(spans) is (indent <= 3)
+    if spans:
+        # The span covers the block from its fence character, leaving the
+        # indentation outside it so the line keeps its column.
+        assert text[spans[0][0] : spans[0][1]] == "```\nvalue\n" + " " * indent + "```"
+
+
+def test_mdx_to_md_pairs_a_container_with_its_own_closer_when_nested():
+    """Tab containers nest, and the tag that ends the outer one is the tag
+    whose nesting depth returns to zero -- not the first ``</Tabs>`` in the
+    document. Pairing the outer ``<Tabs>`` with an inner container's closer
+    left everything after it outside the re-indented region, so a sample the
+    container had indented too far stayed indented too far and rendered as an
+    indented code block."""
+    mdx = """<Tabs>
+  <TabItem label="A">
+    <Tabs>
+      <TabItem label="A1">
+        ```bash
+        x
+        ```
+      </TabItem>
+    </Tabs>
+    ```bash
+    after
+    ```
+  </TabItem>
+</Tabs>
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "**A**" in md and "**A1**" in md
+    assert "```bash\nx\n```" in md, md
+    # The sample that follows the inner container is re-indented too.
+    assert "```bash\nafter\n```" in md, md
+    assert "    ```" not in md
+
+
+def test_mdx_to_md_leaves_a_container_with_no_closer_alone():
+    """A ``<Tabs>`` whose nesting never returns to its own level has no
+    closer to bound the region, so no block can be attributed to it. The
+    content keeps the indentation it was written with rather than being
+    re-indented on a guess."""
+    mdx = "# Title\n\n<Tabs>\n  ```bash\n  x\n  ```\n"
+    md = opencode._mdx_to_md(mdx)
+    assert "  ```bash\n  x\n  ```\n" in md, md
+
+
+def test_mdx_to_md_reindents_prose_a_container_indented():
+    """Unwrapping a container makes the indentation it imposed meaningless
+    for everything it held, not just for fenced samples: prose the container
+    pushed four columns right is an indented code block to CommonMark, so the
+    mirrored page showed a sentence as code. Each block is shifted by the
+    smallest indentation among its own lines, which removes the container's
+    contribution and keeps the block's own structure."""
+    mdx = """<Tabs>
+  <TabItem label="Linux/macOS">
+    ```bash
+    export EDITOR=nano
+    ```
+
+    To make it permanent, add this to your shell profile;
+    `~/.bashrc`, `~/.zshrc`, etc.
+
+  </TabItem>
+</Tabs>
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "```bash\nexport EDITOR=nano\n```" in md, md
+    assert (
+        "To make it permanent, add this to your shell profile;\n"
+        "`~/.bashrc`, `~/.zshrc`, etc.\n"
+    ) in md, md
+    assert "\n    To make it permanent" not in md
+
+
+def test_mdx_to_md_keeps_a_prose_blocks_own_relative_indentation():
+    """Only the container's contribution comes off: a block whose own lines
+    are indented relative to each other shifts as one, so a nested list or a
+    wrapped continuation keeps its shape instead of being flattened to the
+    left margin."""
+    mdx = """<Tabs>
+  <TabItem label="A">
+    Text before the list:
+    - nested item
+  </TabItem>
+</Tabs>
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "Text before the list:\n- nested item\n" in md, md
+
+
+def test_mdx_to_md_pulls_a_fence_less_block_back_to_the_container_column():
+    """A block with no fence that the container indented four columns or
+    deeper is treated as prose and pulled back to the container's column.
+    Inside a container the indentation is the container's, not the author's
+    (upstream fences every sample and writes every paragraph flush against
+    the container's own column), so the alternative -- leaving it where it
+    is -- would keep a line that CommonMark now renders as an indented code
+    block, which is the defect this pass exists to repair."""
+    mdx = """<Tabs>
+  <TabItem label="A">
+        an indented code block
+  </TabItem>
+</Tabs>
+"""
+    assert opencode._mdx_to_md(mdx) == "**A**\n\nan indented code block\n"
+
+
+def test_mdx_to_md_preserves_a_samples_own_indentation_while_dedenting():
+    """Only the container's contribution is removed: a sample whose body is
+    itself indented (a nested block, a continuation line) keeps that
+    indentation, shifted by the same amount as its fences."""
+    mdx = """<Tabs>
+  <TabItem label="npm">
+    ```json
+    {
+      "scripts": {
+        "start": "opencode"
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert '```json\n{\n  "scripts": {\n    "start": "opencode"\n  }\n}\n```' in md, md
+
+
+def test_mdx_to_md_leaves_fences_outside_a_container_alone():
+    """The pass is scoped to the containers it unwraps: a page's own fenced
+    blocks -- including the indented ones a list item owns -- come out
+    exactly as they went in."""
+    mdx = """## Section
+
+```bash
+echo hello
+```
+
+- A list item:
+
+  ```bash
+  echo indented
+  ```
+"""
+    assert opencode._mdx_to_md(mdx) == mdx
+
+
 def test_mdx_to_md_strips_jsx_tags_with_double_braced_style_attributes():
     """Tags with double-braced attributes (e.g. style={{ color: 'red' }}) must be stripped.
 
@@ -901,9 +1219,13 @@ def test_mdx_to_md_preserves_blank_runs_and_indent_only_lines_inside_code():
     assert "```\n\nAfter." in md
 
 
-def test_mdx_to_md_preserves_frontmatter():
-    """YAML frontmatter delimited by ``---`` must survive intact --
-    the mirror preserves it for downstream consumers."""
+def test_mdx_to_md_strips_frontmatter_and_emits_its_title_as_a_heading():
+    """The YAML frontmatter block is build metadata for the upstream site: a
+    Markdown reader renders its fences as a thematic break and its keys as
+    headings, and an LLM indexing the outline reads ``title:`` as page
+    structure. It is dropped -- but its title is the page's real title, so it
+    comes back as the page's level-one heading, and its description comes
+    back under it."""
     mdx = """---
 title: Configuration Guide
 description: Learn how to configure OpenCode
@@ -912,8 +1234,172 @@ description: Learn how to configure OpenCode
 ## Getting Started
 """
     md = opencode._mdx_to_md(mdx)
-    assert md.startswith("---\ntitle: Configuration Guide\n")
-    assert "description: Learn how to configure OpenCode" in md
+    assert "---" not in md.split("\n")[0]
+    assert "title:" not in md
+    assert md == (
+        "# Configuration Guide\n"
+        "\n"
+        "Learn how to configure OpenCode\n"
+        "\n"
+        "## Getting Started\n"
+    )
+
+
+def test_mdx_to_md_splits_frontmatter_fields_across_any_order_and_case():
+    """The fields are read by key, not by position, and keys are matched
+    case-insensitively: real frontmatter puts other keys above the title and
+    a page may spell it ``Title:``. Quoting is stripped, since YAML authors
+    quote a title containing a colon."""
+    mdx = """---
+Title: "CLI: where to start"
+sidebar_position: 3
+Description: 'Everything you need.'
+---
+
+## Install
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert md.startswith("# CLI: where to start\n\nEverything you need.\n")
+    assert "sidebar_position" not in md
+
+
+def test_mdx_to_md_keeps_a_document_that_only_looks_like_frontmatter():
+    """A document that opens with a thematic break -- ``---``, prose, ``---``
+    -- matches the same shape as a frontmatter block. A block with no
+    ``key:`` line in it is page text, not metadata, and stripping it would
+    delete an entire section of the page without a trace."""
+    mdx = """---
+
+Everything above the rule is real content.
+
+---
+
+## After
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "Everything above the rule is real content." in md
+    assert "## After" in md
+
+
+def test_mdx_to_md_keeps_an_unclosed_rule_from_swallowing_the_page():
+    """An opening ``---`` that is never closed as frontmatter -- a thematic
+    break, or a page whose metadata was truncated upstream -- pairs with the
+    NEXT ``---`` anywhere below it, and everything between them is deleted as
+    if it were metadata. The block is therefore only accepted as frontmatter
+    when it reads as a flat metadata header: a blank line inside it, or a
+    line that is not a ``key: value`` pair, marks it as page content and the
+    text comes through untouched."""
+    mdx = """---
+title: A Title
+
+# Real Heading
+
+A paragraph of real content.
+
+---
+
+## After
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "# Real Heading" in md
+    assert "A paragraph of real content." in md
+    assert "## After" in md
+    assert "title: A Title" in md
+
+
+def test_mdx_to_md_keeps_a_heading_that_an_unclosed_rule_enclosed():
+    """The same guard seen from the other side: a ``#`` line inside the
+    block is a Markdown heading, and no upstream page writes a YAML comment
+    in that position. Reading it as a comment would let an unclosed rule
+    delete the section it titles, so the block is rejected and the text comes
+    through whole."""
+    mdx = """---
+title: A Title
+# Real Heading
+---
+
+## After
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "# Real Heading" in md
+    assert "title: A Title" in md
+
+
+def test_mdx_to_md_strips_a_flat_metadata_header():
+    """The guard must not cost the pages that DO carry frontmatter: a tight
+    header of ``key: value`` lines is stripped, indented continuation lines
+    are skipped rather than parsed, and the title still becomes the page's
+    heading."""
+    mdx = """---
+Title: Overview
+description: A short summary.
+sidebar:
+  order: 2
+---
+
+## Section
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert md == "# Overview\n\nA short summary.\n\n## Section\n"
+
+
+def test_mdx_to_md_leaves_a_block_with_a_prose_line_untouched():
+    """A line of prose inside the rule pair is the plainest evidence that the
+    rule above is a thematic break: a metadata header holds keys, not
+    sentences. The block is rejected and every line of it survives."""
+    mdx = """---
+title: A Title
+Just a sentence.
+---
+
+## After
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert "Just a sentence." in md
+    assert "## After" in md
+
+
+def test_mdx_to_md_leaves_an_empty_rule_pair_untouched():
+    """Two rules with nothing between them have no ``key:`` line, so they
+    are a pair of thematic breaks rather than a metadata header -- and the
+    guard that rejects a key-less block rejects the empty one too. Leaving
+    them in place is what the documented contract says: a block with no key
+    in it is page text."""
+    mdx = "---\n\n---\n\nBody\n"
+    assert opencode._mdx_to_md(mdx) == mdx
+
+
+def test_mdx_to_md_does_not_duplicate_a_heading_the_page_already_has():
+    """A page that titles itself with a level-one heading is titled by that
+    heading; re-emitting the frontmatter title would give it two. The body's
+    own heading is also what the manifest reads the title from."""
+    mdx = """---
+title: Ignored Title
+---
+
+# Real Heading
+
+Prose.
+"""
+    md = opencode._mdx_to_md(mdx)
+    assert md.count("# ") == 1
+    assert md.startswith("# Real Heading\n")
+    assert "Ignored Title" not in md
+
+
+def test_mdx_to_md_frontmatter_strip_is_idempotent():
+    """The stripped output carries no frontmatter, so converting it again
+    changes nothing -- the pass has no second block to remove and no title
+    left to re-emit."""
+    mdx = """---
+title: Overview
+description: A short summary.
+---
+
+## Section
+"""
+    once = opencode._mdx_to_md(mdx)
+    assert opencode._mdx_to_md(once) == once
 
 
 def test_mdx_to_md_preserves_standard_html():
@@ -1266,3 +1752,215 @@ def test_fetch_markdown_rejects_non_markdown():
     page = _make_opencode_page("bad")
     with pytest.raises(fetch.FetchError):
         opencode.fetch_markdown(client, page)
+
+
+# --- Link rewriting: site-absolute ``/docs/...`` references -------------------
+
+
+def _rewrite(text: str, slug: str = "config") -> str:
+    """Rewrite *text* against a small, explicit set of mirrored slugs."""
+    known = {"intro", "config", "tui", "cli", "pt-br/intro", "rules"}
+    return opencode._rewrite_site_links(text, slug, known)
+
+
+def test_rewrite_site_links_points_mirrored_targets_at_the_local_file():
+    """A ``/docs/<slug>`` reference to a mirrored page becomes a relative
+    ``.md`` link: a leading ``/`` resolves against the reader's file system
+    root, so the published form is dead in a checkout."""
+    assert _rewrite("See [TUI](/docs/tui).") == "See [TUI](./tui.md)."
+
+
+def test_rewrite_site_links_walks_up_from_a_nested_page():
+    """The relative path is derived from the CURRENT page's directory, so a
+    locale page reaches a page of the English root with ``../``."""
+    assert _rewrite("[CLI](/docs/cli)", "pt-br/intro") == "[CLI](../cli.md)"
+
+
+def test_rewrite_site_links_preserves_anchors_and_trailing_slashes():
+    """The fragment is resolved by the browser against whichever document the
+    link lands on, so it survives the rewrite verbatim. A trailing slash and
+    a trailing slash before the fragment both name the same page and resolve
+    to the same file."""
+    assert _rewrite("[Attention](/docs/tui#attention)") == (
+        "[Attention](./tui.md#attention)"
+    )
+    assert _rewrite("[Subagents](/docs/config/#subagents)") == (
+        "[Subagents](./config.md#subagents)"
+    )
+    assert _rewrite("[Rules](/docs/rules/)") == "[Rules](./rules.md)"
+
+
+def test_rewrite_site_links_maps_the_docs_root_to_the_landing_page():
+    """``/docs`` and ``/docs/`` are the landing page's route -- the page this
+    mirror holds as ``intro`` -- so a reference to them must land on that
+    file rather than fall through to the upstream URL."""
+    assert _rewrite("[Home](/docs/)") == "[Home](./intro.md)"
+    assert _rewrite("[Home](/docs)") == "[Home](./intro.md)"
+
+
+def test_rewrite_site_links_sends_the_bare_site_root_upstream():
+    """The landing page's own back-reference to the project (``](/`) names
+    the site, not a page of it: there is no local file it could mean, so it
+    is made absolute against the site root."""
+    assert _rewrite("[**OpenCode**](/)") == "[**OpenCode**](https://opencode.ai/)"
+
+
+def test_rewrite_site_links_sends_unmirrored_targets_upstream():
+    """A documentation route this run does not mirror -- a locale that was
+    not selected, most of all -- must be sent to its upstream URL, the only
+    destination that still resolves, instead of to a file that does not
+    exist."""
+    assert _rewrite("[Japanese](/docs/ja/cli)") == (
+        "[Japanese](https://opencode.ai/docs/ja/cli)"
+    )
+    assert _rewrite("[Section](/docs/ja/tui#keys)") == (
+        "[Section](https://opencode.ai/docs/ja/tui#keys)"
+    )
+
+
+def test_rewrite_site_links_makes_other_absolute_paths_upstream():
+    """Any other site-absolute path the site owns -- a marketing page, a
+    route outside the docs tree -- is equally meaningless in a checkout, and
+    is made absolute against the site root."""
+    assert _rewrite("[Zen](/zen)") == "[Zen](https://opencode.ai/zen)"
+
+
+def test_rewrite_site_links_leaves_every_other_link_alone():
+    """Only site-absolute paths are touched: an external URL, an intra-page
+    anchor, a relative path, an autolink and an asset reference all already
+    resolve, and rewriting them would be breaking links to fix links."""
+    text = (
+        "[Site](https://opencode.ai/docs/config) "
+        "[Other](https://example.com/docs/x) "
+        "[Section](#permissions) "
+        "[Sibling](./tui.md#attention) "
+        "[Asset](../../assets/web/home.png) "
+        "<https://opencode.ai/docs/config>\n"
+    )
+    assert _rewrite(text) == text
+
+
+def test_rewrite_site_links_skips_fenced_code_blocks():
+    """A code sample that quotes a documentation URL is showing what a config
+    or a request looks like, not linking to a page; rewriting it would change
+    what the sample says. The fenced block is shielded for the duration of the
+    pass and restored byte for byte."""
+    text = (
+        "See [CLI](/docs/cli).\n"
+        "\n"
+        "```bash\n"
+        'curl -s "$BASE/docs/cli"\n'
+        "grep '](/docs/cli)' notes.md\n"
+        "```\n"
+        "\n"
+        "Done.\n"
+    )
+    assert _rewrite(text) == (
+        "See [CLI](./cli.md).\n"
+        "\n"
+        "```bash\n"
+        'curl -s "$BASE/docs/cli"\n'
+        "grep '](/docs/cli)' notes.md\n"
+        "```\n"
+        "\n"
+        "Done.\n"
+    )
+
+
+def test_rewrite_site_links_skips_a_fence_indented_inside_a_list_item():
+    """A sample a list item indents is still a fence to CommonMark (up to
+    three columns), so the destination quoted inside it must survive the pass
+    untouched. Shielding only column-zero fences left such a sample exposed
+    and rewrote text the page was quoting."""
+    text = "- A sample:\n\n  ```bash\n  grep '](/docs/tui)' notes.md\n  ```\n"
+    assert _rewrite(text) == text
+
+
+def test_rewrite_site_links_still_rewrites_prose_beside_an_indented_fence():
+    """Widening the shield must not swallow the page around the sample: the
+    prose link in the same list item is rewritten like any other."""
+    text = "- See [TUI](/docs/tui):\n\n  ```bash\n  grep '](/docs/tui)' x\n  ```\n"
+    assert _rewrite(text) == (
+        "- See [TUI](./tui.md):\n\n  ```bash\n  grep '](/docs/tui)' x\n  ```\n"
+    )
+
+
+def test_rewrite_site_links_rejects_a_protocol_relative_destination():
+    """``//host/path`` is a URL on another host, not a path on this site, and
+    the pattern rejects it with a lookahead on the second slash. The scan has
+    to reject it the same way and move on to the next candidate rather than
+    stop: the link after it is still a link."""
+    text = "[CDN](//cdn.example/x) and [TUI](/docs/tui)."
+    assert _rewrite(text) == "[CDN](//cdn.example/x) and [TUI](./tui.md)."
+
+
+def test_rewrite_site_links_skips_a_candidate_that_is_not_a_link():
+    """A ``](/`` is not a link by itself: the pattern still has to accept the
+    destination up to the closing parenthesis, so ``](/ x)`` -- a space where
+    the destination should be -- matches nothing and is copied through. The
+    scan must recover from that candidate and keep looking."""
+    text = "a ](/ x) b and [TUI](/docs/tui)."
+    assert _rewrite(text) == "a ](/ x) b and [TUI](./tui.md)."
+
+
+def test_rewrite_site_links_is_linear_on_unterminated_destinations():
+    """A page of ``](/...`` candidates with no closing parenthesis anywhere
+    must be scanned in linear time. The pattern's greedy destination class
+    used to expand to end-of-string from every candidate, fail, and let the
+    engine retry the whole scan from the next one -- quadratic, several
+    seconds on this input, and the pass runs on converted MDX of up to 10 MiB.
+    The scan now stops at the first candidate that has no ``)`` after it,
+    because no later candidate can have one either. The bound is far above
+    the cost of the linear walk and far below the cost of the quadratic one,
+    so it measures the shape of the scan rather than the speed of the machine
+    it runs on."""
+    text = "](/x" * 16384  # ~64 KB: the quadratic form needed ~8 s for this
+    started = time.perf_counter()
+    assert _rewrite(text) == text
+    elapsed = time.perf_counter() - started
+    assert elapsed < 2.0, f"rewriting {len(text)} characters took {elapsed:.2f}s"
+
+
+def test_rewrite_site_links_is_idempotent():
+    """The output holds relative ``.md`` links and absolute ``https://`` URLs,
+    neither of which matches the site-absolute pattern, so a second
+    application changes nothing."""
+    text = "[A](/docs/config#models) [B](/docs/ja/cli) [C](/docs/)\n"
+    once = _rewrite(text)
+    assert _rewrite(once) == once
+    assert once != text
+
+
+def test_fetch_markdown_rewrites_site_links_before_hashing():
+    """The hook converts the MDX, repoints the site-absolute links its
+    conversion left behind, and hashes what it returns -- the manifest hash
+    must cover the text that is actually written, or a page that only gained
+    working links would keep reporting a change."""
+    opencode._KNOWN_SLUGS.clear()
+    opencode._KNOWN_SLUGS.update({"intro", "overview", "tui"})
+    body = """---
+title: Overview
+---
+
+## Start
+
+See [TUI](/docs/tui) and [home](/docs/).
+"""
+    md, digest = opencode.fetch_markdown(
+        _FakeClient([_Resp(200, body)]), _make_opencode_page("overview")
+    )
+    assert "[TUI](./tui.md)" in md
+    assert "[home](./intro.md)" in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_discover_publishes_the_slug_set_for_link_rewriting():
+    """``discover`` must leave the run's slugs in ``_KNOWN_SLUGS``, which is
+    what the link pass consults: a reference can only be pointed at a
+    mirrored file when the mirror actually holds that file. The set is
+    REPLACED, never added to, so a locale a previous run selected stops being
+    a rewrite target as soon as the run stops selecting it."""
+    prefix = "packages/web/src/content/docs"
+    opencode._KNOWN_SLUGS.update({"pt-br/from-an-earlier-run"})
+    opencode.discover(tree_client([blob_entry(f"{prefix}/index.mdx")]))
+    assert opencode._KNOWN_SLUGS == {"intro"}

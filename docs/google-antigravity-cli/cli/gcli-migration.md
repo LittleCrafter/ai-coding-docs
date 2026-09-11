@@ -98,6 +98,6 @@ When manually migrating remote websocket or SSE server definitions, update the U
 
 Begin configuring your new visual parameters and troubleshooting any setup anomalies:
 
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Customize keyboard hotkeys, themes, and screen buffers.
-*   **[Troubleshooting](/docs/cli/troubleshooting)**: Learn how to resolve authentication lockouts or path issues.
-*   **[CLI Reference](/docs/cli/reference)**: Access standard parameters lists and slash command mappings.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys, themes, and screen buffers.
+*   **[Troubleshooting](./troubleshooting.md)**: Learn how to resolve authentication lockouts or path issues.
+*   **[CLI Reference](./reference.md)**: Access standard parameters lists and slash command mappings.

@@ -1,7 +1,6 @@
----
-title: LSP Servers
-description: OpenCode integrates with your LSP servers.
----
+# LSP Servers
+
+OpenCode integrates with your LSP servers.
 
 OpenCode can integrate with Language Server Protocol (LSP) servers to use diagnostics as feedback for the agent.
 

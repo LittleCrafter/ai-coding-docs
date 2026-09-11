@@ -4,8 +4,8 @@ Browse, select, and switch between custom agents, or monitor active and complete
 
 ## Before you begin
 
-*   [Install Antigravity CLI](/docs/cli/install)
-*   Understand the [Asynchronous execution model](/docs/cli/subagents)
+*   [Install Antigravity CLI](../install.md)
+*   Understand the [Asynchronous execution model](../subagents.md)
 
 ## Overview
 
@@ -16,7 +16,7 @@ The `/agents` command opens the interactive **Agent Manager Panel**. This interf
 
 Note
 
-**Subagent Specification:** For complete details on subagent lifecycle states, inter-agent communication, and custom Markdown agent specifications (`.md`), consult the [Antigravity 2.0 Subagents Documentation](/docs/subagents) and [CLI Subagents Guide](/docs/cli/subagents).
+**Subagent Specification:** For complete details on subagent lifecycle states, inter-agent communication, and custom Markdown agent specifications (`.md`), consult the [Antigravity 2.0 Subagents Documentation](https://antigravity.google/docs/subagents) and [CLI Subagents Guide](../subagents.md).
 
 To open the panel inside the TUI, type `/agents` and press Enter:
 
@@ -65,7 +65,7 @@ You are an expert code reviewer. Analyze diffs carefully and verify edge cases.
 EOF
 ```
 
-When you reopen `/agents`, the CLI automatically discovers `code-reviewer` and lists it under **Available Agents**. If you need an agent scoped strictly to a single project repository, place it inside that workspace’s `.agents/agents/` directory (for example, `/home/user/projects/my-app/.agents/agents/code-reviewer/agent.md`). You can also package and distribute custom agents inside [Plugins](/docs/cli/plugins).
+When you reopen `/agents`, the CLI automatically discovers `code-reviewer` and lists it under **Available Agents**. If you need an agent scoped strictly to a single project repository, place it inside that workspace’s `.agents/agents/` directory (for example, `/home/user/projects/my-app/.agents/agents/code-reviewer/agent.md`). You can also package and distribute custom agents inside [Plugins](../plugins.md).
 
 * * *
 
@@ -121,6 +121,6 @@ When focused inside the `/agents` panel, the following keyboard shortcuts apply:
 
 ## Next steps
 
-*   [Background tasks & subagents](/docs/cli/subagents): Learn more about the multi-threaded asynchronous execution architecture.
-*   [Plugins & Skills](/docs/cli/plugins): Discover how to bundle custom agents, skills, and MCP configs into shareable plugins.
-*   [Permissions & Sandbox](/docs/cli/sandbox): Configure security guardrails and approval rules for background subagents.
+*   [Background tasks & subagents](../subagents.md): Learn more about the multi-threaded asynchronous execution architecture.
+*   [Plugins & Skills](../plugins.md): Discover how to bundle custom agents, skills, and MCP configs into shareable plugins.
+*   [Permissions & Sandbox](../sandbox.md): Configure security guardrails and approval rules for background subagents.

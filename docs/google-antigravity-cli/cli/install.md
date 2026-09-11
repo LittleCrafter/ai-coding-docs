@@ -140,6 +140,6 @@ To disconnect your account and purge saved authentication profiles from your ope
 
 Once you complete installation and authentication, start interacting with your local agent:
 
-*   **[Tutorial](/docs/cli/tutorial)**: Create and run a basic Python project with an agent.
-*   **[Prompting & Interaction](/docs/cli/prompting)**: Explore multiline text editing, interrupt commands, and terminal media pasting.
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Configure secure filesystem directories and command limits.
+*   **[Tutorial](./tutorial.md)**: Create and run a basic Python project with an agent.
+*   **[Prompting & Interaction](./prompting.md)**: Explore multiline text editing, interrupt commands, and terminal media pasting.
+*   **[Permissions & Sandbox](./sandbox.md)**: Configure secure filesystem directories and command limits.

@@ -1,7 +1,6 @@
----
-title: References
-description: Add local directories and Git repositories as project references.
----
+# References
+
+Add local directories and Git repositories as project references.
 
 References give OpenCode access to directories outside the current project. Use them to make documentation, shared libraries, examples, or another repository available while you work.
 

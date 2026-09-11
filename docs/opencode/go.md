@@ -1,7 +1,6 @@
----
-title: Go
-description: Low cost subscription for open coding models.
----
+# Go
+
+Low cost subscription for open coding models.
 
 OpenCode Go is a low cost **$10/month subscription** that gives you reliable access to popular open coding models.
 
@@ -310,7 +309,7 @@ You can also access Go models through the following API endpoints.
 | Hy4 preview                  | hy4-preview                  | `https://opencode.ai/zen/go/v1/chat/completions` | `@ai-sdk/openai-compatible` |
 | Hy3                          | hy3                          | `https://opencode.ai/zen/go/v1/chat/completions` | `@ai-sdk/openai-compatible` |
 
-The [model id](/docs/config/#models) in your OpenCode config
+The [model id](./config.md#models) in your OpenCode config
 uses the format `opencode-go/<model-id>`. For example, for Kimi K3, you would
 use `opencode-go/kimi-k3` in your config.
 

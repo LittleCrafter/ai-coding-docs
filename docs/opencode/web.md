@@ -1,7 +1,6 @@
----
-title: Web
-description: Using OpenCode in your browser.
----
+# Web
+
+Using OpenCode in your browser.
 
 OpenCode can run as a web application in your browser, providing the same powerful AI coding experience without needing a terminal.
 
@@ -23,13 +22,13 @@ This starts a local server on `127.0.0.1` with a random available port and autom
 > [!TIP]
 > **Windows Users**
 >
-> For the best experience, run `opencode web` from [WSL](/docs/windows-wsl) rather than PowerShell. This ensures proper file system access and terminal integration.
+> For the best experience, run `opencode web` from [WSL](./windows-wsl.md) rather than PowerShell. This ensures proper file system access and terminal integration.
 
 ---
 
 ## Configuration
 
-You can configure the web server using command line flags or in your [config file](/docs/config).
+You can configure the web server using command line flags or in your [config file](./config.md).
 
 ### Port
 

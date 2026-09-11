@@ -1,7 +1,6 @@
----
-title: Permissions
-description: Control which actions require approval to run.
----
+# Permissions
+
+Control which actions require approval to run.
 
 OpenCode uses the `permission` config to decide whether a given action should run automatically, prompt you, or be blocked.
 
@@ -27,7 +26,7 @@ Start OpenCode with `--auto` to automatically approve permission requests that a
 opencode --auto
 ```
 
-You can also use auto mode with [`opencode run`](/docs/cli#run).
+You can also use auto mode with [`opencode run`](./cli.md#run).
 
 ```bash
 opencode run --auto "Refactor this module"
@@ -202,7 +201,7 @@ The set of patterns that `always` would approve is provided by the tool (for exa
 
 ## Agents
 
-You can override permissions per agent. Agent permissions are merged with the global config, and agent rules take precedence. [Learn more](/docs/agents#permissions) about agent permissions.
+You can override permissions per agent. Agent permissions are merged with the global config, and agent rules take precedence. [Learn more](./agents.md#permissions) about agent permissions.
 
 > [!NOTE]
 > Refer to the [Granular Rules (Object Syntax)](#granular-rules-object-syntax) section above for more detailed pattern matching examples.
