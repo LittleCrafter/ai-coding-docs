@@ -6,18 +6,17 @@
 
 > Install and update the Claude desktop app on Ubuntu and Debian
 
-<Note>
-  Linux support for the Claude desktop app is in beta.
-</Note>
+> [!NOTE]
+> Linux support for the Claude desktop app is in beta.
 
-The desktop app on Linux gives you the same Chat, Cowork, and Claude Code experience as on macOS and Windows: parallel sessions, visual diff review, an integrated terminal and editor, and live app preview. See [Use Claude Code Desktop](/docs/en/desktop) for the feature reference.
+The desktop app on Linux gives you the same Chat, Cowork, and Claude Code experience as on macOS and Windows: parallel sessions, visual diff review, an integrated terminal and editor, and live app preview. See [Use Claude Code Desktop](./desktop.md) for the feature reference.
 
 ## Requirements
 
 * Ubuntu 22.04 or later, or Debian 12 or later
 * x86\_64 or arm64
 
-Other Debian-based distributions that meet these requirements may work but aren't officially tested. On distributions that aren't Debian-based, such as Fedora or Arch, run the [CLI](/docs/en/setup#system-requirements) instead. If you work on Windows with WSL 2, install the Windows desktop app and run sessions inside your distribution; see [Claude Code Desktop in WSL](/docs/en/desktop-wsl).
+Other Debian-based distributions that meet these requirements may work but aren't officially tested. On distributions that aren't Debian-based, such as Fedora or Arch, run the [CLI](./setup.md#system-requirements) instead. If you work on Windows with WSL 2, install the Windows desktop app and run sessions inside your distribution; see [Claude Code Desktop in WSL](./desktop-wsl.md).
 
 ### Cowork requirements
 
@@ -33,47 +32,43 @@ The app checks these requirements once at launch: restart it after installing pa
 
 Install from Anthropic's apt repository so that updates arrive through your system's regular package updates. Open a terminal and run the commands in each step.
 
-<Steps>
-  <Step title="Add Anthropic's apt repository">
-    This step downloads the signing key with `curl` and verifies it with `gpg`, which fresh Debian and Ubuntu installations may not include. If either command reports `command not found`, install both first:
+1. **Add Anthropic's apt repository**
 
-    ```bash theme={null}
-    sudo apt install curl gnupg
-    ```
+   This step downloads the signing key with `curl` and verifies it with `gpg`, which fresh Debian and Ubuntu installations may not include. If either command reports `command not found`, install both first:
 
-    Download Anthropic's signing key:
+   ```bash theme={null}
+   sudo apt install curl gnupg
+   ```
 
-    ```bash theme={null}
-    sudo curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc
-    ```
+   Download Anthropic's signing key:
 
-    The command prints nothing when it succeeds and a `curl:` error when it doesn't. A missing or wrong key makes `apt update` fail later with `NO_PUBKEY BAA929FF1A7ECACE`, so confirm the key downloaded and belongs to Anthropic before continuing:
+   ```bash theme={null}
+   sudo curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc
+   ```
 
-    ```bash theme={null}
-    gpg --show-keys /usr/share/keyrings/claude-desktop-archive-keyring.asc
-    ```
+   The command prints nothing when it succeeds and a `curl:` error when it doesn't. A missing or wrong key makes `apt update` fail later with `NO_PUBKEY BAA929FF1A7ECACE`, so confirm the key downloaded and belongs to Anthropic before continuing:
 
-    The fingerprint gpg prints should be `31DDDE24DDFAB679F42D7BD2BAA929FF1A7ECACE`. If gpg reports that the file can't be opened or contains no valid OpenPGP data, the download failed or returned the wrong content: confirm your network can reach `downloads.claude.ai`, then rerun the download command.
+   ```bash theme={null}
+   gpg --show-keys /usr/share/keyrings/claude-desktop-archive-keyring.asc
+   ```
 
-    Register the repository:
+   The fingerprint gpg prints should be `31DDDE24DDFAB679F42D7BD2BAA929FF1A7ECACE`. If gpg reports that the file can't be opened or contains no valid OpenPGP data, the download failed or returned the wrong content: confirm your network can reach `downloads.claude.ai`, then rerun the download command.
 
-    ```bash theme={null}
-    echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" | sudo tee /etc/apt/sources.list.d/claude-desktop.list
-    ```
-  </Step>
+   Register the repository:
 
-  <Step title="Install the package">
-    ```bash theme={null}
-    sudo apt update && sudo apt install claude-desktop
-    ```
-  </Step>
+   ```bash theme={null}
+   echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" | sudo tee /etc/apt/sources.list.d/claude-desktop.list
+   ```
+2. **Install the package**
 
-  <Step title="Launch and sign in">
-    Launch **Claude** from your application launcher, or run `claude-desktop` from a terminal, and sign in with your Anthropic account.
+   ```bash theme={null}
+   sudo apt update && sudo apt install claude-desktop
+   ```
+3. **Launch and sign in**
 
-    The Linux app signs in the same way as on macOS and Windows: with a claude.ai subscription, or through your organization's SSO. Desktop doesn't accept a Claude Console API key directly; use the [CLI](/docs/en/quickstart) for API-key authentication. For enterprise deployments that route Desktop to Google Cloud's Agent Platform or an LLM gateway, see [Claude Desktop on 3P](https://claude.com/docs/third-party/claude-desktop/overview) and [network configuration](/docs/en/network-config).
-  </Step>
-</Steps>
+   Launch **Claude** from your application launcher, or run `claude-desktop` from a terminal, and sign in with your Anthropic account.
+
+   The Linux app signs in the same way as on macOS and Windows: with a claude.ai subscription, or through your organization's SSO. Desktop doesn't accept a Claude Console API key directly; use the [CLI](./quickstart.md) for API-key authentication. For enterprise deployments that route Desktop to Google Cloud's Agent Platform or an LLM gateway, see [Claude Desktop on 3P](https://claude.com/docs/third-party/claude-desktop/overview) and [network configuration](./network-config.md).
 
 ### Install from a downloaded file
 
@@ -154,9 +149,9 @@ If the Cowork tab shows one of these messages, fix the requirement it names, the
 
 ## What's not in the Linux beta yet
 
-* **Computer Use**: [app and screen control](/docs/en/desktop#let-claude-use-your-computer) isn't available on Linux.
-* **Dictation**: voice input isn't available in the Linux desktop app. Use [voice dictation](/docs/en/voice-dictation) in the CLI instead.
+* **Computer Use**: [app and screen control](./desktop.md#let-claude-use-your-computer) isn't available on Linux.
+* **Dictation**: voice input isn't available in the Linux desktop app. Use [voice dictation](./voice-dictation.md) in the CLI instead.
 * **Quick Entry global hotkey**: works on X11. On native Wayland it requires your desktop environment's GlobalShortcuts portal.
 * **Fedora and RHEL**: only Debian-based distributions are supported today. Support for additional distributions is coming in the future.
 
-For anything not yet available in the desktop app, the [CLI](/docs/en/quickstart) runs the same Claude Code engine and supports a wider range of Linux distributions; see the [system requirements](/docs/en/setup#system-requirements).
+For anything not yet available in the desktop app, the [CLI](./quickstart.md) runs the same Claude Code engine and supports a wider range of Linux distributions; see the [system requirements](./setup.md#system-requirements).

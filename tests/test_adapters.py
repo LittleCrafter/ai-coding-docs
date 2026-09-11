@@ -10,6 +10,7 @@ deletes mirrored files.
 from __future__ import annotations
 
 import re
+import time
 
 import pytest
 from conftest import _FakeClient, _Resp, blob_entry, tree_client
@@ -754,6 +755,1055 @@ def test_claude_code_discover_ignores_en_prefix_in_query_string():
     """
     pages = claude_code.discover(_FakeClient([_Resp(200, sitemap)]))
     assert [p.slug for p in pages] == ["hooks"]
+
+
+# --- claude_code: MDX normalisation -------------------------------------------
+
+
+def test_claude_normalize_converts_callouts_to_github_alerts():
+    """The callout components are the pages' prose asides: each one becomes a
+    GitHub Alert blockquote with the matching label, its body quoted in full
+    (blank lines included, so paragraph breaks survive), and any title
+    attribute rendered as the alert's bold first line. ``Info`` maps to NOTE
+    and ``Danger`` to CAUTION because GitHub renders no INFO or DANGER
+    label."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "<Note>\n"
+        "  First paragraph.\n"
+        "\n"
+        "  Second paragraph with `code`.\n"
+        "</Note>\n"
+        "\n"
+        '<Warning title="Careful">\n'
+        "  Destructive operation.\n"
+        "</Warning>\n"
+        "\n"
+        "<Info>Informational.</Info>\n"
+        "\n"
+        "<Danger>Dangerous.</Danger>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "> [!NOTE]\n> First paragraph.\n>\n> Second paragraph with `code`." in md
+    assert "> [!WARNING]\n> **Careful**\n>\n> Destructive operation." in md
+    assert "> [!NOTE]\n> Informational." in md
+    assert "> [!CAUTION]\n> Dangerous." in md
+    assert "<Note>" not in md and "</Warning>" not in md
+
+
+def test_claude_normalize_renders_steps_as_an_ordered_list():
+    """A ``<Steps>`` group is a numbered procedure: its steps become ordered
+    list items carrying their own titles, each body indented to the marker's
+    own width so its blocks -- a nested callout above all -- belong to the
+    item. Numbering restarts per group, and a step body never loses its
+    content."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "<Steps>\n"
+        '  <Step title="Install">\n'
+        "    Run the installer.\n"
+        "  </Step>\n"
+        "\n"
+        '  <Step title="Sign in">\n'
+        "    Use your account.\n"
+        "\n"
+        "    <Tip>Any account works.</Tip>\n"
+        "  </Step>\n"
+        "</Steps>\n"
+        "\n"
+        "<Steps>\n"
+        '  <Step title="Restart">\n'
+        "    Restart the app.\n"
+        "  </Step>\n"
+        "</Steps>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "1. **Install**\n\n   Run the installer." in md
+    assert (
+        "2. **Sign in**\n\n   Use your account.\n\n   > [!TIP]\n   > Any account works."
+        in md
+    )
+    # The second group restarts at one rather than continuing the first.
+    assert md.count("1. **Install**") == 1
+    assert "1. **Restart**" in md
+    assert "<Step " not in md and "<Steps>" not in md
+
+
+def test_claude_normalize_keeps_every_tab_panel_under_its_label():
+    """Tabs are a browser affordance a Markdown reader cannot act on, so every
+    panel is kept, one after another, under its own bold label -- the label a
+    reader needs to tell the installation methods apart, and the content
+    (code samples included) beneath it."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "<Tabs>\n"
+        '  <Tab title="Homebrew">\n'
+        "    ```bash theme={null}\n"
+        "    brew install --cask claude-code\n"
+        "    ```\n"
+        "  </Tab>\n"
+        "\n"
+        '  <Tab title="WinGet">\n'
+        "    ```powershell theme={null}\n"
+        "    winget install Anthropic.ClaudeCode\n"
+        "    ```\n"
+        "  </Tab>\n"
+        "</Tabs>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "**Homebrew**" in md and "**WinGet**" in md
+    assert "brew install --cask claude-code" in md
+    assert "winget install Anthropic.ClaudeCode" in md
+    # The dedented samples are the fences they were, at column zero.
+    assert "\n```bash theme={null}\nbrew install" in md
+    assert "<Tab " not in md and "<Tabs>" not in md
+
+
+def test_claude_normalize_unwraps_layout_components_and_keeps_content():
+    """The layout-only components (a tab group over code samples, a frame
+    around a figure, a grid wrapper) contribute no text of their own, so their
+    tags are dropped and everything they wrapped -- labels included -- is
+    kept. An accordion keeps its title as a bold label, the same convention
+    the tab panels use."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "<CodeGroup>\n"
+        "  ```bash Bash\n"
+        "  echo one\n"
+        "  ```\n"
+        "</CodeGroup>\n"
+        "\n"
+        "<Frame>\n"
+        '  <img src="media/images/shot.png" alt="A screenshot" />\n'
+        "</Frame>\n"
+        "\n"
+        "<AccordionGroup>\n"
+        '  <Accordion title="Reference">\n'
+        "    Token reference.\n"
+        "  </Accordion>\n"
+        "</AccordionGroup>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "```bash Bash\necho one\n```" in md
+    assert '<img src="media/images/shot.png" alt="A screenshot" />' in md
+    assert "**Reference**\n\nToken reference." in md
+    for tag in ("CodeGroup", "Frame", "Accordion", "AccordionGroup"):
+        assert f"<{tag}" not in md
+
+
+def test_claude_normalize_renders_cards_with_their_titles_and_links():
+    """A card's title and href are content, not styling: they are the label
+    and the destination of a link list entry. Dropping them as markup would
+    delete both, so they are rendered as a Markdown link -- with an internal
+    target resolved like any other cross-link and an external one left
+    exactly as upstream wrote it."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "<CardGroup cols={2}>\n"
+        '  <Card title="Worktrees" icon="code-branch" href="/docs/en/worktrees">\n'
+        "    Run isolated parallel sessions\n"
+        "  </Card>\n"
+        "\n"
+        '  <Card title="Help Centre" icon="store" href="https://support.claude.com">\n'
+        "    Get additional support\n"
+        "  </Card>\n"
+        "</CardGroup>\n"
+    )
+    known = {"hooks", "sample", "worktrees"}
+    md = claude_code._normalize_page(raw, "sample", known)
+    assert "**[Worktrees](./worktrees.md)**\n\nRun isolated parallel sessions" in md
+    assert (
+        "**[Help Centre](https://support.claude.com)**\n\nGet additional support" in md
+    )
+    assert "<Card" not in md and "icon=" not in md
+
+
+def test_claude_normalize_renders_update_entries_as_sections():
+    """The weekly digest entries are ``<Update>`` components: their label and
+    version tags become the section heading, their description (the entry's
+    dates) the italic line beneath it, and their body ordinary Markdown."""
+    raw = (
+        "# What's new\n"
+        "\n"
+        '<Update label="Week 34" description="August 17-21, 2026" tags={["v2.1.234-v2.1.239"]}>\n'
+        "  **`/design`**: a research preview.\n"
+        "\n"
+        "  [Read the digest](/docs/en/whats-new/2026-w34)\n"
+        "</Update>\n"
+    )
+    known = {"sample", "whats-new/2026-w34"}
+    md = claude_code._normalize_page(raw, "whats-new", known)
+    assert "## Week 34 (v2.1.234-v2.1.239)" in md
+    assert "*August 17-21, 2026*" in md
+    assert "[Read the digest](./whats-new/2026-w34.md)" in md
+    assert "<Update" not in md and "tags={" not in md
+
+
+def test_claude_normalize_removes_widgets_only_when_self_closing():
+    """The decorative components render a widget and no documentation text, so
+    their self-closing form is removed outright. A container form of the same
+    component would hold text between its tags, and dropping it would delete
+    that text -- the test pins that it survives instead."""
+    raw = (
+        "# Page\n"
+        "\n"
+        '<ContactSalesCard surface="bedrock" />\n'
+        "\n"
+        '<BackToIndex href="#all-settings" label="Back to index" />\n'
+        "\n"
+        "<ClaudeExplorer>Kept text.</ClaudeExplorer>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "ContactSalesCard" not in md
+    assert "BackToIndex" not in md
+    assert "Kept text." in md
+
+
+def test_claude_normalize_renders_the_reference_filter_column_help():
+    """The settings index's filter bar is the one widget whose props carry
+    documentation: the help text it shows for each column. Dropping the
+    component outright would take those explanations out of the page, so they
+    become a bullet list where the widget sat. The props that only configure
+    the widget -- the noun it counts, its search placeholder -- say nothing
+    about the content and go with it."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "Every key below links to its entry.\n"
+        "\n"
+        "<ReferenceFilter\n"
+        '  noun="settings"\n'
+        '  placeholder="Filter settings by key or purpose"\n'
+        '  facetOrder={{ scope: ["Any file", "Managed"] }}\n'
+        "  columnHelp={{\n"
+        '    topic: "The section of this page that holds the entry.",\n'
+        '    scope: "Which settings files can set the key."\n'
+        "  }}\n"
+        "/>\n"
+        "\n"
+        "| Key | Description |\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "ReferenceFilter" not in md
+    assert "Filter settings by key" not in md
+    assert "* **topic**: The section of this page that holds the entry." in md
+    assert "* **scope**: Which settings files can set the key." in md
+    assert "* **scope** (sort order): Any file, Managed" in md
+    assert "| Key | Description |" in md
+
+
+def test_claude_normalize_keeps_a_reference_filter_it_cannot_read():
+    """A filter bar whose props this adapter cannot read is left exactly as
+    upstream wrote it. Rendering from a partly-read value would replace the
+    column help with a shorter list -- or with nothing -- which is worse than
+    leaving the component visible."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "<ReferenceFilter columnHelp={helpFor(columns)} />\n"
+        "\n"
+        "<ReferenceFilter>Filtered table.</ReferenceFilter>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "<ReferenceFilter columnHelp={helpFor(columns)} />" in md
+    assert "Filtered table." in md
+
+
+def test_claude_normalize_renders_prompt_library_data_as_markdown():
+    """A page that is mostly a JavaScript component carries its documentation
+    inside the component's own data. The prompt library's records -- the
+    prompt to copy, its title, why it works, what it needs, where it came
+    from -- become ordinary Markdown, and the rendering code around them,
+    which holds no text of its own, is not mirrored: a reader or an agent
+    gets the prompts rather than the React source they were trapped in."""
+    raw = (
+        "# Prompt library\n"
+        "\n"
+        "export const PromptLibrary = ({text = {}, labels = {}}) => {\n"
+        "  const RAW = useMemo(() => [{\n"
+        "    id: 'explain-code',\n"
+        "    sdlc: 'discover',\n"
+        "    cat: 'Understand',\n"
+        "    roles: ['pm'],\n"
+        "    prompt: 'explain {target}',\n"
+        "    slots: {\n"
+        "      target: 'the queue'\n"
+        "    },\n"
+        "    needs: 'tracker',\n"
+        "    src: 'workflows'\n"
+        "  }], []);\n"
+        "  const SOURCES = useMemo(() => ({\n"
+        "    workflows: '/en/common-workflows'\n"
+        "  }), []);\n"
+        '  return <div className="pl">{RAW.length}</div>;\n'
+        "};\n"
+        "\n"
+        "export const labels = {\n"
+        "  whyWorks: 'Why this works',\n"
+        "  makeItStick: 'Make it stick',\n"
+        "  needsLabel: 'Needs',\n"
+        "  from: 'From',\n"
+        "  needs: {\n"
+        '    tracker: "your issue tracker added as a [connector](/docs/en/mcp)."\n'
+        "  }\n"
+        "};\n"
+        "\n"
+        "export const tagLabels = {\n"
+        "  pm: 'Product'\n"
+        "};\n"
+        "\n"
+        "export const phaseLabels = {\n"
+        "  discover: 'Discover'\n"
+        "};\n"
+        "\n"
+        "export const catLabels = {\n"
+        "  Understand: 'Understand'\n"
+        "};\n"
+        "\n"
+        "export const sourceLabels = {\n"
+        "  workflows: 'Common workflows'\n"
+        "};\n"
+        "\n"
+        "export const text = {\n"
+        "  'explain-code': {\n"
+        "    title: 'Explain unfamiliar code',\n"
+        "    teaches: 'Name the file; say what you want back.',\n"
+        "    next: 'Set an output style'\n"
+        "  }\n"
+        "};\n"
+        "\n"
+        "<PromptLibrary text={text} labels={labels} />\n"
+        "\n"
+        "## Closing prose\n"
+    )
+    md = claude_code._normalize_page(raw, "prompt-library", {"mcp", "common-workflows"})
+    assert "export const" not in md
+    assert "PromptLibrary" not in md
+    assert "### Discover - Understand" in md
+    assert "#### Explain unfamiliar code" in md
+    assert "*Tags: Product*" in md
+    # The prompt is shown with its slot defaults filled in, which is the text
+    # the page displays and the reader copies.
+    assert "```text\nexplain the queue\n```" in md
+    assert "* **Why this works**: Name the file; say what you want back." in md
+    assert "* **Make it stick**: Set an output style" in md
+    assert "* **Needs**: your issue tracker added as a [connector](./mcp.md)." in md
+    assert "* **From**: [Common workflows](./common-workflows.md)" in md
+    assert "## Closing prose" in md
+
+
+def test_claude_normalize_fences_data_page_source_it_cannot_read():
+    """When a data page's component cannot be read, its definitions are kept in
+    a fenced code block rather than rendered from a partly-read value. Fenced
+    code is valid CommonMark -- an agent reads it as a sample -- where raw JSX
+    is neither readable nor parseable, and nothing the page carried is lost."""
+    raw = (
+        "# Prompt library\n"
+        "\n"
+        "export const PromptLibrary = () => {\n"
+        "  const RAW = loadPrompts(locale);\n"
+        "  return <div>{RAW.length}</div>;\n"
+        "};\n"
+    )
+    md = claude_code._normalize_page(raw, "prompt-library", set())
+    assert "```jsx\nexport const PromptLibrary = () => {" in md
+    assert "const RAW = loadPrompts(locale);" in md
+    assert "return <div>{RAW.length}</div>;" in md
+
+
+def test_claude_normalize_fences_a_page_whose_source_is_only_implementation():
+    """A page whose components are implementation rather than documentation --
+    styles, an icon, an experiment's bucket assignment -- keeps that source in
+    a fenced code block. The text the components show a reader lives inside
+    it, so dropping it would lose content, while leaving it un-fenced is what
+    makes a page unreadable to everything but a browser."""
+    raw = (
+        "# Claude Platform on AWS\n"
+        "\n"
+        "export const ContactSalesCard = ({surface}) => {\n"
+        "  const STYLES = `.cc-cs-text { margin: 0; }`;\n"
+        '  return <div className="cc-cs">Talk to sales.</div>;\n'
+        "};\n"
+    )
+    md = claude_code._normalize_page(raw, "claude-platform-on-aws", set())
+    assert "```jsx\nexport const ContactSalesCard" in md
+    assert "Talk to sales." in md
+    assert "style={{" not in md
+
+
+def test_claude_normalize_renders_context_window_timeline_and_keeps_the_rest():
+    """The context window page's steps -- what enters the context window, what
+    loaded it, what it costs, whether the reader sees it, and why -- are data,
+    so they become a table. The commentary the page prints for each stretch of
+    the timeline is written into the view's own render code instead, and no
+    literal holds it: that code stays in the page as a fenced code block, so
+    the commentary is kept rather than dropped with the code around it."""
+    raw = (
+        "# Explore the context window\n"
+        "\n"
+        "export const ContextWindow = () => {\n"
+        "  const MAX = 200000;\n"
+        "  const EVENTS = [{}, {\n"
+        "    t: 0.015,\n"
+        "    kind: 'auto',\n"
+        "    label: 'System prompt',\n"
+        "    tokens: 4200,\n"
+        "    vis: 'hidden',\n"
+        "    desc: 'Core instructions. Always loaded first.',\n"
+        "    link: '/en/memory'\n"
+        "  }, {\n"
+        "    t: 0.22,\n"
+        "    kind: 'user',\n"
+        "    label: 'Your prompt',\n"
+        "    tokens: 40,\n"
+        "    vis: 'full',\n"
+        "    desc: 'What you typed.'\n"
+        "  }];\n"
+        "  const VIS_META = {\n"
+        "    hidden: {\n"
+        "      label: 'Invisible in your terminal'\n"
+        "    },\n"
+        "    full: {\n"
+        "      label: 'Shown in your terminal'\n"
+        "    }\n"
+        "  };\n"
+        "  const KIND_META = {\n"
+        "    auto: {\n"
+        "      detail: 'Auto-loaded'\n"
+        "    },\n"
+        "    user: {\n"
+        "      detail: 'You typed this'\n"
+        "    }\n"
+        "  };\n"
+        "  const takeaway = 'Only the render code holds this sentence.';\n"
+        "  return <div>{takeaway}</div>;\n"
+        "};\n"
+    )
+    md = claude_code._normalize_page(raw, "context-window", {"memory"})
+    assert "## Session timeline" in md
+    assert "holds 200,000 tokens" in md
+    assert (
+        "| System prompt | Auto-loaded | 4,200 | Invisible in your terminal "
+        "| Core instructions. Always loaded first. [Learn more](./memory.md) |" in md
+    )
+    assert "| Your prompt | You typed this | 40 | Shown in your terminal |" in md
+    # The spacer entry that separates stretches of the timeline is not a step.
+    assert "|  |" not in md
+    assert "```jsx\nexport const ContextWindow" in md
+    assert "Only the render code holds this sentence." in md
+
+
+def test_claude_normalize_renders_settings_views_at_their_mount_points():
+    """The settings page declares its two views at the top and mounts them
+    hundreds of lines further down, in the sections that introduce them. Each
+    view's Markdown is written where the view appears, so a reader meets the
+    precedence stack in the precedence section, not in the page's opening."""
+    raw = (
+        "# Settings files and precedence\n"
+        "\n"
+        "export const SettingsPrecedence = () => {\n"
+        "  const LEVELS = [{\n"
+        "    n: 1,\n"
+        "    name: 'Managed settings',\n"
+        "    file: 'managed-settings.json',\n"
+        "    who: 'Your organization',\n"
+        "    w: 390\n"
+        "  }];\n"
+        '  return <div className="sp-root">stack</div>;\n'
+        "};\n"
+        "\n"
+        "export const SettingsScope = () => {\n"
+        "  const FILES = [{\n"
+        "    id: 'user',\n"
+        "    path: '~/.claude/settings.json'\n"
+        "  }, {\n"
+        "    id: 'managed',\n"
+        "    path: 'Managed settings',\n"
+        "    ring: 'managed-settings.json, MDM, or the claude.ai console'\n"
+        "  }];\n"
+        '  return <div className="ssc-root">scope</div>;\n'
+        "};\n"
+        "\n"
+        "Opening prose.\n"
+        "\n"
+        "## Compare the scope of each settings file\n"
+        "\n"
+        "Click a settings file to see the folders it reaches.\n"
+        "\n"
+        "<SettingsScope />\n"
+        "\n"
+        "## Settings precedence\n"
+        "\n"
+        "The stack below shows the levels, highest on top.\n"
+        "\n"
+        "<SettingsPrecedence />\n"
+        "\n"
+        "In order, highest precedence first:\n"
+    )
+    md = claude_code._normalize_page(raw, "settings", set())
+    assert "export const" not in md
+    assert "SettingsPrecedence" not in md and "SettingsScope" not in md
+    assert "sp-root" not in md and "ssc-root" not in md
+    # The view's data lands where the view was mounted, not where it was declared.
+    assert "Opening prose." in md
+    assert md.index("Click a settings file") < md.index("* `~/.claude/settings.json`")
+    assert md.index("* `~/.claude/settings.json`") < md.index("## Settings precedence")
+    assert "| Level | Where you set it | Who it applies to |" in md
+    assert "| 1. Managed settings | managed-settings.json | Your organization |" in md
+    assert (
+        "* `Managed settings` (managed-settings.json, MDM, or the claude.ai console)"
+        in md
+    )
+    assert md.index("| 1. Managed settings") < md.index(
+        "In order, highest precedence first:"
+    )
+
+
+def test_claude_normalize_data_pages_are_idempotent():
+    """Normalisation is applied once per page fetch, but the passes have to
+    agree with what they produce: the component source a rendered page keeps
+    is inside a fence, so a later run must recognize it as a code sample and
+    leave it alone rather than fencing it a second time or reading its
+    declarations back out."""
+    raw = (
+        "# Explore the context window\n"
+        "\n"
+        "export const ContextWindow = () => {\n"
+        "  const MAX = 200000;\n"
+        "  const EVENTS = [{\n"
+        "    t: 0.015,\n"
+        "    kind: 'auto',\n"
+        "    label: 'System prompt',\n"
+        "    tokens: 4200,\n"
+        "    vis: 'hidden',\n"
+        "    desc: 'Core instructions.'\n"
+        "  }];\n"
+        "  const VIS_META = {\n"
+        "    hidden: {\n"
+        "      label: 'Invisible in your terminal'\n"
+        "    }\n"
+        "  };\n"
+        "  const KIND_META = {\n"
+        "    auto: {\n"
+        "      detail: 'Auto-loaded'\n"
+        "    }\n"
+        "  };\n"
+        "  const takeaway = 'Held by the render code.';\n"
+        '  return <div className="cw-root">{takeaway}</div>;\n'
+        "};\n"
+    )
+    once = claude_code._normalize_page(raw, "context-window", set())
+    assert claude_code._normalize_page(once, "context-window", set()) == once
+
+
+def test_claude_normalize_keeps_a_data_page_definition_inside_a_code_sample():
+    """A page may show its own component source inside a fenced sample, and a
+    rendered page carries the source it kept in a fence as well. A definition
+    that stands inside a code block is sample text, so the pass that renders
+    data pages must not touch it -- the sample has to come through byte for
+    byte."""
+    raw = (
+        "# Prompt library\n"
+        "\n"
+        "`export const PromptLibrary = () => {};`\n"
+        "\n"
+        "```jsx\n"
+        "export const PromptLibrary = () => {};\n"
+        "```\n"
+    )
+    md = claude_code._normalize_page(raw, "prompt-library", set())
+    assert "```jsx\nexport const PromptLibrary = () => {};\n```" in md
+
+
+def test_claude_normalize_protects_fenced_code_and_keeps_it_a_fence():
+    """Nothing inside a fenced code sample may be converted: a sample that
+    documents the components (``<Note>``, ``](/docs/en/hooks)``) is code, not
+    page structure. The sample also has to survive the reshaping around it --
+    a step body is dedented and re-indented under its marker, and the fence
+    has to move with it, or the sample breaks out of the list item it
+    belongs to."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "```markdown\n"
+        "<Note>Not a callout here.</Note>\n"
+        "[Hooks](/docs/en/hooks)\n"
+        "```\n"
+        "\n"
+        "<Steps>\n"
+        '  <Step title="Document it">\n'
+        "    Add this to the file:\n"
+        "\n"
+        "    ```markdown\n"
+        "    <Note>Still code.</Note>\n"
+        "    ```\n"
+        "  </Step>\n"
+        "</Steps>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", {"hooks"})
+    assert "<Note>Not a callout here.</Note>" in md
+    assert "[Hooks](/docs/en/hooks)" in md
+    assert "1. **Document it**" in md
+    assert "   ```markdown\n   <Note>Still code.</Note>\n   ```" in md
+
+
+def test_claude_normalize_strips_presentation_attributes():
+    """``style={{...}}`` and ``className`` are JSX spellings of CSS that a
+    Markdown reader renders as literal text, and ``data-path`` repeats the
+    asset path already carried by ``src``. All three are removed from the
+    elements that carry them -- including a multi-line expression value and a
+    braced one -- while the element itself keeps every other attribute it
+    has."""
+    raw = (
+        "# Page\n"
+        "\n"
+        '<img src="media/images/diagram.svg" className="dark:hidden"\n'
+        '  alt="Diagram" width="680" data-path="images/diagram.svg" style={{\n'
+        '  maxWidth: "640px",\n'
+        "  margin: '0 auto'\n"
+        "}} />\n"
+        "\n"
+        "<code style={mono}>claude</code>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "style={" not in md
+    assert "className" not in md
+    assert "data-path" not in md
+    assert 'alt="Diagram" width="680"' in md
+    assert '<img src="media/images/diagram.svg"' in md and md.count("<img") == 1
+    assert "<code>claude</code>" in md
+
+
+def test_claude_normalize_keeps_footnote_anchor_ids():
+    """A self-closing ``<span id="fn1" style={{...}} />`` is the pages' anchor
+    marker for a footnote: the style is site styling, but the id is what makes
+    ``[1](#fn1)`` resolve. It becomes an explicit anchor element, so the link
+    still lands on its footnote after the styling is gone."""
+    raw = (
+        "# Page\n"
+        "\n"
+        'See note <sup><a href="#fn1">1</a></sup>\n'
+        "\n"
+        "<span id=\"fn1\" style={{display: 'block', position: 'relative'}} "
+        "/><sup>1</sup> The footnote text.<br />\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert '<a id="fn1"></a><sup>1</sup> The footnote text.' in md
+    assert "style={{" not in md
+    assert "[1](#fn1)" in md or 'href="#fn1"' in md
+
+
+def test_claude_normalize_converts_inline_pseudo_tags():
+    """One page defines three short inline components -- a code span, a bold
+    run, and a link -- and uses them throughout its prose. They become the
+    Markdown they stand for, including the JSX expression wrapper upstream
+    uses wherever the value would otherwise be parsed as markup."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "Run <C>/memory</C> to edit <C>{'${NOTION_TOKEN}'}</C> and see <B>bold</B>.\n"
+        "\n"
+        'Read the <A href="/docs/en/hooks">hooks guide</A> next.\n'
+    )
+    md = claude_code._normalize_page(raw, "sample", {"hooks"})
+    assert "Run `/memory` to edit `${NOTION_TOKEN}` and see **bold**." in md
+    assert "Read the [hooks guide](./hooks.md) next." in md
+    for tag in ("<C>", "</C>", "<B>", "</B>", "<A "):
+        assert tag not in md
+
+
+def test_claude_normalize_removes_the_site_script_tag():
+    """One page loads a browser-side asset that rewrites SDK type links in
+    place. A mirrored page has no such script and cannot use one, and a
+    ``<script>`` tag in a Markdown file renders as literal text, so the tag is
+    removed. A script element that carries content between its tags is kept:
+    that content may be prose."""
+    raw = (
+        "# Page\n"
+        "\n"
+        '<script src="/docs/components/typescript-sdk-type-links.js" defer />\n'
+        "\n"
+        "Prose.\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "script" not in md
+    assert "Prose." in md
+
+
+def test_claude_normalize_rewrites_video_wrappers_to_external_links():
+    """Video demos stay upstream CDN links (the mirror's media stage mirrors
+    images and diagrams only), so a ``<video>`` element -- whose attributes are
+    browser playback flags -- becomes a plain link to the media it played.
+    A video element with no readable source is left exactly as upstream wrote
+    it rather than being dropped."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "<Frame>\n"
+        '  <video autoPlay muted loop playsInline className="w-full" '
+        'src="https://mintcdn.com/claude-code/token/images/whats-new/demo.mp4?fit=max" '
+        'data-path="images/whats-new/demo.mp4" />\n'
+        "</Frame>\n"
+        "\n"
+        "<video autoplay />\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert (
+        "[Video demo](https://mintcdn.com/claude-code/token/images/whats-new/demo.mp4?fit=max)"
+        in md
+    )
+    assert "<video autoplay />" in md
+    assert "autoPlay" not in md
+
+
+def test_claude_normalize_unwraps_only_presentation_wrappers():
+    """Only a ``div``/``span``/``p`` carrying a class or style is a layout
+    wrapper: its tags go and its content stays. A bare ``<div>`` may be a
+    semantic container or an anchor target, so it is kept together with its
+    closing tag -- the two stay balanced whatever the nesting order is."""
+    raw = (
+        "# Page\n"
+        "\n"
+        '<div className="digest-feature">\n'
+        "  <div>\n"
+        "    Kept by the semantic wrapper.\n"
+        "  </div>\n"
+        "</div>\n"
+        "\n"
+        "<p style={{margin: 0}}>A styled paragraph.</p>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "Kept by the semantic wrapper." in md
+    assert "A styled paragraph." in md
+    assert "digest-feature" not in md
+    assert "<p" not in md
+    assert md.count("<div>") == 1 and md.count("</div>") == 1
+
+
+def test_claude_normalize_resolves_internal_cross_links():
+    """The pages link to each other with site-absolute paths, which resolve
+    against the upstream site and are dead for a reader of the mirror. Each
+    one becomes the relative link that reaches the same page here (nested
+    slugs and anchors included); a target the mirror does not hold becomes its
+    upstream URL, and anything that is not a documentation path -- an external
+    URL, a bare anchor -- is left alone."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "See [hooks](/docs/en/hooks#exec-form) and [python](/docs/en/agent-sdk/python).\n"
+        "\n"
+        "Also [settings](/docs/en/settings-reference#available-settings), "
+        "[unmirrored](/docs/en/unknown-page#x), [external](https://example.com/x), "
+        "and [a fragment](#local).\n"
+        "\n"
+        'In HTML too: <a href="/docs/en/hooks">hooks</a>.\n'
+    )
+    known = {"hooks", "sample", "agent-sdk/python", "agent-sdk/typescript"}
+    md = claude_code._normalize_page(raw, "agent-sdk/typescript", known)
+    assert "[hooks](../hooks.md#exec-form)" in md
+    assert "[python](./python.md)" in md
+    assert (
+        "[settings](https://code.claude.com/docs/en/settings-reference#available-settings)"
+        in md
+    )
+    assert "[unmirrored](https://code.claude.com/docs/en/unknown-page#x)" in md
+    assert "[external](https://example.com/x)" in md
+    assert "[a fragment](#local)" in md
+    assert '<a href="../hooks.md">hooks</a>' in md
+    assert "](" + "/docs/en/" not in md
+
+
+def test_claude_normalize_resolves_links_idempotently():
+    """Resolution is applied once per page fetch, but the page a later pass
+    sees is already the output of the earlier one -- so the same text must
+    resolve to itself. Both passes only match a leading ``/docs/en`` path and
+    neither result starts with one, which is what makes the second run a
+    no-op and keeps the content hash stable across mirror runs."""
+    raw = "# Page\n\nSee [hooks](/docs/en/hooks).\n"
+    known = {"hooks", "sample"}
+    once = claude_code._normalize_page(raw, "sample", known)
+    assert claude_code._normalize_page(once, "sample", known) == once
+
+
+def test_claude_normalize_keeps_component_definitions_structural():
+    """Pages whose body is a JavaScript component carry the prose inside the
+    component's own code. The passes that only remove markup still apply there
+    (a ``style={{...}}`` or a ``<C>`` is JSX noise in a Markdown reader either
+    way), while the passes that rewrite page structure leave the definition
+    alone: its elements and their nesting are the page's code, and rewriting
+    them would edit code rather than documentation."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "export const Widget = () => {\n"
+        '  return <div className={"w-root"} style={{padding: 4}}>\n'
+        "    <p className=\"w-text\">Rendered <C>{'text'}</C> here.</p>\n"
+        "  </div>;\n"
+        "};\n"
+        "\n"
+        "<Widget />\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert 'return <div style="' not in md
+    assert "<div>\n    <p>Rendered `text` here.</p>\n  </div>;" in md
+
+
+def test_claude_normalize_leaves_an_unterminated_component_visible():
+    """A component tag whose partner never arrives is uncertain structure: the
+    page keeps the text exactly as upstream wrote it instead of guessing where
+    the component ends and swallowing the rest of the page into it. The
+    malformed pair of an empty group is converted, since both of its tags are
+    present."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "<Note>\n"
+        "Prose that never closes.\n"
+        "\n"
+        "<CardGroup></CardGroup>\n"
+        "\n"
+        "Closing prose.\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "<Note>" in md
+    assert "Prose that never closes." in md
+    assert "Closing prose." in md
+    assert "<CardGroup>" not in md
+
+
+def test_claude_normalize_keeps_prose_placeholders_and_unknown_markup():
+    """The pages use angle brackets as prose placeholders (``<sessionId>``,
+    ``CLAUDE_PLUGIN_OPTION_<KEY>``) and carry inline HTML that Markdown
+    readers render as it is. A generic "strip every tag" pass would delete the
+    first group, so every conversion above targets one known construct
+    instead; this pins that the rest of the page is untouched."""
+    raw = (
+        "# Page\n"
+        "\n"
+        "Pass an `AsyncIterable<SDKUserMessage>` and read "
+        "`$CLAUDE_PLUGIN_OPTION_<KEY>` from the environment.\n"
+        "\n"
+        "| Key   | Type   |\n"
+        "| ----- | ------ |\n"
+        "| `a`   | string |\n"
+        "\n"
+        "<details>\n"
+        "<summary>More</summary>\n"
+        "\n"
+        "Body.\n"
+        "\n"
+        "</details>\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert "`AsyncIterable<SDKUserMessage>`" in md
+    assert "`$CLAUDE_PLUGIN_OPTION_<KEY>`" in md
+    assert "| `a`   | string |" in md
+    assert "<details>" in md and "</details>" in md
+
+
+def test_claude_normalize_has_no_component_remnants():
+    """Representative converted output carries no MDX component tag, no JSX
+    styling attribute, and no site-absolute cross-link.
+
+    This is the guard that fails loudly if a future upstream adds a component,
+    or changes one of these into a shape the passes do not recognize: the page
+    would keep raw JSX instead of degrading quietly.
+    """
+    raw = (
+        "# Sample\n"
+        "\n"
+        '<Update label="Week 34" description="August 17-21, 2026" tags={["v2.1.234-v2.1.239"]}>\n'
+        "Body of the entry.\n"
+        "</Update>\n"
+        "\n"
+        '<Note title="Heads up">\n'
+        "A callout.\n"
+        "</Note>\n"
+        "\n"
+        "<Tip>Another callout.</Tip>\n"
+        "\n"
+        "<Warning>A third.</Warning>\n"
+        "\n"
+        "<Info>A fourth.</Info>\n"
+        "\n"
+        "<Steps>\n"
+        '  <Step title="First">\n'
+        "    Do the first thing.\n"
+        "  </Step>\n"
+        '  <Step title="Second">\n'
+        "    Do the second thing.\n"
+        "  </Step>\n"
+        "</Steps>\n"
+        "\n"
+        "<Tabs>\n"
+        '  <Tab title="macOS">\n'
+        "    Run it on macOS.\n"
+        "  </Tab>\n"
+        '  <Tab title="Linux">\n'
+        "    Run it on Linux.\n"
+        "  </Tab>\n"
+        "</Tabs>\n"
+        "\n"
+        "<CodeGroup>\n"
+        "  ```bash\n"
+        "  echo hi\n"
+        "  ```\n"
+        "</CodeGroup>\n"
+        "\n"
+        "<AccordionGroup>\n"
+        '  <Accordion title="Details">\n'
+        "    The details.\n"
+        "  </Accordion>\n"
+        "</AccordionGroup>\n"
+        "\n"
+        "<Frame>\n"
+        '  <img src="media/images/shot.png" alt="Shot" width="10" height="10" />\n'
+        "</Frame>\n"
+        "\n"
+        "<CardGroup cols={2}>\n"
+        '  <Card title="Hooks" icon="hook" href="/docs/en/hooks">\n'
+        "    Wire up hooks.\n"
+        "  </Card>\n"
+        "</CardGroup>\n"
+        "\n"
+        '<div style={{maxWidth: "640px"}}>\n'
+        '  <span className="nowrap">Prose in a wrapper.</span>\n'
+        "</div>\n"
+        "\n"
+        '<span id="fn1" style={{display: "block"}} />Footnote one.\n'
+        "\n"
+        "Use <C>claude --version</C> and <B>bold</B>, see "
+        '<A href="/docs/en/hooks">hooks</A>.\n'
+        "\n"
+        '<script src="/docs/components/x.js" defer />\n'
+        "\n"
+        '<video autoPlay src="https://mintcdn.com/claude-code/t/images/x.mp4" />\n'
+        "\n"
+        '<ContactSalesCard surface="bedrock" />\n'
+        "\n"
+        "Closing prose with [hooks](/docs/en/hooks).\n"
+    )
+    md = claude_code._normalize_page(raw, "sample", {"hooks", "sample"})
+    assert re.search(r"<[A-Z][A-Za-z]*\b", md) is None
+    assert "style={{" not in md
+    assert "className" not in md
+    assert "](/docs/en/" not in md
+    assert '<script src="/docs/' not in md
+    # The conversions produced content rather than deleting it.
+    assert "## Week 34 (v2.1.234-v2.1.239)" in md
+    assert "> [!NOTE]\n> **Heads up**\n>\n> A callout." in md
+    assert "> [!TIP]\n> Another callout." in md
+    assert "> [!WARNING]\n> A third." in md
+    assert "1. **First**" in md and "2. **Second**" in md
+    assert "**macOS**" in md and "**Linux**" in md
+    assert "echo hi" in md
+    assert "**Details**\n\nThe details." in md
+    assert '<img src="media/images/shot.png" alt="Shot" width="10" height="10" />' in md
+    assert "**[Hooks](./hooks.md)**" in md
+    assert "Prose in a wrapper." in md
+    assert '<a id="fn1"></a>Footnote one.' in md
+    assert "`claude --version`" in md and "**bold**" in md
+    assert "[Video demo](https://mintcdn.com/claude-code/t/images/x.mp4)" in md
+    assert "[hooks](./hooks.md)" in md
+
+
+def test_claude_normalize_many_unterminated_components_complete_quickly():
+    """A page full of component openers that never close must not be quadratic:
+    the tag scanner resumes after each one instead of restarting its search
+    from the top, so a large malformed page costs the same order as a
+    well-formed one. The text is kept -- nothing is silently deleted."""
+    raw = "# Page\n\n" + "<Note>\nunterminated prose\n" * 2000
+    md = claude_code._normalize_page(raw, "sample", set())
+    assert md.count("<Note>") == 2000
+    assert "unterminated prose" in md
+
+
+def test_claude_shield_many_unterminated_fences_complete_quickly():
+    """A page full of fence openers that no fence line ever closes must not be
+    quadratic: once a closer search has failed for a fence run, every later
+    opener of that run is known to have no closer either and skips the search
+    entirely. The text is kept exactly -- a lone fence run in prose is not a
+    code block, so nothing is shielded and nothing is rewritten.
+
+    The openers carry an info string, which is what stops one opener from
+    closing the one before it. The threshold is deliberately far above the
+    cost of the linear walk and far below the cost of the quadratic one, so
+    the test measures the shape of the scan rather than the speed of the
+    machine it runs on."""
+    text = "# Page\n\n" + "```text\nunterminated code\n" * 20000
+    started = time.monotonic()
+    shielded, blocks = claude_code._shield_fenced_code(text)
+    elapsed = time.monotonic() - started
+    assert blocks == []
+    assert shielded == text
+    assert elapsed < 2.0, f"shielding {len(text)} characters took {elapsed:.2f}s"
+
+
+def _claude_page(slug: str = "overview") -> Page:
+    """Build the ``Page`` a ``fetch_markdown`` test needs, with realistic URLs."""
+    return Page(
+        slug=slug,
+        source_url=f"{claude_code.SITE_URL}/docs/en/{slug}",
+        source_md_url=f"{claude_code.SITE_URL}/docs/en/{slug}.md",
+        source_id=slug,
+        group="root",
+    )
+
+
+def test_claude_fetch_markdown_returns_normalized_markdown_and_hash():
+    """The SUCCESS path of ``claude_code.fetch_markdown``: the raw MDX twin
+    must come back as a ``(markdown, sha256_hash)`` tuple, with the
+    normalisation applied and the hash matching ``fetch.content_hash`` of the
+    returned text -- that pairing is what the pipeline stores in the manifest
+    and what ``core.diff`` compares across runs."""
+    raw = (
+        "> ## Documentation Index\n> Fetch the complete documentation index.\n"
+        "\n"
+        "# Overview\n"
+        "\n"
+        "<Note>\nInstall it first.\n</Note>\n"
+    )
+    page = _claude_page()
+    md, digest = claude_code.fetch_markdown(_FakeClient([_Resp(200, raw)]), page)
+    assert md.startswith("> ## Documentation Index")
+    assert "# Overview" in md
+    assert "> [!NOTE]\n> Install it first." in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_claude_fetch_markdown_rejects_non_markdown():
+    """A response that normalises to something with no Markdown structure (an
+    HTML error page, a truncated body) must raise ``FetchError`` rather than
+    being written to the mirror: the pipeline isolates failures per page for
+    that exception type only, so this is also what keeps one bad response from
+    aborting the whole source."""
+    client = _FakeClient([_Resp(200, "<html><body><p>404 Not Found</p></body></html>")])
+    with pytest.raises(fetch.FetchError):
+        claude_code.fetch_markdown(client, _claude_page("hooks"))
+
+
+def test_claude_fetch_markdown_wraps_a_normalisation_failure(monkeypatch):
+    """An exception out of the normalisation passes is re-raised as
+    ``FetchError``, naming the page and keeping the original exception on
+    ``__cause__``. The pipeline isolates failures per page for that exception
+    type only, so an unforeseen markup shape (or a bug in a pass) must fail
+    just this page instead of aborting the whole source's run."""
+    page = _claude_page("hooks")
+
+    def _explode(text: str, slug: str, known_slugs=None) -> str:
+        raise ValueError("unforeseen markup shape")
+
+    monkeypatch.setattr(claude_code, "_normalize_page", _explode)
+    client = _FakeClient([_Resp(200, "# Hooks\n\nSome prose.\n")])
+    with pytest.raises(fetch.FetchError) as exc_info:
+        claude_code.fetch_markdown(client, page)
+    assert page.slug in str(exc_info.value)
+    assert isinstance(exc_info.value.__cause__, ValueError)
 
 
 # --- DeepSeek code-block blank-line preservation ------------------------------

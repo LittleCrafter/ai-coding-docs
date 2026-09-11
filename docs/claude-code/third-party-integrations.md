@@ -58,17 +58,17 @@ export const ContactSalesCard = ({surface}) => {
   .cc-cs-actions { width: 100%; }
 }
 `;
-  return <div className="cc-cs not-prose">
+  return <div>
       <style>{STYLES}</style>
-      <div className="cc-cs-card">
-        <div className="cc-cs-text">
+      <div>
+        <div>
           <strong>Deploying Claude Code across your organization?</strong> Talk to sales about enterprise plans, SSO, and centralized billing.
         </div>
-        <div className="cc-cs-actions">
-          <a href={`https://claude.com/pricing?${utm('view_plans')}#plans-business`} className="cc-cs-btn-ghost">
+        <div>
+          <a href={`https://claude.com/pricing?${utm('view_plans')}#plans-business`}>
             View plans
           </a>
-          <a href={`https://claude.com/contact-sales?${utm('contact_sales')}`} className="cc-cs-btn-clay">
+          <a href={`https://claude.com/contact-sales?${utm('contact_sales')}`}>
             Contact sales {iconArrowRight()}
           </a>
         </div>
@@ -77,8 +77,6 @@ export const ContactSalesCard = ({surface}) => {
 };
 
 Organizations can deploy Claude Code through Anthropic directly or through a cloud provider. This page helps you choose the right configuration.
-
-<ContactSalesCard surface="third_party_overview" />
 
 ## Compare deployment options
 
@@ -90,7 +88,7 @@ For most organizations, Claude for Teams or Claude for Enterprise provides the b
 
 Learn more about [Team plans](https://support.claude.com/en/articles/9266767-what-is-the-team-plan) and [Enterprise plans](https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan).
 
-The deployment options compared below cover where model inference runs. To run [Claude Code on the web](/docs/en/claude-code-on-the-web) sessions on compute your organization operates, see [self-hosted environments](/docs/en/self-hosted-environments).
+The deployment options compared below cover where model inference runs. To run [Claude Code on the web](./claude-code-on-the-web.md) sessions on compute your organization operates, see [self-hosted environments](./self-hosted-environments.md).
 
 If your organization has specific infrastructure requirements, compare the options below:
 
@@ -151,7 +149,7 @@ If your organization has specific infrastructure requirements, compare the optio
     <tr>
       <td>Authentication</td>
       <td>Claude.ai SSO or email</td>
-      <td>API key or a [Console sign-in without one](/docs/en/authentication#sign-in-without-an-api-key)</td>
+      <td>API key or a [Console sign-in without one](./authentication.md#sign-in-without-an-api-key)</td>
       <td>API key or AWS credentials</td>
       <td>API key or AWS credentials</td>
       <td>GCP credentials</td>
@@ -190,17 +188,17 @@ If your organization has specific infrastructure requirements, compare the optio
   </tbody>
 </table>
 
-For a feature-by-feature breakdown of what's available on each option, see [Feature availability](/docs/en/feature-availability).
+For a feature-by-feature breakdown of what's available on each option, see [Feature availability](./feature-availability.md).
 
 Select a deployment option to view setup instructions:
 
-* [Claude for Teams or Enterprise](/docs/en/authentication#claude-for-teams-or-enterprise)
-* [Anthropic Console](/docs/en/authentication#claude-console-authentication)
-* [Claude apps gateway](/docs/en/claude-apps-gateway), a self-hosted gateway that adds IdP sign-in in front of Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, Microsoft Foundry, or the Anthropic API
-* [Amazon Bedrock](/docs/en/amazon-bedrock)
-* [Claude Platform on AWS](/docs/en/claude-platform-on-aws)
-* [Google Cloud's Agent Platform](/docs/en/google-vertex-ai)
-* [Microsoft Foundry](/docs/en/microsoft-foundry)
+* [Claude for Teams or Enterprise](./authentication.md#claude-for-teams-or-enterprise)
+* [Anthropic Console](./authentication.md#claude-console-authentication)
+* [Claude apps gateway](./claude-apps-gateway.md), a self-hosted gateway that adds IdP sign-in in front of Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, Microsoft Foundry, or the Anthropic API
+* [Amazon Bedrock](./amazon-bedrock.md)
+* [Claude Platform on AWS](./claude-platform-on-aws.md)
+* [Google Cloud's Agent Platform](./google-vertex-ai.md)
+* [Microsoft Foundry](./microsoft-foundry.md)
 
 For Amazon Bedrock and Google Vertex AI, you can also run `claude` and select **3rd-party platform** at the login prompt to launch an interactive setup wizard.
 
@@ -208,18 +206,18 @@ For Amazon Bedrock and Google Vertex AI, you can also run `claude` and select **
 
 Most organizations can use a cloud provider directly without additional configuration. However, you may need to configure a corporate proxy or LLM gateway if your organization has specific network or management requirements. These are different configurations that can be used together:
 
-* **Corporate proxy**: Routes traffic through an HTTP/HTTPS proxy. Use this if your organization requires all outbound traffic to pass through a proxy server for security monitoring, compliance, or network policy enforcement. Configure with the `HTTPS_PROXY` or `HTTP_PROXY` environment variables. Learn more in [Enterprise network configuration](/docs/en/network-config).
-* **LLM Gateway**: A service that sits between Claude Code and the cloud provider to handle authentication and routing. Use this if you need centralized usage tracking across teams, custom rate limiting or budgets, or centralized authentication management. Configure with the `ANTHROPIC_BASE_URL`, `ANTHROPIC_BEDROCK_BASE_URL`, `ANTHROPIC_AWS_BASE_URL`, `ANTHROPIC_VERTEX_BASE_URL`, or `ANTHROPIC_FOUNDRY_BASE_URL` environment variables. Learn more in [LLM gateways](/docs/en/llm-gateway).
+* **Corporate proxy**: Routes traffic through an HTTP/HTTPS proxy. Use this if your organization requires all outbound traffic to pass through a proxy server for security monitoring, compliance, or network policy enforcement. Configure with the `HTTPS_PROXY` or `HTTP_PROXY` environment variables. Learn more in [Enterprise network configuration](./network-config.md).
+* **LLM Gateway**: A service that sits between Claude Code and the cloud provider to handle authentication and routing. Use this if you need centralized usage tracking across teams, custom rate limiting or budgets, or centralized authentication management. Configure with the `ANTHROPIC_BASE_URL`, `ANTHROPIC_BEDROCK_BASE_URL`, `ANTHROPIC_AWS_BASE_URL`, `ANTHROPIC_VERTEX_BASE_URL`, or `ANTHROPIC_FOUNDRY_BASE_URL` environment variables. Learn more in [LLM gateways](./llm-gateway.md).
 
-For the per-provider environment variables that route Amazon Bedrock, Microsoft Foundry, or Google Cloud's Agent Platform through an LLM gateway, see [route to a cloud provider through a gateway](/docs/en/llm-gateway-connect#route-to-a-cloud-provider-through-a-gateway). Run `/status` in Claude Code to verify which provider, base URL, and proxy a session is using.
+For the per-provider environment variables that route Amazon Bedrock, Microsoft Foundry, or Google Cloud's Agent Platform through an LLM gateway, see [route to a cloud provider through a gateway](./llm-gateway-connect.md#route-to-a-cloud-provider-through-a-gateway). Run `/status` in Claude Code to verify which provider, base URL, and proxy a session is using.
 
-If your organization uses [customer-managed encryption keys](https://platform.claude.com/docs/en/manage-claude/cmek) (CMEK) and routes Claude Code through an LLM gateway or a custom `ANTHROPIC_BASE_URL`, CMEK doesn't apply to Claude Code's operational telemetry on those sessions. To turn telemetry off for every developer, deliver `DISABLE_TELEMETRY` through managed settings as shown in [Turn telemetry off for your organization](/docs/en/managed-settings#turn-telemetry-off-for-your-organization).
+If your organization uses [customer-managed encryption keys](https://platform.claude.com/docs/en/manage-claude/cmek) (CMEK) and routes Claude Code through an LLM gateway or a custom `ANTHROPIC_BASE_URL`, CMEK doesn't apply to Claude Code's operational telemetry on those sessions. To turn telemetry off for every developer, deliver `DISABLE_TELEMETRY` through managed settings as shown in [Turn telemetry off for your organization](./managed-settings.md#turn-telemetry-off-for-your-organization).
 
 ## Best practices for organizations
 
 ### Invest in documentation and memory
 
-We strongly recommend investing in documentation so that Claude Code understands your codebase. Organizations can deploy CLAUDE.md files at multiple levels. See [where CLAUDE.md files can live](/docs/en/memory#choose-where-to-put-claude-md-files) and [how to deploy an organization-wide CLAUDE.md](/docs/en/memory#deploy-organization-wide-claude-md).
+We strongly recommend investing in documentation so that Claude Code understands your codebase. Organizations can deploy CLAUDE.md files at multiple levels. See [where CLAUDE.md files can live](./memory.md#choose-where-to-put-claude-md-files) and [how to deploy an organization-wide CLAUDE.md](./memory.md#deploy-organization-wide-claude-md).
 
 ### Simplify deployment
 
@@ -231,22 +229,22 @@ Encourage new users to try Claude Code for codebase Q\&A, or on smaller bug fixe
 
 ### Pin model versions for cloud providers
 
-If you deploy through [Amazon Bedrock](/docs/en/amazon-bedrock), [Google Cloud's Agent Platform](/docs/en/google-vertex-ai), [Microsoft Foundry](/docs/en/microsoft-foundry), or [Claude Platform on AWS](/docs/en/claude-platform-on-aws), pin specific model versions using `ANTHROPIC_DEFAULT_FABLE_MODEL`, `ANTHROPIC_DEFAULT_OPUS_MODEL`, `ANTHROPIC_DEFAULT_SONNET_MODEL`, and `ANTHROPIC_DEFAULT_HAIKU_MODEL`. Without pinning, model aliases resolve to Claude Code's built-in default for that provider, which can lag the newest release and may not yet be enabled in your account. Pinning lets you control when your users move to a new model. See [Model configuration](/docs/en/model-config#pin-models-for-third-party-deployments) for what each provider does when the default is unavailable.
+If you deploy through [Amazon Bedrock](./amazon-bedrock.md), [Google Cloud's Agent Platform](./google-vertex-ai.md), [Microsoft Foundry](./microsoft-foundry.md), or [Claude Platform on AWS](./claude-platform-on-aws.md), pin specific model versions using `ANTHROPIC_DEFAULT_FABLE_MODEL`, `ANTHROPIC_DEFAULT_OPUS_MODEL`, `ANTHROPIC_DEFAULT_SONNET_MODEL`, and `ANTHROPIC_DEFAULT_HAIKU_MODEL`. Without pinning, model aliases resolve to Claude Code's built-in default for that provider, which can lag the newest release and may not yet be enabled in your account. Pinning lets you control when your users move to a new model. See [Model configuration](./model-config.md#pin-models-for-third-party-deployments) for what each provider does when the default is unavailable.
 
 ### Configure security policies
 
-Security teams can configure managed permissions for what Claude Code is and is not allowed to do, which cannot be overwritten by local configuration. [Learn more](/docs/en/security).
+Security teams can configure managed permissions for what Claude Code is and is not allowed to do, which cannot be overwritten by local configuration. [Learn more](./security.md).
 
 <h3 id="leverage-mcp-for-integrations">
   Use MCP for integrations
 </h3>
 
-MCP is a great way to give Claude Code more information, such as connecting to ticket management systems or error logs. We recommend that one central team configures MCP servers and checks a `.mcp.json` configuration into the codebase so that all users benefit. [Learn more](/docs/en/mcp).
+MCP is a great way to give Claude Code more information, such as connecting to ticket management systems or error logs. We recommend that one central team configures MCP servers and checks a `.mcp.json` configuration into the codebase so that all users benefit. [Learn more](./mcp.md).
 
 ## Next steps
 
 Once you've chosen a deployment option and configured access for your team:
 
-1. **Roll out to your team**: Share installation instructions and have team members [install Claude Code](/docs/en/setup) and authenticate with their credentials.
-2. **Set up shared configuration**: Create a [CLAUDE.md file](/docs/en/memory) in your repositories to help Claude Code understand your codebase and coding standards.
-3. **Configure permissions**: Review [security settings](/docs/en/security) to define what Claude Code can and cannot do in your environment.
+1. **Roll out to your team**: Share installation instructions and have team members [install Claude Code](./setup.md) and authenticate with their credentials.
+2. **Set up shared configuration**: Create a [CLAUDE.md file](./memory.md) in your repositories to help Claude Code understand your codebase and coding standards.
+3. **Configure permissions**: Review [security settings](./security.md) to define what Claude Code can and cannot do in your environment.
