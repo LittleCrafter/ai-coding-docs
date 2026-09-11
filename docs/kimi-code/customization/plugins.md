@@ -91,13 +91,14 @@ All official plugins share the same installation and upgrade flow:
 2. Find the plugin you want and press `Enter` to install
 3. After installation completes, run `/reload` or `/new` to activate it
 
-::: info Note
-Kimi WebBridge installs in two parts: after the steps above, you also need to [install the browser extension](#install-the-browser-extension) before it works.
-:::
+> [!NOTE]
+> **Note**
+>
+> Kimi WebBridge installs in two parts: after the steps above, you also need to [install the browser extension](#install-the-browser-extension) before it works.
 
 Official plugins do not update automatically. When an update is available, you'll be prompted the next time you use the old version. To upgrade, repeat the installation steps above.
 
-### Kimi Datasource <Badge type="tip" text="v3.4.0" />
+### Kimi Datasource v3.4.0
 
 Kimi Datasource is the official Kimi Code data plugin, letting you query financial market data, financial news, macroeconomic indicators, corporate registration records, academic literature, Chinese laws and regulations, and official data from intergovernmental organizations in natural language. No manual API calls or data accounts required.
 
@@ -112,37 +113,37 @@ You must first complete OAuth login with a Kimi Code account via `/login`; data 
 
 #### What you can do
 
-::: details **Live market research** — Want to run a quantitative analysis on a stock?
+**Live market research** — Want to run a quantitative analysis on a stock?
+
 Pull three years of daily closing prices, MACD, and KDJ signals in a single query, no third-party data platforms needed.
-:::
 
-::: details **Cross-country macro comparison** — Studying supply-chain shifts across China, India, and Vietnam?
+**Cross-country macro comparison** — Studying supply-chain shifts across China, India, and Vietnam?
+
 Get complete GDP growth, trade volume, and demographic time-series for multiple countries from World Bank data spanning 50+ years, all in one go.
-:::
 
-::: details **Pre-contract risk check** — Need to vet a counterparty minutes before signing?
+**Pre-contract risk check** — Need to vet a counterparty minutes before signing?
+
 Type the company name and instantly get business registration, equity structure, litigation disputes, and credit blacklist status, right when you need it.
-:::
 
-::: details **Literature review acceleration** — Tracing the research arc of RLHF for a paper?
+**Literature review acceleration** — Tracing the research arc of RLHF for a paper?
+
 Get the most-cited papers, key authors, and core findings in seconds, so your literature review outline takes shape in half the time.
-:::
 
-::: details **On-the-spot legal lookup** — Need to confirm the statute behind a residence-right contract dispute?
+**On-the-spot legal lookup** — Need to confirm the statute behind a residence-right contract dispute?
+
 Pinpoint the relevant Civil Code articles (full text, authority level, and validity) in one query, then pull a few comparable precedents to back them up, without digging through statute databases.
-:::
 
-::: details **Institutional-grade US equity research** — Writing a deep dive on a US stock?
+**Institutional-grade US equity research** — Writing a deep dive on a US stock?
+
 Pull the annual report, standardized financial metrics, top-50 holders, and consensus estimates in one go, no more juggling multiple data terminals.
-:::
 
-::: details **Financial news and industry data** — Tracking market hotspots or policy moves?
+**Financial news and industry data** — Tracking market hotspots or policy moves?
+
 Query Caixin's market news, bond/fund/futures data, and listed-company supply-chain relationships, plus news, policies, announcements, and market flashes from the Xinhua Finance national financial information platform. All sources are authoritative and traceable.
-:::
 
-::: details **Standards lookup** — Need to check compliance against Chinese standards?
+**Standards lookup** — Need to check compliance against Chinese standards?
+
 Look up national (GB), industry, local, and association standards by number or topic, with status and full-text entry points.
-:::
 
 #### Coverage
 
@@ -164,7 +165,7 @@ Look up national (GB), industry, local, and association standards by number or t
 - Technical indicators and real-time prices are only available during active trading hours
 - AI-generated output is for reference only and does not constitute investment or business advice
 
-### Kimi WebBridge <Badge type="tip" text="v1.11.3" />
+### Kimi WebBridge v1.11.3
 
 Kimi WebBridge lets AI drive your browser directly: not an emulator, not a crawler, but the browser you use every day, with your login sessions and cookies. AI can open pages, read content, click buttons, fill in forms, and take screenshots just like you do, taking repetitive web operations off your hands. See the [Kimi WebBridge site](https://www.kimi.com/features/webbridge) for a product overview.
 
@@ -201,7 +202,7 @@ Use this when you can't reach the stores:
 - **Competitive analysis**: Batch-question multiple AI products and collect their answers to build side-by-side comparison reports
 - **Flight price comparison**: Query the same itinerary across multiple travel platforms, record airlines, departure/arrival times, and links sorted by price, and get recommended options
 
-### Kimi Computer Use <Badge type="tip" text="v0.5.4" />
+### Kimi Computer Use v0.5.4
 
 Kimi Computer Use lets AI operate your desktop apps directly, clicking, dragging, scrolling, and typing. The macOS version works silently in the background without taking over your mouse (a few popup actions may still bring an app to the foreground); see [the notes below](#notes-for-the-windows-version) for how the Windows version differs.
 
@@ -212,11 +213,11 @@ The first time you use Kimi Computer Use after installation, it shows an authori
 1. Click **Authorize** next to **Accessibility** and **Screen Recording**, and enable both permissions in System Settings: the former lets it perform clicks, typing, and scrolling; the latter lets it read screen content and locate UI elements
 2. Turn on the **Kimi Code** switch under "Connect local agents", then restart Kimi Code for it to take effect
 
-<div style="max-width: 380px; margin: 0 auto;">
+
 
 ![Kimi Computer Use authorization window](../media/kimi-computer-use-auth.jpeg)
 
-</div>
+
 
 #### Notes for the Windows version
 
@@ -235,9 +236,10 @@ The Windows version (WinCU) installs differently from the macOS one: run `/plugi
 - **Run fixed-step tasks**: For flows with clear steps, spell them out and AI follows along; for example, ask AI to open NetEase Cloud Music and play a specific song
 - **Handle software that has no API**: Plenty of professional tools and internal systems have no CLI or API at all; what used to require your own clicking can now be handed to AI, like trimming the first three seconds off a clip in Final Cut Pro and exporting it
 
-::: warning Note
-Don't hand it anything involving money, accounts, or publishing, such as payments and transfers, deleting important files, changing passwords, or posting content. To judge whether a task is suitable, check three things: the result is verifiable, the action is reversible, and the risk of getting it wrong is low.
-:::
+> [!WARNING]
+> **Note**
+>
+> Don't hand it anything involving money, accounts, or publishing, such as payments and transfers, deleting important files, changing passwords, or posting content. To judge whether a task is suitable, check three things: the result is verifiable, the action is reversible, and the risk of getting it wrong is low.
 
 ## Plugin Manifest
 

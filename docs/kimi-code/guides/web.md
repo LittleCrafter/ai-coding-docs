@@ -6,20 +6,20 @@ Kimi Code Web is the browser-based graphical interface built into Kimi Code CLI:
 
 ## Getting started
 
-<div class="step">
-<span class="step-num">1</span> <strong>Install Kimi Code CLI and log in</strong>
+
+1 <strong>Install Kimi Code CLI and log in</strong>
 
 `kimi web` is a built-in CLI command — it isn't available without the CLI. See [Getting started](./getting-started.md) for installation and login.
-</div>
 
-<div class="step">
-<span class="step-num">2</span> <strong>Run <code>kimi web</code> in a terminal</strong>
+
+
+2 <strong>Run <code>kimi web</code> in a terminal</strong>
 
 If you're already in the CLI, you can also type `/web` to hand the current session off to the browser.
-</div>
 
-<div class="step">
-<span class="step-num">3</span> <strong>The web UI opens in your default browser once ready</strong>
+
+
+3 <strong>The web UI opens in your default browser once ready</strong>
 
 The startup banner prints the access URL — if the browser doesn't open by itself, copy this URL and open it manually:
 
@@ -29,10 +29,9 @@ Token:   ...
 Stop:    Ctrl+C
 ```
 
-::: warning
-The `#token=` fragment is the access credential — don't share it. Stop the server with `Ctrl+C` in the terminal.
-:::
-</div>
+> [!WARNING]
+> The `#token=` fragment is the access credential — don't share it. Stop the server with `Ctrl+C` in the terminal.
+
 
 ### Common commands
 
@@ -51,7 +50,7 @@ Note that the web UI supports only a subset of the CLI's slash commands — comm
 
 How the two sides compare:
 
-<div class="feature-compare-table">
+
 
 | Feature | CLI | Web | Notes |
 | --- | --- | --- | --- |
@@ -64,7 +63,7 @@ How the two sides compare:
 | Global search | — | ✓ | Web searches across sessions and workspaces |
 | Mobile layout | — | ✓ | With LAN sharing on (`--host`), it works in phone browsers on the same network |
 
-</div>
+
 
 ## Security notes
 

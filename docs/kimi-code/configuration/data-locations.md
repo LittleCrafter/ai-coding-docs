@@ -18,10 +18,10 @@ export KIMI_CODE_HOME="$HOME/.config/kimi-code"
 
 Once set, **all** Kimi Code data lands under the new path: config, sessions, logs, OAuth credentials, Kimi-specific user Skills, global `AGENTS.md`, and more. For the full reference on `KIMI_CODE_HOME`, see [Environment variables](./env-vars.md).
 
-::: tip Note
-
-**Generic `.agents` resources** stay under the real OS home so they can be shared across tools. For example, user-level generic Skills remain at `~/.agents/skills/`, while Kimi-specific user Skills move with `KIMI_CODE_HOME` as `$KIMI_CODE_HOME/skills/`.
-:::
+> [!TIP]
+> **Note**
+>
+> **Generic `.agents` resources** stay under the real OS home so they can be shared across tools. For example, user-level generic Skills remain at `~/.agents/skills/`, while Kimi-specific user Skills move with `KIMI_CODE_HOME` as `$KIMI_CODE_HOME/skills/`.
 
 ## Directory layout
 

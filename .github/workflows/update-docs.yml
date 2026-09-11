@@ -79,8 +79,10 @@ jobs:
         id: mirror
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # `set +e` because the workflow shell runs with `-eo pipefail`:
-        # without it, a non-zero mirror exit would abort the step here.
+        # `set +e` because GitHub's default step shell is `bash -e` (errexit,
+        # with no pipefail; `sh -e` is only the fallback when bash is absent):
+        # without it a non-zero mirror exit would abort the step before the
+        # exit code below could be captured.
         run: |
           set +e
           uv run mirror-docs
@@ -167,11 +169,16 @@ jobs:
                 if (rn) { printf "Renamed (%d):\n%s\n", rn, r }
                 if (dn) { printf "Removed (%d):\n%s\n", dn, d } }'
           } | git commit -F -
-          # actions/checkout leaves the repo in a DETACHED HEAD (it checks
-          # out the commit, not the branch), so a bare `git push` has no
-          # branch to update and fails with "You are not currently on a
-          # branch". Push the detached HEAD explicitly onto the branch this
-          # run was triggered for.
+          # The push names its destination explicitly (`HEAD:${REF_NAME}`)
+          # rather than relying on a bare `git push`: with the triggers this
+          # workflow uses (schedule, workflow_dispatch) the checkout leaves
+          # the branch this run targets checked out (a dispatch can be
+          # launched from any branch, not only the default one), and the
+          # explicit source:destination refspec pushes the checked-out commit
+          # onto the intended branch regardless of what the checkout produced
+          # -- including a detached HEAD or a tag ref, where a bare
+          # `git push` would fail with "You are not currently on a branch" or
+          # push somewhere unintended.
           #
           # Pull with rebase first to avoid a transient race: if another
           # workflow run (or a manual push) lands on the branch between our
@@ -186,9 +193,12 @@ jobs:
           # recovery: if pull --rebase fails (e.g. merge conflict from two
           # simultaneous runs touching the same line of the same file), abort
           # the rebase, wait a few seconds for the other process to finish, and
-          # retry once. If the second attempt also fails, skip the push rather
-          # than failing the whole job -- the next scheduled run (at most 3
-          # hours away) will pick up the changes, and the mirror self-heals.
+          # retry once. If both attempts fail, the run is failed on purpose
+          # (the ``pushed`` check below exits non-zero): the commit stays in
+          # the runner's workspace, so nothing is lost, and the next scheduled
+          # run (at most 3 hours away) re-mirrors the same upstream state and
+          # pushes it -- the mirror self-heals, but a push that never lands has
+          # to be loud rather than silently dropped.
           #
           # A ``pushed`` flag records whether any attempt's push succeeded.
           # Without it, the case where every rebase succeeds but EVERY push is

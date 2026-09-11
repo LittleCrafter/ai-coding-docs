@@ -77,9 +77,10 @@ extra_agent_dirs = ["~/team-agents", ".agents/team-agents"]
 
 Separately, `$KIMI_CODE_HOME/SYSTEM.md` permanently overrides the default main agent's system prompt; it is not part of agent-file discovery. Its precedence interactions are covered in the [SYSTEM.md section](#overriding-the-main-agents-system-prompt-with-systemmd).
 
-::: warning Trust model
-Agent files are prompt configuration, and project-level files come from the repository itself, including repositories you have just cloned and do not trust yet. A project-scoped file can take over a built-in agent entirely: naming it `agent.md` with `override: true` replaces the **default main agent's whole system prompt**, and `coder.md` with `override: true` replaces the default sub-agent type. Unlike `AGENTS.md` content, which is injected into the prompt as reference data, an override file *is* the system prompt, and a file without a `tools` list keeps every tool. Review `.kimi-code/agents/` and `.agents/agents/` in unfamiliar repositories with the same caution you would apply to scripts, before running Kimi Code inside them.
-:::
+> [!WARNING]
+> **Trust model**
+>
+> Agent files are prompt configuration, and project-level files come from the repository itself, including repositories you have just cloned and do not trust yet. A project-scoped file can take over a built-in agent entirely: naming it `agent.md` with `override: true` replaces the **default main agent's whole system prompt**, and `coder.md` with `override: true` replaces the default sub-agent type. Unlike `AGENTS.md` content, which is injected into the prompt as reference data, an override file *is* the system prompt, and a file without a `tools` list keeps every tool. Review `.kimi-code/agents/` and `.agents/agents/` in unfamiliar repositories with the same caution you would apply to scripts, before running Kimi Code inside them.
 
 ### Agent File Format
 
@@ -127,9 +128,10 @@ Unknown fields are ignored, so newer files stay readable by older versions. Fiel
 
 A file with invalid content discovered in a directory is skipped with a warning and does not affect other files. A file passed explicitly via `--agent-file` must be valid, otherwise the CLI reports the error and exits.
 
-::: warning Note
-`tools` and `disallowedTools` shape the tools shown to the model and are enforced again before execution. `subagents` works the same way: the `Agent` tool lists only the sub-agent types the caller may delegate to, and both `Agent` and `AgentSwarm` re-check the allowlist before dispatching; resuming an existing sub-agent is exempt. Permission rules remain a separate control for operations that require approval.
-:::
+> [!WARNING]
+> **Note**
+>
+> `tools` and `disallowedTools` shape the tools shown to the model and are enforced again before execution. `subagents` works the same way: the `Agent` tool lists only the sub-agent types the caller may delegate to, and both `Agent` and `AgentSwarm` re-check the allowlist before dispatching; resuming an existing sub-agent is exempt. Permission rules remain a separate control for operations that require approval.
 
 Custom agents delegated as sub-agents run without the built-in sub-agent framing ("your final message is the entire handoff"). If you write an agent meant for delegation, state in the body that its last message should be the complete, self-contained result for the caller.
 
@@ -200,9 +202,10 @@ Global Kimi-specific instructions can live at `$KIMI_CODE_HOME/AGENTS.md` (defau
 
 Sub-agent runtime state is persisted to the `agents/` subdirectory of the current session directory. Each sub-agent instance has its own directory, which contains a `wire.jsonl` file that records prompts, message history, and final state in chronological order. Background sub-agents also expose their lifecycle status through a `tasks/` subdirectory.
 
-::: warning Note
-Session directories, wire files, and task records are all local debug materials that may contain user prompts, command output, repository paths, tool return values, or traces of credentials. Do not commit these files directly to public repositories, issues, or chat logs; redact sensitive information before sharing.
-:::
+> [!WARNING]
+> **Note**
+>
+> Session directories, wire files, and task records are all local debug materials that may contain user prompts, command output, repository paths, tool return values, or traces of credentials. Do not commit these files directly to public repositories, issues, or chat logs; redact sensitive information before sharing.
 
 ## Next steps
 

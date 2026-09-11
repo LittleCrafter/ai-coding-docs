@@ -8,9 +8,10 @@ Before configuring your IDE, make sure Kimi Code CLI is installed and you have c
 
 The ACP server is exposed as the `kimi acp` subcommand. The IDE launches it as a child process and communicates over stdin/stdout using JSON-RPC. Each time the IDE creates a session, the CLI reuses its existing authentication state — no need to log in again.
 
-::: tip Path note
-Child processes launched from an IDE GUI on macOS typically do **not** inherit the terminal shell's `PATH`. If `kimi` is not in a system directory like `/usr/local/bin`, use the absolute path in your IDE configuration. Run `which kimi` in a terminal to find the active path.
-:::
+> [!TIP]
+> **Path note**
+>
+> Child processes launched from an IDE GUI on macOS typically do **not** inherit the terminal shell's `PATH`. If `kimi` is not in a system directory like `/usr/local/bin`, use the absolute path in your IDE configuration. Run `which kimi` in a terminal to find the active path.
 
 ## Using Kimi Code CLI in Zed
 

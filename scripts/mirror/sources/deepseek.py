@@ -9,8 +9,11 @@ picks that hook up via ``getattr`` and calls it instead of downloading
 that ``source_md_url`` here points at the HTML page itself; the hook ignores
 it and re-fetches ``source_url``.
 
-Discovery comes from the sitemap (real XML at ``/sitemap.xml``). There is no
-locale split to filter, so every URL under the site root becomes a page.
+Discovery comes from the sitemap (real XML at ``/sitemap.xml``). What that
+sitemap registers is English pages only, so every URL under the site root
+becomes a page -- the site does serve a full Simplified-Chinese tree under
+``/zh-cn/``, but the sitemap does not list it, which is why no locale filter
+is needed here.
 
 Conversion strategy (see ``_html_to_markdown``): Docusaurus renders the doc
 body inside ``<div class="theme-doc-markdown">``, so we isolate that node
@@ -127,12 +130,16 @@ def discover(client: httpx.Client) -> list[Page]:
     itself as a placeholder -- the ``fetch_markdown`` hook below performs the
     actual fetch-and-convert.
 
-    **Why there is no locale/section filter.** Unlike the Claude Code source
-    (which filters to ``/docs/en/``) or the Antigravity source (which
-    filters to ``/docs/cli/``), the DeepSeek API docs site serves a single
-    documentation tree under the site root with no locale split and no other
-    content (blog, marketing) mixed into the sitemap. Every URL under the
-    site root is part of the API docs, so no filter is needed.
+    **Why there is no locale/section filter.** The site serves two
+    documentation trees -- English under the site root and Simplified Chinese
+    under ``/zh-cn/`` -- but its sitemap registers the English pages only, so
+    discovery never sees a Chinese URL and no other content (blog, marketing)
+    is mixed into the listing either. The site-root boundary below is
+    therefore sufficient: every ``<loc>`` it keeps is part of the English API
+    docs. The margin is upstream's sitemap, not the site layout -- if
+    ``/zh-cn/`` URLs ever appear in the sitemap, they would pass the boundary
+    check and be mirrored under ``zh-cn/...`` slugs, so a locale exclusion
+    would have to be added here at that point.
 
     **Query/fragment stripping.** Sitemap entries can carry query strings
     (``?utm_source=newsletter``) or fragments (``#section``). These are

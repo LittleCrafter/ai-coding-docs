@@ -123,28 +123,37 @@ def test_kimi_discover_dedupes_duplicate_tree_paths(capsys):
     assert "docs/en/index.md" in err
 
 
-def test_kimi_discover_maps_index_pages_to_directory_routes():
-    """The human-facing ``source_url`` follows the site's VitePress routing:
-    an ``index.md`` page (root or nested) is served at its DIRECTORY route
-    (``.../docs/en/`` resp. ``.../docs/en/guide/``), not at a literal
-    ``.../index`` URL that would 404. The slug itself is left untouched --
-    it keys the mirrored file layout and the manifest -- and a non-index
-    page keeps the plain ``base + "/" + slug`` form."""
+def test_kimi_discover_builds_published_page_urls():
+    """The human-facing ``source_url`` is the page's published address on the
+    docs site: one ``.html`` file per page at the mirrored path, so an
+    ``index`` page resolves to that folder's landing page (``index.html``)
+    rather than to a literal ``.../index`` URL that would 404. The slug
+    itself is left untouched -- it keys the mirrored file layout and the
+    manifest -- and every URL shares the configured base and suffix.
+
+    One URL is pinned LITERALLY: asserting only ``f"{base}/..."``-shaped
+    strings cannot catch a wrong base or suffix VALUE, because both sides of
+    such an assertion move together with the constant. The literal is what
+    keeps a mirrored page pointing at the address the docs site actually
+    serves."""
     client = tree_client(
         [
             blob_entry("docs/en/index.md"),
             blob_entry("docs/en/guide/index.md"),
             blob_entry("docs/en/guide/setup.md"),
+            blob_entry("docs/en/guides/web.md"),
         ]
     )
     pages = kimi_code.discover(client)
     by_slug = {p.slug: p for p in pages}
-    assert by_slug["index"].source_url == "https://www.kimi.com/code/docs/en/"
-    assert by_slug["guide/index"].source_url == (
-        "https://www.kimi.com/code/docs/en/guide/"
-    )
-    assert by_slug["guide/setup"].source_url == (
-        "https://www.kimi.com/code/docs/en/guide/setup"
+    base = kimi_code.SOURCE_URL_BASE
+    suffix = kimi_code.SOURCE_URL_SUFFIX
+    assert by_slug["index"].source_url == f"{base}/index{suffix}"
+    assert by_slug["guide/index"].source_url == f"{base}/guide/index{suffix}"
+    assert by_slug["guide/setup"].source_url == f"{base}/guide/setup{suffix}"
+    assert (
+        by_slug["guides/web"].source_url
+        == "https://moonshotai.github.io/kimi-code/en/guides/web.html"
     )
 
 
@@ -1642,6 +1651,517 @@ def test_deepseek_discover_surfaces_fetch_error_after_500_retries():
         deepseek.discover(client)
     assert exc_info.value.status_code == 500
     assert client.calls == 3  # config.MAX_RETRIES
+
+
+# --- kimi_code: VitePress normalisation ---------------------------------------
+
+
+def _kimi_page(slug: str = "customization/plugins") -> Page:
+    """Build the ``Page`` a normalisation test needs, with realistic URLs."""
+    return Page(
+        slug=slug,
+        source_url=kimi_code._source_url(slug),
+        source_md_url=(
+            f"https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/"
+            f"docs/en/{slug}.md"
+        ),
+        source_id=f"docs/en/{slug}.md",
+        group=slug.split("/", 1)[0],
+    )
+
+
+def test_kimi_normalize_strips_frontmatter_and_keeps_the_body():
+    """The YAML frontmatter block is build metadata, not page content: it must
+    not reach the mirrored page. The body -- heading and prose -- must survive
+    unchanged, and the page's manifest title must still come out of the
+    normalized Markdown."""
+    raw = (
+        "---\n"
+        "outline: 2\n"
+        "---\n"
+        "\n"
+        "# Changelog\n"
+        "\n"
+        "This page documents the changes in each release.\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert md.startswith("# Changelog")
+    assert "---" not in md
+    assert "outline" not in md
+    assert "This page documents the changes in each release." in md
+    assert fetch.extract_title(md) == "Changelog"
+
+
+def test_kimi_normalize_titles_a_page_that_has_no_heading_of_its_own():
+    """A frontmatter ``title`` must become the page's heading when the body
+    carries none, so the manifest title is the upstream title instead of the
+    slug-derived fallback."""
+    raw = "---\ntitle: Kimi Datasource\noutline: 2\n---\n\nMoved to the plugins page.\n"
+    md = kimi_code._normalize_page(raw)
+    assert md.startswith("# Kimi Datasource")
+    assert "Moved to the plugins page." in md
+    assert fetch.extract_title(md, fallback="datasource") == "Kimi Datasource"
+
+
+def test_kimi_normalize_keeps_page_text_between_horizontal_rules():
+    """A page whose first line is prose is never frontmatter, however many
+    ``---`` rules follow. Reading the text between two rules as a metadata
+    block deleted it from the mirrored page outright -- and the result still
+    validated as Markdown, so nothing downstream reported the loss."""
+    raw = "---\n\nSome prose here\n\n---\n\n# Heading\n\nMore prose\n"
+    md = kimi_code._normalize_page(raw)
+    assert "Some prose here" in md
+    assert "More prose" in md
+    assert fetch.validate_markdown(md)
+
+
+def test_kimi_normalize_strips_a_bom_before_reading_the_frontmatter():
+    """A BOM (U+FEFF) in front of the opening ``---`` is invisible but breaks
+    the start-of-document anchor, because ``\\s`` does not match that
+    character. Leaving it in place would keep the raw YAML in the mirrored
+    page AND lose the frontmatter title, so the adapter strips it exactly like
+    ``core.fetch`` does before its own frontmatter and heading patterns run.
+    The normalized page is the same one either way, and carries no BOM."""
+    without_bom = "---\ntitle: Kimi Notes\n---\n\nprose\n"
+    md = kimi_code._normalize_page("\ufeff" + without_bom)
+    assert md.startswith("# Kimi Notes")
+    assert "\ufeff" not in md
+    assert md == kimi_code._normalize_page(without_bom)
+
+
+def test_kimi_normalize_reads_frontmatter_keys_in_any_case():
+    """Frontmatter keys are matched case-insensitively: ``Title:`` is as valid
+    as ``title:``, and the canonical title (or hero name) is what reaches the
+    page heading. A case-sensitive lookup left a bodyless page with no title
+    at all, so its manifest title fell back to the file name."""
+    assert kimi_code._normalize_page("---\nTitle: Kimi Notes\n---\n") == (
+        kimi_code._normalize_page("---\ntitle: Kimi Notes\n---\n")
+    )
+    md = kimi_code._normalize_page(
+        "---\nLayout: home\nHero:\n  Name: Kimi Code CLI\n  Text: Tagline\n---\n"
+    )
+    assert md.startswith("# Kimi Code CLI")
+    assert "Tagline" in md
+
+
+def test_kimi_normalize_recognises_an_empty_frontmatter_block():
+    """An empty ``---``/``---`` block is legal frontmatter carrying no fields.
+    It is recognised (the two fence lines are build metadata, not page
+    content), and the body that follows is kept untouched."""
+    md = kimi_code._normalize_page("---\n---\n\n# Heading\n\nbody\n")
+    assert md.startswith("# Heading")
+    assert "body" in md
+    assert "---" not in md
+
+
+def test_kimi_normalize_skips_blank_and_comment_lines_in_frontmatter():
+    """Blank lines and YAML comments inside the block are not fields and must
+    not disturb the parse: the real keys around them are still read, and the
+    comment never reaches the mirrored page."""
+    md = kimi_code._normalize_page(
+        "---\n# navigation section\ntitle: Kimi Notes\n\noutline: 2\n---\n"
+    )
+    assert md.startswith("# Kimi Notes")
+    assert "outline" not in md
+    assert "navigation section" not in md
+
+
+def test_kimi_normalize_keeps_a_body_heading_over_the_frontmatter_title():
+    """When the body has its own heading, that heading is the page title --
+    re-emitting the frontmatter title on top of it would leave the page with
+    two competing top-level headings."""
+    raw = "---\ntitle: Frontmatter Title\n---\n\n# Real body heading\n\nprose\n"
+    md = kimi_code._normalize_page(raw)
+    assert md.startswith("# Real body heading")
+    assert "Frontmatter Title" not in md
+
+
+def test_kimi_normalize_renders_a_frontmatter_only_landing_page():
+    """The landing page is pure VitePress frontmatter (a ``layout: home`` hero
+    block with no body at all). It must come out as a readable page: the
+    hero's product name as the heading and its tagline as the description, and
+    nothing of the raw YAML. Without this the page mirrored as an empty file
+    titled after its file name."""
+    raw = (
+        "---\n"
+        "layout: home\n"
+        "hero:\n"
+        "  name: Kimi Code CLI\n"
+        "  text: The Starting Point for Next-Gen Agents\n"
+        "  actions:\n"
+        "    - theme: brand\n"
+        "      text: Get started\n"
+        "      link: guides/getting-started\n"
+        "    - theme: alt\n"
+        "      text: GitHub\n"
+        "      link: https://github.com/MoonshotAI/kimi-code\n"
+        "---\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert md.startswith("# Kimi Code CLI")
+    assert "The Starting Point for Next-Gen Agents" in md
+    # Only the hero's name and tagline are rendered: the action links are
+    # navigation for the Vue theme, not page content, so neither they nor the
+    # raw frontmatter keys leak into the mirrored page.
+    assert "layout" not in md and "hero" not in md and "theme: brand" not in md
+    assert fetch.extract_title(md, fallback="index") == "Kimi Code CLI"
+
+
+def test_kimi_normalize_reads_a_nested_map_that_opens_with_a_list():
+    """The same landing page with its hero entries in the other order (the
+    ``actions:`` list first, ``name:``/``text:`` after it) must normalize to
+    the same page. Taking the direct-child indentation from the first indented
+    line that carried a SCALAR made the level the list's own items sit at, so
+    every real child was read as "deeper than a direct child" and dropped --
+    leaving the landing page as an empty file."""
+    raw = (
+        "---\n"
+        "layout: home\n"
+        "hero:\n"
+        "  actions:\n"
+        "    - theme: brand\n"
+        "      text: Get started\n"
+        "      link: guides/getting-started\n"
+        "  name: Kimi Code CLI\n"
+        "  text: The Starting Point for Next-Gen Agents\n"
+        "---\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert md.startswith("# Kimi Code CLI")
+    assert "The Starting Point for Next-Gen Agents" in md
+    assert md.strip()
+    # The list's own keys are not hero fields: only the direct children are.
+    assert "Get started" not in md and "theme: brand" not in md
+
+
+def test_kimi_normalize_drops_head_meta_refresh_but_keeps_the_moved_notice():
+    """A stub page whose frontmatter only carries a ``head:`` meta-refresh
+    must lose the redirect plumbing and keep its visible body -- the notice
+    that tells a reader where the page went."""
+    raw = (
+        "---\n"
+        "head:\n"
+        "  - - meta\n"
+        "    - http-equiv: refresh\n"
+        "      content: 0; url=./plugins.html#kimi-datasource\n"
+        "---\n"
+        "\n"
+        "# Kimi Datasource\n"
+        "\n"
+        "This page has moved to [Plugins: Kimi Datasource](./plugins.md#kimi-datasource).\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert md.startswith("# Kimi Datasource")
+    assert "http-equiv" not in md and "url=./plugins.html" not in md
+    assert (
+        "This page has moved to [Plugins: Kimi Datasource](./plugins.md#kimi-datasource)."
+        in md
+    )
+
+
+def test_kimi_normalize_replaces_badge_component_with_its_text():
+    """A ``<Badge />`` renders a version pill next to a heading; in Markdown
+    its information is the ``text`` attribute, which must survive as plain
+    text. The attribute value is matched through its own quote pair, so a
+    value containing the other quote kind is not truncated."""
+    raw = (
+        '### Kimi WebBridge <Badge type="tip" text="v1.11.3" />\n'
+        "\n"
+        "### Kimi Notes <Badge text='the \"draft\" plugin' />\n"
+        "\n"
+        "Plugin docs.\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert "### Kimi WebBridge v1.11.3" in md
+    assert '### Kimi Notes the "draft" plugin' in md
+    assert "<Badge" not in md
+
+
+def test_kimi_normalize_drops_a_textless_badge_without_a_dangling_space():
+    """A badge with no ``text`` attribute shows nothing, so the tag (and the
+    whitespace in front of it) must be removed -- leaving a trailing space
+    after the heading it annotated would be a Markdown line-end artifact."""
+    raw = '### Kimi WebBridge <Badge type="info" />\n\nPlugin docs.\n'
+    md = kimi_code._normalize_page(raw)
+    assert "### Kimi WebBridge\n" in md
+    assert "<Badge" not in md
+
+
+def test_kimi_normalize_replaces_a_paired_badge_by_its_inner_text():
+    """The paired form wraps the text it displays between the tags, with no
+    ``text`` attribute to read it from: ``<Badge>v9</Badge>`` must show ``v9``
+    rather than being left in the page as raw markup. When a tag carries both,
+    the attribute wins -- that is the value the component renders."""
+    md = kimi_code._normalize_page('### Kimi WebBridge <Badge type="tip">v9</Badge>\n')
+    assert "### Kimi WebBridge v9" in md
+    assert "<Badge" not in md
+    paired_and_empty = kimi_code._normalize_page('### X <Badge type="tip"></Badge>\n')
+    assert paired_and_empty == "### X\n"
+    assert kimi_code._normalize_page(
+        '### X <Badge type="tip" text="v1">v9</Badge>\n'
+    ) == ("### X v1\n")
+
+
+def test_kimi_normalize_ignores_an_attribute_merely_named_like_text():
+    """Only a ``text`` attribute of the badge itself is its display text. A
+    word boundary alone also fires after a hyphen, which made
+    ``data-text="wrong"`` print that value into the heading it annotated."""
+    md = kimi_code._normalize_page('### X <Badge type="info" data-text="wrong" />\n')
+    assert md == "### X\n"
+    assert "wrong" not in md
+
+
+def test_kimi_normalize_reads_attribute_values_containing_angle_brackets():
+    """An attribute value is a quoted run, so a ``>`` inside it does not end
+    the tag: the badge is still recognized and shows its full text instead of
+    being left in the page as raw markup."""
+    md = kimi_code._normalize_page('### X <Badge type="tip" text="a > b" />\n')
+    assert md == "### X a > b\n"
+    assert "<Badge" not in md
+
+
+def test_kimi_component_patterns_cannot_cross_a_line_or_scan_unbounded():
+    """Structural bounds of the two component patterns, asserted without any
+    timing threshold.
+
+    A match may not cross a line break: ``[^>]*`` used to let it do exactly
+    that, so at every ``<Badge``/``<div`` the engine consumed to the next
+    ``>`` or to end-of-file and then backtracked character by character --
+    quadratic in the document length, and a single adversarial page could
+    stall the mirror for minutes. The same bound is also what keeps a match
+    from reaching into a fenced code block (a fence occupies whole lines).
+    The attribute run is additionally capped, so an unterminated tag costs a
+    constant per occurrence rather than a scan to the end of the line: the
+    long-tag cases below must NOT match, while tags within the cap still do.
+    """
+    assert kimi_code._BADGE_RE.search('<Badge type="tip"\ntext="v1" />') is None
+    assert kimi_code._LAYOUT_TAG_RE.search('<div class="step"\n>') is None
+
+    within_cap = '### X <Badge type="tip" text="' + "v" * 40 + '" />\n'
+    assert kimi_code._BADGE_RE.search(within_cap) is not None
+    assert kimi_code._normalize_page(within_cap).startswith("### X v")
+
+    long_run = "x" * (kimi_code._TAG_RUN_LIMIT * 4)
+    assert kimi_code._BADGE_RE.search(f'### X <Badge text="{long_run}" />') is None
+    assert kimi_code._LAYOUT_TAG_RE.search(f'<div class="{long_run}">') is None
+
+
+def test_kimi_normalize_converts_typed_containers_to_github_alerts():
+    """``::: tip``/``warning``/``info``/``danger`` containers become GitHub
+    Alerts: the label line, the optional title in bold, and every body line
+    prefixed as a blockquote line. ``code-group`` has no alert equivalent and
+    is unwrapped, keeping its code samples verbatim. No ``:::`` marker may
+    survive either conversion."""
+    raw = (
+        "# Guide\n"
+        "\n"
+        "::: warning Note\n"
+        "Keep the token secret.\n"
+        ":::\n"
+        "\n"
+        "::: code-group\n"
+        "\n"
+        "```sh\n"
+        "curl example\n"
+        "```\n"
+        "\n"
+        ":::\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert "> [!WARNING]\n> **Note**\n>\n> Keep the token secret." in md
+    assert "```sh\ncurl example\n```" in md
+    assert ":::" not in md
+    # An empty container collapses to its label line: the separator that
+    # normally introduces the body must not be left dangling behind it.
+    assert kimi_code._normalize_page("::: tip\n:::\n") == "> [!TIP]\n"
+
+
+def test_kimi_normalize_maps_info_and_danger_containers():
+    """``info`` and ``danger`` have no GitHub Alert label of their own, so they
+    map to the closest supported severity (NOTE and CAUTION). Losing that
+    mapping would either drop the callout's severity or leave an unsupported
+    label that renders as plain text."""
+    assert kimi_code._normalize_page("::: info\nHeads up.\n:::\n") == (
+        "> [!NOTE]\n> Heads up.\n"
+    )
+    assert kimi_code._normalize_page("::: danger\nDo not run this.\n:::\n") == (
+        "> [!CAUTION]\n> Do not run this.\n"
+    )
+
+
+def test_kimi_normalize_unwraps_a_container_type_it_does_not_know():
+    """A container type the adapter has no mapping for is uncertain structure:
+    its markers are removed, but the title and the body stay in the page
+    exactly as written, so the reader loses nothing to the conversion."""
+    raw = "::: custom-block A Title\nBody text.\n:::\n"
+    md = kimi_code._normalize_page(raw)
+    assert "A Title" in md
+    assert "Body text." in md
+    assert ":::" not in md
+
+
+def test_kimi_normalize_keeps_an_indented_container_inside_its_list_step():
+    """A callout nested inside a numbered step must stay part of that step:
+    its produced lines keep the container's indentation, and the body is
+    dedented before the blockquote prefix is added, so a code sample inside
+    the callout keeps its own structure."""
+    raw = (
+        "1. Do not use goals for broad topics.\n"
+        "\n"
+        "    ::: warning Counterexample\n"
+        "    ```sh\n"
+        "    /goal Greetings!\n"
+        "    ```\n"
+        "    :::\n"
+        "\n"
+        "    Agents mark the goal complete immediately.\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert (
+        "    > [!WARNING]\n"
+        "    > **Counterexample**\n"
+        "    >\n"
+        "    > ```sh\n"
+        "    > /goal Greetings!\n"
+        "    > ```" in md
+    )
+    assert "    Agents mark the goal complete immediately." in md
+    assert ":::" not in md
+
+
+def test_kimi_normalize_unwraps_details_container_as_plain_content():
+    """``::: details`` is VitePress's collapsible block. It has no GitHub
+    Alert equivalent, so it is unwrapped: the markers go, the optional title
+    the opening marker carried survives as its own paragraph, and the body is
+    kept."""
+    raw = (
+        "::: details **Standards lookup** — Need to check compliance?\n"
+        "Look up national (GB) and industry standards by number.\n"
+        ":::\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert md.startswith("**Standards lookup** — Need to check compliance?")
+    assert "Look up national (GB) and industry standards by number." in md
+    assert ":::" not in md
+
+
+def test_kimi_normalize_leaves_an_unterminated_container_untouched():
+    """An opening marker with no closing marker is uncertain structure. The
+    page must keep the text exactly as upstream wrote it -- silently treating
+    the rest of the document as container content would delete page structure
+    that the adapter merely failed to recognize."""
+    raw = "# Guide\n\n::: tip Never closed\n\ntrailing prose\n"
+    md = kimi_code._normalize_page(raw)
+    assert "::: tip Never closed" in md
+    assert "trailing prose" in md
+
+
+def test_kimi_normalize_unwraps_presentation_only_layout_wrappers():
+    """Class/style-only ``<div>``/``<span>`` wrappers position content for the
+    Vue theme and carry no Markdown meaning: the tags go, the inner content
+    (including the inline HTML the page uses for emphasis) stays."""
+    raw = (
+        "## Getting started\n"
+        "\n"
+        '<div class="step">\n'
+        '<span class="step-num">1</span> <strong>Install the CLI</strong>\n'
+        "\n"
+        "Run the install script.\n"
+        "</div>\n"
+        "\n"
+        '<div style="max-width: 380px; margin: 0 auto;">\n'
+        "\n"
+        "![Authorization window](../../media/auth.jpeg)\n"
+        "\n"
+        "</div>\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert "<div" not in md and "</div>" not in md
+    assert "<span" not in md and "</span>" not in md
+    assert "1 <strong>Install the CLI</strong>" in md
+    assert "Run the install script." in md
+    assert "![Authorization window](../../media/auth.jpeg)" in md
+
+
+def test_kimi_normalize_keeps_semantic_markup_and_fenced_code_intact():
+    """Two things must survive the conversions: a wrapper WITHOUT a class or
+    style attribute is semantic markup (an anchor target, a container), so
+    both of its tags stay and the page is never left unbalanced; and anything
+    written inside a fenced code block is a code sample, so component tags and
+    container markers there come out byte-for-byte."""
+    raw = (
+        "# Guide\n"
+        "\n"
+        "<div>\n"
+        "\n"
+        "kept content\n"
+        "\n"
+        "</div>\n"
+        "\n"
+        "```html\n"
+        '<div class="step">\n'
+        "::: tip sample\n"
+        '<Badge type="tip" text="v1" />\n'
+        "```\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert "<div>\n\nkept content\n\n</div>" in md
+    assert '<div class="step">\n::: tip sample\n<Badge type="tip" text="v1" />' in md
+    assert "[!TIP]" not in md
+
+
+def test_kimi_fetch_markdown_returns_normalized_markdown_and_hash():
+    """The SUCCESS path of ``kimi_code.fetch_markdown``: the raw VitePress
+    file must come back as a ``(markdown, sha256_hash)`` tuple, with the
+    normalization applied and the hash matching ``fetch.content_hash`` of the
+    returned text -- that pairing is what the pipeline stores in the manifest
+    and what ``core.diff`` compares across runs."""
+    raw = (
+        "---\n"
+        "title: Kimi WebBridge\n"
+        "---\n"
+        "\n"
+        "::: tip Note\n"
+        "Install the browser extension first.\n"
+        ":::\n"
+    )
+    page = _kimi_page()
+    md, digest = kimi_code.fetch_markdown(_FakeClient([_Resp(200, raw)]), page)
+    assert md.startswith("# Kimi WebBridge")
+    assert "> [!TIP]" in md
+    assert "---" not in md
+    assert digest == fetch.content_hash(md)
+
+
+def test_kimi_fetch_markdown_rejects_non_markdown():
+    """A response that normalises to something with no Markdown structure (an
+    HTML error page, a truncated body) must raise ``FetchError`` rather than
+    being written to the mirror: the pipeline isolates failures per page for
+    that exception type only, so this is also what keeps one bad response from
+    aborting the whole source."""
+    page = _kimi_page("guides/getting-started")
+    client = _FakeClient([_Resp(200, "<html><body><p>404 Not Found</p></body></html>")])
+    with pytest.raises(fetch.FetchError):
+        kimi_code.fetch_markdown(client, page)
+
+
+def test_kimi_fetch_markdown_wraps_a_normalisation_failure(monkeypatch):
+    """An exception out of the normalisation passes is re-raised as
+    ``FetchError``, naming the page and keeping the original exception on
+    ``__cause__``. The pipeline isolates failures per page for that exception
+    type only, so an unforeseen markup shape (or a bug in a pass) must fail
+    just this page instead of aborting the whole source's run."""
+    page = _kimi_page("guides/getting-started")
+
+    def _explode(text: str) -> str:
+        raise ValueError("unforeseen markup shape")
+
+    monkeypatch.setattr(kimi_code, "_normalize_page", _explode)
+    client = _FakeClient([_Resp(200, "# Guide\n\nSome prose.\n")])
+    with pytest.raises(fetch.FetchError) as exc_info:
+        kimi_code.fetch_markdown(client, page)
+    assert page.slug in str(exc_info.value)
+    assert isinstance(exc_info.value.__cause__, ValueError)
 
 
 # --- get_version unit tests --------------------------------------------------

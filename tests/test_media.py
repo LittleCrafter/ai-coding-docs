@@ -22,15 +22,14 @@ from pathlib import Path
 import pytest
 from conftest import _FakeClient, _Resp, make_entry
 from mirror.core import media
+from mirror.sources.kimi_code import MEDIA as KIMI
 
 # kimi-code: images referenced as ``../../media/<file>`` from pages two
-# directories deep, served from the upstream ``docs/media/`` directory.
-KIMI = media.AssetSourceConfig(
-    name="kimi-code",
-    asset_subdir="media",
-    ref_prefixes=("../../media/",),
-    raw_base_url="https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/media/",
-)
+# directories deep, served from the upstream ``docs/media/`` directory.  The
+# config is imported from the adapter (rather than re-declared here) so the
+# fixture cannot drift away from the rules the kimi mirror actually runs with:
+# a change to the reference prefix or the raw base is exercised by these tests
+# the moment it lands in the adapter.
 
 # opencode: images referenced as ``../../assets/<relpath>`` from pages at
 # the docs root, served from ``packages/web/src/assets/`` (nested

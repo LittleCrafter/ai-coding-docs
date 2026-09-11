@@ -4,9 +4,8 @@ The local server started by `kimi web` exposes two programmatic surfaces: a REST
 
 This page is a curated, human-readable reference: it documents every endpoint's parameters, request bodies, and response shapes below. The precise machine-readable schema of every endpoint is owned by the server's live specification documents: `GET /openapi.json` (OpenAPI) and `GET /asyncapi.json` (AsyncAPI), both generated from the same validation schemas the server enforces at runtime. Both require authentication; when this page and the live spec ever disagree, the live spec wins.
 
-::: warning
-The REST and WebSocket APIs described on this page are experimental: interface stability is not guaranteed, and endpoints, fields, and event types may change in any release. When integrating, rely on the `/openapi.json` and `/asyncapi.json` documents served by your version.
-:::
+> [!WARNING]
+> The REST and WebSocket APIs described on this page are experimental: interface stability is not guaranteed, and endpoints, fields, and event types may change in any release. When integrating, rely on the `/openapi.json` and `/asyncapi.json` documents served by your version.
 
 ## Conventions
 

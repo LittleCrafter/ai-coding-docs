@@ -24,9 +24,8 @@ All sessions are saved under `$KIMI_CODE_HOME/sessions/` (default: `~/.kimi-code
 - `state.json`: session metadata such as title and creation time.
 - `agents/*/wire.jsonl`: the agent event stream, used for session recovery and replay. It also carries a request trace — the tool schemas, request parameters, and MCP tool listings sent to the model — for debugging.
 
-::: warning
-Do not manually edit files inside the `sessions/` directory — doing so may prevent sessions from being restored correctly.
-:::
+> [!WARNING]
+> Do not manually edit files inside the `sessions/` directory — doing so may prevent sessions from being restored correctly.
 
 ## Starting and resuming sessions
 
@@ -50,9 +49,8 @@ kimi --session abc123
 kimi --session
 ```
 
-::: warning
-`--continue` and `--session` are mutually exclusive.
-:::
+> [!WARNING]
+> `--continue` and `--session` are mutually exclusive.
 
 ## Switching sessions inside the TUI
 
@@ -112,9 +110,8 @@ You can also export from inside the TUI without leaving the interactive session:
 
 In the web UI, `/export` downloads the current session as a diagnostic ZIP. It includes the persisted session data, diagnostic logs, and a bounded metadata-only `logs/kimi-web.jsonl` record of key browser events. Prompt text, WebSocket payloads, and console arguments are not copied into this browser log. This web command differs from the TUI `/export` alias above.
 
-::: tip
-Exported files may contain code, command output, and file paths that are sensitive. Review the content before sharing.
-:::
+> [!TIP]
+> Exported files may contain code, command output, and file paths that are sensitive. Review the content before sharing.
 
 ## Next steps
 

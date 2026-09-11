@@ -9,7 +9,7 @@ Auto-generated mirror of documentation for several AI coding tools/CLIs.
 | [Claude Code](./claude-code/) | 2.1.268 | 191 | 2026-09-11T01:33:31Z | no |
 | [Codex CLI](./codex-cli/) | 0.154.0 | 163 | 2026-09-10T23:35:40Z | no |
 | [DeepSeek API](./deepseek-api/) | — | 72 | 2026-09-10T07:34:19Z | no |
-| [Kimi Code](./kimi-code/) | 0.42.0 | 29 | 2026-09-10T17:58:30Z | no |
+| [Kimi Code](./kimi-code/) | 0.42.0 | 29 | 2026-09-11T00:08:41Z | no |
 | [OpenCode](./opencode/) | 1.18.30 | 36 | 2026-09-10T17:58:44Z | no |
 
 Each subfolder has its own `README.md` index and `manifest.json`.

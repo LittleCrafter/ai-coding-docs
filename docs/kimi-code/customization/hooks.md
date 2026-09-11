@@ -19,9 +19,10 @@ The script's response is determined by two things:
 
 Even if the script errors or times out, the CLI **will not interrupt your work** as a result. This "allow on failure" design is called fail-open, preventing hook errors from becoming blockers.
 
-::: warning Note
-Precisely because of fail-open, Hooks are suitable for alerts and lightweight interception, but **should not be used as the sole security barrier**. For truly high-risk operations, rely on permission approvals and manual confirmation.
-:::
+> [!WARNING]
+> **Note**
+>
+> Precisely because of fail-open, Hooks are suitable for alerts and lightweight interception, but **should not be used as the sole security barrier**. For truly high-risk operations, rely on permission approvals and manual confirmation.
 
 ## Quick Start: A Minimal Hook
 
@@ -99,9 +100,10 @@ You can also return a JSON object via stdout to block:
 }
 ```
 
-::: info Which events support blocking?
-Only **blockable events** (`PreToolUse`, `Stop`, `UserPromptSubmit`) have return values that affect the main flow. All other events are **observation-only events**: they fire and forget, and the main flow is unaffected regardless of what the script returns.
-:::
+> [!NOTE]
+> **Which events support blocking?**
+>
+> Only **blockable events** (`PreToolUse`, `Stop`, `UserPromptSubmit`) have return values that affect the main flow. All other events are **observation-only events**: they fire and forget, and the main flow is unaffected regardless of what the script returns.
 
 ## Event Reference
 
@@ -160,9 +162,10 @@ process.stdin.on('end', () => {
 
 After blocking, Kimi Code CLI writes the blocking reason back into the context, and the model can use this to choose a safer alternative.
 
-::: warning Note
-This example only demonstrates the blocking mechanism and is not a production-grade security parser. Real scenarios are better served by whitelists, or a dedicated shell parser to handle quoting, variable expansion, and multi-command sequences.
-:::
+> [!WARNING]
+> **Note**
+>
+> This example only demonstrates the blocking mechanism and is not a production-grade security parser. Real scenarios are better served by whitelists, or a dedicated shell parser to handle quoting, variable expansion, and multi-command sequences.
 
 ## Next steps
 
