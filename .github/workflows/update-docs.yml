@@ -37,15 +37,16 @@ jobs:
     steps:
       # Every action is pinned to a full commit SHA (release tag kept as a
       # trailing comment) so a re-tagged or compromised release cannot change
-      # the code we run. .github/dependabot.yml bumps the pins weekly.
+      # the code we run. The pins are refreshed by hand when a newer release
+      # of an action is adopted.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.DOCS_MIRROR_SSH_KEY }}
 
       # Pinned to an exact release commit SHA (v8 made floating tags like @v8
-      # invalid). Dependabot bumps it; see
-      # https://github.com/astral-sh/setup-uv/releases
+      # invalid). The pin is refreshed by hand when a newer release is
+      # adopted; see https://github.com/astral-sh/setup-uv/releases
       # python-version matches lint.yml ("3.14") so every workflow resolves
       # the same interpreter the project pins in .python-version.
       # enable-cache: the schedule fires every 3 hours (8x/day), so caching
