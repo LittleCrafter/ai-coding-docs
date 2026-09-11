@@ -14,7 +14,8 @@ Get your API Key from the [DeepSeek Platform](<https://platform.deepseek.com/api
 #### 3\. Enter the project directory and run `npx reasonix code` to get started.
 
 ```text
-cd /path/to/my-projectnpx reasonix code
+cd /path/to/my-project
+npx reasonix code
 ```
 
  

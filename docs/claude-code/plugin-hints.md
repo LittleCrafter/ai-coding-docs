@@ -10,11 +10,11 @@ If you maintain a CLI or SDK and have a plugin in the official Anthropic marketp
 
 The protocol requires no extra commands and does not change what your CLI prints for users outside Claude Code.
 
-This page is for CLI and SDK maintainers. If you are looking to install plugins, see [Discover and install plugins](/docs/en/discover-plugins).
+This page is for CLI and SDK maintainers. If you are looking to install plugins, see [Discover and install plugins](./discover-plugins.md).
 
 ## How it works
 
-Claude Code sets the [`CLAUDECODE`](/docs/en/env-vars) environment variable to `1` for every command it runs through the Bash and PowerShell tools, and for [hook](/docs/en/hooks) commands. From v2.1.172 it also sets [`CLAUDE_CODE_CHILD_SESSION`](/docs/en/env-vars) to `1` in those same subprocesses. When your CLI sees one of these variables, it writes a self-closing `<claude-code-hint />` tag to stderr. In hook commands the hint tag is stripped and ignored. Only Bash and PowerShell tool output triggers the install prompt.
+Claude Code sets the [`CLAUDECODE`](./env-vars.md) environment variable to `1` for every command it runs through the Bash and PowerShell tools, and for [hook](./hooks.md) commands. From v2.1.172 it also sets [`CLAUDE_CODE_CHILD_SESSION`](./env-vars.md) to `1` in those same subprocesses. When your CLI sees one of these variables, it writes a self-closing `<claude-code-hint />` tag to stderr. In hook commands the hint tag is stripped and ignored. Only Bash and PowerShell tool output triggers the install prompt.
 
 When Claude Code receives the command output, it:
 
@@ -32,42 +32,40 @@ Hint prompts only fire for plugins listed in the official Anthropic marketplace.
 Gate emission on an environment variable so the marker is unlikely to appear when a human runs your CLI directly, then write the tag to stderr on its own line. Choose which variable to check:
 
 * `CLAUDECODE`: set on every Claude Code version, so it reaches the most sessions. It is also set in tmux sessions and stdio MCP server subprocesses that Claude Code starts. IDE extensions also set it in their integrated terminals, where a human may be running your CLI directly.
-* `CLAUDE_CODE_CHILD_SESSION`: set only in subprocesses Claude Code itself spawns, such as tool calls, hook commands, and [status line](/docs/en/statusline) commands, so the tag does not normally reach a human terminal. A long-lived process that was started inside a session, such as a tmux server, captures the variable, so shells later launched from that process still show the raw tag.
+* `CLAUDE_CODE_CHILD_SESSION`: set only in subprocesses Claude Code itself spawns, such as tool calls, hook commands, and [status line](./statusline.md) commands, so the tag does not normally reach a human terminal. A long-lived process that was started inside a session, such as a tmux server, captures the variable, so shells later launched from that process still show the raw tag.
 
 The following examples gate on `CLAUDECODE` for maximum reach and emit a hint for a plugin named `example-cli` in the official marketplace:
 
-<CodeGroup>
-  ```javascript Node.js theme={null}
-  if (process.env.CLAUDECODE) {
-    process.stderr.write(
-      '<claude-code-hint v="1" type="plugin" value="example-cli@claude-plugins-official" />\n',
+```javascript Node.js theme={null}
+if (process.env.CLAUDECODE) {
+  process.stderr.write(
+    '<claude-code-hint v="1" type="plugin" value="example-cli@claude-plugins-official" />\n',
+  )
+}
+```
+
+```python Python theme={null}
+import os, sys
+
+if os.environ.get("CLAUDECODE"):
+    print(
+        '<claude-code-hint v="1" type="plugin" value="example-cli@claude-plugins-official" />',
+        file=sys.stderr,
     )
-  }
-  ```
+```
 
-  ```python Python theme={null}
-  import os, sys
+```go Go theme={null}
+if os.Getenv("CLAUDECODE") != "" {
+    fmt.Fprintln(os.Stderr,
+        `<claude-code-hint v="1" type="plugin" value="example-cli@claude-plugins-official" />`)
+}
+```
 
-  if os.environ.get("CLAUDECODE"):
-      print(
-          '<claude-code-hint v="1" type="plugin" value="example-cli@claude-plugins-official" />',
-          file=sys.stderr,
-      )
-  ```
-
-  ```go Go theme={null}
-  if os.Getenv("CLAUDECODE") != "" {
-      fmt.Fprintln(os.Stderr,
-          `<claude-code-hint v="1" type="plugin" value="example-cli@claude-plugins-official" />`)
-  }
-  ```
-
-  ```shell Shell theme={null}
-  if [ -n "$CLAUDECODE" ]; then
-    printf '%s\n' '<claude-code-hint v="1" type="plugin" value="example-cli@claude-plugins-official" />' >&2
-  fi
-  ```
-</CodeGroup>
+```shell Shell theme={null}
+if [ -n "$CLAUDECODE" ]; then
+  printf '%s\n' '<claude-code-hint v="1" type="plugin" value="example-cli@claude-plugins-official" />' >&2
+fi
+```
 
 Replace `example-cli` with your plugin's name in the official marketplace.
 
@@ -110,8 +108,8 @@ Prompt frequency is bounded, and some sessions never prompt:
 
 * **Once per plugin**: after the prompt is shown, Claude Code records the plugin and never prompts for it again, regardless of the user's answer.
 * **Once per session**: across all CLIs on the machine, at most one hint prompt appears per Claude Code session.
-* **Main interactive session only**: Claude Code shows the prompt only in the terminal session the user is typing into. Claude Code never prompts for a command that a [subagent](/docs/en/sub-agents) runs, and never prompts when the user runs Claude Code in [non-interactive mode](/docs/en/headless) with the `-p` flag or through the [Agent SDK](/docs/en/agent-sdk/overview). Claude Code still strips the hint line from the command output in all of these cases.
-* **Telemetry opt-outs**: sessions where analytics are disabled never show hint prompts. This includes sessions with `DISABLE_TELEMETRY` or `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, and sessions on third-party providers such as Amazon Bedrock or Google Cloud's Agent Platform where the [automatic telemetry opt-out](/docs/en/data-usage#default-behaviors-by-api-provider) applies.
+* **Main interactive session only**: Claude Code shows the prompt only in the terminal session the user is typing into. Claude Code never prompts for a command that a [subagent](./sub-agents.md) runs, and never prompts when the user runs Claude Code in [non-interactive mode](./headless.md) with the `-p` flag or through the [Agent SDK](./agent-sdk/overview.md). Claude Code still strips the hint line from the command output in all of these cases.
+* **Telemetry opt-outs**: sessions where analytics are disabled never show hint prompts. This includes sessions with `DISABLE_TELEMETRY` or `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` set, and sessions on third-party providers such as Amazon Bedrock or Google Cloud's Agent Platform where the [automatic telemetry opt-out](./data-usage.md#default-behaviors-by-api-provider) applies.
 
 Selecting **Yes** installs the plugin to user scope. Selecting **No, and don't show plugin installation hints again** disables all future hint prompts for the user.
 
@@ -147,10 +145,10 @@ The remaining guidance is recommended but not enforced. Claude Code cannot obser
 
 ## Get your plugin into the official marketplace
 
-The hint protocol only takes effect for plugins listed in the official Anthropic marketplace, `claude-plugins-official`. Anthropic curates that marketplace at its discretion, and the in-app submission forms add plugins to the [community marketplace](/docs/en/plugins#submit-your-plugin-to-the-community-marketplace) instead, which the hint protocol does not check. If you are working with an Anthropic partner contact, reach out to them to coordinate an official-marketplace listing.
+The hint protocol only takes effect for plugins listed in the official Anthropic marketplace, `claude-plugins-official`. Anthropic curates that marketplace at its discretion, and the in-app submission forms add plugins to the [community marketplace](./plugins.md#submit-your-plugin-to-the-community-marketplace) instead, which the hint protocol does not check. If you are working with an Anthropic partner contact, reach out to them to coordinate an official-marketplace listing.
 
 ## See also
 
-* [Create plugins](/docs/en/plugins): build the plugin your CLI recommends
-* [Create and distribute a plugin marketplace](/docs/en/plugin-marketplaces): host plugins outside the official marketplace
-* [Environment variables](/docs/en/env-vars): full reference for `CLAUDECODE` and related variables
+* [Create plugins](./plugins.md): build the plugin your CLI recommends
+* [Create and distribute a plugin marketplace](./plugin-marketplaces.md): host plugins outside the official marketplace
+* [Environment variables](./env-vars.md): full reference for `CLAUDECODE` and related variables

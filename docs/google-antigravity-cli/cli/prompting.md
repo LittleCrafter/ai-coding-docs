@@ -56,6 +56,6 @@ Antigravity CLI supports pasting rich media formats directly from your system cl
 
 After mastering interaction patterns, explore how the agent presents actions and requests verification:
 
-*   **[Reviewing Artifacts](/docs/cli/artifacts)**: Learn to inspect and manage file edits, plans, and test executions.
-*   **[Managing Conversations](/docs/cli/conversations)**: Resume prior threads and fork active sessions.
-*   **[Background Tasks & Subagents](/docs/cli/subagents)**: Monitor asynchronous background agents.
+*   **[Reviewing Artifacts](./artifacts.md)**: Learn to inspect and manage file edits, plans, and test executions.
+*   **[Managing Conversations](./conversations.md)**: Resume prior threads and fork active sessions.
+*   **[Background Tasks & Subagents](./subagents.md)**: Monitor asynchronous background agents.

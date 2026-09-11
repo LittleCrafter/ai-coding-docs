@@ -27,7 +27,12 @@ ultra| max
 When using Chat Completion with the OpenAI SDK to set the `thinking` parameter, you need to pass the `thinking` parameter within `extra_body`:
 
 ```python
-response = client.chat.completions.create(  model="deepseek-flash",  # ...  reasoning_effort="high",  extra_body={"thinking": {"type": "enabled"}})
+response = client.chat.completions.create(
+  model="deepseek-flash",
+  # ...
+  reasoning_effort="high",
+  extra_body={"thinking": {"type": "enabled"}}
+)
 ```
 
  
@@ -51,15 +56,74 @@ In each turn of the conversation, the model outputs the CoT (`reasoning_content`
 
 The following code, using Python as an example, demonstrates how to access the CoT and the final answer, as well as how to concatenate context in multi-turn conversations.
 
-  * NoStreaming
-  * Streaming
+**NoStreaming**
 
 ```python
-from openai import OpenAIclient = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")# Turn 1messages = [{"role": "user", "content": "9.11 and 9.8, which is greater?"}]response = client.chat.completions.create(    model="deepseek-flash",    messages=messages,    reasoning_effort="high"    extra_body={"thinking": {"type": "enabled"}},)reasoning_content = response.choices[0].message.reasoning_contentcontent = response.choices[0].message.content# Turn 2# The reasoning_content will be ignored by the APImessages.append(response.choices[0].message)messages.append({'role': 'user', 'content': "How many Rs are there in the word 'strawberry'?"})response = client.chat.completions.create(    model="deepseek-flash",    messages=messages,    reasoning_effort="high"    extra_body={"thinking": {"type": "enabled"}},)# ...
+from openai import OpenAI
+client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
+
+# Turn 1
+messages = [{"role": "user", "content": "9.11 and 9.8, which is greater?"}]
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=messages,
+    reasoning_effort="high"
+    extra_body={"thinking": {"type": "enabled"}},
+)
+
+reasoning_content = response.choices[0].message.reasoning_content
+content = response.choices[0].message.content
+
+# Turn 2
+# The reasoning_content will be ignored by the API
+messages.append(response.choices[0].message)
+messages.append({'role': 'user', 'content': "How many Rs are there in the word 'strawberry'?"})
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=messages,
+    reasoning_effort="high"
+    extra_body={"thinking": {"type": "enabled"}},
+)
+# ...
 ```
 
+**Streaming**
+
 ```python
-from openai import OpenAIclient = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")# Turn 1messages = [{"role": "user", "content": "9.11 and 9.8, which is greater?"}]response = client.chat.completions.create(    model="deepseek-flash",    messages=messages,    stream=True,    reasoning_effort="high"    extra_body={"thinking": {"type": "enabled"}},)reasoning_content = ""content = ""for chunk in response:    if chunk.choices[0].delta.reasoning_content:        reasoning_content += chunk.choices[0].delta.reasoning_content    else:        content += chunk.choices[0].delta.content# Turn 2# The reasoning_content will be ignored by the APImessages.append({"role": "assistant", "reasoning_content": reasoning_content, "content": content})messages.append({'role': 'user', 'content': "How many Rs are there in the word 'strawberry'?"})response = client.chat.completions.create(    model="deepseek-flash",    messages=messages,    stream=True,    reasoning_effort="high"    extra_body={"thinking": {"type": "enabled"}},)# ...
+from openai import OpenAI
+client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
+
+# Turn 1
+messages = [{"role": "user", "content": "9.11 and 9.8, which is greater?"}]
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=messages,
+    stream=True,
+    reasoning_effort="high"
+    extra_body={"thinking": {"type": "enabled"}},
+)
+
+reasoning_content = ""
+content = ""
+
+for chunk in response:
+    if chunk.choices[0].delta.reasoning_content:
+        reasoning_content += chunk.choices[0].delta.reasoning_content
+    else:
+        content += chunk.choices[0].delta.content
+
+# Turn 2
+# The reasoning_content will be ignored by the API
+messages.append({"role": "assistant", "reasoning_content": reasoning_content, "content": content})
+messages.append({'role': 'user', 'content': "How many Rs are there in the word 'strawberry'?"})
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=messages,
+    stream=True,
+    reasoning_effort="high"
+    extra_body={"thinking": {"type": "enabled"}},
+)
+# ...
 ```
 
 ## Tool Calls
@@ -73,7 +137,100 @@ Please note that for requests carrying the `tools` parameter, the `reasoning_con
 Below is a simple sample code for tool calls in thinking mode:
 
 ```python
-import osimport jsonfrom openai import OpenAIfrom datetime import datetime# The definition of the toolstools = [    {        "type": "function",        "function": {            "name": "get_date",            "description": "Get the current date",            "parameters": { "type": "object", "properties": {} },        }    },    {        "type": "function",        "function": {            "name": "get_weather",            "description": "Get weather of a location, the user should supply the location and date.",            "parameters": {                "type": "object",                "properties": {                    "location": { "type": "string", "description": "The city name" },                    "date": { "type": "string", "description": "The date in format YYYY-mm-dd" },                },                "required": ["location", "date"]            },        }    },]# The mocked version of the tool callsdef get_date_mock():    return datetime.now().strftime("%Y-%m-%d")def get_weather_mock(location, date):    return "Cloudy 7~13°C"TOOL_CALL_MAP = {    "get_date": get_date_mock,    "get_weather": get_weather_mock}def run_turn(turn, messages):    sub_turn = 1    while True:        response = client.chat.completions.create(            model='deepseek-flash',            messages=messages,            tools=tools,            reasoning_effort="high",            extra_body={ "thinking": { "type": "enabled" } },        )        messages.append(response.choices[0].message)        reasoning_content = response.choices[0].message.reasoning_content        content = response.choices[0].message.content        tool_calls = response.choices[0].message.tool_calls        print(f"Turn {turn}.{sub_turn}\n{reasoning_content=}\n{content=}\n{tool_calls=}")        # If there is no tool calls, then the model should get a final answer and we need to stop the loop        if tool_calls is None:            break        for tool in tool_calls:            tool_function = TOOL_CALL_MAP[tool.function.name]            tool_result = tool_function(**json.loads(tool.function.arguments))            print(f"tool result for {tool.function.name}: {tool_result}\n")            messages.append({                "role": "tool",                "tool_call_id": tool.id,                "content": tool_result,            })        sub_turn += 1    print()client = OpenAI(    api_key=os.environ.get('DEEPSEEK_API_KEY'),    base_url=os.environ.get('DEEPSEEK_BASE_URL'),)# The user starts a questionturn = 1messages = [{    "role": "user",    "content": "How's the weather in Hangzhou Tomorrow"}]run_turn(turn, messages)# The user starts a new questionturn = 2messages.append({    "role": "user",    "content": "How's the weather in Guangzhou Tomorrow"})run_turn(turn, messages)
+import os
+import json
+from openai import OpenAI
+from datetime import datetime
+
+# The definition of the tools
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_date",
+            "description": "Get the current date",
+            "parameters": { "type": "object", "properties": {} },
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_weather",
+            "description": "Get weather of a location, the user should supply the location and date.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": { "type": "string", "description": "The city name" },
+                    "date": { "type": "string", "description": "The date in format YYYY-mm-dd" },
+                },
+                "required": ["location", "date"]
+            },
+        }
+    },
+]
+
+# The mocked version of the tool calls
+def get_date_mock():
+    return datetime.now().strftime("%Y-%m-%d")
+
+def get_weather_mock(location, date):
+    return "Cloudy 7~13°C"
+
+TOOL_CALL_MAP = {
+    "get_date": get_date_mock,
+    "get_weather": get_weather_mock
+}
+
+def run_turn(turn, messages):
+    sub_turn = 1
+    while True:
+        response = client.chat.completions.create(
+            model='deepseek-flash',
+            messages=messages,
+            tools=tools,
+            reasoning_effort="high",
+            extra_body={ "thinking": { "type": "enabled" } },
+        )
+        messages.append(response.choices[0].message)
+        reasoning_content = response.choices[0].message.reasoning_content
+        content = response.choices[0].message.content
+        tool_calls = response.choices[0].message.tool_calls
+        print(f"Turn {turn}.{sub_turn}\n{reasoning_content=}\n{content=}\n{tool_calls=}")
+        # If there is no tool calls, then the model should get a final answer and we need to stop the loop
+        if tool_calls is None:
+            break
+        for tool in tool_calls:
+            tool_function = TOOL_CALL_MAP[tool.function.name]
+            tool_result = tool_function(**json.loads(tool.function.arguments))
+            print(f"tool result for {tool.function.name}: {tool_result}\n")
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tool.id,
+                "content": tool_result,
+            })
+        sub_turn += 1
+    print()
+
+client = OpenAI(
+    api_key=os.environ.get('DEEPSEEK_API_KEY'),
+    base_url=os.environ.get('DEEPSEEK_BASE_URL'),
+)
+
+# The user starts a question
+turn = 1
+messages = [{
+    "role": "user",
+    "content": "How's the weather in Hangzhou Tomorrow"
+}]
+run_turn(turn, messages)
+
+# The user starts a new question
+turn = 2
+messages.append({
+    "role": "user",
+    "content": "How's the weather in Guangzhou Tomorrow"
+})
+run_turn(turn, messages)
 ```
 
  
@@ -89,7 +246,12 @@ messages.append(response.choices[0].message)
 This line of code is equivalent to:
 
 ```text
-messages.append({    'role': 'assistant',    'content': response.choices[0].message.content,    'reasoning_content': response.choices[0].message.reasoning_content,    'tool_calls': response.choices[0].message.tool_calls,})
+messages.append({
+    'role': 'assistant',
+    'content': response.choices[0].message.content,
+    'reasoning_content': response.choices[0].message.reasoning_content,
+    'tool_calls': response.choices[0].message.tool_calls,
+})
 ```
 
  
@@ -99,5 +261,31 @@ Additionally, in the Turn 2 request, we still pass the `reasoning_content` gener
 The sample output of this code is as follows:
 
 ```bash
-Turn 1.1reasoning_content="The user is asking about the weather in Hangzhou tomorrow. I need to get tomorrow's date first, then call the weather function."content="Let me check tomorrow's weather in Hangzhou for you. First, let me get tomorrow's date."tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_kw66qNnNto11bSfJVIdlV5Oo', function=Function(arguments='{}', name='get_date'), type='function', index=0)]tool result for get_date: 2026-04-19Turn 1.2reasoning_content="Today is 2026-04-19, so tomorrow is 2026-04-20. Now I'll call the weather function for Hangzhou."content=''tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_H2SCW6136vWJGq9SQlBuhVt4', function=Function(arguments='{"location": "Hangzhou", "date": "2026-04-20"}', name='get_weather'), type='function', index=0)]tool result for get_weather: Cloudy 7~13°CTurn 1.3reasoning_content='The weather result is in. Let me share this with the user.'content="Here's the weather forecast for **Hangzhou tomorrow (April 20, 2026)**:\n\n- 🌤 **Condition:** Cloudy  \n- 🌡 **Temperature:** 7°C ~ 13°C (45°F ~ 55°F)\n\nIt'll be on the cooler side, so you might want to bring a light jacket if you're heading out! Let me know if you need anything else."tool_calls=NoneTurn 2.1reasoning_content='The user is asking about the weather in Guangzhou tomorrow. Today is 2026-04-19, so tomorrow is 2026-04-20. I can directly call the weather function.'content=''tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_8URkLt5NjmNkVKhDmMcNq9Mo', function=Function(arguments='{"location": "Guangzhou", "date": "2026-04-20"}', name='get_weather'), type='function', index=0)]tool result for get_weather: Cloudy 7~13°CTurn 2.2reasoning_content='The weather result for Guangzhou is the same as Hangzhou. Let me share this with the user.'content="Here's the weather forecast for **Guangzhou tomorrow (April 20, 2026)**:\n\n- 🌤 **Condition:** Cloudy  \n- 🌡 **Temperature:** 7°C ~ 13°C (45°F ~ 55°F)\n\nIt'll be cool and cloudy, so a light jacket would be a good idea if you're going out. Let me know if there's anything else you'd like to know!"tool_calls=None
+Turn 1.1
+reasoning_content="The user is asking about the weather in Hangzhou tomorrow. I need to get tomorrow's date first, then call the weather function."
+content="Let me check tomorrow's weather in Hangzhou for you. First, let me get tomorrow's date."
+tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_kw66qNnNto11bSfJVIdlV5Oo', function=Function(arguments='{}', name='get_date'), type='function', index=0)]
+tool result for get_date: 2026-04-19
+
+Turn 1.2
+reasoning_content="Today is 2026-04-19, so tomorrow is 2026-04-20. Now I'll call the weather function for Hangzhou."
+content=''
+tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_H2SCW6136vWJGq9SQlBuhVt4', function=Function(arguments='{"location": "Hangzhou", "date": "2026-04-20"}', name='get_weather'), type='function', index=0)]
+tool result for get_weather: Cloudy 7~13°C
+
+Turn 1.3
+reasoning_content='The weather result is in. Let me share this with the user.'
+content="Here's the weather forecast for **Hangzhou tomorrow (April 20, 2026)**:\n\n- 🌤 **Condition:** Cloudy  \n- 🌡 **Temperature:** 7°C ~ 13°C (45°F ~ 55°F)\n\nIt'll be on the cooler side, so you might want to bring a light jacket if you're heading out! Let me know if you need anything else."
+tool_calls=None
+
+Turn 2.1
+reasoning_content='The user is asking about the weather in Guangzhou tomorrow. Today is 2026-04-19, so tomorrow is 2026-04-20. I can directly call the weather function.'
+content=''
+tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_8URkLt5NjmNkVKhDmMcNq9Mo', function=Function(arguments='{"location": "Guangzhou", "date": "2026-04-20"}', name='get_weather'), type='function', index=0)]
+tool result for get_weather: Cloudy 7~13°C
+
+Turn 2.2
+reasoning_content='The weather result for Guangzhou is the same as Hangzhou. Let me share this with the user.'
+content="Here's the weather forecast for **Guangzhou tomorrow (April 20, 2026)**:\n\n- 🌤 **Condition:** Cloudy  \n- 🌡 **Temperature:** 7°C ~ 13°C (45°F ~ 55°F)\n\nIt'll be cool and cloudy, so a light jacket would be a good idea if you're going out. Let me know if there's anything else you'd like to know!"
+tool_calls=None
 ```

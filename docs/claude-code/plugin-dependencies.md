@@ -8,9 +8,9 @@
 
 A plugin can depend on other plugins by listing them in `plugin.json` or in its marketplace entry. By default, a dependency tracks the latest available version, so an upstream release can change the dependency under your plugin without warning. Version constraints let you hold a dependency at a tested version range until you choose to move.
 
-When you install a plugin that declares dependencies, Claude Code resolves and installs them automatically, apart from a dependency whose marketplace entry has a [`command` source](/docs/en/plugin-marketplaces#how-users-accept-the-command) or a [`headersHelper`](/docs/en/plugin-marketplaces#how-users-accept-a-headershelper-command), which you install yourself first. Later, `/reload-plugins`, auto-update of the dependent plugin's marketplace, re-running `claude plugin install` on the dependent plugin, and `claude plugin marketplace add` each install any declared dependency that isn't installed yet, under the same rules; if one stays unresolved, see [Resolve dependency errors](#resolve-dependency-errors).
+When you install a plugin that declares dependencies, Claude Code resolves and installs them automatically, apart from a dependency whose marketplace entry has a [`command` source](./plugin-marketplaces.md#how-users-accept-the-command) or a [`headersHelper`](./plugin-marketplaces.md#how-users-accept-a-headershelper-command), which you install yourself first. Later, `/reload-plugins`, auto-update of the dependent plugin's marketplace, re-running `claude plugin install` on the dependent plugin, and `claude plugin marketplace add` each install any declared dependency that isn't installed yet, under the same rules; if one stays unresolved, see [Resolve dependency errors](#resolve-dependency-errors).
 
-This guide is for plugin authors who declare dependencies in `plugin.json` and for marketplace maintainers who tag releases. Dependencies here are other plugins; for the npm and Bun packages a plugin itself uses, see [Node.js package dependencies](/docs/en/plugins-reference#node-js-package-dependencies). To install plugins that have dependencies, see [Discover and install plugins](/docs/en/discover-plugins). For the full manifest schema, see the [Plugins reference](/docs/en/plugins-reference).
+This guide is for plugin authors who declare dependencies in `plugin.json` and for marketplace maintainers who tag releases. Dependencies here are other plugins; for the npm and Bun packages a plugin itself uses, see [Node.js package dependencies](./plugins-reference.md#node-js-package-dependencies). To install plugins that have dependencies, see [Discover and install plugins](./discover-plugins.md). For the full manifest schema, see the [Plugins reference](./plugins-reference.md).
 
 ## Why constrain dependency versions
 
@@ -74,7 +74,7 @@ To add a tool to the standard set later, publish a new `backend-standard` versio
 * Enable auto-update for the marketplace in `/plugin`. The next auto-update moves the bundle to the new version and installs any dependencies it adds.
 * Run `claude plugin update backend-standard`, then `/reload-plugins` to install the newly added dependencies.
 
-To roll bundles out across an organization, add the bundle plugin to `enabledPlugins` in [managed settings](/docs/en/settings-reference#enabledplugins).
+To roll bundles out across an organization, add the bundle plugin to `enabledPlugins` in [managed settings](./settings-reference.md#enabledplugins).
 
 ## Depend on a plugin from another marketplace
 
@@ -122,7 +122,7 @@ If you haven't installed the dependency from its marketplace, your plugin stops 
 
 ## Tag plugin releases for version resolution
 
-Claude Code resolves version constraints against git tags on the repository that hosts the dependency: the plugin's own repository for `github`, `url`, and `git-subdir` [plugin sources](/docs/en/plugin-marketplaces#plugin-sources), or the marketplace repository for a plugin the marketplace references by a relative path. For Claude Code to find a dependency's available versions, the upstream plugin's releases must be tagged using a specific naming convention.
+Claude Code resolves version constraints against git tags on the repository that hosts the dependency: the plugin's own repository for `github`, `url`, and `git-subdir` [plugin sources](./plugin-marketplaces.md#plugin-sources), or the marketplace repository for a plugin the marketplace references by a relative path. For Claude Code to find a dependency's available versions, the upstream plugin's releases must be tagged using a specific naming convention.
 
 Tag each release as `{plugin-name}--v{version}`, where `{version}` matches the `version` field in that commit's `plugin.json`. From the plugin directory, run:
 
@@ -150,11 +150,10 @@ For a plugin the marketplace references by a relative path, a marketplace added 
 
 The resolved tag's semver is recorded separately from `plugin.json`'s `version`, so constraint checks use the tag that was actually fetched even if `plugin.json` at that commit has a stale value. The cache directory name for a tag-resolved install includes a 12-character commit-SHA suffix, so if a maintainer force-moves a tag to a different commit, the next install gets a fresh cache directory instead of reusing stale content.
 
-<Note>
-  For dependencies with an `npm`, `archive`, or `command` [plugin source](/docs/en/plugin-marketplaces#plugin-sources), the constraint does not control which version is fetched, since tag-based resolution applies only to git-backed sources. The constraint is still checked at load time, and the dependent plugin is disabled with `dependency-version-unsatisfied` if the installed version does not satisfy it. For a `command` source, Claude Code checks the version in the dependency's `plugin.json` and ignores the content-hash suffix; a dependency whose `plugin.json` sets no version satisfies no constraint, so set one before you constrain it.
-
-  Claude Code never installs a dependency with a `command` source itself, so users [install it first](/docs/en/plugin-marketplaces#how-users-accept-the-command). Claude Code never runs the `headersHelper` on a dependency's marketplace entry either, so users [install that plugin first](/docs/en/plugin-marketplaces#how-users-accept-a-headershelper-command).
-</Note>
+> [!NOTE]
+> For dependencies with an `npm`, `archive`, or `command` [plugin source](./plugin-marketplaces.md#plugin-sources), the constraint does not control which version is fetched, since tag-based resolution applies only to git-backed sources. The constraint is still checked at load time, and the dependent plugin is disabled with `dependency-version-unsatisfied` if the installed version does not satisfy it. For a `command` source, Claude Code checks the version in the dependency's `plugin.json` and ignores the content-hash suffix; a dependency whose `plugin.json` sets no version satisfies no constraint, so set one before you constrain it.
+>
+> Claude Code never installs a dependency with a `command` source itself, so users [install it first](./plugin-marketplaces.md#how-users-accept-the-command). Claude Code never runs the `headersHelper` on a dependency's marketplace entry either, so users [install that plugin first](./plugin-marketplaces.md#how-users-accept-a-headershelper-command).
 
 ## How constraints interact
 
@@ -185,7 +184,7 @@ When you enable a plugin, Claude Code also enables its dependencies at the same 
 | A dependency is set to `false` at a scope with higher precedence than the target scope | Enable fails. Enable the dependency at that scope, or pass `--scope` to write there.                                   |
 | All dependencies are installed and allowed                                             | Enable succeeds and writes `true` for the plugin and each dependency that was not already enabled at the target scope. |
 
-This holds even when a dependency sets [`defaultEnabled: false`](/docs/en/plugins-reference#default-enablement) in its manifest, because Claude Code writes an explicit `true` for it. The same applies at install: a dependency pulled in to satisfy an active plugin installs with `true` regardless of its own default.
+This holds even when a dependency sets [`defaultEnabled: false`](./plugins-reference.md#default-enablement) in its manifest, because Claude Code writes an explicit `true` for it. The same applies at install: a dependency pulled in to satisfy an active plugin installs with `true` regardless of its own default.
 
 When you disable a plugin, Claude Code refuses if another enabled plugin still depends on it. The error names the plugins that depend on it and gives you a chained command that disables them in the right order, ending with the one you asked for.
 
@@ -239,7 +238,7 @@ To check for these errors programmatically, run `claude plugin list --json`. Plu
 
 ## See also
 
-* [Create plugins](/docs/en/plugins): build plugins with skills, agents, and hooks
-* [Create and distribute a plugin marketplace](/docs/en/plugin-marketplaces): host plugins for your team
-* [Plugins reference](/docs/en/plugins-reference#plugin-manifest-schema): the full `plugin.json` schema
-* [Version management](/docs/en/plugins-reference#version-management): how a plugin's own version is resolved and used as the cache key
+* [Create plugins](./plugins.md): build plugins with skills, agents, and hooks
+* [Create and distribute a plugin marketplace](./plugin-marketplaces.md): host plugins for your team
+* [Plugins reference](./plugins-reference.md#plugin-manifest-schema): the full `plugin.json` schema
+* [Version management](./plugins-reference.md#version-management): how a plugin's own version is resolved and used as the cache key

@@ -1,7 +1,6 @@
----
-title: Share
-description: Share your OpenCode conversations.
----
+# Share
+
+Share your OpenCode conversations.
 
 OpenCode's share feature allows you to create public links to your OpenCode conversations, so you can collaborate with teammates or get help from others.
 
@@ -36,7 +35,7 @@ By default, OpenCode uses manual sharing mode. Sessions are not shared automatic
 
 This will generate a unique URL that'll be copied to your clipboard.
 
-To explicitly set manual mode in your [config file](/docs/config):
+To explicitly set manual mode in your [config file](./config.md):
 
 ```json title="opencode.json"
 {
@@ -49,7 +48,7 @@ To explicitly set manual mode in your [config file](/docs/config):
 
 ### Auto-share
 
-You can enable automatic sharing for all new conversations by setting the `share` option to `"auto"` in your [config file](/docs/config):
+You can enable automatic sharing for all new conversations by setting the `share` option to `"auto"` in your [config file](./config.md):
 
 ```json title="opencode.json"
 {
@@ -64,7 +63,7 @@ With auto-share enabled, every new conversation will automatically be shared and
 
 ### Disabled
 
-You can disable sharing entirely by setting the `share` option to `"disabled"` in your [config file](/docs/config):
+You can disable sharing entirely by setting the `share` option to `"disabled"` in your [config file](./config.md):
 
 ```json title="opencode.json"
 {
@@ -124,4 +123,4 @@ For enterprise deployments, the share feature can be:
 - **Restricted** to users authenticated through SSO only
 - **Self-hosted** on your own infrastructure
 
-[Learn more](/docs/enterprise) about using opencode in your organization.
+[Learn more](./enterprise.md) about using opencode in your organization.

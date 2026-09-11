@@ -98,7 +98,7 @@ changelog](./changelog.md) before you update the plugin or
 start a long-running scan.
 
 <figure className="not-prose my-8">
-  
+
   <figcaption className="mt-3 text-sm text-secondary">
     Track the active deep-scan phase and inspect its Codex activity before
     reviewing the completed result.

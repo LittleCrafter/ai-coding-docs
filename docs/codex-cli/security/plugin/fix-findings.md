@@ -56,7 +56,7 @@ one focused fix.
    reason or keep it open for more work.
 
 <figure className="not-prose my-8">
-  
+
   <figcaption className="mt-3 text-sm text-secondary">
     Review the generated security fix before applying it to your checkout.
   </figcaption>

@@ -46,9 +46,10 @@ Please handle code according to the following guidelines:
 | `disableModelInvocation` | If `true`, blocks automatic model invocation. Also accepts `disable-model-invocation`, `disable_model_invocation` |
 | `arguments` | Named parameters; a string array or whitespace-separated string (e.g., `arguments: target mode`). Once declared, readable in the body as `$<name>` |
 
-::: warning Note
-In a directory-form `SKILL.md`, both `name` and `description` **must** be explicitly provided. Omitting either one will cause parsing to fail.
-:::
+> [!WARNING]
+> **Note**
+>
+> In a directory-form `SKILL.md`, both `name` and `description` **must** be explicitly provided. Omitting either one will cause parsing to fail.
 
 ### Body Placeholders
 

@@ -9,14 +9,14 @@ Local and always-up-to-date mirror of the documentation for various **AI coding 
 
 <!-- SOURCES_TABLE:START -->
 
-| Source                                                       | Version | Origin                                                           | How it is mirrored                                            | Whats-new |
-| :----------------------------------------------------------- | :-----: | :--------------------------------------------------------------- | :------------------------------------------------------------ | :-------: |
-| [**Google Antigravity CLI**](./docs/google-antigravity-cli/) | 1.1.13  | antigravity.google/docs/cli/                                     | scraping (sitemap → `<url>.md`)                               |    ✅     |
-| [**Claude Code**](./docs/claude-code/)                       | 2.1.268 | code.claude.com/docs/en/                                         | scraping (sitemap → `<url>.md`)                               |     —     |
-| [**Codex CLI**](./docs/codex-cli/)                           | 0.154.0 | github.com/openai/codex (`docs/`)                                | scraping (GitHub tree + developers.openai.com/codex/llms.txt) |     —     |
-| [**DeepSeek API**](./docs/deepseek-api/)                     |    —    | api-docs.deepseek.com                                            | scraping (HTML → Markdown via `html2text`)                    |     —     |
-| [**Kimi Code**](./docs/kimi-code/)                           | 0.42.0  | github.com/MoonshotAI/kimi-code (`docs/en/`)                     | scraping (GitHub tree → `raw.githubusercontent.com`)          |     —     |
-| [**OpenCode**](./docs/opencode/)                             | 1.18.30 | github.com/anomalyco/opencode (`packages/web/src/content/docs/`) | scraping (GitHub tree → raw `.mdx` → `.md` conversion)        |     —     |
+| Source                                                       | Version | Origin                                                           | How it is mirrored                                                                                | Whats-new |
+| :----------------------------------------------------------- | :-----: | :--------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ | :-------: |
+| [**Google Antigravity CLI**](./docs/google-antigravity-cli/) |  1.2.0  | antigravity.google/docs/cli/                                     | scraping (sitemap → `<url>.md`)                                                                   |    ✅     |
+| [**Claude Code**](./docs/claude-code/)                       | 2.1.268 | code.claude.com/docs/en/                                         | scraping (sitemap → `<url>.md`)                                                                   |     —     |
+| [**Codex CLI**](./docs/codex-cli/)                           | 0.154.0 | learn.chatgpt.com (`/docs/`) + github.com/openai/codex (`docs/`) | scraping (learn.chatgpt.com pages listed in the codex/llms.txt index + the openai/codex git tree) |     —     |
+| [**DeepSeek API**](./docs/deepseek-api/)                     |    —    | api-docs.deepseek.com                                            | scraping (HTML → Markdown via `html2text`)                                                        |     —     |
+| [**Kimi Code**](./docs/kimi-code/)                           | 0.42.0  | github.com/MoonshotAI/kimi-code (`docs/en/`)                     | scraping (GitHub tree → VitePress `.md` → Markdown)                                               |     —     |
+| [**OpenCode**](./docs/opencode/)                             | 1.18.30 | github.com/anomalyco/opencode (`packages/web/src/content/docs/`) | scraping (GitHub tree → raw `.mdx` → `.md` conversion)                                            |     —     |
 
 <!-- SOURCES_TABLE:END -->
 
@@ -33,13 +33,13 @@ Each source is independent and pluggable; adding a new one is as simple as creat
 Each source discovers its pages in its own way, but the pipeline is shared: **discover → download Markdown → validate → hash → diff against previous run → write only what changed**. Runs with no changes do not change any file content (clean git diff, no empty commits).
 
 - **Antigravity CLI** — the site serves `<url>.md` for each page; we discover the `/docs/cli/` pages via the sitemap.
-- **Claude Code** — the site serves `<url>.md` for each page; we use the sitemap.
+- **Claude Code** — the site serves `<url>.md` for each page; we discover the English tree via the sitemap. Those Markdown twins are MDX page sources, so we normalise them: MDX components (alerts, steps, tabs, cards, digest entries) are converted to standard Markdown, inline HTML/JSX is cleaned, and site-absolute cross-links are rewritten to local relative paths.
 - **Codex CLI** — dual discovery mirrors both GitHub repository files (`openai/codex@main:docs/`) and the full documentation catalog from `https://developers.openai.com/codex/llms.txt`. Reference stubs are resolved to rich `.md` twins, hybrid configuration guides are assembled dynamically, cross-documentation links are rewritten to local relative paths, and custom Astro/MDX components (overview landing pages, file trees, toggle sections, model details, pricing cards) are converted to clean CommonMark outlines and code blocks.
 - **DeepSeek API** — the site is Docusaurus (HTML only, no `.md` or public repository); we discover pages via the sitemap and convert the content to Markdown with `html2text`. Guide/FAQ pages come out clean; tables and the API reference (`api/*`) remain a bit raw.
-- **Kimi Code** — the documentation is already Markdown in the public `MoonshotAI/kimi-code` repository (`docs/en/`); we list the tree via the GitHub API and download via raw.
-- **OpenCode** — the documentation is MDX in the public `anomalyco/opencode` repository (`packages/web/src/content/docs/`); we list the tree via the GitHub API, download via raw, and convert MDX components (imports, callouts, JSX wrappers) to clean standard Markdown.
+- **Kimi Code** — the documentation lives as Markdown in the public `MoonshotAI/kimi-code` repository (`docs/en/`); we list the tree via the GitHub API, download via raw, and normalise the VitePress page sources (YAML frontmatter, `<Badge />` components, `:::` container markers, layout wrappers) to plain standard Markdown.
+- **OpenCode** — the documentation is MDX in the public `anomalyco/opencode` repository (`packages/web/src/content/docs/`); we list the tree via the GitHub API, download via raw, and normalise the MDX page sources: the YAML frontmatter block is stripped and its title re-emitted as the page's heading, imports, callouts and JSX wrappers are converted to clean standard Markdown, the content a tab container indented is re-indented to the container's own column, and the site-absolute `/docs/...` cross-references are rewritten to local relative paths.
 
-No headless browser is used. DeepSeek API is converted from HTML; OpenCode and Codex CLI are converted from MDX / Astro components (JSX components converted to standard Markdown headings, lists, tables, code blocks, or callouts); all other sources already expose ready-made Markdown.
+No headless browser is used. DeepSeek API is converted from HTML; OpenCode and Codex CLI are converted from MDX / Astro components (JSX components converted to standard Markdown headings, lists, tables, code blocks, or callouts, and internal links rewritten to local relative paths); Kimi Code is converted from VitePress page sources (frontmatter, Vue components and container markers turned into standard Markdown headings, GitHub Alerts and plain text); Claude Code is converted from MDX page sources too (components turned into standard Markdown headings, lists, tables and GitHub Alerts, with inline HTML/JSX cleaned and internal links rewritten to local paths); Google Antigravity CLI already exposes ready-made Markdown.
 
 **Media assets**: Google Antigravity CLI, Claude Code, Kimi Code, and OpenCode mirror the images and diagrams their pages reference. Each referenced asset is downloaded into the source's own asset directory, in-page references are rewritten so they resolve locally, downloads are hashed and cached (only changed bytes are rewritten), and assets no longer referenced by any page are automatically pruned:
 
@@ -113,8 +113,9 @@ make check                 # every CI gate: format-check + pyright + test-quiet 
 ```bash
 make lock                  # regenerate uv.lock
 make lock-check            # verify uv.lock is current
-make shell-check           # bash -n + shellcheck on scripts/run_local.sh (shellcheck auto-skipped if not installed locally; mandatory in CI)
+make shell-check           # bash -n + shellcheck on scripts/run_local.sh (system shellcheck, else uvx, else skip; mandatory in CI)
 make pre-commit            # run pre-commit on all files
+make pre-commit-install    # wire the pre-commit hook into .git/hooks/
 make lint-fix              # ruff check with safe auto-fixes
 make test-verbose          # run pytest with verbose output (-v)
 make clean                 # remove cache directories
@@ -126,7 +127,7 @@ make install               # sync virtualenv with pyproject.toml / uv.lock (uv s
 
 ## Tests
 
-Unit tests for the pure logic — change detection (`diff`), HTTP retry/validation (`fetch`), the DeepSeek HTML→Markdown and OpenCode MDX conversions, config resolution, page-model validation, CLI argument parsing, pipeline orchestration (including the `--log-file` tee), source-adapter discovery filtering and safety guards (`adapters`), internal Markdown link verification (`link_checker`), and the sitemap/manifest/index/whats-new/github helpers, plus atomic file writes (`utils`) and the shared HTML→Markdown converter (`html_markdown`) — live in [`tests/`](./tests/) and run with [pytest](https://docs.pytest.org/):
+Unit tests for the pure logic — change detection (`diff`), HTTP retry/validation (`fetch`), the DeepSeek HTML→Markdown, OpenCode MDX and Kimi VitePress conversions, the Antigravity adapter (`antigravity`), config resolution, page-model validation, CLI argument parsing, pipeline orchestration (including the `--log-file` tee), media/static-asset staging (`media`), source-adapter discovery filtering and safety guards (`adapters`), internal Markdown link verification (`link_checker`), and the sitemap/manifest/index/whats-new/github helpers, plus atomic file writes (`utils`) and the shared HTML→Markdown converter (`html_markdown`) — live in [`tests/`](./tests/) and run with [pytest](https://docs.pytest.org/):
 
 ```bash
 uv run pytest          # run the suite
@@ -187,7 +188,7 @@ NOTICE                         # attribution for the mirrored docs/ content
 ## Scheduling
 
 **GitHub Actions** ([`.github/workflows/update-docs.yml`](./.github/workflows/update-docs.yml)):
-runs every 3 hours (at :00 UTC) and can be triggered manually; auto-commits changes as `github-actions[bot]` and opens an issue if the run fails. Requires `contents: write` + `issues: write` (already configured in the workflow).
+runs every 3 hours (at :00 UTC) and can be triggered manually; auto-commits changes as `github-actions[bot]` and opens an issue if the run fails. Requires `contents: write` + `issues: write` (already configured in the workflow). The optional `DOCS_MIRROR_SSH_KEY` secret can hold a deploy key for the push; when it is unset the checkout authenticates with the default `GITHUB_TOKEN`.
 
 Failure behavior is deliberately granular: if a single source fails (e.g. an upstream site re-architecture), the healthy sources' updates are **still committed and pushed**, and only then is the run marked failed — one broken source never delays publishing the others. The failure opens (or comments on) a **deduplicated** issue titled "Docs mirror update failed", so a persistent outage produces one issue, not eight per day. GitHub may also e-mail you about each failed run depending on your notification settings (Settings → Notifications → Actions); a job-level timeout is the one case that produces only the e-mail, since a cancelled run cannot run the issue step.
 
@@ -216,13 +217,13 @@ There is a clear separation between the **tooling** and the **mirrored content**
   **MIT**, Copyright © 2026 LittleCrafter — see [`LICENSE`](./LICENSE).
 - **Content under [`docs/`](./docs/)**: **not** covered by this repository's MIT license. It remains the property of its respective owners and is redistributed here only for offline reference and change-tracking. Full attribution can be found in [`NOTICE`](./NOTICE) and in a `SOURCE.md` file within each source subfolder.
 
-| Source                 | Content                     | License                                                         |
-| ---------------------- | --------------------------- | --------------------------------------------------------------- |
-| Google Antigravity CLI | public doc                  | © Google — no redistribution license (unmodified mirror)        |
-| Claude Code            | public doc                  | © Anthropic — no redistribution license (unmodified mirror)     |
-| Codex CLI              | repo `openai/codex`         | **Apache-2.0** (license + NOTICE included in `docs/codex-cli/`) |
-| DeepSeek API           | public doc                  | © DeepSeek — no redistribution license (converted from HTML)    |
-| Kimi Code              | repo `MoonshotAI/kimi-code` | **MIT** (license included in `docs/kimi-code/`)                 |
-| OpenCode               | repo `anomalyco/opencode`   | **MIT** (license included in `docs/opencode/`)                  |
+| Source                 | Content                           | License                                                                                              |
+| ---------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Google Antigravity CLI | public doc                        | © Google — no redistribution license (mirrored from the published pages)                             |
+| Claude Code            | public doc                        | © Anthropic — no redistribution license (mirrored from the published pages)                          |
+| Codex CLI              | docs portal + repo `openai/codex` | **Apache-2.0** for the repo files (license + NOTICE in `docs/codex-cli/`); portal pages as published |
+| DeepSeek API           | public doc                        | © DeepSeek — no redistribution license (converted from HTML)                                         |
+| Kimi Code              | repo `MoonshotAI/kimi-code`       | **MIT** (license included in `docs/kimi-code/`)                                                      |
+| OpenCode               | repo `anomalyco/opencode`         | **MIT** (license included in `docs/opencode/`)                                                       |
 
-Codex (Apache-2.0) and Kimi (MIT) are OSS: their content is redistributed in compliance, with license and notices included. Google, Anthropic, and DeepSeek are public documentations published without an explicit redistribution license, mirrored verbatim (or faithfully converted, in the case of DeepSeek) with full attribution and links to the canonical source. Trademarks belong to their respective owners; if you are an owner and want content removed, please open an issue.
+Codex (Apache-2.0 for the files mirrored from `openai/codex`) and Kimi (MIT) are OSS: their content is redistributed in compliance, with license and notices included, and each source's `SOURCE.md` states the changes the mirror makes for it (such as component conversion and any link or asset-reference rewriting that source needs). Google, Anthropic, and DeepSeek are public documentations published without an explicit redistribution license, reproduced faithfully from the published pages (converted from HTML in the case of DeepSeek) with full attribution and links to the canonical source. Trademarks belong to their respective owners; if you are an owner and want content removed, please open an issue.

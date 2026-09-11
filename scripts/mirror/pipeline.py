@@ -116,13 +116,12 @@ class SourceResult:
     it to assert on counts, failures, and the diff without scraping stdout.
 
     Consumed vs. public surface: the CLI's ``run()`` discards the returned
-    objects entirely, and the test suite currently reads only ``name``,
-    ``discovered``, ``mirrored``, ``written``, and ``whats_new_path``. The
-    remaining fields (``title``, ``deleted``, ``failed``, ``changes``,
-    ``is_baseline``) are deliberately kept as documented programmatic API
-    for embedders of the pipeline -- they are not dead weight, so they must
-    not be pruned as unused even though nothing in this repository reads
-    them today.
+    objects entirely, so the only consumers are the tests (and any future
+    caller embedding the pipeline). Every field is read by the test suite --
+    the tests assert on ``name``, ``discovered``, ``mirrored``, ``written``,
+    ``whats_new_path``, ``title``, ``deleted``, ``failed``, ``changes``, and
+    ``is_baseline`` -- which makes each one load-bearing rather than dead
+    weight, so none of them may be pruned as unused.
 
     The ``is_baseline`` field is particularly important for downstream
     consumers: when it is True, the manifest was just created for the first
@@ -193,11 +192,12 @@ def fetch_pages(
     lets :func:`write_docs` skip carry-forwards without any flag on the entry.
 
     A source may define ``fetch_markdown(client, page) -> (text, hash)`` when
-    its pages are not served as ready Markdown (e.g. DeepSeek's docs are an
-    HTML site, converted to Markdown with html2text; OpenCode's docs are raw
-    MDX with JSX that must be stripped first); the hook is looked up
-    once per source via ``getattr`` so sources that serve plain Markdown need
-    no boilerplate and simply fall through to the generic fetch.
+    a downloaded page needs per-source work before it is Markdown the mirror
+    should store (e.g. DeepSeek's docs are an HTML site, converted to
+    Markdown with html2text; OpenCode's docs are raw MDX with JSX that must be
+    stripped first); the hook is looked up once per source via ``getattr`` so
+    a source that serves ready Markdown needs no boilerplate and simply falls
+    through to the generic fetch.
 
     When ``workers > 1`` and ``len(pages) > 1``, pages are fetched concurrently
     using ``concurrent.futures.ThreadPoolExecutor(max_workers=workers)``.
@@ -226,9 +226,10 @@ def fetch_pages(
 
     # ``getattr`` (rather than attribute access ``source.fetch_markdown``) is
     # required because ``fetch_markdown`` is declared in the ``Source`` Protocol
-    # but is OPTIONAL -- only sources whose pages aren't served as ready Markdown
-    # define it: deepseek.py converts HTML to Markdown, and opencode.py
-    # converts raw MDX (stripping the JSX the Markdown renderer cannot handle).
+    # but is OPTIONAL: a source defines it only when its downloaded pages need
+    # per-source work (DeepSeek converts HTML to Markdown, OpenCode normalises
+    # raw MDX, antigravity repoints site-absolute cross-links, and so on -- see
+    # the hook's docstring in mirror/sources/base.py for the contract).
     # Python's Protocol has no notion of optional members, so the defensive
     # getattr is the correct runtime pattern while the Protocol declaration
     # buys type-checking and IDE support at the call site (see the
@@ -1301,12 +1302,13 @@ def run(
     # appended to inside the per-source try/except below; if it remains empty
     # at the end, every source completed successfully and run() returns 0.
     failed_sources: list[str] = []
-    # Separate flag for a failed top-index write: the top index is not a
-    # source (it aggregates every source's on-disk manifest), so it does not
-    # belong in ``failed_sources``, but its failure must still fold into the
-    # exit code the same way -- a nonzero return tells the operator the run
-    # did not fully succeed.
-    top_index_failed = False
+    # Separate flag for the two failed REPOSITORY-INDEX writes: the top index
+    # (``docs/README.md``) and the root README's sources table. Neither is a
+    # source -- they aggregate every source's on-disk manifest -- so they do
+    # not belong in ``failed_sources``, but a failure to write either must
+    # still fold into the exit code the same way: a nonzero return tells the
+    # operator the run did not fully succeed.
+    index_write_failed = False
     # The log-file tee wraps stdout/stderr for the full duration of the
     # pipeline run, so every print() in reporting, every source adapter's
     # stderr warning, and every exception traceback is captured in the log
@@ -1353,23 +1355,27 @@ def run(
         # after a partial failure: it reads on-disk manifests, and a failed
         # source simply keeps its previous row.
         if not dry_run:
-            # Failure isolation for the top-index write, matching the
-            # per-source isolation above: an OSError here (unwritable
+            # Failure isolation for the two repository-index writes below
+            # (the top index and the root README's sources table), matching
+            # the per-source isolation above: an OSError here (unwritable
             # docs/README.md, a docs directory that cannot be listed, ...)
             # must not escape run() as an unhandled traceback -- that would
             # break the one-line report convention the rest of the module
-            # follows and would leave the exit code undefined. Report the
-            # degradation via reporting.warning (the generic non-fatal
-            # channel) and fold it into the exit code: the mirrored pages
-            # are fine, but the operator must know the index is stale.
+            # follows and would leave the exit code undefined. The root
+            # README can additionally raise UnicodeDecodeError when the
+            # existing README is not valid UTF-8, which the read-modify-write
+            # round trip cannot repair either. Report each degradation via
+            # reporting.warning (the generic non-fatal channel) and fold it
+            # into the exit code: the mirrored pages are fine, but the
+            # operator must know the index is stale.
             try:
                 write_top_index()
             except OSError as exc:
                 reporting.warning(f"failed to write top index: {exc}")
-                top_index_failed = True
+                index_write_failed = True
             try:
                 update_root_readme()
             except (OSError, UnicodeDecodeError) as exc:
                 reporting.warning(f"failed to update root readme: {exc}")
-                top_index_failed = True
-    return 1 if failed_sources or top_index_failed else 0
+                index_write_failed = True
+    return 1 if failed_sources or index_write_failed else 0

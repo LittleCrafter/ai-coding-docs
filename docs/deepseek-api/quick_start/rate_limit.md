@@ -38,7 +38,11 @@ You can set the `user_id` parameter in the following ways:
 HTTP request body:
 
 ```json
-{    "model": "deepseek-flash",    "messages": {"role": "user", "content": "Hello!"},    "user_id": "your_user_id"}
+{
+    "model": "deepseek-flash",
+    "messages": {"role": "user", "content": "Hello!"},
+    "user_id": "your_user_id"
+}
 ```
 
  
@@ -46,7 +50,11 @@ HTTP request body:
 If you are using the OpenAI SDK, you need to place the `user_id` parameter under the `extra_body` parameter:
 
 ```python
-response = client.chat.completions.create(    model="deepseek-flash",    messages=[{"role": "user", "content": "Hello!"}],    extra_body={"user_id": "your_user_id"})
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=[{"role": "user", "content": "Hello!"}],
+    extra_body={"user_id": "your_user_id"}
+)
 ```
 
  
@@ -56,7 +64,12 @@ response = client.chat.completions.create(    model="deepseek-flash",    message
 HTTP request body:
 
 ```json
-{    "model": "deepseek-flash",    "messages": {"role": "user", "content": "Hello!"},    "metadata": {"user_id": "your_user_id"},    "max_tokens": 1024}
+{
+    "model": "deepseek-flash",
+    "messages": {"role": "user", "content": "Hello!"},
+    "metadata": {"user_id": "your_user_id"},
+    "max_tokens": 1024
+}
 ```
 
  
@@ -64,7 +77,12 @@ HTTP request body:
 If you are using the Anthropic SDK, the calling method is as follows:
 
 ```python
-message = client.messages.create(    model="deepseek-flash",    messages=[{"role": "user", "type": "text", "content": "Hello!"}],    metadata={"user_id": "your_user_id"},    max_tokens=1024)
+message = client.messages.create(
+    model="deepseek-flash",
+    messages=[{"role": "user", "type": "text", "content": "Hello!"}],
+    metadata={"user_id": "your_user_id"},
+    max_tokens=1024
+)
 ```
 
  

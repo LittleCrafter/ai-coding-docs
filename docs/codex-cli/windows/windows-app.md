@@ -10,8 +10,6 @@ It runs natively on Windows using PowerShell and the
 [Windows sandbox](./windows-sandbox.md#windows-sandbox), or you can configure it to
 run in [Windows Subsystem for Linux 2 (WSL2)](#windows-subsystem-for-linux-wsl).
 
-  
-
 > Illustration: ChatGPT desktop app for Windows showing a project sidebar, active chat, and review pane
 
 ## Download the ChatGPT desktop app
@@ -53,8 +51,6 @@ editor. You can override that choice per project. If you already picked a
 different app from the **Open** menu for a project, that project-specific
 choice takes precedence.
 
-  
-
 > Illustration: ChatGPT desktop app settings showing the default Open In app on Windows
 
 </section>
@@ -74,8 +70,6 @@ installed, options include:
 This change applies only to new terminal sessions. If you already have an
 integrated terminal open, restart the app or start a new chat before
 expecting the new default terminal to appear.
-
-  
 
 > Illustration: ChatGPT desktop app settings showing the integrated terminal selection on Windows
 
@@ -104,8 +98,6 @@ place after restart.
 
 WSL1 was supported through Codex `0.114`. Starting in Codex `0.115`, the Linux
 sandbox moved to `bubblewrap`, so WSL1 is no longer supported.
-
-  
 
 > Illustration: ChatGPT desktop app settings showing the agent selector with Windows native and WSL options
 

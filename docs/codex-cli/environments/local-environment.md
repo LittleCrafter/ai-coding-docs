@@ -36,8 +36,6 @@ Use actions to define common tasks like starting your app's development server o
 
 Actions are helpful to keep you from typing common actions like triggering a build for your project or starting a development server. For one-off quick debugging you can use the integrated terminal directly.
 
-  
-
 > Illustration: Project actions list shown in ChatGPT desktop app settings
 
 </section>

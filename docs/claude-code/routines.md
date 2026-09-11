@@ -6,11 +6,10 @@
 
 > Put Claude Code on autopilot. Define routines that run on a schedule, trigger on API calls, or react to GitHub events from cloud infrastructure.
 
-<Note>
-  Routines are in research preview. Behavior, limits, and the API surface may change.
-</Note>
+> [!NOTE]
+> Routines are in research preview. Behavior, limits, and the API surface may change.
 
-A routine is a saved Claude Code configuration: a prompt, one or more repositories, and a set of [connectors](/docs/en/mcp), packaged once and run automatically. Routines execute on Anthropic-managed cloud infrastructure, or on your organization's [self-hosted environment](/docs/en/self-hosted-environments) when routed there, so they keep working when your laptop is closed.
+A routine is a saved Claude Code configuration: a prompt, one or more repositories, and a set of [connectors](./mcp.md), packaged once and run automatically. Routines execute on Anthropic-managed cloud infrastructure, or on your organization's [self-hosted environment](./self-hosted-environments.md) when routed there, so they keep working when your laptop is closed.
 
 Each routine can have one or more triggers attached to it:
 
@@ -44,71 +43,61 @@ Each example pairs a trigger type with the kind of work routines are suited to: 
 
 ## Create a routine
 
-Create a routine from the web at [claude.ai/code/routines](https://claude.ai/code/routines), from the Desktop app, or from the CLI. All three surfaces write to the same cloud account, so a routine you create in one shows up in the others immediately. In the Desktop app's **Code** tab, click **Routines** in the sidebar or in the sidebar's **More** menu, then **New routine**, and choose **Cloud**; choosing **Local** instead creates a [Desktop scheduled task](/docs/en/desktop-scheduled-tasks), which runs on your machine rather than in the cloud.
+Create a routine from the web at [claude.ai/code/routines](https://claude.ai/code/routines), from the Desktop app, or from the CLI. All three surfaces write to the same cloud account, so a routine you create in one shows up in the others immediately. In the Desktop app's **Code** tab, click **Routines** in the sidebar or in the sidebar's **More** menu, then **New routine**, and choose **Cloud**; choosing **Local** instead creates a [Desktop scheduled task](./desktop-scheduled-tasks.md), which runs on your machine rather than in the cloud.
 
 The creation form sets up the routine's prompt, repositories, environment, connectors, and triggers.
 
-Routines run autonomously as full Claude Code cloud sessions: there is no permission-mode picker and no approval prompts during a run. The session can run shell commands, use [skills](/docs/en/skills) committed to the cloned repository, and call any connectors you include. What a routine can reach is determined by the repositories you select, the [environment's](/docs/en/cloud-environments) network access and variables, and the connectors you include. Scope each of those to what the routine actually needs.
+Routines run autonomously as full Claude Code cloud sessions: there is no permission-mode picker and no approval prompts during a run. The session can run shell commands, use [skills](./skills.md) committed to the cloned repository, and call any connectors you include. What a routine can reach is determined by the repositories you select, the [environment's](./cloud-environments.md) network access and variables, and the connectors you include. Scope each of those to what the routine actually needs.
 
 Routines belong to your individual claude.ai account. They are not shared with teammates, and they count against your account's daily run allowance. Anything a routine does through your connected GitHub identity or connectors appears as you: commits and pull requests carry your GitHub user, and Slack messages, Linear tickets, or other connector actions use your linked accounts for those services.
 
 ### Create from the web
 
-<Steps>
-  <Step title="Open the creation form">
-    Visit [claude.ai/code/routines](https://claude.ai/code/routines) and click **New routine**.
-  </Step>
+1. **Open the creation form**
 
-  <Step title="Name the routine and write the prompt">
-    Give the routine a descriptive name and write the prompt Claude runs each time. The prompt is the most important part: the routine runs autonomously, so the prompt must be self-contained and explicit about what to do and what success looks like.
+   Visit [claude.ai/code/routines](https://claude.ai/code/routines) and click **New routine**.
+2. **Name the routine and write the prompt**
 
-    When a trigger fires, the session receives the routine's saved prompt as its assigned task and carries it out, rather than treating it as untrusted content that arrived mid-conversation. The trigger attests only that the prompt was stored ahead of time by an authorized session on your account, so the fired prompt is not live user input and can't act as approval or consent for actions during the run. Content the session fetches during the run keeps its normal handling. Before v2.1.213, the session received the same prompt framed as an untrusted background notification and could refuse to act on it.
+   Give the routine a descriptive name and write the prompt Claude runs each time. The prompt is the most important part: the routine runs autonomously, so the prompt must be self-contained and explicit about what to do and what success looks like.
 
-    The prompt input includes a model selector. Claude uses the selected model on every run.
-  </Step>
+   When a trigger fires, the session receives the routine's saved prompt as its assigned task and carries it out, rather than treating it as untrusted content that arrived mid-conversation. The trigger attests only that the prompt was stored ahead of time by an authorized session on your account, so the fired prompt is not live user input and can't act as approval or consent for actions during the run. Content the session fetches during the run keeps its normal handling. Before v2.1.213, the session received the same prompt framed as an untrusted background notification and could refuse to act on it.
 
-  <Step title="Select repositories">
-    Add one or more GitHub repositories for Claude to work in. Each repository is cloned at the start of a run, starting from the default branch. Claude creates `claude/`-prefixed branches for its changes.
-  </Step>
+   The prompt input includes a model selector. Claude uses the selected model on every run.
+3. **Select repositories**
 
-  <Step title="Select an environment">
-    Pick a [cloud environment](/docs/en/cloud-environments) for the routine. Environments control what the cloud session has access to:
+   Add one or more GitHub repositories for Claude to work in. Each repository is cloned at the start of a run, starting from the default branch. Claude creates `claude/`-prefixed branches for its changes.
+4. **Select an environment**
 
-    * **Network access**: set the level of internet access available during each run
-    * **Environment variables**: provide values Claude can use during each run. They're [visible to anyone who uses the environment](/docs/en/cloud-environments#what-carries-over-from-your-setup), so on Pro and Max plans, store keys for the APIs Claude calls during a run as [API credentials](/docs/en/cloud-environments#add-api-credentials) instead. That section also lists the requests that never get a credential
-    * **Setup script**: install dependencies and tools the routine needs. The result is [cached](/docs/en/cloud-environments#environment-caching), so the script doesn't re-run on every session
+   Pick a [cloud environment](./cloud-environments.md) for the routine. Environments control what the cloud session has access to:
 
-    A **Default** environment is provided with **Trusted** network access, which allows only the [default allowlist](/docs/en/cloud-environments#default-allowed-domains) of package registries, cloud provider APIs, container registries, and common development domains through the session's network. Connectors you add to the routine reach their services through Anthropic's servers, so they don't need allowlist changes. If your routine needs to reach your own services directly, or a domain outside that list, edit the environment's [network access](/docs/en/cloud-environments#network-access) before running. To use a separate environment, [create one](/docs/en/cloud-environments#configure-your-environment) first.
-  </Step>
+   * **Network access**: set the level of internet access available during each run
+   * **Environment variables**: provide values Claude can use during each run. They're [visible to anyone who uses the environment](./cloud-environments.md#what-carries-over-from-your-setup), so on Pro and Max plans, store keys for the APIs Claude calls during a run as [API credentials](./cloud-environments.md#add-api-credentials) instead. That section also lists the requests that never get a credential
+   * **Setup script**: install dependencies and tools the routine needs. The result is [cached](./cloud-environments.md#environment-caching), so the script doesn't re-run on every session
 
-  <Step title="Select a trigger">
-    Under **Select a trigger**, choose how the routine starts. You can pick one trigger type or combine several.
+   A **Default** environment is provided with **Trusted** network access, which allows only the [default allowlist](./cloud-environments.md#default-allowed-domains) of package registries, cloud provider APIs, container registries, and common development domains through the session's network. Connectors you add to the routine reach their services through Anthropic's servers, so they don't need allowlist changes. If your routine needs to reach your own services directly, or a domain outside that list, edit the environment's [network access](./cloud-environments.md#network-access) before running. To use a separate environment, [create one](./cloud-environments.md#configure-your-environment) first.
+5. **Select a trigger**
 
-    <Tabs>
-      <Tab title="Schedule">
-        Pick a preset frequency for a recurring run, or schedule a single one-off run at a specific timestamp. See [Add a schedule trigger](#add-a-schedule-trigger) for timezone handling, stagger, custom cron intervals, and one-off runs.
-      </Tab>
+   Under **Select a trigger**, choose how the routine starts. You can pick one trigger type or combine several.
 
-      <Tab title="GitHub event">
-        Select the repository, the event to react to, and optional filters. See [Add a GitHub trigger](#add-a-github-trigger) for the full list of supported events and filter fields.
-      </Tab>
+   **Schedule**
 
-      <Tab title="API">
-        Select **API** here, then save the routine. The URL and token are generated after the routine is saved, since they depend on the routine ID. See [Add an API trigger](#add-an-api-trigger) to copy the URL and generate a token.
-      </Tab>
-    </Tabs>
-  </Step>
+   Pick a preset frequency for a recurring run, or schedule a single one-off run at a specific timestamp. See [Add a schedule trigger](#add-a-schedule-trigger) for timezone handling, stagger, custom cron intervals, and one-off runs.
 
-  <Step title="Review connectors">
-    Under **Connectors** at the bottom of the form, all of your connected [MCP connectors](/docs/en/mcp) are included by default. Remove any the routine doesn't need: Claude can use every tool from an included connector, including writes, without asking for permission during a run.
-  </Step>
+   **GitHub event**
 
-  <Step title="Create the routine">
-    Click **Create**. The routine appears in the list and runs the next time one of its triggers matches. To start a run immediately, click **Run now** on the routine's detail page.
+   Select the repository, the event to react to, and optional filters. See [Add a GitHub trigger](#add-a-github-trigger) for the full list of supported events and filter fields.
 
-    Each run creates a new session alongside your other sessions, where you can see what Claude did, review changes, and create a pull request.
-  </Step>
-</Steps>
+   **API**
+
+   Select **API** here, then save the routine. The URL and token are generated after the routine is saved, since they depend on the routine ID. See [Add an API trigger](#add-an-api-trigger) to copy the URL and generate a token.
+6. **Review connectors**
+
+   Under **Connectors** at the bottom of the form, all of your connected [MCP connectors](./mcp.md) are included by default. Remove any the routine doesn't need: Claude can use every tool from an included connector, including writes, without asking for permission during a run.
+7. **Create the routine**
+
+   Click **Create**. The routine appears in the list and runs the next time one of its triggers matches. To start a run immediately, click **Run now** on the routine's detail page.
+
+   Each run creates a new session alongside your other sessions, where you can see what Claude did, review changes, and create a pull request.
 
 ### Create from the CLI
 
@@ -156,23 +145,18 @@ An API trigger gives a routine a dedicated HTTP endpoint. POSTing to the endpoin
 
 API triggers are added to an existing routine from the web. The CLI cannot currently create or revoke tokens.
 
-<Steps>
-  <Step title="Open the routine for editing">
-    Go to [claude.ai/code/routines](https://claude.ai/code/routines), click the routine you want to trigger via API, then click the pencil icon to open **Edit routine**.
-  </Step>
+1. **Open the routine for editing**
 
-  <Step title="Add an API trigger">
-    Scroll to the **Select a trigger** section below the **Instructions** box, click **Add another trigger**, and choose **API**.
-  </Step>
+   Go to [claude.ai/code/routines](https://claude.ai/code/routines), click the routine you want to trigger via API, then click the pencil icon to open **Edit routine**.
+2. **Add an API trigger**
 
-  <Step title="Copy the URL and generate a token">
-    The modal shows the URL for this routine along with a sample curl command. Copy the URL, then click **Generate token** and copy the token immediately. The token is shown once and cannot be retrieved later, so store it somewhere secure such as your alerting tool's secret store.
-  </Step>
+   Scroll to the **Select a trigger** section below the **Instructions** box, click **Add another trigger**, and choose **API**.
+3. **Copy the URL and generate a token**
 
-  <Step title="Call the endpoint">
-    Send the token in the `Authorization: Bearer` header when you POST to the URL. The [Trigger a routine](#trigger-a-routine) section below shows a complete example.
-  </Step>
-</Steps>
+   The modal shows the URL for this routine along with a sample curl command. Copy the URL, then click **Generate token** and copy the token immediately. The token is shown once and cannot be retrieved later, so store it somewhere secure such as your alerting tool's secret store.
+4. **Call the endpoint**
+
+   Send the token in the `Authorization: Bearer` header when you POST to the URL. The [Trigger a routine](#trigger-a-routine) section below shows a complete example.
 
 Each routine has its own token, scoped to triggering that routine only. To rotate or revoke it, return to the same modal and click **Regenerate** or **Revoke**.
 
@@ -207,9 +191,8 @@ A successful request returns a JSON body with the new session ID and URL:
 
 Open the session URL in a browser to watch the run in real time, review changes, or continue the conversation manually.
 
-<Warning>
-  The `/fire` endpoint ships under the `experimental-cc-routine-2026-04-01` beta header. Request and response shapes, rate limits, and token semantics may change while the feature is in research preview. Breaking changes ship behind new dated beta header versions, and the two most recent previous header versions continue to work so that callers have time to migrate.
-</Warning>
+> [!WARNING]
+> The `/fire` endpoint ships under the `experimental-cc-routine-2026-04-01` beta header. Request and response shapes, rate limits, and token semantics may change while the feature is in research preview. Breaking changes ship behind new dated beta header versions, and the two most recent previous header versions continue to work so that callers have time to migrate.
 
 #### API reference
 
@@ -221,32 +204,26 @@ The `/fire` endpoint is available to claude.ai users only and is not part of the
 
 A GitHub trigger starts a new session automatically when a matching event occurs on a connected repository. Claude Code doesn't reuse sessions across events, so two PR updates produce two independent sessions.
 
-<Note>
-  During the research preview, GitHub webhook events are subject to per-routine and per-account hourly caps. Events beyond the limit are dropped until the window resets. See your current limits at [claude.ai/code/routines](https://claude.ai/code/routines).
-</Note>
+> [!NOTE]
+> During the research preview, GitHub webhook events are subject to per-routine and per-account hourly caps. Events beyond the limit are dropped until the window resets. See your current limits at [claude.ai/code/routines](https://claude.ai/code/routines).
 
 The Claude GitHub App must be installed on the repository you want to subscribe to, whichever surface you configure the trigger from.
 
 * Configure GitHub triggers from the web UI, which prompts you to install the app when it's missing. Follow the steps below to configure one on the web.
 * From the CLI, install the app from the [GitHub App page](https://github.com/apps/claude) first, then ask Claude to attach a GitHub trigger to an existing routine, for example `/schedule add a GitHub trigger to my nightly review for pull requests opened in acme/webapp`. The CLI path requires Claude Code v2.1.225 or later. When Claude adds the trigger, it replies with a link to the routine the trigger fires.
 
-<Steps>
-  <Step title="Open the routine for editing">
-    Go to [claude.ai/code/routines](https://claude.ai/code/routines), click the routine, then click the pencil icon to open **Edit routine**.
-  </Step>
+1. **Open the routine for editing**
 
-  <Step title="Add a GitHub event trigger">
-    Scroll to the **Select a trigger** section, click **Add another trigger**, and choose **GitHub event**.
+   Go to [claude.ai/code/routines](https://claude.ai/code/routines), click the routine, then click the pencil icon to open **Edit routine**.
+2. **Add a GitHub event trigger**
 
-    <Note>
-      Running `/web-setup` in the CLI grants repository access for cloning, but it does not install the Claude GitHub App and does not enable webhook delivery.
-    </Note>
-  </Step>
+   Scroll to the **Select a trigger** section, click **Add another trigger**, and choose **GitHub event**.
 
-  <Step title="Configure the trigger">
-    Select the repository, choose an event from the [supported events](#supported-events) list, and optionally add filters. Save the trigger.
-  </Step>
-</Steps>
+   > [!NOTE]
+   > Running `/web-setup` in the CLI grants repository access for cloning, but it does not install the Claude GitHub App and does not enable webhook delivery.
+3. **Configure the trigger**
+
+   Select the repository, choose an event from the [supported events](#supported-events) list, and optionally add filters. Save the trigger.
 
 #### Supported events
 
@@ -290,9 +267,8 @@ Click a routine in the list to open its detail page. The detail page shows the r
 
 Click any run to open it as a full session. From there you can see what Claude did, review changes, create a pull request, or continue the conversation. Each run session works like any other session: use the dropdown menu next to the session title to rename, archive, or delete it.
 
-<Note>
-  A green status in the run list means the session started and exited without an infrastructure error. It does not mean the task in your prompt succeeded. Open the run to read the transcript and confirm what Claude actually did. Blocked network requests, missing connector tools, and task-level failures all surface there rather than in the status indicator.
-</Note>
+> [!NOTE]
+> A green status in the run list means the session started and exited without an infrastructure error. It does not mean the task in your prompt succeeded. Open the run to read the transcript and confirm what Claude actually did. Blocked network requests, missing connector tools, and task-level failures all surface there rather than in the status indicator.
 
 ### Edit and control routines
 
@@ -311,7 +287,7 @@ You can also ask about a routine's run history, for example `/schedule why did m
 
 ### Repositories and branch permissions
 
-Routines need GitHub access to clone repositories. When you create a routine from the CLI with `/schedule`, Claude checks whether your account has GitHub access for the repository you ran it from and, if it doesn't, adds a setup note naming how to grant it. See [GitHub authentication options](/docs/en/claude-code-on-the-web#github-authentication-options) for the two ways to grant access.
+Routines need GitHub access to clone repositories. When you create a routine from the CLI with `/schedule`, Claude checks whether your account has GitHub access for the repository you ran it from and, if it doesn't, adds a setup note naming how to grant it. See [GitHub authentication options](./claude-code-on-the-web.md#github-authentication-options) for the two ways to grant access.
 
 Each repository you add is cloned on every run. Claude starts from the repository's default branch unless your prompt specifies otherwise.
 
@@ -325,7 +301,7 @@ Claude pushes its work to branches prefixed with `claude/`, which are always acc
 
 Routines can use your connected MCP connectors to read from and write to external services during each run. For example, a routine that triages support requests might read from a Slack channel and create issues in Linear.
 
-Connectors are the [claude.ai integrations](/docs/en/mcp#use-mcp-servers-from-claude-ai) on your account. MCP servers you added locally in the CLI with `claude mcp add` are stored on your machine rather than your claude.ai account, so they do not appear in the connectors list. To use one of those servers in a routine, add it as a connector at [claude.ai/customize/connectors](https://claude.ai/customize/connectors), or declare it in a committed [`.mcp.json`](/docs/en/mcp#project-scope) so it is part of the cloned repository.
+Connectors are the [claude.ai integrations](./mcp.md#use-mcp-servers-from-claude-ai) on your account. MCP servers you added locally in the CLI with `claude mcp add` are stored on your machine rather than your claude.ai account, so they do not appear in the connectors list. To use one of those servers in a routine, add it as a connector at [claude.ai/customize/connectors](https://claude.ai/customize/connectors), or declare it in a committed [`.mcp.json`](./mcp.md#project-scope) so it is part of the cloned repository.
 
 When you create a routine, all of your currently connected connectors are included by default. Remove any that aren't needed to limit which tools Claude has access to during the run. You can also add connectors directly from the routine form.
 
@@ -333,35 +309,29 @@ To manage or add connectors outside of the routine form, visit [claude.ai/custom
 
 ### Environments and network access
 
-Each routine uses a [cloud environment](/docs/en/cloud-environments) that controls network access, environment variables, and setup scripts. The routine inherits the environment's network policy on every run.
+Each routine uses a [cloud environment](./cloud-environments.md) that controls network access, environment variables, and setup scripts. The routine inherits the environment's network policy on every run.
 
-The **Default** environment uses **Trusted** network access, which allows only the [default allowlist](/docs/en/cloud-environments#default-allowed-domains) through the session's network. Requests on that path to hosts outside the allowlist fail with `403` and `x-deny-reason: host_not_allowed`. MCP connector traffic is routed through Anthropic's servers rather than that path, so the connectors you add to the routine work without adding their hosts to **Allowed domains**. Remove any connectors you don't need under [Connectors](#connectors).
+The **Default** environment uses **Trusted** network access, which allows only the [default allowlist](./cloud-environments.md#default-allowed-domains) through the session's network. Requests on that path to hosts outside the allowlist fail with `403` and `x-deny-reason: host_not_allowed`. MCP connector traffic is routed through Anthropic's servers rather than that path, so the connectors you add to the routine work without adding their hosts to **Allowed domains**. Remove any connectors you don't need under [Connectors](#connectors).
 
 To allow additional domains:
 
-<Steps>
-  <Step title="Open the routine for editing">
-    On the routine's detail page, click the pencil icon to open **Edit routine**.
-  </Step>
+1. **Open the routine for editing**
 
-  <Step title="Open the environment selector">
-    Below the **Instructions** box, select the cloud icon showing your environment's name, such as **Default**.
-  </Step>
+   On the routine's detail page, click the pencil icon to open **Edit routine**.
+2. **Open the environment selector**
 
-  <Step title="Open the environment settings">
-    Hover over the environment in the list and click the settings icon that appears on the right.
-  </Step>
+   Below the **Instructions** box, select the cloud icon showing your environment's name, such as **Default**.
+3. **Open the environment settings**
 
-  <Step title="Change the network access level">
-    In the **Update cloud environment** dialog, change **Network access** to **Custom** and enter your domains in **Allowed domains**. Check **Also include default list of common package managers** to keep the [default allowlist](/docs/en/cloud-environments#default-allowed-domains) alongside your custom domains. Select **Full** instead for unrestricted access.
-  </Step>
+   Hover over the environment in the list and click the settings icon that appears on the right.
+4. **Change the network access level**
 
-  <Step title="Save">
-    Click **Save changes**. The new policy applies from the next run.
-  </Step>
-</Steps>
+   In the **Update cloud environment** dialog, change **Network access** to **Custom** and enter your domains in **Allowed domains**. Check **Also include default list of common package managers** to keep the [default allowlist](./cloud-environments.md#default-allowed-domains) alongside your custom domains. Select **Full** instead for unrestricted access.
+5. **Save**
 
-See [Network access](/docs/en/cloud-environments#network-access) for details on access levels and the default allowlist.
+   Click **Save changes**. The new policy applies from the next run.
+
+See [Network access](./cloud-environments.md#network-access) for details on access levels and the default allowlist.
 
 ## Usage and limits
 
@@ -379,9 +349,9 @@ One-off runs do not count against the daily routine cap. They draw down your reg
 
 The CLI hides `/schedule` when one of its requirements isn't met: the command menu shows `No commands match "/schedule"` while you type, and submitting it returns `Unknown command: /schedule` in every case below except a Console API key or an Anthropic profile with feature-flag fetching enabled. The cause is usually one of the following:
 
-* You are authenticated with a Console API key, an [Anthropic profile or federation credential](/docs/en/authentication#anthropic-profiles-and-federation-credentials), or a cloud provider such as Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry. `/schedule` requires a claude.ai subscription login. With a Console API key or a profile, submitting `/schedule` instead shows `/schedule is available with Claude for Enterprise — ask your admin about migrating from API-key access`. With a cloud-provider login, you still see `Unknown command: /schedule`. If `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN` is set in your shell, or `apiKeyHelper` is set in `settings.json`, remove it first, since these take precedence over a claude.ai login. A profile or federation credential takes precedence too, so switch that off as well
+* You are authenticated with a Console API key, an [Anthropic profile or federation credential](./authentication.md#anthropic-profiles-and-federation-credentials), or a cloud provider such as Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry. `/schedule` requires a claude.ai subscription login. With a Console API key or a profile, submitting `/schedule` instead shows `/schedule is available with Claude for Enterprise — ask your admin about migrating from API-key access`. With a cloud-provider login, you still see `Unknown command: /schedule`. If `ANTHROPIC_API_KEY` or `ANTHROPIC_AUTH_TOKEN` is set in your shell, or `apiKeyHelper` is set in `settings.json`, remove it first, since these take precedence over a claude.ai login. A profile or federation credential takes precedence too, so switch that off as well
 * You are inside a Claude Code on the web session. Manage routines from the [web UI](https://claude.ai/code/routines) instead
-* Your organization's policy disables [Claude Code on the web](/docs/en/claude-code-on-the-web), which routines run on
+* Your organization's policy disables [Claude Code on the web](./claude-code-on-the-web.md), which routines run on
 * An Owner [turned off routines](#routines-are-disabled-by-your-organizations-policy) for your Team or Enterprise organization. Before v2.1.227, the command still appeared in this case, and claude.ai rejected the routine when Claude tried to create or run it
 
 Unless your organization's policy disables routines or Claude Code on the web, you can create and manage routines at [claude.ai/code/routines](https://claude.ai/code/routines) regardless of how the CLI is configured.
@@ -398,8 +368,8 @@ An Owner in your Team or Enterprise organization has likely turned off the **Rou
 
 ## Related resources
 
-* [`/loop` and in-session scheduling](/docs/en/scheduled-tasks): schedule local tasks within an open CLI session
-* [Desktop scheduled tasks](/docs/en/desktop-scheduled-tasks): local scheduled tasks that run on your machine with access to local files
-* [Cloud environments](/docs/en/cloud-environments): configure network access, environment variables, and setup scripts for cloud sessions
-* [MCP connectors](/docs/en/mcp): connect external services like Slack, Linear, and Google Drive
-* [GitHub Actions](/docs/en/github-actions): run Claude in your CI pipeline on repository events
+* [`/loop` and in-session scheduling](./scheduled-tasks.md): schedule local tasks within an open CLI session
+* [Desktop scheduled tasks](./desktop-scheduled-tasks.md): local scheduled tasks that run on your machine with access to local files
+* [Cloud environments](./cloud-environments.md): configure network access, environment variables, and setup scripts for cloud sessions
+* [MCP connectors](./mcp.md): connect external services like Slack, Linear, and Google Drive
+* [GitHub Actions](./github-actions.md): run Claude in your CI pipeline on repository events

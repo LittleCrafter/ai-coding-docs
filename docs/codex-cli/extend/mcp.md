@@ -17,6 +17,10 @@ share MCP configuration for the same Codex host.
 The supported server features below apply to MCP servers configured on a Codex
 host. Hosted plugin tools can have different capabilities.
 
+<a id="app-supported-mcp-features"></a>
+<a id="cli-supported-mcp-features"></a>
+<a id="ide-supported-mcp-features"></a>
+
 ## Supported MCP features
 
 - **STDIO servers**: Servers that run as a local process (started by a command).
@@ -30,6 +34,10 @@ host. Hosted plugin tools can have different capabilities.
 
 If you build or maintain an MCP server for Codex, use `instructions` for cross-tool workflows, constraints, and rate limits that apply across the server. Keep the first 512 characters self-contained so the most important guidance is available when Codex is deciding how to use the server.
 
+<a id="app-connect-codex-to-an-mcp-server"></a>
+<a id="cli-connect-codex-to-an-mcp-server"></a>
+<a id="ide-connect-codex-to-an-mcp-server"></a>
+
 ## Connect Codex to an MCP server
 
 Codex stores MCP configuration in `config.toml` alongside other Codex configuration settings. By default this is `~/.codex/config.toml`, but you can also scope MCP servers to a project with `.codex/config.toml` (trusted projects only).
@@ -37,6 +45,10 @@ Codex stores MCP configuration in `config.toml` alongside other Codex configurat
 The ChatGPT desktop app, Codex CLI, and IDE extension share this configuration.
 Once you configure your MCP servers, you can switch among those clients without
 redoing setup.
+
+**Surface: Desktop app**
+
+<a id="app-configure-in-the-chatgpt-desktop-app"></a>
 
 ### Configure in the ChatGPT desktop app
 
@@ -50,6 +62,10 @@ The server list shows which servers are enabled and which require OAuth. Select
 **Authenticate** when an OAuth server requires sign-in. In the composer, type `/mcp`
 to view connected servers.
 
+**Surface: Web**
+
+<a id="web-use-mcp-backed-tools-in-chatgpt-web"></a>
+
 ## Use MCP-backed tools in ChatGPT web
 
 In a hosted ChatGPT Work chat, install a [plugin](../plugins.md) to use its
@@ -61,7 +77,13 @@ ChatGPT web doesn't read local Codex configuration files or expose the local
 Codex command menu. Open the **Plugins** tab to browse and manage available
 tools.
 
+**Surface: CLI**
+
+<a id="cli-configure-with-the-cli"></a>
+
 ### Configure with the CLI
+
+<a id="cli-add-an-mcp-server"></a>
 
 #### Add an MCP server
 
@@ -75,15 +97,23 @@ For example, to add Context7 (a free MCP server for developer documentation), yo
 codex mcp add context7 -- npx -y @upstash/context7-mcp
 ```
 
+<a id="cli-other-cli-commands"></a>
+
 #### Other CLI commands
 
 Run `codex mcp list` to see configured servers. To see all available MCP
 commands, run `codex mcp --help`. For a server that supports OAuth, run
 `codex mcp login <server-name>`.
 
+<a id="cli-terminal-ui-tui"></a>
+
 #### Terminal UI (TUI)
 
 In the `codex` TUI, use `/mcp` to see your active MCP servers.
+
+**Surface: IDE extension**
+
+<a id="ide-configure-in-the-ide-extension"></a>
 
 ### Configure in the IDE extension
 
@@ -96,6 +126,10 @@ In the `codex` TUI, use `/mcp` to see your active MCP servers.
 The MCP server list shows which servers are enabled and which require OAuth.
 Select **Authenticate** when an OAuth server requires sign-in.
 
+<a id="app-configure-with-configtoml"></a>
+<a id="cli-configure-with-configtoml"></a>
+<a id="ide-configure-with-configtoml"></a>
+
 ### Configure with config.toml
 
 For more fine-grained control, edit `~/.codex/config.toml` or a project-scoped
@@ -105,6 +139,10 @@ for a searchable list of every supported MCP option.
 Configure each MCP server with a `[mcp_servers.<server-name>]` table in the configuration file.
 
 <a id="stdio-servers"></a>
+
+<a id="app-stdio-servers"></a>
+<a id="cli-stdio-servers"></a>
+<a id="ide-stdio-servers"></a>
 
 #### STDIO servers
 
@@ -127,6 +165,10 @@ String entries and `source = "local"` read from Codex's local environment.
 remote MCP stdio.
 
 <a id="streamable-http-servers"></a>
+
+<a id="app-streamable-http-servers"></a>
+<a id="cli-streamable-http-servers"></a>
+<a id="ide-streamable-http-servers"></a>
 
 #### Streamable HTTP servers
 
@@ -154,6 +196,10 @@ If no credential source resolves, Codex can connect to the server without
 authentication. Run `codex mcp login <server-name>` separately to start an MCP
 OAuth login.
 
+<a id="app-other-configuration-options"></a>
+<a id="cli-other-configuration-options"></a>
+<a id="ide-other-configuration-options"></a>
+
 #### Other configuration options
 
 - `startup_timeout_sec` (optional): Timeout (seconds) for the server to start. Default: `10`.
@@ -175,6 +221,10 @@ waits for optional MCP servers when building the initial tool catalog. It
 defaults to `1000` milliseconds. Set it to `0` to wait for each server's
 `startup_timeout_sec` instead. Required servers still use their startup
 timeouts.
+
+<a id="app-oauth-client-registration-and-callbacks"></a>
+<a id="cli-oauth-client-registration-and-callbacks"></a>
+<a id="ide-oauth-client-registration-and-callbacks"></a>
 
 #### OAuth client registration and callbacks
 
@@ -259,6 +309,10 @@ If the MCP server advertises `scopes_supported`, Codex prefers those
 server-advertised scopes during OAuth login. Otherwise, Codex falls back to the
 scopes configured in `config.toml`.
 
+<a id="app-oauth-client-registration"></a>
+<a id="cli-oauth-client-registration"></a>
+<a id="ide-oauth-client-registration"></a>
+
 #### OAuth client registration
 
 Codex supports [OAuth Client ID Metadata Documents (CIMD)](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/)
@@ -309,6 +363,10 @@ codex mcp login <server-name> --oauth-client-registration dcr
 The default is `auto`. Registration choices apply only to the current login and
 aren't stored in `config.toml`.
 
+<a id="app-configtoml-examples"></a>
+<a id="cli-configtoml-examples"></a>
+<a id="ide-configtoml-examples"></a>
+
 #### config.toml examples
 
 ```toml
@@ -348,6 +406,10 @@ enabled = true
 approval_mode = "approve"
 output_token_limit = 30000
 ```
+
+<a id="app-plugin-provided-mcp-servers"></a>
+<a id="cli-plugin-provided-mcp-servers"></a>
+<a id="ide-plugin-provided-mcp-servers"></a>
 
 ### Plugin-provided MCP servers
 
@@ -408,6 +470,10 @@ For remote ingress or another proxy, the callback URL port and local listener
 port can intentionally differ when the proxy forwards to the configured
 listener.
 
+<a id="app-examples-of-useful-mcp-servers"></a>
+<a id="cli-examples-of-useful-mcp-servers"></a>
+<a id="ide-examples-of-useful-mcp-servers"></a>
+
 ## Examples of useful MCP servers
 
 The list of MCP servers keeps growing. Here are a few common ones:
@@ -419,4 +485,3 @@ The list of MCP servers keeps growing. Here are a few common ones:
 - [Chrome Developer Tools](https://github.com/ChromeDevTools/chrome-devtools-mcp/): Control and inspect Chrome.
 - [Sentry](https://docs.sentry.io/product/sentry-mcp/#codex): Access Sentry logs.
 - [GitHub](https://github.com/github/github-mcp-server): Manage GitHub beyond what `git` supports (for example, pull requests and issues).
-

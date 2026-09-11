@@ -27,7 +27,10 @@ Example 2: A user's first-round request is `A + B`, and the second-round request
 **First Request**
 
 ```json
-messages: [    {"role": "system", "content": "You are a helpful assistant"},    {"role": "user", "content": "What is the capital of China?"}]
+messages: [
+    {"role": "system", "content": "You are a helpful assistant"},
+    {"role": "user", "content": "What is the capital of China?"}
+]
 ```
 
  
@@ -35,7 +38,12 @@ messages: [    {"role": "system", "content": "You are a helpful assistant"},    
 **Second Request**
 
 ```json
-messages: [    {"role": "system", "content": "You are a helpful assistant"},    {"role": "user", "content": "What is the capital of China?"},    {"role": "assistant", "content": "The capital of China is Beijing."},    {"role": "user", "content": "What is the capital of the United States?"}]
+messages: [
+    {"role": "system", "content": "You are a helpful assistant"},
+    {"role": "user", "content": "What is the capital of China?"},
+    {"role": "assistant", "content": "The capital of China is Beijing."},
+    {"role": "user", "content": "What is the capital of the United States?"}
+]
 ```
 
  
@@ -47,7 +55,10 @@ In this example, the second request can fully reuse the **cache prefix unit** fr
 **First Request**
 
 ```json
-messages: [    {"role": "system", "content": "You are an experienced financial report analyst..."}    {"role": "user", "content": "<financial report content>\n\nPlease summarize the key information of this financial report."}]
+messages: [
+    {"role": "system", "content": "You are an experienced financial report analyst..."}
+    {"role": "user", "content": "<financial report content>\n\nPlease summarize the key information of this financial report."}
+]
 ```
 
  
@@ -55,7 +66,10 @@ messages: [    {"role": "system", "content": "You are an experienced financial r
 **Second Request**
 
 ```json
-messages: [    {"role": "system", "content": "You are an experienced financial report analyst..."}    {"role": "user", "content": "<financial report content>\n\nPlease analyze the profitability of this financial report."}]
+messages: [
+    {"role": "system", "content": "You are an experienced financial report analyst..."}
+    {"role": "user", "content": "<financial report content>\n\nPlease analyze the profitability of this financial report."}
+]
 ```
 
  
@@ -63,7 +77,10 @@ messages: [    {"role": "system", "content": "You are an experienced financial r
 **Third Request**
 
 ```json
-messages: [    {"role": "system", "content": "You are an experienced financial report analyst..."}    {"role": "user", "content": "<financial report content>\n\nPlease analyze the ratio of the company's revenue to expenses."}]
+messages: [
+    {"role": "system", "content": "You are an experienced financial report analyst..."}
+    {"role": "user", "content": "<financial report content>\n\nPlease analyze the ratio of the company's revenue to expenses."}
+]
 ```
 
  

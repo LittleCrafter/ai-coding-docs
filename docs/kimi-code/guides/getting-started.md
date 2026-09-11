@@ -16,13 +16,12 @@ The CLI is written in TypeScript, distributed via npm, and runs on Node.js.
 
 Two installation options are available: the official install script (recommended, no pre-installed Node.js required) and a global npm install.
 
-::: tip Before you install
-Kimi Code CLI is a fully interactive TUI application. For the best visual experience, run it in a terminal with true-color and ligature support, such as [Kitty](https://sw.kovidgoyal.net/kitty/) or [Ghostty](https://ghostty.org/).
-:::
+> [!TIP]
+> **Before you install**
+>
+> Kimi Code CLI is a fully interactive TUI application. For the best visual experience, run it in a terminal with true-color and ligature support, such as [Kitty](https://sw.kovidgoyal.net/kitty/) or [Ghostty](https://ghostty.org/).
 
 ### Install script (recommended)
-
-::: code-group
 
 ```sh [macOS / Linux]
 curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
@@ -31,8 +30,6 @@ curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
 ```powershell [Windows (PowerShell)]
 irm https://code.kimi.com/kimi-code/install.ps1 | iex
 ```
-
-:::
 
 > On Windows, install [Git for Windows](https://gitforwindows.org/) before first launch. Kimi Code CLI uses the bundled Git Bash as its shell environment; if Git Bash is installed in a custom location, set `KIMI_SHELL_PATH` to the absolute path of `bash.exe`.
 
@@ -46,8 +43,6 @@ Requires Node.js 22.19.0 or later:
 node --version
 ```
 
-::: code-group
-
 ```sh [npm]
 npm install -g @moonshot-ai/kimi-code
 ```
@@ -55,8 +50,6 @@ npm install -g @moonshot-ai/kimi-code
 ```sh [pnpm]
 pnpm add -g @moonshot-ai/kimi-code
 ```
-
-:::
 
 ## First launch
 
@@ -92,9 +85,10 @@ On first launch you need to configure an API source. In the interactive UI, ente
 
 To sign out, enter `/logout` to clear the current credentials.
 
-::: tip Using other AI providers
-If you want to connect Anthropic, OpenAI, Google, or other providers, edit `~/.kimi-code/config.toml` directly to configure the API key. See [Providers and models](../configuration/providers.md) for details. For the full reference of all config options, see [Configuration files](../configuration/config-files.md), [Environment variables](../configuration/env-vars.md), and [Configuration overrides](../configuration/overrides.md).
-:::
+> [!TIP]
+> **Using other AI providers**
+>
+> If you want to connect Anthropic, OpenAI, Google, or other providers, edit `~/.kimi-code/config.toml` directly to configure the API key. See [Providers and models](../configuration/providers.md) for details. For the full reference of all config options, see [Configuration files](../configuration/config-files.md), [Environment variables](../configuration/env-vars.md), and [Configuration overrides](../configuration/overrides.md).
 
 ## Your first conversation
 
@@ -114,9 +108,10 @@ Add a function in src/utils that converts any string to kebab-case, and add a un
 
 Kimi Code CLI plans the steps, modifies the code, runs the tests, and tells you what it did at each step.
 
-::: tip Not sure what to do? Type `/help`
-Type `/help` at any time to open the built-in command and keyboard shortcut panel. Use `↑`/`↓` to browse and `Esc` to close. To exit, type `/exit`, press `Ctrl-C` twice, or press `Ctrl-D` with the input box empty.
-:::
+> [!TIP]
+> **Not sure what to do? Type `/help`**
+>
+> Type `/help` at any time to open the built-in command and keyboard shortcut panel. Use `↑`/`↓` to browse and `Esc` to close. To exit, type `/exit`, press `Ctrl-C` twice, or press `Ctrl-D` with the input box empty.
 
 ## Common commands and keyboard shortcuts
 

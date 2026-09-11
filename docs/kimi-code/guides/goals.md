@@ -58,31 +58,34 @@ That goal does not say what counts as success, what to inspect, or when to stop.
 
 1. Do not use goals for broad topics or open-ended discussions.
 
-    ::: warning Counterexample
-    ```sh
-    /goal Greetings!
-    ```
-    :::
+    > [!WARNING]
+    > **Counterexample**
+    >
+    > ```sh
+    > /goal Greetings!
+    > ```
 
     Agents will mark the goal as complete immediately for non-goals.
 
 2. Do not use goals for tasks that are known to be impossible or unresolvable.
 
-    ::: warning Counterexample
-    ```sh
-    /goal Prove 1 + 1 = 3.
-    ```
-    :::
+    > [!WARNING]
+    > **Counterexample**
+    >
+    > ```sh
+    > /goal Prove 1 + 1 = 3.
+    > ```
 
     Agents will mark the goal as blocked if the goal seems impossible or unresolvable.
 
 3. Do not use goals with ambiguous or complicated objectives.
 
-    ::: warning Counterexample
-    ```sh
-    /goal Create a videogame in a single HTML file.
-    ```
-    :::
+    > [!WARNING]
+    > **Counterexample**
+    >
+    > ```sh
+    > /goal Create a videogame in a single HTML file.
+    > ```
 
     Agents may complete goals, but also may produce unexpected or surprising outcomes after a long time.
 

@@ -2,10 +2,16 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
+**Surface: Web**
+
 ChatGPT web has its own composer command menu. Type `/` to see the actions
 available in the current chat. It doesn't expose the ChatGPT desktop app or CLI
 command set; the Codex slash commands, CLI subcommands, and flags in this
 reference don't apply to ChatGPT web.
+
+**Surface: Desktop app**
+
+<a id="app-chatgpt-desktop-app-commands"></a>
 
 ## ChatGPT desktop app commands
 
@@ -17,6 +23,10 @@ The [Slash commands](https://learn.chatgpt.com/docs/reference/slash-commands) pa
 available from the app composer, including `/feedback`, `/goal`, `/init`,
 `/mcp`, `/plan`, `/review`, and `/status`.
 
+**Surface: CLI**
+
+<a id="cli-how-to-read-this-reference"></a>
+
 ## How to read this reference
 
 This page catalogs every documented Codex CLI command and flag. Use the interactive tables to search by key or description. Each section shows the option's maturity and flags deprecated options and risky combinations.
@@ -27,6 +37,8 @@ The CLI inherits most defaults from `~/.codex/config.toml`. Any
   basics](./config-file/config-basic.md#configuration-precedence) for more
   information.
 
+<a id="cli-global-flags"></a>
+
 ## Global flags
 
 These options apply to the base `codex` command. Most propagate to commands;
@@ -34,19 +46,27 @@ see the notes above or the relevant command help for exceptions. For propagated
 flags, follow the relevant command help. For example, `codex exec --oss ...`
 applies `--oss` to `exec`.
 
+<a id="cli-command-overview"></a>
+
 ## Command overview
 
 The Maturity column uses feature maturity labels such as Experimental, Beta,
   Stable, and Deprecated. See [Feature Maturity](./feature-maturity.md) for
   how to interpret these labels.
 
+<a id="cli-command-details"></a>
+
 ## Command details
+
+<a id="cli-codex-interactive"></a>
 
 ### `codex` (interactive)
 
 Running `codex` with no subcommand launches the interactive terminal UI (TUI). The agent accepts the global flags above plus image attachments. Web search defaults to cached mode; use `--search` to switch to live browsing. For low-friction local work, use `--sandbox workspace-write --ask-for-approval on-request`.
 
 Use `--remote ws://host:port` or `--remote wss://host:port` to connect the TUI to an app server started with `codex app-server --listen ws://IP:PORT`. For a local Unix socket, use `--remote unix://` for the default socket or `--remote unix://PATH` for an explicit path. Add `--remote-auth-token-env <ENV_VAR>` when the server requires a bearer token for WebSocket authentication.
+
+<a id="cli-codex-app-server"></a>
 
 ### `codex app-server`
 
@@ -58,6 +78,8 @@ Add `--code-mode-host wss://code-mode.example.com/host` to connect app-server to
 a remote Code Mode host instead of starting a local host. This outbound
 connection is separate from `--listen` and shared by every thread in the
 app-server process. Use `ws://` only for a localhost or SSH-forwarded host.
+
+<a id="cli-codex-remote-control"></a>
 
 ### `codex remote-control`
 
@@ -73,6 +95,8 @@ print a short-lived manual pairing code. Add `--json` to any remote-control
 command for machine-readable output. For `pair`, the JSON response includes
 `pairingCode`, `manualPairingCode`, `environmentId`, and `expiresAt`.
 
+<a id="cli-codex-app"></a>
+
 ### `codex app`
 
 Launch the ChatGPT desktop app from the terminal on macOS or Windows. On macOS,
@@ -83,11 +107,15 @@ open.
 the app is missing. On macOS, Codex opens the provided workspace path; on
 Windows, it prints the path to open after installation.
 
+<a id="cli-codex-debug-app-server-send-message-v2"></a>
+
 ### `codex debug app-server send-message-v2`
 
 Send one message through app-server's V2 thread/turn flow using the built-in app-server test client.
 
 This debug flow initializes with `experimentalApi: true`, starts a thread, sends a turn, and streams server notifications. Use it to reproduce and inspect app-server protocol behavior locally.
+
+<a id="cli-codex-debug-models"></a>
 
 ### `codex debug models`
 
@@ -95,16 +123,22 @@ Print the raw model catalog Codex sees as JSON.
 
 Use `--bundled` when you want to inspect only the catalog bundled with the current binary, without refreshing from the remote models endpoint.
 
+<a id="cli-codex-debug-prompt-input"></a>
+
 ### `codex debug prompt-input`
 
 Render the exact model-visible prompt input list as JSON. Use this when
 debugging instruction discovery, session context, or prompt construction.
+
+<a id="cli-codex-apply"></a>
 
 ### `codex apply`
 
 Apply the most recent diff from a Codex cloud chat to your local repository. You must authenticate and have access to the chat.
 
 Codex prints the patched files and exits non-zero if `git apply` fails (for example, due to conflicts).
+
+<a id="cli-codex-review"></a>
 
 ### `codex review`
 
@@ -113,6 +147,8 @@ custom review instructions as a prompt.
 
 `--uncommitted`, `--base`, `--commit`, and a custom `PROMPT` conflict with one
 another. Use `--title` only with `--commit`.
+
+<a id="cli-codex-archive-and-codex-unarchive"></a>
 
 ### `codex archive` and `codex unarchive`
 
@@ -124,6 +160,8 @@ the transcript. Session IDs take precedence over session names.
 codex archive <SESSION>
 codex unarchive <SESSION>
 ```
+
+<a id="cli-codex-delete"></a>
 
 ### `codex delete`
 
@@ -139,11 +177,15 @@ codex delete <SESSION_UUID> --force
 Use `--force` only with a session UUID. Named sessions still require
 confirmation so Codex doesn't delete a repeated or ambiguous name without a prompt.
 
+<a id="cli-codex-cloud"></a>
+
 ### `codex cloud`
 
 Interact with Codex cloud chats from the terminal. The default command opens an interactive picker; `codex cloud exec` submits a task directly, and `codex cloud list` returns recent chats for scripting or quick inspection.
 
 Authentication follows the same credentials as the main CLI. Codex exits non-zero if the task submission fails.
+
+<a id="cli-codex-cloud-list"></a>
 
 #### `codex cloud list`
 
@@ -151,9 +193,13 @@ List recent cloud chats with optional filtering and pagination.
 
 Plain-text output prints a task URL followed by status details. Use `--json` for automation. The JSON payload contains a `tasks` array plus an optional `cursor` value. Each task includes `id`, `url`, `title`, `status`, `updated_at`, `environment_id`, `environment_label`, `summary`, `is_review`, and `attempt_total`.
 
+<a id="cli-codex-completion"></a>
+
 ### `codex completion`
 
 Generate shell completion scripts and redirect the output to the appropriate location, for example `codex completion zsh > "${fpath[1]}/_codex"`.
+
+<a id="cli-codex-doctor"></a>
 
 ### `codex doctor`
 
@@ -162,11 +208,15 @@ while investigating a broken Codex installation. The report checks installation,
 configuration, authentication, runtime, Git, terminal, app-server, and thread
 inventory health.
 
+<a id="cli-codex-features"></a>
+
 ### `codex features`
 
 Manage feature flags stored in `$CODEX_HOME/config.toml`. The `enable` and
 `disable` commands persist changes so they apply to future sessions. The
 `features` subcommand doesn't accept `--profile`.
+
+<a id="cli-codex-exec"></a>
 
 ### `codex exec`
 
@@ -174,9 +224,13 @@ Use `codex exec` (or the short form `codex e`) for scripted or CI-style runs tha
 
 Codex writes formatted output by default. Add `--json` to receive newline-delimited JSON events (one per state change). The optional `resume` subcommand lets you continue non-interactive tasks. Use `--last` to pick the most recent session from the current working directory, or add `--all` to search across all sessions:
 
+<a id="cli-codex-execpolicy"></a>
+
 ### `codex execpolicy`
 
 Check `execpolicy` rule files before you save them. `codex execpolicy check` accepts one or more `--rules` flags (for example, files under `~/.codex/rules`) and emits JSON showing the strictest decision and any matching rules. Add `--pretty` to format the output. The `execpolicy` command is currently in preview.
+
+<a id="cli-codex-login"></a>
 
 ### `codex login`
 
@@ -184,9 +238,13 @@ Authenticate the CLI with a ChatGPT account, API key, or access token. With no f
 
 `codex login status` exits with `0` when credentials are present, which is helpful in automation scripts.
 
+<a id="cli-codex-logout"></a>
+
 ### `codex logout`
 
 Remove saved credentials for both API key and ChatGPT authentication. This command has no flags.
+
+<a id="cli-codex-mcp"></a>
 
 ### `codex mcp`
 
@@ -195,6 +253,8 @@ Manage Model Context Protocol server entries stored in `~/.codex/config.toml`.
 The `add` subcommand supports both stdio and streamable HTTP transports:
 
 OAuth actions (`login`, `logout`) only work with streamable HTTP servers (and only when the server supports OAuth).
+
+<a id="cli-codex-plugin"></a>
 
 ### `codex plugin`
 
@@ -207,6 +267,8 @@ Install, list, and remove plugins from configured marketplaces.
 `authPolicy`, and, when available, `marketplaceSource` with the configured
 marketplace source type and value. `codex plugin remove --json` prints
 `pluginId`, `name`, and `marketplaceName`.
+
+<a id="cli-codex-plugin-marketplace"></a>
 
 ### `codex plugin marketplace`
 
@@ -228,6 +290,8 @@ with `name`, `root`, and optional `marketplaceSource`; upgrade JSON includes
 `selectedMarketplaces`, `upgradedRoots`, and `errors`; remove JSON includes
 `marketplaceName` and `installedRoot`.
 
+<a id="cli-codex-mcp-server"></a>
+
 ### `codex mcp-server`
 
 `codex mcp-server` is deprecated. Use the [Codex app
@@ -236,6 +300,8 @@ with `name`, `root`, and optional `marketplaceSource`; upgrade JSON includes
   which uses the app server.
 
 For existing integrations, the command runs Codex as an MCP server over stdio so that other tools can connect. It inherits global configuration overrides and exits when the downstream client closes the connection.
+
+<a id="cli-codex-resume"></a>
 
 ### `codex resume`
 
@@ -247,6 +313,8 @@ Codex asks which directory to use. Set
 `"session"` to reuse that choice without a prompt. An explicit `--cd` (`-C`)
 override takes precedence over `tui.resume_cwd`.
 
+<a id="cli-codex-fork"></a>
+
 ### `codex fork`
 
 Fork a previous interactive session into a new chat. By default, `codex fork` opens the session picker; add `--last` to fork your most recent session instead.
@@ -254,25 +322,39 @@ Fork a previous interactive session into a new chat. By default, `codex fork` op
 When the current and saved session directories differ, `codex fork` uses the
 same working-directory prompt and `tui.resume_cwd` setting as `codex resume`.
 
+<a id="cli-codex-sandbox"></a>
+
 ### `codex sandbox`
 
 Use the sandbox helper to run a command under the same policies Codex uses internally.
 
+<a id="cli-macos-seatbelt"></a>
+
 #### macOS seatbelt
+
+<a id="cli-linux-landlock"></a>
 
 #### Linux Landlock
 
+<a id="cli-windows"></a>
+
 #### Windows
+
+<a id="cli-codex-update"></a>
 
 ### `codex update`
 
 Check for and apply a Codex CLI update when the installed release supports self-update. Debug builds print a message telling you to install a release build instead.
+
+<a id="cli-flag-combinations-and-safety-tips"></a>
 
 ## Flag combinations and safety tips
 
 - Use `--sandbox workspace-write` for unattended local work that can stay inside the workspace, and avoid `--dangerously-bypass-approvals-and-sandbox` unless you are inside a dedicated sandbox VM.
 - When you need to grant Codex write access to more directories, prefer `--add-dir` rather than forcing `--sandbox danger-full-access`.
 - Pair `--json` with `--output-last-message` in CI to capture machine-readable progress and a final natural-language summary.
+
+<a id="cli-interactive-shortcuts"></a>
 
 ## Interactive shortcuts
 
@@ -285,6 +367,8 @@ Check for and apply a Codex CLI update when the installed release supports self-
 - Press <kbd>Enter</kbd> while Codex is working to inject new instructions into the current turn.
 - Press <kbd>Esc</kbd> twice with an empty composer to edit the previous user message and fork the chat from that point.
 - Press <kbd>Ctrl</kbd>+<kbd>C</kbd> or run `/exit` to close the session.
+
+<a id="cli-related-resources"></a>
 
 ## Related resources
 
@@ -303,6 +387,8 @@ This guide shows you how to:
 - Find the right built-in slash command for a task
 - Steer an active session with commands like `/model`, `/fast`,
   `/personality`, `/permissions`, `/approve`, `/raw`, `/agent`, and `/status`
+
+<a id="cli-built-in-slash-commands"></a>
 
 ## Built-in slash commands
 
@@ -374,9 +460,13 @@ Use `/permissions` to adjust what Codex can do without asking first. Use
 `/approve` only when you need to retry a recent action that automatic review
 denied.
 
+<a id="cli-control-your-session-with-slash-commands"></a>
+
 ## Control your session with slash commands
 
 The following workflows keep your session on track without restarting Codex.
+
+<a id="cli-set-the-active-model-with-model"></a>
 
 ### Set the active model with `/model`
 
@@ -385,6 +475,8 @@ The following workflows keep your session on track without restarting Codex.
 3. Choose a model such as `gpt-5.6-luna` or `gpt-5.6-terra` from the popup.
 
 Expected: Codex confirms the new model in the transcript. Run `/status` to verify the change.
+
+<a id="cli-toggle-fast-mode-with-fast"></a>
 
 ### Toggle Fast mode with `/fast`
 
@@ -396,6 +488,8 @@ you can also show a Fast mode status-line item with `/statusline`.
 
 Fast tier commands are catalog-driven. If the current model doesn't advertise a
 Fast tier, Codex won't show `/fast`.
+
+<a id="cli-set-a-communication-style-with-personality"></a>
 
 ### Set a communication style with `/personality`
 
@@ -412,6 +506,8 @@ to disable personality instructions.
 
 If the active model doesn't support personality-specific instructions, Codex hides this command.
 
+<a id="cli-switch-to-plan-mode-with-plan"></a>
+
 ### Switch to plan mode with `/plan`
 
 1. Type `/plan` and press Enter to switch the active chat into plan
@@ -424,6 +520,8 @@ Expected: Codex enters plan mode and uses your optional inline prompt as the fir
 
 While Codex is already working, `/plan` is temporarily unavailable.
 
+<a id="cli-set-or-view-a-task-goal-with-goal"></a>
+
 ### Set or view a task goal with `/goal`
 
 1. Type `/goal <objective>` to set the goal, for example `/goal Finish the migration and keep tests green`.
@@ -435,12 +533,16 @@ Expected: Codex keeps the goal attached to the active chat while work continues.
 Goal objectives must be non-empty and at most 4,000 characters. For longer
 instructions, put the details in a file and point the goal at that file.
 
+<a id="cli-toggle-experimental-features-with-experimental"></a>
+
 ### Toggle experimental features with `/experimental`
 
 1. Type `/experimental` and press Enter.
 2. Toggle the features you want (for example, Network proxy or Prevent sleep while running), then restart Codex if the prompt asks you to.
 
 Expected: Codex saves your feature choices to config and applies them on restart.
+
+<a id="cli-approve-an-auto-review-denial-with-approve"></a>
 
 ### Approve an auto review denial with `/approve`
 
@@ -453,6 +555,8 @@ Codex to retry it once.
 Expected: Codex retries that denied action once under the current session
 policy.
 
+<a id="cli-configure-memories-with-memories"></a>
+
 ### Configure memories with `/memories`
 
 1. Type `/memories`.
@@ -460,6 +564,8 @@ policy.
    keep memory behavior disabled.
 
 Expected: Codex updates the relevant memory settings for future sessions.
+
+<a id="cli-use-skills-with-skills"></a>
 
 ### Use skills with `/skills`
 
@@ -472,6 +578,8 @@ that skill's instructions.
 <a id="import-claude-code-configuration-with-import"></a>
 <a id="import-claude-code-setup-with-import"></a>
 <a id="cli-import-claude-code-setup-with-import"></a>
+
+<a id="cli-import-claude-code-or-cursor-setup-with-import"></a>
 
 ### Import Claude Code or Cursor setup with `/import`
 
@@ -492,6 +600,8 @@ another agent](./import.md).
 <a id="clear-the-terminal-and-start-a-new-chat-with-clear"></a>
 <a id="clear-the-terminal-and-start-a-new-task-with-clear"></a>
 
+<a id="cli-clear-the-terminal-and-start-a-new-chat-with-clear"></a>
+
 ### Clear the terminal and start a new chat with `/clear`
 
 1. Type `/clear` and press Enter.
@@ -506,6 +616,8 @@ Unlike <kbd>Ctrl</kbd>+<kbd>L</kbd>, `/clear` starts a new chat.
 <kbd>Ctrl</kbd>+<kbd>L</kbd> only clears the terminal view and keeps the current
 chat. Codex disables both actions while a task is in progress.
 
+<a id="cli-archive-the-current-session-with-archive"></a>
+
 ### Archive the current session with `/archive`
 
 1. Type `/archive` and press Enter.
@@ -516,6 +628,8 @@ Codex keeps the session transcript stored locally; restore it later with
 `codex unarchive <SESSION>`.
 
 `/archive` is unavailable while a task is running.
+
+<a id="cli-delete-the-current-session-with-delete"></a>
 
 ### Delete the current session with `/delete`
 
@@ -528,6 +642,8 @@ sessions.
 
 `/delete` is unavailable while a chat is running or in a side chat.
 
+<a id="cli-update-permissions-with-permissions"></a>
+
 ### Update permissions with `/permissions`
 
 1. Type `/permissions` and press Enter.
@@ -539,6 +655,8 @@ sessions.
 Expected: Codex announces the updated policy. Future actions respect the
 updated approval mode until you change it again.
 
+<a id="cli-include-ide-context-with-ide"></a>
+
 ### Include IDE context with `/ide`
 
 1. Type `/ide`.
@@ -546,6 +664,8 @@ updated approval mode until you change it again.
    current IDE selection or open files.
 
 Expected: Codex includes available IDE context in the next prompt.
+
+<a id="cli-toggle-vim-mode-with-vim"></a>
 
 ### Toggle Vim mode with `/vim`
 
@@ -555,6 +675,8 @@ Expected: Codex includes available IDE context in the next prompt.
 Expected: Codex toggles composer Vim mode for the current session. To make Vim
 mode the default for new sessions, set `tui.vim_mode_default = true` in
 `config.toml`.
+
+<a id="cli-set-up-the-elevated-windows-sandbox-with-setup-default-sandbox"></a>
 
 ### Set up the elevated Windows sandbox with `/setup-default-sandbox`
 
@@ -566,6 +688,8 @@ restricted-token sandbox.
 
 Expected: Codex configures the elevated Windows sandbox and selects the
 corresponding automatic approval preset.
+
+<a id="cli-copy-the-latest-response-with-copy"></a>
 
 ### Copy the latest response with `/copy`
 
@@ -580,6 +704,8 @@ Codex output and immediately after a rollback.
 You can also press <kbd>Ctrl</kbd>+<kbd>O</kbd> from the main TUI to copy the
 latest completed response without opening the slash command menu.
 
+<a id="cli-toggle-raw-scrollback-with-raw"></a>
+
 ### Toggle raw scrollback with `/raw`
 
 1. Type `/raw`, `/raw on`, or `/raw off`.
@@ -587,6 +713,8 @@ latest completed response without opening the slash command menu.
 Expected: Codex toggles raw scrollback mode, which makes terminal selection and
 copying more direct. You can also use the default <kbd>Alt</kbd>+<kbd>R</kbd>
 binding or persist the default with `tui.raw_output_mode = true`.
+
+<a id="cli-grant-sandbox-read-access-with-sandbox-add-read-dir"></a>
 
 ### Grant sandbox read access with `/sandbox-add-read-dir`
 
@@ -598,6 +726,8 @@ This command is available only when running the CLI natively on Windows.
 Expected: Codex refreshes the Windows sandbox policy and grants read access to
 that directory for later commands that run in the sandbox.
 
+<a id="cli-inspect-the-session-with-status"></a>
+
 ### Inspect the session with `/status`
 
 1. In any chat, type `/status`.
@@ -608,6 +738,8 @@ that directory for later commands that run in the sandbox.
 Expected: Codex prints a summary confirming that it's operating where you
 expect.
 
+<a id="cli-view-account-usage-with-usage"></a>
+
 ### View account usage with `/usage`
 
 1. Type `/usage` to open the usage menu.
@@ -617,6 +749,8 @@ expect.
 Expected: Codex opens usage actions or shows account token activity for the
 selected view. If the session doesn't have Codex service account auth, Codex
 shows a sign-in requirement.
+
+<a id="cli-inspect-config-layers-with-debug-config"></a>
 
 ### Inspect config layers with `/debug-config`
 
@@ -630,6 +764,8 @@ and `experimental_network` when configured.
 
 Use this output to debug why an effective setting differs from `config.toml`.
 
+<a id="cli-configure-footer-items-with-statusline"></a>
+
 ### Configure footer items with `/statusline`
 
 1. Type `/statusline`.
@@ -642,6 +778,8 @@ Available status-line items include model, model+reasoning, context stats, rate
 limits, git branch, token counters, session id, current directory/project root,
 and Codex version.
 
+<a id="cli-configure-terminal-title-items-with-title"></a>
+
 ### Configure terminal title items with `/title`
 
 1. Type `/title`.
@@ -653,6 +791,8 @@ Expected: The terminal window or tab title updates immediately and persists to
 Available title items include app name, project, spinner, status, thread, git
 branch, model, and task progress.
 
+<a id="cli-choose-a-syntax-theme-with-theme"></a>
+
 ### Choose a syntax theme with `/theme`
 
 1. Type `/theme`.
@@ -661,6 +801,8 @@ branch, model, and task progress.
 Expected: Codex updates syntax highlighting and persists the choice to
 `tui.theme` in `config.toml`.
 
+<a id="cli-choose-a-terminal-pet-with-pets"></a>
+
 ### Choose a terminal pet with `/pets`
 
 1. Type `/pets` (or `/pet`) to open the pet picker.
@@ -668,6 +810,8 @@ Expected: Codex updates syntax highlighting and persists the choice to
 
 Expected: Codex displays the selected ambient pet in supported terminals and
 persists the selection. You can also type `/pets off` to hide it.
+
+<a id="cli-remap-tui-shortcuts-with-keymap"></a>
 
 ### Remap TUI shortcuts with `/keymap`
 
@@ -681,6 +825,8 @@ Expected: Codex updates the active keymap and writes the custom binding to `tui.
 
 Key bindings use names such as `ctrl-a`, `shift-enter`, and `page-down`. Context-specific bindings override `tui.keymap.global`; an empty binding list unbinds the action.
 
+<a id="cli-check-background-terminals-with-ps"></a>
+
 ### Check background terminals with `/ps`
 
 1. Type `/ps`.
@@ -691,6 +837,8 @@ recent, non-empty output lines so you can gauge progress at a glance.
 
 Background terminals appear when `unified_exec` is in use; otherwise, the list may be empty.
 
+<a id="cli-stop-background-terminals-with-stop"></a>
+
 ### Stop background terminals with `/stop`
 
 1. Type `/stop`.
@@ -698,6 +846,8 @@ Background terminals appear when `unified_exec` is in use; otherwise, the list m
 
 Expected: Codex stops all background terminals for the current session. `/clean`
 is still available as an alias for `/stop`.
+
+<a id="cli-keep-transcripts-lean-with-compact"></a>
 
 ### Keep transcripts lean with `/compact`
 
@@ -707,6 +857,8 @@ is still available as an alias for `/stop`.
 Expected: Codex replaces earlier turns with a concise summary, freeing context
 while keeping critical details.
 
+<a id="cli-review-changes-with-diff"></a>
+
 ### Review changes with `/diff`
 
 1. Type `/diff` to inspect the Git diff.
@@ -714,6 +866,8 @@ while keeping critical details.
 
 Expected: Codex shows changes you've staged, changes you haven't staged yet,
 and files Git hasn't started tracking, so you can decide what to keep.
+
+<a id="cli-highlight-files-with-mention"></a>
 
 ### Highlight files with `/mention`
 
@@ -723,6 +877,8 @@ and files Git hasn't started tracking, so you can decide what to keep.
 Expected: Codex adds the file to the chat, ensuring follow-up turns reference it directly.
 
 <a id="start-a-new-conversation-with-new"></a>
+
+<a id="cli-start-a-new-chat-with-new"></a>
 
 ### Start a new chat with `/new`
 
@@ -738,6 +894,8 @@ Unlike `/clear`, `/new` doesn't clear the current terminal view first.
 <a id="rename-the-current-chat-with-rename"></a>
 <a id="rename-the-current-task-with-rename"></a>
 
+<a id="cli-rename-the-current-chat-with-rename"></a>
+
 ### Rename the current chat with `/rename`
 
 1. Type `/rename <name>`, or type `/rename` to open the naming prompt.
@@ -746,6 +904,8 @@ Unlike `/clear`, `/new` doesn't clear the current terminal view first.
 Expected: Codex updates the saved chat name without changing its transcript.
 
 <a id="resume-a-saved-conversation-with-resume"></a>
+
+<a id="cli-resume-a-saved-chat-with-resume"></a>
 
 ### Resume a saved chat with `/resume`
 
@@ -756,6 +916,8 @@ Expected: Codex reloads the selected chat's transcript so you can pick
 up where you left off, keeping the original history intact.
 
 <a id="fork-the-current-conversation-with-fork"></a>
+
+<a id="cli-fork-the-current-chat-with-fork"></a>
 
 ### Fork the current chat with `/fork`
 
@@ -768,6 +930,8 @@ approach in parallel.
 If you need to fork a saved session instead of the current one, run
 `codex fork` in your terminal to open the session picker.
 
+<a id="cli-continue-in-the-desktop-app-with-app"></a>
+
 ### Continue in the desktop app with `/app`
 
 On macOS and Windows, type `/app` to open the current session in the ChatGPT
@@ -777,6 +941,8 @@ you to install or launch it.
 Expected: The desktop app opens the same saved chat so you can continue there.
 
 <a id="start-a-side-conversation-with-side"></a>
+
+<a id="cli-start-a-side-chat-with-side"></a>
 
 ### Start a side chat with `/side`
 
@@ -792,6 +958,8 @@ parent chat's status so you can see whether the main chat is still running.
 
 `/side` is unavailable inside another side chat and during review mode.
 
+<a id="cli-generate-agentsmd-with-init"></a>
+
 ### Generate `AGENTS.md` with `/init`
 
 1. Run `/init` in the directory where you want Codex to look for persistent instructions.
@@ -799,6 +967,8 @@ parent chat's status so you can see whether the main chat is still running.
 
 Expected: Codex creates an `AGENTS.md` scaffold you can refine and commit for
 future sessions.
+
+<a id="cli-ask-for-a-working-tree-review-with-review"></a>
 
 ### Ask for a working tree review with `/review`
 
@@ -809,6 +979,8 @@ Expected: Codex summarizes issues it finds in your working tree, focusing on
 behavior changes and missing tests. It uses the current session model unless
 you set `review_model` in `config.toml`.
 
+<a id="cli-list-mcp-tools-with-mcp"></a>
+
 ### List MCP tools with `/mcp`
 
 1. Type `/mcp`.
@@ -818,6 +990,8 @@ Expected: You see the configured Model Context Protocol (MCP) tools Codex can ca
 
 Use `/mcp verbose` to include detailed server diagnostics. If you pass anything other than `verbose`, Codex shows the command usage.
 
+<a id="cli-browse-apps-with-apps"></a>
+
 ### Browse apps with `/apps`
 
 1. Type `/apps`.
@@ -825,6 +999,8 @@ Use `/mcp verbose` to include detailed server diagnostics. If you pass anything 
 
 Expected: Codex inserts the app mention into the composer as `$app-slug`, so
 you can immediately ask Codex to use it.
+
+<a id="cli-browse-plugins-with-plugins"></a>
 
 ### Browse plugins with `/plugins`
 
@@ -834,6 +1010,8 @@ you can immediately ask Codex to use it.
 Expected: Codex opens the plugin browser so you can review installed plugins,
 discoverable plugins that your configuration allows, and installed plugin state.
 Press <kbd>Space</kbd> on an installed plugin to toggle its enabled state.
+
+<a id="cli-view-and-manage-lifecycle-hooks-with-hooks"></a>
 
 ### View and manage lifecycle hooks with `/hooks`
 
@@ -845,6 +1023,8 @@ Expected: Codex opens the hook browser so you can review configured lifecycle
 hooks. Managed hooks appear as managed and can't be disabled from the user hook
 browser.
 
+<a id="cli-switch-agent-threads-with-agent"></a>
+
 ### Switch agent threads with `/agent`
 
 1. Type `/agent` or `/subagents` and press Enter.
@@ -852,6 +1032,8 @@ browser.
 
 Expected: Codex switches the active thread so you can inspect or continue that
 agent's work.
+
+<a id="cli-send-feedback-with-feedback"></a>
 
 ### Send feedback with `/feedback`
 
@@ -861,11 +1043,15 @@ agent's work.
 Expected: Codex collects the requested diagnostics and submits them to the
 maintainers.
 
+<a id="cli-sign-out-with-logout"></a>
+
 ### Sign out with `/logout`
 
 1. Type `/logout` and press Enter.
 
 Expected: Codex clears local credentials for the current user session.
+
+<a id="cli-exit-the-cli-with-quit-or-exit"></a>
 
 ### Exit the CLI with `/quit` or `/exit`
 
@@ -873,7 +1059,11 @@ Expected: Codex clears local credentials for the current user session.
 
 Expected: Codex exits immediately. Save or commit any important work first.
 
+**Surface: IDE extension**
+
 Use these commands to control Codex from the VS Code Command Palette. You can also bind them to keyboard shortcuts.
+
+<a id="ide-assign-a-key-binding"></a>
 
 ## Assign a key binding
 
@@ -883,6 +1073,8 @@ To assign or change a key binding for a Codex command:
 2. Run **Preferences: Open Keyboard Shortcuts**.
 3. Search for `Codex` or the command ID (for example, `chatgpt.newChat`).
 4. Select the pencil icon, then enter the shortcut you want.
+
+<a id="ide-extension-commands"></a>
 
 ## Extension commands
 
@@ -897,11 +1089,15 @@ To assign or change a key binding for a Codex command:
 
 Slash commands let you control Codex without leaving the composer. Use them to check status, switch between local and cloud mode, or send feedback.
 
+<a id="ide-use-a-slash-command"></a>
+
 ## Use a slash command
 
 1. In the Codex composer, type `/`.
 2. Select a command from the list, or keep typing to filter (for example, `/status`).
 3. Press **Enter**.
+
+<a id="ide-available-slash-commands"></a>
 
 ## Available slash commands
 
@@ -929,4 +1125,3 @@ Slash commands let you control Codex without leaving the composer. Use them to c
 | `/side`              | Start a temporary side chat without interrupting the main chat.                         |
 | `/status`            | Show the chat ID, context usage, and rate limits.                                       |
 | `/worktree`          | Run the chat in a new Git worktree.                                                     |
-

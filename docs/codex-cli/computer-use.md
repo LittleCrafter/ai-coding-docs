@@ -117,8 +117,6 @@ computer. You can choose **Always allow** so ChatGPT can use that app in the fut
 without asking again. You can remove apps from the **Always allow** list in the
 **Computer Use** section of the ChatGPT desktop app settings.
 
-  
-
 > Illustration: Computer Use approval dialog requesting access to Calculator
 
 ChatGPT may also ask for permission before taking sensitive or disruptive actions.

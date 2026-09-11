@@ -13,6 +13,4 @@ Both **Local** and **Worktree** chats run on your computer.
 
 For the full glossary and concepts, explore the [concepts section](../prompting.md).
 
-  
-
 > Illustration: New chat composer with Local, Worktree, and Cloud environment options

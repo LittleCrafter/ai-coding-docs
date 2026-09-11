@@ -12,8 +12,6 @@ current workspace and pauses before reaching beyond that boundary.
 
 Select different modes below to understand how each one works.
 
-<PermissionModeSelectorDemo client:load />
-
 ## Enable modes
 
 When you're using the ChatGPT desktop app for the first time, you need to enable modes in application settings.

@@ -1,9 +1,8 @@
----
-title: Custom Tools
-description: Create tools the LLM can call in opencode.
----
+# Custom Tools
 
-Custom tools are functions you create that the LLM can call during conversations. They work alongside opencode's [built-in tools](/docs/tools) like `read`, `write`, and `bash`.
+Create tools the LLM can call in opencode.
+
+Custom tools are functions you create that the LLM can call during conversations. They work alongside opencode's [built-in tools](./tools.md) like `read`, `write`, and `bash`.
 
 ---
 
@@ -100,7 +99,7 @@ export default tool({
 ```
 
 > [!NOTE]
-> Prefer unique names unless you intentionally want to replace a built-in tool. If you want to disable a built in tool but not override it, use [permissions](/docs/permissions).
+> Prefer unique names unless you intentionally want to replace a built-in tool. If you want to disable a built in tool but not override it, use [permissions](./permissions.md).
 
 ---
 

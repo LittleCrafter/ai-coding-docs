@@ -23,17 +23,29 @@ structural changelog either way.
 
 from __future__ import annotations
 
+import posixpath
 import re
 import sys
+from collections.abc import Iterator
 from typing import TYPE_CHECKING
 
 from .. import config
 from ..core import fetch
+from ..core.fenced_code import (
+    MAX_FENCE_INDENT,
+    iter_indented_fence_spans,
+    protect_fenced_code,
+    restore_fenced_code,
+)
 from ..core.github import fetch_git_tree, fetch_latest_release_tag
-from ..core.html_markdown import iter_code_block_spans
 from ..core.media import AssetSourceConfig
 from ..core.page import Page
-from .base import SourceConfig, try_make_page, warn_duplicate_slug
+from .base import (
+    SourceConfig,
+    ensure_known_slugs,
+    try_make_page,
+    warn_duplicate_slug,
+)
 
 if TYPE_CHECKING:
     import httpx
@@ -42,7 +54,13 @@ REPO = "anomalyco/opencode"
 BRANCH = "dev"
 DOCS_PREFIX = "packages/web/src/content/docs"
 RAW_BASE = f"https://raw.githubusercontent.com/{REPO}/{BRANCH}"
-SOURCE_URL_BASE = "https://opencode.ai/docs"
+SITE_URL = "https://opencode.ai"
+# The docs site's route prefix.  Distinct from ``DOCS_PREFIX`` on purpose: one
+# is the path of the content directory inside the repository, the other is the
+# path of the documentation tree on the published site, and a link written in a
+# page is stated in the second.
+DOCS_ROUTE = "/docs"
+SOURCE_URL_BASE = f"{SITE_URL}{DOCS_ROUTE}"
 
 # Static-asset rules for the pipeline's media stage. A few pages embed
 # screenshots via relative refs of the shape ``../../assets/<relpath>`` --
@@ -64,7 +82,7 @@ CONFIG = SourceConfig(
     title="OpenCode",
     home_url=SOURCE_URL_BASE,
     generate_whats_new=False,
-    version="1.18.18",
+    version="1.18.30",
     origin=f"github.com/{REPO} (`packages/web/src/content/docs/`)",
     how_mirrored="scraping (GitHub tree → raw `.mdx` → `.md` conversion)",
 )
@@ -267,6 +285,44 @@ _TAB_ITEM_RE = re.compile(
 )
 _TAB_LABEL_RE = re.compile(r"label\s*=\s*([\"'])(.*?)\1", re.IGNORECASE)
 
+# The ``<Tabs>`` / ``</Tabs>`` delimiters of a tab container.  Upstream writes
+# the content of every ``<TabItem>`` indented to wherever the surrounding MDX
+# happened to put it, and the indentation of a fenced code block inside a tab
+# is whatever that made it -- six columns in one TabItem and ten in the next is
+# normal.  A fence indented four columns or more is no longer a fence in
+# CommonMark: it parses as an indented code block, and the mirrored page shows
+# the ``` line as literal text.  ``_dedent_container_fences`` therefore
+# re-indents the fences of each container once the tabs are unwrapped, which is
+# why the delimiters are matched here: they bound the regions that were
+# indented by the container rather than by the document.
+#
+# The attribute list of the opening tag is matched by the shared ``_JSX_ATTRS``
+# subpattern (see its comment), so a ``>`` inside a quoted attribute value
+# cannot terminate the opening-tag match early.
+_TABS_OPEN_RE = re.compile(r"<Tabs\b" + _JSX_ATTRS + r"\s*>", re.DOTALL | re.IGNORECASE)
+_TABS_CLOSE_RE = re.compile(r"</Tabs\s*>", re.DOTALL | re.IGNORECASE)
+
+# A line that opens a fenced code block, at ANY indentation: the leading
+# whitespace is captured so the block can be re-indented, and the fence run is
+# captured so its own length decides which line closes the block.  Indentation
+# is what this pattern exists to see -- unlike the shared
+# ``iter_code_block_spans`` scanner (which mirrors CommonMark's own
+# column-zero fence rule for the shielding passes), a fence a container
+# indented away from column zero is exactly the case being repaired.
+_CONTAINER_FENCE_RE = re.compile(r"^(?P<indent>[ \t]*)(?P<fence>`{3,}|~{3,})[^\n]*$")
+
+# A line that opens a Markdown list item: its indentation, its bullet or
+# ordered marker, and the whitespace between the marker and the item's content.
+# Used to find the column a container's content was nested at, so an unwrapped
+# fence can be re-indented to the list it belongs to instead of being pulled
+# out of it.  ``\S`` after the gap keeps the match honest: a line like ``- -``
+# (a bullet followed by nothing) is not a list item with content to nest
+# under, and a marker with no content after it would otherwise report a column
+# nothing sits at.
+_LIST_ITEM_RE = re.compile(
+    r"^(?P<indent>[ \t]*)(?P<marker>[-*+]|\d{1,9}[.)])(?P<gap>[ \t]+)\S"
+)
+
 # Known non-English locale directories at the top level of the upstream docs
 # tree (``packages/web/src/content/docs/`` in ``anomalyco/opencode@dev``),
 # verified against the live repository via the GitHub contents API.  Upstream
@@ -454,19 +510,20 @@ _TYPE_RE = re.compile(r"type\s*=\s*[\"'](\w+)[\"']", re.IGNORECASE)
 # the value freely.
 _TITLE_RE = re.compile(r"title\s*=\s*([\"'])(.*?)\1", re.IGNORECASE)
 
-# ``iter_code_block_spans`` (imported from ``core/html_markdown.py``)
+# ``iter_indented_fence_spans`` (imported from ``core/fenced_code.py``)
 # locates every complete fenced code block (CommonMark): an opening fence
 # of 3+ backticks OR 3+ tildes, an optional info string on the opening
 # fence line, a body of any number of lines, and a closing fence that is
-# the EXACT same character sequence as the opening fence.  Used by
-# ``_protect_fenced_code`` to lift code samples out of the raw MDX before
-# the JSX / import transformations run, so that a line which looks like a
-# JS ``import``/``export`` statement or a JSX tag inside a code sample is
-# never stripped or rewritten -- it is code, not MDX wiring.  The scanner
-# is shared with the HTML-to-Markdown adapters (which use it for their
-# blank-line-collapse pass); see its definition in
-# ``core/html_markdown.py`` for the full matching rules and for why it is
-# a linear line scan rather than a regex (the regex form was a
+# the EXACT same character sequence as the opening fence -- with a fence
+# indented up to three columns recognised as well, because upstream writes
+# samples inside list items.  Used by ``_protect_fenced_code`` to lift code
+# samples out of the raw MDX before the JSX / import transformations run,
+# so that a line which looks like a JS ``import``/``export`` statement or a
+# JSX tag inside a code sample is never stripped or rewritten -- it is
+# code, not MDX wiring.  The scanner is shared with the HTML-to-Markdown
+# adapters (which use it for their blank-line-collapse pass); see its
+# definition in ``core/fenced_code.py`` for the full matching rules and for
+# why it is a linear line scan rather than a regex (the regex form was a
 # quadratic-time hazard on unclosed fences, and this protector runs on
 # raw network MDX).
 
@@ -669,6 +726,261 @@ def _convert_jsx_callouts(text: str) -> str:
     return "".join(out)
 
 
+def _dedent_line(line: str, columns: int) -> str:
+    """Remove up to *columns* leading spaces from *line*.
+
+    Only spaces the line actually has are removed, so a line of a code sample
+    that was written flush left keeps its position instead of being pushed to
+    a negative column.  A tab stops the removal: it stands for some number of
+    columns this pass does not know, and guessing it wrong would silently
+    re-indent the code the sample is showing.
+    """
+    leading = len(line) - len(line.lstrip(" "))
+    return line[min(leading, columns) :]
+
+
+def _is_lone_jsx_tag(line: str) -> bool:
+    """Return whether *line* holds nothing but a single JSX tag.
+
+    Such a line is the container's own wiring -- an opening or closing tag of
+    a wrapper -- and the passes around this one delete it.  Its indentation
+    therefore says nothing about where the content beside it belongs, which
+    is why :func:`_reindent_container_blocks` does not let it decide a
+    block's shift: a closing tag written flush against the prose before it
+    would otherwise hold that prose at the container's indentation.
+    """
+    stripped = line.strip()
+    return bool(_JSX_OPEN_RE.fullmatch(stripped) or _JSX_CLOSE_RE.fullmatch(stripped))
+
+
+def _closes_fence(line: str, fence: str) -> bool:
+    """Return whether *line* is the closing fence of a block opened by *fence*.
+
+    A closing fence is the same character as the opener, repeated at least as
+    many times, with nothing else on the line -- trailing whitespace excepted,
+    which is why the comparison is made on the stripped line.
+    """
+    stripped = line.strip()
+    if not stripped or stripped[0] != fence[0]:
+        return False
+    return len(stripped) >= len(fence) and stripped == stripped[0] * len(stripped)
+
+
+def _list_content_column(text: str, position: int) -> int:
+    """Return the column a container starting at *position* is nested at.
+
+    A ``<Tabs>`` written inside a list item indents everything it contains to
+    wherever the list item's content begins, and the fences it wrapped belong
+    at that column once the container is unwrapped -- pulling them all the way
+    to column zero would lift a sample out of the list it documents.
+
+    The answer is found by looking at the container's own line and then at the
+    nearest line above it: blank lines are skipped (a list item may hold a
+    blank line before a nested block), the first line with content decides.
+    Only a list marker there means the container is inside a list item, and
+    the column reported is the marker's content column; any other line means
+    the container stands on its own, at column zero.  A content column too
+    deep to indent a fence is capped at ``core.fenced_code.MAX_FENCE_INDENT``:
+    a list item deeper than that column (``10. ...`` and any nested list) has a
+    content column of four or more, and indenting a fence that far would put it
+    right back into indented-code-block territory.  The fence is pulled up to
+    this column instead, which leaves the list item but keeps the sample a code
+    block.  The walk is bounded by the run of blank lines above the container,
+    so it is linear in the size of that run and never revisits a line twice.
+    """
+    line_start = text.rfind("\n", 0, position) + 1
+    prefix = text[line_start:position]
+    if prefix.strip():
+        # The container shares its line with other content, so no list item
+        # can be what indents it.
+        return 0
+    container_column = len(prefix)
+    if container_column == 0:
+        # A container at column zero is not inside a list item: a list item
+        # requires its content to be indented past its marker.
+        return 0
+
+    cursor = line_start - 1  # the newline ending the line above the container
+    while cursor >= 0:
+        previous_start = text.rfind("\n", 0, cursor) + 1
+        line = text[previous_start:cursor]
+        if line.strip():
+            marker = _LIST_ITEM_RE.match(line)
+            if marker is None:
+                return 0
+            indent = len(marker.group("indent"))
+            if indent >= container_column:
+                return 0
+            content_column = (
+                indent + len(marker.group("marker")) + len(marker.group("gap"))
+            )
+            return min(content_column, MAX_FENCE_INDENT)
+        cursor = previous_start - 1
+    return 0
+
+
+def _reindent_container_blocks(lines: list[str], target: int) -> list[str]:
+    """Re-indent every block of a container region to come out at *target*.
+
+    A region is whatever a ``<Tabs>`` container indented: its tab items, the
+    prose inside them, and the samples it holds.  Unwrapping the container
+    makes that indentation meaningless -- and a line left indented four
+    columns or more stops being what it was, because CommonMark reads it as
+    an indented code block, so the mirrored page shows a fence line as text
+    or a sentence as code.  Each block is shifted left by its own
+    indentation minus *target*, which is the container's contribution and
+    nothing more:
+
+    * a fenced block is shifted by its opening fence's indentation, and the
+      shift carries on through its closing fence;
+    * any other block is shifted by the smallest indentation among its own
+      lines -- the lines that hold nothing but a container tag excepted, see
+      :func:`_is_lone_jsx_tag` -- so its relative structure (a nested list, a
+      wrapped line) is preserved while the container's indentation comes off;
+    * a block already at or left of the target shifts by zero and comes out
+      untouched, which is what keeps content a list item indented on purpose
+      exactly where it was written.
+
+    Blank lines separate blocks, and are passed through unchanged.
+
+    CHOICE: a block that is NOT fenced and sits four columns or deeper is
+    treated like prose and pulled back to the target.  Inside a container the
+    indentation is the container's, not the author's -- upstream writes every
+    sample as a fenced block and every paragraph flush against the container's
+    own column -- so a deep, fence-less block is a line the container pushed
+    right, not code somebody meant to indent twice.  Leaving it alone would
+    keep a line that now renders as an indented code block, which is the
+    defect this pass exists to repair.
+    """
+    out: list[str] = []
+    index = 0
+    while index < len(lines):
+        opener = _CONTAINER_FENCE_RE.match(lines[index])
+        if opener is not None:
+            shift = max(len(opener.group("indent")) - target, 0)
+            fence = opener.group("fence")
+            out.append(_dedent_line(lines[index], shift))
+            index += 1
+            # The block runs to the line that closes it.  An opener with no
+            # closer takes the rest of the region with it: the remainder is
+            # that block's body as far as the container is concerned, and
+            # leaving half of it indented would be worse than shifting all
+            # of it.
+            while index < len(lines):
+                line = lines[index]
+                out.append(_dedent_line(line, shift))
+                index += 1
+                if _closes_fence(line, fence):
+                    break
+            continue
+        if not lines[index].strip():
+            out.append(lines[index])
+            index += 1
+            continue
+        end = index + 1
+        while (
+            end < len(lines)
+            and lines[end].strip()
+            and _CONTAINER_FENCE_RE.match(lines[end]) is None
+        ):
+            end += 1
+        block = lines[index:end]
+        measured = [line for line in block if not _is_lone_jsx_tag(line)]
+        if not measured:
+            # A block made up of nothing but container tags: there is no
+            # content whose alignment could depend on the shift, and the tags
+            # themselves are removed by the next step, so every shift produces
+            # the same page.  Falling back to the whole block keeps the
+            # measurement below well defined.
+            measured = block
+        shift = max(
+            min(len(line) - len(line.lstrip(" ")) for line in measured) - target, 0
+        )
+        out.extend(_dedent_line(line, shift) for line in block)
+        index = end
+    return out
+
+
+def _match_container_close(text: str, position: int) -> re.Match[str] | None:
+    """Return the ``</Tabs>`` that closes the container opened before *position*.
+
+    The tag that ends a container is the one whose nesting depth returns to
+    zero, not simply the next ``</Tabs>`` in the document: upstream nests tab
+    containers, and pairing the outer ``<Tabs>`` with an inner container's
+    closer would leave everything after that inner closer outside the region
+    this pass re-indents -- samples a container had indented too far would
+    stay indented too far, and the mirrored page would show their fence lines
+    as text.
+
+    *position* is just past the opening tag being matched.  Nesting is
+    counted by scanning the tags in document order, so an opener seen before
+    the next closer deepens the nesting and that closer only closes its own
+    level.  Returns ``None`` when the nesting never returns to zero -- the
+    container is unterminated.
+
+    The scan visits each tag once, and the caller resumes at the closer it
+    returns, so the tags of the document are walked a bounded number of
+    times overall.
+    """
+    depth = 1
+    while True:
+        opener = _TABS_OPEN_RE.search(text, position)
+        closer = _TABS_CLOSE_RE.search(text, position)
+        if closer is None:
+            return None
+        if opener is not None and opener.start() < closer.start():
+            depth += 1
+            position = opener.end()
+            continue
+        depth -= 1
+        if depth == 0:
+            return closer
+        position = closer.end()
+
+
+def _dedent_container_fences(text: str) -> str:
+    """Re-indent the content of every ``<Tabs>`` container in *text*.
+
+    Upstream indents the content of each tab to wherever the surrounding MDX
+    put it, and any line that ends up four columns or more deep stops being
+    what it was: CommonMark parses it as an indented code block, so the
+    mirrored page shows a ``` line as text and a sentence as code.
+    Unwrapping the container is what makes that indentation meaningless, so
+    this pass -- which runs once the tabs have been converted to labels and
+    before the JSX tag strips remove the delimiters it needs -- re-indents
+    each block of the region to the column the container itself was nested at
+    (see ``_list_content_column`` and ``_reindent_container_blocks``).
+
+    Content OUTSIDE a container is never touched, and neither is content a
+    list item indented directly for itself: that carries the indentation the
+    list item gave it, which is neither a container's leftover nor too deep
+    for CommonMark, and a block already at or left of the target shifts by
+    zero.
+    """
+    out: list[str] = []
+    position = 0
+    while True:
+        opener = _TABS_OPEN_RE.search(text, position)
+        if opener is None:
+            break
+        closer = _match_container_close(text, opener.end())
+        if closer is None:
+            # The nesting opened here never returns to its own level, so no
+            # closer matches it.  Nothing in the remainder of the document is
+            # converted: resuming the search at the next opener would have to
+            # rescan this opener's tags again, once per unbalanced opener,
+            # which is the shape that turns this pass quadratic.
+            break
+        out.append(text[position : opener.end()])
+        target = _list_content_column(text, opener.start())
+        region = text[opener.end() : closer.start()]
+        out.append("\n".join(_reindent_container_blocks(region.split("\n"), target)))
+        position = closer.start()
+
+    out.append(text[position:])
+    return "".join(out)
+
+
 def _convert_tab_items(text: str) -> str:
     """Convert <TabItem label="..."> opening tags into bold label headers.
 
@@ -686,6 +998,32 @@ def _convert_tab_items(text: str) -> str:
         return "\n\n"
 
     return _TAB_ITEM_RE.sub(_replace, text)
+
+
+def _iter_fence_spans(text: str) -> Iterator[tuple[int, int]]:
+    """Yield the ``(start, end)`` span of every fenced code block in *text*.
+
+    A thin naming of the shared
+    :func:`core.fenced_code.iter_indented_fence_spans` scanner -- the same
+    spans the column-zero :func:`core.html_markdown.iter_code_block_spans`
+    reports, extended to the fences upstream indents inside a list item (see
+    that function for the full rule, including why the indentation stays
+    outside the span, and for the linear-time argument).  Those blocks need
+    shielding exactly like a top-level one: the JSX and import/export strips
+    below would otherwise reach inside them, and a sample such as ``<TAB>``
+    would come out of the conversion empty.
+    """
+    return iter_indented_fence_spans(text, MAX_FENCE_INDENT)
+
+
+def _fence_placeholder(index: int) -> str:
+    """Return the placeholder token that stands for one shielded block.
+
+    A bare uppercase sentinel that upstream never produces and that no
+    downstream transformation can invent, so it passes through every regex in
+    this module untouched and cannot collide with the document's own text.
+    """
+    return f"OPENCODEFENCEBLOCK{index}PLACEHOLDER"
 
 
 def _protect_fenced_code(content: str) -> tuple[str, list[str]]:
@@ -709,27 +1047,20 @@ def _protect_fenced_code(content: str) -> tuple[str, list[str]]:
     containing JSX tokens could be altered, but this is an acceptable
     limitation for our current documentation structure.
 
-    The placeholder token is a bare uppercase sentinel that is never
-    produced upstream and cannot be confused with prose or code, so it
-    passes through every downstream regex untouched and does not collide
-    with the document's own text.
+    The extraction loop and the splice come from :mod:`core.fenced_code`,
+    which is where the mechanism every fence-shielding adapter shares is
+    kept; this module contributes its own scanner and its own token shape.
+    The scanner delegates the fence semantics -- matching fence characters
+    and lengths, an opener with no closer not being a block at all -- to the
+    shared :func:`iter_code_block_spans` scanner, so those rules live in
+    exactly one place.  It widens one of them for this adapter's benefit: a
+    fence indented by up to three columns, which CommonMark still reads as a
+    fence, is shielded too.  Upstream writes samples inside list items, and
+    without that shield the JSX strip below reaches into them.
     """
-
-    blocks: list[str] = []
-    segments: list[str] = []
-    pos = 0
-    for start, end in iter_code_block_spans(content):
-        # Copy the text between the previous block and this one verbatim,
-        # then stash the full spanned fenced block (fences included) and
-        # emit a unique placeholder token keyed by the block's position in
-        # document order, so each block restores to its original location.
-        segments.append(content[pos:start])
-        index = len(blocks)
-        blocks.append(content[start:end])
-        segments.append(f"OPENCODEFENCEBLOCK{index}PLACEHOLDER")
-        pos = end
-    segments.append(content[pos:])
-    return "".join(segments), blocks
+    return protect_fenced_code(
+        content, spans=_iter_fence_spans, placeholder=_fence_placeholder
+    )
 
 
 def _restore_fenced_code(text: str, blocks: list[str]) -> str:
@@ -738,22 +1069,153 @@ def _restore_fenced_code(text: str, blocks: list[str]) -> str:
     The inverse of ``_protect_fenced_code``: each placeholder token is
     replaced with the exact fenced block that was stashed in its place, so
     the code samples reappear verbatim -- no transformation was applied to
-    them while they were lifted out.  Blocks are spliced in ascending
-    index order, matching the order in which they were stashed.
+    them while they were lifted out.
     """
-    for index, block in enumerate(blocks):
-        text = text.replace(f"OPENCODEFENCEBLOCK{index}PLACEHOLDER", block)
-    return text
+    return restore_fenced_code(text, blocks, _fence_placeholder)
+
+
+# YAML frontmatter block at the very start of a page source: an opening
+# ``---`` fence, the block body (captured), and a closing fence.  The anchor
+# and the line tolerances mirror the recognition ``core.fetch`` performs (a
+# leading blank line, CRLF line endings), so the block dropped here is exactly
+# the block whose ``title:`` the pipeline would otherwise have read the page
+# title from.  The body is matched non-greedily so the block stops at its own
+# closing fence and never swallows a ``---`` thematic break further down.
+_FRONTMATTER_RE = re.compile(
+    r"\A\s*---[ \t]*\r?\n(?P<body>.*?)\r?\n---[ \t]*(?:\r?\n|\Z)", re.DOTALL
+)
+
+# One ``key: value`` line, the smallest evidence that a ``---`` block delimited
+# by two rules is frontmatter rather than a document that opens with a
+# thematic break.
+_FRONTMATTER_KEY_RE = re.compile(r"^[A-Za-z_][\w.-]*[ \t]*:", re.MULTILINE)
+
+
+def _is_frontmatter_body(body: str) -> bool:
+    """Return whether *body* is the inside of a YAML frontmatter block.
+
+    The block is accepted only when it holds at least one ``key: value`` line,
+    contains no blank line, and holds nothing a flat metadata header could not
+    have written.  Both extra conditions exist because
+    ``_FRONTMATTER_RE`` searches the WHOLE document for its closing ``---``:
+    an opening rule that is never closed -- a thematic break, or a page whose
+    frontmatter was truncated upstream -- pairs with the next ``---`` anywhere
+    below it, and everything in between is deleted as if it were metadata.
+
+    * A blank line is the separator between the sections such a pair would
+      swallow, and no upstream page puts one inside its frontmatter (all 614
+      pages of the mirrored tree were checked when this guard was written);
+      a metadata header is a tight run of lines.
+    * A line that is neither a ``key: value`` pair nor an indented
+      continuation is not something a flat mapping contains, so the prose a
+      mis-paired rule encloses is itself the evidence that this is not
+      frontmatter.  A ``#`` line is rejected along with it: a Markdown
+      heading and a YAML comment are written the same three characters, and
+      no upstream page puts a comment in that position.  The ambiguity is
+      therefore resolved towards leaving the text alone, whose failure mode
+      is a line of metadata left visible, rather than towards deleting a
+      section of the page without a trace.
+
+    A block with an empty body fails both counts: it carries no key, so it is
+    a pair of thematic breaks that happen to be adjacent, and the text is left
+    exactly as it was written.
+    """
+    lines = body.splitlines()
+    if any(not line.strip() for line in lines):
+        return False
+    if not _FRONTMATTER_KEY_RE.search(body):
+        return False
+    for line in lines:
+        if line[:1] in (" ", "\t"):
+            continue  # an indented line belongs to a nested map or a list
+        if not _FRONTMATTER_KEY_RE.match(line.strip()):
+            return False
+    return True
+
+
+def _split_frontmatter(text: str) -> tuple[dict[str, str], str]:
+    """Split a leading YAML frontmatter block off *text*.
+
+    Returns the block's top-level scalar fields (an empty mapping when the
+    page has none) and the page body with the block removed.  The block is
+    build metadata for the upstream site: GitHub renders it as a thematic
+    break followed by whatever headings its keys happen to spell, and an LLM
+    reader indexing the outline picks up ``title:``/``description:`` as page
+    structure instead of as metadata.  It is dropped, but its fields are
+    returned first because the page's ``title`` is its real title -- see
+    ``_page_heading``.
+
+    Only the flat ``key: value`` subset the upstream pages use is parsed:
+    indented lines (a nested map, a list item) are ignored, because nothing
+    rendered from this block needs them and interpreting them would mean
+    re-implementing a YAML parser for metadata about to be discarded.  Keys
+    are folded to lower case so a page spelling ``Title:`` is read exactly
+    like one spelling ``title:``.  Every other line reaching the loop is a
+    ``key: value`` pair, which the guard below has already established.
+
+    A block that does not read as a flat metadata header is not frontmatter
+    at all: the text is returned untouched, block and all, so a document that
+    opens with a thematic break is never mistaken for one and silently
+    stripped of the sections up to the next break (see
+    :func:`_is_frontmatter_body`).  A leading BOM is stripped first, matching
+    what ``core.fetch`` does before its own frontmatter and heading patterns:
+    a BOM-prefixed page would otherwise miss the start-of-document anchor,
+    keep its frontmatter, and lose its title to the discard.
+    """
+    text = text.lstrip("\ufeff")
+    block = _FRONTMATTER_RE.match(text)
+    if block is None:
+        return {}, text
+    body = block.group("body")
+    if not _is_frontmatter_body(body):
+        return {}, text
+
+    fields: dict[str, str] = {}
+    for line in body.splitlines():
+        if line[:1] in (" ", "\t"):
+            continue  # an indented line belongs to a nested map or a list
+        key, _, value = line.strip().partition(":")
+        value = value.strip().strip("\"'")
+        if value:
+            fields[key.strip().lower()] = value
+    return fields, text[block.end() :]
+
+
+def _page_heading(fields: dict[str, str], body: str) -> str:
+    """Return the leading ``# <title>`` block a page needs, or "".
+
+    The body of nearly every upstream page opens with a level-two heading --
+    the frontmatter ``title`` is the page's only level-one heading, and the
+    pipeline reads the manifest title from the body it is given (see
+    ``core.fetch.extract_title``, which prefers the first heading it finds).
+    Dropping the frontmatter without re-emitting that title would therefore
+    file every page under whatever ``##`` heading happens to come first.
+
+    The heading is added only when the body does not already open with one of
+    its own: a page that titles itself is titled by that heading, and
+    re-emitting the frontmatter title would give it two.  The frontmatter
+    ``description`` is carried along under the heading so the page still says
+    what upstream says it says; the two are joined with a blank line so each
+    is its own Markdown block.
+    """
+    title = fields.get("title", "")
+    if not title or re.match(r"#\s", body.lstrip()):
+        return ""
+    return "\n\n".join(
+        part for part in (f"# {title}", fields.get("description", "")) if part
+    )
 
 
 def _mdx_to_md(content: str) -> str:
     """Convert raw MDX text into clean standard Markdown.
 
-    The conversion is deliberately conservative: it strips JSX component
-    wiring (imports, self-closing tags, generic JSX wrappers), converts
-    Starlight ``:::`` callout blocks and ``<Callout>`` JSX elements to
-    GitHub Alerts, and preserves everything else -- frontmatter, Markdown
-    body, HTML elements, and code blocks all pass through unchanged.
+    The conversion is deliberately conservative: it strips the YAML
+    frontmatter block (re-emitting its title as the page's heading), strips
+    JSX component wiring (imports, self-closing tags, generic JSX wrappers),
+    converts Starlight ``:::`` callout blocks and ``<Callout>`` JSX elements
+    to GitHub Alerts, re-indents the code samples a tab container left
+    indented, and preserves everything else -- Markdown body, HTML elements,
+    and code blocks all pass through unchanged.
 
     Fenced code blocks (triple-backtick and triple-tilde) are lifted out
     into placeholders before the JSX / import transformations run and
@@ -764,7 +1226,16 @@ def _mdx_to_md(content: str) -> str:
     inside a sample is never collapsed or blanked: it is code, not MDX
     wiring, and no regex ever sees it.
     """
-    # 0. Lift fenced code blocks (both the triple-backtick and the
+    # 0. Split off the YAML frontmatter block and keep its fields.  The block
+    #    itself is build metadata for the upstream site and is dropped, but
+    #    its ``title`` is the page's real title (see ``_page_heading``), so it
+    #    is captured before the block goes -- a page whose title were only in
+    #    the discarded block would be filed under its first ``##`` heading by
+    #    the manifest.
+    fields, body = _split_frontmatter(content)
+    content = body
+
+    # 0.5 Lift fenced code blocks (both the triple-backtick and the
     #    triple-tilde styles) out into opaque placeholder tokens.  This
     #    MUST happen before any of the transformations below: a fenced
     #    JS/TS sample can legitimately contain an ``import ...`` or
@@ -776,6 +1247,12 @@ def _mdx_to_md(content: str) -> str:
     #    AND the whitespace cleanup in steps 7-8 -- are done, because none
     #    of those passes is fence-aware.  The callout converters still run
     #    in between, which is correct because callouts are never fenced.
+    #
+    #    The shield covers every fence CommonMark reads as one, including a
+    #    fence indented up to three columns (see ``_iter_fence_spans``): a
+    #    sample written inside a list item is protected exactly like a
+    #    top-level one.  Step 5.6 exists for the fences a ``<Tabs>``
+    #    container pushed PAST that limit, which no fence rule can see.
     text, fenced_blocks = _protect_fenced_code(content)
 
     # 1. Convert JSX comments to HTML comments.  The replacement goes
@@ -822,6 +1299,16 @@ def _mdx_to_md(content: str) -> str:
     #     so package manager or platform tab names survive.
     text = _convert_tab_items(text)
 
+    # 5.6 Re-indent the fenced code blocks of each tab container.  This MUST
+    #     run after the import/export strip above: the strip is line-anchored,
+    #     and a dedented sample is the one place a shell line such as
+    #     ``export EDITOR=nano`` reaches column zero.  Running the strip first
+    #     leaves such a line inside its sample instead of deleting it as
+    #     component wiring.  It MUST also run before step 6, which removes the
+    #     ``<Tabs>`` / ``</Tabs>`` delimiters this pass uses to tell a
+    #     container's leftover indentation apart from a list item's.
+    text = _dedent_container_fences(text)
+
     # 6. Strip generic JSX element open/close tags while preserving inner
     #    text content.  For example, ``<Tabs>...content...</Tabs>`` becomes
     #    ``...content...``.  Only tags starting with an uppercase letter are
@@ -853,7 +1340,34 @@ def _mdx_to_md(content: str) -> str:
     # exactly as they were in the input.
     text = _restore_fenced_code(text, fenced_blocks)
 
-    return text.strip() + "\n"
+    # 9. Give the page back the heading its frontmatter carried.  This runs
+    #    last, on the finished body, because it has to see what the passes
+    #    above produced: a body that opens with a heading of its own keeps it,
+    #    and only a body that has none is given the frontmatter title.  The
+    #    blank line between the parts keeps the heading and the description
+    #    separate Markdown blocks, exactly as they would be in the source.
+    parts = (
+        _page_heading(fields, text.strip()),
+        text.strip(),
+    )
+    return "\n\n".join(part for part in parts if part) + "\n"
+
+
+def _page_source_url(slug: str) -> str:
+    """Return the live docs-site URL of the page with *slug*.
+
+    ``intro`` is not a route of its own: it is the site's landing layout, so
+    the English landing page is served at the docs root and each locale's
+    landing page at that locale's root.  Appending the slug to the base would
+    record ``/docs/intro`` (and ``/docs/pt-br/intro``) -- URLs that 404,
+    because no such page exists on the site.  Every other slug is the route
+    the site serves under the same base.
+    """
+    if slug == "intro":
+        return SOURCE_URL_BASE
+    if slug.endswith("/intro"):
+        return f"{SOURCE_URL_BASE}/{slug[: -len('/intro')]}"
+    return f"{SOURCE_URL_BASE}/{slug}"
 
 
 def _locale_of(rel: str) -> str | None:
@@ -1106,7 +1620,7 @@ def discover(
         page = try_make_page(
             path,
             slug=slug,
-            source_url=f"{SOURCE_URL_BASE}/{slug}",
+            source_url=_page_source_url(slug),
             source_md_url=f"{RAW_BASE}/{path}",
             source_id=path,
             group=group,
@@ -1160,7 +1674,315 @@ def discover(
                 f"{', '.join(sorted(mirrored_locales))}"
             )
 
+    # Publish the slugs of this run for the link pass in ``fetch_markdown``:
+    # it can only point a reference at a mirrored page if it knows which pages
+    # this run actually mirrors.  Replacing the set wholesale (rather than
+    # adding to it) keeps a run's view exact -- a page that disappeared
+    # upstream, or a locale a previous run selected and this one did not, must
+    # send its inbound references to the upstream URL rather than to a
+    # relative link to a file that is no longer there.
+    _KNOWN_SLUGS.clear()
+    _KNOWN_SLUGS.update(page.slug for page in pages)
+
     return pages
+
+
+# ---------------------------------------------------------------------------
+# Link rewriting: site-absolute ``/docs/...`` references
+# ---------------------------------------------------------------------------
+# The upstream MDX addresses every other page of the docs site by its
+# site-absolute route (``](/docs/permissions)``), which is correct on
+# opencode.ai and dead in the mirror: a leading ``/`` resolves against the
+# reader's file system root, not against ``docs/opencode/``.  Every such link
+# is rewritten to the mirrored page it names, or to its upstream URL when the
+# page is not part of this run.
+
+# A Markdown link whose destination is site-absolute: a leading ``/`` that is
+# not the start of a protocol-relative ``//host`` URL.
+#
+# The destination is captured with ``[^)\s]*``, which stops at the closing
+# parenthesis of the link and at the first whitespace, so a match can never run
+# past the end of one link; a destination containing a space is not matched at
+# all (such a link is malformed -- a destination with a space must be written
+# ``<...>`` -- and guessing where it ends would corrupt the page).
+#
+# This pattern is ONLY ever applied through ``_iter_site_links`` (never via
+# ``re.sub``), because the substitution is O(N x body length) on input with N
+# ``](/`` openers and no closing parenthesis: the greedy ``[^)\s]*`` expands
+# to end-of-string from every candidate, fails to find its ``)``, and the
+# engine retries the whole scan from the next candidate (measured: 2,048 /
+# 4,096 / 8,192 occurrences took 0.03 / 0.13 / 0.51 s, the classic 4x-per-2x
+# quadratic signature -- ~8 s at 16k).  The pass runs on converted MDX derived
+# from raw network sources of up to ``MAX_RESPONSE_BYTES`` (10 MiB), making
+# this a remotely-triggerable hang.  ``_iter_site_links`` keeps this pattern
+# for the actual matching (so group semantics are untouched) but drives it
+# with a linear ``str.find`` scan -- see that function for the monotonicity
+# argument.
+_SITE_ABSOLUTE_LINK_RE = re.compile(r"\]\(/(?!/)(?P<href>[^)\s]*)\)")
+
+
+def _iter_site_links(text: str) -> Iterator[re.Match[str]]:
+    """Yield every site-absolute ``](/...)`` link in *text*, in document order.
+
+    Semantics-identical to ``_SITE_ABSOLUTE_LINK_RE.finditer(text)`` but
+    LINEAR on adversarial input (see the hazard comment on the pattern).  The
+    substitution is decomposed into:
+
+    1. ``str.find("](/", ...)`` to locate the next candidate -- the literal
+       opener plus the leading slash the pattern requires, so a position that
+       cannot match is never handed to the regex engine;
+    2. ``str.find(")", ...)`` to locate the first closing parenthesis after
+       it.  The destination class excludes ``)``, so the match can only ever
+       end at that first parenthesis; passing it to the engine as ``endpos``
+       is what bounds every attempt to one link's worth of text instead of
+       letting it scan to end-of-string and backtrack one character at a
+       time;
+    3. ``_SITE_ABSOLUTE_LINK_RE.match`` on the proven window, so the group
+       semantics (including the ``(?!/)`` protocol-relative rejection
+       performed by the pattern itself) are produced by the original pattern,
+       not reimplemented.
+
+    LINEAR-TIME ARGUMENT: every ``str.find`` resumes where the previous one
+    stopped -- the candidate cursor only moves forward, and the parenthesis
+    search is reused while it still sits ahead of the candidate and is
+    otherwise restarted from a strictly later position -- so each character
+    of the document is scanned a bounded number of times.  When no closing
+    parenthesis exists, the loop STOPS rather than retrying from the next
+    candidate: a ``)`` for any later link would sit after this candidate too
+    and would have been found, so no later link can match either.
+    """
+    pos = 0
+    closer = -1  # cached first ")" at or after the candidate cursor
+    while True:
+        start = text.find("](/", pos)
+        if start == -1:
+            break
+        if text[start + 3 : start + 4] == "/":
+            # A protocol-relative "//host" destination is not a path on the
+            # site, so the pattern rejects it; a later candidate starts after
+            # this one.
+            pos = start + 1
+            continue
+        if closer < start + 2:
+            closer = text.find(")", start + 2)
+            if closer == -1:
+                # No ")" anywhere after this candidate -- and therefore
+                # after ANY later one either (see the docstring).
+                break
+        match = _SITE_ABSOLUTE_LINK_RE.match(text, start, closer + 1)
+        if match is None:
+            # The destination does not continue the way the pattern needs
+            # (a space before the closer, say), so this candidate is not a
+            # link.  A later one starts after it.
+            pos = start + 1
+            continue
+        yield match
+        pos = closer = match.end()
+
+
+# A Markdown link written out as a FULL URL on the documentation site's own
+# origin (``](https://opencode.ai/docs/config/)``).  Upstream writes most
+# cross-references site-absolute and a few this way; both name the same page,
+# so both have to resolve the same way -- a link that keeps the site's host
+# sends a reader of the mirror to the network for a page that is already on
+# disk beside it.
+#
+# Only destinations under the documentation route are matched, and only on
+# the site's own origin: another host that happens to carry a ``/docs/`` path
+# is a different site, and a path outside the documentation tree (the site
+# root, a marketing page) names no page of the mirror.  The bare origin
+# ``https://opencode.ai`` is therefore left alone as well -- it addresses the
+# site, and the mirror has no file to put in its place.
+#
+# Same BACKTRACKING HAZARD as the pattern above, and the same answer: this
+# pattern is ONLY ever applied through ``_iter_origin_links``, never via
+# ``re.sub``.
+_ORIGIN_DOCS_LINK_RE = re.compile(
+    # ``DOCS_ROUTE`` without its leading slash: the origin and that slash are
+    # consumed by the literal head, so the captured group is the route exactly
+    # as ``_resolve_site_href`` expects it -- the form its caller's pattern
+    # produces for a site-absolute link.
+    rf"\]\({re.escape(SITE_URL)}/(?P<href>{DOCS_ROUTE[1:]}(?:/[^)\s]*)?)\)"
+)
+
+
+def _iter_origin_links(text: str) -> Iterator[re.Match[str]]:
+    """Yield every full-origin ``](https://opencode.ai/docs...)`` link in *text*.
+
+    Semantics-identical to ``_ORIGIN_DOCS_LINK_RE.finditer(text)`` but LINEAR
+    on adversarial input, by the same decomposition as
+    :func:`_iter_site_links`: ``str.find`` for the pattern's literal head, a
+    ``str.find(")")`` to bound the attempt to one link's worth of text, and
+    the pattern itself for the match (so the group semantics, and the
+    rejection of every destination the pattern does not describe, come from
+    the pattern rather than from a reimplementation of it).
+
+    The literal head searched for is the whole ``](https://opencode.ai/``
+    prefix the pattern requires, so no position that cannot start a match is
+    handed to the regex engine.  The monotonicity argument of
+    :func:`_iter_site_links` applies unchanged: the candidate cursor and the
+    parenthesis cursor only move forward, and the loop stops at the first
+    candidate with no ``)`` after it, because no later candidate can have one
+    either.
+    """
+    prefix = f"]({SITE_URL}/"
+    pos = 0
+    closer = -1  # cached first ")" at or after the candidate cursor
+    while True:
+        start = text.find(prefix, pos)
+        if start == -1:
+            break
+        if closer < start + 2:
+            closer = text.find(")", start + 2)
+            if closer == -1:
+                # No ")" anywhere after this candidate -- and therefore
+                # after ANY later one either (see the docstring).
+                break
+        match = _ORIGIN_DOCS_LINK_RE.match(text, start, closer + 1)
+        if match is None:
+            # The destination does not continue the way the pattern needs
+            # (a path outside the documentation tree, say), so this
+            # candidate is not a link.  A later one starts after it.
+            pos = start + 1
+            continue
+        yield match
+        pos = closer = match.end()
+
+
+# Slugs of the pages discovered by the current run; populated by ``discover``
+# and read by the link pass in ``fetch_markdown``.  The pipeline discovers
+# every page of a source before it fetches the first one, so the set is
+# already complete when the first page is converted.  A module-level set is
+# what carries the information between the two hooks: the pipeline calls them
+# separately, with nothing but the module itself in between.
+_KNOWN_SLUGS: set[str] = set()
+
+
+def _resolve_site_href(href: str, current_slug: str, known_slugs: set[str]) -> str:
+    """Resolve one site-absolute destination to something the mirror can serve.
+
+    *href* is a destination that starts at the site root (``docs/config#models``
+    once the leading slash has been consumed by the caller's pattern).  A
+    documentation route this run mirrors becomes a relative ``.md`` link to the
+    page that holds it; one it does not mirror -- most often a locale the run
+    did not select -- becomes its upstream URL, the only destination that still
+    resolves.  Anything outside the documentation tree (the bare site root, a
+    marketing page) also becomes an upstream URL, for the same reason a
+    mirrored target does not: a site-absolute path has no meaning in a
+    checkout.
+
+    The anchor is preserved on every branch.  A fragment is resolved by the
+    reader's browser against whichever document the link lands on, so it keeps
+    working whether that document is a mirrored file or the upstream page.  A
+    query string is kept verbatim on every upstream branch -- it still selects
+    what the site would have selected -- and dropped on the mirrored one: a
+    mirrored file is a static document with nothing to parameterise.
+    """
+    if href in ("", "/"):
+        return f"{SITE_URL}/"
+
+    path, _, anchor = href.partition("#")
+    suffix = f"#{anchor}" if anchor else ""
+    path, _, query = path.partition("?")
+    # Rebuilt with its own leading "?" so that appending it cannot glue the
+    # parameters onto the path (``/pricing`` + ``plan=pro`` used to read
+    # ``/pricingplan=pro``).
+    query_suffix = f"?{query}" if query else ""
+    # The caller's pattern consumes the leading slash, so every branch below
+    # works on the path as the site sees it -- leading slash included -- which
+    # is also what the upstream URL is built from.
+    path = f"/{path}"
+
+    if path.rstrip("/") == DOCS_ROUTE:
+        # The docs root is the landing page's route, not a page of its own.
+        slug, upstream = "intro", SOURCE_URL_BASE
+    elif path.startswith(f"{DOCS_ROUTE}/"):
+        slug = path[len(DOCS_ROUTE) :].strip("/")
+        upstream = f"{SITE_URL}{path.rstrip('/')}"
+    else:
+        return f"{SITE_URL}{path}{query_suffix}{suffix}"
+
+    if slug not in known_slugs:
+        return f"{upstream}{query_suffix}{suffix}"
+
+    # ``current_slug`` is the on-disk path of the page being rewritten, so the
+    # relative path is derived the same way whatever depth the page sits at.
+    current_dir = posixpath.dirname(current_slug) or "."
+    relative = posixpath.relpath(f"{slug}.md", current_dir)
+    if not relative.startswith((".", "/")):
+        relative = f"./{relative}"
+    return f"{relative}{suffix}"
+
+
+def _rewrite_site_links(
+    text: str, current_slug: str, known_slugs: set[str] | None = None
+) -> str:
+    """Repoint every reference to the documentation site at something that resolves.
+
+    Two spellings of the same reference are routed through
+    :func:`_resolve_site_href`: the site-absolute one (``](/docs/tui)``) and
+    the full URL on the site's own origin
+    (``](https://opencode.ai/docs/tui)``).  Both address a page of the site,
+    so both become a relative ``.md`` link when this run mirrors that page and
+    the page's upstream URL when it does not.  Localising the full URL matters
+    as much as rewriting the site-absolute form: a reader of the mirror would
+    otherwise leave it for a page that is already on disk beside the page they
+    are reading.
+
+    Only links are touched: an external URL, a mail address, an anchor, a
+    relative path, or a URL on another host does not match either pattern and
+    is returned unchanged, so this pass can never break a link that already
+    worked.
+
+    Fenced code blocks are shielded for the duration of the pass, because a
+    code sample is not prose: a snippet that shows a documentation URL must
+    keep showing exactly what it showed.  The pass is idempotent -- its output
+    holds relative ``.md`` links and absolute upstream URLs, and the first
+    pass has already localised every full URL it could, so a second
+    application is a no-op.
+    """
+    if known_slugs is None:
+        known_slugs = _KNOWN_SLUGS
+
+    protected, blocks = _protect_fenced_code(text)
+    # The full-origin pass runs first: it turns a mirrored page's URL into a
+    # relative link and leaves every other URL alone, so the site-absolute
+    # scan that follows sees only the links still to be resolved, and neither
+    # pass can undo the other's work.
+    protected = _rewrite_link_targets(
+        protected, _iter_origin_links(protected), current_slug, known_slugs
+    )
+    protected = _rewrite_link_targets(
+        protected, _iter_site_links(protected), current_slug, known_slugs
+    )
+    return _restore_fenced_code(protected, blocks)
+
+
+def _rewrite_link_targets(
+    text: str,
+    matches: Iterator[re.Match[str]],
+    current_slug: str,
+    known_slugs: set[str],
+) -> str:
+    """Replace the destination of every link in *matches* with its resolved form.
+
+    The substitution half of the link pass: the scanner names the links in
+    document order, each destination goes through
+    :func:`_resolve_site_href`, and everything between two links is copied
+    through byte for byte.  Copying is what confines the pass to the links the
+    scanner proved -- the rest of the page is never re-examined, so text that
+    merely resembles a link cannot be rewritten by accident.
+    """
+    out: list[str] = []
+    pos = 0
+    for match in matches:
+        out.append(text[pos : match.start()])
+        out.append(
+            f"]({_resolve_site_href(match.group('href'), current_slug, known_slugs)})"
+        )
+        pos = match.end()
+    out.append(text[pos:])
+    return "".join(out)
 
 
 # ---------------------------------------------------------------------------
@@ -1169,10 +1991,11 @@ def discover(
 # The pipeline calls ``fetch_markdown`` (via ``getattr`` on the source module)
 # instead of downloading ``page.source_md_url`` directly.  This hook fetches
 # the raw MDX from ``raw.githubusercontent.com``, runs it through
-# ``_mdx_to_md`` to strip JSX and convert callouts, validates the output,
-# and returns ``(markdown, content_hash)`` for the pipeline's manifest.
-# Any conversion or validation failure raises ``FetchError`` so the pipeline
-# carries the previous manifest entry forward rather than writing corruption.
+# ``_mdx_to_md`` to strip JSX and convert callouts, rewrites the site-absolute
+# links of the result, validates the output, and returns
+# ``(markdown, content_hash)`` for the pipeline's manifest.  Any conversion or
+# validation failure raises ``FetchError`` so the pipeline carries the previous
+# manifest entry forward rather than writing corruption.
 
 
 def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
@@ -1183,15 +2006,28 @@ def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
     downloading ``page.source_md_url`` as ready Markdown, because the upstream
     files are MDX (Markdown with embedded JSX), not plain Markdown.
 
-    The raw MDX is fetched from ``raw.githubusercontent.com``, converted to
-    clean Markdown via ``_mdx_to_md``, and validated before the content hash
-    is computed. A validation failure raises ``FetchError`` so the pipeline
-    carries the previous manifest entry forward rather than writing garbage
-    to disk.
+    The raw MDX is fetched from ``raw.githubusercontent.com`` and converted to
+    clean Markdown via ``_mdx_to_md``; the site-absolute ``/docs/...`` links
+    the conversion leaves behind are then repointed at the mirrored pages by
+    ``_rewrite_site_links``.  That pass runs on the converted text rather than
+    inside the converter because it needs to know which pages this run
+    mirrors, which the converter does not -- the pipeline fetches the pages
+    after discovering them all, and the slug set is what discovery published.
+    The result is validated before the content hash is computed, so the hash
+    covers exactly the text written to disk.  A validation failure raises
+    ``FetchError`` so the pipeline carries the previous manifest entry forward
+    rather than writing garbage to disk.
     """
+    # The link pass resolves each reference against the pages this run mirrors;
+    # without that set every internal link would become its upstream URL (see
+    # ``ensure_known_slugs``). The guard runs BEFORE the download: a hook
+    # invoked without discovery must fail immediately, not fetch every page
+    # first and then fail on each one.
+    ensure_known_slugs("opencode", _KNOWN_SLUGS, page.slug)
     raw = fetch.get_with_retry(client, page.source_md_url)
     try:
         md = _mdx_to_md(raw)
+        md = _rewrite_site_links(md, page.slug)
     except Exception as exc:
         raise fetch.FetchError(
             f"MDX to Markdown conversion failed for {page.slug}: {exc}"

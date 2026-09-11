@@ -35,7 +35,7 @@ Complete the following sequential steps to launch your first session:
     
     Note
     
-    **Advanced Setup**: For detailed enterprise credentials configuration, secure keyring auth permissions, proxy setups, or troubleshooting installation issues, consult the **[Installation & Auth Guide](/docs/cli/install)**.
+    **Advanced Setup**: For detailed enterprise credentials configuration, secure keyring auth permissions, proxy setups, or troubleshooting installation issues, consult the **[Installation & Auth Guide](./install.md)**.
     
 2.  **Launch the TUI inside a project**
     
@@ -60,13 +60,13 @@ Complete the following sequential steps to launch your first session:
     Write a simple python script to fetch web page text
     ```
     
-    The agent reads the workspace, reasons about the task, and proposes a plan. For a detailed step-by-step tutorial on reviewing code and running test commands inside the TUI, follow the **[Tutorial Guide](/docs/cli/tutorial)**.
+    The agent reads the workspace, reasons about the task, and proposes a plan. For a detailed step-by-step tutorial on reviewing code and running test commands inside the TUI, follow the **[Tutorial Guide](./tutorial.md)**.
     
 
 ## Related resources
 
 Optimize your local environment configurations and master advanced collaboration tools:
 
-*   **[Best Practices](/docs/cli/best-practices)**: Master verification loops, planning phases, rule files, and session checkpoints.
-*   **[Troubleshooting](/docs/cli/troubleshooting)**: Resolve common path, keyring, or SSH forwarding errors.
-*   **[CLI Reference](/docs/cli/reference)**: Dense reference sheets cataloging all slash commands, shortcuts, and JSON keys.
+*   **[Best Practices](./best-practices.md)**: Master verification loops, planning phases, rule files, and session checkpoints.
+*   **[Troubleshooting](./troubleshooting.md)**: Resolve common path, keyring, or SSH forwarding errors.
+*   **[CLI Reference](./reference.md)**: Dense reference sheets cataloging all slash commands, shortcuts, and JSON keys.

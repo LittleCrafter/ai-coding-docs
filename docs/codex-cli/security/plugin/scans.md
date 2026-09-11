@@ -93,7 +93,7 @@ Review the result in this order:
 5. Select one accepted finding before starting a fix.
 
 <figure className="not-prose my-8">
-  
+
   <figcaption className="mt-3 text-sm text-secondary">
     Review the finding's severity, validation status, root cause, and attack
     path.

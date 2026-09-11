@@ -24,9 +24,10 @@ Once started, the terminal prints the access URL (like `https://code-rc.kimi.com
 
 ![Terminal output after starting kimi rc: QR code and connection status](../media/kimi-rc-banner.jpg)
 
-::: warning Note
-The Remote Control link is a remote control entry point to this machine — anyone who has it may control your sessions and files. Do not share it with others or post it anywhere public.
-:::
+> [!WARNING]
+> **Note**
+>
+> The Remote Control link is a remote control entry point to this machine — anyone who has it may control your sessions and files. Do not share it with others or post it anywhere public.
 
 Two limitations:
 
@@ -41,9 +42,10 @@ Two limitations:
 
 Remote Control works in the browser.
 
-::: info Device limit
-Each account currently supports up to about **3 devices**.
-:::
+> [!NOTE]
+> **Device limit**
+>
+> Each account currently supports up to about **3 devices**.
 
 ### How to turn off Remote Control
 

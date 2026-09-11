@@ -114,10 +114,11 @@ class _FakeClient:
         """Initialise the fake client with an ordered list of responses.
 
         The *script* is a list of ``_Resp`` instances (or ``Exception``
-        subclasses) that ``get()`` will return in FIFO order.  Each call to
-        ``get()`` pops the next item from the front — a test that makes N
-        fetch calls must script exactly N items, or the empty-script guard
-        will raise ``RuntimeError`` with the URL that was asked for.
+        instances, which are raised) that ``get()`` will return in FIFO
+        order.  Each call to ``get()`` pops the next item from the front — a
+        test that makes N fetch calls must script exactly N items, or the
+        empty-script guard will raise ``RuntimeError`` with the URL that was
+        asked for.
 
         Args:
             script: List of ``_Resp`` stubs and/or ``Exception`` instances.
@@ -156,9 +157,13 @@ class _FakeClient:
 
         Each call to ``get()`` consumes one item from the script list the
         client was constructed with.  Items can be either a ``_Resp`` stub
-        (returned to the caller) or an ``Exception`` subclass (raised
+        (returned to the caller) or an ``Exception`` INSTANCE (raised
         immediately) — this lets tests simulate transient errors like HTTP
-        500s without a separate error-injection path.
+        500s without a separate error-injection path.  Passing an exception
+        CLASS does not raise: the dispatch below tests the item against
+        ``Exception`` with ``isinstance``, so a class object would simply be
+        returned as if it were a response.  Script ``Exception("...")``
+        instances, never bare types.
 
         Args:
             url: The URL being fetched (passed through to the caller as the

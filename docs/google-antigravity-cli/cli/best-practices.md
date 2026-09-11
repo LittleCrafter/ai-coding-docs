@@ -105,6 +105,6 @@ For large-scale sweeps or multi-file refactoring, direct the primary agent to sp
 
 Learn how to configure settings and customize visual layouts:
 
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Enforce filesystem containment.
-*   **[Plugins & Skills](/docs/cli/plugins)**: Create your own custom slash commands.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions & Sandbox](./sandbox.md)**: Enforce filesystem containment.
+*   **[Plugins & Skills](./plugins.md)**: Create your own custom slash commands.

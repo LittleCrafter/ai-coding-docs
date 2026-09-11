@@ -41,7 +41,8 @@ jobs:
     steps:
       # Every action is pinned to a full commit SHA (release tag kept as a
       # trailing comment) so a re-tagged or compromised release cannot change
-      # the code we run. .github/dependabot.yml bumps the pins weekly.
+      # the code we run. The pins are refreshed by hand when a newer release
+      # of an action is adopted.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       # uv provides the project environment: ruff comes from the pinned dev

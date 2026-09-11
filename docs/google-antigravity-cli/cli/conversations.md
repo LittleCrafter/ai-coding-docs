@@ -14,7 +14,7 @@ You can return to a prior conversation at any time to continue an implementation
 
 Antigravity CLI supports both an interactive **Session Picker** TUI overlay and direct command-line flags (`agy -c` / `agy --continue`) to resume threads instantly based on your active workspace.
 
-For a complete walkthrough of the interactive picker, keyboard shortcuts, and details on how the directory-scoped session cache works, see the dedicated **[Resume Command Guide](/docs/cli/commands/resume)**.
+For a complete walkthrough of the interactive picker, keyboard shortcuts, and details on how the directory-scoped session cache works, see the dedicated **[Resume Command Guide](./commands/resume.md)**.
 
 ## Branching with `/fork`
 
@@ -43,6 +43,6 @@ Note
 
 Explore how the agent handles complex, asynchronous operations and parallel tasks:
 
-*   **[Background Tasks & Subagents](/docs/cli/subagents)**: Monitor subagents and handle fast-path approvals.
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Configure rendering buffers and override JSON preferences.
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Manage security profiles and system command lists.
+*   **[Background Tasks & Subagents](./subagents.md)**: Monitor subagents and handle fast-path approvals.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Configure rendering buffers and override JSON preferences.
+*   **[Permissions & Sandbox](./sandbox.md)**: Manage security profiles and system command lists.

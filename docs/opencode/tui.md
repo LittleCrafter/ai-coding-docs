@@ -1,7 +1,6 @@
----
-title: TUI
-description: Using the OpenCode terminal user interface.
----
+# TUI
+
+Using the OpenCode terminal user interface.
 
 OpenCode provides an interactive terminal interface or TUI for working on your projects with an LLM.
 
@@ -38,7 +37,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 
 The content of the file is added to the conversation automatically.
 
-Configured [references](/docs/references) also appear in `@` autocomplete. Type `@alias` to add the reference root as context, or type `@alias/` to autocomplete files inside that reference.
+Configured [references](./references.md) also appear in `@` autocomplete. Type `@alias` to add the reference root as context, or type `@alias/` to autocomplete files inside that reference.
 
 ```text "@docs/README.md"
 Compare our setup with @docs/README.md
@@ -66,7 +65,7 @@ When using the OpenCode TUI, you can type `/` followed by a command name to quic
 /help
 ```
 
-Most commands also have keyboard shortcuts using `ctrl+x` as the default leader key. [Learn more](/docs/keybinds).
+Most commands also have keyboard shortcuts using `ctrl+x` as the default leader key. [Learn more](./keybinds.md).
 
 Here are all available slash commands:
 
@@ -152,7 +151,7 @@ Show the help dialog.
 
 ### init
 
-Guided setup for creating or updating `AGENTS.md`. [Learn more](/docs/rules).
+Guided setup for creating or updating `AGENTS.md`. [Learn more](./rules.md).
 
 ```bash frame="none"
 /init
@@ -216,7 +215,7 @@ List and switch between sessions. _Aliases_: `/resume`, `/continue`
 
 ### share
 
-Share current session. [Learn more](/docs/share).
+Share current session. [Learn more](./share.md).
 
 ```bash frame="none"
 /share
@@ -269,7 +268,7 @@ be a Git repository**.
 
 ### unshare
 
-Unshare current session. [Learn more](/docs/share#un-sharing).
+Unshare current session. [Learn more](./share.md#un-sharing).
 
 ```bash frame="none"
 /unshare
@@ -283,43 +282,43 @@ Both the `/editor` and `/export` commands use the editor specified in your `EDIT
 
 **Linux/macOS**
 
-    ```bash
-    # Example for nano or vim
-    export EDITOR=nano
-    export EDITOR=vim
+```bash
+# Example for nano or vim
+export EDITOR=nano
+export EDITOR=vim
 
-    # For GUI editors, VS Code, Cursor, VSCodium, Windsurf, Zed, etc.
-    # include --wait
-    export EDITOR="code --wait"
-    ```
+# For GUI editors, VS Code, Cursor, VSCodium, Windsurf, Zed, etc.
+# include --wait
+export EDITOR="code --wait"
+```
 
-    To make it permanent, add this to your shell profile;
-    `~/.bashrc`, `~/.zshrc`, etc.
+To make it permanent, add this to your shell profile;
+`~/.bashrc`, `~/.zshrc`, etc.
 
 **Windows (CMD)**
 
-    ```bash
-    set EDITOR=notepad
+```bash
+set EDITOR=notepad
 
-    # For GUI editors, VS Code, Cursor, VSCodium, Windsurf, Zed, etc.
-    # include --wait
-    set EDITOR=code --wait
-    ```
+# For GUI editors, VS Code, Cursor, VSCodium, Windsurf, Zed, etc.
+# include --wait
+set EDITOR=code --wait
+```
 
-    To make it permanent, use **System Properties** > **Environment
-    Variables**.
+To make it permanent, use **System Properties** > **Environment
+Variables**.
 
 **Windows (PowerShell)**
 
-    ```powershell
-    $env:EDITOR = "notepad"
+```powershell
+$env:EDITOR = "notepad"
 
-    # For GUI editors, VS Code, Cursor, VSCodium, Windsurf, Zed, etc.
-    # include --wait
-    $env:EDITOR = "code --wait"
-    ```
+# For GUI editors, VS Code, Cursor, VSCodium, Windsurf, Zed, etc.
+# include --wait
+$env:EDITOR = "code --wait"
+```
 
-    To make it permanent, add this to your PowerShell profile.
+To make it permanent, add this to your PowerShell profile.
 
 Popular editor options include:
 
@@ -381,8 +380,8 @@ This is separate from `opencode.json`, which configures server/runtime behavior.
 
 ### Options
 
-- `theme` - Sets your UI theme. [Learn more](/docs/themes).
-- `keybinds` - Customizes keyboard shortcuts. [Learn more](/docs/keybinds).
+- `theme` - Sets your UI theme. [Learn more](./themes.md).
+- `keybinds` - Customizes keyboard shortcuts. [Learn more](./keybinds.md).
 - `leader_timeout` - Controls how long OpenCode waits after the leader key. Defaults to `2000`.
 - `scroll_acceleration.enabled` - Enable macOS-style scroll acceleration for smooth, natural scrolling. When enabled, scroll speed increases with rapid scrolling gestures and stays precise for slower movements. **This setting takes precedence over `scroll_speed` and overrides it when enabled.**
 - `scroll_speed` - Controls how fast the TUI scrolls when using scroll commands (minimum: `0.001`, supports decimal values). Defaults to `3`. **Note: This is ignored if `scroll_acceleration.enabled` is set to `true`.**

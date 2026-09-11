@@ -14,8 +14,6 @@ A service account represents a non-human workspace identity. A [personal access 
 
 This interactive walkthrough uses GitHub as an example: create an account, configure a plugin, create a token, and assign groups and roles.
 
-<ServiceAccountsDemo client:load guided />
-
 1. Open [Service accounts](https://chatgpt.com/admin/service-accounts) in your workspace settings.
 2. Select the plus (**+**) button and enter a descriptive name, such as `release-automation`.
 3. Select **Create**.

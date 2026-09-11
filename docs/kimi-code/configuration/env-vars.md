@@ -2,13 +2,14 @@
 
 Kimi Code CLI uses environment variables to control a small number of runtime behaviors: relocating the data directory, turning off telemetry, and temporarily switching models without touching the config file.
 
-::: warning Important: API keys are not configured here
-Credential variables such as `KIMI_API_KEY`, `ANTHROPIC_API_KEY`, and `OPENAI_API_KEY` are **not** read automatically from shell environment variables. Running `export KIMI_API_KEY=xxx` in the terminal does not give any provider its key. They must be written in `config.toml` under `[providers.<name>]` or the `[providers.<name>.env]` sub-table.
-
-The only exception is the `KIMI_MODEL_*` family, an explicit channel that *does* read credentials from the shell. See [Define a model from environment variables](#define-a-model-from-environment-variables-kimi_model_).
-
-For background, see [Config overrides: provider credentials](./overrides.md#provider-credentials).
-:::
+> [!WARNING]
+> **Important: API keys are not configured here**
+>
+> Credential variables such as `KIMI_API_KEY`, `ANTHROPIC_API_KEY`, and `OPENAI_API_KEY` are **not** read automatically from shell environment variables. Running `export KIMI_API_KEY=xxx` in the terminal does not give any provider its key. They must be written in `config.toml` under `[providers.<name>]` or the `[providers.<name>.env]` sub-table.
+>
+> The only exception is the `KIMI_MODEL_*` family, an explicit channel that *does* read credentials from the shell. See [Define a model from environment variables](#define-a-model-from-environment-variables-kimi_model_).
+>
+> For background, see [Config overrides: provider credentials](./overrides.md#provider-credentials).
 
 ## Core paths
 
@@ -38,9 +39,10 @@ Switch models temporarily without modifying `config.toml`: when `KIMI_MODEL_NAME
 
 ### `KIMI_CODE_CUSTOM_HEADERS`
 
-::: info Added
-Added in 0.20.2.
-:::
+> [!NOTE]
+> **Added**
+>
+> Added in 0.20.2.
 
 Attaches custom HTTP headers to every outbound model request: both LLM chat requests (across all provider protocols) and `/models` listing requests carry them. Useful when a gateway routes by header, for example to pin a specific cluster:
 
@@ -79,9 +81,8 @@ Key names per provider:
 | `GOOGLE_CLOUD_PROJECT` | Vertex AI | None |
 | `GOOGLE_CLOUD_LOCATION` | Vertex AI | None |
 
-::: warning
-`GOOGLE_APPLICATION_CREDENTIALS` (path to a service account JSON file) is the only exception that goes through the system environment variable mechanism. It is read by the Google SDK directly via the standard ADC flow; the CLI does not participate. All other key names must be placed in the `[providers.<name>.env]` sub-table to take effect.
-:::
+> [!WARNING]
+> `GOOGLE_APPLICATION_CREDENTIALS` (path to a service account JSON file) is the only exception that goes through the system environment variable mechanism. It is read by the Google SDK directly via the standard ADC flow; the CLI does not participate. All other key names must be placed in the `[providers.<name>.env]` sub-table to take effect.
 
 For the full provider type and field reference, see [Providers and models](./providers.md).
 
@@ -95,9 +96,8 @@ This group of variables redirects OAuth authentication and managed service endpo
 | `KIMI_OAUTH_HOST` | OAuth auth host; fallback for `KIMI_CODE_OAUTH_HOST` | Falls back to `https://auth.kimi.com` when unset |
 | `KIMI_CODE_BASE_URL` | Managed API base URL used after OAuth login | `https://api.kimi.com/coding/v1` |
 
-::: warning
-`KIMI_CODE_BASE_URL` (OAuth-managed service, targeting `kimi.com`) and `KIMI_BASE_URL` (direct API key connection, targeting `moonshot.ai`) are two distinct variables. Use each one in its appropriate context.
-:::
+> [!WARNING]
+> `KIMI_CODE_BASE_URL` (OAuth-managed service, targeting `kimi.com`) and `KIMI_BASE_URL` (direct API key connection, targeting `moonshot.ai`) are two distinct variables. Use each one in its appropriate context.
 
 ## Define a model from environment variables (`KIMI_MODEL_*`)
 

@@ -107,9 +107,10 @@ If you edit the theme file that is **currently active**, the change is not reloa
 - run `/reload-tui`, which reloads `tui.toml` and re-applies the current theme (including re-reading the theme file); or
 - switch to another theme in `/theme` and back.
 
-::: warning Note
-Re-selecting the **same** theme in `/theme` does not reload it (you get a "Theme unchanged" message). To reload changes to the active theme, use one of the two methods above.
-:::
+> [!WARNING]
+> **Note**
+>
+> Re-selecting the **same** theme in `/theme` does not reload it (you get a "Theme unchanged" message). To reload changes to the active theme, use one of the two methods above.
 
 ## Next steps
 

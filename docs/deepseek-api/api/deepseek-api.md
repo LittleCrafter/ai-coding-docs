@@ -6,26 +6,20 @@ The DeepSeek API. To use the DeepSeek API, please [create an API key first](<htt
 
 ## Authentication
 
-  * HTTP: Bearer Auth
+**HTTP: Bearer Auth**
 
 Security Scheme Type:| http  
 ---|---  
 HTTP Authorization Scheme:| bearer  
   
-### 
-
-Contact
+### Contact
 
 DeepSeek Support: [api-service@deepseek.com](<mailto:api-service@deepseek.com>)
 
-### 
-
-Terms of Service
+### Terms of Service
 
 [<https://cdn.deepseek.com/policies/en-US/deepseek-open-platform-terms-of-service.html>](<https://cdn.deepseek.com/policies/en-US/deepseek-open-platform-terms-of-service.html>)
 
-### 
-
-License
+### License
 
 [MIT](<https://opensource.org/license/mit/>)

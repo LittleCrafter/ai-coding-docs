@@ -1,7 +1,6 @@
----
-title: Formatters
-description: OpenCode uses language specific formatters.
----
+# Formatters
+
+OpenCode uses language specific formatters.
 
 OpenCode can format files after they are written or edited using language-specific formatters. Formatters are disabled by default; enable them in your config before OpenCode will run them.
 
@@ -28,7 +27,7 @@ OpenCode comes with several built-in formatters for popular languages and framew
 | nixfmt               | .nix                                                                                                     | `nixfmt` command available                                                                            |
 | ocamlformat          | .ml, .mli                                                                                                | `ocamlformat` command available and `.ocamlformat` config file                                        |
 | ormolu               | .hs                                                                                                      | `ormolu` command available                                                                            |
-| oxfmt (Experimental) | .js, .jsx, .ts, .tsx                                                                                     | `oxfmt` dependency in `package.json` and an [experimental env variable flag](/docs/cli/#experimental) |
+| oxfmt (Experimental) | .js, .jsx, .ts, .tsx                                                                                     | `oxfmt` dependency in `package.json` and an [experimental env variable flag](./cli.md#experimental) |
 | pint                 | .php                                                                                                     | `laravel/pint` dependency in `composer.json`                                                          |
 | prettier             | .js, .jsx, .ts, .tsx, .html, .css, .md, .json, .yaml, and [more](https://prettier.io/docs/en/index.html) | `prettier` dependency in `package.json`                                                               |
 | rubocop              | .rb, .rake, .gemspec, .ru                                                                                | `rubocop` command available                                                                           |

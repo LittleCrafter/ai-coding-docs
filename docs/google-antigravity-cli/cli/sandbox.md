@@ -25,7 +25,7 @@ Enable the sandbox in `~/.gemini/antigravity-cli/settings.json`, or interactivel
 ```
 
 *   **`enableTerminalSandbox`** (boolean, default: `false`): Runs agent commands inside the sandbox.
-*   **`toolPermission`** (string, default: `"request-review"`): Setting this to `"proceed-in-sandbox"` lets sandboxed commands run automatically, while commands that need to run outside the sandbox still prompt for review. See [Settings](/docs/cli/settings) for the other modes.
+*   **`toolPermission`** (string, default: `"request-review"`): Setting this to `"proceed-in-sandbox"` lets sandboxed commands run automatically, while commands that need to run outside the sandbox still prompt for review. See [Settings](./settings.md) for the other modes.
 
 ### CLI flags
 
@@ -40,7 +40,7 @@ antigravity --sandbox
 
 ## Permissions integration
 
-The sandbox derives its access boundaries from your **[Permissions](/docs/cli/permissions)** configuration:
+The sandbox derives its access boundaries from your **[Permissions](./permissions.md)** configuration:
 
 *   **Filesystem**: Workspace folders and paths allowed under `write_file` are mounted read-write. Paths allowed under `read_file` are mounted read-only, on top of the default system mounts. Denied paths are blocked, and everything else is inaccessible.
 *   **Network**: Sandboxed commands run without network access by default. Domains allowed under `read_url` are added to the sandbox’s outbound allowlist.
@@ -98,6 +98,6 @@ Approving “always allow” here records an `unsandboxed(...)` rule instead of 
 
 ## See also
 
-*   **[Hub Sandbox](/docs/sandbox)**: How sandboxing works in Antigravity 2.0.
-*   **[Permissions](/docs/cli/permissions)**: Configure allow, deny, and ask rules.
-*   **[Settings](/docs/cli/settings)**: Global CLI preferences and configuration.
+*   **[Hub Sandbox](https://antigravity.google/docs/sandbox)**: How sandboxing works in Antigravity 2.0.
+*   **[Permissions](./permissions.md)**: Configure allow, deny, and ask rules.
+*   **[Settings](./settings.md)**: Global CLI preferences and configuration.

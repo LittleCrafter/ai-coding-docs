@@ -77,9 +77,6 @@ in the composer to choose a specific plugin.
 
 [Learn about plugins
 
-      <Plugin />
-    
-
     Find, install, and use plugins in ChatGPT and Codex.](./plugins.md)
 
 ### Personalize ChatGPT
@@ -89,9 +86,6 @@ as custom instructions. Keep details that matter only to the current chat in the
 prompt.
 
 [Review personalization settings
-
-      <Settings />
-    
 
     Set a default personality, custom instructions, and other app preferences.](./reference/settings.md#personalization)
 
@@ -186,8 +180,6 @@ asks for a final check without spelling out every step.
 In the ChatGPT desktop app, press <kbd>Ctrl+Shift+D</kbd> while the composer is
 visible, then start talking. ChatGPT transcribes your speech into the composer
 so you can review and edit it before sending the prompt.
-
-  
 
 > Illustration: Voice dictation indicator in the composer with a transcribed prompt
 

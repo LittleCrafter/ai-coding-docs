@@ -1,7 +1,6 @@
----
-title: GitHub
-description: Use OpenCode in GitHub issues and pull-requests.
----
+# GitHub
+
+Use OpenCode in GitHub issues and pull-requests.
 
 OpenCode integrates with your GitHub workflow. Mention `/opencode` or `/oc` in your comment, and OpenCode will execute tasks within your GitHub Actions runner.
 

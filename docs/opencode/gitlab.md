@@ -1,7 +1,6 @@
----
-title: GitLab
-description: Use OpenCode in GitLab issues and merge requests.
----
+# GitLab
+
+Use OpenCode in GitLab issues and merge requests.
 
 OpenCode integrates with your GitLab workflow through your GitLab CI/CD pipeline or with GitLab Duo.
 

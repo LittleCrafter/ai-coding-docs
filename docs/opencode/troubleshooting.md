@@ -1,7 +1,6 @@
----
-title: Troubleshooting
-description: Common issues and how to resolve them.
----
+# Troubleshooting
+
+Common issues and how to resolve them.
 
 To debug issues with OpenCode, start by checking the logs and local data it stores on disk.
 
@@ -45,7 +44,7 @@ To uninstall the OpenCode CLI and remove its related files, run:
 opencode uninstall
 ```
 
-The command shows what will be removed and asks for confirmation. See the [CLI reference](/docs/cli#uninstall) for options to keep your configuration or application data.
+The command shows what will be removed and asks for confirmation. See the [CLI reference](./cli.md#uninstall) for options to keep your configuration or application data.
 
 To remove OpenCode Desktop, uninstall the application through your operating system's app management tools.
 
@@ -152,7 +151,7 @@ On Windows, OpenCode Desktop requires the Microsoft Edge **WebView2 Runtime**. I
 
 ### Windows: General performance issues
 
-If you're experiencing slow performance, file access issues, or terminal problems on Windows, try using [WSL (Windows Subsystem for Linux)](/docs/windows-wsl). WSL provides a Linux environment that works more seamlessly with OpenCode's features.
+If you're experiencing slow performance, file access issues, or terminal problems on Windows, try using [WSL (Windows Subsystem for Linux)](./windows-wsl.md). WSL provides a Linux environment that works more seamlessly with OpenCode's features.
 
 ---
 
@@ -251,7 +250,7 @@ If you encounter a ProviderInitError, you likely have an invalid or corrupted co
 
 To resolve this:
 
-1. First, verify your provider is set up correctly by following the [providers guide](/docs/providers)
+1. First, verify your provider is set up correctly by following the [providers guide](./providers.md)
 2. If the issue persists, try clearing your stored configuration:
 
    ```bash

@@ -7,113 +7,96 @@
 
 <h2 class="sr-only">Pricing options</h2>
 
-  
-
-    
-
-      ### Free ($0/month)
+### Free ($0/month)
 
 Explore Codex capabilities on quick coding tasks.
 
 [Get Free](https://chatgpt.com/plans/free/)
-      ### Go ($8/month)
+### Go ($8/month)
 
 Use Codex for lightweight coding tasks.
 
 [Get Go](https://chatgpt.com/plans/go)
-      ### Plus ($20/month)
+### Plus ($20/month)
 
 Power a few focused coding sessions each week.
 
 [Get Plus](https://chatgpt.com/explore/plus?utm_internal_source=openai_developers_codex)
 
 - Codex on the web, in the CLI, in the IDE extension, and on iOS
-        - Cloud-based integrations like automatic code review and Slack
-          integration
-        - The GPT-5.6 model family, including Sol, Terra, and Luna
-        - GPT-5.6 Luna for higher usage limits on lighter-weight or high-volume
-          workloads
-        - Flexibly extend usage with [ChatGPT credits](#credits-overview)
-        - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
-          Plus plan
-      ### Pro ($100/month)
+- Cloud-based integrations like automatic code review and Slack
+  integration
+- The GPT-5.6 model family, including Sol, Terra, and Luna
+- GPT-5.6 Luna for higher usage limits on lighter-weight or high-volume
+  workloads
+- Flexibly extend usage with [ChatGPT credits](#credits-overview)
+- Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
+  Plus plan
+### Pro ($100/month)
 
 Choose 5x or 20x higher rate limits than Plus.
 
 [Get Pro](https://chatgpt.com/explore/pro?utm_internal_source=openai_developers_codex)
 
 - Access to GPT-5.3-Codex-Spark (research preview), a fast Codex model
-          for day-to-day coding tasks
-        - 5x or 20x more Codex usage than Plus*
-        - Unlimited ChatGPT Voice on the $200/month tier; tasks still draw from
-          your Codex usage budget
-        - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
-          Pro plan
-      ### API Key
+  for day-to-day coding tasks
+- 5x or 20x more Codex usage than Plus*
+- Unlimited ChatGPT Voice on the $200/month tier; tasks still draw from
+  your Codex usage budget
+- Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
+  Pro plan
+### API Key
 
 Great for automation in shared environments like CI.
 
-[Learn more](/codex/auth)
+[Learn more](./auth.md)
 
 - Codex in the CLI, SDK, or IDE extension
-        - No cloud-based features (GitHub code review, Slack, etc.)
-        - Model availability follows the API models available to your key
-        - Pay for Codex usage based on [API pricing](https://developers.openai.com/api/docs/pricing)
-    
+- No cloud-based features (GitHub code review, Slack, etc.)
+- Model availability follows the API models available to your key
+- Pay for Codex usage based on [API pricing](https://developers.openai.com/api/docs/pricing)
 
-  
-
-  
-
-    
-
-      ### Business ($20/ user / month*)
+### Business ($20/ user / month*)
 
 Bring Codex into your startup or growing business.
 
 [Get Business](https://chatgpt.com/team-sign-up)
 
 - Access ChatGPT and Codex across desktop and mobile apps
-        - Larger virtual machines to run cloud chats faster
-        - Flexibly extend usage with [ChatGPT credits](#credits-overview)
-        - A secure, dedicated workspace with essential admin controls, SAML SSO,
-          and MFA
-        - No training on your business data by default. [Learn
-          more](https://openai.com/business-data/)
-        - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
-          Business plan
-      ### Enterprise & Edu
+- Larger virtual machines to run cloud chats faster
+- Flexibly extend usage with [ChatGPT credits](#credits-overview)
+- A secure, dedicated workspace with essential admin controls, SAML SSO,
+  and MFA
+- No training on your business data by default. [Learn
+  more](https://openai.com/business-data/)
+- Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
+  Business plan
+### Enterprise & Edu
 
 Unlock Codex for your entire organization with enterprise-grade functionality.
 
 [Contact sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_codex)
 
 - Priority request processing
-        - Enterprise-level security and controls, including SCIM, EKM, user
-          analytics, domain verification, and role-based access control
-          ([RBAC](https://help.openai.com/en/articles/11750701-rbac))
-        - Audit logs and usage monitoring via the [Compliance
-          API](https://chatgpt.com/public/admin/api-reference#tag/Codex%20Tasks)
-        - Data retention and data residency controls
-        - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
-          Enterprise plan
-    
+- Enterprise-level security and controls, including SCIM, EKM, user
+  analytics, domain verification, and role-based access control
+  ([RBAC](https://help.openai.com/en/articles/11750701-rbac))
+- Audit logs and usage monitoring via the [Compliance
+  API](https://chatgpt.com/public/admin/api-reference#tag/Codex%20Tasks)
+- Data retention and data residency controls
+- Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
+  Enterprise plan
 
-    
-
-      ### API Key
+### API Key
 
 Great for automation in shared environments like CI.
 
-[Learn more](/codex/auth)
+[Learn more](./auth.md)
 
 - Codex in the CLI, SDK, or IDE extension
-        - No cloud-based features (GitHub code review, Slack, etc.)
-        - Model availability follows the API models available to your key
-        - Pay for Codex usage based on [API pricing](https://developers.openai.com/api/docs/pricing)
-    
-
-  
+- No cloud-based features (GitHub code review, Slack, etc.)
+- Model availability follows the API models available to your key
+- Pay for Codex usage based on [API pricing](https://developers.openai.com/api/docs/pricing)
 
 ## Invite friends and coworkers
 
@@ -170,120 +153,18 @@ messages. These estimates are not fixed message limits; check your
 [usage dashboard](#where-can-i-see-my-current-usage-limits) for current limits
 and reset times.
 
-<TableWrapper class="w-full min-w-[46rem]">
-  <thead class="whitespace-nowrap">
-    <tr>
-      <th scope="col">Model</th>
-      <th scope="col" style="text-align:center">
-        Plus
-      </th>
-      <th scope="col" style="text-align:center">
-        Pro 5x
-      </th>
-      <th scope="col" style="text-align:center">
-        Pro 20x
-      </th>
-      <th scope="col" style="text-align:center">
-        Standard Business
-      </th>
-      <th scope="col" style="text-align:center">
-        API Key
-      </th>
-    </tr>
-  </thead>
-  <tbody class="whitespace-nowrap">
-    <tr>
-      <td>GPT-6 Astra</td>
-      <td style="text-align:center">5-45</td>
-      <td style="text-align:center">25-225</td>
-      <td style="text-align:center">100-900</td>
-      <td style="text-align:center">5-45</td>
-      <td style="text-align:center">
-        [Usage-based](https://platform.openai.com/docs/pricing)
-      </td>
-    </tr>
-    <tr>
-      <td>GPT-5.6 Sol</td>
-      <td style="text-align:center">10-100</td>
-      <td style="text-align:center">50-500</td>
-      <td style="text-align:center">200-2,000</td>
-      <td style="text-align:center">10-100</td>
-      <td style="text-align:center">
-        [Usage-based](https://platform.openai.com/docs/pricing)
-      </td>
-    </tr>
-    <tr>
-      <td>GPT-5.6 Terra</td>
-      <td style="text-align:center">25-200</td>
-      <td style="text-align:center">125-1,000</td>
-      <td style="text-align:center">500-4,000</td>
-      <td style="text-align:center">25-200</td>
-      <td style="text-align:center">
-        [Usage-based](https://platform.openai.com/docs/pricing)
-      </td>
-    </tr>
-    <tr>
-      <td>GPT-5.6 Luna</td>
-      <td style="text-align:center">250-2,000</td>
-      <td style="text-align:center">1,250-10,000</td>
-      <td style="text-align:center">5,000-40,000</td>
-      <td style="text-align:center">250-2,000</td>
-      <td style="text-align:center">
-        [Usage-based](https://platform.openai.com/docs/pricing)
-      </td>
-    </tr>
-    <tr>
-      <td>GPT-5.5</td>
-      <td style="text-align:center">15-80</td>
-      <td style="text-align:center">75-400</td>
-      <td style="text-align:center">300-1,600</td>
-      <td style="text-align:center">15-80</td>
-      <td style="text-align:center">
-        [Usage-based](https://platform.openai.com/docs/pricing)
-      </td>
-    </tr>
-    <tr>
-      <td>GPT-5.4</td>
-      <td style="text-align:center">20-100</td>
-      <td style="text-align:center">100-500</td>
-      <td style="text-align:center">400-2,000</td>
-      <td style="text-align:center">20-100</td>
-      <td style="text-align:center">
-        [Usage-based](https://platform.openai.com/docs/pricing)
-      </td>
-    </tr>
-    <tr>
-      <td>GPT-5.4 mini</td>
-      <td style="text-align:center">60-350</td>
-      <td style="text-align:center">300-1,750</td>
-      <td style="text-align:center">1,200-7,000</td>
-      <td style="text-align:center">60-350</td>
-      <td style="text-align:center">
-        [Usage-based](https://platform.openai.com/docs/pricing)
-      </td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="6" style="text-align:center">
-        Local messages and cloud chats share your plan's usage allowance. Weekly
-        limits may also apply.
-      </td>
-    </tr>
-    <tr>
-      <td colspan="6" style="text-align:center">
-        For Enterprise/Edu users with flexible pricing, there are no fixed rate
-        limits—usage scales with [credits](#credits-overview).
-      </td>
-    </tr>
-    <tr>
-      <td colspan="6" style="text-align:center">
-        Enterprise and Edu plans without flexible pricing have the same per-seat
-        usage limits as Plus for most features.
-      </td>
-    </tr>
-  </tfoot>
-</TableWrapper>
+| Model | Plus | Pro 5x | Pro 20x | Standard Business | API Key |
+| --- | :---: | :---: | :---: | :---: | :---: |
+| GPT-6 Astra | 5-45 | 25-225 | 100-900 | 5-45 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| GPT-5.6 Sol | 10-100 | 50-500 | 200-2,000 | 10-100 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| GPT-5.6 Terra | 25-200 | 125-1,000 | 500-4,000 | 25-200 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| GPT-5.6 Luna | 250-2,000 | 1,250-10,000 | 5,000-40,000 | 250-2,000 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| GPT-5.5 | 15-80 | 75-400 | 300-1,600 | 15-80 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| GPT-5.4 | 20-100 | 100-500 | 400-2,000 | 20-100 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| GPT-5.4 mini | 60-350 | 300-1,750 | 1,200-7,000 | 60-350 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| Local messages and cloud chats share your plan's usage allowance. Weekly limits may also apply. |  |  |  |  |  |
+| For Enterprise/Edu users with flexible pricing, there are no fixed rate limits—usage scales with [credits](#credits-overview). |  |  |  |  |  |
+| Enterprise and Edu plans without flexible pricing have the same per-seat usage limits as Plus for most features. |  |  |  |  |  |
 
 Business ($100) uses the Pro 5x estimates.
 
@@ -549,743 +430,93 @@ efficiently](./prompting.md#use-work-efficiently).
 
 ## Feature availability
 
-<CodexPlanFeatureMatrix
-  client:load
-  data={{
-    plans: [
-      { id: "plus", shortLabel: "Plus", label: "ChatGPT Plus" },
-      { id: "pro", shortLabel: "Pro", label: "ChatGPT Pro" },
-      {
-        id: "business",
-        shortLabel: "Business",
-        label: "ChatGPT Business",
-      },
-      {
-        id: "enterprise",
-        shortLabel: "Enterprise",
-        label: "Enterprise / Education",
-      },
-      { id: "api", shortLabel: "API Key", label: "API Key" },
-    ],
-    sections: [
-      {
-        title: "Access and surfaces",
-        features: [
-          {
-            name: "Codex cloud",
-            href: "/codex/cloud",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "ChatGPT Work on the web",
-            href: "/codex/get-started-with-work",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "ChatGPT desktop app for local chats",
-            href: "/codex/app",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Codex CLI",
-            href: "/codex/cli",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "IDE extension",
-            href: "/codex/ide",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Codex SDK, `codex exec`, and scriptable workflows",
-            shortName: "Codex SDK and scripting",
-            href: "/codex/codex-sdk",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Codex access tokens for trusted automation",
-            shortName: "Automation access tokens",
-            href: "/codex/enterprise/access-tokens",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "ChatGPT for Excel",
-            href: "https://help.openai.com/articles/20001063",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-        ],
-      },
-      {
-        title: "Models and multimodal",
-        features: [
-          {
-            name: "GPT-5.6",
-            href: "/codex/models",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Fast mode",
-            href: "/codex/agent-configuration/speed",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Codex-Spark research preview",
-            href: "/codex/models",
-            availability: {
-              plus: "unavailable",
-              pro: "available",
-              business: "unavailable",
-              enterprise: "unavailable",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Image generation and editing",
-            href: "/codex/image-generation?surface=app",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Voice dictation",
-            href: "/codex/prompting#use-voice-dictation",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "ChatGPT Voice",
-            href: "/codex/features/voice",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Web search",
-            href: "/codex/web-search?surface=app",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-        ],
-      },
-      {
-        title: "Local features",
-        features: [
-          {
-            name: "Local code review with `/review`",
-            shortName: "Local code review",
-            href: "/codex/prompting#do-a-local-code-review",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Auto-review for approval requests",
-            href: "/codex/sandboxing/auto-review",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Sandboxing and permission controls",
-            href: "/codex/permissions",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Project and standalone scheduled tasks",
-            shortName: "Scheduled tasks",
-            href: "/codex/automations",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Scheduled tasks",
-            href: "/codex/automations",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Worktrees and built-in Git tools",
-            shortName: "Built-in Git tools",
-            href: "/codex/environments/git-worktrees",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Local environments and repeatable actions",
-            shortName: "Repeatable actions",
-            href: "/codex/environments/local-environment",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Appshots",
-            href: "/codex/appshots",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "unavailable",
-              api: "available",
-            },
-          },
-        ],
-      },
-      {
-        title: "Browser and remote control",
-        features: [
-          {
-            name: "Built-in browser previews and comments",
-            shortName: "Built-in browser",
-            href: "/codex/browser?surface=app",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Computer Use in the browser",
-            href: "/codex/browser?surface=app#app-computer-use-in-the-browser",
-            availability: {
-              plus: "limited",
-              pro: "limited",
-              business: "limited",
-              enterprise: "limited",
-              api: "limited",
-            },
-          },
-          {
-            name: "Use ChatGPT with Chrome",
-            shortName: "Chrome browser control",
-            href: "/codex/chrome-extension",
-            availability: {
-              plus: "limited",
-              pro: "limited",
-              business: "limited",
-              enterprise: "limited",
-              api: "limited",
-            },
-          },
-          {
-            name: "Computer Use",
-            href: "/codex/computer-use",
-            limitedFootnote: "region",
-            availability: {
-              plus: "limited",
-              pro: "limited",
-              business: "limited",
-              enterprise: "limited",
-              api: "limited",
-            },
-          },
-          {
-            name: "Record & Replay (macOS)",
-            shortName: "Record & Replay",
-            href: "/codex/extend/record-and-replay",
-            limitedFootnote: "region",
-            availability: {
-              plus: "limited",
-              pro: "limited",
-              business: "limited",
-              enterprise: "limited",
-              api: "limited",
-            },
-          },
-          {
-            name: "SSH remote connections",
-            shortName: "SSH remote",
-            href: "/codex/remote-connections#connect-to-an-ssh-host",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Mobile remote control",
-            href: "/codex/remote-connections",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Browser in ChatGPT Web",
-            href: "/codex/browser?surface=web",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-        ],
-      },
-      {
-        title: "Customization and extensions",
-        features: [
-          {
-            name: "Custom instructions with `AGENTS.md`",
-            shortName: "Custom instructions",
-            href: "/codex/agent-configuration/agents-md",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Skills",
-            href: "/codex/build-skills",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Plugins",
-            href: "/codex/plugins",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "limited",
-            },
-            limitedFootnote: "plugins",
-          },
-          {
-            name: "Plugin sharing",
-            href: "https://developers.openai.com/plugins/build/plugins#share-a-local-plugin-with-your-workspace",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Connectors",
-            href: "/codex/plugins",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "MCP",
-            href: "/codex/extend/mcp",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Subagents and custom agents",
-            shortName: "Subagents",
-            href: "/codex/agent-configuration/subagents",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Memories",
-            href: "/codex/customization/memories",
-            availability: {
-              plus: "limited",
-              pro: "limited",
-              business: "limited",
-              enterprise: "limited",
-              api: "limited",
-            },
-          },
-          {
-            name: "Computer History",
-            href: "/codex/customization/computer-history",
-            availability: {
-              plus: "unavailable",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-        ],
-      },
-      {
-        title: "Cloud and integrations",
-        features: [
-          {
-            name: "Codex cloud chats",
-            shortName: "Cloud chats",
-            href: "/codex/cloud",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Cloud environments and setup scripts",
-            shortName: "Cloud environments",
-            href: "/codex/environments/cloud-environment",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Cloud agent internet access controls",
-            shortName: "Internet controls",
-            href: "/codex/cloud/internet-access",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Sites",
-            href: "/codex/sites",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "GitHub issue and PR delegation with `@codex`",
-            shortName: "GitHub delegation",
-            href: "/codex/third-party/github#give-codex-other-tasks",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "GitHub code review and automatic PR reviews",
-            shortName: "GitHub PR reviews",
-            href: "/codex/third-party/github",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Slack cloud integration",
-            shortName: "Slack integration",
-            href: "/codex/third-party/slack",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Linear cloud integration",
-            shortName: "Linear integration",
-            href: "/codex/third-party/linear",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-        ],
-      },
-      {
-        title: "Admin, security, and analytics",
-        features: [
-          {
-            name: "SAML SSO, MFA, and workspace user management",
-            shortName: "Workspace management",
-            href: "/codex/enterprise/admin-setup",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "`requirements.toml` managed config",
-            shortName: "`requirements.toml` config",
-            href: "/codex/enterprise/managed-configuration",
-            availability: {
-              plus: "available",
-              pro: "available",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Cloud-managed config policies",
-            shortName: "Cloud-managed policies",
-            href: "/codex/enterprise/managed-configuration#cloud-managed-requirements",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "available",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "ChatGPT workspace RBAC and custom roles",
-            shortName: "RBAC and roles",
-            href: "/codex/enterprise/roles-and-workspace-permissions",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "unavailable",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "SCIM, EKM, and domain verification",
-            shortName: "SCIM, EKM, and domains",
-            href: "/codex/enterprise/admin-setup#enterprise-grade-security-and-privacy",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "unavailable",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Enterprise retention and residency controls",
-            shortName: "Retention and residency",
-            href: "/codex/enterprise/admin-setup#enterprise-grade-security-and-privacy",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "unavailable",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "No training on API or business data by default",
-            shortName: "No default training",
-            href: "https://openai.com/business-data/",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "available",
-              enterprise: "available",
-              api: "available",
-            },
-          },
-          {
-            name: "Analytics dashboard",
-            href: "/codex/enterprise/workspace-analytics",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "unavailable",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Analytics API",
-            href: "/codex/enterprise/analytics-api",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "unavailable",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Compliance API and audit logs",
-            shortName: "Compliance and audit logs",
-            href: "/codex/enterprise/compliance-api",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "unavailable",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-          {
-            name: "Codex Security for connected GitHub repositories",
-            shortName: "Codex Security",
-            href: "/codex/security",
-            availability: {
-              plus: "unavailable",
-              pro: "unavailable",
-              business: "unavailable",
-              enterprise: "available",
-              api: "unavailable",
-            },
-          },
-        ],
-      },
-    ],
-  }}
-/>
+### Access and surfaces
+
+| Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
+| --- | --- | --- | --- | --- | --- |
+| [Codex cloud](./cloud.md) | Yes | Yes | Yes | Yes | No |
+| [ChatGPT Work on the web](./get-started-with-work.md) | Yes | Yes | Yes | Yes | No |
+| [ChatGPT desktop app for local chats](./app.md) | Yes | Yes | Yes | Yes | Yes |
+| [Codex CLI](https://developers.openai.com/codex/cli) | Yes | Yes | Yes | Yes | Yes |
+| [IDE extension](https://developers.openai.com/codex/ide) | Yes | Yes | Yes | Yes | Yes |
+| [Codex SDK, `codex exec`, and scriptable workflows](./codex-sdk.md) | Yes | Yes | Yes | Yes | Yes |
+| [Codex access tokens for trusted automation](./enterprise/access-tokens.md) | No | No | Yes | Yes | No |
+| [ChatGPT for Excel](https://help.openai.com/articles/20001063) | Yes | Yes | Yes | Yes | No |
+### Models and multimodal
+
+| Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
+| --- | --- | --- | --- | --- | --- |
+| [GPT-5.6](./models.md) | Yes | Yes | Yes | Yes | Yes |
+| [Fast mode](./agent-configuration/speed.md) | Yes | Yes | Yes | Yes | Yes |
+| [Codex-Spark research preview](./models.md) | No | Yes | No | No | No |
+| [Image generation and editing](./image-generation.md) | Yes | Yes | Yes | Yes | Yes |
+| [Voice dictation](./prompting.md#use-voice-dictation) | Yes | Yes | Yes | Yes | No |
+| [ChatGPT Voice](./features/voice.md) | Yes | Yes | Yes | Yes | No |
+| [Web search](./web-search.md) | Yes | Yes | Yes | Yes | Yes |
+### Local features
+
+| Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
+| --- | --- | --- | --- | --- | --- |
+| [Local code review with `/review`](./prompting.md#do-a-local-code-review) | Yes | Yes | Yes | Yes | Yes |
+| [Auto-review for approval requests](./sandboxing/auto-review.md) | Yes | Yes | Yes | Yes | Yes |
+| [Sandboxing and permission controls](./permissions.md) | Yes | Yes | Yes | Yes | Yes |
+| [Project and standalone scheduled tasks](./automations.md) | Yes | Yes | Yes | Yes | Yes |
+| [Scheduled tasks](./automations.md) | Yes | Yes | Yes | Yes | Yes |
+| [Worktrees and built-in Git tools](./environments/git-worktrees.md) | Yes | Yes | Yes | Yes | Yes |
+| [Local environments and repeatable actions](./environments/local-environment.md) | Yes | Yes | Yes | Yes | Yes |
+| [Appshots](./appshots.md) | Yes | Yes | Yes | No | Yes |
+### Browser and remote control
+
+| Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
+| --- | --- | --- | --- | --- | --- |
+| [Built-in browser previews and comments](./browser.md) | Yes | Yes | Yes | Yes | Yes |
+| [Computer Use in the browser](./browser.md) | Limited | Limited | Limited | Limited | Limited |
+| [Use ChatGPT with Chrome](./chrome-extension.md) | Limited | Limited | Limited | Limited | Limited |
+| [Computer Use](./computer-use.md) | Limited | Limited | Limited | Limited | Limited |
+| [Record & Replay (macOS)](./extend/record-and-replay.md) | Limited | Limited | Limited | Limited | Limited |
+| [SSH remote connections](./remote-connections.md#connect-to-an-ssh-host) | Yes | Yes | Yes | Yes | Yes |
+| [Mobile remote control](./remote-connections.md) | Yes | Yes | Yes | Yes | No |
+| [Browser in ChatGPT Web](./browser.md) | Yes | Yes | Yes | Yes | No |
+### Customization and extensions
+
+| Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
+| --- | --- | --- | --- | --- | --- |
+| [Custom instructions with `AGENTS.md`](./agent-configuration/agents-md.md) | Yes | Yes | Yes | Yes | Yes |
+| [Skills](./build-skills.md) | Yes | Yes | Yes | Yes | Yes |
+| [Plugins](./plugins.md) | Yes | Yes | Yes | Yes | Limited |
+| [Plugin sharing](https://developers.openai.com/plugins/build/plugins#share-a-local-plugin-with-your-workspace) | Yes | Yes | Yes | Yes | No |
+| [Connectors](./plugins.md) | Yes | Yes | Yes | Yes | No |
+| [MCP](./extend/mcp.md) | Yes | Yes | Yes | Yes | Yes |
+| [Subagents and custom agents](./agent-configuration/subagents.md) | Yes | Yes | Yes | Yes | Yes |
+| [Memories](./customization/memories.md) | Limited | Limited | Limited | Limited | Limited |
+| [Computer History](./customization/computer-history.md) | No | Yes | Yes | Yes | No |
+### Cloud and integrations
+
+| Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
+| --- | --- | --- | --- | --- | --- |
+| [Codex cloud chats](./cloud.md) | Yes | Yes | Yes | Yes | No |
+| [Cloud environments and setup scripts](./environments/cloud-environment.md) | Yes | Yes | Yes | Yes | No |
+| [Cloud agent internet access controls](./cloud/internet-access.md) | Yes | Yes | Yes | Yes | No |
+| [Sites](./sites.md) | No | No | Yes | Yes | No |
+| [GitHub issue and PR delegation with `@codex`](./third-party/github.md#give-codex-other-tasks) | Yes | Yes | Yes | Yes | No |
+| [GitHub code review and automatic PR reviews](./third-party/github.md) | Yes | Yes | Yes | Yes | No |
+| [Slack cloud integration](./third-party/slack.md) | Yes | Yes | Yes | Yes | No |
+| [Linear cloud integration](./third-party/linear.md) | Yes | Yes | Yes | Yes | No |
+### Admin, security, and analytics
+
+| Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
+| --- | --- | --- | --- | --- | --- |
+| [SAML SSO, MFA, and workspace user management](./enterprise/admin-setup.md) | No | No | Yes | Yes | No |
+| [`requirements.toml` managed config](./enterprise/managed-configuration.md) | Yes | Yes | Yes | Yes | Yes |
+| [Cloud-managed config policies](./enterprise/managed-configuration.md#cloud-managed-requirements) | No | No | Yes | Yes | No |
+| [ChatGPT workspace RBAC and custom roles](./enterprise/roles-and-workspace-permissions.md) | No | No | No | Yes | No |
+| [SCIM, EKM, and domain verification](./enterprise/admin-setup.md#enterprise-grade-security-and-privacy) | No | No | No | Yes | No |
+| [Enterprise retention and residency controls](./enterprise/admin-setup.md#enterprise-grade-security-and-privacy) | No | No | No | Yes | No |
+| [No training on API or business data by default](https://openai.com/business-data/) | No | No | Yes | Yes | Yes |
+| [Analytics dashboard](./enterprise/workspace-analytics.md) | No | No | No | Yes | No |
+| [Analytics API](./enterprise/analytics-api.md) | No | No | No | Yes | No |
+| [Compliance API and audit logs](./enterprise/compliance-api.md) | No | No | No | Yes | No |
+| [Codex Security for connected GitHub repositories](./security.md) | No | No | No | Yes | No |
 
 <div
   id="codex-plan-region-limits"

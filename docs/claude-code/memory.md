@@ -20,7 +20,7 @@ This page covers how to:
 
 ## CLAUDE.md vs auto memory
 
-Claude Code has two complementary memory systems. Both are loaded at the start of every conversation. Claude treats them as context, not enforced configuration. To block an action regardless of what Claude decides, use a [PreToolUse hook](/docs/en/hooks-guide) instead. The more specific and concise your instructions, the more consistently Claude follows them.
+Claude Code has two complementary memory systems. Both are loaded at the start of every conversation. Claude treats them as context, not enforced configuration. To block an action regardless of what Claude decides, use a [PreToolUse hook](./hooks-guide.md) instead. The more specific and concise your instructions, the more consistently Claude follows them.
 
 |                      | CLAUDE.md files                                   | Auto memory                                                                                      |
 | :------------------- | :------------------------------------------------ | :----------------------------------------------------------------------------------------------- |
@@ -32,7 +32,7 @@ Claude Code has two complementary memory systems. Both are loaded at the start o
 
 Use CLAUDE.md files when you want to guide Claude's behavior. Auto memory lets Claude learn from your corrections without manual effort.
 
-Subagents can also maintain their own auto memory. See [subagent configuration](/docs/en/sub-agents#enable-persistent-memory) for details.
+Subagents can also maintain their own auto memory. See [subagent configuration](./sub-agents.md#enable-persistent-memory) for details.
 
 ## CLAUDE.md files
 
@@ -47,7 +47,7 @@ Treat CLAUDE.md as the place you write down what you'd otherwise re-explain. Add
 * You type the same correction or clarification into chat that you typed last session
 * A new teammate would need the same context to be productive
 
-Keep it to facts Claude should hold in every session: build commands, conventions, project layout, "always do X" rules. If an entry is a multi-step procedure or only matters for one part of the codebase, move it to a [skill](/docs/en/skills) or a [path-scoped rule](#organize-rules-with-claude/rules/) instead. The [extension overview](/docs/en/features-overview#build-your-setup-over-time) covers when to use each mechanism.
+Keep it to facts Claude should hold in every session: build commands, conventions, project layout, "always do X" rules. If an entry is a multi-step procedure or only matters for one part of the codebase, move it to a [skill](./skills.md) or a [path-scoped rule](#organize-rules-with-claude/rules/) instead. The [extension overview](./features-overview.md#build-your-setup-over-time) covers when to use each mechanism.
 
 ### Choose where to put CLAUDE.md files
 
@@ -68,15 +68,14 @@ For large projects, you can break instructions into topic-specific files using [
 
 A project CLAUDE.md can be stored in either `./CLAUDE.md` or `./.claude/CLAUDE.md`. Create this file and add instructions that apply to anyone working on the project: build and test commands, coding standards, architectural decisions, naming conventions, and common workflows. These instructions are shared with your team through version control, so focus on project-level standards rather than personal preferences. To confirm the file loaded, run `/context` in a session and check the list under **Memory files**.
 
-<Tip>
-  Run `/init` to generate a starting CLAUDE.md automatically. Claude analyzes your codebase and creates a file with build commands, test instructions, and project conventions it discovers. If a CLAUDE.md already exists, `/init` suggests improvements rather than overwriting it. Refine from there with instructions Claude wouldn't discover on its own.
-
-  Set `CLAUDE_CODE_NEW_INIT=1` to enable an interactive multi-phase flow. `/init` asks which artifacts to set up: CLAUDE.md files, skills, and hooks. It then explores your codebase with a subagent, fills in gaps via follow-up questions, and presents a reviewable proposal before writing any files.
-</Tip>
+> [!TIP]
+> Run `/init` to generate a starting CLAUDE.md automatically. Claude analyzes your codebase and creates a file with build commands, test instructions, and project conventions it discovers. If a CLAUDE.md already exists, `/init` suggests improvements rather than overwriting it. Refine from there with instructions Claude wouldn't discover on its own.
+>
+> Set `CLAUDE_CODE_NEW_INIT=1` to enable an interactive multi-phase flow. `/init` asks which artifacts to set up: CLAUDE.md files, skills, and hooks. It then explores your codebase with a subagent, fills in gaps via follow-up questions, and presents a reviewable proposal before writing any files.
 
 ### Write effective instructions
 
-CLAUDE.md files are loaded into the context window at the start of every session, consuming tokens alongside your conversation. The [context window visualization](/docs/en/context-window) shows where CLAUDE.md loads relative to the rest of the startup context. Because they're context rather than enforced configuration, how you write instructions affects how reliably Claude follows them. Specific, concise, well-structured instructions work best.
+CLAUDE.md files are loaded into the context window at the start of every session, consuming tokens alongside your conversation. The [context window visualization](./context-window.md) shows where CLAUDE.md loads relative to the rest of the startup context. Because they're context rather than enforced configuration, how you write instructions affects how reliably Claude follows them. Specific, concise, well-structured instructions work best.
 
 **Size**: target under 200 lines per CLAUDE.md file. Longer files consume more context and reduce adherence. If your instructions are growing large, use [path-scoped rules](#path-specific-rules) so instructions load only when Claude works with matching files. You can also split content into [imports](#import-additional-files) for organization, though imported files still load and enter the context window at launch.
 
@@ -116,13 +115,12 @@ If you work across multiple git worktrees of the same repository, a gitignored `
 - @~/.claude/my-project-instructions.md
 ```
 
-<Warning>
-  An import in a project-level memory file is external when its path resolves outside your working directory, like the home directory import above. The first time Claude Code encounters external imports in a project, it shows an approval dialog listing the files. If you decline, the imports stay disabled and the dialog doesn't appear again.
-
-  Claude Code shows the dialog to protect you from files other people commit to a shared project. User-scope memory files, such as `~/.claude/CLAUDE.md` and `~/.claude/rules/`, are files you wrote yourself. Except in [Cowork](https://claude.com/product/cowork) sessions on your desktop, Claude Code loads their imports without the dialog and trusts them like the rest of your personal configuration.
-
-  In Cowork sessions on your desktop, Claude Code skips any import in a user-scope file that resolves to a path outside the session's working directory and loads the rest of the file. In those sessions it also skips a `~/.claude/CLAUDE.md` that is itself a symlink or hard link, and a symlinked `~/.claude/rules/` directory or rule file that points outside the working directory.
-</Warning>
+> [!WARNING]
+> An import in a project-level memory file is external when its path resolves outside your working directory, like the home directory import above. The first time Claude Code encounters external imports in a project, it shows an approval dialog listing the files. If you decline, the imports stay disabled and the dialog doesn't appear again.
+>
+> Claude Code shows the dialog to protect you from files other people commit to a shared project. User-scope memory files, such as `~/.claude/CLAUDE.md` and `~/.claude/rules/`, are files you wrote yourself. Except in [Cowork](https://claude.com/product/cowork) sessions on your desktop, Claude Code loads their imports without the dialog and trusts them like the rest of your personal configuration.
+>
+> In Cowork sessions on your desktop, Claude Code skips any import in a user-scope file that resolves to a path outside the session's working directory and loads the rest of the file. In those sessions it also skips a `~/.claude/CLAUDE.md` that is itself a symlink or hard link, and a symlinked `~/.claude/rules/` directory or rule file that points outside the working directory.
 
 ### AGENTS.md
 
@@ -146,9 +144,9 @@ The command prints no output on success. In your next session, run `/context` an
 
 On Windows, creating a symlink requires Administrator privileges or Developer Mode, so use the `@AGENTS.md` import instead.
 
-Running [`/init`](/docs/en/commands) reads Cursor rules, in `.cursor/rules/` or `.cursorrules`, and Copilot rules, in `.github/copilot-instructions.md`, and incorporates the relevant parts into the generated `CLAUDE.md`. With `CLAUDE_CODE_NEW_INIT=1` set, `/init` also reads `AGENTS.md`, `.devin/rules/`, `.windsurf/rules/` or `.windsurfrules`, and `.clinerules`.
+Running [`/init`](./commands.md) reads Cursor rules, in `.cursor/rules/` or `.cursorrules`, and Copilot rules, in `.github/copilot-instructions.md`, and incorporates the relevant parts into the generated `CLAUDE.md`. With `CLAUDE_CODE_NEW_INIT=1` set, `/init` also reads `AGENTS.md`, `.devin/rules/`, `.windsurf/rules/` or `.windsurfrules`, and `.clinerules`.
 
-You can also run [`/import`](/docs/en/commands) to bring a supported coding agent's configuration into Claude Code, which appends a one-time copy of instruction files such as `AGENTS.md` to the matching `CLAUDE.md` and carries over MCP servers, commands, subagents, and skills. Requires Claude Code v2.1.213 or later.
+You can also run [`/import`](./commands.md) to bring a supported coding agent's configuration into Claude Code, which appends a one-time copy of instruction files such as `AGENTS.md` to the matching `CLAUDE.md` and carries over MCP servers, commands, subagents, and skills. Requires Claude Code v2.1.213 or later.
 
 ### How CLAUDE.md files load
 
@@ -158,7 +156,7 @@ All discovered files are concatenated into context rather than overriding each o
 
 Claude also discovers `CLAUDE.md` and `CLAUDE.local.md` files in subdirectories under your current working directory. Instead of loading them at launch, they are included when Claude reads files in those subdirectories.
 
-If you work in a large monorepo where other teams' CLAUDE.md files get picked up, use [`claudeMdExcludes`](#exclude-specific-claude-md-files) to skip them. For the full layout of root and per-directory CLAUDE.md files and rules, see [Monorepos and large repos](/docs/en/large-codebases).
+If you work in a large monorepo where other teams' CLAUDE.md files get picked up, use [`claudeMdExcludes`](#exclude-specific-claude-md-files) to skip them. For the full layout of root and per-directory CLAUDE.md files and rules, see [Monorepos and large repos](./large-codebases.md).
 
 Block-level HTML comments (`<!-- maintainer notes -->`) in CLAUDE.md files are stripped before the content is injected into Claude's context. Use them to leave notes for human maintainers without spending context tokens on them. Comments inside code blocks are preserved. When you open a CLAUDE.md file directly with the Read tool, comments remain visible.
 
@@ -172,15 +170,14 @@ To also load memory files from additional directories, set the `CLAUDE_CODE_ADDI
 CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../shared-config
 ```
 
-This loads `CLAUDE.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md`, and `CLAUDE.local.md` from the additional directory. `CLAUDE.local.md` is skipped if you exclude `local` from [`--setting-sources`](/docs/en/cli-reference).
+This loads `CLAUDE.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md`, and `CLAUDE.local.md` from the additional directory. `CLAUDE.local.md` is skipped if you exclude `local` from [`--setting-sources`](./cli-reference.md).
 
 ### Organize rules with `.claude/rules/`
 
 For larger projects, you can organize instructions into multiple files using the `.claude/rules/` directory. This keeps instructions modular and easier for teams to maintain. Rules can also be [scoped to specific file paths](#path-specific-rules), so they only load into context when Claude works with matching files, reducing noise and saving context space.
 
-<Note>
-  Rules load into context every session or when matching files are opened. For task-specific instructions that don't need to be in context all the time, use [skills](/docs/en/skills) instead, which only load when you invoke them or when Claude determines they're relevant to your prompt.
-</Note>
+> [!NOTE]
+> Rules load into context every session or when matching files are opened. For task-specific instructions that don't need to be in context all the time, use [skills](./skills.md) instead, which only load when you invoke them or when Claude determines they're relevant to your prompt.
 
 #### Set up rules
 
@@ -198,7 +195,7 @@ your-project/
 
 Rules without [`paths` frontmatter](#path-specific-rules) are loaded at launch with the same priority as `.claude/CLAUDE.md`.
 
-Project rules are skipped if you exclude `project` from [`--setting-sources`](/docs/en/cli-reference). Before v2.1.211, rules that load on demand, including path-scoped rules and rules in nested `.claude/rules/` directories, loaded even when `project` was excluded.
+Project rules are skipped if you exclude `project` from [`--setting-sources`](./cli-reference.md). Before v2.1.211, rules that load on demand, including path-scoped rules and rules in nested `.claude/rules/` directories, loaded even when `project` was excluded.
 
 #### Path-specific rules
 
@@ -278,17 +275,14 @@ For organizations deploying Claude Code across teams, you can centralize instruc
 
 Organizations can deploy a centrally managed CLAUDE.md that applies to all users on a machine. This file cannot be excluded by individual settings.
 
-<Steps>
-  <Step title="Create the file at the managed policy location">
-    * macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md`
-    * Linux and WSL: `/etc/claude-code/CLAUDE.md`
-    * Windows: `C:\Program Files\ClaudeCode\CLAUDE.md`
-  </Step>
+1. **Create the file at the managed policy location**
 
-  <Step title="Deploy with your configuration management system">
-    Use MDM, Group Policy, Ansible, or similar tools to distribute the file across developer machines. See [managed settings](/docs/en/managed-settings) for other organization-wide configuration options.
-  </Step>
-</Steps>
+   * macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md`
+   * Linux and WSL: `/etc/claude-code/CLAUDE.md`
+   * Windows: `C:\Program Files\ClaudeCode\CLAUDE.md`
+2. **Deploy with your configuration management system**
+
+   Use MDM, Group Policy, Ansible, or similar tools to distribute the file across developer machines. See [managed settings](./managed-settings.md) for other organization-wide configuration options.
 
 The `claudeMd` key lets you put managed CLAUDE.md content directly inside `managed-settings.json` instead of deploying a separate file.
 
@@ -306,7 +300,7 @@ The example below adds behavioral instructions directly in a managed settings fi
 }
 ```
 
-A managed CLAUDE.md and [managed settings](/docs/en/managed-settings) serve different purposes. Use settings for technical enforcement and CLAUDE.md for behavioral guidance:
+A managed CLAUDE.md and [managed settings](./managed-settings.md) serve different purposes. Use settings for technical enforcement and CLAUDE.md for behavioral guidance:
 
 | Concern                                        | Configure in                                              |
 | :--------------------------------------------- | :-------------------------------------------------------- |
@@ -335,7 +329,7 @@ This example excludes a top-level CLAUDE.md and a rules directory from a parent 
 }
 ```
 
-Patterns are matched against absolute file paths using glob syntax. You can configure `claudeMdExcludes` at any [settings layer](/docs/en/settings#where-settings-live): user, project, local, or managed policy. Arrays merge across layers.
+Patterns are matched against absolute file paths using glob syntax. You can configure `claudeMdExcludes` at any [settings layer](./settings.md#where-settings-live): user, project, local, or managed policy. Arrays merge across layers.
 
 To exclude a rules file you reach through a [symlink](#share-rules-across-projects-with-symlinks), whether the file or its directory is the link, write the pattern against either path: the file's path under `.claude/rules/` or its link target. A pattern that matches either path excludes the file. Before v2.1.239, only a pattern that matched the link target excluded the file.
 
@@ -370,9 +364,9 @@ To disable auto memory via environment variable, set `CLAUDE_CODE_DISABLE_AUTO_M
 
 Each project gets its own memory directory at `~/.claude/projects/<project>/memory/`. The `<project>` path is derived from the git repository, so all worktrees and subdirectories within the same repo share one auto memory directory. Outside a git repo, the project root is used instead.
 
-If you set [`CLAUDE_CODE_PROJECT_DIR_NAME`](/docs/en/sessions#name-the-project-directory-yourself) beside `CLAUDE_CONFIG_DIR`, Claude Code uses that name as the `<project>` directory under `<config dir>/projects/` instead, whichever repository you launch it in, so projects launched with that config directory share one auto memory directory. Requires Claude Code v2.1.234 or later.
+If you set [`CLAUDE_CODE_PROJECT_DIR_NAME`](./sessions.md#name-the-project-directory-yourself) beside `CLAUDE_CONFIG_DIR`, Claude Code uses that name as the `<project>` directory under `<config dir>/projects/` instead, whichever repository you launch it in, so projects launched with that config directory share one auto memory directory. Requires Claude Code v2.1.234 or later.
 
-To store auto memory in a different location, set `autoMemoryDirectory` in your `settings.json`. It is read from any [settings scope](/docs/en/settings#settings-precedence): user, project, local, policy, or `--settings`.
+To store auto memory in a different location, set `autoMemoryDirectory` in your `settings.json`. It is read from any [settings scope](./settings.md#settings-precedence): user, project, local, policy, or `--settings`.
 
 ```json theme={null}
 {
@@ -380,7 +374,7 @@ To store auto memory in a different location, set `autoMemoryDirectory` in your 
 }
 ```
 
-The value must be an absolute path or start with `~/`. When you set it in a project's `.claude/settings.json` or `.claude/settings.local.json`, Claude Code honors it under the same [workspace trust rule as hooks in settings files](/docs/en/permissions#what-runs-before-you-trust-a-folder).
+The value must be an absolute path or start with `~/`. When you set it in a project's `.claude/settings.json` or `.claude/settings.local.json`, Claude Code honors it under the same [workspace trust rule as hooks in settings files](./permissions.md#what-runs-before-you-trust-a-folder).
 
 The directory contains a `MEMORY.md` index and one topic file per memory:
 
@@ -396,19 +390,19 @@ The directory contains a `MEMORY.md` index and one topic file per memory:
 
 Auto memory is machine-local. All worktrees and subdirectories within the same git repository share one auto memory directory. Files are not shared across machines or cloud environments.
 
-Claude Code deletes old session transcripts after the [`cleanupPeriodDays`](/docs/en/settings-reference#cleanupperioddays) retention period, but excludes the memory files in the memory directory from that [retention sweep](/docs/en/claude-directory#cleaned-up-automatically). `MEMORY.md` and topic files stay until you or Claude edits or deletes them.
+Claude Code deletes old session transcripts after the [`cleanupPeriodDays`](./settings-reference.md#cleanupperioddays) retention period, but excludes the memory files in the memory directory from that [retention sweep](./claude-directory.md#cleaned-up-automatically). `MEMORY.md` and topic files stay until you or Claude edits or deletes them.
 
 ### How it works
 
 The first 200 lines of `MEMORY.md`, or the first 25KB, whichever comes first, are loaded at the start of every conversation. Content beyond that threshold is not loaded at session start. Claude keeps `MEMORY.md` concise by moving detailed notes into separate topic files.
 
-After Claude writes to `MEMORY.md`, Claude Code measures the file against the 200-line and 25KB read limits. If the file is near a limit, Claude Code reminds Claude to shorten it: keep one line per entry, move detail into topic files, and merge or drop stale entries. If the file is over a limit, the write still succeeds, but Claude Code returns an [error telling Claude to rewrite the index](/docs/en/errors#memory-index-is-over-its-read-limit), because everything past the limit is dropped on the next load.
+After Claude writes to `MEMORY.md`, Claude Code measures the file against the 200-line and 25KB read limits. If the file is near a limit, Claude Code reminds Claude to shorten it: keep one line per entry, move detail into topic files, and merge or drop stale entries. If the file is over a limit, the write still succeeds, but Claude Code returns an [error telling Claude to rewrite the index](./errors.md#memory-index-is-over-its-read-limit), because everything past the limit is dropped on the next load.
 
 This limit applies only to `MEMORY.md`. Claude Code loads a CLAUDE.md file of up to 4 MiB in full and skips a larger file. Shorter files produce better adherence.
 
 Claude Code doesn't load topic files such as `user_role.md` or `feedback_testing.md` at startup. Claude reads them on demand using its standard file tools when it needs the information.
 
-The main conversation's auto memory isn't loaded into [subagents](/docs/en/sub-agents#what-loads-at-startup); the exception is a [fork](/docs/en/sub-agents#fork-the-current-conversation), which inherits the parent conversation and system prompt. A subagent's own auto memory, enabled with the subagent `memory` field, is a separate directory.
+The main conversation's auto memory isn't loaded into [subagents](./sub-agents.md#what-loads-at-startup); the exception is a [fork](./sub-agents.md#fork-the-current-conversation), which inherits the parent conversation and system prompt. A subagent's own auto memory, enabled with the subagent `memory` field, is a separate directory.
 
 Claude reads and writes memory files during your session. When you see messages like "Saved 2 memories" or "Recalled 2 memories" in the Claude Code interface, Claude is actively updating or reading from `~/.claude/projects/<project>/memory/`.
 
@@ -441,13 +435,12 @@ To debug:
 * Make instructions more specific. "Use 2-space indentation" works better than "format code nicely."
 * Look for conflicting instructions across CLAUDE.md files. If two files give different guidance for the same behavior, Claude may pick one arbitrarily.
 
-If the instruction is something that must run at a specific point, such as before every commit or after each file edit, write it as a [hook](/docs/en/hooks-guide) instead. Hooks execute as shell commands at fixed lifecycle events and apply regardless of what Claude decides to do.
+If the instruction is something that must run at a specific point, such as before every commit or after each file edit, write it as a [hook](./hooks-guide.md) instead. Hooks execute as shell commands at fixed lifecycle events and apply regardless of what Claude decides to do.
 
-For instructions you want at the system prompt level, use [`--append-system-prompt`](/docs/en/cli-reference#system-prompt-flags). You pass it at launch, so it's better suited to scripts and automation than interactive use. For how it behaves when you resume a conversation, see [System prompt flags in resumed conversations](/docs/en/cli-reference#system-prompt-flags-in-resumed-conversations).
+For instructions you want at the system prompt level, use [`--append-system-prompt`](./cli-reference.md#system-prompt-flags). You pass it at launch, so it's better suited to scripts and automation than interactive use. For how it behaves when you resume a conversation, see [System prompt flags in resumed conversations](./cli-reference.md#system-prompt-flags-in-resumed-conversations).
 
-<Tip>
-  Use the [`InstructionsLoaded` hook](/docs/en/hooks#instructionsloaded) to log exactly which instruction files are loaded, when they load, and why. This is useful for debugging path-specific rules or lazy-loaded files in subdirectories.
-</Tip>
+> [!TIP]
+> Use the [`InstructionsLoaded` hook](./hooks.md#instructionsloaded) to log exactly which instruction files are loaded, when they load, and why. This is useful for debugging path-specific rules or lazy-loaded files in subdirectories.
 
 ### I don't know what auto memory saved
 
@@ -457,19 +450,19 @@ Run `/memory` and select the auto memory folder to browse what Claude has saved.
 
 Files over 200 lines consume more context and may reduce adherence. Claude Code skips a file over 4 MiB. Use [path-scoped rules](#path-specific-rules) to load instructions only when Claude works with matching files, or trim content that isn't needed in every session. Splitting into [`@path` imports](#import-additional-files) helps organization but doesn't reduce context, since imported files load at launch.
 
-The [`/doctor`](/docs/en/commands#all-commands) checkup proposes trims for a checked-in CLAUDE.md: it cuts content Claude can derive from the codebase, such as directory layouts, dependency lists, and architecture overviews, and keeps pitfalls, rationale, and conventions that differ from tool defaults. The trim check requires Claude Code v2.1.206 or later.
+The [`/doctor`](./commands.md#all-commands) checkup proposes trims for a checked-in CLAUDE.md: it cuts content Claude can derive from the codebase, such as directory layouts, dependency lists, and architecture overviews, and keeps pitfalls, rationale, and conventions that differ from tool defaults. The trim check requires Claude Code v2.1.206 or later.
 
 ### Instructions seem lost after `/compact`
 
 Project-root CLAUDE.md survives compaction: after `/compact`, Claude re-reads it from disk and re-injects it into the session. Nested CLAUDE.md files in subdirectories and rules with [`paths:` frontmatter](#path-specific-rules) reload as Claude reads files they apply to.
 
-If an instruction disappeared after compaction, it was given only in conversation, lives in a nested CLAUDE.md that hasn't reloaded yet, or is a path-scoped rule that hasn't matched a file since. Add conversation-only instructions to CLAUDE.md to make them persist. See [What survives compaction](/docs/en/context-window#what-survives-compaction) for the full breakdown.
+If an instruction disappeared after compaction, it was given only in conversation, lives in a nested CLAUDE.md that hasn't reloaded yet, or is a path-scoped rule that hasn't matched a file since. Add conversation-only instructions to CLAUDE.md to make them persist. See [What survives compaction](./context-window.md#what-survives-compaction) for the full breakdown.
 
 See [Write effective instructions](#write-effective-instructions) for guidance on size, structure, and specificity.
 
 ## Related resources
 
-* [Debug your configuration](/docs/en/debug-your-config): diagnose why CLAUDE.md or settings aren't taking effect
-* [Skills](/docs/en/skills): package repeatable workflows that load on demand
-* [Settings](/docs/en/settings): configure Claude Code behavior with settings files
-* [Subagent memory](/docs/en/sub-agents#enable-persistent-memory): let subagents maintain their own auto memory
+* [Debug your configuration](./debug-your-config.md): diagnose why CLAUDE.md or settings aren't taking effect
+* [Skills](./skills.md): package repeatable workflows that load on demand
+* [Settings](./settings.md): configure Claude Code behavior with settings files
+* [Subagent memory](./sub-agents.md#enable-persistent-memory): let subagents maintain their own auto memory

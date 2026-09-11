@@ -166,6 +166,6 @@ Press `Esc` to close the Detail Viewer and return back to the primary picker che
 
 Configure settings preferences and review agent autonomy parameters:
 
-*   **[Managing Conversations](/docs/cli/conversations)**: Resume prior sessions and fork branches.
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Customize keyboard hotkeys and visual buffers.
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Configure security parameters and containment lists.
+*   **[Managing Conversations](./conversations.md)**: Resume prior sessions and fork branches.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys and visual buffers.
+*   **[Permissions & Sandbox](./sandbox.md)**: Configure security parameters and containment lists.

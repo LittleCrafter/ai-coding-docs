@@ -6,13 +6,12 @@
 
 > Connect Claude Code to your self-hosted GitHub Enterprise Server instance for web sessions, code review, and plugin marketplaces.
 
-<Note>
-  GitHub Enterprise Server support is available for Team and Enterprise plans.
-</Note>
+> [!NOTE]
+> GitHub Enterprise Server support is available for Team and Enterprise plans.
 
 GitHub Enterprise Server (GHES) support lets your organization use Claude Code with repositories hosted on your self-managed GitHub instance instead of github.com. Once an Owner connects your GHES instance, developers can run web sessions and get automated code reviews without any per-repository configuration. Plugin marketplaces hosted on your instance are also supported; credential requirements vary by surface, as described in [Plugin marketplaces on GHES](#plugin-marketplaces-on-ghes).
 
-For repositories on github.com, see [Claude Code on the web](/docs/en/claude-code-on-the-web) and [Code Review](/docs/en/code-review). To run Claude in your own CI infrastructure, see [GitHub Actions](/docs/en/github-actions).
+For repositories on github.com, see [Claude Code on the web](./claude-code-on-the-web.md) and [Code Review](./code-review.md). To run Claude in your own CI infrastructure, see [GitHub Actions](./github-actions.md).
 
 ## What works with GitHub Enterprise Server
 
@@ -25,7 +24,7 @@ The table below shows which Claude Code features support GHES and any difference
 | Claude Security        | ✅ Supported     | Available in public beta for Enterprise plans at [claude.ai/security](https://claude.ai/security)                              |
 | Teleport sessions      | ✅ Supported     | Move sessions between web and terminal with `--teleport`                                                                       |
 | Plugin marketplaces    | ✅ Supported     | Credential requirements differ by surface. See [Plugin marketplaces on GHES](#plugin-marketplaces-on-ghes)                     |
-| Contribution metrics   | ✅ Supported     | Delivered via webhooks to the [analytics dashboard](/docs/en/analytics)                                                             |
+| Contribution metrics   | ✅ Supported     | Delivered via webhooks to the [analytics dashboard](./analytics.md)                                                             |
 | GitHub Actions         | ✅ Supported     | Requires manual workflow setup; `/install-github-app` is github.com only                                                       |
 | GitHub MCP server      | ❌ Not supported | The GitHub MCP server does not work with GHES instances                                                                        |
 
@@ -35,27 +34,21 @@ An Owner connects your GHES instance to Claude Code once. After that, developers
 
 The guided setup generates a GitHub App manifest and redirects you to your GHES instance to create the app in one click. If your environment blocks the redirect flow, an [alternative manual setup](#manual-setup) is available.
 
-<Steps>
-  <Step title="Open Claude Code admin settings">
-    Go to [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code) and find the GitHub Enterprise Server section.
-  </Step>
+1. **Open Claude Code admin settings**
 
-  <Step title="Start the guided setup">
-    Click **Connect**. Enter a display name of up to 20 characters for the connection and your GHES hostname, for example `github.example.com`. If your GHES instance uses a self-signed or private certificate authority, paste the CA certificate in the optional field.
-  </Step>
+   Go to [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code) and find the GitHub Enterprise Server section.
+2. **Start the guided setup**
 
-  <Step title="Create the GitHub App">
-    Click **Continue to GitHub Enterprise**. Your browser redirects to your GHES instance with a pre-filled app manifest. Review the configuration and click **Create GitHub App**. GHES redirects you back to Claude with the app credentials stored automatically.
-  </Step>
+   Click **Connect**. Enter a display name of up to 20 characters for the connection and your GHES hostname, for example `github.example.com`. If your GHES instance uses a self-signed or private certificate authority, paste the CA certificate in the optional field.
+3. **Create the GitHub App**
 
-  <Step title="Install the app on your repositories">
-    From the GitHub App page on your GHES instance, install the app on the repositories or organizations you want Claude to access. You can start with a subset and add more later.
-  </Step>
+   Click **Continue to GitHub Enterprise**. Your browser redirects to your GHES instance with a pre-filled app manifest. Review the configuration and click **Create GitHub App**. GHES redirects you back to Claude with the app credentials stored automatically.
+4. **Install the app on your repositories**
 
-  <Step title="Enable features">
-    Return to [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code) and enable [Code Review](/docs/en/code-review#set-up-code-review), Claude Security, and [contribution metrics](/docs/en/analytics#enable-contribution-metrics) for your GHES repositories using the same configuration as github.com.
-  </Step>
-</Steps>
+   From the GitHub App page on your GHES instance, install the app on the repositories or organizations you want Claude to access. You can start with a subset and add more later.
+5. **Enable features**
+
+   Return to [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code) and enable [Code Review](./code-review.md#set-up-code-review), Claude Security, and [contribution metrics](./analytics.md#enable-contribution-metrics) for your GHES repositories using the same configuration as github.com.
 
 ### GitHub App permissions
 
@@ -85,7 +78,7 @@ Claude generates the app's webhook URL when you save the connection. After you c
 
 ### Network requirements
 
-For Anthropic-hosted sessions, your GHES instance must be reachable from Anthropic infrastructure so Claude can clone repositories and post review comments. If your GHES instance is behind a firewall, allowlist Anthropic's [outbound IP addresses](https://platform.claude.com/docs/en/api/ip-addresses#outbound-ip-addresses). Sessions in a [self-hosted environment](/docs/en/self-hosted-environments-deploy#configure-git) clone from inside your network instead, unless the runner opts into the [Anthropic git proxy](/docs/en/self-hosted-environments-deploy#use-the-anthropic-git-proxy), which fetches from Anthropic's side and needs the same reachability; the [SCM connector](/docs/en/self-hosted-environments-reference#scm-connector-flags) covers the hosted pre-session flows, such as the repository picker, for a GHES host that's only routable internally.
+For Anthropic-hosted sessions, your GHES instance must be reachable from Anthropic infrastructure so Claude can clone repositories and post review comments. If your GHES instance is behind a firewall, allowlist Anthropic's [outbound IP addresses](https://platform.claude.com/docs/en/api/ip-addresses#outbound-ip-addresses). Sessions in a [self-hosted environment](./self-hosted-environments-deploy.md#configure-git) clone from inside your network instead, unless the runner opts into the [Anthropic git proxy](./self-hosted-environments-deploy.md#use-the-anthropic-git-proxy), which fetches from Anthropic's side and needs the same reachability; the [SCM connector](./self-hosted-environments-reference.md#scm-connector-flags) covers the hosted pre-session flows, such as the repository picker, for a GHES host that's only routable internally.
 
 ## Developer workflow
 
@@ -104,11 +97,11 @@ Then start a web session. Claude detects the GHES host from your git remote and 
 claude --cloud "Add retry logic to the payment webhook handler"
 ```
 
-The session clones your repository from GHES and pushes changes back to a branch. Monitor progress with `/tasks` or at [claude.ai/code](https://claude.ai/code). See [Claude Code on the web](/docs/en/claude-code-on-the-web) for the full cloud session workflow including diff review, auto-fix, and routines.
+The session clones your repository from GHES and pushes changes back to a branch. Monitor progress with `/tasks` or at [claude.ai/code](https://claude.ai/code). See [Claude Code on the web](./claude-code-on-the-web.md) for the full cloud session workflow including diff review, auto-fix, and routines.
 
 ### Teleport sessions to your terminal
 
-Pull a web session into your local terminal with `claude --teleport`. Teleport verifies you're in a checkout of the same GHES repository before fetching the branch and loading the session history. See [teleport requirements](/docs/en/claude-code-on-the-web#teleport-requirements) for details.
+Pull a web session into your local terminal with `claude --teleport`. Teleport verifies you're in a checkout of the same GHES repository before fetching the branch and loading the session history. See [teleport requirements](./claude-code-on-the-web.md#teleport-requirements) for details.
 
 ## Plugin marketplaces on GHES
 
@@ -122,9 +115,8 @@ Host plugin marketplaces on your GHES instance to distribute internal tooling ac
 | claude.ai user settings                     | Anthropic's backend fetches the repository using the submitting user's GitHub Enterprise connection                                                                                                                                  | Their own GitHub Enterprise account connected to Claude                                                                                                                                                   |
 | Claude Code on the web                      | Cloud sessions clone marketplaces inside the session sandbox. The sandbox can reach your GHES instance only when the session's repository is on that same instance, and its git credentials are scoped to the session's repositories | Not reliable for GHES-hosted marketplaces: a different host than the session's repository is not reachable, and even same-instance installs can fail. Use the CLI, managed settings, or claude.ai instead |
 
-<Warning>
-  GitHub Enterprise connections on claude.ai are per user when a marketplace is added from user settings. The [admin setup](#admin-setup) connects your GHES instance to your organization, but it does not connect individual user accounts: each user who adds a GHES marketplace from their own settings must first connect their own GitHub Enterprise account, and one user's connection, including the Owner's, does not cover anyone else. Marketplaces added by an Owner in the organization plugin settings do not put this requirement on users, because ongoing fetches use the organization's GitHub App. The Owner adding the marketplace still needs their own GitHub Enterprise account connected at add time.
-</Warning>
+> [!WARNING]
+> GitHub Enterprise connections on claude.ai are per user when a marketplace is added from user settings. The [admin setup](#admin-setup) connects your GHES instance to your organization, but it does not connect individual user accounts: each user who adds a GHES marketplace from their own settings must first connect their own GitHub Enterprise account, and one user's connection, including the Owner's, does not cover anyone else. Marketplaces added by an Owner in the organization plugin settings do not put this requirement on users, because ongoing fetches use the organization's GitHub App. The Owner adding the marketplace still needs their own GitHub Enterprise account connected at add time.
 
 ### Add a GHES marketplace
 
@@ -142,11 +134,11 @@ SSH URLs work if the machine already trusts your GHES host:
 
 Claude Code runs git non-interactively and rejects SSH connections to hosts that are not in the machine's `known_hosts` file. An HTTPS URL with a git credential helper avoids the `known_hosts` requirement.
 
-See [Create and distribute a plugin marketplace](/docs/en/plugin-marketplaces) for the full guide to building marketplaces.
+See [Create and distribute a plugin marketplace](./plugin-marketplaces.md) for the full guide to building marketplaces.
 
 ### Pre-register GHES marketplaces with managed settings
 
-The `extraKnownMarketplaces` setting pre-registers a marketplace so developers get it without manual setup. It works from [any settings file](/docs/en/settings-reference#extraknownmarketplaces), including a repository's `.claude/settings.json`; managed settings deliver it organization-wide:
+The `extraKnownMarketplaces` setting pre-registers a marketplace so developers get it without manual setup. It works from [any settings file](./settings-reference.md#extraknownmarketplaces), including a repository's `.claude/settings.json`; managed settings deliver it organization-wide:
 
 ```json theme={null}
 {
@@ -166,11 +158,11 @@ Claude Code installs these marketplaces locally: it registers each entry and clo
 * **Use a full git URL.** The `owner/repo` shorthand always resolves to github.com and cannot reference a GHES host.
 * **Prefer HTTPS URLs.** SSH clones fail on machines that do not already trust your GHES host key. An HTTPS URL with your organization's standard git credential helper works on any machine with credentials configured.
 * **Confirm each machine can clone from your GHES host.** If a machine lacks credentials, the marketplace is registered but never installed, and its plugins report as not found instead of prompting for credentials.
-* **Confirm the setting reaches each machine.** A managed settings file only takes effect on machines it's deployed to, for example through your device management system. See [Deploy managed settings](/docs/en/managed-settings#delivery-mechanisms) for file locations.
+* **Confirm the setting reaches each machine.** A managed settings file only takes effect on machines it's deployed to, for example through your device management system. See [Deploy managed settings](./managed-settings.md#delivery-mechanisms) for file locations.
 
 ### Allowlist GHES marketplaces in managed settings
 
-If your organization uses [managed settings](/docs/en/settings) to restrict which marketplaces developers can add, use the `hostPattern` source type to allow all marketplaces from your GHES instance without enumerating each repository. See [Delivery mechanisms](/docs/en/managed-settings#delivery-mechanisms) for file locations on each platform. Add the JSON to your `managed-settings.json` file or equivalent MDM policy:
+If your organization uses [managed settings](./settings.md) to restrict which marketplaces developers can add, use the `hostPattern` source type to allow all marketplaces from your GHES instance without enumerating each repository. See [Delivery mechanisms](./managed-settings.md#delivery-mechanisms) for file locations on each platform. Add the JSON to your `managed-settings.json` file or equivalent MDM policy:
 
 ```json theme={null}
 {
@@ -183,7 +175,7 @@ If your organization uses [managed settings](/docs/en/settings) to restrict whic
 }
 ```
 
-See the [strictKnownMarketplaces](/docs/en/settings-reference#strictknownmarketplaces) and [extraKnownMarketplaces](/docs/en/settings-reference#extraknownmarketplaces) settings reference for the complete schema.
+See the [strictKnownMarketplaces](./settings-reference.md#strictknownmarketplaces) and [extraKnownMarketplaces](./settings-reference.md#extraknownmarketplaces) settings reference for the complete schema.
 
 ## Limitations
 
@@ -212,7 +204,7 @@ On other claude.ai surfaces, a "Repository not found. If it's private, GitHub ac
 
 ### GHES instance not reachable
 
-If reviews or Anthropic-hosted web sessions time out, your GHES instance may not be reachable from Anthropic infrastructure. Confirm your firewall allows inbound connections from Anthropic's [outbound IP addresses](https://platform.claude.com/docs/en/api/ip-addresses#outbound-ip-addresses). Sessions in a [self-hosted environment](/docs/en/self-hosted-environments) reach GHES from inside your network, so for them check the runner's own network path and the [SCM connector](/docs/en/self-hosted-environments-reference#scm-connector-flags) instead.
+If reviews or Anthropic-hosted web sessions time out, your GHES instance may not be reachable from Anthropic infrastructure. Confirm your firewall allows inbound connections from Anthropic's [outbound IP addresses](https://platform.claude.com/docs/en/api/ip-addresses#outbound-ip-addresses). Sessions in a [self-hosted environment](./self-hosted-environments.md) reach GHES from inside your network, so for them check the runner's own network path and the [SCM connector](./self-hosted-environments-reference.md#scm-connector-flags) instead.
 
 ### Session start fails with `Unable to get organization UUID`
 
@@ -222,9 +214,9 @@ Web sessions require a Team or Enterprise organization. Sign in with `/login` us
 
 These pages cover the features referenced throughout this guide in more depth:
 
-* [Claude Code on the web](/docs/en/claude-code-on-the-web): run Claude Code sessions on cloud infrastructure
-* [Code Review](/docs/en/code-review): automated PR reviews
-* [Plugin marketplaces](/docs/en/plugin-marketplaces): build and distribute plugin catalogs
-* [Analytics](/docs/en/analytics): track usage and contribution metrics
-* [Managed settings](/docs/en/settings): organization-wide policy configuration
-* [Network configuration](/docs/en/network-config): firewall and IP allowlist requirements
+* [Claude Code on the web](./claude-code-on-the-web.md): run Claude Code sessions on cloud infrastructure
+* [Code Review](./code-review.md): automated PR reviews
+* [Plugin marketplaces](./plugin-marketplaces.md): build and distribute plugin catalogs
+* [Analytics](./analytics.md): track usage and contribution metrics
+* [Managed settings](./settings.md): organization-wide policy configuration
+* [Network configuration](./network-config.md): firewall and IP allowlist requirements

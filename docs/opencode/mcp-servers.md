@@ -1,7 +1,6 @@
----
-title: MCP servers
-description: Add local and remote MCP tools.
----
+# MCP servers
+
+Add local and remote MCP tools.
 
 You can add external tools to OpenCode using the _Model Context Protocol_, or MCP. OpenCode supports both local and remote servers.
 
@@ -22,7 +21,7 @@ Certain MCP servers, like the GitHub MCP server, tend to add a lot of tokens and
 
 ## Enable
 
-You can define MCP servers in your [OpenCode Config](https://opencode.ai/docs/config/) under `mcp`. Add each MCP with a unique name. You can refer to that MCP by name when prompting the LLM.
+You can define MCP servers in your [OpenCode Config](./config.md) under `mcp`. Add each MCP with a unique name. You can refer to that MCP by name when prompting the LLM.
 
 ```jsonc title="opencode.jsonc" {6}
 {
@@ -62,7 +61,7 @@ To enable a specific server from your organization's remote config, add it to yo
 }
 ```
 
-Your local config values override the remote defaults. See [config precedence](/docs/config#precedence-order) for more details.
+Your local config values override the remote defaults. See [config precedence](./config.md#precedence-order) for more details.
 
 ---
 
@@ -348,7 +347,7 @@ Here we are using the glob pattern `my-mcp*` to disable all MCPs.
 If you have a large number of MCP servers you may want to only enable them per agent and disable them globally. To do this:
 
 1. Disable it as a tool globally.
-2. In your [agent config](/docs/agents#tools), enable the MCP server as a tool.
+2. In your [agent config](./agents.md#tools), enable the MCP server as a tool.
 
 ```json title="opencode.json" {11, 14-18}
 {
@@ -473,7 +472,7 @@ Add `use context7` to your prompts to use Context7 MCP server.
 Configure a Cloudflare Worker script to cache JSON API responses for five minutes. use context7
 ```
 
-Alternatively, you can add something like this to your [AGENTS.md](/docs/rules/).
+Alternatively, you can add something like this to your [AGENTS.md](./rules.md).
 
 ```md title="AGENTS.md"
 When you need to search docs, use `context7` tools.
@@ -503,7 +502,7 @@ Since we named our MCP server `gh_grep`, you can add `use the gh_grep tool` to y
 What's the right way to set a custom domain in an SST Astro component? use the gh_grep tool
 ```
 
-Alternatively, you can add something like this to your [AGENTS.md](/docs/rules/).
+Alternatively, you can add something like this to your [AGENTS.md](./rules.md).
 
 ```md title="AGENTS.md"
 If you are unsure how to do something, use `gh_grep` to search code examples from GitHub.

@@ -1,7 +1,6 @@
----
-title: IDE
-description: The OpenCode extension for VS Code, Cursor, and other IDEs
----
+# IDE
+
+The OpenCode extension for VS Code, Cursor, and other IDEs
 
 OpenCode integrates with VS Code, Cursor, or any IDE that supports a terminal. Just run `opencode` in the terminal to get started.
 
@@ -24,7 +23,7 @@ To install OpenCode on VS Code and popular forks like Cursor, Windsurf, VSCodium
 2. Open the integrated terminal
 3. Run `opencode` - the extension installs automatically
 
-If on the other hand you want to use your own IDE when you run `/editor` or `/export` from the TUI, you'll need to set `export EDITOR="code --wait"`. [Learn more](/docs/tui/#editor-setup).
+If on the other hand you want to use your own IDE when you run `/editor` or `/export` from the TUI, you'll need to set `export EDITOR="code --wait"`. [Learn more](./tui.md#editor-setup).
 
 ---
 

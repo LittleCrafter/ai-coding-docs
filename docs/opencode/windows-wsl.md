@@ -1,7 +1,6 @@
----
-title: Windows (WSL)
-description: Run OpenCode on Windows using WSL for the best experience.
----
+# Windows (WSL)
+
+Run OpenCode on Windows using WSL for the best experience.
 
 While OpenCode can run directly on Windows, we recommend using [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) for the best experience. WSL provides a Linux environment that works seamlessly with OpenCode's features.
 
@@ -20,7 +19,7 @@ While OpenCode can run directly on Windows, we recommend using [Windows Subsyste
 
 2. **Install OpenCode in WSL**
 
-   Once WSL is set up, open your WSL terminal and install OpenCode using one of the [installation methods](/docs/).
+   Once WSL is set up, open your WSL terminal and install OpenCode using one of the [installation methods](./intro.md).
 
    ```bash
    curl -fsSL https://opencode.ai/install | bash

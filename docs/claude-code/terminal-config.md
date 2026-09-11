@@ -16,7 +16,7 @@ Claude Code works in any terminal without configuration. This page is for when s
 * [Display flickers or scrollback jumps](#switch-to-fullscreen-rendering)
 * [You want Vim keys in the prompt](#edit-prompts-with-vim-keybindings)
 
-This page is about getting your terminal to send the right signals to Claude Code. To change which keys Claude Code itself responds to, see [keybindings](/docs/en/keybindings) instead.
+This page is about getting your terminal to send the right signals to Claude Code. To change which keys Claude Code itself responds to, see [keybindings](./keybindings.md) instead.
 
 ## Enter multiline prompts
 
@@ -32,48 +32,46 @@ In most terminals you can also press Shift+Enter, but support varies by terminal
 
 For VS Code, Cursor, Devin Desktop, Alacritty, and Zed, `/terminal-setup` writes a Shift+Enter keybinding into the terminal's configuration file. On the first run you see a confirmation such as `Installed VSCode terminal Shift+Enter key binding`. Existing bindings are left in place; if you see a message such as `VSCode terminal Shift+Enter key binding already configured`, no change was made. Run `/terminal-setup` directly in the host terminal rather than inside tmux or screen, since it needs to write to the host terminal's configuration.
 
-In VS Code, Cursor, and Devin Desktop, `/terminal-setup` also updates two editor settings: it sets `terminal.integrated.gpuAcceleration` to `"off"` to prevent garbled text in the integrated terminal, and it sets `terminal.integrated.mouseWheelScrollSensitivity` for smoother scrolling in [fullscreen mode](/docs/en/fullscreen). To undo the GPU acceleration change, set it back to `"auto"` and reload the editor window.
+In VS Code, Cursor, and Devin Desktop, `/terminal-setup` also updates two editor settings: it sets `terminal.integrated.gpuAcceleration` to `"off"` to prevent garbled text in the integrated terminal, and it sets `terminal.integrated.mouseWheelScrollSensitivity` for smoother scrolling in [fullscreen mode](./fullscreen.md). To undo the GPU acceleration change, set it back to `"auto"` and reload the editor window.
 
 In Zed, `/terminal-setup` updates your `keymap.json` in place:
 
 * If the keymap already has bindings and none of them is a Terminal `shift-enter`, Claude Code first backs it up to a copy in the same directory, such as `keymap.json.1a2b3c4d.bak`, then merges the Shift+Enter binding into your keymap, keeping your other keybindings and comments
-* If Claude Code can't read or parse the keymap, can't back it up, or can't verify the merged result, it [leaves the file unchanged and prints the keybinding block to add yourself](/docs/en/errors#terminal-setup-left-your-zed-keymap-unchanged)
+* If Claude Code can't read or parse the keymap, can't back it up, or can't verify the merged result, it [leaves the file unchanged and prints the keybinding block to add yourself](./errors.md#terminal-setup-left-your-zed-keymap-unchanged)
 
 If you are running inside tmux, Shift+Enter also requires the [tmux configuration below](#configure-tmux) even when the outer terminal supports it.
 
-To bind newline to a different key, or to swap behavior so Enter inserts a newline and Shift+Enter submits, map the `chat:newline` and `chat:submit` actions in your [keybindings file](/docs/en/keybindings).
+To bind newline to a different key, or to swap behavior so Enter inserts a newline and Shift+Enter submits, map the `chat:newline` and `chat:submit` actions in your [keybindings file](./keybindings.md).
 
 ## Enable Option key shortcuts on macOS
 
 Some Claude Code shortcuts use the Option key, such as Option+Enter for a newline or Option+P to switch models. On macOS, most terminals do not send Option as a modifier by default, so these shortcuts do nothing until you enable it. The terminal setting for this is usually labeled "Use Option as Meta Key"; Meta is the historical Unix name for the key now labeled Option or Alt.
 
-<Tabs>
-  <Tab title="Apple Terminal">
-    Open Settings → Profiles → Keyboard and check "Use Option as Meta Key".
+**Apple Terminal**
 
-    If you accepted Claude Code's first-run terminal setup prompt, this is already done. That prompt runs `/terminal-setup` for you, which enables Option as Meta and turns off the audible bell in your Apple Terminal profile.
+Open Settings → Profiles → Keyboard and check "Use Option as Meta Key".
 
-    In [screen reader mode](/docs/en/accessibility), `/terminal-setup` leaves the bell setting unchanged so the terminal bell stays audible. Before v2.1.211, `/terminal-setup` turned the bell off even in screen reader mode. If an earlier run turned the bell off, turn it back on under Settings → Profiles → Advanced → "Audible bell".
-  </Tab>
+If you accepted Claude Code's first-run terminal setup prompt, this is already done. That prompt runs `/terminal-setup` for you, which enables Option as Meta and turns off the audible bell in your Apple Terminal profile.
 
-  <Tab title="iTerm2">
-    Open Settings → Profiles → Keys → General and set Left Option key and Right Option key to "Esc+".
+In [screen reader mode](./accessibility.md), `/terminal-setup` leaves the bell setting unchanged so the terminal bell stays audible. Before v2.1.211, `/terminal-setup` turned the bell off even in screen reader mode. If an earlier run turned the bell off, turn it back on under Settings → Profiles → Advanced → "Audible bell".
 
-    Running `/terminal-setup` in iTerm2 enables "Applications in terminal may access clipboard" under Settings → General → Selection so the `/copy` command can write to your system clipboard. The command detects iTerm2 even when run from inside tmux. Restart iTerm2 for the change to take effect.
-  </Tab>
+**iTerm2**
 
-  <Tab title="VS Code">
-    Add `"terminal.integrated.macOptionIsMeta": true` to your VS Code settings.
-  </Tab>
-</Tabs>
+Open Settings → Profiles → Keys → General and set Left Option key and Right Option key to "Esc+".
+
+Running `/terminal-setup` in iTerm2 enables "Applications in terminal may access clipboard" under Settings → General → Selection so the `/copy` command can write to your system clipboard. The command detects iTerm2 even when run from inside tmux. Restart iTerm2 for the change to take effect.
+
+**VS Code**
+
+Add `"terminal.integrated.macOptionIsMeta": true` to your VS Code settings.
 
 For Ghostty, Kitty, and other terminals, look for an Option-as-Alt or Option-as-Meta setting in the terminal's configuration file.
 
 ## Get a terminal bell or notification
 
-When Claude finishes a task or pauses for a permission prompt, and you appear to be away from the terminal, it fires a notification event. See [when each notification type fires](/docs/en/hooks#notification) for the exact timing. Surfacing this as a terminal bell or desktop notification lets you switch to other work while a long task runs.
+When Claude finishes a task or pauses for a permission prompt, and you appear to be away from the terminal, it fires a notification event. See [when each notification type fires](./hooks.md#notification) for the exact timing. Surfacing this as a terminal bell or desktop notification lets you switch to other work while a long task runs.
 
-By default Claude Code sends a desktop notification only in Ghostty, Kitty, and iTerm2. In other terminals, set [`preferredNotifChannel`](/docs/en/settings-reference#preferrednotifchannel) to `"terminal_bell"` to ring the terminal bell instead, or configure a [Notification hook](#play-a-sound-with-a-notification-hook) for a custom sound or command. The following settings entry turns on the terminal bell:
+By default Claude Code sends a desktop notification only in Ghostty, Kitty, and iTerm2. In other terminals, set [`preferredNotifChannel`](./settings-reference.md#preferrednotifchannel) to `"terminal_bell"` to ring the terminal bell instead, or configure a [Notification hook](#play-a-sound-with-a-notification-hook) for a custom sound or command. The following settings entry turns on the terminal bell:
 
 ```json ~/.claude/settings.json theme={null}
 {
@@ -83,21 +81,18 @@ By default Claude Code sends a desktop notification only in Ghostty, Kitty, and 
 
 The desktop notification reaches your local machine over SSH, so a remote session can still alert you. Ghostty and Kitty forward it to your OS notification center without further setup. iTerm2 requires you to enable forwarding:
 
-<Steps>
-  <Step title="Open iTerm2 notification settings">
-    Go to Settings → Profiles → Terminal.
-  </Step>
+1. **Open iTerm2 notification settings**
 
-  <Step title="Enable alerts">
-    Check "Notification Center Alerts", then click "Filter Alerts" and enable "Send escape sequence-generated alerts".
-  </Step>
-</Steps>
+   Go to Settings → Profiles → Terminal.
+2. **Enable alerts**
+
+   Check "Notification Center Alerts", then click "Filter Alerts" and enable "Send escape sequence-generated alerts".
 
 If notifications still do not appear, confirm that your terminal application has notification permission in your OS settings, and if you are running inside tmux, [enable passthrough](#configure-tmux).
 
 ### Play a sound with a Notification hook
 
-In any terminal you can configure a [Notification hook](/docs/en/hooks-guide#get-notified-when-claude-needs-input) to play a sound or run a custom command when Claude needs your attention. Hooks run alongside the built-in notification rather than replacing it, so terminals that do not receive a desktop notification, such as Warp or the VS Code integrated terminal, can use a hook or set `preferredNotifChannel` to `"terminal_bell"` instead.
+In any terminal you can configure a [Notification hook](./hooks-guide.md#get-notified-when-claude-needs-input) to play a sound or run a custom command when Claude needs your attention. Hooks run alongside the built-in notification rather than replacing it, so terminals that do not receive a desktop notification, such as Warp or the VS Code integrated terminal, can use a hook or set `preferredNotifChannel` to `"terminal_bell"` instead.
 
 The example below plays a system sound on macOS. The linked guide has desktop notification commands for macOS, Linux, and Windows.
 
@@ -115,7 +110,7 @@ The example below plays a system sound on macOS. The linked guide has desktop no
 
 ## Configure tmux
 
-When Claude Code runs inside tmux, two things break by default: Shift+Enter submits instead of inserting a newline, and desktop notifications and the [progress bar](/docs/en/settings-reference#terminalprogressbarenabled) never reach the outer terminal. Add these lines to `~/.tmux.conf`, then run `tmux source-file ~/.tmux.conf` to apply them to the running server:
+When Claude Code runs inside tmux, two things break by default: Shift+Enter submits instead of inserting a newline, and desktop notifications and the [progress bar](./settings-reference.md#terminalprogressbarenabled) never reach the outer terminal. Add these lines to `~/.tmux.conf`, then run `tmux source-file ~/.tmux.conf` to apply them to the running server:
 
 ```bash ~/.tmux.conf theme={null}
 set -g allow-passthrough on
@@ -127,19 +122,19 @@ The `allow-passthrough` line lets notifications and progress updates reach the o
 
 ## Fix Backspace deleting a whole word on Windows
 
-On Windows, Claude Code reads a Backspace that arrives as `^H` as Ctrl+Backspace, which [deletes the previous word](/docs/en/interactive-mode#text-editing), except when `TERM_PROGRAM` is `mintty` or `TERM` is `cygwin`. On macOS and Linux, Claude Code reads it as plain Backspace.
+On Windows, Claude Code reads a Backspace that arrives as `^H` as Ctrl+Backspace, which [deletes the previous word](./interactive-mode.md#text-editing), except when `TERM_PROGRAM` is `mintty` or `TERM` is `cygwin`. On macOS and Linux, Claude Code reads it as plain Backspace.
 
-If each press of Backspace deletes a whole word, your terminal sends `^H` for plain Backspace. Set [`CLAUDE_CODE_BS_AS_CTRL_BACKSPACE=0`](/docs/en/env-vars). Backspace and Ctrl+H then erase one character each. If Ctrl+Backspace erases only one character on macOS or Linux because your terminal sends `^H` for it, set the variable to `1` instead.
+If each press of Backspace deletes a whole word, your terminal sends `^H` for plain Backspace. Set [`CLAUDE_CODE_BS_AS_CTRL_BACKSPACE=0`](./env-vars.md). Backspace and Ctrl+H then erase one character each. If Ctrl+Backspace erases only one character on macOS or Linux because your terminal sends `^H` for it, set the variable to `1` instead.
 
 ## Match the color theme
 
 Use the `/theme` command, or the theme picker in `/config`, to choose a Claude Code theme that matches your terminal. Selecting the auto option detects your terminal's light or dark background, so the theme follows OS appearance changes whenever your terminal does. Claude Code does not control the terminal's own color scheme, which is set by the terminal application.
 
-To customize what appears at the bottom of the interface, configure a [custom status line](/docs/en/statusline) that shows the current model, working directory, git branch, or other context.
+To customize what appears at the bottom of the interface, configure a [custom status line](./statusline.md) that shows the current model, working directory, git branch, or other context.
 
 ### Create a custom theme
 
-In addition to the built-in presets, `/theme` lists any custom themes you have defined and any themes contributed by installed [plugins](/docs/en/plugins-reference#themes). Select **New custom theme…** at the end of the list to create one interactively: you name the theme, then pick individual color tokens to override. Press `Ctrl+E` while a custom theme is highlighted to edit it.
+In addition to the built-in presets, `/theme` lists any custom themes you have defined and any themes contributed by installed [plugins](./plugins-reference.md#themes). Select **New custom theme…** at the end of the list to create one interactively: you name the theme, then pick individual color tokens to override. Press `Ctrl+E` while a custom theme is highlighted to edit it.
 
 Each custom theme is a JSON file in `~/.claude/themes/`. The filename without the `.json` extension is the theme's slug, and selecting the theme stores `custom:<slug>` as your theme preference. The file has three optional fields:
 
@@ -169,172 +164,170 @@ Claude Code watches `~/.claude/themes/` and reloads when a file is added or chan
 
 The reference below covers the tokens you can set in `overrides`. The interactive editor in `/theme` shows the same tokens with a live preview, plus a few single-purpose accents such as onboarding screen colors that are omitted here.
 
-<Accordion title="Color token reference">
-  The following example combines tokens from several of the groups below: the brand accent, the plan mode border, the diff backgrounds, and the message background.
+**Color token reference**
 
-  ```json ~/.claude/themes/midnight.json theme={null}
-  {
-    "name": "Midnight",
-    "base": "dark",
-    "overrides": {
-      "claude": "#a78bfa",
-      "planMode": "#38bdf8",
-      "diffAdded": "#14532d",
-      "diffRemoved": "#7f1d1d",
-      "userMessageBackground": "#1e1b4b"
-    }
+The following example combines tokens from several of the groups below: the brand accent, the plan mode border, the diff backgrounds, and the message background.
+
+```json ~/.claude/themes/midnight.json theme={null}
+{
+  "name": "Midnight",
+  "base": "dark",
+  "overrides": {
+    "claude": "#a78bfa",
+    "planMode": "#38bdf8",
+    "diffAdded": "#14532d",
+    "diffRemoved": "#7f1d1d",
+    "userMessageBackground": "#1e1b4b"
   }
-  ```
+}
+```
 
-  #### Text and accent colors
+#### Text and accent colors
 
-  Control the primary brand accent and the foreground text shades used throughout the interface.
+Control the primary brand accent and the foreground text shades used throughout the interface.
 
-  | Token         | Controls                                                         |
-  | :------------ | :--------------------------------------------------------------- |
-  | `claude`      | Primary brand accent, used for the spinner and assistant label   |
-  | `text`        | Default foreground text                                          |
-  | `inverseText` | Text drawn on top of a colored background, such as status badges |
-  | `inactive`    | Secondary text such as hints, timestamps, and disabled items     |
-  | `subtle`      | Faint borders and de-emphasized secondary text                   |
-  | `suggestion`  | Autocomplete suggestions and selection highlight in pickers      |
-  | `permission`  | Dialog borders, including permission prompts and pickers         |
-  | `remember`    | Memory and `CLAUDE.md` indicators                                |
+| Token         | Controls                                                         |
+| :------------ | :--------------------------------------------------------------- |
+| `claude`      | Primary brand accent, used for the spinner and assistant label   |
+| `text`        | Default foreground text                                          |
+| `inverseText` | Text drawn on top of a colored background, such as status badges |
+| `inactive`    | Secondary text such as hints, timestamps, and disabled items     |
+| `subtle`      | Faint borders and de-emphasized secondary text                   |
+| `suggestion`  | Autocomplete suggestions and selection highlight in pickers      |
+| `permission`  | Dialog borders, including permission prompts and pickers         |
+| `remember`    | Memory and `CLAUDE.md` indicators                                |
 
-  #### Status colors
+#### Status colors
 
-  Signal success, failure, and warning states across messages and indicators.
+Signal success, failure, and warning states across messages and indicators.
 
-  | Token     | Controls                                             |
-  | :-------- | :--------------------------------------------------- |
-  | `success` | Success messages and passing checks                  |
-  | `error`   | Error messages and failures                          |
-  | `warning` | Warnings, caution messages, and the auto mode border |
-  | `merged`  | Merged pull request status                           |
+| Token     | Controls                                             |
+| :-------- | :--------------------------------------------------- |
+| `success` | Success messages and passing checks                  |
+| `error`   | Error messages and failures                          |
+| `warning` | Warnings, caution messages, and the auto mode border |
+| `merged`  | Merged pull request status                           |
 
-  #### Input box and mode indicators
+#### Input box and mode indicators
 
-  Set the input box border color and the accent shown while a permission mode or indicator is active.
+Set the input box border color and the accent shown while a permission mode or indicator is active.
 
-  | Token          | Controls                                                                                                                                                                             |
-  | :------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | `promptBorder` | Input box border in Manual mode                                                                                                                                                      |
-  | `planMode`     | Plan mode accent and border                                                                                                                                                          |
-  | `autoAccept`   | Accept-edits mode accent and border                                                                                                                                                  |
-  | `bashBorder`   | Input box border when entering a `!` shell command                                                                                                                                   |
-  | `ide`          | IDE connection indicator                                                                                                                                                             |
-  | `fastMode`     | Fast mode indicator                                                                                                                                                                  |
-  | `effortUltra`  | The `ultracode` tag on the input box border while [ultracode](/docs/en/model-config#adjust-effort-level) is on. Your override of this color takes effect on Claude Code v2.1.239 or later |
+| Token          | Controls                                                                                                                                                                             |
+| :------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `promptBorder` | Input box border in Manual mode                                                                                                                                                      |
+| `planMode`     | Plan mode accent and border                                                                                                                                                          |
+| `autoAccept`   | Accept-edits mode accent and border                                                                                                                                                  |
+| `bashBorder`   | Input box border when entering a `!` shell command                                                                                                                                   |
+| `ide`          | IDE connection indicator                                                                                                                                                             |
+| `fastMode`     | Fast mode indicator                                                                                                                                                                  |
+| `effortUltra`  | The `ultracode` tag on the input box border while [ultracode](./model-config.md#adjust-effort-level) is on. Your override of this color takes effect on Claude Code v2.1.239 or later |
 
-  #### Diff rendering
+#### Diff rendering
 
-  Color added and removed code in file edits and reviews.
+Color added and removed code in file edits and reviews.
 
-  | Token               | Controls                                                                      |
-  | :------------------ | :---------------------------------------------------------------------------- |
-  | `diffAdded`         | Background of added lines                                                     |
-  | `diffRemoved`       | Background of removed lines                                                   |
-  | `diffAddedDimmed`   | Background of added lines in the dimmed diff shown after you reject an edit   |
-  | `diffRemovedDimmed` | Background of removed lines in the dimmed diff shown after you reject an edit |
-  | `diffAddedWord`     | Word-level highlight within an added line                                     |
-  | `diffRemovedWord`   | Word-level highlight within a removed line                                    |
+| Token               | Controls                                                                      |
+| :------------------ | :---------------------------------------------------------------------------- |
+| `diffAdded`         | Background of added lines                                                     |
+| `diffRemoved`       | Background of removed lines                                                   |
+| `diffAddedDimmed`   | Background of added lines in the dimmed diff shown after you reject an edit   |
+| `diffRemovedDimmed` | Background of removed lines in the dimmed diff shown after you reject an edit |
+| `diffAddedWord`     | Word-level highlight within an added line                                     |
+| `diffRemovedWord`   | Word-level highlight within a removed line                                    |
 
-  #### Fullscreen mode
+#### Fullscreen mode
 
-  Claude Code paints `userMessageBackground`, `bashMessageBackgroundColor`, and `memoryBackgroundColor` in both the default and fullscreen renderers. It uses `userMessageBackgroundHover` and `selectionBg` only in [fullscreen rendering mode](/docs/en/fullscreen).
+Claude Code paints `userMessageBackground`, `bashMessageBackgroundColor`, and `memoryBackgroundColor` in both the default and fullscreen renderers. It uses `userMessageBackgroundHover` and `selectionBg` only in [fullscreen rendering mode](./fullscreen.md).
 
-  | Token                        | Controls                                                      |
-  | :--------------------------- | :------------------------------------------------------------ |
-  | `userMessageBackground`      | Background behind your messages in the transcript             |
-  | `userMessageBackgroundHover` | Background behind a message while hovered or expanded         |
-  | `bashMessageBackgroundColor` | Background behind `!` shell command entries in the transcript |
-  | `memoryBackgroundColor`      | Background behind `#` memory entries in the transcript        |
-  | `selectionBg`                | Background of text selected with the mouse                    |
+| Token                        | Controls                                                      |
+| :--------------------------- | :------------------------------------------------------------ |
+| `userMessageBackground`      | Background behind your messages in the transcript             |
+| `userMessageBackgroundHover` | Background behind a message while hovered or expanded         |
+| `bashMessageBackgroundColor` | Background behind `!` shell command entries in the transcript |
+| `memoryBackgroundColor`      | Background behind `#` memory entries in the transcript        |
+| `selectionBg`                | Background of text selected with the mouse                    |
 
-  #### Usage meter and speaker labels
+#### Usage meter and speaker labels
 
-  Adjust the bar shown in the `/usage` view and the labels that distinguish your messages from Claude's.
+Adjust the bar shown in the `/usage` view and the labels that distinguish your messages from Claude's.
 
-  | Token              | Controls                                          |
-  | :----------------- | :------------------------------------------------ |
-  | `rate_limit_fill`  | Filled portion of the usage meter                 |
-  | `rate_limit_empty` | Unfilled portion of the usage meter               |
-  | `briefLabelYou`    | Color of the `You` label on your messages         |
-  | `briefLabelClaude` | Color of the `Claude` label on assistant messages |
+| Token              | Controls                                          |
+| :----------------- | :------------------------------------------------ |
+| `rate_limit_fill`  | Filled portion of the usage meter                 |
+| `rate_limit_empty` | Unfilled portion of the usage meter               |
+| `briefLabelYou`    | Color of the `You` label on your messages         |
+| `briefLabelClaude` | Color of the `Claude` label on assistant messages |
 
-  #### Shimmer variants and subagent colors
+#### Shimmer variants and subagent colors
 
-  Several tokens have a paired shimmer variant that supplies the lighter color used in the spinner's animated gradient. Override the shimmer alongside its base token if the animation looks mismatched.
+Several tokens have a paired shimmer variant that supplies the lighter color used in the spinner's animated gradient. Override the shimmer alongside its base token if the animation looks mismatched.
 
-  * `claude` and `claudeShimmer`
-  * `warning` and `warningShimmer`
-  * `permission` and `permissionShimmer`
-  * `promptBorder` and `promptBorderShimmer`
-  * `inactive` and `inactiveShimmer`
-  * `fastMode` and `fastModeShimmer`
+* `claude` and `claudeShimmer`
+* `warning` and `warningShimmer`
+* `permission` and `permissionShimmer`
+* `promptBorder` and `promptBorderShimmer`
+* `inactive` and `inactiveShimmer`
+* `fastMode` and `fastModeShimmer`
 
-  Each [subagent](/docs/en/sub-agents) and parallel task is shown in one of eight named colors so you can tell them apart in the transcript. The token names follow the pattern `<color>_FOR_SUBAGENTS_ONLY`, where `<color>` is `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, or `cyan`. Override these to change what each named color looks like. For example, a subagent with `color: blue` in its definition is drawn using the `blue_FOR_SUBAGENTS_ONLY` value.
+Each [subagent](./sub-agents.md) and parallel task is shown in one of eight named colors so you can tell them apart in the transcript. The token names follow the pattern `<color>_FOR_SUBAGENTS_ONLY`, where `<color>` is `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, or `cyan`. Override these to change what each named color looks like. For example, a subagent with `color: blue` in its definition is drawn using the `blue_FOR_SUBAGENTS_ONLY` value.
 
-  Claude Code renders the [`ultrathink`](/docs/en/model-config#use-ultrathink-for-one-off-deep-reasoning) keyword in the prompt input with a seven-color rainbow gradient. The token names follow the pattern `rainbow_<color>` and `rainbow_<color>_shimmer`, where `<color>` is `red`, `orange`, `yellow`, `green`, `blue`, `indigo`, or `violet`.
-</Accordion>
+Claude Code renders the [`ultrathink`](./model-config.md#use-ultrathink-for-one-off-deep-reasoning) keyword in the prompt input with a seven-color rainbow gradient. The token names follow the pattern `rainbow_<color>` and `rainbow_<color>_shimmer`, where `<color>` is `red`, `orange`, `yellow`, `green`, `blue`, `indigo`, or `violet`.
 
 ## Switch to fullscreen rendering
 
-In [screen reader mode](/docs/en/accessibility), this section doesn't apply. Claude Code always renders as plain scrolling text except in attached [background sessions](/docs/en/agent-view), and if you run `/tui fullscreen` in any other session, Claude Code prints an explanation instead of switching.
+In [screen reader mode](./accessibility.md), this section doesn't apply. Claude Code always renders as plain scrolling text except in attached [background sessions](./agent-view.md), and if you run `/tui fullscreen` in any other session, Claude Code prints an explanation instead of switching.
 
-If the display flickers or the scroll position jumps while Claude is working, switch to [fullscreen rendering mode](/docs/en/fullscreen). In this mode you scroll with the mouse or PageUp inside Claude Code rather than with your terminal's native scrollback; see the [fullscreen page](/docs/en/fullscreen#search-and-review-the-conversation) for how to search and copy.
+If the display flickers or the scroll position jumps while Claude is working, switch to [fullscreen rendering mode](./fullscreen.md). In this mode you scroll with the mouse or PageUp inside Claude Code rather than with your terminal's native scrollback; see the [fullscreen page](./fullscreen.md#search-and-review-the-conversation) for how to search and copy.
 
-If flicker is the only problem and your terminal supports synchronized output but isn't auto-detected, such as Emacs `eat`, set [`CLAUDE_CODE_FORCE_SYNC_OUTPUT=1`](/docs/en/env-vars) to stop the flicker without changing renderers.
+If flicker is the only problem and your terminal supports synchronized output but isn't auto-detected, such as Emacs `eat`, set [`CLAUDE_CODE_FORCE_SYNC_OUTPUT=1`](./env-vars.md) to stop the flicker without changing renderers.
 
-Run `/tui fullscreen` to switch and save the preference. Your conversation relaunches intact and future sessions start in fullscreen unless a [fullscreen start fails](/docs/en/fullscreen#fullscreen-renderer-didnt-finish-starting). You can also set the `CLAUDE_CODE_NO_FLICKER` environment variable before starting Claude Code:
+Run `/tui fullscreen` to switch and save the preference. Your conversation relaunches intact and future sessions start in fullscreen unless a [fullscreen start fails](./fullscreen.md#fullscreen-renderer-didnt-finish-starting). You can also set the `CLAUDE_CODE_NO_FLICKER` environment variable before starting Claude Code:
 
-<CodeGroup>
-  ```bash Bash and Zsh theme={null}
-  CLAUDE_CODE_NO_FLICKER=1 claude
-  ```
+```bash Bash and Zsh theme={null}
+CLAUDE_CODE_NO_FLICKER=1 claude
+```
 
-  ```powershell PowerShell theme={null}
-  $env:CLAUDE_CODE_NO_FLICKER = "1"; claude
-  ```
+```powershell PowerShell theme={null}
+$env:CLAUDE_CODE_NO_FLICKER = "1"; claude
+```
 
-  ```json ~/.claude/settings.json theme={null}
-  {
-    "env": {
-      "CLAUDE_CODE_NO_FLICKER": "1"
-    }
+```json ~/.claude/settings.json theme={null}
+{
+  "env": {
+    "CLAUDE_CODE_NO_FLICKER": "1"
   }
-  ```
-</CodeGroup>
+}
+```
 
 ## Paste large content
 
 When you paste more than 800 characters or more than three lines into the prompt, Claude Code collapses the input to a placeholder such as `[Pasted text #1 +120 lines]` so the input box stays usable. In a terminal window shorter than 12 rows the line limit drops, so Claude Code collapses a three-line paste at 11 rows and any multi-line paste at 10 rows or fewer. Claude Code still sends the full content when you submit.
 
-When you delete with a word or line shortcut such as `Ctrl+W` or `Ctrl+K`, or with a vim delete through an `f`/`t` motion such as `df]`, and the deleted range reaches inside a placeholder, Claude Code removes the placeholder whole. You can paste the deletion back to restore it, with [`Ctrl+Y`](/docs/en/interactive-mode#text-editing) after a word or line shortcut, or with [`p` in NORMAL mode](/docs/en/interactive-mode#editing-normal-mode) after a vim delete.
+When you delete with a word or line shortcut such as `Ctrl+W` or `Ctrl+K`, or with a vim delete through an `f`/`t` motion such as `df]`, and the deleted range reaches inside a placeholder, Claude Code removes the placeholder whole. You can paste the deletion back to restore it, with [`Ctrl+Y`](./interactive-mode.md#text-editing) after a word or line shortcut, or with [`p` in NORMAL mode](./interactive-mode.md#editing-normal-mode) after a vim delete.
 
-Claude Code keeps the collapsed content under `~/.claude/paste-cache/`, so when you recall a prompt from [command history](/docs/en/interactive-mode#command-history) and resubmit it, Claude Code sends the full pasted content again, including in a later session, until the retention sweep removes the cache file.
+Claude Code keeps the collapsed content under `~/.claude/paste-cache/`, so when you recall a prompt from [command history](./interactive-mode.md#command-history) and resubmit it, Claude Code sends the full pasted content again, including in a later session, until the retention sweep removes the cache file.
 
-Claude Code deletes cache files older than [`cleanupPeriodDays`](/docs/en/settings-reference#cleanupperioddays), following the [retention sweep rules](/docs/en/claude-directory#cleaned-up-automatically), so a recalled prompt can reference pasted text that no longer exists. When you submit such a prompt, Claude Code never sends the literal `[Pasted text #N]` string, and shows a notification naming the missing paste:
+Claude Code deletes cache files older than [`cleanupPeriodDays`](./settings-reference.md#cleanupperioddays), following the [retention sweep rules](./claude-directory.md#cleaned-up-automatically), so a recalled prompt can reference pasted text that no longer exists. When you submit such a prompt, Claude Code never sends the literal `[Pasted text #N]` string, and shows a notification naming the missing paste:
 
 * In a plain prompt with text remaining, Claude Code removes the placeholder and sends the remaining text.
-* In a [shell mode](/docs/en/interactive-mode#shell-mode-with-prefix) command or a `/` command, where the removal would change what runs, and in any prompt the removal leaves empty, Claude Code cancels the submission and keeps the original text in the input, with the placeholder still in it. Delete the placeholder or edit the command, then resubmit.
+* In a [shell mode](./interactive-mode.md#shell-mode-with-prefix) command or a `/` command, where the removal would change what runs, and in any prompt the removal leaves empty, Claude Code cancels the submission and keeps the original text in the input, with the placeholder still in it. Delete the placeholder or edit the command, then resubmit.
 
 The VS Code integrated terminal can drop characters from very large pastes before they reach Claude Code, so prefer file-based workflows there. For very large inputs such as entire files or long logs, write the content to a file and ask Claude to read it instead of pasting. This keeps the conversation transcript readable and lets Claude reference the file by path in later turns.
 
 ## Edit prompts with Vim keybindings
 
-Claude Code includes a Vim-style editing mode for the prompt input. Enable it through `/config` → Editor mode, or by setting [`editorMode`](/docs/en/settings-reference#editormode) to `"vim"` in `~/.claude/settings.json`. Set Editor mode back to `normal` to turn it off.
+Claude Code includes a Vim-style editing mode for the prompt input. Enable it through `/config` → Editor mode, or by setting [`editorMode`](./settings-reference.md#editormode) to `"vim"` in `~/.claude/settings.json`. Set Editor mode back to `normal` to turn it off.
 
-Vim mode supports a subset of NORMAL- and VISUAL-mode motions and operators, such as `hjkl` navigation, `v`/`V` selection, and `d`/`c`/`y` with text objects. See the [Vim editor mode reference](/docs/en/interactive-mode#vim-editor-mode) for the full key table.
+Vim mode supports a subset of NORMAL- and VISUAL-mode motions and operators, such as `hjkl` navigation, `v`/`V` selection, and `d`/`c`/`y` with text objects. See the [Vim editor mode reference](./interactive-mode.md#vim-editor-mode) for the full key table.
 
-Vim motions aren't remappable through the keybindings file. To map a two-key INSERT-mode sequence such as `jj` to Escape, set [`vimInsertModeRemaps`](/docs/en/interactive-mode#remap-insert-mode-key-sequences) in your user settings.
+Vim motions aren't remappable through the keybindings file. To map a two-key INSERT-mode sequence such as `jj` to Escape, set [`vimInsertModeRemaps`](./interactive-mode.md#remap-insert-mode-key-sequences) in your user settings.
 
 Pressing Enter still submits your prompt in INSERT mode, unlike standard Vim. Use `o` or `O` in NORMAL mode, or Ctrl+J, to insert a newline instead.
 
 ## Related resources
 
-* [Interactive mode](/docs/en/interactive-mode): full keyboard shortcut reference and the Vim key table
-* [Keybindings](/docs/en/keybindings): remap any Claude Code shortcut, including Enter and Shift+Enter
-* [Fullscreen rendering](/docs/en/fullscreen): details on scrolling, search, and copy in fullscreen mode
-* [Hooks guide](/docs/en/hooks-guide): more Notification hook examples for Linux and Windows
-* [Troubleshooting](/docs/en/troubleshooting): fixes for issues outside terminal configuration
+* [Interactive mode](./interactive-mode.md): full keyboard shortcut reference and the Vim key table
+* [Keybindings](./keybindings.md): remap any Claude Code shortcut, including Enter and Shift+Enter
+* [Fullscreen rendering](./fullscreen.md): details on scrolling, search, and copy in fullscreen mode
+* [Hooks guide](./hooks-guide.md): more Notification hook examples for Linux and Windows
+* [Troubleshooting](./troubleshooting.md): fixes for issues outside terminal configuration

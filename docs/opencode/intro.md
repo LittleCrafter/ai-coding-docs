@@ -1,9 +1,8 @@
----
-title: Intro
-description: Get started with OpenCode.
----
+# Intro
 
-[**OpenCode**](/) is an open source AI coding agent. It's available as a terminal-based interface, desktop app, or IDE extension.
+Get started with OpenCode.
+
+[**OpenCode**](https://opencode.ai/) is an open source AI coding agent. It's available as a terminal-based interface, desktop app, or IDE extension.
 
 ![OpenCode TUI with the opencode theme](assets/lander/screenshot.png)
 
@@ -39,27 +38,27 @@ You can also install it with the following commands:
 
 **npm**
 
-      ```bash
-      npm install -g opencode-ai
-      ```
+  ```bash
+  npm install -g opencode-ai
+  ```
 
 **Bun**
 
-        ```bash
-        bun install -g opencode-ai
-        ```
+  ```bash
+  bun install -g opencode-ai
+  ```
 
 **pnpm**
 
-        ```bash
-        pnpm install -g opencode-ai
-        ```
+  ```bash
+  pnpm install -g opencode-ai
+  ```
 
 **Yarn**
 
-        ```bash
-        yarn global add opencode-ai
-        ```
+  ```bash
+  yarn global add opencode-ai
+  ```
 
 - **Using Homebrew on macOS and Linux**
 
@@ -81,7 +80,7 @@ You can also install it with the following commands:
 > [!TIP]
 > **Recommended: Use WSL**
 >
-> For the best experience on Windows, we recommend using [Windows Subsystem for Linux (WSL)](/docs/windows-wsl). It provides better performance and full compatibility with OpenCode's features.
+> For the best experience on Windows, we recommend using [Windows Subsystem for Linux (WSL)](./windows-wsl.md). It provides better performance and full compatibility with OpenCode's features.
 
 - **Using Chocolatey**
 
@@ -123,7 +122,7 @@ You can also grab the binary from the [Releases](https://github.com/anomalyco/op
 
 With OpenCode you can use any LLM provider by configuring their API keys.
 
-If you are new to using LLM providers, we recommend using [OpenCode Zen](/docs/zen).
+If you are new to using LLM providers, we recommend using [OpenCode Zen](./zen.md).
 It's a curated list of models that have been tested and verified by the OpenCode
 team.
 
@@ -144,7 +143,7 @@ team.
    └ enter
    ```
 
-Alternatively, you can select one of the other providers. [Learn more](/docs/providers#directory).
+Alternatively, you can select one of the other providers. [Learn more](./providers.md#directory).
 
 ---
 
@@ -217,7 +216,7 @@ You can ask OpenCode to add new features to your project. Though we first recomm
    Switch to it using the **Tab** key. You'll see an indicator for this in the lower right corner.
 
    ```bash frame="none" title="Switch to Plan mode"
-
+   <TAB>
    ```
 
    Now let's describe what we want it to do.
@@ -256,7 +255,7 @@ You can ask OpenCode to add new features to your project. Though we first recomm
    hitting the **Tab** key again.
 
    ```bash frame="none"
-
+   <TAB>
    ```
 
    And asking it to make the changes.
@@ -321,7 +320,7 @@ Or you **can redo** the changes using the `/redo` command.
 ## Share
 
 The conversations that you have with OpenCode can be [shared with your
-team](/docs/share).
+team](./share.md).
 
 ```bash frame="none"
 /share
@@ -340,4 +339,4 @@ Here's an [example conversation](https://opencode.ai/s/4XP1fce5) with OpenCode.
 
 And that's it! You are now a pro at using OpenCode.
 
-To make it your own, we recommend [picking a theme](/docs/themes), [customizing the keybinds](/docs/keybinds), [configuring code formatters](/docs/formatters), [creating custom commands](/docs/commands), or playing around with the [OpenCode config](/docs/config).
+To make it your own, we recommend [picking a theme](./themes.md), [customizing the keybinds](./keybinds.md), [configuring code formatters](./formatters.md), [creating custom commands](./commands.md), or playing around with the [OpenCode config](./config.md).

@@ -103,7 +103,7 @@ Customize the visual experience of the TUI:
 Configure integrations with your host environment:
 
 *   **Editor (`editor`)**: The text editor used to view artifacts or compose prompts (via `Ctrl+G`). Defaults to `auto` (respects `$EDITOR`), but can be set to `vim`, `emacs`, or others.
-*   **Editor Mode (`editorMode`)**: The editing model used inside the CLI prompt itself. Defaults to `default` (flat text editing); set it to `vim` for modal editing. See [Vim Editor Mode](/docs/cli/vim-editor-mode). This is independent of the `editor` setting above, which only selects an external program.
+*   **Editor Mode (`editorMode`)**: The editing model used inside the CLI prompt itself. Defaults to `default` (flat text editing); set it to `vim` for modal editing. See [Vim Editor Mode](./vim-editor-mode.md). This is independent of the `editor` setting above, which only selects an external program.
 *   **Notifications (`notifications`)**: When enabled (`on`), triggers a system desktop notification and a terminal bell chime when a long-running task completes or requires your attention.
 
 ### AI Credits & Feedback
@@ -119,8 +119,8 @@ Manage usage, tips, and telemetry:
 
 For advanced TUI environment integrations, you can toggle active metrics or deploy custom scripts to generate dynamic status bars and modify your terminal window titles:
 
-*   **[Status Line Customization](/docs/cli/commands/statusline)**: Learn how to manage the status indicator panel and construct custom formatted status line shell scripts.
-*   **[Terminal Title Customization](/docs/cli/commands/title)**: Learn how to toggle window title outputs and pipe live agent states into your window headers.
+*   **[Status Line Customization](./commands/statusline.md)**: Learn how to manage the status indicator panel and construct custom formatted status line shell scripts.
+*   **[Terminal Title Customization](./commands/title.md)**: Learn how to toggle window title outputs and pipe live agent states into your window headers.
 
 ## Keybindings configuration
 
@@ -164,6 +164,6 @@ rm ~/.gemini/antigravity-cli/keybindings.json
 
 Now that you have configured your environment, review security controls and extensibility options:
 
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Manage secure execution containment boundaries.
-*   **[Plugins & Skills](/docs/cli/plugins)**: Create your own custom skills and import legacy plugins.
-*   **[CLI Reference](/docs/cli/reference)**: Access quick reference sheets listing all configuration options, commands, and default key maps.
+*   **[Permissions & Sandbox](./sandbox.md)**: Manage secure execution containment boundaries.
+*   **[Plugins & Skills](./plugins.md)**: Create your own custom skills and import legacy plugins.
+*   **[CLI Reference](./reference.md)**: Access quick reference sheets listing all configuration options, commands, and default key maps.

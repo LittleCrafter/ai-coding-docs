@@ -58,25 +58,23 @@ export const ContactSalesCard = ({surface}) => {
   .cc-cs-actions { width: 100%; }
 }
 `;
-  return <div className="cc-cs not-prose">
+  return <div>
       <style>{STYLES}</style>
-      <div className="cc-cs-card">
-        <div className="cc-cs-text">
+      <div>
+        <div>
           <strong>Deploying Claude Code across your organization?</strong> Talk to sales about enterprise plans, SSO, and centralized billing.
         </div>
-        <div className="cc-cs-actions">
-          <a href={`https://claude.com/pricing?${utm('view_plans')}#plans-business`} className="cc-cs-btn-ghost">
+        <div>
+          <a href={`https://claude.com/pricing?${utm('view_plans')}#plans-business`}>
             View plans
           </a>
-          <a href={`https://claude.com/contact-sales?${utm('contact_sales')}`} className="cc-cs-btn-clay">
+          <a href={`https://claude.com/contact-sales?${utm('contact_sales')}`}>
             Contact sales {iconArrowRight()}
           </a>
         </div>
       </div>
     </div>;
 };
-
-<ContactSalesCard surface="foundry" />
 
 ## Prerequisites
 
@@ -86,9 +84,8 @@ Before configuring Claude Code with Microsoft Foundry, ensure you have:
 * RBAC permissions to create Microsoft Foundry resources and deployments
 * Azure CLI installed and configured (optional - only needed if you don't have another mechanism for getting credentials)
 
-<Note>
-  If you are deploying Claude Code to multiple users, [pin your model versions](#4-pin-model-versions) before rolling out.
-</Note>
+> [!NOTE]
+> If you are deploying Claude Code to multiple users, [pin your model versions](#4-pin-model-versions) before rolling out.
 
 ## Setup
 
@@ -144,9 +141,8 @@ export ANTHROPIC_FOUNDRY_AUTH_TOKEN=your-entra-access-token
 
 `ANTHROPIC_FOUNDRY_AUTH_TOKEN` takes precedence over `ANTHROPIC_FOUNDRY_API_KEY` and over the default credential chain.
 
-<Note>
-  When using Microsoft Foundry, the `/logout` command is unavailable since authentication is handled through Azure credentials.
-</Note>
+> [!NOTE]
+> When using Microsoft Foundry, the `/logout` command is unavailable since authentication is handled through Azure credentials.
 
 ### 3. Configure Claude Code
 
@@ -164,9 +160,8 @@ export ANTHROPIC_FOUNDRY_RESOURCE={resource}
 
 ### 4. Pin model versions
 
-<Warning>
-  Pin specific model versions for every deployment. Without pinning, model aliases such as `sonnet` and `opus` resolve to Claude Code's built-in default for Microsoft Foundry, which can lag the newest release and may not yet be available in your account. Microsoft Foundry has no startup model check, so requests fail when the default is unavailable. When you create Azure deployments, select a specific model version rather than "auto-update to latest."
-</Warning>
+> [!WARNING]
+> Pin specific model versions for every deployment. Without pinning, model aliases such as `sonnet` and `opus` resolve to Claude Code's built-in default for Microsoft Foundry, which can lag the newest release and may not yet be available in your account. Microsoft Foundry has no startup model check, so requests fail when the default is unavailable. When you create Azure deployments, select a specific model version rather than "auto-update to latest."
 
 Set the model variables to match the deployment names you created in step 1.
 
@@ -180,15 +175,15 @@ export ANTHROPIC_DEFAULT_HAIKU_MODEL='claude-haiku-4-5'
 
 Background tasks such as session title generation use the small/fast model, normally a Haiku-class model. On Microsoft Foundry, Claude Code defaults this to the primary model because not every account has a Haiku deployment. To use Haiku for background tasks, set `ANTHROPIC_DEFAULT_HAIKU_MODEL` to a Haiku deployment that is available in your account, as shown above.
 
-For current and legacy model IDs, see [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview). See [Model configuration](/docs/en/model-config#pin-models-for-third-party-deployments) for the full list of environment variables.
+For current and legacy model IDs, see [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview). See [Model configuration](./model-config.md#pin-models-for-third-party-deployments) for the full list of environment variables.
 
-[Prompt caching](/docs/en/prompt-caching) is enabled automatically. To request a 1-hour cache TTL instead of the 5-minute default, set the following variable; cache writes with a 1-hour TTL are billed at a higher rate:
+[Prompt caching](./prompt-caching.md) is enabled automatically. To request a 1-hour cache TTL instead of the 5-minute default, set the following variable; cache writes with a 1-hour TTL are billed at a higher rate:
 
 ```bash theme={null}
 export ENABLE_PROMPT_CACHING_1H=1
 ```
 
-To set different TTLs for your main conversation and for the requests Claude Code makes outside it, [choose the TTL yourself](/docs/en/prompt-caching#choose-the-ttl-yourself).
+To set different TTLs for your main conversation and for the requests Claude Code makes outside it, [choose the TTL yourself](./prompt-caching.md#choose-the-ttl-yourself).
 
 ### 5. Run Claude Code
 

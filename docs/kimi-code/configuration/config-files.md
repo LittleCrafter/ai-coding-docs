@@ -12,9 +12,8 @@ export KIMI_CODE_HOME=/path/to/kimi-home
 
 The config file path then becomes `$KIMI_CODE_HOME/config.toml`. Regardless of where the directory lives, the file name is always `config.toml`.
 
-::: tip
-TOML field names always use snake_case, for example `default_model` and `max_context_size`. If a key contains `.`, you must quote it (for example `[models."gpt-4.1"]`); otherwise TOML treats `.` as a nested table separator.
-:::
+> [!TIP]
+> TOML field names always use snake_case, for example `default_model` and `max_context_size`. If a key contains `.`, you must quote it (for example `[models."gpt-4.1"]`); otherwise TOML treats `.` as a nested table separator.
 
 ## Complete example
 
@@ -288,12 +287,13 @@ Two prerequisites:
 
 Note the asymmetry between the main agent and pool-bound subagents: for the main agent, a configured global `[thinking].effort` overrides the variant's `default_effort`; for subagents the variant's `default_effort` wins over the global value, and only `[secondary_model].default_effort` outranks it. Value and fallback rules follow the [`[models]` entry's `default_effort`](#models).
 
-::: warning Note
-Configuration errors fail loudly instead of falling back silently. Session creation, resume, and fork all fail at startup when:
-
-- `default_model` is missing, is not a pool key, or a pool key does not resolve to a configured [`[models]`](#models) entry;
-- `force` is set without `default_model`, or combined with a `models` table.
-:::
+> [!WARNING]
+> **Note**
+>
+> Configuration errors fail loudly instead of falling back silently. Session creation, resume, and fork all fail at startup when:
+>
+> - `default_model` is missing, is not a pool key, or a pool key does not resolve to a configured [`[models]`](#models) entry;
+> - `force` is set without `default_model`, or combined with a `models` table.
 
 ## `thinking`
 
@@ -427,9 +427,10 @@ Name matching follows the same rules as the same-named fields in an agent file: 
 disabled = ["EnterPlanMode", "ExitPlanMode", "mcp__github__*"]
 ```
 
-::: warning Note
-Like the `tools` / `disallowedTools` fields of an agent file, this section shapes the tools shown to the model and is enforced again before execution. [Permission rules](#permission) remain a separate control for operations that require approval.
-:::
+> [!WARNING]
+> **Note**
+>
+> Like the `tools` / `disallowedTools` fields of an agent file, this section shapes the tools shown to the model and is enforced again before execution. [Permission rules](#permission) remain a separate control for operations that require approval.
 
 ## `read`
 
@@ -536,9 +537,8 @@ decision = "ask"
 pattern = "Bash"
 ```
 
-::: tip
-MCP server declarations are configured in `~/.kimi-code/mcp.json` or the project-local `.kimi-code/mcp.json`, not in `config.toml`. The interactive configuration entry point is `/mcp-config`; see [Model Context Protocol](../customization/mcp.md).
-:::
+> [!TIP]
+> MCP server declarations are configured in `~/.kimi-code/mcp.json` or the project-local `.kimi-code/mcp.json`, not in `config.toml`. The interactive configuration entry point is `/mcp-config`; see [Model Context Protocol](../customization/mcp.md).
 
 ## `tui.toml`
 

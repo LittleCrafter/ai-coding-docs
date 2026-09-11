@@ -8,6 +8,8 @@ tools depend on the surface you use.
 
 [Watch: Work with documents, spreadsheets, and presentations in ChatGPT](https://www.youtube.com/watch?v=E3dDr_QtBuo)
 
+**Surface: Desktop app**
+
 The ChatGPT desktop app previews generated documents, presentations,
 spreadsheets, and PDF files alongside the chat. When automatic previews are
 enabled, the app can open a generated file after a task finishes.
@@ -19,19 +21,25 @@ view to inspect the output or its underlying HTML.
 Use annotations to point at a specific part of a supported preview and request
 a focused revision.
 
+**Surface: Web**
+
 In ChatGPT Work on the web, attach source files or ask ChatGPT to create a
 document, presentation, spreadsheet, or PDF. Review the generated file in the
 chat, download it when needed, and give targeted feedback for the next version.
+
+**Surface: CLI**
 
 Codex CLI can create and edit files in the working directory, but it doesn't
 include a visual file preview or annotation interface. Ask Codex to report each
 output path and the checks it ran.
 
+**Surface: IDE extension**
+
 The IDE extension can create and edit files in the workspace. Review text and
 code files in the editor, and open documents, presentations, spreadsheets, or
 PDF files in a compatible viewer.
 
-  
+**Surface: Desktop app**
 
 > Illustration: ChatGPT desktop app showing a generated presentation preview
 
@@ -44,6 +52,10 @@ output and how it checked the result.
 <a id="refine-files-with-annotations"></a>
 
 <a id="review-and-refine-files"></a>
+
+**Surface: Desktop app**
+
+<a id="app-refine-files-with-annotations"></a>
 
 ## Refine files with annotations
 
@@ -63,6 +75,10 @@ the file without starting over or changing the parts you already like.
 Annotations are particularly useful after the first draft, when the work needs
 review and iteration.
 
+**Surface: Web**
+
+<a id="web-review-and-refine-files-on-the-web"></a>
+
 ## Review and refine files on the web
 
 Open or download the generated file to review it in the appropriate viewer.
@@ -70,6 +86,10 @@ When you request a revision, name the page, slide, sheet, table, or passage that
 needs attention and describe what should stay unchanged. Ask ChatGPT to report
 the new file name and the checks it performed before you download the next
 version.
+
+**Surface: Desktop app**
+
+<a id="app-review-and-refine-files"></a>
 
 ## Review and refine files
 

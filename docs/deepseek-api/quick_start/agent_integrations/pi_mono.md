@@ -38,7 +38,67 @@ Pi supports custom providers via `models.json`. Add DeepSeek as an OpenAI-compat
   * **Windows** : `%USERPROFILE%\.pi\agent\models.json`
 
 ```json
-{  "providers": {    "deepseek": {      "baseUrl": "https://api.deepseek.com",      "api": "openai-completions",      "apiKey": "$DEEPSEEK_API_KEY",      "models": [        {          "id": "deepseek-v4-pro",          "name": "DeepSeek V4 Pro",          "contextWindow": 1000000,          "maxTokens": 384000,          "input": ["text"],          "reasoning": true,          "cost": {            "input": 1.74,            "output": 3.48,            "cacheRead": 0.145,            "cacheWrite": 0          },          "compat": {            "requiresReasoningContentOnAssistantMessages": true,            "thinkingFormat": "deepseek",            "reasoningEffortMap": {              "minimal": "high",              "low": "high",              "medium": "high",              "high": "high",              "xhigh": "max"            }          }        },        {          "id": "deepseek-v4-flash",          "name": "DeepSeek V4 Flash",          "contextWindow": 1000000,          "maxTokens": 384000,          "input": ["text"],          "reasoning": true,          "cost": {            "input": 0.14,            "output": 0.28,            "cacheRead": 0.028,            "cacheWrite": 0          },          "compat": {            "requiresReasoningContentOnAssistantMessages": true,            "thinkingFormat": "deepseek",            "reasoningEffortMap": {              "minimal": "high",              "low": "high",              "medium": "high",              "high": "high",              "xhigh": "max"            }          }        }      ]    }  }}
+{
+  "providers": {
+    "deepseek": {
+      "baseUrl": "https://api.deepseek.com",
+      "api": "openai-completions",
+      "apiKey": "$DEEPSEEK_API_KEY",
+      "models": [
+        {
+          "id": "deepseek-v4-pro",
+          "name": "DeepSeek V4 Pro",
+          "contextWindow": 1000000,
+          "maxTokens": 384000,
+          "input": ["text"],
+          "reasoning": true,
+          "cost": {
+            "input": 1.74,
+            "output": 3.48,
+            "cacheRead": 0.145,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "requiresReasoningContentOnAssistantMessages": true,
+            "thinkingFormat": "deepseek",
+            "reasoningEffortMap": {
+              "minimal": "high",
+              "low": "high",
+              "medium": "high",
+              "high": "high",
+              "xhigh": "max"
+            }
+          }
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "name": "DeepSeek V4 Flash",
+          "contextWindow": 1000000,
+          "maxTokens": 384000,
+          "input": ["text"],
+          "reasoning": true,
+          "cost": {
+            "input": 0.14,
+            "output": 0.28,
+            "cacheRead": 0.028,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "requiresReasoningContentOnAssistantMessages": true,
+            "thinkingFormat": "deepseek",
+            "reasoningEffortMap": {
+              "minimal": "high",
+              "low": "high",
+              "medium": "high",
+              "high": "high",
+              "xhigh": "max"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
 ```
 
  
@@ -68,7 +128,8 @@ $env:DEEPSEEK_API_KEY="<your DeepSeek API Key>"
   * Enter the project directory and execute the `pi` command:
 
 ```bash
-cd /path/to/my-projectpi
+cd /path/to/my-project
+pi
 ```
 
  

@@ -387,7 +387,12 @@ def link_check_report(
     scope = f": {source_name}" if source_name else ""
     header(f"Link Verification{scope}")
     if scanned_files == 0:
-        print("   ! warning: no Markdown documentation files found to verify.")
+        # Routed through ``warning`` so this degradation carries the same
+        # two-space ``warning:`` prefix and stderr channel as every other
+        # non-fatal diagnostic, instead of mixing a warning into the stdout
+        # report stream. The trailing blank line stays on stdout: it
+        # terminates the report block begun by the header above.
+        warning("no Markdown documentation files found to verify.")
         print()
         return
 

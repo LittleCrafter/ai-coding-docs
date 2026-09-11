@@ -2,7 +2,9 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-  
+**Surface: Desktop app**
+
+<a id="app-choose-a-model"></a>
 
 ## Choose a model
 
@@ -18,11 +20,9 @@ beyond a single-agent run. It uses
 [subagents](./agent-configuration/subagents.md) to accelerate complex work,
 making it useful for larger tasks that can be split across subagents.
 
-  
+**Surface: Web**
 
-  
-
-  
+<a id="web-choose-a-model"></a>
 
 ## Choose a model
 
@@ -39,11 +39,9 @@ beyond a single-agent run. It uses
 [subagents](./agent-configuration/subagents.md) to accelerate complex work,
 making it useful for larger tasks that can be split across subagents.
 
-  
+**Surface: CLI**
 
-  
-
-  
+<a id="cli-choose-a-model"></a>
 
 ## Choose a model
 
@@ -70,14 +68,9 @@ beyond a single-agent run. It uses
 [subagents](./agent-configuration/subagents.md) to accelerate complex work,
 making it useful for larger tasks that can be split across subagents.
 
-  
+**Surface: IDE extension**
 
-  <CodexReasoningLevelTerminal
-    client:load
-    className="lg:mt-7 lg:justify-self-end"
-  />
-
-  
+<a id="ide-choose-a-model"></a>
 
 ## Choose a model
 
@@ -93,16 +86,17 @@ beyond a single-agent run. It uses
 [subagents](./agent-configuration/subagents.md) to accelerate complex work,
 making it useful for larger tasks that can be split across subagents.
 
-  
-
-  
-
 <a id="recommended-models"></a>
 <a id="other-models"></a>
 <a id="deprecated-codex-models"></a>
 <a id="configure-your-default-local-model"></a>
 <a id="choose-a-model-for-cloud-tasks"></a>
 <a id="gpt-6-astra"></a>
+
+<a id="app-recommended-models"></a>
+<a id="web-recommended-models"></a>
+<a id="cli-recommended-models"></a>
+<a id="ide-recommended-models"></a>
 
 ## Recommended models
 
@@ -156,7 +150,7 @@ Fast and affordable GPT-5.6 model that delivers strong capability at the lowest 
 - **ChatGPT Credits**: Supported
 - **API Access**: Supported
 
-  ### `gpt-5.3-codex-spark`
+### `gpt-5.3-codex-spark`
 
 Text-only research preview model optimized for near-instant, real-time coding iteration. Available to ChatGPT Pro users.
 
@@ -183,6 +177,15 @@ The picker illustrations show GPT-5.6 controls. For eligible Pro, Business
 to Terra Light, Sol Light, Sol Medium, Astra Light, Astra Medium, and Astra
 Extra High. Options can differ by plan and rollout stage.
 
+<a id="app-experimental-context-management"></a>
+<a id="web-experimental-context-management"></a>
+<a id="cli-experimental-context-management"></a>
+<a id="ide-experimental-context-management"></a>
+
+<a id="app-experimental-context-management-2"></a>
+<a id="cli-experimental-context-management-2"></a>
+<a id="ide-experimental-context-management-2"></a>
+
 ### Experimental context management
 
 On supported Codex clients, users signed in with ChatGPT Plus or Pro can opt
@@ -198,11 +201,21 @@ for the file location. Workspace requirements still apply.
 
 <a id="choosing-sol-terra-and-luna"></a>
 
+<a id="app-choosing-astra-sol-terra-and-luna"></a>
+<a id="web-choosing-astra-sol-terra-and-luna"></a>
+<a id="cli-choosing-astra-sol-terra-and-luna"></a>
+<a id="ide-choosing-astra-sol-terra-and-luna"></a>
+
 ## Choosing Astra, Sol, Terra, and Luna
 
 Choose **Astra** when a task needs the strongest capability across multiple
 steps and tools. **Sol** offers depth and polish, **Terra** suits everyday work,
 and **Luna** suits clear, repeatable tasks.
+
+<a id="app-where-each-model-shines"></a>
+<a id="web-where-each-model-shines"></a>
+<a id="cli-where-each-model-shines"></a>
+<a id="ide-where-each-model-shines"></a>
 
 ### Where each model shines
 
@@ -222,6 +235,11 @@ and **Luna** suits clear, repeatable tasks.
   tasks when you know what a good result looks like, such as extraction,
   classification, transformation, and structured summaries.
 
+<a id="app-pick-a-reasoning-effort"></a>
+<a id="web-pick-a-reasoning-effort"></a>
+<a id="cli-pick-a-reasoning-effort"></a>
+<a id="ide-pick-a-reasoning-effort"></a>
+
 ### Pick a reasoning effort
 
 Use the lowest reasoning effort that produces the result you need. Increase it
@@ -236,6 +254,11 @@ for tasks that need more planning, analysis, or checking.
 There is no exact mapping from GPT-5.5 reasoning efforts to GPT-5.6. Try a
 familiar task at a lower setting and adjust based on the result.
 
+<a id="app-know-when-to-use-max-or-ultra"></a>
+<a id="web-know-when-to-use-max-or-ultra"></a>
+<a id="cli-know-when-to-use-max-or-ultra"></a>
+<a id="ide-know-when-to-use-max-or-ultra"></a>
+
 ### Know when to use Max or Ultra
 
 **Max** gives the selected model more time to reason about a single task. Use it
@@ -248,6 +271,10 @@ work into meaningful parts. Most tasks do not need Max or Ultra.
 
 If Ultra doesn't appear in the desktop app's model slider, go to
 **Settings** > **Configuration**, then turn on **Ultra in model picker slider**.
+
+<a id="app-other-models"></a>
+<a id="cli-other-models"></a>
+<a id="ide-other-models"></a>
 
 ## Other models
 
@@ -276,7 +303,7 @@ Previous-generation flagship model for complex coding, computer use, knowledge w
 - **ChatGPT Credits**: Supported
 - **API Access**: Supported
 
-    ### `gpt-5.4`
+### `gpt-5.4`
 
 Flagship model for professional work with strong coding, reasoning, tool use, and agentic workflow capabilities.
 
@@ -288,7 +315,7 @@ Flagship model for professional work with strong coding, reasoning, tool use, an
 - **ChatGPT Credits**: Supported
 - **API Access**: Supported
 
-    ### `gpt-5.4-mini`
+### `gpt-5.4-mini`
 
 Fast, efficient mini model for responsive coding tasks and subagents.
 
@@ -307,6 +334,10 @@ You can also point Codex at any model and provider that supports either the [Cha
 Support for the Chat Completions API is deprecated and will be removed in
   future releases of Codex.
 
+<a id="app-deprecated-codex-models"></a>
+<a id="cli-deprecated-codex-models"></a>
+<a id="ide-deprecated-codex-models"></a>
+
 ## Deprecated Codex models
 
 The `gpt-5.4` and `gpt-5.4-mini` models retire from Codex with ChatGPT sign-in
@@ -322,6 +353,10 @@ The OpenAI API and Codex authenticated with your own API key aren't affected
 by the GPT-5.4 retirement. For current API model availability, see the
 [API models page](https://developers.openai.com/api/docs/models).
 
+<a id="app-configure-your-default-local-model"></a>
+<a id="cli-configure-your-default-local-model"></a>
+<a id="ide-configure-your-default-local-model"></a>
+
 ## Configure your default local model
 
 The ChatGPT desktop app, Codex CLI, and IDE extension use the same `config.toml`
@@ -333,7 +368,10 @@ ChatGPT desktop app, Codex CLI, or IDE extension uses a recommended model.
 model = "gpt-5.6"
 ```
 
+<a id="app-choose-a-model-for-cloud-chats"></a>
+<a id="cli-choose-a-model-for-cloud-chats"></a>
+<a id="ide-choose-a-model-for-cloud-chats"></a>
+
 ## Choose a model for cloud chats
 
 Currently, you can't change the default model for Codex cloud chats.
-

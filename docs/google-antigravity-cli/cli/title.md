@@ -4,7 +4,7 @@ Configure dynamic window titles, map custom scripting configurations, and format
 
 Note
 
-To toggle or set the terminal title interactively, see the **[Window Title Command](/docs/cli/commands/title)**.
+To toggle or set the terminal title interactively, see the **[Window Title Command](./commands/title.md)**.
 
 ## Overview
 
@@ -31,7 +31,7 @@ Whenever the agent state changes, the TUI executes your command script, pipes a 
 
 ### JSON state payload schema
 
-The JSON state payload is the same as the one sent to the custom status line script. It includes detailed properties representing `cwd`, `conversation_id`, `agent_state`, `vcs` details, and more. See the **[Status Line Schema](/docs/cli/statusline#available-json-fields)** for the complete property list.
+The JSON state payload is the same as the one sent to the custom status line script. It includes detailed properties representing `cwd`, `conversation_id`, `agent_state`, `vcs` details, and more. See the **[Status Line Schema](./statusline.md#available-json-fields)** for the complete property list.
 
 ### Example script
 
@@ -45,7 +45,7 @@ chmod +x ~/.gemini/antigravity-cli/title.sh
 
 ## See also
 
-*   **[Window Title Command](/docs/cli/commands/title)**: Toggle or set the terminal title interactively.
-*   **[Status Line Customization](/docs/cli/statusline)**: Customize dynamic TUI status bars.
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Manage secure directory permissions.
+*   **[Window Title Command](./commands/title.md)**: Toggle or set the terminal title interactively.
+*   **[Status Line Customization](./statusline.md)**: Customize dynamic TUI status bars.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions & Sandbox](./sandbox.md)**: Manage secure directory permissions.

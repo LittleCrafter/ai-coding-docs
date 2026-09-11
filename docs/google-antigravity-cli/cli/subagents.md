@@ -4,7 +4,7 @@ Delegate slow builds, multi-file code generation, and research sweeps to paralle
 
 Note
 
-**Antigravity 2.0 & Hub Docs:** For core platform capabilities, subagent lifecycle state diagrams, inter-agent messaging, and nesting depth limits, see the [Antigravity 2.0 Subagents Documentation](/docs/subagents).
+**Antigravity 2.0 & Hub Docs:** For core platform capabilities, subagent lifecycle state diagrams, inter-agent messaging, and nesting depth limits, see the [Antigravity 2.0 Subagents Documentation](https://antigravity.google/docs/subagents).
 
 ## Asynchronous execution model
 
@@ -14,7 +14,7 @@ This delegation model ensures you never have to wait on high-latency AI processe
 
 ## Managing agents: The `/agents` panel
 
-The active agent-hierarchy and custom agent selection menu are fully transparent and manageable through the interactive [Agent Manager Panel (`/agents`)](/docs/cli/commands/agents).
+The active agent-hierarchy and custom agent selection menu are fully transparent and manageable through the interactive [Agent Manager Panel (`/agents`)](./commands/agents.md).
 
 ### Opening the panel
 
@@ -31,7 +31,7 @@ The panel displays a live checklist of all active, completed, killed, or failed 
 
 Tip
 
-You can also select and switch between custom agents (or fork conversations) from this panel. See the [`/agents` command reference](/docs/cli/commands/agents) for full details on custom agent discovery and panel keybindings.
+You can also select and switch between custom agents (or fork conversations) from this panel. See the [`/agents` command reference](./commands/agents.md) for full details on custom agent discovery and panel keybindings.
 
 ## Custom Agents (Markdown Format)
 
@@ -42,7 +42,7 @@ In addition to built-in agents, the CLI automatically discovers custom agents de
 
 When a custom agent has `subagent: true` set in its YAML frontmatter, the primary agent can invoke it via `invoke_subagent`. You can also select custom agents directly as your primary agent in the `/agents` panel menu.
 
-For the complete schema, frontmatter parameters, and code examples, see [Custom Subagents Specification](/docs/subagents#custom-subagents).
+For the complete schema, frontmatter parameters, and code examples, see [Custom Subagents Specification](https://antigravity.google/docs/subagents#custom-subagents).
 
 ## Deep-dive monitoring
 
@@ -89,7 +89,7 @@ To authorize an agent action instantly without leaving your active workspace:
 
 Configure the visual shell behavior and customize your configuration profiles:
 
-*   **[Teamwork agent teams (`/teamwork-preview`)](/docs/teamwork)**: Launch collaborative multi-agent teams for long-horizon projects.
-*   **[Settings, Rendering & Keybindings](/docs/cli/settings)**: Customize key maps, buffering, and JSON rules.
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Enforce security containment rings on background processes.
-*   **[Plugins & Skills](/docs/cli/plugins)**: Create your own custom skills and slash commands.
+*   **[Teamwork agent teams (`/teamwork-preview`)](https://antigravity.google/docs/teamwork)**: Launch collaborative multi-agent teams for long-horizon projects.
+*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize key maps, buffering, and JSON rules.
+*   **[Permissions & Sandbox](./sandbox.md)**: Enforce security containment rings on background processes.
+*   **[Plugins & Skills](./plugins.md)**: Create your own custom skills and slash commands.

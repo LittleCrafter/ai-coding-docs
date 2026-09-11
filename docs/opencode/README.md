@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 36
 - **Version:** 1.18.30
-- **Last updated:** 2026-09-10T17:58:44Z
+- **Last updated:** 2026-09-11T05:53:06Z
 - **Official docs:** https://opencode.ai/docs
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -25,7 +25,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | GitLab | [gitlab.md](./gitlab.md) | [source](<https://opencode.ai/docs/gitlab>) |
 | Go | [go.md](./go.md) | [source](<https://opencode.ai/docs/go>) |
 | IDE | [ide.md](./ide.md) | [source](<https://opencode.ai/docs/ide>) |
-| Intro | [intro.md](./intro.md) | [source](<https://opencode.ai/docs/intro>) |
+| Intro | [intro.md](./intro.md) | [source](<https://opencode.ai/docs>) |
 | Keybinds | [keybinds.md](./keybinds.md) | [source](<https://opencode.ai/docs/keybinds>) |
 | LSP Servers | [lsp.md](./lsp.md) | [source](<https://opencode.ai/docs/lsp>) |
 | MCP servers | [mcp-servers.md](./mcp-servers.md) | [source](<https://opencode.ai/docs/mcp-servers>) |

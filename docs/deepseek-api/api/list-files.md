@@ -8,9 +8,7 @@ Returns a list of files that belong to the user, with cursor-based pagination.
 
 ## Request
 
-### 
-
-Query Parameters
+### Query Parameters
 
 **after** string
 
@@ -40,15 +38,13 @@ Only return files with the given purpose. Only `user_data` is supported.
 
 ## Responses
 
-  * 200
+**200**
 
 OK, returns a list of `file object`.
 
-  * application/json
+**application/json**
 
-  * Schema
-  * Example (from schema)
-  * Example
+**Schema**
 
 **
 
@@ -122,12 +118,47 @@ The ID of the last file in the list. Useful as a pagination cursor.
 
 Whether there are more files beyond this page.
 
-```json
-{  "object": "list",  "data": [    {      "id": "string",      "object": "file",      "bytes": 0,      "created_at": 0,      "filename": "string",      "purpose": "user_data",      "expires_at": 0    }  ],  "first_id": "string",  "last_id": "string",  "has_more": true}
-```
+**Example (from schema)**
 
 ```json
-{  "object": "list",  "data": [    {      "id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",      "object": "file",      "bytes": 102400,      "created_at": 1700000000,      "filename": "image.jpg",      "purpose": "user_data"    }  ],  "first_id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",  "last_id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",  "has_more": false}
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "string",
+      "object": "file",
+      "bytes": 0,
+      "created_at": 0,
+      "filename": "string",
+      "purpose": "user_data",
+      "expires_at": 0
+    }
+  ],
+  "first_id": "string",
+  "last_id": "string",
+  "has_more": true
+}
+```
+
+**Example**
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",
+      "object": "file",
+      "bytes": 102400,
+      "created_at": 1700000000,
+      "filename": "image.jpg",
+      "purpose": "user_data"
+    }
+  ],
+  "first_id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",
+  "last_id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",
+  "has_more": false
+}
 ```
 
 Loading...

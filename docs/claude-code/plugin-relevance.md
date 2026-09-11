@@ -8,9 +8,9 @@
 
 If you operate a plugin marketplace for your organization, you can have Claude Code suggest specific plugins to users based on what they are working on. Add a `relevance` block to a plugin's entry in `marketplace.json`, then allowlist the marketplace in managed settings. When a user's session matches one of the declared signals, Claude Code surfaces an install suggestion for that plugin.
 
-Marketplace-declared suggestions are opt-in per marketplace through [managed settings](/docs/en/managed-settings). No marketplace's `relevance` declarations produce suggestions until an administrator adds it to the allowlist, including the official Anthropic marketplace. Claude Code also includes one built-in suggestion that is independent of this allowlist; that tip and all marketplace-declared tips are disabled when [`spinnerTipsEnabled`](/docs/en/settings-reference#spinnertipsenabled) is set to `false`.
+Marketplace-declared suggestions are opt-in per marketplace through [managed settings](./managed-settings.md). No marketplace's `relevance` declarations produce suggestions until an administrator adds it to the allowlist, including the official Anthropic marketplace. Claude Code also includes one built-in suggestion that is independent of this allowlist; that tip and all marketplace-declared tips are disabled when [`spinnerTipsEnabled`](./settings-reference.md#spinnertipsenabled) is set to `false`.
 
-This page is for marketplace operators and enterprise administrators. If you are looking to install plugins, see [Discover and install plugins](/docs/en/discover-plugins).
+This page is for marketplace operators and enterprise administrators. If you are looking to install plugins, see [Discover and install plugins](./discover-plugins.md).
 
 ## How it works
 
@@ -24,7 +24,7 @@ When a signal matches and the plugin is not already installed, Claude Code shows
 * **Session-start suggestion**: if the `cwd` signal matches the working directory, a one-line `plugin suggestion: <name>@<marketplace> · /plugin` notification appears before the first turn.
 * **`/plugin` Discover tab**: the plugin is pinned to the top of the Discover list with an annotation such as "suggested for this directory" or "suggested for stripe commands".
 
-The spinner tip and the session-start notification are part of the spinner-tips system. Claude Code disables both when `spinnerTipsEnabled` resolves to `false` across your settings files, or when `excludeDefault` resolves to `true` across the [`spinnerTipsOverride`](/docs/en/settings-reference#spinnertipsoverride) keys in user, `--settings`, and managed settings and those keys configure at least one tip or a `tipsFile`.
+The spinner tip and the session-start notification are part of the spinner-tips system. Claude Code disables both when `spinnerTipsEnabled` resolves to `false` across your settings files, or when `excludeDefault` resolves to `true` across the [`spinnerTipsOverride`](./settings-reference.md#spinnertipsoverride) keys in user, `--settings`, and managed settings and those keys configure at least one tip or a `tipsFile`.
 
 The Discover-tab pin is independent of tip settings.
 
@@ -98,13 +98,12 @@ The following example uses `manifestDeps` to suggest a Stripe plugin once Claude
 }
 ```
 
-<Note>
-  Claude Code ignores unknown fields under `relevance` and `relevance.signals` at load time, so older clients continue to load your marketplace.
-</Note>
+> [!NOTE]
+> Claude Code ignores unknown fields under `relevance` and `relevance.signals` at load time, so older clients continue to load your marketplace.
 
 ## Enable suggestions in managed settings
 
-Declaring `relevance` in `marketplace.json` is not enough on its own. An administrator must allowlist the marketplace in [managed settings](/docs/en/managed-settings) before its suggestions appear to users.
+Declaring `relevance` in `marketplace.json` is not enough on its own. An administrator must allowlist the marketplace in [managed settings](./managed-settings.md) before its suggestions appear to users.
 
 Add the marketplace name to `pluginSuggestionMarketplaces`. For any marketplace other than the official Anthropic marketplace, also declare the marketplace source in the same managed settings, either as that name's entry in `extraKnownMarketplaces` or as an entry in `strictKnownMarketplaces`. The allowlisted name is ignored if the marketplace registered on the machine came from a different source. This prevents an unrelated source from registering under an allowlisted name to have its plugins suggested across your org.
 
@@ -163,6 +162,6 @@ The validator reports unknown keys under `relevance` and `relevance.signals` as 
 
 ## See also
 
-* [Create and distribute a plugin marketplace](/docs/en/plugin-marketplaces): build the marketplace that hosts your plugins
-* [Recommend your plugin from your CLI](/docs/en/plugin-hints): prompt users from your own CLI instead of from Claude Code's session signals
-* [All settings](/docs/en/settings-reference#pluginsuggestionmarketplaces): `pluginSuggestionMarketplaces` and `extraKnownMarketplaces`
+* [Create and distribute a plugin marketplace](./plugin-marketplaces.md): build the marketplace that hosts your plugins
+* [Recommend your plugin from your CLI](./plugin-hints.md): prompt users from your own CLI instead of from Claude Code's session signals
+* [All settings](./settings-reference.md#pluginsuggestionmarketplaces): `pluginSuggestionMarketplaces` and `extraKnownMarketplaces`

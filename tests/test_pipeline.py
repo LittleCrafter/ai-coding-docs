@@ -2141,7 +2141,7 @@ def test_write_docs_deletion_stops_parent_cleanup_at_non_empty_dir(tmp_path: Pat
     assert sibling.exists()
 
 
-def test_pipeline_concurrent_fetch_real_execution(tmp_path: Path, monkeypatch):
+def test_pipeline_concurrent_fetch_real_execution():
     """fetch_pages fetches pages concurrently with real worker pool preserving order."""
     client = _FakeClient(
         [

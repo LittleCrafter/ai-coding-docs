@@ -33,7 +33,7 @@ with `xhigh` reasoning effort.
 8. Select **Start scan**.
 
 <figure className="not-prose my-8">
-  
+
   <figcaption className="mt-3 text-sm text-secondary">
     Choose a repository and configure a scan in the Security workbench.
   </figcaption>
@@ -58,7 +58,7 @@ When the scan completes, open its results to review the target, revision,
 findings, coverage, and available report artifacts.
 
 <figure className="not-prose my-8">
-  
+
   <figcaption className="mt-3 text-sm text-secondary">
     Review findings, severity, scan coverage, and artifacts after a scan
     completes.

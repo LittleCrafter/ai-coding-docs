@@ -38,7 +38,7 @@ Choose the format that fits your destination:
 | SARIF  | Send findings to tools that support the SARIF interchange format. |
 
 <figure className="not-prose my-8">
-  
+
   <figcaption className="mt-3 text-sm text-secondary">
     Open the coverage, findings, scan manifest, Markdown report, or SARIF
     artifact from a completed scan.
@@ -50,7 +50,7 @@ editor. The editor depends on your system settings; the example below shows the
 generated report contents.
 
 <figure className="not-prose my-8">
-  
+
   <figcaption className="mt-3 text-sm text-secondary">
     Review the scan scope, threat model, validated findings, and detailed report
     links in the generated Markdown report.

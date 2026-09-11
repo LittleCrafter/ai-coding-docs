@@ -20,12 +20,7 @@ Go to [Codex environments](https://chatgpt.com/codex/settings/environments) and 
 
 [Open environments](https://chatgpt.com/codex/settings/environments)
 
-  
-    
-
 > Illustration: Codex environments
-
-  
 
 ## 2. New security scan
 
@@ -44,12 +39,7 @@ To configure a repository:
 5. Choose a **history window**. Longer windows provide more context, but backfill takes longer.
 6. Click **Create**.
 
-  
-    
-
 > Illustration: Create a security scan
-
-  
 
 ## 3. Initial scans can take a while
 
@@ -64,12 +54,7 @@ Initial scan setup is automatic and thorough. This can take a few hours. Don’t
 
 [Review scans](https://chatgpt.com/codex/security/scans)
 
-  
-    
-
 > Illustration: Threat model editor in Codex Security
-
-  
 
 When the initial scan finishes, open the scan and review the threat model that was generated.
 After initial findings appear, update the threat model so it matches your architecture, trust boundaries, and business context.
@@ -93,8 +78,6 @@ You can use two views:
 
 - **Recommended Findings**: an evolving top 10 list of the most critical issues in the repo
 - **All Findings**: a sortable, filterable table of findings across the repository
-
-  
 
 > Illustration: Recommended findings view
 

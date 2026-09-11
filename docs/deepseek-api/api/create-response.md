@@ -6,15 +6,13 @@ POST /responses
 
 Creates a model response in the OpenAI Responses API format.
 
-The API is **stateless** : responses and conversations are not stored on the server. For multi-turn conversations, the client needs to send the full conversation history in `input` on each request. Please refer to the [Responses API Guide](</guides/responses_api>) for details, including the full parameter compatibility tables.
+The API is **stateless** : responses and conversations are not stored on the server. For multi-turn conversations, the client needs to send the full conversation history in `input` on each request. Please refer to the [Responses API Guide](<../guides/responses_api.md>) for details, including the full parameter compatibility tables.
 
 ## Request
 
-  * application/json
+**application/json**
 
-### 
-
-Body
+### Body
 
 **
 
@@ -50,10 +48,11 @@ At least one of `input` and `instructions` is required.
 
 oneOf
 
-    * Text input
-    * Input item list
+**Text input**
 
 string
+
+**Input item list**
 
   * Array [
 
@@ -81,18 +80,17 @@ For `message` items, the message content, either a plain string or a list of `in
 
 oneOf
 
-    * Text content
-    * Array of content parts
+**Text content**
 
 string
+
+**Array of content parts**
 
   * Array [
 
 oneOf
 
-    * Text content part
-    * Image content part
-    * Reasoning text content part
+**Text content part**
 
 **type** stringrequired
 
@@ -103,6 +101,8 @@ The type of the content part.
 **text** stringrequired
 
 The text content.
+
+**Image content part**
 
 **type** stringrequired
 
@@ -122,7 +122,9 @@ Controls how the image is processed. `low` downsamples the image to 512x512 (fas
 
 **file_id** string
 
-The ID of an image file uploaded via the [Files API](</guides/files_api>), of the form `file-api-...`. Mutually exclusive with `image_url`; `detail` is ignored when `file_id` is set.
+The ID of an image file uploaded via the [Files API](<../guides/files_api.md>), of the form `file-api-...`. Mutually exclusive with `image_url`; `detail` is ignored when `file_id` is set.
+
+**Reasoning text content part**
 
 **type** stringrequired
 
@@ -160,18 +162,17 @@ For `function_call_output` / `custom_tool_call_output` items. The output of the 
 
 oneOf
 
-    * Text output
-    * Array of content parts
+**Text output**
 
 string
+
+**Array of content parts**
 
   * Array [
 
 oneOf
 
-    * Text content part
-    * Image content part
-    * Reasoning text content part
+**Text content part**
 
 **type** stringrequired
 
@@ -182,6 +183,8 @@ The type of the content part.
 **text** stringrequired
 
 The text content.
+
+**Image content part**
 
 **type** stringrequired
 
@@ -201,7 +204,9 @@ Controls how the image is processed. `low` downsamples the image to 512x512 (fas
 
 **file_id** string
 
-The ID of an image file uploaded via the [Files API](</guides/files_api>), of the form `file-api-...`. Mutually exclusive with `image_url`; `detail` is ignored when `file_id` is set.
+The ID of an image file uploaded via the [Files API](<../guides/files_api.md>), of the form `file-api-...`. Mutually exclusive with `image_url`; `detail` is ignored when `file_id` is set.
+
+**Reasoning text content part**
 
 **type** stringrequired
 
@@ -245,7 +250,7 @@ An upper bound for the number of tokens that can be generated in the response, i
 
 **stream** booleannullable
 
-If set to `true`, the response is streamed as semantic server-sent events. The final event is `response.completed` / `response.incomplete` / `response.failed` (there is no `data: [DONE]` message). Please refer to the [Responses API Guide](</guides/responses_api#streaming>) for the full event list.
+If set to `true`, the response is streamed as semantic server-sent events. The final event is `response.completed` / `response.incomplete` / `response.failed` (there is no `data: [DONE]` message). Please refer to the [Responses API Guide](<../guides/responses_api.md#streaming>) for the full event list.
 
 **temperature** numbernullable
 
@@ -309,7 +314,7 @@ object[]
 
 nullable
 
-A list of tools the model may call. Function names must be non-empty, at most 128 characters, match `^[a-zA-Z0-9_-]+$`, and be unique across all tools. Built-in tool types are ignored. Please refer to the [Responses API Guide](</guides/responses_api>) for details.
+A list of tools the model may call. Function names must be non-empty, at most 128 characters, match `^[a-zA-Z0-9_-]+$`, and be unique across all tools. Built-in tool types are ignored. Please refer to the [Responses API Guide](<../guides/responses_api.md>) for details.
 
   * Array [
 
@@ -335,13 +340,13 @@ parameters
 
 object
 
-The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](</guides/tool_calls>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
+The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](<../guides/tool_calls.md>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
 
 Omitting `parameters` defines a function with an empty parameter list.
 
 **property name*** any
 
-The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](</guides/tool_calls>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
+The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](<../guides/tool_calls.md>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
 
 Omitting `parameters` defines a function with an empty parameter list.
 
@@ -373,12 +378,13 @@ Specifying a particular tool via `{"type": "function", "name": "my_function"}` f
 
 oneOf
 
-    * Tool choice mode
-    * Named tool choice
+**Tool choice mode**
 
 string
 
 **Possible values:** [`none`, `auto`, `required`]
+
+**Named tool choice**
 
 **type** stringrequired
 
@@ -398,20 +404,17 @@ An integer between 0 and 20 specifying the number of most likely tokens to retur
 
 A custom end-user identifier, with allowed character set [a-zA-Z0-9\\-_] and a maximum length of 512. Do not include user privacy information.
 
-    * It can be used to distinguish user identities on your side to help us with content safety review, for KVCache isolation, and for scheduling isolation. For more details, please refer to [Rate Limit & Isolation](</quick_start/rate_limit>)
+    * It can be used to distinguish user identities on your side to help us with content safety review, for KVCache isolation, and for scheduling isolation. For more details, please refer to [Rate Limit & Isolation](<../quick_start/rate_limit.md>)
 
 ## Responses
 
-  * 200 (No streaming)
-  * 200 (Streaming)
+**200 (No streaming)**
 
 OK, returns a `response` object
 
-  * application/json
+**application/json**
 
-  * Schema
-  * Example (from schema)
-  * Example
+**Schema**
 
 **
 
@@ -559,7 +562,7 @@ Breakdown of the input tokens.
 
 **cached_tokens** integer
 
-Number of input tokens that hit the context cache. See [Context Caching](</guides/kv_cache>).
+Number of input tokens that hit the context cache. See [Context Caching](<../guides/kv_cache.md>).
 
 **output_tokens** integerrequired
 
@@ -583,21 +586,108 @@ Number of reasoning (chain-of-thought) tokens generated by the model.
 
 Total number of tokens used in the request (input + output).
 
-```json
-{  "id": "string",  "object": "response",  "created_at": 0,  "status": "in_progress",  "error": {},  "incomplete_details": {    "reason": "max_output_tokens"  },  "model": "string",  "output": [    {      "type": "message",      "id": "string",      "status": "in_progress",      "role": "assistant",      "content": [        {          "type": "output_text",          "text": "string"        }      ],      "call_id": "string",      "name": "string",      "arguments": "string"    }  ],  "usage": {    "input_tokens": 0,    "input_tokens_details": {      "cached_tokens": 0    },    "output_tokens": 0,    "output_tokens_details": {      "reasoning_tokens": 0    },    "total_tokens": 0  }}
-```
+**Example (from schema)**
 
 ```json
-{  "id": "24778070-1c36-4ae0-a4bd-870afc7fc13e",  "object": "response",  "created_at": 1753000000,  "status": "completed",  "model": "deepseek-flash",  "output": [    {      "type": "reasoning",      "id": "rs_1",      "status": "completed",      "content": [        {          "type": "reasoning_text",          "text": "The user greets me. I should reply politely."        }      ],      "summary": []    },    {      "type": "message",      "id": "msg_1",      "status": "completed",      "role": "assistant",      "content": [        {          "type": "output_text",          "text": "Hello! How can I help you today?",          "annotations": []        }      ]    }  ],  "usage": {    "input_tokens": 22,    "input_tokens_details": { "cached_tokens": 0 },    "output_tokens": 29,    "output_tokens_details": { "reasoning_tokens": 27 },    "total_tokens": 51  },  "store": false,  "parallel_tool_calls": true,  "previous_response_id": null,  "error": null,  "incomplete_details": null}
+{
+  "id": "string",
+  "object": "response",
+  "created_at": 0,
+  "status": "in_progress",
+  "error": {},
+  "incomplete_details": {
+    "reason": "max_output_tokens"
+  },
+  "model": "string",
+  "output": [
+    {
+      "type": "message",
+      "id": "string",
+      "status": "in_progress",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "string"
+        }
+      ],
+      "call_id": "string",
+      "name": "string",
+      "arguments": "string"
+    }
+  ],
+  "usage": {
+    "input_tokens": 0,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 0,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 0
+  }
+}
 ```
 
-OK, returns a streamed sequence of semantic server-sent events. Each event has an `event` field for the event type and an incrementing `sequence_number`. The final event is `response.completed` / `response.incomplete` / `response.failed` (there is no `data: [DONE]` message). Please refer to the [Responses API Guide](</guides/responses_api#streaming>) for the full event list.
+**Example**
 
-  * text/event-stream
+```json
+{
+  "id": "24778070-1c36-4ae0-a4bd-870afc7fc13e",
+  "object": "response",
+  "created_at": 1753000000,
+  "status": "completed",
+  "model": "deepseek-flash",
+  "output": [
+    {
+      "type": "reasoning",
+      "id": "rs_1",
+      "status": "completed",
+      "content": [
+        {
+          "type": "reasoning_text",
+          "text": "The user greets me. I should reply politely."
+        }
+      ],
+      "summary": []
+    },
+    {
+      "type": "message",
+      "id": "msg_1",
+      "status": "completed",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "Hello! How can I help you today?",
+          "annotations": []
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "input_tokens": 22,
+    "input_tokens_details": { "cached_tokens": 0 },
+    "output_tokens": 29,
+    "output_tokens_details": { "reasoning_tokens": 27 },
+    "total_tokens": 51
+  },
+  "store": false,
+  "parallel_tool_calls": true,
+  "previous_response_id": null,
+  "error": null,
+  "incomplete_details": null
+}
+```
 
-  * Schema
-  * Example (from schema)
-  * Example
+**200 (Streaming)**
+
+OK, returns a streamed sequence of semantic server-sent events. Each event has an `event` field for the event type and an incrementing `sequence_number`. The final event is `response.completed` / `response.incomplete` / `response.failed` (there is no `data: [DONE]` message). Please refer to the [Responses API Guide](<../guides/responses_api.md#streaming>) for the full event list.
+
+**text/event-stream**
+
+**Schema**
 
 **
 
@@ -611,12 +701,34 @@ object
 
   * ]
 
+**Example (from schema)**
+
 ```json
-[  {}]
+[
+  {}
+]
 ```
 
+**Example**
+
 ```shell
-event: response.createddata: {"type": "response.created", "sequence_number": 0, "response": {"id": "...", "object": "response", "status": "in_progress", ...}}event: response.output_item.addeddata: {"type": "response.output_item.added", "sequence_number": 2, "output_index": 0, "item": {"type": "reasoning", ...}}event: response.reasoning_text.deltadata: {"type": "response.reasoning_text.delta", "sequence_number": 4, "item_id": "rs_1", "output_index": 0, "content_index": 0, "delta": "The user"}event: response.output_item.addeddata: {"type": "response.output_item.added", "sequence_number": 9, "output_index": 1, "item": {"type": "message", "role": "assistant", ...}}event: response.output_text.deltadata: {"type": "response.output_text.delta", "sequence_number": 11, "item_id": "msg_1", "output_index": 1, "content_index": 0, "delta": "Hello"}event: response.completeddata: {"type": "response.completed", "sequence_number": 20, "response": {"id": "...", "object": "response", "status": "completed", "usage": {...}, ...}}
+event: response.created
+data: {"type": "response.created", "sequence_number": 0, "response": {"id": "...", "object": "response", "status": "in_progress", ...}}
+
+event: response.output_item.added
+data: {"type": "response.output_item.added", "sequence_number": 2, "output_index": 0, "item": {"type": "reasoning", ...}}
+
+event: response.reasoning_text.delta
+data: {"type": "response.reasoning_text.delta", "sequence_number": 4, "item_id": "rs_1", "output_index": 0, "content_index": 0, "delta": "The user"}
+
+event: response.output_item.added
+data: {"type": "response.output_item.added", "sequence_number": 9, "output_index": 1, "item": {"type": "message", "role": "assistant", ...}}
+
+event: response.output_text.delta
+data: {"type": "response.output_text.delta", "sequence_number": 11, "item_id": "msg_1", "output_index": 1, "content_index": 0, "delta": "Hello"}
+
+event: response.completed
+data: {"type": "response.completed", "sequence_number": 20, "response": {"id": "...", "object": "response", "status": "completed", "usage": {...}, ...}}
 ```
 
 Loading...

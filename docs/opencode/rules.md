@@ -1,7 +1,6 @@
----
-title: Rules
-description: Set custom instructions for opencode.
----
+# Rules
+
+Set custom instructions for opencode.
 
 You can provide custom instructions to opencode by creating an `AGENTS.md` file. This is similar to Cursor's rules. It contains instructions that will be included in the LLM's context to customize its behavior for your specific project.
 
@@ -79,7 +78,7 @@ For users migrating from Claude Code, OpenCode supports Claude Code's file conve
 
 - **Project rules**: `CLAUDE.md` in your project directory (used if no `AGENTS.md` exists)
 - **Global rules**: `~/.claude/CLAUDE.md` (used if no `~/.config/opencode/AGENTS.md` exists)
-- **Skills**: `~/.claude/skills/` — see [Agent Skills](/docs/skills/) for details
+- **Skills**: `~/.claude/skills/` — see [Agent Skills](./skills.md) for details
 
 To disable Claude Code compatibility, set one of these environment variables:
 

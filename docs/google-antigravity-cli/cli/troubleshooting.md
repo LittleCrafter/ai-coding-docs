@@ -171,7 +171,7 @@ Antigravity CLI contains a native, statically linked self-updater that runs in t
 
 Access our quick reference sheets or configure advanced permissions:
 
-*   **[CLI Reference](/docs/cli/reference)**: Dense tables listing all slash commands and visual settings keys.
-*   **[Permissions](/docs/cli/permissions)**: Configure fine-grained allowed and denied action policies.
-*   **[Sandbox](/docs/cli/sandbox)**: Enforce OS-level container isolation boundaries.
-*   **[Plugins & Skills](/docs/cli/plugins)**: Create your own custom skills.
+*   **[CLI Reference](./reference.md)**: Dense tables listing all slash commands and visual settings keys.
+*   **[Permissions](./permissions.md)**: Configure fine-grained allowed and denied action policies.
+*   **[Sandbox](./sandbox.md)**: Enforce OS-level container isolation boundaries.
+*   **[Plugins & Skills](./plugins.md)**: Create your own custom skills.

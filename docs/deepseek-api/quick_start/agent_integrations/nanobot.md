@@ -52,7 +52,20 @@ The configuration file path varies by operating system:
 Edit the `config.json` file and modify the following configuration items:
 
 ```json
-{    "agents": {        "defaults": {            "model": "deepseek-v4-pro",            "provider": "deepseek",        }    },    "providers": {        "deepseek": {            "apiKey": "<your DeepSeek API Key>",            "apiBase": "https://api.deepseek.com/v1",        },    },}
+{
+    "agents": {
+        "defaults": {
+            "model": "deepseek-v4-pro",
+            "provider": "deepseek",
+        }
+    },
+    "providers": {
+        "deepseek": {
+            "apiKey": "<your DeepSeek API Key>",
+            "apiBase": "https://api.deepseek.com/v1",
+        },
+    },
+}
 ```
 
  

@@ -19,7 +19,59 @@ export DEEPSEEK_API_KEY=<your API key>
 Create `~/.omp/agent/models.yml`:
 
 ```yaml
-providers:  deepseek:    baseUrl: https://api.deepseek.com    api: openai-completions    apiKey: DEEPSEEK_API_KEY    authHeader: true    models:      - id: deepseek-v4-pro        name: DeepSeek V4 Pro        reasoning: true        thinking:          minLevel: high          maxLevel: xhigh          mode: effort        input: [text]        contextWindow: 1000000        maxTokens: 384000        compat:          supportsDeveloperRole: false          supportsReasoningEffort: true          maxTokensField: max_tokens          reasoningEffortMap:            high: high            xhigh: max          supportsToolChoice: false          requiresReasoningContentForToolCalls: true          requiresAssistantContentForToolCalls: true          extraBody:            thinking:              type: enabled      - id: deepseek-v4-flash        name: DeepSeek V4 Flash        reasoning: true        thinking:          minLevel: high          maxLevel: xhigh          mode: effort        input: [text]        contextWindow: 1000000        maxTokens: 384000        compat:          supportsDeveloperRole: false          supportsReasoningEffort: true          maxTokensField: max_tokens          reasoningEffortMap:            high: high            xhigh: max          supportsToolChoice: false          requiresReasoningContentForToolCalls: true          requiresAssistantContentForToolCalls: true          extraBody:            thinking:              type: enabled
+providers:
+  deepseek:
+    baseUrl: https://api.deepseek.com
+    api: openai-completions
+    apiKey: DEEPSEEK_API_KEY
+    authHeader: true
+    models:
+      - id: deepseek-v4-pro
+        name: DeepSeek V4 Pro
+        reasoning: true
+        thinking:
+          minLevel: high
+          maxLevel: xhigh
+          mode: effort
+        input: [text]
+        contextWindow: 1000000
+        maxTokens: 384000
+        compat:
+          supportsDeveloperRole: false
+          supportsReasoningEffort: true
+          maxTokensField: max_tokens
+          reasoningEffortMap:
+            high: high
+            xhigh: max
+          supportsToolChoice: false
+          requiresReasoningContentForToolCalls: true
+          requiresAssistantContentForToolCalls: true
+          extraBody:
+            thinking:
+              type: enabled
+      - id: deepseek-v4-flash
+        name: DeepSeek V4 Flash
+        reasoning: true
+        thinking:
+          minLevel: high
+          maxLevel: xhigh
+          mode: effort
+        input: [text]
+        contextWindow: 1000000
+        maxTokens: 384000
+        compat:
+          supportsDeveloperRole: false
+          supportsReasoningEffort: true
+          maxTokensField: max_tokens
+          reasoningEffortMap:
+            high: high
+            xhigh: max
+          supportsToolChoice: false
+          requiresReasoningContentForToolCalls: true
+          requiresAssistantContentForToolCalls: true
+          extraBody:
+            thinking:
+              type: enabled
 ```
 
  
@@ -58,7 +110,8 @@ Field| Notes
 ## Usage
 
 ```sh
-cd /path/to/your-projectomp --model deepseek/deepseek-v4-pro
+cd /path/to/your-project
+omp --model deepseek/deepseek-v4-pro
 ```
 
  

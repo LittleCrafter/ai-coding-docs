@@ -2,25 +2,35 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
+**Surface: Web**
+
 ChatGPT web stores product and workspace preferences in ChatGPT settings. ChatGPT Work
 chats run in a managed environment and don't read local Codex
 configuration files. Use the controls your workspace exposes in ChatGPT
 settings; workspace administrators may manage some settings for you.
 
+**Surface: Desktop app**
+
 The general [Settings](./reference/settings.md) page covers app preferences,
 including profile, keyboard shortcuts, notifications, appearance,
 personalization, memories, and archived chats.
+
+<a id="app-project-and-terminal-behavior"></a>
 
 ## Project and terminal behavior
 
 Choose where files open, how much command output appears in chats, and where
 terminal tabs open by default.
 
+<a id="app-code-review"></a>
+
 ## Code review
 
 Under **Settings > Git**, use **Review delivery** to choose **Inline** to run
 `/review` in the current chat when possible or **Detached** to start a separate
 review chat.
+
+<a id="app-ide-extension-sync"></a>
 
 ## IDE extension sync
 
@@ -33,6 +43,8 @@ You can open an app chat from the IDE extension and continue an IDE chat in the
 app. Both surfaces use the same project to determine which chats and context to
 share.
 
+<a id="app-agent-configuration"></a>
+
 ## Agent configuration
 
 Codex agents in the app inherit the same configuration as the IDE extension and
@@ -40,11 +52,15 @@ CLI. Use the in-app controls for common settings, or edit `config.toml` for
 advanced options. See [Agent approvals and security](./agent-approvals-security.md)
 and [Config basics](./config-file/config-basic.md) for details.
 
+<a id="app-git"></a>
+
 ## Git
 
 Use Git settings to standardize branch naming and choose whether Codex uses
 force pushes. You can also set prompts that Codex uses to generate commit
 messages and pull request descriptions.
+
+<a id="app-integrations-and-mcp"></a>
 
 ## Integrations and MCP
 
@@ -54,6 +70,8 @@ authentication flow. These settings also apply to the Codex CLI and IDE
 extension because MCP configuration lives in `config.toml`. See
 [Model Context Protocol](./extend/mcp.md) for details.
 
+<a id="app-browser-developer-mode"></a>
+
 ## Browser developer mode
 
 Under **Developer mode**, turn on **Enable full CDP access** to let ChatGPT use
@@ -62,10 +80,14 @@ debugging. If your organization has disabled full CDP access, you can't enable
 it locally. See [Developer mode](./browser.md#app-developer-mode) for setup,
 risk, approval, and administrator requirements.
 
+**Surface: CLI**
+
 Codex CLI reads your personal defaults from `~/.codex/config.toml`. Add a
 `.codex/config.toml` file to a trusted project or subfolder when you need
 project-specific overrides. The CLI and IDE extension share these configuration
 layers.
+
+<a id="cli-inspect-your-settings"></a>
 
 ## Inspect your settings
 
@@ -82,6 +104,8 @@ session:
 See [Developer commands](./developer-commands.md) for the full
 interactive command reference.
 
+<a id="cli-change-settings-for-one-run"></a>
+
 ## Change settings for one run
 
 Use a dedicated flag when one exists. Common examples include `--model`,
@@ -97,6 +121,8 @@ codex --config model_reasoning_effort='"high"'
 Command-line flags and `--config` values have the highest precedence. For the
 complete flag list, see [Developer commands](./developer-commands.md).
 
+<a id="cli-configuration-layers"></a>
+
 ## Configuration layers
 
 The CLI applies command-line flags and `--config` overrides before project,
@@ -104,6 +130,8 @@ profile, user, system, and built-in settings. Use that precedence to keep shared
 defaults in configuration files and one-off changes on the command line.
 
 For the complete order and common options, see [Config basics](./config-file/config-basic.md).
+
+<a id="cli-change-settings-in-the-tui"></a>
 
 ## Change settings in the TUI
 
@@ -124,12 +152,16 @@ save the choice. Set the related configuration key when you want a default for
 future sessions. For the terminal theme, editor, completions, and shortcut
 workflows, see [CLI customization](./cli-customization.md).
 
+<a id="cli-settings-references"></a>
+
 ## Settings references
 
 - [Advanced configuration](./config-file/config-advanced.md) covers profiles, one-off overrides, and other advanced workflows.
 - [Configuration reference](./config-file/config-reference.md) lists the available keys and values.
 - [Sample configuration](./config-file/config-sample.md) provides a complete example file.
 - [Environment variables](./config-file/environment-variables.md) documents variables used by the CLI and installer.
+
+**Surface: IDE extension**
 
 The Codex IDE extension has two settings layers:
 
@@ -139,6 +171,8 @@ The Codex IDE extension has two settings layers:
 - **Editor settings** control how the extension behaves inside VS Code and
   compatible editors. These settings use `chatgpt.*` keys in the editor's
   settings system.
+
+<a id="ide-open-codex-settings"></a>
 
 ## Open Codex settings
 
@@ -150,6 +184,8 @@ For the configuration layer order and common keys, see [Config
 basics](./config-file/config-basic.md). For every supported `config.toml` key, see the
 [Configuration reference](./config-file/config-reference.md).
 
+<a id="ide-change-an-editor-setting"></a>
+
 ## Change an editor setting
 
 To change a setting, follow these steps:
@@ -159,6 +195,8 @@ To change a setting, follow these steps:
 3. Update the value.
 
 The extension also honors VS Code's built-in chat font settings for Codex chat surfaces.
+
+<a id="ide-editor-settings-reference"></a>
 
 ## Editor settings reference
 
@@ -179,4 +217,3 @@ The `chatgpt.*` keys above belong to the IDE extension and don't go in
 `config.toml`. For shared agent settings, use [Config
 basics](./config-file/config-basic.md), [Advanced configuration](./config-file/config-advanced.md),
 and the [Configuration reference](./config-file/config-reference.md).
-

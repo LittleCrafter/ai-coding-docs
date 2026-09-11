@@ -6,15 +6,13 @@ POST /files
 
 Upload an image file that can later be referenced by its `file_id` in chat completion requests.
 
-Supported formats: JPEG, PNG, GIF, and WebP. The format is detected from the file content. See the [Files API guide](</guides/files_api>) for details.
+Supported formats: JPEG, PNG, GIF, and WebP. The format is detected from the file content. See the [Files API guide](<../guides/files_api.md>) for details.
 
 ## Request
 
-  * multipart/form-data
+**multipart/form-data**
 
-### 
-
-Body
+### Body
 
 **
 
@@ -46,15 +44,13 @@ The lifetime of the file in seconds, between 3600 (1 hour) and 2592000 (30 days)
 
 ## Responses
 
-  * 200
+**200**
 
 OK, returns the uploaded `file object`.
 
-  * application/json
+**application/json**
 
-  * Schema
-  * Example (from schema)
-  * Example
+**Schema**
 
 **
 
@@ -94,12 +90,31 @@ The intended purpose of the file.
 
 The Unix timestamp (in seconds) of when the file expires. Only present when an expiration was set at upload time.
 
-```json
-{  "id": "string",  "object": "file",  "bytes": 0,  "created_at": 0,  "filename": "string",  "purpose": "user_data",  "expires_at": 0}
-```
+**Example (from schema)**
 
 ```json
-{  "id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",  "object": "file",  "bytes": 102400,  "created_at": 1700000000,  "filename": "image.jpg",  "purpose": "user_data"}
+{
+  "id": "string",
+  "object": "file",
+  "bytes": 0,
+  "created_at": 0,
+  "filename": "string",
+  "purpose": "user_data",
+  "expires_at": 0
+}
+```
+
+**Example**
+
+```json
+{
+  "id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",
+  "object": "file",
+  "bytes": 102400,
+  "created_at": 1700000000,
+  "filename": "image.jpg",
+  "purpose": "user_data"
+}
 ```
 
 Loading...

@@ -16,15 +16,16 @@ This page covers the Codex Security plugin in the desktop app or Codex CLI. To
 
 ## Install the plugin
 
+**Surface: Desktop app**
+
 1. Open [Codex in the ChatGPT desktop app](../app.md).
 2. Open **Plugins**, search for **Codex Security**, or use the button below:
 
-   
-
      [Install the Codex Security plugin](https://developers.openai.comcodex://plugins/install/codex-security?marketplace=openai-curated)
-   
 
 3. Confirm the plugin is enabled, then open **Security** in the sidebar.
+
+**Surface: CLI**
 
 1. In your terminal, go to the repository you want to assess and start Codex:
 
@@ -46,8 +47,10 @@ Check the [plugin changelog](./plugin/changelog.md) before you rely
 For the best scan quality, use `gpt-5.6-sol`
 with `xhigh` reasoning effort.
 
+**Surface: Desktop app**
+
 <figure className="not-prose my-8">
-  
+
   <figcaption className="mt-3 text-sm text-secondary">
     Choose a repository and configure a new security scan before you start it.
   </figcaption>
@@ -70,7 +73,7 @@ with `xhigh` reasoning effort.
    repository detail that should guide the review.
 
    <figure className="not-prose my-6">
-     
+
      <figcaption className="mt-3 text-sm text-secondary">
        Turn on additional context to describe attack vectors, focus areas, and
        relevant security guidance.
@@ -89,11 +92,13 @@ with `xhigh` reasoning effort.
    to inspect a repository's scan history.
 
    <figure className="not-prose my-6">
-     
+
      <figcaption className="mt-3 text-sm text-secondary">
        Review scan results, findings, and coverage in the Security workbench.
      </figcaption>
    </figure>
+
+**Surface: CLI**
 
 1. Ask for a standard scan
 
@@ -117,10 +122,14 @@ with `xhigh` reasoning effort.
 
 ## What the scan creates
 
+**Surface: Desktop app**
+
 Completed scans remain available in **Scans**. Review their findings and
 coverage in the Security workbench, or inspect related findings and repository
 history in **Findings** and **Repositories**. The scan also creates the files
 below.
+
+**Surface: CLI**
 
 Every completed scan reports a summary in the terminal and creates the files
 below.

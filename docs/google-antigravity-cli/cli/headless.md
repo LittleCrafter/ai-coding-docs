@@ -464,7 +464,7 @@ To auto-approve every tool for a run, pass `--dangerously-skip-permissions`:
 agy -p "Run the test suite and report failures" --dangerously-skip-permissions
 ```
 
-> **Warning:** `--dangerously-skip-permissions` approves all tool calls, including file writes and command execution. Prefer scoped `permissions.allow` rules unless you fully trust the prompt and environment. See [Permissions](/docs/cli/permissions) for the full rule syntax.
+> **Warning:** `--dangerously-skip-permissions` approves all tool calls, including file writes and command execution. Prefer scoped `permissions.allow` rules unless you fully trust the prompt and environment. See [Permissions](./permissions.md) for the full rule syntax.
 
 ## Handle exit codes and errors
 
@@ -542,7 +542,7 @@ echo "$result" | jq -r '.response' > result.txt
 
 ## Next steps
 
-*   [Prompting & Interaction](/docs/cli/prompting): Write effective prompts for the agent.
-*   [Permissions](/docs/cli/permissions): Configure allow, deny, and ask rules.
-*   [Background Tasks & Subagents](/docs/cli/subagents): Delegate work to specialized agents.
-*   [Reference](/docs/cli/reference): Full command and flag reference.
+*   [Prompting & Interaction](./prompting.md): Write effective prompts for the agent.
+*   [Permissions](./permissions.md): Configure allow, deny, and ask rules.
+*   [Background Tasks & Subagents](./subagents.md): Delegate work to specialized agents.
+*   [Reference](./reference.md): Full command and flag reference.

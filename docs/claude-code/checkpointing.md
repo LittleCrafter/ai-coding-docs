@@ -19,15 +19,14 @@ Claude Code tracks all changes made by its file editing tools:
 * Every user prompt creates a new checkpoint
 * Claude Code keeps file snapshots for the 100 most recent checkpoints in a session. Discarding an older checkpoint deletes the snapshot files that no remaining checkpoint references, except each file's first snapshot, which the VS Code extension uses as the baseline for its session diffs.
 * Claude Code saves checkpoints with the conversation, so you can still run `/rewind` after you resume a session
-* Claude Code deletes a session's file snapshots in the [retention sweep](/docs/en/claude-directory#cleaned-up-automatically), by default about 30 days after the session last saved one. Rewinding to a checkpoint whose snapshots are gone can fail with [`No files were restored`](/docs/en/errors#no-files-were-restored). To keep snapshots longer, set [`cleanupPeriodDays`](/docs/en/settings-reference#cleanupperioddays).
+* Claude Code deletes a session's file snapshots in the [retention sweep](./claude-directory.md#cleaned-up-automatically), by default about 30 days after the session last saved one. Rewinding to a checkpoint whose snapshots are gone can fail with [`No files were restored`](./errors.md#no-files-were-restored). To keep snapshots longer, set [`cleanupPeriodDays`](./settings-reference.md#cleanupperioddays).
 
 ### Rewind and summarize
 
 Run `/rewind`, or press `Esc` twice when the prompt input is empty, to open the rewind menu.
 
-<Note>
-  If the prompt input contains text, double `Esc` clears it instead of opening the menu. The cleared text is saved to your input history, so press `Up` to recall it after you finish in the rewind menu.
-</Note>
+> [!NOTE]
+> If the prompt input contains text, double `Esc` clears it instead of opening the menu. The cleared text is saved to your input history, so press `Up` to recall it after you finish in the rewind menu.
 
 The rewind menu lists each prompt you sent during the session. Select the point you want to act on, then choose an action:
 
@@ -52,9 +51,8 @@ If you ran `/clear` earlier in the same Claude Code process, the rewind menu sho
 
 Summarizing doesn't change files on disk, and the original messages stay in the session transcript, so Claude can still reference the details. To guide what the summary focuses on, highlight a **Summarize** option with the arrow keys and type instructions where the row reads **add context (optional)**, then press `Enter`. Selecting the option with its number key summarizes immediately without instructions.
 
-<Note>
-  Summarize keeps you in the same session and compresses context, like a targeted `/compact`. To branch off and try a different approach while preserving the original session intact, use [`/branch`](/docs/en/sessions#branch-a-session) or `claude --continue --fork-session` instead.
-</Note>
+> [!NOTE]
+> Summarize keeps you in the same session and compresses context, like a targeted `/compact`. To branch off and try a different approach while preserving the original session intact, use [`/branch`](./sessions.md#branch-a-session) or `claude --continue --fork-session` instead.
 
 ## Common use cases
 
@@ -81,10 +79,10 @@ These file modifications cannot be undone through rewind. Only direct file edits
 
 ### Subagent edits not restored
 
-A [subagent](/docs/en/sub-agents) makes edits with Claude's file editing tools, but Claude Code usually doesn't capture those edits in your session's checkpoints. Whether rewinding restores them depends on how the subagent runs:
+A [subagent](./sub-agents.md) makes edits with Claude's file editing tools, but Claude Code usually doesn't capture those edits in your session's checkpoints. Whether rewinding restores them depends on how the subagent runs:
 
-* **Foreground forked skill**: a [skill with `context: fork`](/docs/en/skills#run-skills-in-a-subagent) that runs in the foreground edits your working tree during your own turn, so rewinding restores its edits as usual. Set `background: false` to run a fork in the foreground; a few situations, [listed on the skills page](/docs/en/skills#run-skills-in-a-subagent), run it there regardless of the setting.
-* **Any other subagent**: rewinding doesn't restore the edits. Use git to revert them. This includes a forked skill that runs in the background, the default, and a background [`/code-review --fix`](/docs/en/code-review) run.
+* **Foreground forked skill**: a [skill with `context: fork`](./skills.md#run-skills-in-a-subagent) that runs in the foreground edits your working tree during your own turn, so rewinding restores its edits as usual. Set `background: false` to run a fork in the foreground; a few situations, [listed on the skills page](./skills.md#run-skills-in-a-subagent), run it there regardless of the setting.
+* **Any other subagent**: rewinding doesn't restore the edits. Use git to revert them. This includes a forked skill that runs in the background, the default, and a background [`/code-review --fix`](./code-review.md) run.
 
 ### External changes not tracked
 
@@ -94,7 +92,7 @@ Checkpointing only tracks files that have been edited within the current session
 
 Checkpointing doesn't rewind symlinked or hard-linked files. When you pick **Restore code** or **Restore code and conversation** from the `/rewind` menu, Claude Code skips any tracked path that is a symlink or hard link and shows a `Restored the code, but skipped N files` warning. The skipped files keep their current contents. To undo the session's changes to one of them, ask Claude to reverse the edit or edit the file yourself. Config files a dotfile manager symlinks into your project and files pnpm hard-links into place both fall into this category.
 
-To see which paths a restore skips, turn on debug logging with `/debug` before you restore: the debug log at `~/.claude/debug/<session-id>.txt` names each skipped path. For every skip reason and the recovery steps, see [the skipped-files entry in the error reference](/docs/en/errors#restored-the-code-but-skipped-files).
+To see which paths a restore skips, turn on debug logging with `/debug` before you restore: the debug log at `~/.claude/debug/<session-id>.txt` names each skipped path. For every skip reason and the recovery steps, see [the skipped-files entry in the error reference](./errors.md#restored-the-code-but-skipped-files).
 
 ### Not a replacement for version control
 
@@ -102,6 +100,6 @@ Checkpoints are designed for quick, session-level recovery. For permanent versio
 
 ## See also
 
-* [Interactive mode](/docs/en/interactive-mode) - Keyboard shortcuts and session controls
-* [Commands](/docs/en/commands) - Accessing checkpoints using `/rewind`
-* [CLI reference](/docs/en/cli-reference) - Command-line options
+* [Interactive mode](./interactive-mode.md) - Keyboard shortcuts and session controls
+* [Commands](./commands.md) - Accessing checkpoints using `/rewind`
+* [CLI reference](./cli-reference.md) - Command-line options

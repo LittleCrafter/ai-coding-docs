@@ -17,7 +17,7 @@ You can run the demo tokenizer code in the following zip package to calculate th
 
 ## Calculate image token usage
 
-You can estimate the number of tokens consumed by an image based on its dimensions. Images are automatically resized before inference, and there is an upper bound on the number of tokens per image; for details, see [Vision](</guides/vision#token-usage>).
+You can estimate the number of tokens consumed by an image based on its dimensions. Images are automatically resized before inference, and there is an upper bound on the number of tokens per image; for details, see [Vision](<../guides/vision.md#token-usage>).
 
 This is an estimate only; the actual number of tokens produced during processing may vary slightly, so refer to the usage returned by the API as the source of truth.
 

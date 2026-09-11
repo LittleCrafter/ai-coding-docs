@@ -103,7 +103,7 @@ npx @openai/codex-security bulk-scan repositories.csv \
 `--workers` controls concurrent repository scans and defaults to `4`. It does
 not set the number of independent standard-scan workers within each deep scan;
 configure those limits through
-[`[deep_scan]`](/codex/security/cli/reference#configure-deep-scans). Use `--mode
+[`[deep_scan]`](./reference.md#configure-deep-scans). Use `--mode
 deep` to select deep scanning for rows without their own `mode`. Each CSV row
 can still choose its own scan mode and repository scope.
 

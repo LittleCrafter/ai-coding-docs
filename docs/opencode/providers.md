@@ -1,7 +1,6 @@
----
-title: Providers
-description: Using any LLM provider in OpenCode.
----
+# Providers
+
+Using any LLM provider in OpenCode.
 
 OpenCode uses the [AI SDK](https://ai-sdk.dev/) and [Models.dev](https://models.dev) to support **75+ LLM providers** and it supports running local models.
 
@@ -84,7 +83,7 @@ Both options take an array of model IDs — the same IDs shown in the `/models` 
 ## OpenCode Zen
 
 OpenCode Zen is a list of models provided by the OpenCode team that have been
-tested and verified to work well with OpenCode. [Learn more](/docs/zen).
+tested and verified to work well with OpenCode. [Learn more](./zen.md).
 
 > [!TIP]
 > If you are new, we recommend starting with OpenCode Zen.
@@ -1787,7 +1786,7 @@ If you already have an API key, you can select **Manually enter API Key** and pa
 
 ### OpenCode Zen
 
-OpenCode Zen is a list of tested and verified models provided by the OpenCode team. [Learn more](/docs/zen).
+OpenCode Zen is a list of tested and verified models provided by the OpenCode team. [Learn more](./zen.md).
 
 1. Sign in to **<a href={console}>OpenCode Zen</a>** and click **Create API Key**.
 
@@ -2631,7 +2630,7 @@ Here's an example setting the `apiKey`, `headers`, and model `limit` options.
 
 Configuration details:
 
-- **apiKey**: Set using `env` variable syntax, [learn more](/docs/config#env-vars).
+- **apiKey**: Set using `env` variable syntax, [learn more](./config.md#env-vars).
 - **headers**: Custom headers sent with each request.
 - **limit.context**: Maximum input tokens the model accepts.
 - **limit.output**: Maximum tokens the model can generate.

@@ -1,7 +1,6 @@
----
-title: Ecosystem
-description: Projects and integrations built with OpenCode.
----
+# Ecosystem
+
+Projects and integrations built with OpenCode.
 
 A collection of community projects built on OpenCode.
 

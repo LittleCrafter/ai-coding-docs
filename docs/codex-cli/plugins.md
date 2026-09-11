@@ -19,19 +19,29 @@ Plugins marked **Desktop only** require the ChatGPT desktop app. You can discove
 but you must open the ChatGPT desktop app to install and use them. They aren't
 available on mobile.
 
+**Surface: Desktop app**
+
 Open the **Plugins** tab to browse and install plugins. After installation, you
 can use plugins in Chat or Work in ChatGPT, or in Codex. Installed plugins can
 add skills and MCP tools to new chats.
+
+**Surface: Web**
 
 Open the **Plugins** tab to browse and install plugins. After installation, you
 can use plugins in Chat or Work. A plugin can prompt you to connect an external
 service before its tools become available.
 
+**Surface: CLI**
+
 In Codex CLI, enter `/plugins` to open the plugin browser. Install a plugin from
 a configured marketplace, then start a new session before using its bundled
 skills or tools.
 
+**Surface: IDE extension**
+
 <a id="plugin-directory-in-the-ide-extension"></a>
+
+<a id="ide-use-plugins-from-a-supported-surface"></a>
 
 ### Use plugins from a supported surface
 
@@ -78,12 +88,15 @@ If the plugin needs custom UI, use the
 
 <a id="plugin-directory-in-the-codex-app"></a>
 
+<a id="app-universal-plugin-directory"></a>
+<a id="web-universal-plugin-directory"></a>
+
 ### Universal plugin directory
 
 ChatGPT and Codex use the same public plugin catalog. On the web or in the
 ChatGPT desktop app, open the **Plugins** tab to browse and install plugins.
 
-  
+**Surface: Desktop app**
 
 > Illustration: Plugins Directory in the ChatGPT desktop app
 
@@ -100,6 +113,9 @@ Workspace admins can import and sync a GitHub marketplace for their team. See
 [Plugin management](./enterprise/plugin-management.md) for setup and access
 requirements.
 
+<a id="app-install-and-use-a-plugin"></a>
+<a id="web-install-and-use-a-plugin"></a>
+
 ### Install and use a plugin
 
 Once you open the Plugins Directory:
@@ -111,6 +127,9 @@ Once you open the Plugins Directory:
    use them.
 4. After installation, start a new chat and ask ChatGPT or Codex to use the
    plugin.
+
+<a id="app-connect-supported-partners-with-sign-in-with-chatgpt"></a>
+<a id="web-connect-supported-partners-with-sign-in-with-chatgpt"></a>
 
 ### Connect supported partners with Sign in with ChatGPT
 
@@ -126,47 +145,29 @@ permissions as a separate step before using the connection.
 
 After you install a plugin, you can use it directly in the prompt window:
 
-  
+**Surface: Desktop app**
 
 > Illustration: Installed plugin on the Plugins page
 
-  
-
-    
 Describe the task directly
-
-    
 
       Ask for the outcome you want, such as "Summarize unread Gmail threads
       from today" or "Pull the latest launch notes from Google Drive."
-    
-
-    
 
       Use this when you want ChatGPT to choose the right installed tools for the
       task.
-    
 
-  
-
-  
-
-    
 Choose a specific plugin
-
-    
 
       Type `@` to invoke the plugin or one of its bundled skills
       explicitly.
-    
-
-    
 
       Use this when you want to be specific about which plugin or skill ChatGPT
       should use. See [Skills & Plugins](./skills-and-plugins.md).
-    
 
-  
+**Surface: Desktop app**
+
+<a id="app-use-apple-messages-from-codex"></a>
 
 ### Use Apple Messages from Codex
 
@@ -209,7 +210,11 @@ web or mobile, Codex CLI, or the IDE extension.
 In managed workspaces, administrators can disable Apple Messages through the
 existing Computer Use control.
 
+**Surface: CLI**
+
 <a id="plugin-directory-in-codex-cli"></a>
+
+<a id="cli-plugin-browser-in-codex-cli"></a>
 
 ### Plugin browser in Codex CLI
 
@@ -220,8 +225,6 @@ codex
 /plugins
 ```
 
-  
-
 > Illustration: Plugins list in Codex CLI
 
 The CLI plugin browser groups plugins by marketplace. Use the marketplace tabs
@@ -230,6 +233,9 @@ marketplace entries, and press <kbd>Space</kbd> on an installed plugin to turn i
 on or off.
 
 <a id="api-key-availability"></a>
+
+<a id="app-api-key-availability"></a>
+<a id="cli-api-key-availability"></a>
 
 ### API key availability
 
@@ -241,6 +247,8 @@ connection flows require unsupported OAuth capabilities. Review plugin usage
 on the [Platform Usage page](https://platform.openai.com/usage).
 
 ### How permissions and data sharing work
+
+**Surface: Web**
 
 In ChatGPT on the web, Chat and Work use the workspace permissions and tools
 available to that chat. MCP servers still require their own sign-in and access.

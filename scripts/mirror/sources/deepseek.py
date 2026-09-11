@@ -9,8 +9,11 @@ picks that hook up via ``getattr`` and calls it instead of downloading
 that ``source_md_url`` here points at the HTML page itself; the hook ignores
 it and re-fetches ``source_url``.
 
-Discovery comes from the sitemap (real XML at ``/sitemap.xml``). There is no
-locale split to filter, so every URL under the site root becomes a page.
+Discovery comes from the sitemap (real XML at ``/sitemap.xml``). What that
+sitemap registers is English pages only, so every URL under the site root
+becomes a page -- the site does serve a full Simplified-Chinese tree under
+``/zh-cn/``, but the sitemap does not list it, which is why no locale filter
+is needed here.
 
 Conversion strategy (see ``_html_to_markdown``): Docusaurus renders the doc
 body inside ``<div class="theme-doc-markdown">``, so we isolate that node
@@ -19,20 +22,27 @@ landing page, ``<article>``, and then the whole document as fallbacks),
 strip leftover chrome (nav/footer/aside plus breadcrumbs and pagination),
 and run html2text over what remains. ``<pre>`` code blocks are lifted out
 *before* conversion and spliced back in afterwards as fenced code blocks,
-so they keep their language tag and their exact text (blank lines included)
-instead of being mangled into html2text's indented-block rendering.
+so they keep their language tag and their exact text (line breaks and blank
+lines included) instead of being mangled into html2text's indented-block
+rendering. Three constructs that survive the chrome removal but render wrong
+under html2text are normalised on the tree first: a paragraph nested inside a
+heading, a tab strip that would become a bullet list naming content further
+down the page, and a site-absolute cross-link that only resolves on the
+upstream site.
 
 The core conversion pipeline -- html2text configuration, the code-block
-extraction skeleton (grouping ``<pre>`` elements by replacement target and
-swapping in placeholder tokens), code-block post-processing (blank-line
-collapse, Cf-character stripping, fence-length adaptation), and the
+extraction skeleton (grouping ``<pre>`` elements by replacement target,
+reading each block's text with its markup line breaks intact, and swapping in
+placeholder tokens), code-block post-processing (blank-line collapse,
+invisible-character stripping, fence-length adaptation), and the
 fetch/convert/validate/hash body of the ``fetch_markdown`` hook -- is
 provided via ``core.html_markdown``. This adapter keeps only the
 DeepSeek/Docusaurus-specific parts: the content-container selection
 (``div.theme-doc-markdown``), the Docusaurus-specific chrome removal
-(breadcrumbs, pagination), and the code-block language detection (from
-``language-*`` CSS classes on the ``<pre>``, its ``<code>`` child, and the
-``theme-code-block`` container). No whats-new for this source.
+(breadcrumbs, pagination), the page-shape normalisation described above, and
+the code-block language detection (from ``language-*`` CSS classes on the
+``<pre>``, its ``<code>`` child, and the ``theme-code-block`` container). No
+whats-new for this source.
 
 Fragility notes -- what breaks when the upstream site changes:
 
@@ -50,6 +60,7 @@ Fragility notes -- what breaks when the upstream site changes:
 
 from __future__ import annotations
 
+import posixpath
 import sys
 from typing import TYPE_CHECKING
 
@@ -62,7 +73,7 @@ from ..core.html_markdown import (
     fetch_markdown_converted,
     make_converter,
     splice_code_blocks,
-    strip_cf_characters,
+    strip_invisible_characters,
 )
 from ..core.page import Page
 from ..core.sitemap import extract_locs
@@ -70,6 +81,7 @@ from .base import (
     SourceConfig,
     clean_url,
     ensure_discovered_pages,
+    ensure_known_slugs,
     same_origin,
     try_make_page,
 )
@@ -84,6 +96,8 @@ if TYPE_CHECKING:
 # The base URL of the DeepSeek API documentation site. This is used both as
 # the site-root boundary for sitemap filtering (only URLs under this prefix
 # are included in discovery) and as the home URL registered in SourceConfig.
+# It is also the prefix the page-to-page cross-links are written with, and
+# therefore the base of the upstream URL an unmirrored target is rewritten to.
 # If the upstream site moves to a new domain, updating this single constant
 # is sufficient -- SITEMAP_URL and all boundary checks derive from it.
 SITE_URL = "https://api-docs.deepseek.com"
@@ -127,12 +141,16 @@ def discover(client: httpx.Client) -> list[Page]:
     itself as a placeholder -- the ``fetch_markdown`` hook below performs the
     actual fetch-and-convert.
 
-    **Why there is no locale/section filter.** Unlike the Claude Code source
-    (which filters to ``/docs/en/``) or the Antigravity source (which
-    filters to ``/docs/cli/``), the DeepSeek API docs site serves a single
-    documentation tree under the site root with no locale split and no other
-    content (blog, marketing) mixed into the sitemap. Every URL under the
-    site root is part of the API docs, so no filter is needed.
+    **Why there is no locale/section filter.** The site serves two
+    documentation trees -- English under the site root and Simplified Chinese
+    under ``/zh-cn/`` -- but its sitemap registers the English pages only, so
+    discovery never sees a Chinese URL and no other content (blog, marketing)
+    is mixed into the listing either. The site-root boundary below is
+    therefore sufficient: every ``<loc>`` it keeps is part of the English API
+    docs. The margin is upstream's sitemap, not the site layout -- if
+    ``/zh-cn/`` URLs ever appear in the sitemap, they would pass the boundary
+    check and be mirrored under ``zh-cn/...`` slugs, so a locale exclusion
+    would have to be added here at that point.
 
     **Query/fragment stripping.** Sitemap entries can carry query strings
     (``?utm_source=newsletter``) or fragments (``#section``). These are
@@ -265,7 +283,226 @@ def discover(client: httpx.Client) -> list[Page]:
         if page is not None:
             pages.append(page)
     pages.sort(key=lambda p: p.slug)
+    # Publish the slugs of this run for the cross-link pass in the conversion
+    # hook: it can only point a reference at a mirrored page if it knows which
+    # pages this run actually mirrors. Replacing the set wholesale (rather
+    # than adding to it) keeps a run's view exact even when a page disappeared
+    # upstream, so a reference to it falls back to its upstream URL instead of
+    # a relative link to a file that no longer exists.
+    _KNOWN_SLUGS.clear()
+    _KNOWN_SLUGS.update(page.slug for page in pages)
     return ensure_discovered_pages(pages, "deepseek-api", f"site root {SITE_URL!r}")
+
+
+def _resolve_site_href(href: str, current_slug: str, known_slugs: set[str]) -> str:
+    """Resolve one site-absolute destination to something the mirror can serve.
+
+    *href* is an ``<a href>`` value that starts at the site root
+    (``/guides/vision#limits``). A documentation route this run mirrors
+    becomes a relative ``.md`` link to the page that holds it; a route it does
+    not mirror -- an asset the mirror does not download, a page that has
+    disappeared upstream -- becomes its upstream URL, the only destination
+    that still resolves.
+
+    The anchor is preserved on both branches: a fragment is resolved by the
+    reader's browser against whichever document the link lands on, so it keeps
+    working whether that document is a mirrored file or the upstream page. A
+    query string is kept on the upstream branch and dropped on the mirrored
+    one, because a mirrored file is a static document with nothing to
+    parameterise.
+
+    The site root itself resolves to the mirrored landing page (slug
+    ``"index"``, the slug discovery gives the homepage), so the navigation
+    links every page carries keep pointing at a file in the mirror.
+    """
+    path, _, anchor = href.partition("#")
+    suffix = f"#{anchor}" if anchor else ""
+    path, _, query = path.partition("?")
+
+    slug = path.strip("/")
+    if slug:
+        upstream = f"{SITE_URL}{path}"
+    else:
+        slug = "index"
+        upstream = f"{SITE_URL}/"
+
+    if slug not in known_slugs:
+        return f"{upstream}{query}{suffix}"
+
+    # ``current_slug`` is the on-disk path of the page being rewritten, so the
+    # relative path is derived the same way whatever depth the page sits at.
+    current_dir = posixpath.dirname(current_slug) or "."
+    relative = posixpath.relpath(f"{slug}.md", current_dir)
+    if not relative.startswith((".", "/")):
+        relative = f"./{relative}"
+    return f"{relative}{suffix}"
+
+
+def _rewrite_content_hrefs(
+    content: bs4.Tag | bs4.BeautifulSoup,
+    current_slug: str,
+    known_slugs: set[str],
+) -> None:
+    """Repoint every site-absolute link under *content* at a live destination.
+
+    The pages cross-reference each other with site-absolute paths
+    (``<a href="/guides/vision">``), which only resolve while the reader is on
+    the upstream site: in a local checkout a leading ``/`` means the
+    filesystem root, so every one of those links is dead exactly where this
+    mirror is read. Each is routed through :func:`_resolve_site_href`.
+
+    Only ``<a href>`` values that start at the site root are touched. An
+    external URL, a mail address, an intra-page ``#anchor``, and an already
+    relative path are copied through unchanged, so this pass can never break a
+    link that already worked. It is idempotent too: its output holds relative
+    paths and absolute ``https://`` URLs, and neither starts with a single
+    ``/``.
+
+    The pass runs on the DOM rather than on the converted Markdown, which is
+    what keeps code samples out of it: the ``<pre>`` blocks have already been
+    lifted out of the tree by the time this runs, so a snippet that shows a
+    site path keeps showing exactly what it showed without any fence-shielding
+    step of its own.
+    """
+    for anchor in content.find_all("a", href=True):
+        href = anchor["href"]
+        # ``href=True`` selects anchors that have the attribute, but bs4 types
+        # an attribute value as possibly multi-valued; a link destination is a
+        # single string, so anything else is not a destination to rewrite.
+        if not isinstance(href, str):
+            continue
+        if not href.startswith("/") or href.startswith("//"):
+            continue
+        anchor["href"] = _resolve_site_href(href, current_slug, known_slugs)
+
+
+def _unwrap_heading_paragraphs(content: bs4.Tag | bs4.BeautifulSoup) -> None:
+    """Lift paragraphs out of headings so each heading keeps its own text.
+
+    The embedded OpenAPI renderer wraps a heading's text in a paragraph:
+    ``<h3><p>Body</p></h3>``. html2text treats the nested block as its own
+    block, emits the heading marker alone and the text as the paragraph under
+    it, and the document outline loses a heading -- readers see a stray
+    ``###`` line followed by an unrelated paragraph. Unwrapping the paragraph
+    before conversion puts the text back where the heading expects it.
+
+    Only ``<p>`` children are touched. A heading that carries inline markup
+    (a ``<code>``, a link) keeps it: unwrapping swaps the paragraph element
+    for its children, it does not flatten them.
+    """
+    for heading in content.find_all(["h1", "h2", "h3", "h4", "h5", "h6"]):
+        for paragraph in heading.find_all("p"):
+            paragraph.unwrap()
+
+
+def _holds_tab_panels(node: bs4.Tag) -> bool:
+    """Report whether *node* is a tab panel itself or carries one below it."""
+    return node.get("role") == "tabpanel" or node.select('[role="tabpanel"]') != []
+
+
+def _own_tab_panels(panels: list[bs4.Tag], group: bs4.Tag) -> list[bs4.Tag]:
+    """Filter *panels* down to the ones that belong to the group *group*.
+
+    A tab group may render INSIDE one of another group's panels -- an OpenAPI
+    page nests a schema's groups inside the request-body panel that holds
+    them -- so a search over a group's subtree finds the inner groups' panels
+    too. A panel belongs to the OUTERMOST panel-bearing element it sits in:
+    one that has another panel between itself and *group* is the inner
+    group's, and pairing it with the outer strip's labels would attach a
+    label to a sample it does not name.
+    """
+    own: list[bs4.Tag] = []
+    for panel in panels:
+        for ancestor in panel.parents:
+            if ancestor is group:
+                own.append(panel)
+                break
+            if isinstance(ancestor, bs4.Tag) and ancestor.get("role") == "tabpanel":
+                break
+    return own
+
+
+def _tab_panels_for(strip: bs4.Tag) -> list[bs4.Tag]:
+    """Return the panels one tab strip controls, in document order.
+
+    A tab group is a container holding the strip and its panels side by side,
+    each behind a wrapper of its own (``div.openapi-tabs__mime-container`` for
+    the strip, ``div.margin-top--md`` for the panels, in the markup this
+    adapter converts). The group is therefore found by walking OUTWARDS from
+    the strip and taking the first sibling subtree that holds panels: that is
+    the strip's own group, because a strip's panels always sit nearer to it
+    than another group's do.
+
+    Scoping the search this way is what keeps the pairing correct on a page
+    that nests tab groups: searching the whole ``tabs-container`` subtree, as
+    this pass used to, counts the nested groups' panels as well, so the counts
+    never agree and every strip on such a page goes unlabelled. Keying the
+    search on the wrapper's layout class instead would pair correctly but
+    break silently if upstream renamed it.
+    """
+    node: bs4.Tag = strip
+    parent = strip.parent
+    while isinstance(parent, bs4.Tag):
+        for child in parent.find_all(recursive=False):
+            # The strip's own ancestry is not its panel group: those children
+            # are the wrappers the strip sits in.
+            if child is node or node in child.parents:
+                continue
+            if _holds_tab_panels(child):
+                return _own_tab_panels(child.select('[role="tabpanel"]'), child)
+        node = parent
+        parent = parent.parent
+    return []
+
+
+def _label_tab_panels(content: bs4.Tag | bs4.BeautifulSoup) -> None:
+    """Replace each Docusaurus tab strip with a label above the panel it names.
+
+    Tabs are layout only: they decide which panel is visible at a time, a
+    distinction a Markdown reader cannot act on. The strip that carries the
+    labels is an HTML list, though, so converting the page as-is turns the
+    labels into a bare bullet list that names content appearing further down
+    the page with nothing to connect the two. The panels themselves must stay
+    -- the mirror is a document, not an interactive page, so every panel is
+    content a reader wants.
+
+    Each label is therefore moved onto a bold line of its own directly above
+    its panel, matching the convention the other adapters' tab conversions
+    use, and the strip is removed. The pairing is made positionally: the tabs
+    of a strip and the panels it controls are emitted in the same order (see
+    :func:`_tab_panels_for` for how a strip's panels are told apart from those
+    of a group nested inside them).
+
+    The strip is removed ONLY when the pairing succeeded. A count mismatch
+    means the markup changed shape, and a wrong pairing would attach a label
+    to the wrong sample -- worse than the bare list it replaced. Leaving the
+    strip in place then costs a bullet list but loses nothing: every label is
+    still on the page as text, next to the panel it names.
+    """
+    for strip in content.find_all("ul", attrs={"role": "tablist"}):
+        labels = [
+            item.get_text().strip()
+            for item in strip.find_all("li", attrs={"role": "tab"})
+        ]
+        panels = _tab_panels_for(strip)
+        if not labels or len(labels) != len(panels):
+            continue
+        for label, panel in zip(labels, panels):
+            heading = content.new_tag("p")
+            strong = content.new_tag("strong")
+            strong.string = label
+            heading.append(strong)
+            panel.insert_before(heading)
+        strip.decompose()
+
+
+# Slugs of the pages discovered by the current run; populated by ``discover``
+# and read by the cross-link pass each page conversion runs. The pipeline
+# discovers every page of a source before it fetches the first one, so the set
+# is already complete when the first page is converted. A module-level set is
+# what carries the information between the two hooks: the pipeline calls them
+# separately, with nothing but the module itself in between.
+_KNOWN_SLUGS: set[str] = set()
 
 
 def _code_placeholder(index: int) -> str:
@@ -397,16 +634,28 @@ def _extract_code_blocks(
     )
 
 
-def _html_to_markdown(html: str) -> str:
+def _html_to_markdown(
+    html: str, slug: str = "", known_slugs: set[str] | None = None
+) -> str:
     """Convert one Docusaurus docs page from HTML to Markdown.
 
     Isolates the doc body (``div.theme-doc-markdown``, Docusaurus's content
     container, or ``div.PromptLibrary`` on the bespoke prompt-library
     landing page), lifts out ``<pre>`` code blocks, strips navigation chrome
-    that may live inside it, runs the configured html2text instance over
-    the remainder, splices the code blocks back in as fenced blocks, strips
-    Unicode format characters (category "Cf"), and collapses excessive blank
-    lines while preserving blank lines inside code blocks.
+    that may live inside it, normalises the constructs html2text would
+    otherwise mistranslate (a paragraph nested in a heading, a tab strip that
+    would become a bare bullet list), repoints the page's site-absolute
+    cross-links at mirrored files or upstream URLs, runs the configured
+    html2text instance over the remainder, splices the code blocks back in as
+    fenced blocks, strips invisible Unicode characters, and collapses
+    excessive blank lines while preserving blank lines inside code blocks.
+
+    *slug* is the on-disk path of the page being converted and *known_slugs*
+    the page set this run mirrors; together they drive the cross-link pass
+    (see :func:`_rewrite_content_hrefs`). Both default to "nothing is known",
+    which leaves every link exactly as upstream wrote it -- the state the
+    converter-only tests want, and the safe behaviour for a page converted
+    outside a run.
 
     The fallback chain for content-container selection (the ``PromptLibrary``
     landing-page container, then ``<article>``, then the whole document)
@@ -414,18 +663,21 @@ def _html_to_markdown(html: str) -> str:
     container class. Warnings on fallback go to stderr so operators get
     early visibility of a selector break.
 
-    The three post-processing steps (splicing, Cf-stripping, blank-line
-    collapsing) are shared via ``core.html_markdown``. The ordering of those
-    steps is deliberate:
+    The tree surgery (heading paragraphs, tab strips, cross-links) runs BEFORE
+    the conversion, so html2text sees a document it already knows how to
+    render; the three post-processing steps (splicing, invisible-character
+    stripping, blank-line collapsing) are shared via ``core.html_markdown``.
+    The ordering of those steps is deliberate:
 
     1. Splice code blocks back in FIRST -- the placeholder tokens are bare
-       strings in the converted text, and the Cf-strip and collapse passes
+       strings in the converted text, and the strip and collapse passes
        must not see them (they would treat the tokens as regular text and
        could modify them);
-    2. Strip Cf characters -- these are invisible formatting residues from
-       Docusaurus markup that html2text preserves; they corrupt copy-paste
-       and diffs, so they go before the blank-line pass which works on
-       visible whitespace only;
+    2. Strip invisible characters -- these are formatting residues and stray
+       control bytes from Docusaurus markup that html2text preserves; they
+       corrupt copy-paste and diffs (a NUL byte even makes the file binary to
+       ``git`` and ``grep``), so they go before the blank-line pass which
+       works on visible whitespace only;
     3. Collapse blank lines LAST -- this is pure cosmetic cleanup of the
        visible whitespace, and it must run after code blocks are back in
        place so their interiors are protected by the fenced-block scanner
@@ -507,6 +759,20 @@ def _html_to_markdown(html: str) -> str:
     # hypothetical class like ``pseudo-breadcrumbs``.
     for tag in content.select(".pagination-nav, .breadcrumbs"):
         tag.decompose()
+    # Three constructs survive the chrome removal but render WRONG under
+    # html2text, so they are normalised on the tree first (each helper's
+    # docstring covers its own failure mode): a paragraph nested in a heading,
+    # a tab strip that would become a bullet list naming content further down,
+    # and a site-absolute cross-link that resolves on the upstream site only.
+    _unwrap_heading_paragraphs(content)
+    _label_tab_panels(content)
+    # The cross-link pass needs to know which pages this run mirrors, and an
+    # empty set means that is unknown rather than "nothing is mirrored" -- the
+    # two would rewrite the same links in opposite directions, so an absent
+    # page set leaves every href exactly as upstream wrote it. A real run
+    # always has one (``fetch_markdown`` refuses to convert without it).
+    if known_slugs:
+        _rewrite_content_hrefs(content, slug, known_slugs)
     # Run the pre-configured html2text converter over the stripped content
     # tree. ``make_converter()`` (from ``core.html_markdown``) returns an
     # ``html2text.HTML2Text`` instance configured with five shared options:
@@ -530,9 +796,10 @@ def _html_to_markdown(html: str) -> str:
     # one backtick longer than the longest inner run, so the inner run can
     # never close the fence prematurely.
     text = splice_code_blocks(text, blocks, _code_placeholder)
-    # Strip invisible Unicode format characters (category "Cf") that
-    # html2text and Docusaurus can leave in the output.
-    text = strip_cf_characters(text)
+    # Strip the invisible characters (Unicode categories Cf and Cc, minus the
+    # three controls that are line structure) that html2text and Docusaurus
+    # can leave in the output.
+    text = strip_invisible_characters(text)
     # Collapse runs of 3+ blank lines down to 2, but only OUTSIDE fenced
     # code blocks.
     text = collapse_blank_lines(text)
@@ -569,6 +836,20 @@ def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
 
     The fetch / convert / validate / hash sequence itself is provided via
     ``core.html_markdown.fetch_markdown_converted``; this hook contributes
-    only the Docusaurus-specific converter.
+    only the Docusaurus-specific converter -- bound here to this page's slug
+    and to the page set this run mirrors, so the converter can resolve the
+    page's site-absolute cross-links (see ``_rewrite_content_hrefs``).
+
+    Raises:
+        fetch.FetchError: When no discovered slug set is available -- the
+            conversion would otherwise rewrite every internal link to its
+            upstream URL (see ``ensure_known_slugs``).
     """
-    return fetch_markdown_converted(client, page, _html_to_markdown)
+    ensure_known_slugs("deepseek-api", _KNOWN_SLUGS, page.slug)
+    known_slugs = _KNOWN_SLUGS
+
+    def convert(html: str) -> str:
+        """Convert one fetched page with its cross-links resolved."""
+        return _html_to_markdown(html, page.slug, known_slugs)
+
+    return fetch_markdown_converted(client, page, convert)

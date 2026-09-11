@@ -42,8 +42,6 @@ Codex can use the history to identify that source and then read it directly.
 Ask what you were doing before a break without reconstructing every open app,
 document, and next step.
 
-<ComputerHistoryThreadDemo client:load scenario="resume" />
-
 </section>
 
 <section class="feature-grid inverse">
@@ -52,8 +50,6 @@ document, and next step.
 
 Refer to a document, conversation, or task the way you remember it. Computer
 History can use the activity timeline to identify the source you mean.
-
-<ComputerHistoryThreadDemo client:load scenario="find" />
 
 </section>
 
@@ -64,8 +60,6 @@ History can use the activity timeline to identify the source you mean.
 When Computer History notices repeatable work, a timeline entry can suggest a
 skill or automation. Review the suggestion, then ask Codex to create it from the
 recorded workflow.
-
-<ComputerHistoryThreadDemo client:load scenario="workflow" />
 
 </section>
 

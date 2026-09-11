@@ -4,9 +4,8 @@ Slash commands are built-in control commands provided by Kimi Code CLI in the in
 
 After typing the full command name, press `Enter` to execute. If the `/`-prefixed input does not match any built-in or Skill command, it is sent to the Agent as a regular message.
 
-::: tip
-Some commands are only available in the idle state. Executing these commands while a session is streaming output or compacting context will be blocked — press `Esc` or `Ctrl-C` to interrupt first. The "Always available" column in the tables below indicates commands that are also available during streaming.
-:::
+> [!TIP]
+> Some commands are only available in the idle state. Executing these commands while a session is streaming output or compacting context will be blocked — press `Esc` or `Ctrl-C` to interrupt first. The "Always available" column in the tables below indicates commands that are also available during streaming.
 
 ## Account & Configuration
 
@@ -55,9 +54,8 @@ Some commands are only available in the idle state. Executing these commands whi
 | `/swarm <task>` | — | Turn swarm mode on, then send `<task>` as a normal prompt. If the turn completes normally, swarm mode turns off automatically. In `manual` permission mode, Kimi Code asks whether to switch to Ask When Needed or Never Ask mode before starting. | No |
 | `/goal [...]` | — | Start or manage an autonomous goal | See below |
 
-::: warning
-`/yolo` skips approval for regular tool calls. Please make sure you understand the potential risks before enabling it. Plan mode exit approval is not bypassed by `/yolo`; `Bash` inside Plan mode is still subject to the regular `/yolo` allow rules.
-:::
+> [!WARNING]
+> `/yolo` skips approval for regular tool calls. Please make sure you understand the potential risks before enabling it. Plan mode exit approval is not bypassed by `/yolo`; `Bash` inside Plan mode is still subject to the regular `/yolo` allow rules.
 
 ## Autonomous Goal
 
@@ -153,9 +151,8 @@ For convenience, external Skill commands also support a shorthand form that omit
 
 Built-in Skills shipped with Kimi Code CLI appear directly as `/<name>` in the slash command panel. For example, `/mcp-config` helps configure MCP servers and handle MCP OAuth login, and `/custom-theme [extra text]` invokes the custom-theme workflow to create or edit a TUI theme.
 
-::: info
-External Skill commands entered while the agent is busy are queued behind the running turn instead of being rejected — press `Ctrl-S` to steer a queued command into the running turn immediately. `flow`-type Skills are also exposed via `/skill:<name>` — there is no separate `/flow:` namespace.
-:::
+> [!NOTE]
+> External Skill commands entered while the agent is busy are queued behind the running turn instead of being rejected — press `Ctrl-S` to steer a queued command into the running turn immediately. `flow`-type Skills are also exposed via `/skill:<name>` — there is no separate `/flow:` namespace.
 
 For installing and authoring Skills, see [Agent Skills](../customization/skills.md).
 

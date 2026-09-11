@@ -30,9 +30,8 @@ All flags are optional — run `kimi` directly to enter an interactive session:
 
 `-r` / `--resume` is a hidden alias for `--session`; `--yes` and `--auto-approve` are hidden aliases for `--yolo` and are not shown in help output.
 
-::: warning
-`--yolo` skips human approval for regular tool calls, including file writes and shell command execution. Use it only in trusted working directories. Plan mode exit approval is not bypassed by `--yolo`; `Bash` inside Plan mode is handled under the regular allow rules.
-:::
+> [!WARNING]
+> `--yolo` skips human approval for regular tool calls, including file writes and shell command execution. Use it only in trusted working directories. Plan mode exit approval is not bypassed by `--yolo`; `Bash` inside Plan mode is handled under the regular allow rules.
 
 ### Flag Conflict Rules
 
@@ -180,13 +179,11 @@ Multiple instances can share one home directory: each registers itself under `~/
 
 `kimi web` binds to local loopback only by default and prints the bearer token in the startup banner; the web UI authenticates automatically via the `#token=` URL fragment.
 
-::: info
-The `kimi server` command tree is deprecated: any `kimi server …` invocation (including all legacy subcommands) only prints a deprecation notice and exits with code 1 — use `kimi web` instead. The one exception is `kimi server kill`, which stays functional for stopping servers started by a version before 0.28.0. The notice will be removed in the next major version of Kimi Code.
-:::
+> [!NOTE]
+> The `kimi server` command tree is deprecated: any `kimi server …` invocation (including all legacy subcommands) only prints a deprecation notice and exits with code 1 — use `kimi web` instead. The one exception is `kimi server kill`, which stays functional for stopping servers started by a version before 0.28.0. The notice will be removed in the next major version of Kimi Code.
 
-::: danger
-`--dangerous-bypass-auth` disables authentication entirely. Anyone who can reach the port gets full access to your sessions, filesystem, and shell. Only use it on a trusted network or behind your own authenticating reverse proxy, and stop the server with `Ctrl+C` when you are done.
-:::
+> [!CAUTION]
+> `--dangerous-bypass-auth` disables authentication entirely. Anyone who can reach the port gets full access to your sessions, filesystem, and shell. Only use it on a trusted network or behind your own authenticating reverse proxy, and stop the server with `Ctrl+C` when you are done.
 
 #### `kimi server kill`
 

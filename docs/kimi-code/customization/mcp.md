@@ -73,9 +73,10 @@ HTTP and SSE servers support providing static credentials via `headers` or `bear
 
 Plugins can also declare MCP servers in their manifest. Servers declared by a plugin are enabled by default and can be disabled or re-enabled in `/plugins`: disabling or removing one makes calls from open sessions fail with a removal notice, and adding or enabling a server connects it in open sessions right away. See [Plugins](./plugins.md#mcp-servers-in-plugins) for details.
 
-::: warning Note
-stdio entries in a project-level `.kimi-code/mcp.json` execute local commands when a session starts. Only enable these in repositories you trust.
-:::
+> [!WARNING]
+> **Note**
+>
+> stdio entries in a project-level `.kimi-code/mcp.json` execute local commands when a session starts. Only enable these in repositories you trust.
 
 ## Tool Naming and Permissions
 
@@ -105,9 +106,10 @@ When connecting to external MCP servers, be aware of:
 - Verify that tool names and parameters look reasonable in approval requests
 - Keep manual approval for high-risk tools (file writes, command execution, etc.); avoid using `mcp__*` wildcards to allow all tools at once
 
-::: warning Note
-In [Ask When Needed mode](../guides/interaction.md#the-three-permission-modes), MCP tool calls are automatically approved. Only use this mode when you fully trust the MCP servers you have connected.
-:::
+> [!WARNING]
+> **Note**
+>
+> In [Ask When Needed mode](../guides/interaction.md#the-three-permission-modes), MCP tool calls are automatically approved. Only use this mode when you fully trust the MCP servers you have connected.
 
 ## Next steps
 

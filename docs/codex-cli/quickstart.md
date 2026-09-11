@@ -15,8 +15,6 @@ If you're a developer and want to use Codex in your terminal or code editor,
 
 ## Setup
 
-  
-
 The ChatGPT desktop app is available for macOS, Windows, and Linux. Use it for
 projects, local files, longer tasks, and quick chats. For supported Linux
 distributions and package installation, see the
@@ -25,8 +23,6 @@ distributions and package installation, see the
 1. <h3 id="setup-app-install">Install the ChatGPT desktop app</h3>
 
     Choose the version for your operating system:
-
-    
 
 2.  <h3 id="setup-app-sign-in">Open the ChatGPT desktop app and sign in</h3>
 
@@ -41,10 +37,6 @@ distributions and package installation, see the
 
 4.  <h3 id="setup-app-start-task">Start a chat</h3>
 
-            
-
-          
-
                 - For research, analysis, or deliverables such as documents, presentations,
                   spreadsheets, and Sites, select **ChatGPT**, then switch to **Work** at the
                   top of the new chat page, above the composer.
@@ -56,17 +48,9 @@ distributions and package installation, see the
 
                 Learn more about [using ChatGPT](./use-chatgpt.md).
 
-              
-
-          <ChatGPTModeDropdown client:visible />
-
-    
-
 5.  <h3 id="setup-app-send-message">Send your first message</h3>
 
     Describe your goal and add any files or context ChatGPT needs. Try an example:
-
-    
 
 **Prepare a decision:**
 
@@ -88,10 +72,6 @@ Inspect this app, identify one high-impact usability improvement, implement it, 
 
 Explore more [use cases](https://learn.chatgpt.com/use-cases).
 
-  
-
-  
-
 ChatGPT is available on the web and includes Chat and ChatGPT Work.
 
 1. <h3 id="setup-web-sign-in">Open ChatGPT and sign in</h3>
@@ -100,22 +80,12 @@ Go to [chatgpt.com](https://chatgpt.com) and sign in with your ChatGPT account.
 
 2.  <h3 id="setup-web-start-task">Start a chat</h3>
 
-            
-
-          
-
                 - Select **Chat** to ask questions, explore ideas, and work through a topic
                   conversationally.
                 - Select **Work** to research, analyze information, and create documents,
                   presentations, spreadsheets, Sites, or other finished work.
 
                 Learn more about [using ChatGPT](./use-chatgpt.md).
-
-              
-
-          <ChatWorkSegmentPicker client:visible />
-
-    
 
 3.  <h3 id="setup-web-select-workspace">Select where ChatGPT should work</h3>
 
@@ -124,8 +94,6 @@ Go to [chatgpt.com](https://chatgpt.com) and sign in with your ChatGPT account.
 4.  <h3 id="setup-web-send-message">Send your first message</h3>
 
     Describe your goal and add any files or context ChatGPT needs. Try an example:
-
-    
 
 **Make a decision:**
 
@@ -145,18 +113,10 @@ Every weekday at 8:00 a.m., review my connected calendar and recent messages, th
 Help me plan my event. Ask me about the occasion, guests, date, location, budget, and anything else you need. Then create a timeline, budget, invitation copy, and checklist, and publish a Site I can use to invite guests and collect RSVPs.
 ```
 
-  
-
 ## Next steps
 [Learn more about the ChatGPT desktop app
 
-      <OpenBook />
-    
-
     Use the ChatGPT desktop app to work with your local projects.](./app.md)
 [Import your setup
-
-      <CompareArrows />
-    
 
     Bring supported setup, projects, and recent work into ChatGPT.](./import.md)

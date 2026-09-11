@@ -2,12 +2,17 @@
 
 Only the functions with non-trivial behaviour contracts are pinned here:
 ``splice_code_blocks`` (placeholder splicing, adaptive fence lengths, and
-the missing-placeholder warning path) and ``collapse_blank_lines`` (the
-blank-run collapse semantics stated in its docstring). ``make_converter``
-and ``strip_cf_characters`` are exercised end-to-end by the adapter tests.
+the missing-placeholder warning path), ``collapse_blank_lines`` (the
+blank-run collapse semantics stated in its docstring), the ``<pre>`` text
+extraction (which must keep the line breaks a syntax highlighter expresses
+as ``<br>``), and ``strip_invisible_characters`` (which must drop control
+characters without touching line structure). ``make_converter`` is exercised
+end-to-end by the adapter tests.
 """
 
 from __future__ import annotations
+
+import bs4
 
 from mirror.core import html_markdown
 
@@ -95,8 +100,6 @@ def test_extract_code_blocks_with_containers():
     """When a `<pre>` sits inside a `<div>` carrying *container_class*, the WHOLE
     container must be replaced by the token. One container holding several `<pre>`
     elements is replaced exactly once, and its blocks are returned in order."""
-    import bs4
-
     html = """
     <div class="code-container">
       <div class="header">bash</div>
@@ -133,3 +136,93 @@ def test_extract_code_blocks_with_containers():
     assert "TOKEN2" in out
     assert "linux" not in out
     assert "code-container" not in out
+
+
+# --- extract_code_blocks: line breaks expressed as markup -----------------------
+
+
+def _extract(html: str) -> list[tuple[str, str]]:
+    """Extract the code blocks of *html* with a container-free configuration."""
+    soup = bs4.BeautifulSoup(html, "html.parser")
+    return html_markdown.extract_code_blocks(
+        soup,
+        soup,
+        container_class="theme-code-block",
+        detect_language=lambda pre, container: "",
+        placeholder=lambda index: f"TOKEN{index}",
+    )
+
+
+def test_extract_code_blocks_keeps_line_breaks_written_as_br():
+    """A syntax highlighter renders each code line as a ``<span>`` followed by
+    a ``<br>``, and a ``<br>`` carries no text of its own -- so reading the
+    block with ``get_text()`` would concatenate every line of the sample into
+    one. Each ``<br>`` must come back as a real newline instead."""
+    blocks = _extract(
+        "<pre><code>"
+        '<span class="token-line">first<span class="token plain"></span><br></span>'
+        '<span class="token-line"><span class="token plain"></span><br></span>'
+        '<span class="token-line">second</span><br>'
+        "</code></pre>"
+    )
+    assert blocks == [("", "first\n\nsecond")]
+
+
+def test_extract_code_blocks_keeps_literal_newlines_unchanged():
+    """A plain ``<pre>`` whose newlines are already text must be returned
+    exactly as before: the markup handling only adds the breaks that markup
+    expressed and leaves literal ones alone."""
+    blocks = _extract("<pre><code>alpha\n\nbeta</code></pre>")
+    assert blocks == [("", "alpha\n\nbeta")]
+
+
+def test_extract_code_blocks_handles_inline_markup_inside_a_line():
+    """Inline spans inside one line are not breaks: the line keeps its text
+    and only an actual ``<br>`` splits it."""
+    blocks = _extract(
+        '<pre><code><span class="token keyword">def</span> '
+        '<span class="token plain">f()</span><br>'
+        '<span class="token plain">    pass</span></code></pre>'
+    )
+    assert blocks == [("", "def f()\n    pass")]
+
+
+def test_extract_code_blocks_leaves_comments_out_of_the_sample():
+    """A comment between two text nodes is not code. React separates the text
+    nodes it renders with an empty ``<!-- -->``, and a page's own comment
+    inside a ``<pre>`` carries prose rather than sample text; reading either
+    as text would splice it into the middle of a code line, which is exactly
+    what ``get_text()`` avoids by not considering comment nodes."""
+    blocks = _extract(
+        "<pre><code><span>line1</span><!-- --><br>"
+        "<span>line2</span><!-- do not ship this --><br>"
+        "<span>line3</span></code></pre>"
+    )
+    assert blocks == [("", "line1\nline2\nline3")]
+
+
+# --- strip_invisible_characters --------------------------------------------------
+
+
+def test_strip_invisible_characters_removes_format_and_control_characters():
+    """Both invisible categories go: the Cf formatting residues and the Cc
+    control bytes (a NUL byte makes a mirrored page binary to ``git`` and
+    ``grep``, which is how such a file silently drops out of every diff)."""
+    text = "a​b﻿c\x00d\x07e"
+    assert html_markdown.strip_invisible_characters(text) == "abcde"
+
+
+def test_strip_invisible_characters_keeps_line_structure():
+    """Tab, line feed, and carriage return are structure, not noise: dropping
+    them would re-indent code samples and join the lines of a page."""
+    text = "col1\tcol2\nrow2\r\nrow3\rrow4"
+    assert html_markdown.strip_invisible_characters(text) == text
+
+
+def test_strip_invisible_characters_leaves_ordinary_text_alone():
+    """Visible Unicode is untouched: the filter is category-based and must not
+    drop or fold accents, CJK characters, or emoji."""
+    # Sample CHARACTERS, not a sentence: the point is that none of these
+    # categories is filtered out.
+    text = "Café, naïve, 日本語, 🚀"
+    assert html_markdown.strip_invisible_characters(text) == text

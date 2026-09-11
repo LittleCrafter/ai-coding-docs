@@ -1,12 +1,11 @@
----
-title: SDK
-description: Type-safe JS client for opencode server.
----
+# SDK
+
+Type-safe JS client for opencode server.
 
 The opencode JS/TS SDK provides a type-safe client for interacting with the server.
 Use it to build integrations and control opencode programmatically.
 
-[Learn more](/docs/server) about how the server works. For examples, check out the [projects](/docs/ecosystem#projects) built by the community.
+[Learn more](./server.md) about how the server works. For examples, check out the [projects](./ecosystem.md#projects) built by the community.
 
 ---
 

@@ -7,12 +7,18 @@ screenshot, interface design, architecture diagram, or existing asset. Explain
 what ChatGPT should inspect and what outcome you want; don't rely on the image
 alone to communicate the task.
 
+**Surface: Desktop app**
+
 Drag an image into the prompt composer while holding <kbd>Shift</kbd> to include
 it as context. You can also ask ChatGPT to inspect an image on your system or use
 a screenshot tool to verify work in another app.
 
+**Surface: Web**
+
 Attach, paste, or drag an image into the ChatGPT web composer. In the prompt,
 tell ChatGPT what to inspect and what result you want from the image.
+
+**Surface: CLI**
 
 Paste an image into the interactive composer, or pass one or more files on the
 command line:
@@ -24,6 +30,8 @@ codex --image before.png,after.png "Compare these states and list the regression
 
 For multiple images, separate paths with commas or repeat `--image`. Codex
 accepts common image formats, including PNG and JPEG.
+
+**Surface: IDE extension**
 
 Drag an image into the prompt composer while holding <kbd>Shift</kbd> so the
 extension accepts the drop instead of passing it to the editor.

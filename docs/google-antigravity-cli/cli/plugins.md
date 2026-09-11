@@ -163,12 +163,12 @@ Hooks are defined inside a plugin’s `hooks.json` or configured inside your pri
 
 Model Context Protocol is an open standard enabling foundation models to interface securely with local APIs, file parsers, and custom developer tools.
 
-For comprehensive documentation on configuring local and remote MCP servers in Antigravity CLI, accessing the interactive `/mcp` manager overlay, and understanding server schemas and authentication, see the dedicated [MCP Documentation](/docs/mcp).
+For comprehensive documentation on configuring local and remote MCP servers in Antigravity CLI, accessing the interactive `/mcp` manager overlay, and understanding server schemas and authentication, see the dedicated [MCP Documentation](https://antigravity.google/docs/mcp).
 
 ## Next steps
 
 Learn how to migrate your existing configurations from Gemini CLI and troubleshoot connection anomalies:
 
-*   **[Migration from Gemini CLI](/docs/cli/gcli-migration)**: Fast-track your legacy extensions and config conversions.
-*   **[Troubleshooting](/docs/cli/troubleshooting)**: Resolve terminal hook errors, lockouts, or network failures.
-*   **[Permissions & Sandbox](/docs/cli/sandbox)**: Configure security containment rings around your custom plugins and MCP servers.
+*   **[Migration from Gemini CLI](./gcli-migration.md)**: Fast-track your legacy extensions and config conversions.
+*   **[Troubleshooting](./troubleshooting.md)**: Resolve terminal hook errors, lockouts, or network failures.
+*   **[Permissions & Sandbox](./sandbox.md)**: Configure security containment rings around your custom plugins and MCP servers.

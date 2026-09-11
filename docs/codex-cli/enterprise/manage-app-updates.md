@@ -32,10 +32,10 @@ If you haven't deployed the app on Windows, start with
 
 > [!WARNING]
 > When you turn off in-app updates, your organization is responsible for
->   promptly deploying new app releases and security fixes. Delaying updates can
->   leave the app and its bundled components exposed to known security
->   vulnerabilities. Older app versions don't receive separate security patches or
->   extended support.
+> promptly deploying new app releases and security fixes. Delaying updates can
+> leave the app and its bundled components exposed to known security
+> vulnerabilities. Older app versions don't receive separate security patches or
+> extended support.
 
 Create a managed policy that disables the desktop app's own updater:
 

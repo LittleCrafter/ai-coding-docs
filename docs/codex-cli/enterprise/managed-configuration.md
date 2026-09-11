@@ -370,10 +370,10 @@ For example, `allowed_web_search_modes = ["cached"]` prevents live web search ev
 
 > [!WARNING]
 > `[experimental_network]` is experimental and may change. Do not enable these
->   requirements broadly across an enterprise deployment without validating them
->   on the local client versions and operating systems your users run. Windows
->   support is still limited; avoid applying this policy to Windows users unless
->   you have tested it in your environment.
+> requirements broadly across an enterprise deployment without validating them
+> on the local client versions and operating systems your users run. Windows
+> support is still limited; avoid applying this policy to Windows users unless
+> you have tested it in your environment.
 
 Use `[experimental_network]` in `requirements.toml` when administrators should
 define network access requirements centrally. These requirements are separate

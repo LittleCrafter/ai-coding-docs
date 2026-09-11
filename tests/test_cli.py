@@ -104,7 +104,7 @@ def test_main_forwards_concurrency_and_workers_flags(
     "invalid_val",
     ["0", "-1", "abc"],
 )
-def test_main_rejects_invalid_concurrency(invalid_val, capsys):
+def test_main_rejects_invalid_concurrency(invalid_val):
     """--concurrency must reject values < 1 or non-integers with exit code 2."""
     with pytest.raises(SystemExit) as excinfo:
         cli.main(["--concurrency", invalid_val])
@@ -341,7 +341,9 @@ def test_main_check_links_flag_success(monkeypatch):
     """--check-links without issues returns exit code 0."""
     from mirror.core import link_checker
 
-    monkeypatch.setattr(link_checker, "check_source_links", lambda source: ([], 1))
+    monkeypatch.setattr(
+        link_checker, "check_source_links", lambda source, *args: ([], 1)
+    )
     assert cli.main(["--check-links"]) == 0
 
 
@@ -356,7 +358,7 @@ def test_main_check_links_flag_failure(monkeypatch, tmp_path):
         reason="Target file does not exist",
     )
     monkeypatch.setattr(
-        link_checker, "check_source_links", lambda source: ([fake_issue], 1)
+        link_checker, "check_source_links", lambda source, *args: ([fake_issue], 1)
     )
     assert cli.main(["--check-links"]) == 1
 
@@ -367,7 +369,7 @@ def test_main_check_links_forwards_source_flag(monkeypatch):
 
     seen_source = []
 
-    def fake_check(source):
+    def fake_check(source, exempt_targets_by_source=None):
         seen_source.append(source)
         return [], 1
 
@@ -380,7 +382,9 @@ def test_main_check_links_does_not_call_pipeline_run(monkeypatch):
     """--check-links executes standalone without invoking pipeline.run."""
     from mirror.core import link_checker
 
-    monkeypatch.setattr(link_checker, "check_source_links", lambda source: ([], 1))
+    monkeypatch.setattr(
+        link_checker, "check_source_links", lambda source, *args: ([], 1)
+    )
 
     def forbidden_run(*args, **kwargs):
         raise AssertionError("pipeline.run should not be called with --check-links")
@@ -413,7 +417,9 @@ def test_main_check_links_creates_and_writes_log_file(monkeypatch, tmp_path):
     """--check-links with --log-file tees output to the specified log path."""
     from mirror.core import link_checker
 
-    monkeypatch.setattr(link_checker, "check_source_links", lambda source: ([], 1))
+    monkeypatch.setattr(
+        link_checker, "check_source_links", lambda source, *args: ([], 1)
+    )
     log_path = tmp_path / "check_links.log"
 
     ret = cli.main(["--check-links", "--log-file", str(log_path)])
@@ -425,14 +431,17 @@ def test_main_check_links_creates_and_writes_log_file(monkeypatch, tmp_path):
 
 
 def test_main_check_links_zero_scanned_files_warns_and_returns_1(monkeypatch, capsys):
-    """--check-links returning 0 scanned files prints a warning and exits with code 1."""
+    """--check-links returning 0 scanned files warns on stderr and exits with code 1."""
     from mirror.core import link_checker
 
-    monkeypatch.setattr(link_checker, "check_source_links", lambda source: ([], 0))
+    monkeypatch.setattr(
+        link_checker, "check_source_links", lambda source, *args: ([], 0)
+    )
     ret = cli.main(["--check-links", "--source", "kimi-code"])
     assert ret == 1
     captured = capsys.readouterr()
-    assert "warning: no Markdown documentation files found" in captured.out
+    assert "warning: no Markdown documentation files found" in captured.err
+    assert "warning: no Markdown documentation files found" not in captured.out
 
 
 def test_main_locales_warns_when_used_with_non_opencode_source(monkeypatch, capsys):

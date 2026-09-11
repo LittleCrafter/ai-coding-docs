@@ -41,7 +41,7 @@ If the prompt box already contained text before starting dictation, the transcri
 
 Note
 
-The F5 key is remappable. Use [`/keybindings`](/docs/cli/reference#default-keybindings) to bind `voice.start_dictation` to a different shortcut; the on-screen hint will automatically update to reflect your custom keybinding.
+The F5 key is remappable. Use [`/keybindings`](../reference.md#default-keybindings) to bind `voice.start_dictation` to a different shortcut; the on-screen hint will automatically update to reflect your custom keybinding.
 
 ### Availability
 
@@ -139,6 +139,6 @@ If `/tmp/mic.raw` accumulates data at approximately 32 kB/s, audio streaming acr
 
 ## Next steps
 
-*   **[CLI Reference](/docs/cli/reference)**: See all available slash commands and keybindings.
-*   **[Prompting & Interaction](/docs/cli/prompting)**: Multiline editing, interrupts, and pasting media into the prompt.
-*   **[Installation & Auth](/docs/cli/install)**: Sign-in flows, including the remote SSH OAuth loop.
+*   **[CLI Reference](../reference.md)**: See all available slash commands and keybindings.
+*   **[Prompting & Interaction](../prompting.md)**: Multiline editing, interrupts, and pasting media into the prompt.
+*   **[Installation & Auth](../install.md)**: Sign-in flows, including the remote SSH OAuth loop.
