@@ -53,7 +53,7 @@ Ways to organize, delegate, and review work.
 
 - [Notifications](./notifications.md): Choose how ChatGPT tells you when work needs attention.
 
-- [Pets](./pets.md): Choose an animated companion and follow chat activity.
+- [Pets](./pets.md): Choose a companion, start chats, and follow activity.
 
 - [Codex Micro](./features/codex-micro.md): Monitor and control ChatGPT chats from a Work Louder keyboard.
 
@@ -381,6 +381,38 @@ Source: [What's new](./whats-new.md)
 This weekly digest highlights ChatGPT and Codex features that can change how you
 work, with examples and links to learn more. For every versioned update, bug fix,
 and minor improvement, see the [Codex changelog](https://learn.chatgpt.com/docs/changelog).
+
+#### September 7–11, 2026
+
+#### Start a quick chat from your pet
+
+Type a request or start a voice conversation from the floating
+[Pets controls](./pets.md) in the ChatGPT desktop app on macOS
+and Windows. Keep working in another app while you follow progress, then open
+the full conversation when you need it.
+
+Choose a companion in **Settings > Pets**, or select **Mini** to use the
+controls without a pet. Press **Option+Space** on macOS or **Windows+Alt+P** on
+Windows to show the controls and focus Quick Chat. Use `@` to add context and
+`$` to choose a skill, then press **Enter** to send your request.
+
+#### Share an app window on Windows
+
+[Appshots](./appshots.md) bring a screenshot and available text
+from the frontmost Windows app into ChatGPT. Press both **Alt** keys at the
+same time, then ask a question about the window or describe what you want to
+do. Windows Appshots open in the main ChatGPT app.
+
+On macOS, Appshots can also start a new chat in the floating Pets controls
+when they're visible and the main ChatGPT window is in the background. Set
+**Appshot destination** to **Automatic** and authorize Appshots permissions
+in the main app first.
+
+Update the desktop app to use these features. Availability depends on rollout
+and workspace settings.
+
+[Read the September 11 release notes](https://learn.chatgpt.com/docs/changelog#codex-2026-09-11-app)
+for the full update and smaller improvements.
 
 #### August 31–September 4, 2026
 
@@ -11941,9 +11973,9 @@ stricter approval behavior Codex derives when a project uses
 `approval_policy = "untrusted"`.
 
 The `[models.new_thread]` table supplies managed defaults, not enforcement.
-Explicit launch choices from dedicated CLI flags or `--config` overrides take
-precedence. An explicit model or reasoning-effort override skips both managed
-model fields; `service_tier` is independent.
+If you explicitly override the model or reasoning effort with `--model`,
+`--config`, or `--profile`, Codex ignores both `model` and
+`model_reasoning_effort` in `[models.new_thread]`. `service_tier` is independent.
 
 The browser requirements cover three separate surfaces. `in_app_browser`
 controls the browser pane that a person opens and uses directly. `browser_use`
@@ -12081,11 +12113,11 @@ from either one wins.
 | `mcp_servers..identity.url.match`                            | `exact \| prefix \| regex`             |         | Match operation for the configured MCP server URL.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `mcp_servers..identity.url.value`                            | `string`                               |         | Value used by an `exact` or `prefix` URL matcher.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `model_catalog_json`                                         | `string (path)`                        |         | Enforce the JSON model catalog Codex uses at startup.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `models`                                                     | `table`                                |         | Managed model defaults for new threads. These values take priority over user and project defaults, but an explicit selection for the new thread can override them.                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `models.new_thread`                                          | `table`                                |         | Defaults to apply when a new local thread starts. Each model setting is optional.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `models.new_thread.model`                                    | `string`                               |         | Default model for new threads. An explicit `--model` or model/reasoning `--config` override takes precedence.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `models.new_thread.model_reasoning_effort`                   | `string`                               |         | Default reasoning effort for new threads. An explicit model or reasoning-effort override skips both managed model fields.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `models.new_thread.service_tier`                             | `string`                               |         | Default service tier for new threads. An explicit service-tier override takes precedence independently of the model fields.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `models`                                                     | `table`                                |         | Contains the `[models.new_thread]` table.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `models.new_thread`                                          | `table`                                |         | Optional defaults to apply when a new local thread starts. They take priority over user and project defaults, but can be superseded by explicit overrides.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `models.new_thread.model`                                    | `string`                               |         | Default model for new threads. An explicit override of either the model or reasoning effort causes both fields to be ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `models.new_thread.model_reasoning_effort`                   | `string`                               |         | Default reasoning effort for new threads. An explicit override of either the model or reasoning effort causes both fields to be ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `models.new_thread.service_tier`                             | `string`                               |         | Default service tier for new threads. An explicit service-tier override causes this field to be ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `permissions`                                                | `table`                                |         | Admin-defined permission profiles keyed by profile name. Uses the same profile fields as `config.toml`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `permissions.`                                               | `table`                                |         | Admin-defined permission profile. The name can't start with `:`, use the reserved name `filesystem`, or duplicate a profile from a loaded config. Uses the same profile fields as `config.toml`; see the Permissions guide for the complete profile schema.                                                                                                                                                                                                                                                                                                                                                                             |
 | `permissions.filesystem.deny_read`                           | `array`                                |         | Admin-enforced filesystem read denials. Entries can be paths or glob patterns, and users cannot weaken them with local config.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -15066,7 +15098,7 @@ Source: [Personalize ChatGPT](./personalize.md)
 
 Personalize ChatGPT so its responses and working style better match your
 preferences. You control which personalization features are enabled and can
-change them at any time in the ChatGPT desktop app settings.
+change them in settings. Available controls vary between web and desktop.
 
 #### Choose a personality
 
@@ -15082,6 +15114,22 @@ instructions are stored in your global `AGENTS.md` file. Projects and
 repositories can also provide their own instructions.
 
 [Learn how `AGENTS.md` instructions work](./agent-configuration/agents-md.md).
+
+#### Match your writing style in Work
+
+In ChatGPT Work on the web, writing style uses your own writing from connected
+apps to help drafts sound like you.
+
+1. Open Set up writing style.
+2. Connect the available email, messaging, or document apps you want ChatGPT
+   to use. Available apps depend on your account and workspace.
+3. Select **Use writing style** to enable it. Connecting an app alone doesn't
+   complete setup.
+4. Ask Work to draft an email, message, or document.
+
+To turn it off, open **Settings > Personalization > Writing** on the web and
+disable **Reference my writing style**. You can return to setup from the same
+section.
 
 #### Carry context forward with memories
 
@@ -16532,11 +16580,12 @@ code fonts. You can also share your custom theme with friends.
 #### Pets
 
 Pets are optional animated companions for the app. In **Settings > Pets**,
-choose a built-in or custom pet, then use `/pet`, **Wake Pet**, or
-**Tuck Away Pet** to control the floating overlay.
+choose a built-in or custom pet, then use `/pet`, **Show pet**, or **Hide pet**
+to control the floating overlay. Choose **Mini** to keep the chat controls
+visible without a pet.
 
-    See [Pets](./pets.md) to understand pet status, follow
-    activity across chats, or create your own pet.
+    See [Pets](./pets.md) to start chats, use voice, follow
+    activity, or create your own pet.
 
 #### Browser
 
@@ -19047,8 +19096,9 @@ Appshots let you send the frontmost app window to a chat in ChatGPT. Use them wh
 you're actively working in another app on your computer and want to provide
 ChatGPT with your current context so it can help you with the task.
 
-Appshots are available in the ChatGPT desktop app on macOS. Press both Command
-keys, or your custom Appshots hotkey, to take one.
+Appshots are available in the ChatGPT desktop app on macOS and Windows. Press
+both Command keys on macOS or both Alt keys on Windows to take one. You can
+also configure a custom Appshots hotkey.
 
 #### What appshots capture
 
@@ -19064,7 +19114,7 @@ manually.
 
 #### When to use appshots
 
-Use appshots when ChatGPT needs context from a Mac app before it can act.
+Use appshots when ChatGPT needs context from another app before it can act.
 
 Examples:
 
@@ -19078,20 +19128,30 @@ Examples:
 #### Take an appshot
 
 1. Bring the app window you want to share to the front.
-2. Press both Command keys, or the custom hotkey you configured in ChatGPT
-   settings.
-3. Allow macOS permissions if ChatGPT asks.
+2. Press both Command keys on macOS or both Alt keys on Windows, or use the
+   custom hotkey you configured in ChatGPT settings.
+3. Complete the permission setup if ChatGPT asks.
 4. Ask ChatGPT to perform a task with the appshot.
 
 By default, ChatGPT starts a new chat for the appshot. If you interacted with a
 chat in the last 60 seconds, ChatGPT adds the appshot to that recent
 chat instead. Taking consecutive appshots adds them to the same chat.
 
-You can change the Appshots hotkey in the app settings.
+You can change the hotkey and **Appshot destination** in the app settings.
+Choose **Current chat** or **New chat** to set a destination, or keep
+**Automatic** for the behavior described here.
+
+#### Use appshots from the floating controls
+
+On macOS, when the [floating pet controls](./pets.md#app-send-appshots-to-your-pet)
+are open and the main ChatGPT window is in the background, **Automatic** starts
+a new chat from those controls with the appshot. This also works when you select
+**Mini** as your pet. Complete Appshots permission setup in the main app
+first. On Windows, Appshots open in the main app.
 
 #### Permissions and safety
 
-ChatGPT may ask for permissions before it can take appshots:
+On macOS, ChatGPT may ask for these permissions before it can take appshots:
 
 - **Screen & System Audio Recording** lets ChatGPT capture an image of the
   frontmost window.
@@ -19106,9 +19166,9 @@ with ChatGPT.
 
 #### Limits and troubleshooting
 
-Appshots are available in the ChatGPT desktop app on macOS. If you resume a chat
-in the CLI that already contains an appshot, the attachment is part of the chat
-history, but the CLI can't create a new appshot.
+Appshots require the ChatGPT desktop app on macOS or Windows. If you resume a
+chat in the CLI that already contains an appshot, the attachment is part of
+the chat history, but the CLI can't create a new appshot.
 
 For some apps and websites, including Google Docs, Gmail, Google Sheets, and
 Google Slides, ChatGPT may receive only the visible screenshot and may not receive
@@ -19116,7 +19176,9 @@ the full document or off-screen text. In ChatGPT Work or Codex, ChatGPT can use 
 matching installed plugin to access the relevant app content and help with your
 request.
 
-If appshots don't work:
+If appshots don't work, update the desktop app, check the configured hotkey,
+and confirm that your organization allows Appshots. On macOS, also check
+permissions:
 
 1. Open **System Settings > Privacy & Security**.
 2. Check **Screen & System Audio Recording** and **Accessibility** for Codex
@@ -19402,21 +19464,58 @@ appearance, not how ChatGPT completes tasks.
 
 #### Use a floating pet
 
-In the ChatGPT desktop app, a pet can float above other app windows and help
-you follow activity across your chats.
+In the ChatGPT desktop app on macOS and Windows, a pet can float above other
+app windows. Use the controls below it to start a chat by typing or speaking,
+and follow activity while you work in other apps.
 
 #### Choose and wake a pet
 
 1. Open the profile menu at the bottom of the app and select **Pets**. You can
    also open [**Settings**](codex://settings) and go to **Pets**.
-2. Choose a built-in or custom pet.
-3. Enter `/pet`, or open the command menu and select **Wake Pet**.
+2. Choose a built-in or custom pet, or select **Mini** to show the chat controls
+   without a pet. If you haven't created a custom pet yet, select **Create pet**
+   first.
+3. Enter `/pet`, or open the command menu and select **Show pet**.
+   You can also right-click the pet and select **Hide** to hide it.
 
-Select **Tuck Away Pet** in **Settings > Pets** or the command menu, or enter
-`/pet` again, to hide the pet. Your selection and the pet's position persist
-when you reopen the app.
+To change your pet's size, select **Customize** in **Settings > Pets** and adjust
+**Pet size**. Select **Reset** to restore the default size.
 
 When you select a custom pet, it also appears in your **Profile** view.
+
+#### Show or hide the floating controls
+
+With the desktop app running, use the global shortcut to show the controls and
+focus Quick Chat:
+
+| Platform | Default shortcut  |
+| -------- | ----------------- |
+| macOS    | **Option+Space**  |
+| Windows  | **Windows+Alt+P** |
+
+You can change **Show pet** in **Settings > Keyboard shortcuts**. Pressing the
+shortcut again keeps the controls open and focuses Quick Chat.
+
+To hide the controls, right-click the pet and select **Hide**, select **Hide pet**
+in the command menu or **Settings > Pets**, or enter `/pet` again. Your pet
+selection and position persist when you reopen the app.
+If the controls aren't available, update the app and check whether your
+workspace allows pets.
+
+#### Start a chat
+
+1. Move the pointer over the controls below your pet and select the pencil icon.
+2. Enter your request and press **Enter** to send it. Use `@` to add context
+   and `$` to choose a skill.
+3. Select the bell icon to follow progress in your threads. Select a thread to
+   open the full conversation in ChatGPT, or select the chevron to collapse
+   your threads.
+
+A chat started from these controls is outside a project. To use a project's
+context, start the chat from that project in the main app.
+
+To speak instead, select the voice icon. See
+[ChatGPT Voice](./features/voice.md) for voice availability and controls.
 
 #### Understand pet status
 
@@ -19428,21 +19527,34 @@ When you select a custom pet, it also appears in your **Profile** view.
 | **Blocked**     | A chat failed or encountered a system error.             |
 
 When more than one chat has activity, the pet prioritizes chats that need
-input, followed by blocked, ready, and running chats. Open the activity tray to
-choose a chat.
+input, followed by blocked, ready, and running chats. Select the bell icon to
+show your threads, then choose a thread to open its conversation. Select the
+chevron to collapse your threads.
 
-Select the pet to return to ChatGPT, or select an activity to open its chat.
 The activity tray is separate from [system
-notifications](./notifications.md).
+notifications](./notifications.md#app-configure-desktop-notifications).
+
+#### Send Appshots to your pet
+
+On macOS, press both **Command** keys at the same time while using an app to
+take an [Appshot](./appshots.md). If your pet is visible and the main ChatGPT
+window is in the background, the appshot goes to your pet and starts a new chat.
+This also works when **Mini** is selected.
+
+Set **Appshot destination** to **Automatic** in settings and authorize Appshots
+permissions in the main app before using this shortcut.
+
+On Windows, Appshots open in the main ChatGPT app.
 
 #### Follow Computer Use
 
 On macOS, the [Computer Use](./computer-use.md) picture-in-picture window can
-attach to an awake pet. Move the pet, and the window follows.
+attach to your pet. Move the pet, and the window follows. If your pet is hidden,
+sending the picture-in-picture window to it shows the pet automatically.
 
 #### Create a custom pet
 
-1. Open **Settings > Pets** and select **Create your own pet**.
+1. Open **Settings > Pets** and select **Create pet**.
 2. The app installs the bundled `hatch-pet` skill, reloads skills, and opens a
    new chat.
 3. Describe the pet you want and send the prompt.
@@ -20077,9 +20189,38 @@ untrusted input.
 In the ChatGPT desktop app, ask for current information in a chat. ChatGPT records
 search activity with the other tool calls in the transcript.
 
+#### Research a topic in Work
+
+Use the Deep research plugin in the desktop app for an investigation across
+multiple sources and a report you can review.
+
+1. Switch to **Work** and open [**Plugins**](./plugins.md).
+2. Select **Deep research**. Install or enable it if needed, then select
+   **Try now** to start a Work chat.
+3. Describe the question, scope, and result you need. Include relevant files
+   or connected app context.
+4. Review the report and its sources, then ask follow-up questions in the chat.
+
+Plugin availability depends on your account and workspace settings.
+
 In ChatGPT web, ask for current information or sources. Search results and
 citations appear in the chat when ChatGPT uses web search. Workspace
 settings can limit whether search is available.
+
+#### Research a topic in Work
+
+Use deep research in Work for a question that needs investigation across
+multiple sources and a report you can review.
+
+1. Start a chat in **Work**.
+2. Open the **+** menu and select **Deep research**, if it's available for
+   your account and workspace.
+3. Describe the question, scope, and result you need. Include relevant files
+   or connected app context.
+4. Review the report and its sources, then ask follow-up questions in the chat.
+
+For example: "Research three approaches to reducing food waste in office
+cafeterias. Compare the evidence, costs, and implementation requirements."
 
 In the CLI, pass `--search` to fetch live results for one run:
 

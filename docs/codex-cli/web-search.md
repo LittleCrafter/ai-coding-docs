@@ -10,11 +10,44 @@ untrusted input.
 In the ChatGPT desktop app, ask for current information in a chat. ChatGPT records
 search activity with the other tool calls in the transcript.
 
+<a id="app-research-a-topic-in-work"></a>
+
+## Research a topic in Work
+
+Use the Deep research plugin in the desktop app for an investigation across
+multiple sources and a report you can review.
+
+1. Switch to **Work** and open [**Plugins**](./plugins.md).
+2. Select **Deep research**. Install or enable it if needed, then select
+   **Try now** to start a Work chat.
+3. Describe the question, scope, and result you need. Include relevant files
+   or connected app context.
+4. Review the report and its sources, then ask follow-up questions in the chat.
+
+Plugin availability depends on your account and workspace settings.
+
 **Surface: Web**
 
 In ChatGPT web, ask for current information or sources. Search results and
 citations appear in the chat when ChatGPT uses web search. Workspace
 settings can limit whether search is available.
+
+<a id="web-research-a-topic-in-work"></a>
+
+## Research a topic in Work
+
+Use deep research in Work for a question that needs investigation across
+multiple sources and a report you can review.
+
+1. Start a chat in **Work**.
+2. Open the **+** menu and select **Deep research**, if it's available for
+   your account and workspace.
+3. Describe the question, scope, and result you need. Include relevant files
+   or connected app context.
+4. Review the report and its sources, then ask follow-up questions in the chat.
+
+For example: "Research three approaches to reducing food waste in office
+cafeterias. Compare the evidence, costs, and implementation requirements."
 
 **Surface: CLI**
 

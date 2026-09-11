@@ -938,11 +938,11 @@ See [Skills-directory plugins](#skills-directory-plugins) for scope and trust re
 claude plugin init <name> [options]
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `<name>`: Plugin name. Becomes the skill namespace and the directory name under `~/.claude/skills/`, so it cannot contain spaces or path separators.
 
-**Options:**
+The command accepts these options:
 
 | Option                   | Description                                                                                                         | Default                 |
 | :----------------------- | :------------------------------------------------------------------------------------------------------------------ | :---------------------- |
@@ -953,7 +953,7 @@ claude plugin init <name> [options]
 | `-f, --force`            | Overwrite an existing `.claude-plugin/` at the target                                                               |                         |
 | `-h, --help`             | Display help for command                                                                                            |                         |
 
-**Aliases:** `new`
+`claude plugin new` is an alias for this command.
 
 Each `--with` value adds a starter file for that component, ready to edit:
 
@@ -969,7 +969,7 @@ Each `--with` value adds a starter file for that component, ready to edit:
 
 The scaffolded plugin uses the `@skills-dir` source rather than a marketplace. Admins can block this source with `strictKnownMarketplaces` or by adding `{"source": "skills-dir"}` to `blockedMarketplaces` in [managed settings](./plugin-marketplaces.md#managed-marketplace-restrictions). When blocked, `plugin init` fails before writing.
 
-**Examples:**
+These examples show common invocations:
 
 ```bash theme={null}
 # Scaffold a minimal plugin
@@ -990,11 +990,11 @@ Install a plugin from available marketplaces.
 claude plugin install <plugin> [options]
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `<plugin>`: Plugin name or `plugin-name@marketplace-name` for a specific marketplace
 
-**Options:**
+The command accepts these options:
 
 | Option                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Default |
 | :--------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
@@ -1014,7 +1014,7 @@ Scope determines which settings file the installed plugin is added to. For examp
 
 Other fields, such as `pluginId`, `scope`, and `failureCode`, appear only when they apply. The `--json` option on `plugin uninstall`, `plugin update`, `plugin enable`, and `plugin disable` prints the same object with that subcommand's own fields. A usage error, such as an invalid `--scope`, prints no result line and exits 1 with the reason on stderr.
 
-**Examples:**
+These examples show common invocations:
 
 ```bash theme={null}
 # Install to user scope (default)
@@ -1035,11 +1035,11 @@ Remove an installed plugin.
 claude plugin uninstall <plugin> [options]
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `<plugin>`: Plugin name or `plugin-name@marketplace-name`
 
-**Options:**
+The command accepts these options:
 
 | Option                | Description                                                                                                                                                                                                    | Default |
 | :-------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
@@ -1050,7 +1050,7 @@ claude plugin uninstall <plugin> [options]
 | `--json`              | Print the result as one JSON object on the last line of stdout, in the [same format as `plugin install --json`](#plugin-json-result). Can't be combined with `--prune`. Requires Claude Code v2.1.268 or later |         |
 | `-h, --help`          | Display help for command                                                                                                                                                                                       |         |
 
-**Aliases:** `remove`, `rm`
+`claude plugin remove` and `claude plugin rm` are aliases for this command.
 
 By default, uninstalling from the last remaining scope also deletes the plugin's `${CLAUDE_PLUGIN_DATA}` directory. Use `--keep-data` to preserve it, for example when reinstalling after testing a new version.
 
@@ -1065,7 +1065,7 @@ Remove auto-installed plugin dependencies that are no longer required by any ins
 claude plugin prune [options]
 ```
 
-**Options:**
+The command accepts these options:
 
 | Option                | Description                                                              | Default |
 | :-------------------- | :----------------------------------------------------------------------- | :------ |
@@ -1074,7 +1074,7 @@ claude plugin prune [options]
 | `-y, --yes`           | Skip the confirmation prompt. Required when stdin or stdout is not a TTY |         |
 | `-h, --help`          | Display help for command                                                 |         |
 
-**Aliases:** `autoremove`
+`claude plugin autoremove` is an alias for this command.
 
 The command lists orphaned dependencies and asks for confirmation before removing them. To remove a plugin and clean up its dependencies in one step, run `claude plugin uninstall <plugin> --prune`.
 
@@ -1086,11 +1086,11 @@ Enable a disabled plugin. When the target is installed from a marketplace and de
 claude plugin enable <plugin> [options]
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `<plugin>`: Plugin name or `plugin-name@marketplace-name`
 
-**Options:**
+The command accepts these options:
 
 | Option                | Description                                                                                                                                                                  | Default     |
 | :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- |
@@ -1106,11 +1106,11 @@ Disable a plugin without uninstalling it. When the target is installed from a ma
 claude plugin disable [plugin] [options]
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `[plugin]`: Plugin name or `plugin-name@marketplace-name`. Optional when using `--all`
 
-**Options:**
+The command accepts these options:
 
 | Option                | Description                                                                                                                                                                  | Default     |
 | :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- |
@@ -1127,11 +1127,11 @@ Update a plugin to the latest version.
 claude plugin update <plugin> [options]
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `<plugin>`: Plugin name or `plugin-name@marketplace-name`
 
-**Options:**
+The command accepts these options:
 
 | Option                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Default |
 | :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
@@ -1153,7 +1153,7 @@ List installed plugins with their version, source marketplace, and enable status
 claude plugin list [options]
 ```
 
-**Options:**
+The command accepts these options:
 
 | Option        | Description                                                                                                                                                                                                                                                                                                          | Default |
 | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ |
@@ -1177,11 +1177,11 @@ Show a plugin's component inventory and projected token cost. The output lists a
 claude plugin details <name>
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `<name>`: Plugin name or `plugin-name@marketplace-name`
 
-**Options:**
+The command accepts these options:
 
 | Option       | Description              | Default |
 | :----------- | :----------------------- | :------ |
@@ -1230,11 +1230,11 @@ The command exits 0 when validation passes, 1 when it fails, and 2 when the vali
 claude plugin validate <path> [options]
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `<path>`: Path to a plugin directory or a marketplace directory. See [Validate a plugin or a directory without a manifest](./plugin-marketplaces.md#validate-a-plugin-or-a-directory-without-a-manifest) for which files a plugin run covers.
 
-**Options:**
+The command accepts these options:
 
 | Option       | Description                                                                                                                                       | Default |
 | :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | :------ |
@@ -1311,11 +1311,11 @@ Create a release git tag for a plugin. By default the command tags the plugin in
 claude plugin tag [path] [options]
 ```
 
-**Arguments:**
+The command takes these arguments:
 
 * `[path]`: Path to the plugin directory. Defaults to the current directory.
 
-**Options:**
+The command accepts these options:
 
 | Option                | Description                                                                | Default  |
 | :-------------------- | :------------------------------------------------------------------------- | :------- |

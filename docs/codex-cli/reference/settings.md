@@ -51,11 +51,12 @@ code fonts. You can also share your custom theme with friends.
 ## Pets
 
     Pets are optional animated companions for the app. In **Settings > Pets**,
-    choose a built-in or custom pet, then use `/pet`, **Wake Pet**, or
-    **Tuck Away Pet** to control the floating overlay.
+    choose a built-in or custom pet, then use `/pet`, **Show pet**, or **Hide pet**
+    to control the floating overlay. Choose **Mini** to keep the chat controls
+    visible without a pet.
 
-    See [Pets](../pets.md) to understand pet status, follow
-    activity across chats, or create your own pet.
+    See [Pets](../pets.md) to start chats, use voice, follow
+    activity, or create your own pet.
 
 <a id="browser-use"></a>
 

@@ -367,9 +367,9 @@ stricter approval behavior Codex derives when a project uses
 `approval_policy = "untrusted"`.
 
 The `[models.new_thread]` table supplies managed defaults, not enforcement.
-Explicit launch choices from dedicated CLI flags or `--config` overrides take
-precedence. An explicit model or reasoning-effort override skips both managed
-model fields; `service_tier` is independent.
+If you explicitly override the model or reasoning effort with `--model`,
+`--config`, or `--profile`, Codex ignores both `model` and
+`model_reasoning_effort` in `[models.new_thread]`. `service_tier` is independent.
 
 The browser requirements cover three separate surfaces. `in_app_browser`
 controls the browser pane that a person opens and uses directly. `browser_use`
@@ -402,11 +402,11 @@ from either one wins.
 | `allowed_permission_profiles.<name>` | `boolean` | Allow or deny a built-in or custom permission profile defined in a loaded config or requirements source. A later, higher-precedence requirements source can use `false` to turn off a profile allowed by an earlier, lower-precedence source. |
 | `default_permissions` | `string` | Managed default permission profile. The profile must be allowed by `allowed_permission_profiles`. Set this explicitly for predictable behavior; if omitted, Codex defaults to `:workspace` only when both `:workspace` and `:read-only` are explicitly allowed. |
 | `enforce_residency` | `string` | Require Codex service traffic to use a supported data residency. Currently accepts `us`. |
-| `models` | `table` | Managed model defaults for new threads. These values take priority over user and project defaults, but an explicit selection for the new thread can override them. |
-| `models.new_thread` | `table` | Defaults to apply when a new local thread starts. Each model setting is optional. |
-| `models.new_thread.model` | `string` | Default model for new threads. An explicit `--model` or model/reasoning `--config` override takes precedence. |
-| `models.new_thread.model_reasoning_effort` | `string` | Default reasoning effort for new threads. An explicit model or reasoning-effort override skips both managed model fields. |
-| `models.new_thread.service_tier` | `string` | Default service tier for new threads. An explicit service-tier override takes precedence independently of the model fields. |
+| `models` | `table` | Contains the `[models.new_thread]` table. |
+| `models.new_thread` | `table` | Optional defaults to apply when a new local thread starts. They take priority over user and project defaults, but can be superseded by explicit overrides. |
+| `models.new_thread.model` | `string` | Default model for new threads. An explicit override of either the model or reasoning effort causes both fields to be ignored. |
+| `models.new_thread.model_reasoning_effort` | `string` | Default reasoning effort for new threads. An explicit override of either the model or reasoning effort causes both fields to be ignored. |
+| `models.new_thread.service_tier` | `string` | Default service tier for new threads. An explicit service-tier override causes this field to be ignored. |
 | `permissions` | `table` | Admin-defined permission profiles keyed by profile name. Uses the same profile fields as `config.toml`. |
 | `permissions.<name>` | `table` | Admin-defined permission profile. The name can't start with `:`, use the reserved name `filesystem`, or duplicate a profile from a loaded config. Uses the same profile fields as `config.toml`; see the Permissions guide for the complete profile schema. |
 | `allowed_sandbox_modes` | `array<string>` | Allowed values for `sandbox_mode`. |

@@ -264,58 +264,59 @@ The MCP Store features direct integrations for a wide variety of developer platf
 
 Databases & Storage (14 servers)
 
-*   AlloyDB for PostgreSQL
-*   BigQuery
-*   Bigtable Admin remote MCP
-*   ClickHouse
-*   Cloud SQL (MySQL, PostgreSQL, SQL Server, Managed)
-*   Dataplex
-*   MCP Toolbox for Databases
-*   MongoDB
-*   Neon
-*   Pinecone
-*   Prisma
-*   Redis
-*   Spanner
-*   Supabase
+*   [AlloyDB for PostgreSQL](https://cloud.google.com/alloydb/docs/ai/use-alloydb-mcp)
+*   [BigQuery](https://cloud.google.com/bigquery/docs/use-bigquery-mcp)
+*   [Bigtable Admin remote MCP](https://docs.cloud.google.com/bigtable/docs/use-bigtable-mcp)
+*   [ClickHouse](https://clickhouse.com/docs/use-cases/AI/MCP)
+*   [Cloud SQL (MySQL, PostgreSQL, SQL Server, Managed)](https://docs.cloud.google.com/sql/docs/mysql/use-cloudsql-mcp)
+*   [Dataplex](https://docs.cloud.google.com/dataplex/docs/use-remote-mcp)
+*   [MCP Toolbox for Databases](https://mcp-toolbox.dev/documentation/introduction/)
+*   [MongoDB](https://github.com/mongodb-js/mongodb-mcp-server)
+*   [Neon](https://github.com/neondatabase-labs/mcp-server-neon)
+*   [Pinecone](https://github.com/pinecone-io/pinecone-mcp)
+*   [Prisma](https://github.com/prisma/prisma?tab=readme-ov-file#mcp-server)
+*   [Redis](https://github.com/redis/mcp-redis)
+*   [Spanner](https://docs.cloud.google.com/spanner/docs/use-spanner-mcp)
+*   [Supabase](https://github.com/supabase-community/supabase-mcp)
 
 Developer Tools & CI/CD (13 servers)
 
-*   Apigee MCP
-*   Atlassian
-*   Cloud CLI Execution
-*   GitHub
-*   GitLab Orbit
-*   GKE OneMCP
-*   Harness
-*   Heroku
-*   Home Developer MCP
-*   Linear
-*   Netlify
-*   Postman
-*   SonarQube
+*   [Apigee MCP](https://docs.cloud.google.com/apigee/docs/reference/apis/apihub/mcp)
+*   [Atlassian](https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/)
+*   [Cloud CLI Execution](https://docs.cloud.google.com/sdk/use-gcloud-mcp)
+*   [GitHub](https://github.com/github/github-mcp-server)
+*   [GitLab Orbit](https://docs.gitlab.com/orbit/remote/access/mcp/)
+*   [GKE OneMCP](https://docs.cloud.google.com/kubernetes-engine/docs/how-to/use-gke-mcp)
+*   [Harness](https://github.com/harness/mcp-server)
+*   [Heroku](https://github.com/heroku/heroku-mcp-server)
+*   [Home Developer MCP](https://developers.home.google.com/mcp/developer)
+*   [Linear](https://linear.app/changelog/2025-05-01-mcp)
+*   [Netlify](https://github.com/netlify/netlify-mcp)
+*   [Postman](https://github.com/postmanlabs/postman-mcp-server)
+*   [SonarQube](https://github.com/SonarSource/sonarqube-mcp-server)
 
 Frontend & Design (6 servers)
 
-*   Chrome DevTools
-*   Dart
-*   Figma Dev Mode MCP
-*   Locofy
-*   Lovable MCP
-*   Mobbin MCP
+*   [Chrome DevTools](https://github.com/ChromeDevTools/chrome-devtools-mcp)
+*   [Dart](https://dart.dev/tools/mcp-server)
+*   [Figma Dev Mode MCP](https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server)
+*   [Locofy](https://www.locofy.ai/docs/export-and-deployment/locofy-mcp/)
+*   [Lovable MCP](https://docs.lovable.dev/integrations/lovable-mcp-server)
+*   [Mobbin MCP](https://mobbin.com/mcp)
 
-Analytics, AI & Cloud (13 servers)
+Analytics, AI & Cloud (14 servers)
 
-*   Airweave
-*   Antimetal
-*   Arize
-*   Firebase
-*   Google Cloud Quotas
-*   Looker
-*   Notion
-*   PayPal
-*   Perplexity Ask
-*   PostHog
-*   Sequential Thinking
-*   Stripe
-*   Windsor AI
+*   [Airweave](https://github.com/airweave-ai/airweave)
+*   [Antimetal](https://docs.antimetal.com/connect)
+*   [Arize](https://github.com/Arize-ai/arize-tracing-assistant)
+*   [Firebase](https://firebase.google.com/docs/ai-assistance/mcp-server)
+*   [Google Cloud Quotas](https://cloud.google.com/docs/quotas/overview)
+*   [Looker](https://mcp-toolbox.dev/documentation/connect-to/ides/looker_mcp/)
+*   [Notion](https://github.com/makenotion/notion-mcp-server)
+*   [PayPal](https://developer.paypal.com/tools/mcp-server/)
+*   [Perplexity Ask](https://github.com/ppl-ai/modelcontextprotocol)
+*   [PostHog](https://posthog.com/mcp)
+*   [Sequential Thinking](https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking)
+*   [Splunk](https://splunkbase.splunk.com/app/7931)
+*   [Stripe](https://github.com/stripe/agent-toolkit/tree/main/modelcontextprotocol)
+*   [Windsor AI](https://windsor.ai/documentation/windsor-mcp/)

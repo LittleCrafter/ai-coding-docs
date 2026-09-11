@@ -19,7 +19,7 @@ Ways to organize, delegate, and review work.
 - [Scheduled tasks](./automations.md) — Schedule recurring work and review completed results.
 - [Long-running work](./long-running-work.md) — Let ChatGPT continue working while you step away.
 - [Notifications](./notifications.md) — Choose how ChatGPT tells you when work needs attention.
-- [Pets](./pets.md) — Choose an animated companion and follow chat activity.
+- [Pets](./pets.md) — Choose a companion, start chats, and follow activity.
 - [Codex Micro](./features/codex-micro.md) — Monitor and control ChatGPT chats from a Work Louder keyboard.
 
 ## Capabilities

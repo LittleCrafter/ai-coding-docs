@@ -12,8 +12,9 @@ appearance, not how ChatGPT completes tasks.
 
 ## Use a floating pet
 
-In the ChatGPT desktop app, a pet can float above other app windows and help
-you follow activity across your chats.
+In the ChatGPT desktop app on macOS and Windows, a pet can float above other
+app windows. Use the controls below it to start a chat by typing or speaking,
+and follow activity while you work in other apps.
 
 <a id="app-choose-and-wake-a-pet"></a>
 
@@ -21,14 +22,56 @@ you follow activity across your chats.
 
 1. Open the profile menu at the bottom of the app and select **Pets**. You can
    also open [**Settings**](codex://settings) and go to **Pets**.
-2. Choose a built-in or custom pet.
-3. Enter `/pet`, or open the command menu and select **Wake Pet**.
+2. Choose a built-in or custom pet, or select **Mini** to show the chat controls
+   without a pet. If you haven't created a custom pet yet, select **Create pet**
+   first.
+3. Enter `/pet`, or open the command menu and select **Show pet**.
+   You can also right-click the pet and select **Hide** to hide it.
 
-Select **Tuck Away Pet** in **Settings > Pets** or the command menu, or enter
-`/pet` again, to hide the pet. Your selection and the pet's position persist
-when you reopen the app.
+To change your pet's size, select **Customize** in **Settings > Pets** and adjust
+**Pet size**. Select **Reset** to restore the default size.
 
 When you select a custom pet, it also appears in your **Profile** view.
+
+> Illustration: A pet above floating chat controls. A cursor types and sends a request, then selects the bell to open the thread activity.
+
+<a id="app-show-or-hide-the-floating-controls"></a>
+
+### Show or hide the floating controls
+
+With the desktop app running, use the global shortcut to show the controls and
+focus Quick Chat:
+
+| Platform | Default shortcut  |
+| -------- | ----------------- |
+| macOS    | **Option+Space**  |
+| Windows  | **Windows+Alt+P** |
+
+You can change **Show pet** in **Settings > Keyboard shortcuts**. Pressing the
+shortcut again keeps the controls open and focuses Quick Chat.
+
+To hide the controls, right-click the pet and select **Hide**, select **Hide pet**
+in the command menu or **Settings > Pets**, or enter `/pet` again. Your pet
+selection and position persist when you reopen the app.
+If the controls aren't available, update the app and check whether your
+workspace allows pets.
+
+<a id="app-start-a-chat"></a>
+
+### Start a chat
+
+1. Move the pointer over the controls below your pet and select the pencil icon.
+2. Enter your request and press **Enter** to send it. Use `@` to add context
+   and `$` to choose a skill.
+3. Select the bell icon to follow progress in your threads. Select a thread to
+   open the full conversation in ChatGPT, or select the chevron to collapse
+   your threads.
+
+A chat started from these controls is outside a project. To use a project's
+context, start the chat from that project in the main app.
+
+To speak instead, select the voice icon. See
+[ChatGPT Voice](./features/voice.md) for voice availability and controls.
 
 <a id="app-understand-pet-status"></a>
 
@@ -42,25 +85,40 @@ When you select a custom pet, it also appears in your **Profile** view.
 | **Blocked**     | A chat failed or encountered a system error.             |
 
 When more than one chat has activity, the pet prioritizes chats that need
-input, followed by blocked, ready, and running chats. Open the activity tray to
-choose a chat.
+input, followed by blocked, ready, and running chats. Select the bell icon to
+show your threads, then choose a thread to open its conversation. Select the
+chevron to collapse your threads.
 
-Select the pet to return to ChatGPT, or select an activity to open its chat.
 The activity tray is separate from [system
-notifications](./notifications.md).
+notifications](./notifications.md#app-configure-desktop-notifications).
+
+<a id="app-send-appshots-to-your-pet"></a>
+
+### Send Appshots to your pet
+
+On macOS, press both **Command** keys at the same time while using an app to
+take an [Appshot](./appshots.md). If your pet is visible and the main ChatGPT
+window is in the background, the appshot goes to your pet and starts a new chat.
+This also works when **Mini** is selected.
+
+Set **Appshot destination** to **Automatic** in settings and authorize Appshots
+permissions in the main app before using this shortcut.
+
+On Windows, Appshots open in the main ChatGPT app.
 
 <a id="app-follow-computer-use"></a>
 
 ### Follow Computer Use
 
 On macOS, the [Computer Use](./computer-use.md) picture-in-picture window can
-attach to an awake pet. Move the pet, and the window follows.
+attach to your pet. Move the pet, and the window follows. If your pet is hidden,
+sending the picture-in-picture window to it shows the pet automatically.
 
 <a id="app-create-a-custom-pet"></a>
 
 ### Create a custom pet
 
-1. Open **Settings > Pets** and select **Create your own pet**.
+1. Open **Settings > Pets** and select **Create pet**.
 2. The app installs the bundled `hatch-pet` skill, reloads skills, and opens a
    new chat.
 3. Describe the pet you want and send the prompt.
