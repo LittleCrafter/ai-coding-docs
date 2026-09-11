@@ -128,6 +128,6 @@ When you use Claude Code or Claude Desktop APP, we map the Claude model names yo
   * Models starting with claude-opus are mapped to `deepseek-v4-pro`
   * Models starting with claude-haiku or claude-sonnet are mapped to `deepseek-flash`
 
-The claude-opus mapping points to `deepseek-v4-pro`, which is billed at the V4 Pro price until 12:00 Beijing Time on September 14, 2026; after that, `deepseek-v4-pro` will also be routed to V4.1 Flash and billed at the Flash price.
+The claude-opus mapping points to `deepseek-v4-pro`, which is billed at the V4 Pro price.
 
 With this mapping, when using the developer mode of the new Claude Desktop APP, you can bypass the APP's model name restrictions by simply changing the base_url and api_key to connect to DeepSeek models.

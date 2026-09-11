@@ -39,7 +39,6 @@ Add Codex to products, systems, and automated workflows.
 
 - [Codex SDK](./codex-sdk.md) — Control Codex programmatically from your application.
 - [App Server](./app-server.md) — Integrate with the protocol that powers Codex clients.
-- [MCP Server](./mcp-server.md) — Expose Codex capabilities through Model Context Protocol.
 - [GitHub Action](./github-action.md) — Run Codex from GitHub Actions workflows.
 - [Non-interactive mode](./non-interactive-mode.md) — Run Codex from scripts and other automated systems.
 

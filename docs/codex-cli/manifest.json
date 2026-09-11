@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.154.0",
-  "last_updated": "2026-09-11T01:17:26Z",
+  "last_updated": "2026-09-11T13:05:28Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -240,8 +240,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "74be448f5a4bba9dcf8eaffe41512824282204507492e5e71effff34c704f6b3",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "c8cb2c97f07c2a76c5a0e50242363fc67bc40099ae747c40512c98fec4e9a6f6",
+      "last_updated": "2026-09-11T13:05:28Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-sdk",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-sdk.md",
       "source_id": "llms:codex-sdk",
-      "hash": "06bf98f7760ae9fd50f889530ed4d224acf7096bec744a02da382d2231fdd6a3",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "12f7fc18761a9fca4ca9e6646708e25c83dc42d71c7a67c82de4e6da8f73aeed",
+      "last_updated": "2026-09-11T13:05:28Z"
     },
     "codex/cli": {
       "slug": "codex/cli",
@@ -430,8 +430,8 @@
       "source_url": "https://learn.chatgpt.com/docs/developer-commands",
       "source_md_url": "https://learn.chatgpt.com/docs/developer-commands.md",
       "source_id": "llms:developer-commands",
-      "hash": "d33e7df49d4b8013bdc2220fb33ac0a48914f6d76138e0b67648aa24df7eba8a",
-      "last_updated": "2026-09-11T01:15:25Z"
+      "hash": "c6d3ad1169430c6d06d9f3b25c1a35120f1b909dd17977a8d0a7a159789f6e2b",
+      "last_updated": "2026-09-11T13:05:28Z"
     },
     "developer-settings": {
       "slug": "developer-settings",
@@ -450,8 +450,8 @@
       "source_url": "https://learn.chatgpt.com/docs/developers",
       "source_md_url": "https://learn.chatgpt.com/docs/developers.md",
       "source_id": "llms:developers",
-      "hash": "aa4f76cea0abef410a79ded8f40c753e0910f91f3d2a48ddf8823225f018d015",
-      "last_updated": "2026-09-10T23:35:40Z"
+      "hash": "b2e35668c524d84dff5e4f785839eb0f01daea0f7d5625360c3daca3f8cae729",
+      "last_updated": "2026-09-11T13:05:28Z"
     },
     "enterprise/access-tokens": {
       "slug": "enterprise/access-tokens",
@@ -700,8 +700,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/workload-identity",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/workload-identity.md",
       "source_id": "llms:enterprise/workload-identity",
-      "hash": "d858bbb8e6d94d541c83f9fff70bd3bab2669fe17b50a01e7978348ac5c2cb98",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "8a7ae51c2b55ea3987d74e6346d3ea29f4c3e229850c6323370be528674c9e18",
+      "last_updated": "2026-09-11T13:05:28Z"
     },
     "enterprise/workspace-analytics": {
       "slug": "enterprise/workspace-analytics",
@@ -975,13 +975,13 @@
     },
     "mcp-server": {
       "slug": "mcp-server",
-      "title": "Use Codex with the Agents SDK",
+      "title": "Codex MCP server removal",
       "group": "root",
       "source_url": "https://learn.chatgpt.com/docs/mcp-server",
       "source_md_url": "https://learn.chatgpt.com/docs/mcp-server.md",
       "source_id": "llms:mcp-server",
-      "hash": "851b989eada423ab37956df3c3ec89d13bd78d0f5c368aaf9258bfacec977149",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "3d5e664a43e3075755b94177f0af04277b0cf531fa4e2f06b8b9011b681d38ec",
+      "last_updated": "2026-09-11T13:05:28Z"
     },
     "models": {
       "slug": "models",
@@ -1460,8 +1460,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/slash_commands.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/slash_commands.md",
       "source_id": "docs/slash_commands.md",
-      "hash": "93fb7ed61e2af2e4425b9298edb0724d95c4fdf3a79cbc694eed30bcaf6bce04",
-      "last_updated": "2026-09-11T01:15:25Z"
+      "hash": "05c65fde7faad41d62bf2ede92f73d14e412112a086a4897c142846652794ebf",
+      "last_updated": "2026-09-11T13:05:28Z"
     },
     "third-party/github": {
       "slug": "third-party/github",
@@ -1595,8 +1595,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-11T01:17:26Z",
-    "fetch_duration_seconds": 55.801,
+    "last_fetch_completed": "2026-09-11T13:05:28Z",
+    "fetch_duration_seconds": 55.468,
     "total_pages_discovered": 159,
     "pages_fetched_successfully": 159,
     "pages_failed": 0,

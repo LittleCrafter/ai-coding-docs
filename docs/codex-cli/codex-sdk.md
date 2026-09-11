@@ -13,7 +13,7 @@ Use the SDK when you need to:
 
 Use the Codex SDK to automate coding tasks, including jobs in CI. Use the [Codex app server](./app-server.md) to build custom clients that handle authentication, conversation history, approvals, and streamed agent events.
 
-`codex mcp-server` is deprecated. The [MCP server guide](./mcp-server.md) remains available for existing integrations.
+The `codex mcp-server` command and standalone `codex-mcp-server` binary have been removed. Use the [Codex app server](./app-server.md) for existing integrations.
 
 If you have beta access and need repository or change scans with structured
 security findings and coverage, use the [Codex Security TypeScript

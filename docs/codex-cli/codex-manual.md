@@ -2765,8 +2765,6 @@ Add Codex to products, systems, and automated workflows.
 
 - [App Server](./app-server.md): Integrate with the protocol that powers Codex clients.
 
-- [MCP Server](./mcp-server.md): Expose Codex capabilities through Model Context Protocol.
-
 - [GitHub Action](./github-action.md): Run Codex from GitHub Actions workflows.
 
 - [Non-interactive mode](./non-interactive-mode.md): Run Codex from scripts and other automated systems.
@@ -15150,7 +15148,7 @@ information.
 | `--remote-auth-token-env`                            | `ENV_VAR`                                                     |         | Read a bearer token from this environment variable and send it when connecting with `--remote`. Requires `--remote`; tokens are only sent over `wss://` URLs or local-only `ws://` URLs.                                    |
 | `--sandbox, -s`                                      | `read-only \| workspace-write \| danger-full-access`          |         | Select the sandbox policy for model-generated shell commands.                                                                                                                                                               |
 | `--search`                                           | `boolean`                                                     | `false` | Enable live web search (sets `web_search = "live"` instead of the default `"cached"`).                                                                                                                                      |
-| `--strict-config`                                    | `boolean`                                                     | `false` | Error when `config.toml` contains fields this Codex version does not recognize. Supported by runtime commands such as `codex`, `exec`, `review`, `resume`, `fork`, `app-server`, `mcp-server`, and `exec-server`.           |
+| `--strict-config`                                    | `boolean`                                                     | `false` | Error when `config.toml` contains fields this Codex version does not recognize. Supported by runtime commands such as `codex`, `exec`, `review`, `resume`, `fork`, `app-server`, and `exec-server`.                         |
 | `PROMPT`                                             | `string`                                                      |         | Optional text instruction to start the session. Omit to launch the TUI without a pre-filled message.                                                                                                                        |
 
 These options apply to the base `codex` command. Most propagate to commands;
@@ -15164,36 +15162,35 @@ The Maturity column uses feature maturity labels such as Experimental, Beta,
 Stable, and Deprecated. See [Feature Maturity](./feature-maturity.md) for
 how to interpret these labels.
 
-| Key                                                                                                                          | Maturity       | Default | Details                                                                                                                                                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------------------------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`codex`](./developer-commands.md#cli-codex-interactive)                                                       | `stable`       |         | Launch the terminal UI. Accepts the global flags above plus an optional prompt or image attachments.                                                                                                                                          |
-| [`codex app`](./developer-commands.md#cli-codex-app)                                                           | `stable`       |         | Launch the ChatGPT desktop app on macOS or Windows. On macOS, Codex can open a workspace path; on Windows, Codex prints the path to open.                                                                                                     |
-| [`codex app-server`](./developer-commands.md#cli-codex-app-server)                                             | `experimental` |         | Launch the Codex app server for local development or debugging over stdio, WebSocket, or a Unix socket.                                                                                                                                       |
-| [`codex apply`](./developer-commands.md#cli-codex-apply)                                                       | `stable`       |         | Apply the latest diff generated by a Codex cloud chat to your local working tree. Alias: `codex a`.                                                                                                                                           |
-| [`codex archive`](./developer-commands.md#cli-codex-archive-and-codex-unarchive)                               | `stable`       |         | Archive a saved interactive session by session ID or session name.                                                                                                                                                                            |
-| [`codex cloud`](./developer-commands.md#cli-codex-cloud)                                                       | `experimental` |         | Browse or execute Codex cloud chats from the terminal without opening the TUI. Alias: `codex cloud-tasks`.                                                                                                                                    |
-| [`codex completion`](./developer-commands.md#cli-codex-completion)                                             | `stable`       |         | Generate shell completion scripts for Bash, Zsh, Fish, or PowerShell.                                                                                                                                                                         |
-| [`codex debug app-server send-message-v2`](./developer-commands.md#cli-codex-debug-app-server-send-message-v2) | `experimental` |         | Debug app-server by sending a single V2 message through the built-in test client.                                                                                                                                                             |
-| [`codex debug models`](./developer-commands.md#cli-codex-debug-models)                                         | `experimental` |         | Print the raw model catalog Codex sees, including an option to inspect only the bundled catalog.                                                                                                                                              |
-| [`codex debug prompt-input`](./developer-commands.md#cli-codex-debug-prompt-input)                             | `experimental` |         | Render the model-visible prompt input list as JSON, optionally with a prompt and images.                                                                                                                                                      |
-| [`codex delete`](./developer-commands.md#cli-codex-delete)                                                     | `stable`       |         | Permanently delete a saved interactive session by session ID or session name.                                                                                                                                                                 |
-| [`codex doctor`](./developer-commands.md#cli-codex-doctor)                                                     | `stable`       |         | Generate a diagnostic report for local installation, config, auth, runtime, Git, terminal, app-server, and thread inventory issues.                                                                                                           |
-| [`codex exec`](./developer-commands.md#cli-codex-exec)                                                         | `stable`       |         | Run Codex non-interactively. Alias: `codex e`. Stream results to stdout or JSONL and optionally resume previous sessions.                                                                                                                     |
-| [`codex execpolicy`](./developer-commands.md#cli-codex-execpolicy)                                             | `experimental` |         | Evaluate execpolicy rule files and see whether a command would be allowed, prompted, or blocked.                                                                                                                                              |
-| [`codex features`](./developer-commands.md#cli-codex-features)                                                 | `stable`       |         | List feature flags and persistently enable or disable them in `config.toml`.                                                                                                                                                                  |
-| [`codex fork`](./developer-commands.md#cli-codex-fork)                                                         | `stable`       |         | Fork a previous interactive session into a new chat, preserving the original transcript.                                                                                                                                                      |
-| [`codex login`](./developer-commands.md#cli-codex-login)                                                       | `stable`       |         | Authenticate Codex using ChatGPT OAuth, device auth, an API key, or an access token piped over stdin.                                                                                                                                         |
-| [`codex logout`](./developer-commands.md#cli-codex-logout)                                                     | `stable`       |         | Remove stored authentication credentials.                                                                                                                                                                                                     |
-| [`codex mcp`](./developer-commands.md#cli-codex-mcp)                                                           | `stable`       |         | Manage Model Context Protocol servers (list, add, remove, authenticate).                                                                                                                                                                      |
-| [`codex mcp-server`](./developer-commands.md#cli-codex-mcp-server)                                             | `deprecated`   |         | Deprecated interface for running Codex as an MCP server over stdio. Use the [Codex app server](./app-server.md) instead. To call Codex from Claude Code, use the [Codex plugin for Claude Code](https://github.com/openai/codex-plugin-cc). |
-| [`codex plugin`](./developer-commands.md#cli-codex-plugin)                                                     | `stable`       |         | Install, list, and remove plugins from configured marketplace sources.                                                                                                                                                                        |
-| [`codex plugin marketplace`](./developer-commands.md#cli-codex-plugin-marketplace)                             | `stable`       |         | Add, list, upgrade, or remove plugin marketplaces from Git or local sources.                                                                                                                                                                  |
-| [`codex remote-control`](./developer-commands.md#cli-codex-remote-control)                                     | `experimental` |         | Run or manage remote control for the local app-server, or create a short-lived pairing code.                                                                                                                                                  |
-| [`codex resume`](./developer-commands.md#cli-codex-resume)                                                     | `stable`       |         | Continue a previous interactive session by ID or resume the most recent chat.                                                                                                                                                                 |
-| [`codex review`](./developer-commands.md#cli-codex-review)                                                     | `stable`       |         | Run a non-interactive review of uncommitted changes, a base branch diff, a commit, or custom review instructions.                                                                                                                             |
-| [`codex sandbox`](./developer-commands.md#cli-codex-sandbox)                                                   | `stable`       |         | Run arbitrary commands inside Codex-provided macOS, Linux, or Windows sandboxes.                                                                                                                                                              |
-| [`codex unarchive`](./developer-commands.md#cli-codex-archive-and-codex-unarchive)                             | `stable`       |         | Restore an archived interactive session by session ID or session name.                                                                                                                                                                        |
-| [`codex update`](./developer-commands.md#cli-codex-update)                                                     | `stable`       |         | Check for and apply a Codex CLI update when the installed release supports self-update.                                                                                                                                                       |
+| Key                                                                                                                          | Maturity       | Default | Details                                                                                                                                   |
+| ---------------------------------------------------------------------------------------------------------------------------- | -------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| [`codex`](./developer-commands.md#cli-codex-interactive)                                                       | `stable`       |         | Launch the terminal UI. Accepts the global flags above plus an optional prompt or image attachments.                                      |
+| [`codex app`](./developer-commands.md#cli-codex-app)                                                           | `stable`       |         | Launch the ChatGPT desktop app on macOS or Windows. On macOS, Codex can open a workspace path; on Windows, Codex prints the path to open. |
+| [`codex app-server`](./developer-commands.md#cli-codex-app-server)                                             | `experimental` |         | Launch the Codex app server for local development or debugging over stdio, WebSocket, or a Unix socket.                                   |
+| [`codex apply`](./developer-commands.md#cli-codex-apply)                                                       | `stable`       |         | Apply the latest diff generated by a Codex cloud chat to your local working tree. Alias: `codex a`.                                       |
+| [`codex archive`](./developer-commands.md#cli-codex-archive-and-codex-unarchive)                               | `stable`       |         | Archive a saved interactive session by session ID or session name.                                                                        |
+| [`codex cloud`](./developer-commands.md#cli-codex-cloud)                                                       | `experimental` |         | Browse or execute Codex cloud chats from the terminal without opening the TUI. Alias: `codex cloud-tasks`.                                |
+| [`codex completion`](./developer-commands.md#cli-codex-completion)                                             | `stable`       |         | Generate shell completion scripts for Bash, Zsh, Fish, or PowerShell.                                                                     |
+| [`codex debug app-server send-message-v2`](./developer-commands.md#cli-codex-debug-app-server-send-message-v2) | `experimental` |         | Debug app-server by sending a single V2 message through the built-in test client.                                                         |
+| [`codex debug models`](./developer-commands.md#cli-codex-debug-models)                                         | `experimental` |         | Print the raw model catalog Codex sees, including an option to inspect only the bundled catalog.                                          |
+| [`codex debug prompt-input`](./developer-commands.md#cli-codex-debug-prompt-input)                             | `experimental` |         | Render the model-visible prompt input list as JSON, optionally with a prompt and images.                                                  |
+| [`codex delete`](./developer-commands.md#cli-codex-delete)                                                     | `stable`       |         | Permanently delete a saved interactive session by session ID or session name.                                                             |
+| [`codex doctor`](./developer-commands.md#cli-codex-doctor)                                                     | `stable`       |         | Generate a diagnostic report for local installation, config, auth, runtime, Git, terminal, app-server, and thread inventory issues.       |
+| [`codex exec`](./developer-commands.md#cli-codex-exec)                                                         | `stable`       |         | Run Codex non-interactively. Alias: `codex e`. Stream results to stdout or JSONL and optionally resume previous sessions.                 |
+| [`codex execpolicy`](./developer-commands.md#cli-codex-execpolicy)                                             | `experimental` |         | Evaluate execpolicy rule files and see whether a command would be allowed, prompted, or blocked.                                          |
+| [`codex features`](./developer-commands.md#cli-codex-features)                                                 | `stable`       |         | List feature flags and persistently enable or disable them in `config.toml`.                                                              |
+| [`codex fork`](./developer-commands.md#cli-codex-fork)                                                         | `stable`       |         | Fork a previous interactive session into a new chat, preserving the original transcript.                                                  |
+| [`codex login`](./developer-commands.md#cli-codex-login)                                                       | `stable`       |         | Authenticate Codex using ChatGPT OAuth, device auth, an API key, or an access token piped over stdin.                                     |
+| [`codex logout`](./developer-commands.md#cli-codex-logout)                                                     | `stable`       |         | Remove stored authentication credentials.                                                                                                 |
+| [`codex mcp`](./developer-commands.md#cli-codex-mcp)                                                           | `stable`       |         | Manage Model Context Protocol servers (list, add, remove, authenticate).                                                                  |
+| [`codex plugin`](./developer-commands.md#cli-codex-plugin)                                                     | `stable`       |         | Install, list, and remove plugins from configured marketplace sources.                                                                    |
+| [`codex plugin marketplace`](./developer-commands.md#cli-codex-plugin-marketplace)                             | `stable`       |         | Add, list, upgrade, or remove plugin marketplaces from Git or local sources.                                                              |
+| [`codex remote-control`](./developer-commands.md#cli-codex-remote-control)                                     | `experimental` |         | Run or manage remote control for the local app-server, or create a short-lived pairing code.                                              |
+| [`codex resume`](./developer-commands.md#cli-codex-resume)                                                     | `stable`       |         | Continue a previous interactive session by ID or resume the most recent chat.                                                             |
+| [`codex review`](./developer-commands.md#cli-codex-review)                                                     | `stable`       |         | Run a non-interactive review of uncommitted changes, a base branch diff, a commit, or custom review instructions.                         |
+| [`codex sandbox`](./developer-commands.md#cli-codex-sandbox)                                                   | `stable`       |         | Run arbitrary commands inside Codex-provided macOS, Linux, or Windows sandboxes.                                                          |
+| [`codex unarchive`](./developer-commands.md#cli-codex-archive-and-codex-unarchive)                             | `stable`       |         | Restore an archived interactive session by session ID or session name.                                                                    |
+| [`codex update`](./developer-commands.md#cli-codex-update)                                                     | `stable`       |         | Check for and apply a Codex CLI update when the installed release supports self-update.                                                   |
 
 #### Command details
 
@@ -15551,12 +15548,8 @@ with `name`, `root`, and optional `marketplaceSource`; upgrade JSON includes
 
 #### `codex mcp-server`
 
-`codex mcp-server` is deprecated. Use the [Codex app
-server](./app-server.md) instead. To call Codex from Claude Code, use the
-[Codex plugin for Claude Code](https://github.com/openai/codex-plugin-cc),
-which uses the app server.
-
-For existing integrations, the command runs Codex as an MCP server over stdio so that other tools can connect. It inherits global configuration overrides and exits when the downstream client closes the connection.
+The `codex mcp-server` command and standalone `codex-mcp-server` binary have
+been removed. Use the [Codex app server](./app-server.md) instead.
 
 #### `codex resume`
 
@@ -33411,7 +33404,7 @@ Use the SDK when you need to:
 
 Use the Codex SDK to automate coding tasks, including jobs in CI. Use the [Codex app server](./app-server.md) to build custom clients that handle authentication, conversation history, approvals, and streamed agent events.
 
-`codex mcp-server` is deprecated. The [MCP server guide](./mcp-server.md) remains available for existing integrations.
+The `codex mcp-server` command and standalone `codex-mcp-server` binary have been removed. Use the [Codex app server](./app-server.md) for existing integrations.
 
 If you have beta access and need repository or change scans with structured
 security findings and coverage, use the [Codex Security TypeScript
@@ -34163,415 +34156,6 @@ scheduled tasks fall back to the approval behavior of your selected permission
 mode.
 
 #### Examples
-
-### Use Codex with the Agents SDK
-
-Source: [Use Codex with the Agents SDK](./mcp-server.md)
-
-`codex mcp-server` is deprecated. Use the [Codex app
-server](./app-server.md) instead. To call Codex from Claude Code, use the
-[Codex plugin for Claude Code](https://github.com/openai/codex-plugin-cc),
-which uses the app server. This page documents the deprecated command for
-existing integrations.
-
-You can run Codex as an MCP server and connect it from other MCP clients (for example, an agent built with the [OpenAI Agents SDK MCP integration](https://developers.openai.com/api/docs/guides/agents/integrations-observability#mcp)).
-
-To start Codex as an MCP server, you can use the following command:
-
-```bash
-codex mcp-server
-```
-
-You can launch a Codex MCP server with the [Model Context Protocol Inspector](https://modelcontextprotocol.io/legacy/tools/inspector):
-
-```bash
-npx @modelcontextprotocol/inspector codex mcp-server
-```
-
-Send a `tools/list` request to see two tools:
-
-**`codex`**: Run a Codex session with the following prompt and configuration overrides:
-
-| Property                 | Type     | Description                                                                                              |
-| ------------------------ | -------- | -------------------------------------------------------------------------------------------------------- |
-| **`prompt`** (required)  | `string` | The initial user prompt to start the Codex conversation.                                                 |
-| `approval-policy`        | `string` | Approval policy for shell commands generated by the model: `on-request` or `never`.                      |
-| `base-instructions`      | `string` | The set of instructions to use instead of the default ones.                                              |
-| `compact-prompt`         | `string` | Prompt used when compacting the conversation.                                                            |
-| `config`                 | `object` | Individual configuration settings that override what's in `$CODEX_HOME/config.toml`.                     |
-| `cwd`                    | `string` | Working directory for the session. If relative, resolved against the server process's current directory. |
-| `developer-instructions` | `string` | Developer instructions injected as a developer-role message.                                             |
-| `model`                  | `string` | Optional override for the model name (for example, `gpt-5.6-terra`).                                     |
-| `sandbox`                | `string` | Sandbox mode: `read-only`, `workspace-write`, or `danger-full-access`.                                   |
-
-**`codex-reply`**: Continue a Codex session by providing the thread ID and prompt. The `codex-reply` tool takes these properties:
-
-| Property                      | Type   | Description                                               |
-| ----------------------------- | ------ | --------------------------------------------------------- |
-| **`prompt`** (required)       | string | The next user prompt to continue the Codex conversation.  |
-| **`threadId`** (required)     | string | The ID of the thread to continue.                         |
-| `conversationId` (deprecated) | string | Deprecated alias for `threadId` (kept for compatibility). |
-
-Use the `threadId` from `structuredContent.threadId` in the `tools/call` response. Approval prompts (exec/patch) also include `threadId` in their `params` payload.
-
-Example response payload:
-
-```json
-{
-  "structuredContent": {
-    "threadId": "019bbb20-bff6-7130-83aa-bf45ab33250e",
-    "content": "`ls -lah` (or `ls -alh`) — long listing, includes dotfiles, human-readable sizes."
-  },
-  "content": [
-    {
-      "type": "text",
-      "text": "`ls -lah` (or `ls -alh`) — long listing, includes dotfiles, human-readable sizes."
-    }
-  ]
-}
-```
-
-Note modern MCP clients generally report only `"structuredContent"` as the result of a tool call, if present, though the Codex MCP server also returns `"content"` for the benefit of older MCP clients.
-
-Codex CLI can do far more than run ad-hoc tasks. By exposing the CLI as a [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server and orchestrating it with the OpenAI Agents SDK, you can create deterministic, reviewable workflows that scale from a single agent to a complete software delivery pipeline.
-
-This guide walks through the same workflow showcased in the [OpenAI Cookbook](https://github.com/openai/openai-cookbook/blob/main/examples/codex/codex_mcp_agents_sdk/building_consistent_workflows_codex_cli_agents_sdk.ipynb). You will:
-
-- launch Codex CLI as a long-running MCP server,
-- build a focused single-agent workflow that produces a playable browser game, and
-- orchestrate a multi-agent team with hand-offs, guardrails, and full traces you can review afterwards.
-
-Before starting, make sure you have:
-
-- [Codex CLI](./codex/cli.md) installed locally so the `codex` command is available.
-- Python 3.10+ with `pip`.
-- Node.js 18+ if you want to run the MCP Inspector example above.
-- An OpenAI API key stored locally. You can create or manage keys in the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
-
-Create a working directory for the guide and add your API key to a `.env` file:
-
-```bash
-mkdir codex-workflows
-cd codex-workflows
-printf "OPENAI_API_KEY=sk-..." > .env
-```
-
-#### Install dependencies
-
-The Agents SDK handles orchestration across Codex, hand-offs, and traces. Install the latest SDK packages:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install --upgrade openai openai-agents python-dotenv
-```
-
-Activating a virtual environment keeps the SDK dependencies isolated from the
-rest of your system.
-
-#### Initialize Codex CLI as an MCP server
-
-Start by turning Codex CLI into an MCP server that the Agents SDK can call. The server exposes two tools (`codex()` to start a conversation and `codex-reply()` to continue one) and keeps Codex alive across multiple agent turns.
-
-Create a file called `codex_mcp.py` and add the following:
-
-```python
-import asyncio
-
-from agents import Agent, Runner
-from agents.mcp import MCPServerStdio
-
-async def main() -> None:
-    async with MCPServerStdio(
-        name="Codex CLI",
-        params={
-            "command": "codex",
-            "args": ["mcp-server"],
-        },
-        client_session_timeout_seconds=360000,
-    ) as codex_mcp_server:
-        print("Codex MCP server started.")
-        # More logic coming in the next sections.
-        return
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-Run the script once to verify that Codex launches successfully:
-
-```bash
-python codex_mcp.py
-```
-
-The script exits after printing `Codex MCP server started.`. In the next sections you will reuse the same MCP server inside richer workflows.
-
-#### Build a single-agent workflow
-
-Let’s start with a scoped example that uses Codex MCP to ship a small browser game. The workflow relies on two agents:
-
-1. **Game Designer**: writes a brief for the game.
-2. **Game Developer**: implements the game by calling Codex MCP.
-
-Update `codex_mcp.py` with the following code. It keeps the MCP server setup from above and adds both agents.
-
-```python
-import asyncio
-import os
-
-from dotenv import load_dotenv
-
-from agents import Agent, Runner, set_default_openai_api
-from agents.mcp import MCPServerStdio
-
-load_dotenv(override=True)
-set_default_openai_api(os.getenv("OPENAI_API_KEY"))
-
-async def main() -> None:
-    async with MCPServerStdio(
-        name="Codex CLI",
-        params={
-            "command": "codex",
-            "args": ["mcp-server"],
-        },
-        client_session_timeout_seconds=360000,
-    ) as codex_mcp_server:
-        developer_agent = Agent(
-            name="Game Developer",
-            instructions=(
-                "You are an expert in building simple games using basic html + css + javascript with no dependencies. "
-                "Save your work in a file called index.html in the current directory. "
-                "Always call codex with \"approval-policy\": \"never\" and \"sandbox\": \"workspace-write\"."
-            ),
-            mcp_servers=[codex_mcp_server],
-        )
-
-        designer_agent = Agent(
-            name="Game Designer",
-            instructions=(
-                "You are an indie game connoisseur. Come up with an idea for a single page html + css + javascript game that a developer could build in about 50 lines of code. "
-                "Format your request as a 3 sentence design brief for a game developer and call the Game Developer coder with your idea."
-            ),
-            model="gpt-5",
-            handoffs=[developer_agent],
-        )
-
-        await Runner.run(designer_agent, "Implement a fun new game!")
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-Execute the script:
-
-```bash
-python codex_mcp.py
-```
-
-Codex will read the designer's brief, create an `index.html` file, and write the full game to disk. Open the generated file in a browser to play the result. Every run produces a different design with unique play-style twists and polish.
-
-#### Expand to a multi-agent workflow
-
-Now turn the single-agent setup into an orchestrated, traceable workflow. The system adds:
-
-- **Project Manager**: creates shared requirements, coordinates hand-offs, and enforces guardrails.
-- **Designer**, **Frontend Developer**, **Server Developer**, and **Tester**: each with scoped instructions and output folders.
-
-Create a new file called `multi_agent_workflow.py`:
-
-```python
-import asyncio
-import os
-
-from dotenv import load_dotenv
-
-from agents import (
-    Agent,
-    ModelSettings,
-    Runner,
-    WebSearchTool,
-    set_default_openai_api,
-)
-from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
-from agents.mcp import MCPServerStdio
-from openai.types.shared import Reasoning
-
-load_dotenv(override=True)
-set_default_openai_api(os.getenv("OPENAI_API_KEY"))
-
-async def main() -> None:
-    async with MCPServerStdio(
-        name="Codex CLI",
-        params={"command": "codex", "args": ["mcp-server"]},
-        client_session_timeout_seconds=360000,
-    ) as codex_mcp_server:
-        designer_agent = Agent(
-            name="Designer",
-            instructions=(
-                f"""{RECOMMENDED_PROMPT_PREFIX}"""
-                "You are the Designer.\n"
-                "Your only source of truth is AGENT_TASKS.md and REQUIREMENTS.md from the Project Manager.\n"
-                "Do not assume anything that is not written there.\n\n"
-                "You may use the internet for additional guidance or research."
-                "Deliverables (write to /design):\n"
-                "- design_spec.md – a single page describing the UI/UX layout, main screens, and key visual notes as requested in AGENT_TASKS.md.\n"
-                "- wireframe.md – a simple text or ASCII wireframe if specified.\n\n"
-                "Keep the output short and implementation-friendly.\n"
-                "When complete, handoff to the Project Manager with transfer_to_project_manager."
-                "When creating files, call Codex MCP with {\"approval-policy\":\"never\",\"sandbox\":\"workspace-write\"}."
-            ),
-            model="gpt-5",
-            tools=[WebSearchTool()],
-            mcp_servers=[codex_mcp_server],
-        )
-
-        frontend_developer_agent = Agent(
-            name="Frontend Developer",
-            instructions=(
-                f"""{RECOMMENDED_PROMPT_PREFIX}"""
-                "You are the Frontend Developer.\n"
-                "Read AGENT_TASKS.md and design_spec.md. Implement exactly what is described there.\n\n"
-                "Deliverables (write to /frontend):\n"
-                "- index.html – main page structure\n"
-                "- styles.css or inline styles if specified\n"
-                "- main.js or game.js if specified\n\n"
-                "Follow the Designer’s DOM structure and any integration points given by the Project Manager.\n"
-                "Do not add features or branding beyond the provided documents.\n\n"
-                "When complete, handoff to the Project Manager with transfer_to_project_manager_agent."
-                "When creating files, call Codex MCP with {\"approval-policy\":\"never\",\"sandbox\":\"workspace-write\"}."
-            ),
-            model="gpt-5",
-            mcp_servers=[codex_mcp_server],
-        )
-
-        backend_developer_agent = Agent(
-            name="Backend Developer",
-            instructions=(
-                f"""{RECOMMENDED_PROMPT_PREFIX}"""
-                "You are the Backend Developer.\n"
-                "Read AGENT_TASKS.md and REQUIREMENTS.md. Implement the backend endpoints described there.\n\n"
-                "Deliverables (write to /backend):\n"
-                "- package.json – include a start script if requested\n"
-                "- server.js – implement the API endpoints and logic exactly as specified\n\n"
-                "Keep the code as simple and readable as possible. No external database.\n\n"
-                "When complete, handoff to the Project Manager with transfer_to_project_manager_agent."
-                "When creating files, call Codex MCP with {\"approval-policy\":\"never\",\"sandbox\":\"workspace-write\"}."
-            ),
-            model="gpt-5",
-            mcp_servers=[codex_mcp_server],
-        )
-
-        tester_agent = Agent(
-            name="Tester",
-            instructions=(
-                f"""{RECOMMENDED_PROMPT_PREFIX}"""
-                "You are the Tester.\n"
-                "Read AGENT_TASKS.md and TEST.md. Verify that the outputs of the other roles meet the acceptance criteria.\n\n"
-                "Deliverables (write to /tests):\n"
-                "- TEST_PLAN.md – bullet list of manual checks or automated steps as requested\n"
-                "- test.sh or a simple automated script if specified\n\n"
-                "Keep it minimal and easy to run.\n\n"
-                "When complete, handoff to the Project Manager with transfer_to_project_manager."
-                "When creating files, call Codex MCP with {\"approval-policy\":\"never\",\"sandbox\":\"workspace-write\"}."
-            ),
-            model="gpt-5",
-            mcp_servers=[codex_mcp_server],
-        )
-
-        project_manager_agent = Agent(
-            name="Project Manager",
-            instructions=(
-                f"""{RECOMMENDED_PROMPT_PREFIX}"""
-                """
-                You are the Project Manager.
-
-                Objective:
-                Convert the input task list into three project-root files the team will execute against.
-
-                Deliverables (write in project root):
-                - REQUIREMENTS.md: concise summary of product goals, target users, key features, and constraints.
-                - TEST.md: tasks with [Owner] tags (Designer, Frontend, Backend, Tester) and clear acceptance criteria.
-                - AGENT_TASKS.md: one section per role containing:
-                  - Project name
-                  - Required deliverables (exact file names and purpose)
-                  - Key technical notes and constraints
-
-                Process:
-                - Resolve ambiguities with minimal, reasonable assumptions. Be specific so each role can act without guessing.
-                - Create files using Codex MCP with {"approval-policy":"never","sandbox":"workspace-write"}.
-                - Do not create folders. Only create REQUIREMENTS.md, TEST.md, AGENT_TASKS.md.
-
-                Handoffs (gated by required files):
-                1) After the three files above are created, hand off to the Designer with transfer_to_designer_agent and include REQUIREMENTS.md and AGENT_TASKS.md.
-                2) Wait for the Designer to produce /design/design_spec.md. Verify that file exists before proceeding.
-                3) When design_spec.md exists, hand off in parallel to both:
-                   - Frontend Developer with transfer_to_frontend_developer_agent (provide design_spec.md, REQUIREMENTS.md, AGENT_TASKS.md).
-                   - Backend Developer with transfer_to_backend_developer_agent (provide REQUIREMENTS.md, AGENT_TASKS.md).
-                4) Wait for Frontend to produce /frontend/index.html and Backend to produce /backend/server.js. Verify both files exist.
-                5) When both exist, hand off to the Tester with transfer_to_tester_agent and provide all prior artifacts and outputs.
-                6) Do not advance to the next handoff until the required files for that step are present. If something is missing, request the owning agent to supply it and re-check.
-
-                PM Responsibilities:
-                - Coordinate all roles, track file completion, and enforce the above gating checks.
-                - Do NOT respond with status updates. Just handoff to the next agent until the project is complete.
-                """
-            ),
-            model="gpt-5",
-            model_settings=ModelSettings(
-                reasoning=Reasoning(effort="medium"),
-            ),
-            handoffs=[designer_agent, frontend_developer_agent, backend_developer_agent, tester_agent],
-            mcp_servers=[codex_mcp_server],
-        )
-
-        designer_agent.handoffs = [project_manager_agent]
-        frontend_developer_agent.handoffs = [project_manager_agent]
-        backend_developer_agent.handoffs = [project_manager_agent]
-        tester_agent.handoffs = [project_manager_agent]
-
-        task_list = """
-Goal: Build a tiny browser game to showcase a multi-agent workflow.
-
-High-level requirements:
-- Single-screen game called "Bug Busters".
-- Player clicks a moving bug to earn points.
-- Game ends after 20 seconds and shows final score.
-- Optional: submit score to a simple backend and display a top-10 leaderboard.
-
-Roles:
-- Designer: create a one-page UI/UX spec and basic wireframe.
-- Frontend Developer: implement the page and game logic.
-- Backend Developer: implement a minimal API (GET /health, GET/POST /scores).
-- Tester: write a quick test plan and a simple script to verify core routes.
-
-Constraints:
-- No external database—memory storage is fine.
-- Keep everything readable for beginners; no frameworks required.
-- All outputs should be small files saved in clearly named folders.
-"""
-
-        result = await Runner.run(project_manager_agent, task_list, max_turns=30)
-        print(result.final_output)
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-Run the script and watch the generated files:
-
-```bash
-python multi_agent_workflow.py
-ls -R
-```
-
-The project manager agent writes `REQUIREMENTS.md`, `TEST.md`, and `AGENT_TASKS.md`, then coordinates hand-offs across the designer, frontend, server, and tester agents. Each agent writes scoped artifacts in its own folder before handing control back to the project manager.
-
-#### Trace the workflow
-
-Codex automatically records traces that capture every prompt, tool call, and hand-off. After the multi-agent run completes, open the [Traces dashboard](https://platform.openai.com/trace) to inspect the execution timeline.
-
-The high-level trace highlights how the project manager verifies hand-offs before moving forward. Click into individual steps to see prompts, Codex MCP calls, files written, and execution durations. These details make it straightforward to audit every hand-off and understand how the workflow evolved turn by turn.
-These traces make it straightforward to debug workflow hiccups, audit agent behavior, and measure performance over time without requiring extra instrumentation.
 
 ## Platform, Enterprise, and Caveats
 
@@ -39542,7 +39126,6 @@ Configure workload identity on the machine that owns the Codex process.
 | `codex app-server`                              | Supported. Configure WIF on the app-server host, not on a remote client.                                |
 | `codex exec-server --remote`                    | Supported for authentication to the remote environment registry. Configure WIF on the exec-server host. |
 | Local exec-server process operations            | Do not use WIF authentication. They run through the local exec-server protocol.                         |
-| `codex mcp-server`                              | Not supported.                                                                                          |
 
 Remote app-server and exec-server clients never send the upstream identity
 token over their protocols.

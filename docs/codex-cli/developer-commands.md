@@ -294,12 +294,8 @@ with `name`, `root`, and optional `marketplaceSource`; upgrade JSON includes
 
 ### `codex mcp-server`
 
-`codex mcp-server` is deprecated. Use the [Codex app
-  server](./app-server.md) instead. To call Codex from Claude Code, use the
-  [Codex plugin for Claude Code](https://github.com/openai/codex-plugin-cc),
-  which uses the app server.
-
-For existing integrations, the command runs Codex as an MCP server over stdio so that other tools can connect. It inherits global configuration overrides and exits when the downstream client closes the connection.
+The `codex mcp-server` command and standalone `codex-mcp-server` binary have
+  been removed. Use the [Codex app server](./app-server.md) instead.
 
 <a id="cli-codex-resume"></a>
 

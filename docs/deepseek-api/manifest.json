@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-09-11T05:59:11Z",
+  "last_updated": "2026-09-11T13:06:23Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -190,8 +190,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/anthropic_api",
       "source_md_url": "https://api-docs.deepseek.com/guides/anthropic_api",
       "source_id": "guides/anthropic_api",
-      "hash": "ca371063133c615e7fe6999f135a2294334232bd35c8c8de8ca2f10d6f075699",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "c88db085d7cbb67fc65df72c33b6eec3277ecf7b9de8ff572c9003186416b5fd",
+      "last_updated": "2026-09-11T13:06:23Z"
     },
     "guides/chat_prefix_completion": {
       "slug": "guides/chat_prefix_completion",
@@ -310,8 +310,8 @@
       "source_url": "https://api-docs.deepseek.com",
       "source_md_url": "https://api-docs.deepseek.com",
       "source_id": "index",
-      "hash": "00628d91cc670e633707d9c9875da5880c4f05857af6be6df4470ac9e75cc8cf",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "92212dab7511511f68df5363859447b21f27dd12306828e0e9feec9ef4ce48fd",
+      "last_updated": "2026-09-11T13:06:23Z"
     },
     "news/news0725": {
       "slug": "news/news0725",
@@ -385,13 +385,13 @@
     },
     "news/news250120": {
       "slug": "news/news250120",
-      "title": "Your First API Call",
+      "title": "DeepSeek-R1 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250120",
       "source_md_url": "https://api-docs.deepseek.com/news/news250120",
       "source_id": "news/news250120",
-      "hash": "1e04ca526ece0372593f05a1f6dba3140253eacdd00918426eaf960f5c0f16a9",
-      "last_updated": "2026-09-11T05:59:11Z"
+      "hash": "c26512dcc9b13a6fdd79dca4287e33d5d465ddd814ac9153acc2e2c4c9d6cac5",
+      "last_updated": "2026-09-11T13:06:23Z"
     },
     "news/news250325": {
       "slug": "news/news250325",
@@ -520,8 +520,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code",
       "source_id": "quick_start/agent_integrations/claude_code",
-      "hash": "003f11de790c6c45f7200a9d884dcdf773febed32eb5ddf93a593725d79783e3",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "1c23da3022c15bdb471a0bc4e524e757fc25886ee982b1d49d764e6985ef9651",
+      "last_updated": "2026-09-11T13:06:23Z"
     },
     "quick_start/agent_integrations/codex": {
       "slug": "quick_start/agent_integrations/codex",
@@ -530,8 +530,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/codex",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/codex",
       "source_id": "quick_start/agent_integrations/codex",
-      "hash": "f052491b801f0ec10f6a563ec50d33ecaf2018b870cd95fc6558ae8d1fe0b929",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "4ee42db5100726e54c1e2e64511d3fb47ee4ab7d2da1d8a6a10c3835f53f6c8d",
+      "last_updated": "2026-09-11T13:06:23Z"
     },
     "quick_start/agent_integrations/copilot_cli": {
       "slug": "quick_start/agent_integrations/copilot_cli",
@@ -690,8 +690,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "62e39ceaa9b8ed756a513056161fcead56b391dd575f792bc03e7edece5cd489",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "822aab6e33914254ca09c1ba98733d976be4ac7fe621d1fc750ab949f6ab79f5",
+      "last_updated": "2026-09-11T13:06:23Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -720,13 +720,13 @@
       "source_url": "https://api-docs.deepseek.com/updates",
       "source_md_url": "https://api-docs.deepseek.com/updates",
       "source_id": "updates",
-      "hash": "11ea01e99b77dc344594c858646809804e1a38af41349da95e4618419456375c",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "3f2b61acbbea67f6143d575bf471145a52d07b8572595ec9f9dddc7af787f5d5",
+      "last_updated": "2026-09-11T13:06:23Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-11T05:59:11Z",
-    "fetch_duration_seconds": 38.402,
+    "last_fetch_completed": "2026-09-11T13:06:23Z",
+    "fetch_duration_seconds": 53.732,
     "total_pages_discovered": 72,
     "pages_fetched_successfully": 72,
     "pages_failed": 0,

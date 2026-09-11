@@ -26,7 +26,7 @@ irm https://cdn.deepseek.com/api-docs/codex-deepseek-setup-en.ps1 | iex
 
  
 
-After launching, pick an action from the menu: option 1 configures Codex to use the `deepseek-flash` model, which also accepts [image input](<../../guides/vision.md>); option 2 configures it to use `deepseek-v4-pro` (retiring September 14); option 9 restores the default Codex configuration, removing the DeepSeek-related settings. On first run, the script asks for your API Key (starting with `sk-`; get one from the [DeepSeek Platform](<https://platform.deepseek.com/api_keys>)).
+After launching, pick an action from the menu: option 1 configures Codex to use the `deepseek-flash` model, which also accepts [image input](<../../guides/vision.md>); option 2 configures it to use `deepseek-v4-pro`; option 9 restores the default Codex configuration, removing the DeepSeek-related settings. On first run, the script asks for your API Key (starting with `sk-`; get one from the [DeepSeek Platform](<https://platform.deepseek.com/api_keys>)).
 
 The script performs the following steps:
 

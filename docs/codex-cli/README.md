@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 159
 - **Version:** 0.154.0
-- **Last updated:** 2026-09-11T01:17:26Z
+- **Last updated:** 2026-09-11T13:05:28Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -57,7 +57,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Integrated terminal | [integrated-terminal.md](./integrated-terminal.md) | [source](<https://learn.chatgpt.com/docs/integrated-terminal>) |
 | License | [license.md](./license.md) | [source](<https://github.com/openai/codex/blob/main/docs/license.md>) |
 | Long-running work | [long-running-work.md](./long-running-work.md) | [source](<https://learn.chatgpt.com/docs/long-running-work>) |
-| Use Codex with the Agents SDK | [mcp-server.md](./mcp-server.md) | [source](<https://learn.chatgpt.com/docs/mcp-server>) |
+| Codex MCP server removal | [mcp-server.md](./mcp-server.md) | [source](<https://learn.chatgpt.com/docs/mcp-server>) |
 | Models | [models.md](./models.md) | [source](<https://learn.chatgpt.com/docs/models>) |
 | Non-interactive mode | [non-interactive-mode.md](./non-interactive-mode.md) | [source](<https://learn.chatgpt.com/docs/non-interactive-mode>) |
 | Notifications | [notifications.md](./notifications.md) | [source](<https://learn.chatgpt.com/docs/notifications>) |
