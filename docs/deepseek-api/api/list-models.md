@@ -4,19 +4,17 @@
 GET /models
 ```
 
-Lists the currently available models, and provides basic information about each one such as the owner and availability. Check [Models & Pricing](</quick_start/pricing>) for our currently supported models.
+Lists the currently available models, and provides basic information about each one such as the owner and availability. Check [Models & Pricing](<../quick_start/pricing.md>) for our currently supported models.
 
 ## Responses
 
-  * 200
+**200**
 
 OK, returns A list of models
 
-  * application/json
+**application/json**
 
-  * Schema
-  * Example (from schema)
-  * Example
+**Schema**
 
 **
 
@@ -56,12 +54,39 @@ The organization that owns the model.
 
   * ]
 
-```json
-{  "object": "list",  "data": [    {      "id": "string",      "object": "model",      "owned_by": "string"    }  ]}
-```
+**Example (from schema)**
 
 ```json
-{  "object": "list",  "data": [    {      "id": "deepseek-flash",      "object": "model",      "owned_by": "deepseek"    },    {      "id": "deepseek-v4-pro",      "object": "model",      "owned_by": "deepseek"    }  ]}
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "string",
+      "object": "model",
+      "owned_by": "string"
+    }
+  ]
+}
+```
+
+**Example**
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "deepseek-flash",
+      "object": "model",
+      "owned_by": "deepseek"
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "object": "model",
+      "owned_by": "deepseek"
+    }
+  ]
+}
 ```
 
 Loading...

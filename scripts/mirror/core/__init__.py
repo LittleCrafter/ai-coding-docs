@@ -12,9 +12,13 @@ This package holds the *source-agnostic* half of the mirror pipeline:
   * :mod:`~.sitemap`     -- parse sitemap XML for sitemap-based sources;
   * :mod:`~.github`      -- auth/headers for GitHub-API-based sources;
   * :mod:`~.html_markdown` -- shared HTML-to-Markdown conversion pipeline
-                            (html2text config, Cf stripping, blank-line collapse,
-                            code-block splicing) consumed by the Antigravity and
-                            DeepSeek source adapters;
+                            (html2text config, invisible-character stripping,
+                            blank-line collapse, code-block splicing) consumed by
+                            the Antigravity and DeepSeek source adapters;
+  * :mod:`~.fenced_code` -- shielding a page's fenced code blocks from the text
+                            passes that rewrite it (extract -> transform ->
+                            splice), shared by every adapter that rewrites
+                            Markdown, plus the indentation-aware fence scanner;
   * :mod:`~.link_checker` -- verify internal/relative Markdown links across
                             the mirrored documentation tree;
   * :mod:`~.media`       -- static media/asset mirroring shared by every

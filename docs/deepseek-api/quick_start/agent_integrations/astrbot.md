@@ -25,7 +25,8 @@ iwr -useb https://docs.astrbot.app/install.ps1 | iex
 Then initialize and start AstrBot:
 
 ```bash
-astrbot init # Run this only once to initialize the environment. This command installs AstrBot into the current terminal directory.astrbot run  # Start AstrBot. This command checks whether AstrBot is installed in the current directory; if not, it prompts you to initialize it with `astrbot init`.
+astrbot init # Run this only once to initialize the environment. This command installs AstrBot into the current terminal directory.
+astrbot run  # Start AstrBot. This command checks whether AstrBot is installed in the current directory; if not, it prompts you to initialize it with `astrbot init`.
 ```
 
  
@@ -35,7 +36,8 @@ astrbot init # Run this only once to initialize the environment. This command in
 First, clone the AstrBot repository:
 
 ```bash
-git clone https://github.com/AstrBotDevs/AstrBot --depth 1cd AstrBot
+git clone https://github.com/AstrBotDevs/AstrBot --depth 1
+cd AstrBot
 ```
 
  

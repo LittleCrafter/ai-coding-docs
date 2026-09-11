@@ -14,8 +14,19 @@ Deliberate design choices:
   (``http://``, ``https://``, ``ftp://``), special URL schemes (``mailto:``,
   ``data:``, ``javascript:``, ``tel:``, ``sms:``, ``irc:``), protocol-relative
   links (``//...``), and pure page anchor fragments (``#heading``).
+* **Site-absolute detection**: Reports a destination that starts at the site
+  root (``/docs/en/hooks``) as an issue rather than skipping it. Such a path
+  cannot resolve from a mirrored file, so it is always a defect: either the
+  adapter failed to rewrite it or upstream introduced a new one. Both the
+  Markdown link syntax and the inline HTML ``href``/``src`` attributes a page
+  passes through are read, because a site-absolute path is just as dead
+  whichever syntax carries it.
 * **Directory target support**: Resolves directory targets by checking for
   the presence of ``README.md`` or ``index.md``.
+* **Illustrative exemptions**: Each source may declare relative destinations
+  that its pages use inside documentation samples rather than as real
+  cross-references (see ``sources.base.SourceConfig``). The caller passes
+  those lists in; nothing here knows about any concrete source.
 """
 
 from __future__ import annotations
@@ -23,6 +34,7 @@ from __future__ import annotations
 import bisect
 import re
 import urllib.parse
+from collections.abc import Collection, Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -51,18 +63,6 @@ _EXTERNAL_SCHEMES = frozenset(
     }
 )
 
-# Known illustrative relative links that appear in documentation code examples
-# or sample config snippets (e.g. claude-directory.md memory index sample).
-_KNOWN_ILLUSTRATIVE_TARGETS: dict[str, frozenset[str]] = {
-    "claude-directory.md": frozenset(
-        {
-            "build-and-test.md",
-            "architecture.md",
-            "debugging.md",
-        }
-    ),
-}
-
 # Regular expression matching Markdown fenced code block boundaries.
 # Matches 0-3 leading spaces, followed by 3 or more backticks or tildes.
 _FENCE_START_RE = re.compile(r"^[ ]{0,3}(?P<fence>`{3,}|~{3,})(?P<info>.*)$")
@@ -83,6 +83,19 @@ _REF_LINK_RE = re.compile(
     r"^[ ]{0,3}\[(?P<label>[^\]]+)\]:\s*"
     r"(?P<dest><[^>]+>|\S+)"
     r"(?:\s+(?:\"[^\"]*\"|'[^']*'|\([^)]*\)))?\s*$"
+)
+
+# Regular expression matching the destination of an inline HTML link or media
+# attribute: href="..." / href='...' / src="..." / src='...'. A page's body
+# text may carry HTML that an adapter passes through verbatim, and a
+# site-absolute HTML destination is as dead as a site-absolute Markdown one
+# (see ``_destination_kind``), but the Markdown patterns above cannot see it.
+# The attribute name must be followed by ``=``, so ``srcset=`` is not matched;
+# a prefixed form such as ``data-href=`` still is, which is intended -- the
+# destination it carries is a real one.
+_HTML_LINK_ATTR_RE = re.compile(
+    r"\b(?:href|src)\s*=\s*(?P<quote>[\"'])(?P<dest>[^\"']*)(?P=quote)",
+    re.IGNORECASE,
 )
 
 
@@ -152,33 +165,58 @@ def _mask_inline_code(line: str) -> str:
     return "".join(chars)
 
 
-def _is_relative_link(destination: str) -> bool:
-    """Determine if a link destination is a local relative reference.
+def _destination_kind(destination: str) -> str | None:
+    """Classify a link destination, however the page wrote it.
 
-    Returns False for empty destinations, pure anchor fragments (``#...``),
-    external URI schemes (``http://``, ``https://``, ``mailto:``, etc.),
-    protocol-relative links (``//...``), and site-root absolute links (``/...``).
+    Returns ``"relative"`` for a local relative reference (the only kind whose
+    target is resolved on disk), ``"site-absolute"`` for a destination
+    anchored at the site root (``/docs/en/hooks``), ``"malformed"`` for a
+    destination the URI parser rejects, and ``None`` for every destination
+    this checker deliberately ignores: empty destinations, pure anchor
+    fragments (``#...``), query-only references (``?...``), external URI
+    schemes (``http://``, ``https://``, ``mailto:``, ...), and
+    protocol-relative links (``//host/path``).
+
+    A site-absolute destination gets a category of its own because it can
+    NEVER resolve from a mirrored file: the mirror is browsed from a local
+    checkout, where a leading ``/`` means the filesystem root, not a docs
+    site. Reporting it as an issue is what keeps an adapter that forgot to
+    rewrite its site links from shipping a tree full of dead references
+    silently. Protocol-relative links stay in the ignored bucket: they name a
+    host as well, so they are an external reference written in shorthand
+    rather than a path into this mirror.
+
+    A malformed destination is one ``urllib.parse.urlsplit`` refuses to parse
+    (``http://[::1`` and anything else with an unclosed IPv6 bracket), which
+    it signals by raising ``ValueError``. Catching it here keeps one bad link
+    in one page from aborting the whole ``--check-links`` run: the defect is
+    reported against the line that carries it, exactly like a broken target.
     """
     clean = destination.strip()
     if not clean:
-        return False
+        return None
     if clean.startswith("<") and clean.endswith(">"):
         clean = clean[1:-1].strip()
     if not clean or clean.startswith("#") or clean.startswith("?"):
-        return False
-    if clean.startswith("//") or clean.startswith("/"):
-        return False
+        return None
+    if clean.startswith("//"):
+        return None
+    if clean.startswith("/"):
+        return "site-absolute"
 
-    parsed = urllib.parse.urlsplit(clean)
+    try:
+        parsed = urllib.parse.urlsplit(clean)
+    except ValueError:
+        return "malformed"
     if parsed.scheme.lower() in _EXTERNAL_SCHEMES:
-        return False
+        return None
 
     lower = clean.lower()
     for scheme in _EXTERNAL_SCHEMES:
         if lower.startswith(f"{scheme}:"):
-            return False
+            return None
 
-    return True
+    return "relative"
 
 
 def _clean_target_path(destination: str) -> str:
@@ -210,11 +248,19 @@ def _check_target_exists(referencing_file: Path, clean_path: str) -> str | None:
     return f"Target file does not exist: {clean_path}"
 
 
-def check_file_links(file_path: Path) -> list[LinkIssue]:
+def check_file_links(
+    file_path: Path, exempt_targets: Collection[str] = ()
+) -> list[LinkIssue]:
     """Verify all internal relative links in a single Markdown file.
 
     Scans the file line by line, ignores fenced code blocks and inline code,
-    and returns a list of all identified LinkIssue records.
+    and returns a list of all identified LinkIssue records. Destinations the
+    owning source declared illustrative (*exempt_targets*) are not reported,
+    and a site-root-absolute destination is always reported: it cannot resolve
+    from a mirrored file wherever it appears, whether the page wrote it as a
+    Markdown link or as an inline HTML ``href``/``src`` attribute. A
+    destination the URI parser rejects is reported the same way, so one
+    malformed link fails its own line instead of the whole run.
     """
     try:
         content = file_path.read_text(encoding="utf-8")
@@ -234,7 +280,6 @@ def check_file_links(file_path: Path) -> list[LinkIssue]:
     in_fence = False
     fence_char = ""
     fence_len = 0
-    exempt_targets = _KNOWN_ILLUSTRATIVE_TARGETS.get(file_path.name, frozenset())
 
     for line_num, line in enumerate(lines, start=1):
         fence_match = _FENCE_START_RE.match(line)
@@ -269,11 +314,48 @@ def check_file_links(file_path: Path) -> list[LinkIssue]:
         if ref_match:
             raw_destinations.append(ref_match.group("dest"))
 
+        # Inline HTML carried through into the mirror is read as well, so a
+        # site-absolute attribute destination is reported like any other.
+        for attr_match in _HTML_LINK_ATTR_RE.finditer(sanitized_line):
+            raw_destinations.append(attr_match.group("dest"))
+
         for raw_dest in raw_destinations:
-            if not _is_relative_link(raw_dest):
+            kind = _destination_kind(raw_dest)
+            if kind is None:
                 continue
 
             clean_path = _clean_target_path(raw_dest)
+
+            if kind == "site-absolute":
+                issues.append(
+                    LinkIssue(
+                        file=file_path,
+                        line=line_num,
+                        target=raw_dest,
+                        reason=(
+                            f"Site-root-absolute link target {clean_path!r} cannot "
+                            "resolve in the mirror; it must be rewritten to a "
+                            "relative path or an upstream URL"
+                        ),
+                    )
+                )
+                continue
+
+            if kind == "malformed":
+                issues.append(
+                    LinkIssue(
+                        file=file_path,
+                        line=line_num,
+                        target=raw_dest,
+                        reason=(
+                            f"Malformed link destination {raw_dest!r}: it cannot "
+                            "be parsed as a URI, so no target can be resolved "
+                            "from it"
+                        ),
+                    )
+                )
+                continue
+
             if not clean_path or clean_path in exempt_targets:
                 continue
 
@@ -291,17 +373,48 @@ def check_file_links(file_path: Path) -> list[LinkIssue]:
     return issues
 
 
-def check_links(base_dir: Path) -> tuple[list[LinkIssue], int]:
+def _exempt_targets_for(
+    file_path: Path, by_source: Mapping[str, Collection[str]] | None
+) -> Collection[str]:
+    """Return the illustrative destinations declared by the source owning *file_path*.
+
+    The owning source is the first path segment of the file's location under
+    ``config.DOCS_DIR`` (``<DOCS_DIR>/<source>/...``), so a scan of the whole
+    docs tree and a scan of one source's directory both resolve the same way.
+    A file outside the docs tree -- a scan invoked directly on an arbitrary
+    path -- belongs to no source and therefore has no exemptions; both sides
+    are resolved before the comparison so a symlinked temporary docs tree
+    still matches its own files.
+    """
+    if not by_source:
+        return ()
+    try:
+        relative = file_path.resolve().relative_to(config.DOCS_DIR.resolve())
+    except OSError, ValueError:
+        return ()
+    if not relative.parts:
+        return ()
+    return by_source.get(relative.parts[0], ())
+
+
+def check_links(
+    base_dir: Path,
+    exempt_targets_by_source: Mapping[str, Collection[str]] | None = None,
+) -> tuple[list[LinkIssue], int]:
     """Recursively verify all Markdown links in files under base_dir.
 
-    Returns a tuple of (issues, scanned_files_count).
+    *exempt_targets_by_source* maps a source name to the illustrative
+    destinations that source declares; each file is checked against the list
+    of the source directory it lives under. Returns a tuple of (issues,
+    scanned_files_count).
     """
     if not base_dir.exists():
         return [], 0
 
     if base_dir.is_file():
         if base_dir.suffix.lower() in {".md", ".markdown"}:
-            return check_file_links(base_dir), 1
+            exempt = _exempt_targets_for(base_dir, exempt_targets_by_source)
+            return check_file_links(base_dir, exempt), 1
         return [], 0
 
     md_files = sorted(
@@ -312,21 +425,28 @@ def check_links(base_dir: Path) -> tuple[list[LinkIssue], int]:
 
     issues: list[LinkIssue] = []
     for md_file in md_files:
-        issues.extend(check_file_links(md_file))
+        exempt = _exempt_targets_for(md_file, exempt_targets_by_source)
+        issues.extend(check_file_links(md_file, exempt))
 
     return issues, len(md_files)
 
 
-def check_source_links(source_name: str | None = None) -> tuple[list[LinkIssue], int]:
+def check_source_links(
+    source_name: str | None = None,
+    exempt_targets_by_source: Mapping[str, Collection[str]] | None = None,
+) -> tuple[list[LinkIssue], int]:
     """Verify Markdown links across docs/ or for a specific documentation source.
 
-    Returns a tuple of (issues, scanned_files_count).
+    *exempt_targets_by_source* is forwarded to :func:`check_links`; the caller
+    (the CLI) builds it from the source registry, which keeps this module free
+    of any knowledge about concrete sources. Returns a tuple of (issues,
+    scanned_files_count).
     """
     if source_name is None:
-        return check_links(config.DOCS_DIR)
+        return check_links(config.DOCS_DIR, exempt_targets_by_source)
 
     source_dir = config.DOCS_DIR / source_name
     if not source_dir.exists() or not source_dir.is_dir():
         return [], 0
 
-    return check_links(source_dir)
+    return check_links(source_dir, exempt_targets_by_source)

@@ -8,11 +8,9 @@ Creates a model response for the given chat conversation.
 
 ## Request
 
-  * application/json
+**application/json**
 
-### 
-
-Body
+### Body
 
 **
 
@@ -38,10 +36,7 @@ A list of messages comprising the conversation so far.
 
 oneOf
 
-    * System message
-    * User message
-    * Assistant message
-    * Tool message
+**System message**
 
 **content** stringrequired
 
@@ -57,6 +52,8 @@ The role of the messages author, in this case `system`.
 
 An optional name for the participant. Provides the model information to differentiate between participants of the same role.
 
+**User message**
+
 **
 
 content
@@ -71,22 +68,21 @@ required
 
 **
 
-The contents of the user message. Either a string, or an array of content parts (for image input). See the [Vision guide](</guides/vision>) for details.
+The contents of the user message. Either a string, or an array of content parts (for image input). See the [Vision guide](<../guides/vision.md>) for details.
 
 oneOf
 
-    * Text content
-    * Array of content parts
+**Text content**
 
 string
+
+**Array of content parts**
 
   * Array [
 
 oneOf
 
-    * Text content part
-    * Image content part
-    * File content part
+**Text content part**
 
 **type** stringrequired
 
@@ -97,6 +93,8 @@ The type of the content part, in this case `text`.
 **text** stringrequired
 
 The text content.
+
+**Image content part**
 
 **type** stringrequired
 
@@ -124,6 +122,8 @@ Either an `http(s)` URL of the image (max 8192 characters) or a base64-encoded d
 
 Controls how the image is processed. `low` downsamples the image to 512x512 (faster, cheaper). `high`, `original`, and `auto` keep the original image.
 
+**File content part**
+
 **type** stringrequired
 
 **Possible values:** [`file`]
@@ -132,7 +132,7 @@ The type of the content part, in this case `file`.
 
 **file_id** string
 
-The ID of a file uploaded via the [Files API](</guides/files_api>), of the form `file-api-...`. Mutually exclusive with `file_data`.
+The ID of a file uploaded via the [Files API](<../guides/files_api.md>), of the form `file-api-...`. Mutually exclusive with `file_data`.
 
 **file_data** string
 
@@ -154,6 +154,8 @@ The role of the messages author, in this case `user`.
 
 An optional name for the participant. Provides the model information to differentiate between participants of the same role.
 
+**Assistant message**
+
 **content** stringnullablerequired
 
 The contents of the assistant message.
@@ -174,7 +176,9 @@ An optional name for the participant. Provides the model information to differen
 
 **reasoning_content** stringnullable
 
-(Beta) Used for the thinking mode in the [Chat Prefix Completion](</guides/chat_prefix_completion>) feature as the input for the CoT in the last assistant message. When using this feature, the `prefix` parameter must be set to `true`.
+(Beta) Used for the thinking mode in the [Chat Prefix Completion](<../guides/chat_prefix_completion.md>) feature as the input for the CoT in the last assistant message. When using this feature, the `prefix` parameter must be set to `true`.
+
+**Tool message**
 
 **role** stringrequired
 
@@ -196,22 +200,21 @@ required
 
 **
 
-The contents of the tool message. Either a string, or an array of content parts (for image input). See the [Vision guide](</guides/vision>) for details.
+The contents of the tool message. Either a string, or an array of content parts (for image input). See the [Vision guide](<../guides/vision.md>) for details.
 
 oneOf
 
-    * Text content
-    * Array of content parts
+**Text content**
 
 string
+
+**Array of content parts**
 
   * Array [
 
 oneOf
 
-    * Text content part
-    * Image content part
-    * File content part
+**Text content part**
 
 **type** stringrequired
 
@@ -222,6 +225,8 @@ The type of the content part, in this case `text`.
 **text** stringrequired
 
 The text content.
+
+**Image content part**
 
 **type** stringrequired
 
@@ -249,6 +254,8 @@ Either an `http(s)` URL of the image (max 8192 characters) or a base64-encoded d
 
 Controls how the image is processed. `low` downsamples the image to 512x512 (faster, cheaper). `high`, `original`, and `auto` keep the original image.
 
+**File content part**
+
 **type** stringrequired
 
 **Possible values:** [`file`]
@@ -257,7 +264,7 @@ The type of the content part, in this case `file`.
 
 **file_id** string
 
-The ID of a file uploaded via the [Files API](</guides/files_api>), of the form `file-api-...`. Mutually exclusive with `file_data`.
+The ID of a file uploaded via the [Files API](<../guides/files_api.md>), of the form `file-api-...`. Mutually exclusive with `file_data`.
 
 **file_data** string
 
@@ -313,7 +320,7 @@ The maximum number of tokens that can be generated in the chat completion.
 
 The total length of input tokens and generated tokens is limited by the model's context length.
 
-The value must be between 1 and 384K (393216). When not set, the default is 8K in non-thinking mode, 64K in thinking mode (128K with `reasoning_effort` set to `max`). Please refer to the [Models & Pricing](</quick_start/pricing>) page for details.
+The value must be between 1 and 384K (393216). When not set, the default is 8K in non-thinking mode, 64K in thinking mode (128K with `reasoning_effort` set to `max`). Please refer to the [Models & Pricing](<../quick_start/pricing.md>) page for details.
 
 **
 
@@ -355,10 +362,11 @@ Up to 16 sequences where the API will stop generating further tokens.
 
 oneOf
 
-    * MOD1
-    * MOD2
+**MOD1**
 
 string
+
+**MOD2**
 
   * Array [
 
@@ -454,13 +462,13 @@ parameters
 
 object
 
-The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](</guides/tool_calls>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
+The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](<../guides/tool_calls.md>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
 
 Omitting `parameters` defines a function with an empty parameter list.
 
 **property name*** any
 
-The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](</guides/tool_calls>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
+The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](<../guides/tool_calls.md>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
 
 Omitting `parameters` defines a function with an empty parameter list.
 
@@ -468,7 +476,7 @@ Omitting `parameters` defines a function with an empty parameter list.
 
 **Default value:** `false`
 
-If set to true, the API will use strict-mode for the tool calls to ensure the output always complies with the function's JSON schema. This is a Beta feature, for more details please refer to [Tool Calls Guide](</guides/tool_calls>)
+If set to true, the API will use strict-mode for the tool calls to ensure the output always complies with the function's JSON schema. This is a Beta feature, for more details please refer to [Tool Calls Guide](<../guides/tool_calls.md>)
 
   * ]
 
@@ -502,12 +510,13 @@ Specifying a particular tool via `{"type": "function", "function": {"name": "my_
 
 oneOf
 
-    * ChatCompletionToolChoice
-    * ChatCompletionNamedToolChoice
+**ChatCompletionToolChoice**
 
 string
 
 **Possible values:** [`none`, `auto`, `required`]
+
+**ChatCompletionNamedToolChoice**
 
 **type** stringrequired
 
@@ -546,7 +555,7 @@ A custom user_id. Allowed character set is [a-zA-Z0-9\\-_], with a maximum lengt
     * user_id can be used to distinguish user identities on your side to help us with content safety review.
     * user_id can be used for KVCache isolation for privacy management.
     * user_id can be used for scheduling isolation of users on your business side.
-    * For more details on the user_id parameter, please refer to [Rate Limit & Isolation](</quick_start/rate_limit>)
+    * For more details on the user_id parameter, please refer to [Rate Limit & Isolation](<../quick_start/rate_limit.md>)
 
 **frequency_penalty** deprecated
 
@@ -558,16 +567,13 @@ This parameter is no longer supported. It will not take effect if you pass it to
 
 ## Responses
 
-  * 200 (No streaming)
-  * 200 (Streaming)
+**200 (No streaming)**
 
 OK, returns a `chat completion object`
 
-  * application/json
+**application/json**
 
-  * Schema
-  * Example (from schema)
-  * Example
+**Schema**
 
 **
 
@@ -881,21 +887,130 @@ Breakdown of tokens used in a completion.
 
 Tokens generated by the model for reasoning.
 
-```json
-{  "id": "string",  "choices": [    {      "finish_reason": "stop",      "index": 0,      "message": {        "content": "string",        "reasoning_content": "string",        "tool_calls": [          {            "id": "string",            "type": "function",            "function": {              "name": "string",              "arguments": "string"            }          }        ],        "role": "assistant"      },      "logprobs": {        "content": [          {            "token": "string",            "logprob": 0,            "bytes": [              0            ],            "top_logprobs": [              {                "token": "string",                "logprob": 0,                "bytes": [                  0                ]              }            ]          }        ],        "reasoning_content": [          {            "token": "string",            "logprob": 0,            "bytes": [              0            ],            "top_logprobs": [              {                "token": "string",                "logprob": 0,                "bytes": [                  0                ]              }            ]          }        ]      }    }  ],  "created": 0,  "model": "string",  "system_fingerprint": "string",  "object": "chat.completion",  "usage": {    "completion_tokens": 0,    "prompt_tokens": 0,    "prompt_tokens_details": {      "cached_tokens": 0    },    "prompt_cache_hit_tokens": 0,    "prompt_cache_miss_tokens": 0,    "total_tokens": 0,    "completion_tokens_details": {      "reasoning_tokens": 0    }  }}
-```
+**Example (from schema)**
 
 ```json
-{  "id": "930c60df-bf64-41c9-a88e-3ec75f81e00e",  "choices": [    {      "finish_reason": "stop",      "index": 0,      "message": {        "content": "Hello! How can I help you today?",        "role": "assistant"      },      "logprobs": null    }  ],  "created": 1705651092,  "model": "deepseek-flash",  "object": "chat.completion",  "system_fingerprint": "fp_7a09fdf9c2",  "usage": {    "completion_tokens": 10,    "prompt_tokens": 16,    "total_tokens": 26,    "prompt_tokens_details": {      "cached_tokens": 0    },    "prompt_cache_hit_tokens": 0,    "prompt_cache_miss_tokens": 16  }}
+{
+  "id": "string",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "string",
+        "reasoning_content": "string",
+        "tool_calls": [
+          {
+            "id": "string",
+            "type": "function",
+            "function": {
+              "name": "string",
+              "arguments": "string"
+            }
+          }
+        ],
+        "role": "assistant"
+      },
+      "logprobs": {
+        "content": [
+          {
+            "token": "string",
+            "logprob": 0,
+            "bytes": [
+              0
+            ],
+            "top_logprobs": [
+              {
+                "token": "string",
+                "logprob": 0,
+                "bytes": [
+                  0
+                ]
+              }
+            ]
+          }
+        ],
+        "reasoning_content": [
+          {
+            "token": "string",
+            "logprob": 0,
+            "bytes": [
+              0
+            ],
+            "top_logprobs": [
+              {
+                "token": "string",
+                "logprob": 0,
+                "bytes": [
+                  0
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "created": 0,
+  "model": "string",
+  "system_fingerprint": "string",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 0,
+    "prompt_tokens": 0,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 0,
+    "total_tokens": 0,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  }
+}
 ```
+
+**Example**
+
+```json
+{
+  "id": "930c60df-bf64-41c9-a88e-3ec75f81e00e",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Hello! How can I help you today?",
+        "role": "assistant"
+      },
+      "logprobs": null
+    }
+  ],
+  "created": 1705651092,
+  "model": "deepseek-flash",
+  "object": "chat.completion",
+  "system_fingerprint": "fp_7a09fdf9c2",
+  "usage": {
+    "completion_tokens": 10,
+    "prompt_tokens": 16,
+    "total_tokens": 26,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 16
+  }
+}
+```
+
+**200 (Streaming)**
 
 OK, returns a streamed sequence of `chat completion chunk` objects
 
-  * text/event-stream
+**text/event-stream**
 
-  * Schema
-  * Example (from schema)
-  * Example
+**Schema**
 
 **
 
@@ -1149,12 +1264,106 @@ The object type, which is always `chat.completion.chunk`.
 
   * ]
 
+**Example (from schema)**
+
 ```json
-[  {    "id": "string",    "choices": [      {        "delta": {          "content": "string",          "reasoning_content": "string",          "role": "assistant",          "tool_calls": [            {              "index": 0,              "id": "string",              "type": "function",              "function": {                "name": "string",                "arguments": "string"              }            }          ]        },        "logprobs": {          "content": [            {              "token": "string",              "logprob": 0,              "bytes": [                0              ],              "top_logprobs": [                {                  "token": "string",                  "logprob": 0,                  "bytes": [                    0                  ]                }              ]            }          ],          "reasoning_content": [            {              "token": "string",              "logprob": 0,              "bytes": [                0              ],              "top_logprobs": [                {                  "token": "string",                  "logprob": 0,                  "bytes": [                    0                  ]                }              ]            }          ]        },        "finish_reason": "stop",        "index": 0      }    ],    "created": 0,    "model": "string",    "system_fingerprint": "string",    "object": "chat.completion.chunk"  }]
+[
+  {
+    "id": "string",
+    "choices": [
+      {
+        "delta": {
+          "content": "string",
+          "reasoning_content": "string",
+          "role": "assistant",
+          "tool_calls": [
+            {
+              "index": 0,
+              "id": "string",
+              "type": "function",
+              "function": {
+                "name": "string",
+                "arguments": "string"
+              }
+            }
+          ]
+        },
+        "logprobs": {
+          "content": [
+            {
+              "token": "string",
+              "logprob": 0,
+              "bytes": [
+                0
+              ],
+              "top_logprobs": [
+                {
+                  "token": "string",
+                  "logprob": 0,
+                  "bytes": [
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "reasoning_content": [
+            {
+              "token": "string",
+              "logprob": 0,
+              "bytes": [
+                0
+              ],
+              "top_logprobs": [
+                {
+                  "token": "string",
+                  "logprob": 0,
+                  "bytes": [
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "finish_reason": "stop",
+        "index": 0
+      }
+    ],
+    "created": 0,
+    "model": "string",
+    "system_fingerprint": "string",
+    "object": "chat.completion.chunk"
+  }
+]
 ```
 
+**Example**
+
 ```shell
-data: {"id": "1f633d8bfc032625086f14113c411638", "choices": [{"index": 0, "delta": {"content": "", "role": "assistant"}, "finish_reason": null, "logprobs": null}], "created": 1718345013, "model": "deepseek-flash", "system_fingerprint": "fp_a49d71b8a1", "object": "chat.completion.chunk"}data: {"choices": [{"delta": {"content": "Hello", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "!", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " How", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " can", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " I", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " assist", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " you", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": " today", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "?", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}data: {"choices": [{"delta": {"content": "", "role": null}, "finish_reason": "stop", "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1", "usage": {"completion_tokens": 9, "prompt_tokens": 17, "total_tokens": 26, "prompt_tokens_details": {"cached_tokens": 0}, "prompt_cache_hit_tokens": 0, "prompt_cache_miss_tokens": 17}}data: [DONE]
+data: {"id": "1f633d8bfc032625086f14113c411638", "choices": [{"index": 0, "delta": {"content": "", "role": "assistant"}, "finish_reason": null, "logprobs": null}], "created": 1718345013, "model": "deepseek-flash", "system_fingerprint": "fp_a49d71b8a1", "object": "chat.completion.chunk"}
+
+data: {"choices": [{"delta": {"content": "Hello", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": "!", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": " How", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": " can", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": " I", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": " assist", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": " you", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": " today", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": "?", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+
+data: {"choices": [{"delta": {"content": "", "role": null}, "finish_reason": "stop", "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1", "usage": {"completion_tokens": 9, "prompt_tokens": 17, "total_tokens": 26, "prompt_tokens_details": {"cached_tokens": 0}, "prompt_cache_hit_tokens": 0, "prompt_cache_miss_tokens": 17}}
+
+data: [DONE]
 ```
 
 Loading...

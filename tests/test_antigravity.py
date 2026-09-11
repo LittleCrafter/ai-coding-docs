@@ -544,9 +544,25 @@ def test_fetch_markdown_rejects_non_markdown():
     """The hook validates like the generic fetch path it replaces: a response
     that is not Markdown raises ``FetchError`` so the pipeline carries the
     previous manifest entry forward instead of writing garbage."""
+    ag._KNOWN_SLUGS.clear()
+    ag._KNOWN_SLUGS.update({"cli/reference"})
     client = _FakeClient([_Resp(200, "not markdown at all")])
     with pytest.raises(fetch.FetchError):
         ag.fetch_markdown(client, _page("cli/reference"))
+
+
+def test_fetch_markdown_refuses_to_rewrite_links_without_discovered_slugs():
+    """Rewriting with no discovered slug set would send every internal link to
+    its upstream URL (see ``ensure_known_slugs``), so the hook fails loudly
+    instead -- as a ``FetchError``, the one type the pipeline isolates per
+    page rather than aborting the source. The refusal comes before the
+    download, so a run that skipped discovery stops at the first page instead
+    of fetching the whole source and then failing."""
+    assert ag._KNOWN_SLUGS == set()
+    client = _FakeClient([_Resp(200, "# Title\n\nEnough prose to be Markdown.\n")])
+    with pytest.raises(fetch.FetchError, match="no discovered slugs"):
+        ag.fetch_markdown(client, _page("cli/reference"))
+    assert client.calls == 0
 
 
 def test_fetch_markdown_wraps_a_rewrite_failure(monkeypatch):
@@ -555,6 +571,11 @@ def test_fetch_markdown_wraps_a_rewrite_failure(monkeypatch):
     isolates failures per page for that exception type only, so an unforeseen
     link shape must fail just this page instead of aborting the whole run."""
     page = _page("cli/reference")
+    # The hook refuses to run without a discovered slug set (the link pass
+    # cannot resolve anything without it), so the test seeds one to reach the
+    # rewrite pass it is actually exercising.
+    ag._KNOWN_SLUGS.clear()
+    ag._KNOWN_SLUGS.update({"cli/reference"})
 
     def explode(text: str, current_slug: str, known_slugs=None) -> str:
         raise ValueError("unforeseen link shape")

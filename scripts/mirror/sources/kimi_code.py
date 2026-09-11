@@ -34,8 +34,8 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 from ..core import fetch
+from ..core.fenced_code import MAX_FENCE_INDENT, iter_indented_fence_spans
 from ..core.github import fetch_git_tree, fetch_latest_release_tag
-from ..core.html_markdown import iter_code_block_spans
 from ..core.media import AssetSourceConfig
 from ..core.page import Page
 from .base import SourceConfig, try_make_page, warn_duplicate_slug
@@ -252,7 +252,7 @@ def discover(client: httpx.Client) -> list[Page]:
 # the mirror instead of the page silently losing text. No pass ever rewrites a
 # fenced code block -- a code sample that happens to contain ``:::` or
 # ``<div class="...">`` is code, not page structure -- which the shared
-# ``iter_code_block_spans`` scanner and the ``_FenceSpans`` guard enforce.
+# ``iter_indented_fence_spans`` scanner and the ``_FenceSpans`` guard enforce.
 # Inline code spans get no such protection: upstream writes these constructs
 # as block markup only, so the conversions below never meet one inside
 # backticks, and guarding that case would mean a second inline scanner for a
@@ -399,23 +399,30 @@ _ALERT_LABELS = {
 class _FenceSpans:
     """The fenced code blocks of one document, queried through a moving cursor.
 
-    The spans come from ``core.html_markdown.iter_code_block_spans``, the
-    shared CommonMark fence scanner, and are the guard that keeps every
-    conversion in this module away from code samples. A query only ever has to
-    look at the current span: every caller here walks its document strictly
-    left to right (a ``finditer``/``sub`` callback, or a marker scan that
-    resumes after each match), so the spans that end before a queried position
-    are retired once and never revisited -- the whole walk costs O(spans)
-    instead of re-scanning the span list from the start at every query.
-    Queries must therefore be made in non-decreasing position order, which
-    ``overlaps`` respects by asking for its start before its end.
+    The spans come from ``core.fenced_code.iter_indented_fence_spans`` -- the
+    shared CommonMark fence scanner (``core.html_markdown``) widened to the
+    fences upstream indents inside a list item. The widening matters here:
+    the conversions below match construct patterns that are deliberately
+    unanchored or indentation-tolerant (a ``<Badge>`` anywhere on a line, a
+    ``:::`` marker at any indentation), so an indented sample that quotes one
+    would be rewritten as if it were page structure unless its fence is
+    recognised. This guard is what keeps every conversion in this module away
+    from code samples.
+
+    A query only ever has to look at the current span: every caller here walks
+    its document strictly left to right (a ``finditer``/``sub`` callback, or a
+    marker scan that resumes after each match), so the spans that end before a
+    queried position are retired once and never revisited -- the whole walk
+    costs O(spans) instead of re-scanning the span list from the start at
+    every query. Queries must therefore be made in non-decreasing position
+    order, which ``overlaps`` respects by asking for its start before its end.
     """
 
     __slots__ = ("_spans", "_index")
 
     def __init__(self, text: str) -> None:
         """Scan *text* once for its fenced code blocks."""
-        self._spans = list(iter_code_block_spans(text))
+        self._spans = list(iter_indented_fence_spans(text, MAX_FENCE_INDENT))
         self._index = 0
 
     def contains(self, position: int) -> bool:

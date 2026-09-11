@@ -43,5 +43,9 @@ Go to [LangRouter](<https://langrouter.ai/>), register an account, save your API
 #### Running
 
 ```bash
-# Start Langcli (interactive)langcli# Then, in the session:hi
+# Start Langcli (interactive)
+langcli
+
+# Then, in the session:
+hi
 ```

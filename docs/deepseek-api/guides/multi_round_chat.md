@@ -7,7 +7,28 @@ The DeepSeek `/chat/completions` API is a "stateless" API, meaning the server do
 The following code in Python demonstrates how to concatenate context to achieve multi-turn conversations.
 
 ```python
-from openai import OpenAIclient = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")# Round 1messages = [{"role": "user", "content": "What's the highest mountain in the world?"}]response = client.chat.completions.create(    model="deepseek-flash",    messages=messages)messages.append(response.choices[0].message)print(f"Messages Round 1: {messages}")# Round 2messages.append({"role": "user", "content": "What is the second?"})response = client.chat.completions.create(    model="deepseek-flash",    messages=messages)messages.append(response.choices[0].message)print(f"Messages Round 2: {messages}")
+from openai import OpenAI
+client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
+
+# Round 1
+messages = [{"role": "user", "content": "What's the highest mountain in the world?"}]
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=messages
+)
+
+messages.append(response.choices[0].message)
+print(f"Messages Round 1: {messages}")
+
+# Round 2
+messages.append({"role": "user", "content": "What is the second?"})
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=messages
+)
+
+messages.append(response.choices[0].message)
+print(f"Messages Round 2: {messages}")
 ```
 
  
@@ -17,7 +38,9 @@ from openai import OpenAIclient = OpenAI(api_key="<DeepSeek API Key>", base_url=
 In the **first round** of the request, the `messages` passed to the API are:
 
 ```json
-[    {"role": "user", "content": "What's the highest mountain in the world?"}]
+[
+    {"role": "user", "content": "What's the highest mountain in the world?"}
+]
 ```
 
  
@@ -30,5 +53,9 @@ In the **second round** of the request:
 The `messages` ultimately passed to the API are:
 
 ```json
-[    {"role": "user", "content": "What's the highest mountain in the world?"},    {"role": "assistant", "content": "The highest mountain in the world is Mount Everest."},    {"role": "user", "content": "What is the second?"}]
+[
+    {"role": "user", "content": "What's the highest mountain in the world?"},
+    {"role": "assistant", "content": "The highest mountain in the world is Mount Everest."},
+    {"role": "user", "content": "What is the second?"}
+]
 ```

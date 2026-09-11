@@ -21,8 +21,9 @@ rewrite); the source adapter that wants media mirroring exposes a
 ``MEDIA = media.AssetSourceConfig(...)`` module attribute and the pipeline
 wires the stage when that attribute exists (the same getattr discovery
 pattern ``pipeline`` already uses for a source's custom ``fetch_markdown``).
-Two real sources fit this shape today (kimi-code, opencode); a third source
-whose upstream images are structured differently just means another config.
+Four real sources fit this shape today (antigravity, claude-code, kimi-code,
+opencode); a further source whose upstream images are structured differently
+just means another config.
 
 Pipeline integration point: the stage must run AFTER ``fetch_pages`` --
 fresh texts (and the carried-forward / failed split) must already exist --
@@ -84,7 +85,7 @@ if TYPE_CHECKING:
 class AssetSourceConfig:
     """Per-source rules describing how one mirror source references assets.
 
-    All four fields together must describe EXACTLY one upstream layout: the
+    All six fields together must describe EXACTLY one upstream layout: the
     directory the assets live in under the mirrored ``docs/<source>`` tree,
     the raw base URL the assets download from, and the reference prefixes
     (as written in upstream page text) that identify references to those
@@ -105,6 +106,21 @@ class AssetSourceConfig:
             alternation tries them in order).
         raw_base_url: Absolute base URL the assets download from; must end
             in ``/``.  The asset's normalized path is appended verbatim.
+            Empty for a source whose references are already absolute URLs
+            (claude-code): the matched reference is then downloaded as
+            written instead of being rebuilt from a base.
+        strip_token_depth: Number of leading path segments to drop from every
+            reference remainder before it becomes an asset path, for upstream
+            URLs that carry a per-deployment token directory (claude-code's
+            ``https://mintcdn.com/claude-code/<token>/<path>``).  ``0`` keeps
+            the remainder whole.  A remainder with fewer segments than the
+            configured depth yields no reference at all (see ``extract_refs``),
+            so a malformed URL can never be reduced to a meaningless path.
+        allowed_extensions: Lowercase extension whitelist (``.png``,
+            ``.svg``, ...) applied to the reference remainder; ``None``
+            accepts every extension.  Mirrors only the asset kinds the
+            markdown readers render, so an inline data URL or a script source
+            that happens to share a configured prefix is not downloaded.
     """
 
     name: str

@@ -9,7 +9,15 @@ If you already have Claude Code installed, simply configure the following enviro
 Linux / Mac users:
 
 ```text
-export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_AUTH_TOKEN=<your DeepSeek API Key>export ANTHROPIC_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-flashexport CLAUDE_CODE_SUBAGENT_MODEL=deepseek-flashexport CLAUDE_CODE_EFFORT_LEVEL=maxexport CLAUDE_CODE_AUTO_COMPACT_WINDOW=786432
+export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+export ANTHROPIC_AUTH_TOKEN=<your DeepSeek API Key>
+export ANTHROPIC_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-flash
+export CLAUDE_CODE_SUBAGENT_MODEL=deepseek-flash
+export CLAUDE_CODE_EFFORT_LEVEL=max
+export CLAUDE_CODE_AUTO_COMPACT_WINDOW=786432
 ```
 
  
@@ -17,7 +25,15 @@ export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_AUT
 Windows users:
 
 ```text
-$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"$env:ANTHROPIC_AUTH_TOKEN="<your DeepSeek API Key>"$env:ANTHROPIC_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-flash"$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-flash"$env:CLAUDE_CODE_EFFORT_LEVEL="max"$env:CLAUDE_CODE_AUTO_COMPACT_WINDOW="786432"
+$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"
+$env:ANTHROPIC_AUTH_TOKEN="<your DeepSeek API Key>"
+$env:ANTHROPIC_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-flash"
+$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-flash"
+$env:CLAUDE_CODE_EFFORT_LEVEL="max"
+$env:CLAUDE_CODE_AUTO_COMPACT_WINDOW="786432"
 ```
 
  
@@ -25,7 +41,8 @@ $env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"$env:ANTHROPIC_AUTH_
 Then enter your project directory and run claude:
 
 ```text
-cd /path/to/my-projectclaude
+cd /path/to/my-project
+claude
 ```
 
  
@@ -56,7 +73,15 @@ claude --version
 Linux / Mac users, run the following commands to configure the relevant environment variables. Get your API Key from the [DeepSeek Platform](<https://platform.deepseek.com/api_keys>):
 
 ```text
-export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_AUTH_TOKEN=<your DeepSeek API Key>export ANTHROPIC_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-flash[1m]export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-flashexport CLAUDE_CODE_SUBAGENT_MODEL=deepseek-flashexport CLAUDE_CODE_EFFORT_LEVEL=maxexport CLAUDE_CODE_AUTO_COMPACT_WINDOW=786432
+export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+export ANTHROPIC_AUTH_TOKEN=<your DeepSeek API Key>
+export ANTHROPIC_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-flash
+export CLAUDE_CODE_SUBAGENT_MODEL=deepseek-flash
+export CLAUDE_CODE_EFFORT_LEVEL=max
+export CLAUDE_CODE_AUTO_COMPACT_WINDOW=786432
 ```
 
  
@@ -64,7 +89,15 @@ export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_AUT
 Windows users, run:
 
 ```text
-$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"$env:ANTHROPIC_AUTH_TOKEN="<your DeepSeek API Key>"$env:ANTHROPIC_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-flash[1m]"$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-flash"$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-flash"$env:CLAUDE_CODE_EFFORT_LEVEL="max"$env:CLAUDE_CODE_AUTO_COMPACT_WINDOW="786432"
+$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"
+$env:ANTHROPIC_AUTH_TOKEN="<your DeepSeek API Key>"
+$env:ANTHROPIC_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-flash"
+$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-flash"
+$env:CLAUDE_CODE_EFFORT_LEVEL="max"
+$env:CLAUDE_CODE_AUTO_COMPACT_WINDOW="786432"
 ```
 
  
@@ -72,7 +105,8 @@ $env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"$env:ANTHROPIC_AUTH_
 #### 3\. Enter the project directory and execute the `claude` command to get started.
 
 ```text
-cd /path/to/my-projectclaude
+cd /path/to/my-project
+claude
 ```
 
  

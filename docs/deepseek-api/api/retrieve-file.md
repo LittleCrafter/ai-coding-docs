@@ -8,9 +8,7 @@ Returns information about a specific file.
 
 ## Request
 
-### 
-
-Path Parameters
+### Path Parameters
 
 **file_id** stringrequired
 
@@ -18,15 +16,13 @@ The ID of the file to retrieve.
 
 ## Responses
 
-  * 200
+**200**
 
 OK, returns the `file object`.
 
-  * application/json
+**application/json**
 
-  * Schema
-  * Example (from schema)
-  * Example
+**Schema**
 
 **
 
@@ -66,12 +62,31 @@ The intended purpose of the file.
 
 The Unix timestamp (in seconds) of when the file expires. Only present when an expiration was set at upload time.
 
-```json
-{  "id": "string",  "object": "file",  "bytes": 0,  "created_at": 0,  "filename": "string",  "purpose": "user_data",  "expires_at": 0}
-```
+**Example (from schema)**
 
 ```json
-{  "id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",  "object": "file",  "bytes": 102400,  "created_at": 1700000000,  "filename": "image.jpg",  "purpose": "user_data"}
+{
+  "id": "string",
+  "object": "file",
+  "bytes": 0,
+  "created_at": 0,
+  "filename": "string",
+  "purpose": "user_data",
+  "expires_at": 0
+}
+```
+
+**Example**
+
+```json
+{
+  "id": "file-api-0a1b2c3d4e5f60718293a4b5c6d7e8f9",
+  "object": "file",
+  "bytes": 102400,
+  "created_at": 1700000000,
+  "filename": "image.jpg",
+  "purpose": "user_data"
+}
 ```
 
 Loading...

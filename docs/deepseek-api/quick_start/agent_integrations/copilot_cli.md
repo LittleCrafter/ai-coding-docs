@@ -24,7 +24,10 @@ Requires Node.js 22 or later. See the [official getting-started guide](<https://
 Linux / Mac:
 
 ```shell
-export COPILOT_PROVIDER_TYPE=anthropicexport COPILOT_PROVIDER_BASE_URL=https://api.deepseek.com/anthropicexport COPILOT_PROVIDER_API_KEY=sk-your-deepseek-api-keyexport COPILOT_MODEL=deepseek-v4-pro
+export COPILOT_PROVIDER_TYPE=anthropic
+export COPILOT_PROVIDER_BASE_URL=https://api.deepseek.com/anthropic
+export COPILOT_PROVIDER_API_KEY=sk-your-deepseek-api-key
+export COPILOT_MODEL=deepseek-v4-pro
 ```
 
  
@@ -32,7 +35,10 @@ export COPILOT_PROVIDER_TYPE=anthropicexport COPILOT_PROVIDER_BASE_URL=https://a
 Windows (PowerShell):
 
 ```powershell
-$env:COPILOT_PROVIDER_TYPE="anthropic"$env:COPILOT_PROVIDER_BASE_URL="https://api.deepseek.com/anthropic"$env:COPILOT_PROVIDER_API_KEY="sk-your-deepseek-api-key"$env:COPILOT_MODEL="deepseek-v4-pro"
+$env:COPILOT_PROVIDER_TYPE="anthropic"
+$env:COPILOT_PROVIDER_BASE_URL="https://api.deepseek.com/anthropic"
+$env:COPILOT_PROVIDER_API_KEY="sk-your-deepseek-api-key"
+$env:COPILOT_MODEL="deepseek-v4-pro"
 ```
 
  
@@ -56,7 +62,8 @@ Since `deepseek-v4-pro` is not in Copilot CLI's built-in model catalog, configur
 Linux / Mac:
 
 ```shell
-export COPILOT_PROVIDER_MAX_PROMPT_TOKENS=840000export COPILOT_PROVIDER_MAX_OUTPUT_TOKENS=128000
+export COPILOT_PROVIDER_MAX_PROMPT_TOKENS=840000
+export COPILOT_PROVIDER_MAX_OUTPUT_TOKENS=128000
 ```
 
  
@@ -64,7 +71,8 @@ export COPILOT_PROVIDER_MAX_PROMPT_TOKENS=840000export COPILOT_PROVIDER_MAX_OUTP
 Windows (PowerShell):
 
 ```powershell
-$env:COPILOT_PROVIDER_MAX_PROMPT_TOKENS="840000"$env:COPILOT_PROVIDER_MAX_OUTPUT_TOKENS="128000"
+$env:COPILOT_PROVIDER_MAX_PROMPT_TOKENS="840000"
+$env:COPILOT_PROVIDER_MAX_OUTPUT_TOKENS="128000"
 ```
 
  

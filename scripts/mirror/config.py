@@ -406,8 +406,10 @@ MAX_RETRY_DELAY = 30.0
 # being read into memory in full first.
 #
 # 10 MiB is generous enough for any real documentation page — the largest
-# page currently in this mirror is ~530 KiB — while still capping worst-case
-# memory usage at well below a typical desktop system's available RAM.
+# page currently in this mirror (docs/codex-cli/codex-manual.md) is
+# ~2.2 MiB, and the next largest (docs/claude-code/changelog.md) is
+# ~650 KiB — while still capping worst-case memory usage at well below a
+# typical desktop system's available RAM.
 # The limit is expressed as a multiplication (10 * 1024 * 1024) rather than
 # as the literal 10485760 so the intent (10 mebibytes) is obvious to anyone
 # reading the code.

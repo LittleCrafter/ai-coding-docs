@@ -78,7 +78,6 @@ def test_check_file_links_ignores_external_and_anchors(tmp_path: Path):
         "- Protocol relative: [CDN](//cdn.example.com/lib.js)\n"
         "- Pure anchor: [Section](#heading)\n"
         "- Multi-hash anchor: [Sub](#sub-heading-1)\n"
-        "- Upstream site root: [SiteRoot](/docs/en/settings)\n"
     )
 
     issues = link_checker.check_file_links(source_file)
@@ -256,8 +255,134 @@ def test_check_file_links_ignores_query_only_links(tmp_path: Path):
     assert issues == []
 
 
+def test_check_file_links_reports_site_absolute_targets(tmp_path: Path):
+    """A site-root-absolute destination is always an issue: it cannot resolve
+    from a mirrored file, so it means the owning adapter did not rewrite it."""
+    source_file = tmp_path / "page.md"
+    source_file.write_text(
+        "# Page\n"
+        "- Absolute: [hooks](/docs/en/hooks)\n"
+        "- Angle-bracketed: [hooks](</docs/en/hooks#x>)\n"
+        "- Bare root: [home](/)\n"
+    )
+    issues = link_checker.check_file_links(source_file)
+    assert [issue.line for issue in issues] == [2, 3, 4]
+    assert issues[0].target == "/docs/en/hooks"
+    assert issues[1].target == "</docs/en/hooks#x>"
+    assert "'/docs/en/hooks'" in issues[0].reason
+    assert "cannot resolve in the mirror" in issues[0].reason
+
+
+def test_check_file_links_ignores_absolute_targets_in_code(tmp_path: Path):
+    """Fenced code and inline code hold samples, not references: an absolute
+    path inside one is quoted documentation and must not be reported."""
+    source_file = tmp_path / "page.md"
+    source_file.write_text(
+        "# Page\n"
+        "\n"
+        "```sh\n"
+        "curl https://example.com/docs/en/hooks\n"
+        "echo [sample](/docs/en/hooks)\n"
+        "```\n"
+        "\n"
+        "Inline: `[hooks](/docs/en/hooks)` stays quoted.\n"
+    )
+    assert link_checker.check_file_links(source_file) == []
+
+
+def test_check_file_links_reports_site_absolute_html_attributes(tmp_path: Path):
+    """A site-absolute path is just as dead written as an inline HTML
+    attribute as it is written as a Markdown link, and a mirrored page carries
+    both: an adapter that passes HTML through leaves ``href="/..."`` and
+    ``src="/..."`` in the body text where the Markdown patterns cannot see
+    them. Every one is reported, whatever quoting the attribute used."""
+    source_file = tmp_path / "page.md"
+    source_file.write_text(
+        "# Page\n"
+        '<a href="/docs/en/hooks">Hooks</a> and <img src="/img/logo.svg" alt="L" />\n'
+        "<a class='x' href='/docs/en/skills'>Skills</a>\n"
+    )
+    issues = link_checker.check_file_links(source_file)
+    assert [issue.line for issue in issues] == [2, 2, 3]
+    assert [issue.target for issue in issues] == [
+        "/docs/en/hooks",
+        "/img/logo.svg",
+        "/docs/en/skills",
+    ]
+    assert "cannot resolve in the mirror" in issues[0].reason
+
+
+def test_check_file_links_ignores_html_attributes_inside_code(tmp_path: Path):
+    """An HTML sample that shows a site-absolute link is quoted documentation,
+    so it stays exempt exactly like the Markdown form does -- both inside a
+    fenced block and inside an inline code span."""
+    source_file = tmp_path / "page.md"
+    source_file.write_text(
+        "# Page\n"
+        "\n"
+        "```html\n"
+        '<a href="/signin-with-chatgpt">Sign in with ChatGPT</a>\n'
+        "```\n"
+        "\n"
+        'Inline: `<a href="/signin-with-chatgpt">Sign in</a>` stays quoted.\n'
+    )
+    assert link_checker.check_file_links(source_file) == []
+
+
+def test_check_file_links_ignores_resolvable_html_attributes(tmp_path: Path):
+    """Only site-absolute attribute destinations are defects of their own:
+    an external URL names another site, a fragment names this page, and a
+    relative destination is resolved on disk like any other reference."""
+    (tmp_path / "img").mkdir()
+    (tmp_path / "img" / "logo.svg").write_text("<svg />\n")
+    source_file = tmp_path / "page.md"
+    source_file.write_text(
+        "# Page\n"
+        '<a href="https://example.com/x">External</a>\n'
+        '<a href="#section">Anchor</a>\n'
+        '<img src="img/logo.svg" alt="L" />\n'
+        '<img src="img/missing.svg" alt="M" />\n'
+    )
+    issues = link_checker.check_file_links(source_file)
+    assert [issue.line for issue in issues] == [5]
+    assert issues[0].target == "img/missing.svg"
+    assert "does not exist" in issues[0].reason
+
+
+def test_check_file_links_reports_a_destination_the_uri_parser_rejects(
+    tmp_path: Path,
+):
+    """A destination ``urllib.parse.urlsplit`` refuses -- an IPv6 host with no
+    closing bracket, here -- must be reported as a defect of its own line
+    instead of raising out of the check and aborting the whole run before any
+    other page is examined."""
+    source_file = tmp_path / "page.md"
+    source_file.write_text(
+        "# Page\n- Bad: [bad](http://[::1)\n- Good: [hooks](./missing.md)\n"
+    )
+    issues = link_checker.check_file_links(source_file)
+    assert [issue.line for issue in issues] == [2, 3]
+    assert issues[0].target == "http://[::1"
+    assert "Malformed link destination" in issues[0].reason
+    assert "cannot be parsed as a URI" in issues[0].reason
+
+
+def test_check_file_links_ignores_protocol_relative_and_external_targets(
+    tmp_path: Path,
+):
+    """``//host/path`` names a host, like any other external URL, so it is not
+    a path into this mirror and stays ignored."""
+    source_file = tmp_path / "page.md"
+    source_file.write_text(
+        "# Page\n"
+        "- Protocol relative: [cdn](//cdn.example.com/x.png)\n"
+        "- External: [site](https://example.com/docs/en/hooks)\n"
+    )
+    assert link_checker.check_file_links(source_file) == []
+
+
 def test_check_file_links_honors_exempt_targets(tmp_path: Path):
-    """Known illustrative targets configured for claude-directory.md must be exempted."""
+    """Illustrative targets passed in by the caller must be exempted."""
     claude_dir_file = tmp_path / "claude-directory.md"
     claude_dir_file.write_text(
         "# Directory\n"
@@ -266,6 +391,40 @@ def test_check_file_links_honors_exempt_targets(tmp_path: Path):
         "- [debugging.md](debugging.md)\n"
         "- [real_broken.md](real_broken.md)\n"
     )
-    issues = link_checker.check_file_links(claude_dir_file)
+    issues = link_checker.check_file_links(
+        claude_dir_file,
+        ("build-and-test.md", "architecture.md", "debugging.md"),
+    )
     assert len(issues) == 1
     assert issues[0].target == "real_broken.md"
+
+
+def test_check_links_resolves_exemptions_from_the_owning_source(
+    monkeypatch, tmp_path: Path
+):
+    """``exempt_targets_by_source`` applies only to files under that source.
+
+    A destination is exempt in the source that declared it and broken in every
+    other source, which is what keeps one source's sample-driven exemption
+    from silencing a genuinely dead link elsewhere in the mirror.
+    """
+    docs_dir = tmp_path / "docs"
+    (docs_dir / "source-a").mkdir(parents=True)
+    (docs_dir / "source-b").mkdir(parents=True)
+    (docs_dir / "source-a" / "page.md").write_text("[Sample](architecture.md)\n")
+    (docs_dir / "source-b" / "page.md").write_text("[Real](architecture.md)\n")
+    monkeypatch.setattr(config, "DOCS_DIR", docs_dir)
+
+    by_source = {"source-a": ("architecture.md",)}
+
+    issues, count = link_checker.check_links(docs_dir, by_source)
+    assert count == 2
+    assert [issue.file.name for issue in issues] == ["page.md"]
+    assert issues[0].file.parent.name == "source-b"
+
+    # Scanning one source's directory resolves the same ownership rule.
+    a_issues, a_count = link_checker.check_source_links("source-a", by_source)
+    assert (a_issues, a_count) == ([], 1)
+    b_issues, b_count = link_checker.check_source_links("source-b", by_source)
+    assert b_count == 1
+    assert len(b_issues) == 1

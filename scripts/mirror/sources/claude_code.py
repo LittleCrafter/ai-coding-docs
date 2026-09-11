@@ -59,6 +59,7 @@ from ..core.sitemap import crawl_sitemap
 from .base import (
     SourceConfig,
     ensure_discovered_pages,
+    ensure_known_slugs,
     same_origin,
     try_make_page,
 )
@@ -112,6 +113,18 @@ CONFIG = SourceConfig(
     version="2.1.268",
     origin="code.claude.com/docs/en/",
     how_mirrored="scraping (sitemap → `<url>.md`)",
+    # The memory-directory page shows readers a sample ``MEMORY.md`` index
+    # whose entries point at the topic files of the reader's OWN project
+    # (``- [architecture.md](architecture.md): API client singleton``). Those
+    # files are illustrative: they exist in the project being documented, not
+    # in this mirror, and no upstream page serves them. Every other relative
+    # destination in this source does resolve, so the exemption is limited to
+    # exactly the names that sample uses.
+    illustrative_link_targets=(
+        "build-and-test.md",
+        "architecture.md",
+        "debugging.md",
+    ),
 )
 
 # Slugs discovered by ``discover`` in the current run. The site's own pages
@@ -127,6 +140,15 @@ _KNOWN_SLUGS: set[str] = set()
 # page this mirror does not hold.
 DOCS_PATH_PREFIX = "/docs/en/"
 DOCS_ORIGIN = f"{SITE_URL}/docs/en"
+# A handful of upstream cross-links are written WITHOUT the ``docs`` segment
+# (``/en/skills``). The site serves that spelling as the same page, so it
+# denotes the same slug and is resolved identically; without this second
+# prefix those links would reach a mirrored page as literal site-absolute
+# paths, which resolve to nothing in a local checkout.
+EN_PATH_PREFIX = "/en/"
+# The two spellings of the documentation root, whose page is mirrored under
+# the slug ``"index"``.
+_ROOT_PATH_PREFIXES = (DOCS_PATH_PREFIX.rstrip("/"), EN_PATH_PREFIX.rstrip("/"))
 
 
 def get_version(client: httpx.Client) -> str | None:
@@ -482,9 +504,10 @@ _WIDGET_COMPONENTS = (
 # Site-absolute documentation link, in the two shapes the pages use it: a
 # Markdown link destination, and an HTML/JSX ``href`` attribute. Both are
 # resolved through ``_resolve_docs_href``.
-_MARKDOWN_DOCS_LINK_RE = re.compile(r"\]\((?P<href>/docs/en(?:[/#?][^)\s]*)?)\)")
+_MARKDOWN_DOCS_LINK_RE = re.compile(r"\]\((?P<href>/(?:docs/)?en(?:[/#?][^)\s]*)?)\)")
 _HTML_DOCS_HREF_RE = re.compile(
-    r"(?P<prefix>\bhref[ \t]*=[ \t]*)(?P<quote>[\"'])(?P<href>/docs/en[^\"']*)(?P=quote)"
+    r"(?P<prefix>\bhref[ \t]*=[ \t]*)(?P<quote>[\"'])"
+    r"(?P<href>/(?:docs/)?en[^\"']*)(?P=quote)"
 )
 # One inline-code expression inside a JSX prop value: ``{'text'}`` and
 # ``{"text"}``. Upstream wraps literals that would otherwise be parsed as
@@ -2043,6 +2066,11 @@ def _resolve_docs_href(href: str, current_slug: str, known_slugs: set[str]) -> s
     rewritten to its upstream URL instead: the link then still works for a
     reader who is online, where a site-absolute path would work for nobody.
 
+    Upstream writes most of those paths with the ``docs`` segment
+    (``/docs/en/hooks``) and a few without it (``/en/skills``); both
+    spellings address the same page, so both resolve to the same slug. The
+    upstream fallback always names the canonical ``/docs/en/...`` route.
+
     Anything else -- an external URL, a bare anchor, a link that is already
     relative -- is returned unchanged: it names no upstream documentation page,
     and prefixing it with the documentation origin would turn a working link
@@ -2050,14 +2078,16 @@ def _resolve_docs_href(href: str, current_slug: str, known_slugs: set[str]) -> s
     """
     path, _, anchor = href.partition("#")
     path = path.split("?", 1)[0].rstrip("/")
-    if path == DOCS_PATH_PREFIX.rstrip("/"):
+    if path in _ROOT_PATH_PREFIXES:
         slug = "index"  # the English tree's root page
     elif path.startswith(DOCS_PATH_PREFIX):
         slug = path[len(DOCS_PATH_PREFIX) :]
-        if slug.endswith(".md"):
-            slug = slug[: -len(".md")]
+    elif path.startswith(EN_PATH_PREFIX):
+        slug = path[len(EN_PATH_PREFIX) :]
     else:
         return href
+    if slug.endswith(".md"):
+        slug = slug[: -len(".md")]
     if slug in known_slugs:
         current_dir = posixpath.dirname(current_slug) or "."
         relative = posixpath.relpath(f"{slug}.md", current_dir)
@@ -2885,6 +2915,12 @@ def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
     keeps the original exception on ``__cause__`` so a genuine programming
     error stays distinguishable in the traceback.
     """
+    # The normalisation resolves the page's site-absolute cross-links, which
+    # needs the page set this run discovers; without it every internal link
+    # would be rewritten to its upstream URL (see ``ensure_known_slugs``). The
+    # guard runs BEFORE the download: a hook invoked without discovery must
+    # fail immediately, not fetch every page first and then fail on each one.
+    ensure_known_slugs("claude-code", _KNOWN_SLUGS, page.slug)
     raw = fetch.get_with_retry(client, page.source_md_url)
     try:
         markdown = _normalize_page(raw, page.slug)

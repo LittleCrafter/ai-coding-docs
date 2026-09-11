@@ -1,9 +1,19 @@
 """Tests for the shared mirror configuration (mirror.config).
 
-The version pins here are deliberately loose: the exact version value lives
-in pyproject.toml (the single source of truth) and changes with every
-release, so these tests assert only the *contract* -- non-emptiness and that
-the User-Agent embeds it -- never a literal version string.
+The version pins here are deliberately loose: the released version value
+lives in pyproject.toml (the single source of truth) and changes with every
+release, so the tests around the resolution chain assert only the *contract*
+-- non-emptiness, and that the User-Agent embeds whatever was resolved --
+never a literal version string.
+
+The one deliberate exception is
+``test_resolve_version_tier3_hardcoded_fallback``, which asserts the exact
+string ``"0.2.0"``. That is not a release pin: ``"0.2.0"`` is the literal
+hardcoded LAST-RESORT value inside ``config._resolve_version``, returned only
+when both the installed metadata and pyproject.toml are unreadable. Asserting
+it verbatim is what fails the suite when someone edits the fallback, which is
+the drift this test exists to catch; the released version is irrelevant to
+it.
 """
 
 from __future__ import annotations
@@ -146,9 +156,13 @@ def test_prettier_version_consistent():
         pytest.param("MAX_RETRIES", int, 1, True, 20, id="MAX_RETRIES"),
         # MAX_RESPONSE_BYTES guards against OOM crashes from oversized
         # upstream responses (the mirror reads the full body into memory for
-        # Markdown validation). Below 1 KiB it would reject real documentation
-        # pages (the smallest real page in this mirror is ~2 KiB); above 1 GiB
-        # it would effectively disable the guard and risk an OOM crash on a
+        # Markdown validation). The 1 KiB floor asserted here is a coarse
+        # sanity bound, not the value's real design constraint: the mirrored
+        # pages span 56 bytes (docs/kimi-code/index.md) to ~2.2 MiB
+        # (docs/codex-cli/codex-manual.md), so what the cap must
+        # actually clear is the LARGEST page, and a floor of 1 KiB only
+        # rules out a catastrophically mis-scaled constant. Above 1 GiB the
+        # guard would effectively disable itself and risk an OOM crash on a
         # misconfigured upstream serving multi-gigabyte payloads.
         pytest.param(
             "MAX_RESPONSE_BYTES",

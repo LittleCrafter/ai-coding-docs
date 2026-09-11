@@ -27,7 +27,15 @@ deepcode --version
 Create `~/.deepcode/settings.json` with your DeepSeek API key and model settings:
 
 ```json
-{  "env": {    "MODEL": "deepseek-v4-pro",    "BASE_URL": "https://api.deepseek.com",    "API_KEY": "sk-..."  },  "thinkingEnabled": true,  "reasoningEffort": "max"}
+{
+  "env": {
+    "MODEL": "deepseek-v4-pro",
+    "BASE_URL": "https://api.deepseek.com",
+    "API_KEY": "sk-..."
+  },
+  "thinkingEnabled": true,
+  "reasoningEffort": "max"
+}
 ```
 
  
@@ -50,7 +58,8 @@ Option| Description
 #### 3\. Enter a project directory and launch Deep Code
 
 ```sh
-cd /path/to/my-projectdeepcode
+cd /path/to/my-project
+deepcode
 ```
 
  

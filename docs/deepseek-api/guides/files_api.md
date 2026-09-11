@@ -3,9 +3,9 @@
 The Files API lets you upload images and reference them later by `file_id`. It is the recommended way to:
 
   * Reuse the same image across multiple requests without re-uploading it.
-  * Send images that would otherwise exceed the 48 MiB request body limit or the 32 MiB per-image inline limit (see [Vision: Limits](</guides/vision#limits>)).
+  * Send images that would otherwise exceed the 48 MiB request body limit or the 32 MiB per-image inline limit (see [Vision: Limits](<./vision.md#limits>)).
 
-Uploaded files are used together with the `deepseek-flash` model. See [Vision](</guides/vision>) for how to reference an uploaded file in a chat request.
+Uploaded files are used together with the `deepseek-flash` model. See [Vision](<./vision.md>) for how to reference an uploaded file in a chat request.
 
 Supported formats: **JPEG, PNG, GIF, and WebP**. The format is detected from the actual file content.
 
@@ -27,13 +27,23 @@ Field| Required| Description
 `expires_after[seconds]`| No| Lifetime in seconds, between `3600` and `2592000` (1 hour to 30 days). Omit both `expires_after` fields to keep the file permanently.  
 
 ```python
-from openai import OpenAIclient = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")with open("image.jpg", "rb") as f:    uploaded = client.files.create(file=f, purpose="user_data")print(uploaded.id)  # file-api-xxxxxxxxxxxxxxxx
+from openai import OpenAI
+
+client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
+
+with open("image.jpg", "rb") as f:
+    uploaded = client.files.create(file=f, purpose="user_data")
+
+print(uploaded.id)  # file-api-xxxxxxxxxxxxxxxx
 ```
 
  
 
 ```bash
-curl https://api.deepseek.com/files \  -H "Authorization: Bearer <DeepSeek API Key>" \  -F purpose="user_data" \  -F file="@image.jpg"
+curl https://api.deepseek.com/files \
+  -H "Authorization: Bearer <DeepSeek API Key>" \
+  -F purpose="user_data" \
+  -F file="@image.jpg"
 ```
 
  
@@ -41,7 +51,15 @@ curl https://api.deepseek.com/files \  -H "Authorization: Bearer <DeepSeek API K
 The response describes the stored file:
 
 ```json
-{  "id": "file-api-xxxxxxxxxxxxxxxx",  "object": "file",  "bytes": 102400,  "created_at": 1700000000,  "filename": "image.jpg",  "purpose": "user_data",  "expires_at": 1700003600}
+{
+  "id": "file-api-xxxxxxxxxxxxxxxx",
+  "object": "file",
+  "bytes": 102400,
+  "created_at": 1700000000,
+  "filename": "image.jpg",
+  "purpose": "user_data",
+  "expires_at": 1700003600
+}
 ```
 
  
@@ -53,13 +71,16 @@ The response describes the stored file:
 ## List Files
 
 ```python
-files = client.files.list()for f in files.data:    print(f.id, f.filename)
+files = client.files.list()
+for f in files.data:
+    print(f.id, f.filename)
 ```
 
  
 
 ```bash
-curl https://api.deepseek.com/files \  -H "Authorization: Bearer <DeepSeek API Key>"
+curl https://api.deepseek.com/files \
+  -H "Authorization: Bearer <DeepSeek API Key>"
 ```
 
  
@@ -76,7 +97,22 @@ Parameter| Description
 The response is a paginated list:
 
 ```json
-{  "object": "list",  "data": [    {      "id": "file-api-xxxxxxxxxxxxxxxx",      "object": "file",      "bytes": 102400,      "created_at": 1700000000,      "filename": "image.jpg",      "purpose": "user_data"    }  ],  "first_id": "file-api-xxxxxxxxxxxxxxxx",  "last_id": "file-api-xxxxxxxxxxxxxxxx",  "has_more": false}
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "file-api-xxxxxxxxxxxxxxxx",
+      "object": "file",
+      "bytes": 102400,
+      "created_at": 1700000000,
+      "filename": "image.jpg",
+      "purpose": "user_data"
+    }
+  ],
+  "first_id": "file-api-xxxxxxxxxxxxxxxx",
+  "last_id": "file-api-xxxxxxxxxxxxxxxx",
+  "has_more": false
+}
 ```
 
  
@@ -86,13 +122,15 @@ The response is a paginated list:
 ## Retrieve File Info
 
 ```python
-info = client.files.retrieve("file-api-xxxxxxxxxxxxxxxx")print(info.filename, info.bytes)
+info = client.files.retrieve("file-api-xxxxxxxxxxxxxxxx")
+print(info.filename, info.bytes)
 ```
 
  
 
 ```bash
-curl https://api.deepseek.com/files/file-api-xxxxxxxxxxxxxxxx \  -H "Authorization: Bearer <DeepSeek API Key>"
+curl https://api.deepseek.com/files/file-api-xxxxxxxxxxxxxxxx \
+  -H "Authorization: Bearer <DeepSeek API Key>"
 ```
 
  
@@ -108,13 +146,18 @@ client.files.delete("file-api-xxxxxxxxxxxxxxxx")
  
 
 ```bash
-curl -X DELETE https://api.deepseek.com/files/file-api-xxxxxxxxxxxxxxxx \  -H "Authorization: Bearer <DeepSeek API Key>"
+curl -X DELETE https://api.deepseek.com/files/file-api-xxxxxxxxxxxxxxxx \
+  -H "Authorization: Bearer <DeepSeek API Key>"
 ```
 
  
 
 ```json
-{  "id": "file-api-xxxxxxxxxxxxxxxx",  "object": "file",  "deleted": true}
+{
+  "id": "file-api-xxxxxxxxxxxxxxxx",
+  "object": "file",
+  "deleted": true
+}
 ```
 
  
@@ -126,7 +169,19 @@ curl -X DELETE https://api.deepseek.com/files/file-api-xxxxxxxxxxxxxxxx \  -H "A
 Reference the returned `file_id` with a `file` content block:
 
 ```python
-response = client.chat.completions.create(    model="deepseek-flash",    messages=[        {            "role": "user",            "content": [                {"type": "text", "text": "What is in this image?"},                {"type": "file", "file_id": "file-api-xxxxxxxxxxxxxxxx"},            ],        }    ],)print(response.choices[0].message.content)
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What is in this image?"},
+                {"type": "file", "file_id": "file-api-xxxxxxxxxxxxxxxx"},
+            ],
+        }
+    ],
+)
+print(response.choices[0].message.content)
 ```
 
  
@@ -161,7 +216,14 @@ Required header| None| `anthropic-beta: files-api-2025-04-14`
 A file object returned by the Anthropic-compatible endpoint looks like:
 
 ```json
-{  "id": "file-api-xxxxxxxxxxxxxxxx",  "type": "file",  "size_bytes": 102400,  "created_at": "2026-01-01T00:00:00+00:00",  "filename": "image.jpg",  "mime_type": "image/jpeg"}
+{
+  "id": "file-api-xxxxxxxxxxxxxxxx",
+  "type": "file",
+  "size_bytes": 102400,
+  "created_at": "2026-01-01T00:00:00+00:00",
+  "filename": "image.jpg",
+  "mime_type": "image/jpeg"
+}
 ```
 
  
@@ -169,13 +231,29 @@ A file object returned by the Anthropic-compatible endpoint looks like:
 List files with `after_id` / `before_id` cursors:
 
 ```bash
-curl "https://api.deepseek.com/anthropic/v1/files?limit=20" \  -H "x-api-key: <DeepSeek API Key>" \  -H "anthropic-beta: files-api-2025-04-14"
+curl "https://api.deepseek.com/anthropic/v1/files?limit=20" \
+  -H "x-api-key: <DeepSeek API Key>" \
+  -H "anthropic-beta: files-api-2025-04-14"
 ```
 
  
 
 ```json
-{  "data": [    {      "id": "file-api-xxxxxxxxxxxxxxxx",      "type": "file",      "size_bytes": 102400,      "created_at": "2026-01-01T00:00:00+00:00",      "filename": "image.jpg",      "mime_type": "image/jpeg"    }  ],  "first_id": "file-api-xxxxxxxxxxxxxxxx",  "last_id": "file-api-xxxxxxxxxxxxxxxx",  "has_more": false}
+{
+  "data": [
+    {
+      "id": "file-api-xxxxxxxxxxxxxxxx",
+      "type": "file",
+      "size_bytes": 102400,
+      "created_at": "2026-01-01T00:00:00+00:00",
+      "filename": "image.jpg",
+      "mime_type": "image/jpeg"
+    }
+  ],
+  "first_id": "file-api-xxxxxxxxxxxxxxxx",
+  "last_id": "file-api-xxxxxxxxxxxxxxxx",
+  "has_more": false
+}
 ```
 
  

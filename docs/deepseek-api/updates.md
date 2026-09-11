@@ -38,9 +38,9 @@ Meanwhile, extensive testing shows that V4.1 Flash now outperforms DeepSeek V4 P
 
 **API pricing adjustment**
 
-With the release of DeepSeek-V4.1-Flash, API prices have been reduced accordingly. For details, please refer to [Models & Pricing](</quick_start/pricing>).
+With the release of DeepSeek-V4.1-Flash, API prices have been reduced accordingly. For details, please refer to [Models & Pricing](<./quick_start/pricing.md>).
 
-For more details, please refer to [this documentation](</news/news260910>).
+For more details, please refer to [this documentation](<./news/news260910.md>).
 
 * * *
 
@@ -66,7 +66,7 @@ In terms of pure-text capabilities (agent, reasoning, world knowledge, etc.), De
 
 On agent benchmarks that require visual understanding, DeepSeek-V4-Flash-Vision-Exp delivers a significant leap over DeepSeek-V4-Flash, bringing its multimodal agent capabilities close to Opus-4.8.
 
-For usage details, please refer to the [Vision guide](</guides/vision>).
+For usage details, please refer to the [Vision guide](<./guides/vision.md>).
 
 * * *
 
@@ -93,17 +93,17 @@ The GA version of DeepSeek V4 Pro greatly enhances agent capabilities, with part
 
 **Native support for the Responses API**
 
-The DeepSeek API now natively supports the OpenAI Responses API format and is specifically adapted for Codex. Users can refer to the [official documentation](</quick_start/agent_integrations/codex>) and complete the Codex configuration with a one-click configuration script.
+The DeepSeek API now natively supports the OpenAI Responses API format and is specifically adapted for Codex. Users can refer to the [official documentation](<./quick_start/agent_integrations/codex.md>) and complete the Codex configuration with a one-click configuration script.
 
 **More flexible thinking effort control**
 
-The thinking modes of V4-Pro and V4-Flash now support three thinking effort levels: low / high / max. In real-world usage, users can flexibly choose based on task complexity: use low for simple tasks, high for daily Agent tasks, and max for more complex scenarios. For setup instructions, please refer to the official API documentation: [Thinking Mode](</guides/thinking_mode>).
+The thinking modes of V4-Pro and V4-Flash now support three thinking effort levels: low / high / max. In real-world usage, users can flexibly choose based on task complexity: use low for simple tasks, high for daily Agent tasks, and max for more complex scenarios. For setup instructions, please refer to the official API documentation: [Thinking Mode](<./guides/thinking_mode.md>).
 
 **API Pricing Adjustment**
 
-With the official release of the DeepSeek V4 model family, we will [update and adjust API pricing](</quick_start/pricing>). To allocate resources more reasonably, we will adopt peak/off-peak pricing, with off-peak prices set at half of the peak-hour prices, encouraging users to schedule their tasks based on actual usage. The new prices will take effect at 16:00 (UTC Time) on August 16, 2026.
+With the official release of the DeepSeek V4 model family, we will [update and adjust API pricing](<./quick_start/pricing.md>). To allocate resources more reasonably, we will adopt peak/off-peak pricing, with off-peak prices set at half of the peak-hour prices, encouraging users to schedule their tasks based on actual usage. The new prices will take effect at 16:00 (UTC Time) on August 16, 2026.
 
-For more details, please refer to [this documentation](</news/news260813>).
+For more details, please refer to [this documentation](<./news/news260813.md>).
 
 * * *
 
@@ -128,7 +128,7 @@ The official release of the DeepSeek-V4-Flash API is now in public beta. The API
 Note 1: For the Code Agent tasks in the public benchmark sets, the official DeepSeek-V4-Flash was tested using the DeepSeek Harness minimal mode (to be released soon) as the framework, with the max effort level, topp=0.95, and temperature=1.0  
 Note 2: DSBench-FullStack is an internal full-stack development test set, and DSBench-Hard is an internal Coding Agent hard-problem test set
 
-**The official V4-Flash natively supports the Responses API format and is specifically adapted for Codex. For the specific configuration, please refer to the[documentation](</quick_start/agent_integrations/codex>).**   
+**The official V4-Flash natively supports the Responses API format and is specifically adapted for Codex. For the specific configuration, please refer to the[documentation](<./quick_start/agent_integrations/codex.md>).**   
   
 **DeepSeek-V4-Flash-0731 keeps the same model architecture and size as DeepSeek-V4-Flash-Preview, and was only re-post-trained.**   
   
@@ -145,7 +145,7 @@ The DeepSeek API now supports V4-Pro and V4-Flash, available via both the OpenAI
 
 The two legacy API model names, `deepseek-chat` and `deepseek-reasoner`, will be discontinued in three months (2026-07-24). During the current period, these two model names point to the non-thinking mode and thinking mode of `deepseek-v4-flash`, respectively.
 
-For more details, please refer to [this documentation](</news/news260424>).
+For more details, please refer to [this documentation](<./news/news260424.md>).
 
 * * *
 
@@ -162,7 +162,7 @@ Both `deepseek-chat` and `deepseek-reasoner` have been upgraded to DeepSeek-V3.2
 
 DeepSeek-V3.2-Speciale is served via a temporary endpoint: base_url="<https://api.deepseek.com/v3.2_speciale_expires_on_20251215>". Same pricing as V3.2, no tool calls, available until Dec 15th, 2025, 15:59 (UTC Time).
 
-For more details, please refer to [this documentation](</news/news251201>).
+For more details, please refer to [this documentation](<./news/news251201.md>).
 
 * * *
 
@@ -175,7 +175,7 @@ Both `deepseek-chat` and `deepseek-reasoner` have been upgraded to DeepSeek-V3.2
   * `deepseek-chat` corresponds to DeepSeek-V3.2-Exp's **non-thinking mode**
   * `deepseek-reasoner` corresponds to DeepSeek-V3.2-Exp's **thinking mode**
 
-For more details, please refer to [this documentation](</news/news250929>).
+For more details, please refer to [this documentation](<./news/news250929.md>).
 
 * * *
 
@@ -271,8 +271,8 @@ This update maintains the model's original capabilities while addressing issues 
 ### deepseek-reasoner
 
   * `deepseek-reasoner` is our new model DeepSeek-R1. You can invoke DeepSeek-V3 by specifying `model='deepseek-reasoner'`.
-  * For details, please refer to: [DeepSeek-R1 Release](</news/news250120>)
-  * For guides, please refer to: [Thinking Mode](</guides/thinking_mode>)
+  * For details, please refer to: [DeepSeek-R1 Release](<./news/news250120.md>)
+  * For guides, please refer to: [Thinking Mode](<./guides/thinking_mode.md>)
 
 * * *
 
@@ -281,7 +281,7 @@ This update maintains the model's original capabilities while addressing issues 
 ### deepseek-chat
 
   * The `deepseek-chat` model has been upgraded to DeepSeek-V3. The API remains unchanged. You can invoke DeepSeek-V3 by specifying `model='deepseek-chat'`.
-  * For details, please refer to: [introducing DeepSeek-V3](</news/news1226>)
+  * For details, please refer to: [introducing DeepSeek-V3](<./news/news1226.md>)
 
 * * *
 
@@ -329,7 +329,7 @@ The new model significantly surpasses the previous versions in both general capa
 
 The DeepSeek API has innovatively adopted hard disk caching, reducing prices by another order of magnitude.
 
-For more details on the update, please refer to the documentation [Context Caching is Available 2024/08/02](</news/news0802>).
+For more details on the update, please refer to the documentation [Context Caching is Available 2024/08/02](<./news/news0802.md>).
 
 * * *
 
@@ -345,7 +345,7 @@ For more details on the update, please refer to the documentation [Context Cachi
   * **New API /completions**
     * FIM Completion（Beta）
 
-For more details, please check the documentation [New API Features 2024/07/25](</news/news0725>)
+For more details, please check the documentation [New API Features 2024/07/25](<./news/news0725.md>)
 
 * * *
 

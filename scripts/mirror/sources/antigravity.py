@@ -39,17 +39,27 @@ import posixpath
 import re
 import shutil
 import subprocess
-from bisect import bisect_right
 from collections.abc import Iterator
 from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
 
 from ..core import fetch, media
-from ..core.html_markdown import iter_code_block_spans
+from ..core.fenced_code import (
+    MAX_FENCE_INDENT,
+    iter_indented_fence_spans,
+    protect_fenced_code,
+    restore_fenced_code,
+)
 from ..core.page import Page
 from ..core.sitemap import extract_locs
 from ..core.utils import extract_version
-from .base import SourceConfig, ensure_discovered_pages, same_origin, try_make_page
+from .base import (
+    SourceConfig,
+    ensure_discovered_pages,
+    ensure_known_slugs,
+    same_origin,
+    try_make_page,
+)
 
 if TYPE_CHECKING:
     import httpx
@@ -137,17 +147,16 @@ def get_version(client: httpx.Client) -> str | None:
 # scan -- see that function for the monotonicity argument.
 _DOCS_LINK_RE = re.compile(r"\]\((?P<href>/docs(?:/[^)\s]*)?)\)")
 
-# Largest indentation, in columns, a fenced code block may carry and still be
-# a fence: CommonMark reads four or more leading spaces as an indented code
-# block instead, with the ``` line as literal text. The shared
-# ``iter_code_block_spans`` scanner mirrors the column-zero fence rule only,
-# so the shielding below widens that rule for this adapter.
-_MAX_FENCE_INDENT = 3
-
 # Placeholder token for a shielded fenced code block. Uppercase, with no
 # characters a Markdown document would produce around a link, so it passes
 # through the link pass untouched and cannot be mistaken for page content.
 _FENCE_PLACEHOLDER = "ANTIGRAVITYFENCEBLOCK{}PLACEHOLDER"
+
+
+def _fence_placeholder(index: int) -> str:
+    """Return the placeholder token that stands for one shielded block."""
+    return _FENCE_PLACEHOLDER.format(index)
+
 
 # Slugs of the pages discovered by the current run; populated by ``discover``
 # and read by the link pass in ``fetch_markdown``. The pipeline discovers
@@ -161,52 +170,18 @@ _KNOWN_SLUGS: set[str] = set()
 def _iter_fence_spans(text: str) -> Iterator[tuple[int, int]]:
     """Yield the ``(start, end)`` span of every fenced code block in *text*.
 
-    Same spans as the shared :func:`iter_code_block_spans` scanner, with one
-    difference: a fence indented by up to three columns is recognised here,
-    where the shared scanner sees column-zero fences only. Upstream indents a
-    sample that sits inside a list item -- the list marker pushes the whole
-    item's content right -- and CommonMark still reads a fence indented that
-    far as a fence. Those blocks need shielding exactly like a top-level one:
-    a sample in a list item quotes documentation URLs just as often, and
-    rewriting it would change what the sample says.
-
-    The fence semantics stay with the shared scanner, which is fed a copy of
-    *text* with up to three leading spaces removed from every line -- exactly
-    the transformation that turns an indented fence into a column-zero one.
-    A line indented four columns or more is an indented code block, not a
-    fence, in either form: removing three of its spaces leaves it indented,
-    so the copy can neither gain nor lose a fence there. A tab is left alone:
-    it advances to the next multiple of four columns, which is out of fence
-    range however it is written, and its width is not knowable here.
-
-    Each span the scanner reports in that copy is mapped back through the
-    per-line offsets, so the caller receives the original text of the block.
-    The span starts where the opening fence character sits in *text*: at the
-    line start for a column-zero fence, and past the indentation for an
-    indented one, so a shielded block keeps the column the page wrote it at.
+    A thin naming of the shared
+    :func:`core.fenced_code.iter_indented_fence_spans` scanner -- the same
+    spans the column-zero :func:`core.html_markdown.iter_code_block_spans`
+    reports, extended to the fences upstream indents inside a list item (see
+    that function for the full rule, including why the indentation stays
+    outside the span, and for the linear-time argument). Those blocks need
+    shielding exactly like a top-level one: the link pass below would
+    otherwise reach inside them and rewrite a documented path that a sample is
+    quoting. The indent bound is the shared constant, so this adapter cannot
+    drift from the other shielded adapters on how deep a fence may be.
     """
-    lines = text.split("\n")
-    shifts = [
-        min(len(line) - len(line.lstrip(" ")), _MAX_FENCE_INDENT) for line in lines
-    ]
-    starts: list[int] = []
-    indented_starts: list[int] = []
-    offset = 0
-    indented_offset = 0
-    for line, shift in zip(lines, shifts):
-        starts.append(offset)
-        indented_starts.append(indented_offset)
-        offset += len(line) + 1
-        indented_offset += len(line) - shift + 1
-    indented = "\n".join(line[shift:] for line, shift in zip(lines, shifts))
-
-    def to_source(index: int) -> int:
-        """Map an offset of the de-indented copy back to one of *text*."""
-        line = bisect_right(indented_starts, index) - 1
-        return starts[line] + shifts[line] + (index - indented_starts[line])
-
-    for start, end in iter_code_block_spans(indented):
-        yield to_source(start), to_source(end)
+    return iter_indented_fence_spans(text, MAX_FENCE_INDENT)
 
 
 def _iter_docs_links(text: str) -> Iterator[re.Match[str]]:
@@ -274,20 +249,16 @@ def _protect_fenced_code(text: str) -> tuple[str, list[str]]:
     The blocks are located by :func:`_iter_fence_spans`, which delegates the
     fence semantics -- matching fence characters and lengths, an opener with
     no closer not being a block at all -- to the shared
-    :func:`iter_code_block_spans` scanner (the same one the ``opencode``
-    adapter uses), so those rules live in exactly one place.
+    :func:`core.html_markdown.iter_code_block_spans` scanner (the same one the
+    ``opencode`` adapter uses), so those rules live in exactly one place. The
+    extraction loop and the splice below come from
+    :mod:`core.fenced_code`, which is where the mechanism every fence-shielding
+    adapter shares is kept; this module contributes its own scanner and its own
+    token shape.
     """
-    blocks: list[str] = []
-    segments: list[str] = []
-    pos = 0
-    for start, end in _iter_fence_spans(text):
-        segments.append(text[pos:start])
-        index = len(blocks)
-        blocks.append(text[start:end])
-        segments.append(_FENCE_PLACEHOLDER.format(index))
-        pos = end
-    segments.append(text[pos:])
-    return "".join(segments), blocks
+    return protect_fenced_code(
+        text, spans=_iter_fence_spans, placeholder=_fence_placeholder
+    )
 
 
 def _restore_fenced_code(text: str, blocks: list[str]) -> str:
@@ -296,9 +267,7 @@ def _restore_fenced_code(text: str, blocks: list[str]) -> str:
     Each placeholder token is replaced by the exact block it stands for, so
     the samples reappear byte for byte -- no pass ever saw them.
     """
-    for index, block in enumerate(blocks):
-        text = text.replace(_FENCE_PLACEHOLDER.format(index), block)
-    return text
+    return restore_fenced_code(text, blocks, _fence_placeholder)
 
 
 def _resolve_docs_href(href: str, current_slug: str, known_slugs: set[str]) -> str:
@@ -480,6 +449,12 @@ def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
     rewritten text that is written to disk, and an unchanged page stops
     producing a diff.
     """
+    # The link pass resolves each reference against the pages this run mirrors;
+    # without that set every internal link would become its upstream URL (see
+    # ``ensure_known_slugs``). The guard runs BEFORE the download: a hook
+    # invoked without discovery must fail immediately, not fetch every page
+    # first and then fail on each one.
+    ensure_known_slugs("google-antigravity-cli", _KNOWN_SLUGS, page.slug)
     raw = fetch.get_with_retry(client, page.source_md_url)
     try:
         markdown = _rewrite_docs_links(raw, page.slug)

@@ -31,12 +31,13 @@ Lifecycle contract every source adapter follows:
    instead of returning an empty list (the zero-page guard).
 2. **Fetching** -- for each discovered page the pipeline obtains
    ``(markdown_text, content_hash)``. By default it downloads
-   ``page.source_md_url`` as ready Markdown. A source whose pages are NOT
-   served as Markdown defines the optional ``fetch_markdown(client, page)``
-   hook instead, which the pipeline picks up via ``getattr`` and calls per
-   page. Fetch failures surface as ``fetch.FetchError`` so the pipeline
-   can isolate them per page (carrying the previous manifest entry
-   forward) rather than aborting the whole source.
+   ``page.source_md_url`` as ready Markdown. A source defines the optional
+   ``fetch_markdown(client, page)`` hook instead when the download needs
+   work before it is Markdown the mirror can store; the pipeline picks the
+   hook up via ``getattr`` and calls it per page. Fetch failures surface as
+   ``fetch.FetchError`` so the pipeline can isolate them per page (carrying
+   the previous manifest entry forward) rather than aborting the whole
+   source.
 3. **Steady state** -- unchanged pages hash identically and are neither
    rewritten nor re-dated; only discoveries, removals, renames, and content
    edits touch the disk and the whats-new log.
@@ -45,8 +46,10 @@ Lifecycle contract every source adapter follows:
 from __future__ import annotations
 
 import sys
+from collections.abc import Collection
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Protocol
+from ..core import fetch
 from ..core.page import Page
 from ..core.utils import clean_url, same_origin
 
@@ -56,6 +59,7 @@ __all__ = [
     "SourceConfig",
     "clean_url",
     "ensure_discovered_pages",
+    "ensure_known_slugs",
     "same_origin",
     "try_make_page",
     "warn_duplicate_slug",
@@ -98,6 +102,23 @@ class SourceConfig:
     version: str = "—"  # upstream target version (or "—" when not versioned)
     origin: str = ""  # upstream documentation path or repository
     how_mirrored: str = ""  # mirroring mechanism description
+    # Relative link destinations this source's pages use ILLUSTRATIVELY, i.e.
+    # as part of a documentation sample rather than as a real cross-reference.
+    # The link checker (``core.link_checker``) reports every relative
+    # destination that does not resolve on disk, which is the right default:
+    # a dead link in the mirror is a defect. A sample is the one legitimate
+    # exception -- a page that shows readers the shape of a memory index or a
+    # config file necessarily names files that exist only in the reader's own
+    # project -- and only the source knows which of its destinations are of
+    # that kind, so the list lives here rather than in the checker.
+    #
+    # Semantics: each entry is an exact, cleaned relative destination (the
+    # path part of the link, query and fragment stripped, as the checker
+    # compares it). The exemption covers the WHOLE source, so an entry must
+    # name a destination that appears exclusively inside samples -- a
+    # genuinely broken link spelled the same way elsewhere in the source
+    # would be silenced too.
+    illustrative_link_targets: tuple[str, ...] = ()
 
 
 class Source(Protocol):
@@ -129,14 +150,17 @@ class Source(Protocol):
     the ``client`` parameter instead.
 
     ``fetch_markdown`` and ``get_version`` below are declared as Protocol
-    members even though both are OPTIONAL at runtime: only sources whose
-    pages are not served as Markdown (``deepseek.py``, ``opencode.py``)
-    define ``fetch_markdown``, and ``get_version`` exists only on some
-    sources. Python's Protocol has no notion of an optional member, so
-    declaring them makes them *required* members as far as static checkers
-    are concerned -- but nothing here ever performs a runtime structural
-    check (the Protocol is not ``@runtime_checkable`` and no ``isinstance``
-    call targets it), and the pipeline looks both hooks up defensively with
+    members even though both are OPTIONAL at runtime: a source declares
+    ``fetch_markdown`` only when its pages need per-source work after the
+    download -- HTML converted to Markdown (deepseek), MDX or VitePress
+    sources normalised (claude_code, kimi_code, opencode), cross-links
+    repointed at the mirrored tree (antigravity), reference stubs resolved
+    (codex_cli) -- and ``get_version`` exists only on some sources. Python's
+    Protocol has no notion of an optional member, so declaring them makes
+    them *required* members as far as static checkers are concerned -- but
+    nothing here ever performs a runtime structural check (the Protocol is
+    not ``@runtime_checkable`` and no ``isinstance`` call targets it), and
+    the pipeline looks both hooks up defensively with
     ``getattr(source, "fetch_markdown", None)`` /
     ``getattr(source, "get_version", None)``. Declaring them anyway buys
     real value: static type checkers and IDEs can autocomplete and
@@ -170,16 +194,25 @@ class Source(Protocol):
 
         When a source module defines this, the pipeline calls it for each
         page instead of downloading ``page.source_md_url`` as ready
-        Markdown. This is the escape hatch for sources whose pages are not
-        served as Markdown at all -- ``deepseek.py`` fetches rendered HTML
-        and converts it to Markdown, while ``opencode.py`` fetches raw MDX
-        and strips the JSX before hashing.
+        Markdown. It is the escape hatch for any source whose downloaded
+        text is not yet what the mirror should store: ``deepseek.py`` fetches
+        rendered HTML and converts it to Markdown, the MDX/VitePress sources
+        (``claude_code.py``, ``kimi_code.py``, ``opencode.py``) normalise the
+        upstream page sources to plain Markdown, ``codex_cli.py`` resolves
+        reference stubs to their richer twins, and ``antigravity.py``
+        repoints the page's site-absolute cross-links at the mirrored tree.
 
         The returned hash is what the pipeline stores in the manifest for
         change detection, so it must be ``fetch.content_hash`` of the exact
         returned text. Failures must be raised as ``fetch.FetchError``: the
         pipeline isolates failures PER PAGE only for that exception type,
         so anything else escaping the hook aborts the source's entire run.
+
+        A hook that needs run-scoped state discovery produced (the set of
+        slugs this run mirrors, say) reads it from its own module and should
+        refuse to run without it -- see
+        :func:`ensure_known_slugs` for the guard and why an empty set is
+        not a harmless default.
         """
         ...
 
@@ -262,6 +295,49 @@ def try_make_page(
             file=sys.stderr,
         )
         return None
+
+
+def ensure_known_slugs(source_name: str, slugs: Collection[str], slug: str) -> None:
+    """Guard a link-rewriting fetch hook against running without discovery.
+
+    Several adapters resolve their pages' site-absolute cross-links against
+    the set of slugs the CURRENT run mirrors. That set travels as module-level
+    state, because the pipeline calls ``discover()`` and ``fetch_markdown()``
+    separately with nothing but the source module in between. The state is
+    written by discovery and read by the fetch hook, so a hook invoked on its
+    own -- a direct call in a test, a future caller that skips discovery, a
+    refactor that reorders the two stages -- would read an EMPTY set.
+
+    An empty set is not a harmless degradation: every cross-link would miss
+    the mirrored-tree branch and be rewritten to its upstream URL, so the run
+    would silently produce a page whose internal navigation points off-site,
+    and the manifest would record that text as the page's correct content.
+    Absence of knowledge and knowledge that nothing is mirrored are therefore
+    NOT the same thing, and this guard makes the difference loud: it raises
+    before any rewriting happens.
+
+    The failure type is ``fetch.FetchError`` so it takes the pipeline's
+    ordinary per-page path. Every page of the source fails the same way, all
+    of them are carried forward from the previous manifest, and nothing on
+    disk is touched -- a loud, inert failure rather than silent link
+    corruption.
+
+    Args:
+        source_name: The source reporting the problem, for the message.
+        slugs: The discovered-slug collection as the hook sees it.
+        slug: The page being converted, so the message names a real page.
+
+    Raises:
+        fetch.FetchError: When *slugs* is empty.
+    """
+    if not slugs:
+        raise fetch.FetchError(
+            f"{source_name}: no discovered slugs are available while converting "
+            f"{slug!r}. This source resolves its cross-links against the pages "
+            "the current run mirrors, so converting without that set would "
+            "rewrite every internal link to its upstream URL. Run discovery "
+            "before fetching."
+        )
 
 
 def ensure_discovered_pages(

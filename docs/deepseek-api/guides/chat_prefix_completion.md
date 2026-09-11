@@ -1,6 +1,6 @@
 # Chat Prefix Completion (Beta)
 
-The chat prefix completion follows the [Chat Completion API](</api/create-chat-completion>), where users provide an assistant's prefix message for the model to complete the rest of the message.
+The chat prefix completion follows the [Chat Completion API](<../api/create-chat-completion.md>), where users provide an assistant's prefix message for the model to complete the rest of the message.
 
 ## Notice
 
@@ -12,5 +12,21 @@ The chat prefix completion follows the [Chat Completion API](</api/create-chat-c
 Below is a complete Python code example for chat prefix completion. In this example, we set the prefix message of the `assistant` to `"```python\n"` to force the model to output Python code, and set the `stop` parameter to `['```']` to prevent additional explanations from the model.
 
 ````python
-from openai import OpenAIclient = OpenAI(    api_key="<your api key>",    base_url="https://api.deepseek.com/beta",)messages = [    {"role": "user", "content": "Please write quick sort code"},    {"role": "assistant", "content": "```python\n", "prefix": True}]response = client.chat.completions.create(    model="deepseek-flash",    messages=messages,    stop=["```"],)print(response.choices[0].message.content)
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="<your api key>",
+    base_url="https://api.deepseek.com/beta",
+)
+
+messages = [
+    {"role": "user", "content": "Please write quick sort code"},
+    {"role": "assistant", "content": "```python\n", "prefix": True}
+]
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=messages,
+    stop=["```"],
+)
+print(response.choices[0].message.content)
 ````

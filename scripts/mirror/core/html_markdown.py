@@ -5,9 +5,9 @@ adapters (such as ``sources/deepseek.py``) and code block protection utilities
 used across sources (including ``sources/opencode.py``): creating a configured
 ``html2text.HTML2Text`` instance, pre-extracting ``<pre>`` code blocks from
 BeautifulSoup trees, splicing them back in as fenced code blocks after
-conversion, stripping Unicode format characters (category "Cf") that web
-markup leaves behind, collapsing excessive blank lines while preserving blank
-lines inside fenced code blocks, and running the whole fetch-convert-validate-hash
+conversion, stripping the invisible Unicode characters that web markup leaves
+behind, collapsing excessive blank lines while preserving blank lines inside
+fenced code blocks, and running the whole fetch-convert-validate-hash
 sequence behind the pipeline's ``fetch_markdown`` hook.
 
 The shared utilities provided are:
@@ -22,15 +22,18 @@ The shared utilities provided are:
   language-detection callback;
 * the blank-line-collapse loop (driven by ``iter_code_block_spans()``,
   collapsing ``\\n{3,}`` only in the gaps between blocks);
-* the ``unicodedata.category(c) != "Cf"`` character filtering pass;
+* ``strip_invisible_characters()`` -- the Cf/Cc character filtering pass;
 * ``fetch_markdown_converted()`` -- the fetch / convert / validate / hash
   sequence that ``fetch_markdown`` pipeline hooks run.
 
 The ``iter_code_block_spans()`` scanner locates complete fenced code blocks in
-the Markdown text so the blank-line-collapse pass (and the OpenCode MDX
-fence protector) can skip over code-block interiors -- blank lines inside
-code are semantically significant (they separate code paragraphs, mark the
-end of multi-line strings, etc.) and must survive verbatim.
+the Markdown text so the blank-line-collapse pass can skip over code-block
+interiors -- blank lines inside code are semantically significant (they
+separate code paragraphs, mark the end of multi-line strings, etc.) and must
+survive verbatim. It recognises COLUMN-ZERO fences only, which is the rule the
+collapse pass needs; the adapters that must also shield a fence indented
+inside a list item widen it through :mod:`~.fenced_code`, which is also where
+the extract -> transform -> splice mechanism those adapters share lives.
 """
 
 from __future__ import annotations
@@ -44,7 +47,7 @@ from typing import TYPE_CHECKING
 
 import bs4
 import html2text
-from bs4.element import PageElement
+from bs4.element import NavigableString, PageElement
 
 from . import fetch
 
@@ -130,9 +133,9 @@ def make_converter() -> html2text.HTML2Text:
 
 # Complete fenced code blocks are located by the linear line scanner
 # ``iter_code_block_spans`` below (no regex), so the blank-line-collapse
-# pass and the OpenCode MDX fence-protector never touch the interior of a
-# code block (blank lines and JSX-looking lines inside code are
-# semantically significant). A block is:
+# pass and the adapters' fence protectors in ``core.fenced_code`` never
+# touch the interior of a code block (blank lines and JSX-looking lines
+# inside code are semantically significant). A block is:
 #
 #   * an opening fence of 3+ backticks (```) or tildes (~~~), optionally
 #     followed by an info string on the same line, and a terminating
@@ -213,46 +216,51 @@ def _leading_fence_run(line: str) -> str:
 def iter_code_block_spans(text: str) -> Iterator[tuple[int, int]]:
     """Yield ``(start, end)`` spans of every complete fenced code block.
 
-    A drop-in, semantics-identical replacement for iterating
-    ``CODE_BLOCK_RE.finditer(text)`` with the regex this scanner replaced
-    (see the hazard comment above): spans are non-overlapping, in document
-    order, and each runs from the opening fence's line start through the end
-    of the closing fence line (the closing line's trailing newline is NOT
-    included, exactly like the old pattern's ``$``-anchored match end).
+    Spans are non-overlapping, in document order, and each runs from the
+    opening fence's line start through the end of the closing fence line
+    (the closing line's trailing newline is NOT included).
 
-    Matching rules, mirroring the old pattern
-    ``^(`{3,}|~{3,})[^\\n]*\\n[\\s\\S]*?^\\1[ \\t\\r]*$``:
+    Only COLUMN-ZERO fences are recognised here -- a fence indented by any
+    amount is ordinary text to this scanner. That is deliberate: it is the
+    exact fence rule the blank-line-collapse pass must apply (the collapse
+    input is converter output, whose fences always start at column zero),
+    and keeping the scanner on one unambiguous rule is what makes its
+    linear-time guarantee easy to reason about. An adapter that must also
+    shield fences inside list items wraps this scanner in a de-indent pass of
+    its own (see :func:`~.fenced_code.iter_indented_fence_spans`), leaving
+    these semantics untouched for every other caller.
+
+    Matching rules:
 
     * An opener is a line whose leading fence run is 3+ backticks or 3+
       tildes, followed by anything (the info string), and terminated by a
       newline -- an opener-shaped LAST line of the document (no trailing
-      newline) can never open a block, because the old pattern required a
-      literal ``\\n`` after the info string.
-    * The opener's effective fence is not always its maximal run: the old
-      greedy ``{3,}`` backtracked one character at a time when no closer
-      existed for the full run, so a six-backtick opener CAN be closed by a
-      three-backtick fence (the three extra backticks becoming part of the
-      info string). The scanner replicates this by trying run lengths from
-      longest down to three and using the longest length that has a closer.
+      newline) can never open a block, because a block needs the newline
+      after the info string to have a body at all.
+    * The opener's effective fence is not always its maximal run: a
+      six-backtick opener CAN be closed by a three-backtick fence (the
+      three extra backticks then reading as part of the info string). The
+      scanner decides this by trying run lengths from the longest down to
+      three and using the longest length that has a closer anywhere ahead
+      of the opener.
     * A closer is a line consisting of exactly that fence string plus
       optional trailing spaces, tabs, or carriage returns. The first closer
-      after the opener wins (the old lazy body), and scanning resumes on
-      the line after the closer (non-overlapping matches).
+      after the opener wins, and scanning resumes on the line after the
+      closer (non-overlapping matches).
     * An opener with no closer at any tried length matches nothing: it is
       ordinary text, and scanning continues on the next line.
 
-    LINEAR-TIME ARGUMENT (why this cannot go quadratic like the regex): all
-    pure-fence closer lines are collected in ONE pass into per-fence-string
-    sorted index lists. Each opener then locates its first possible closer
-    with a ``bisect_right`` per tried fence length -- O(log n) each, and the
-    number of tried lengths is bounded by the opener line's own length -- so
-    N unclosed openers cost O(N log N) total rather than the old pattern's
-    O(N x body length) of repeated lazy scans to end-of-string.
+    LINEAR-TIME ARGUMENT (why this cannot go quadratic): all pure-fence
+    closer lines are collected in ONE pass into per-fence-string sorted
+    index lists. Each opener then locates its first possible closer with a
+    ``bisect_right`` per tried fence length -- O(log n) each, and the number
+    of tried lengths is bounded by the opener line's own length -- so N
+    unclosed openers cost O(N log N) total rather than the O(N x body
+    length) a per-opener scan to the end of the document would cost.
     """
-    # Split on "\n" only (never ``str.splitlines``): the old pattern's
-    # MULTILINE ``^`` anchor recognised line starts exclusively after
-    # ``\n``, so a fence following a bare ``\r`` or a Unicode line
-    # separator must NOT count as an opener or closer.
+    # Split on "\n" only (never ``str.splitlines``): a line start here means
+    # a position right after ``\n``, so a fence following a bare ``\r`` or a
+    # Unicode line separator must NOT count as an opener or closer.
     parts = text.split("\n")
     offsets: list[int] = []
     offset = 0
@@ -292,43 +300,60 @@ def iter_code_block_spans(text: str) -> Iterator[tuple[int, int]]:
             i += 1
 
 
-def strip_cf_characters(text: str) -> str:
-    """Remove all Unicode format characters (category "Cf") from *text*.
+# The control characters (category "Cc") that ARE document structure rather
+# than noise, and therefore survive :func:`strip_invisible_characters`: tab,
+# line feed, and carriage return. Membership is checked before the category
+# call, so the common characters on a documentation page cost nothing.
+_PRESERVED_CONTROL_CHARACTERS = frozenset("\t\n\r")
 
-    Unicode format characters are invisible code points used for text
-    shaping, bidirectional ordering, and encoding metadata. They have no
-    visible glyph, but they survive html2text conversion and end up in the
-    mirror's Markdown files where they silently corrupt copy-paste, diffs,
-    and string searches. The most commonly encountered ones in
-    documentation contexts:
 
-    * U+200B  ZERO WIDTH SPACE -- used by web frameworks as a
-      zero-width whitespace for layout micro-adjustments;
-    * U+FEFF  BOM / ZERO WIDTH NO-BREAK SPACE -- a byte-order mark
-      some tools prepend to UTF-8 content, and its original Unicode
-      role as an invisible no-break space;
-    * U+200E  LEFT-TO-RIGHT MARK -- inserted by bidirectional-text
-      engines to control text direction around mixed RTL/LTR content;
-    * U+200F  RIGHT-TO-LEFT MARK -- same, for RTL context;
-    * U+200C  ZERO WIDTH NON-JOINER -- prevents a ligature or
-      cursive connection between adjacent characters;
-    * U+200D  ZERO WIDTH JOINER -- forces a ligature or cursive
-      connection;
-    * U+2060  WORD JOINER -- prevents a line break at that position.
+def strip_invisible_characters(text: str) -> str:
+    """Remove invisible Unicode characters from *text*.
 
-    Filtering by Unicode category (``unicodedata.category(c) == "Cf"``)
-    is more robust than maintaining a blocklist of individual code points:
-    the Unicode standard can assign new Cf characters in future versions,
-    and a category-based filter catches them all automatically without
-    needing to update a hardcoded list. The cost is one
-    ``unicodedata.category`` call per character, which is acceptable for
-    documentation pages (typically a few tens of thousands of characters
-    at most).
+    Two Unicode categories are dropped, because both are invisible in a
+    rendered document yet survive the HTML-to-Markdown conversion and end up
+    in the mirror's Markdown files, where they silently corrupt copy-paste,
+    diffs, and string searches:
+
+    * **Cf (format)** -- code points used for text shaping, bidirectional
+      ordering, and encoding metadata. The most commonly encountered ones in
+      documentation contexts are U+200B ZERO WIDTH SPACE (used by web
+      frameworks for layout micro-adjustments), U+FEFF BOM / ZERO WIDTH
+      NO-BREAK SPACE (a byte-order mark some tools prepend to UTF-8 content),
+      U+200E LEFT-TO-RIGHT MARK and U+200F RIGHT-TO-LEFT MARK (inserted by
+      bidirectional-text engines), U+200C ZERO WIDTH NON-JOINER and U+200D
+      ZERO WIDTH JOINER, and U+2060 WORD JOINER.
+    * **Cc (control)** -- the C0/C1 control range, except the three that ARE
+      document structure and must survive: TAB (U+0009), LINE FEED (U+000A),
+      and CARRIAGE RETURN (U+000D). A NUL byte (U+0000) is the one that
+      actually shows up in practice: it makes a mirrored page BINARY to
+      ``git`` and to ``grep``, so the file silently drops out of every diff,
+      every search, and every text-mode tool. Control characters are also
+      rejected outright by most Markdown toolchains, so keeping one buys
+      nothing.
+
+    Filtering by Unicode category (``unicodedata.category(c)``) is more
+    robust than maintaining a blocklist of individual code points: the
+    Unicode standard can assign new Cf characters in future versions, and a
+    category-based filter catches them all automatically without needing to
+    update a hardcoded list. The cost is one ``unicodedata.category`` call
+    per character, which is acceptable for documentation pages (typically a
+    few tens of thousands of characters at most).
+
+    The three whitespace controls are kept because they are line structure,
+    not noise: dropping TAB would re-indent code samples and dropping the
+    line terminators would concatenate every line of a page. Every other
+    control character carries no rendering the caller could want.
 
     The return value is a new string; the input is never modified in place
     (Python strings are immutable).
     """
-    return "".join(c for c in text if unicodedata.category(c) != "Cf")
+    return "".join(
+        c
+        for c in text
+        if c in _PRESERVED_CONTROL_CHARACTERS
+        or unicodedata.category(c) not in ("Cf", "Cc")
+    )
 
 
 def collapse_blank_lines(text: str) -> str:
@@ -359,9 +384,10 @@ def collapse_blank_lines(text: str) -> str:
     blocks at all is simply regex-collapsed in full, which is equivalent
     to the gap between the (empty) block list and the trailing text.
 
-    The block locator this relies on is also used by the OpenCode MDX adapter's
-    fence protector -- which is why ``iter_code_block_spans`` is a module-level
-    function rather than being re-derived per call.
+    The block locator this relies on is also the base of the fence scanner the
+    shielding adapters share (``core.fenced_code``) -- which is why
+    ``iter_code_block_spans`` is a module-level function rather than being
+    re-derived per call.
     """
     segments: list[str] = []
     # Position cursor tracking how far through the document we have already
@@ -404,6 +430,46 @@ def collapse_blank_lines(text: str) -> str:
     # Concatenate all gap-collapsed segments and verbatim code-block
     # segments back into a single document string in their original order.
     return "".join(segments)
+
+
+def _pre_text(pre: bs4.Tag) -> str:
+    """Return the text of one ``<pre>`` with the line breaks of its markup intact.
+
+    ``Tag.get_text()`` joins every descendant string with the separator (empty
+    here) and DROPS the line breaks a code block expresses as markup: a
+    syntax highlighter renders each code line as
+    ``<span class="token-line">...</span><br>``, and a ``<br>`` element
+    contributes no text of its own. Such a block read with ``get_text()``
+    collapses onto a single line -- the characters are all still there, but
+    every newline is gone, which is corruption for anyone reading or copying
+    the sample. (Docusaurus/Prism markup, the shape this pipeline converts,
+    is exactly that.)
+
+    This walk therefore keeps document order and turns each ``<br>`` into a
+    newline. Text nodes are taken exactly as ``get_text()`` takes them, so a
+    block whose newlines are already literal text -- the shape a plain
+    ``<pre>`` produces -- is returned unchanged.
+
+    The line-break element is the only child handled specially: any other
+    element contributes its text and nothing else, so nesting, inline spans,
+    and entity decoding all behave as they did with ``get_text()``.
+
+    Comment nodes contribute nothing, exactly as ``get_text()`` skips them.
+    Taking every ``NavigableString`` would let a comment's own text into the
+    sample: a rendered React tree writes an empty ``<!-- -->`` between two
+    adjacent text nodes, and reading that as text would splice its content --
+    ``" "`` for the separator, or a source comment's whole body for a
+    comment the page carries -- into the middle of a code line.
+    """
+    parts: list[str] = []
+    for node in pre.descendants:
+        if isinstance(node, bs4.Comment):
+            continue
+        if isinstance(node, NavigableString):
+            parts.append(str(node))
+        elif isinstance(node, bs4.Tag) and node.name == "br":
+            parts.append("\n")
+    return "".join(parts)
 
 
 def extract_code_blocks(
@@ -549,14 +615,15 @@ def extract_code_blocks(
             # remove everything outside the widely-accepted set of
             # alphanumerics plus ``_``, ``+``, ``#``, ``.``, and ``-``.
             language = re.sub(r"[^A-Za-z0-9_+#.-]", "", language)
-            # ``pre.get_text()`` returns the full text content of the
-            # <pre> element, with all HTML tags removed and entities
-            # decoded. The trailing newline that BeautifulSoup appends
-            # after block-level elements is stripped with ``rstrip("\n")``
-            # -- it is cosmetic and would add a needless blank line at the
-            # end of every fenced code block. Internal blank lines are
-            # preserved verbatim.
-            blocks.append((language, pre.get_text().rstrip("\n")))
+            # ``_pre_text`` returns the full text content of the <pre>
+            # element, with all HTML tags removed, entities decoded, and
+            # every markup line break turned back into a newline (see its
+            # docstring for why ``get_text()`` cannot be used here). The
+            # trailing newline that BeautifulSoup appends after block-level
+            # elements is stripped with ``rstrip("\n")`` -- it is cosmetic
+            # and would add a needless blank line at the end of every fenced
+            # code block. Internal blank lines are preserved verbatim.
+            blocks.append((language, _pre_text(pre).rstrip("\n")))
             tokens.append(placeholder(len(blocks) - 1))
         # Multiple tokens from one shared container are joined into a
         # single replacement string: every block keeps its own token (so

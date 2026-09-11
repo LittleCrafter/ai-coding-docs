@@ -30,7 +30,32 @@ Crush supports custom providers via OpenAI-compatible APIs. Add DeepSeek to your
   * **Windows** : `%USERPROFILE%\.config\crush\crush.json`
 
 ```json
-{  "$schema": "https://charm.land/crush.json",  "providers": {    "deepseek": {      "type": "openai-compat",      "base_url": "https://api.deepseek.com",      "api_key": "$DEEPSEEK_API_KEY",      "models": [        {          "id": "deepseek-v4-pro",          "name": "DeepSeek-V4-Pro",          "context_window": 1048576,          "default_max_tokens": 32768,          "can_reason": true        },        {          "id": "deepseek-v4-flash",          "name": "DeepSeek-V4-Flash",          "context_window": 1048576,          "default_max_tokens": 32768,          "can_reason": true        }      ]    }  }}
+{
+  "$schema": "https://charm.land/crush.json",
+  "providers": {
+    "deepseek": {
+      "type": "openai-compat",
+      "base_url": "https://api.deepseek.com",
+      "api_key": "$DEEPSEEK_API_KEY",
+      "models": [
+        {
+          "id": "deepseek-v4-pro",
+          "name": "DeepSeek-V4-Pro",
+          "context_window": 1048576,
+          "default_max_tokens": 32768,
+          "can_reason": true
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "name": "DeepSeek-V4-Flash",
+          "context_window": 1048576,
+          "default_max_tokens": 32768,
+          "can_reason": true
+        }
+      ]
+    }
+  }
+}
 ```
 
  
@@ -60,7 +85,8 @@ $env:DEEPSEEK_API_KEY="<your DeepSeek API Key>"
   * Enter the project directory and execute the `crush` command:
 
 ```bash
-cd /path/to/my-projectcrush
+cd /path/to/my-project
+crush
 ```
 
  

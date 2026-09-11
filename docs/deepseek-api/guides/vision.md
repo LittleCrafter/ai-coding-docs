@@ -8,7 +8,7 @@ Supported image formats: **JPEG, PNG, GIF, and WebP**. The format is detected fr
 
 ## Sending Images
 
-There are three ways to provide an image to the model. All of them use the standard OpenAI-compatible Chat Completions format, where `content` is an array of blocks instead of a plain string. The same three methods are also available in the [Responses API](</guides/responses_api#image-input>), where images are carried in `input_image` content parts.
+There are three ways to provide an image to the model. All of them use the standard OpenAI-compatible Chat Completions format, where `content` is an array of blocks instead of a plain string. The same three methods are also available in the [Responses API](<./responses_api.md#image-input>), where images are carried in `input_image` content parts.
 
 The `base_url` for the examples below is `https://api.deepseek.com`.
 
@@ -17,13 +17,50 @@ The `base_url` for the examples below is `https://api.deepseek.com`.
 Encode the image and embed it directly in the request as a `data:` URL. This is the simplest option for local files. The encoded data counts toward the **48 MiB** request body limit (see Limits).
 
 ```python
-import base64from openai import OpenAIclient = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")with open("image.jpg", "rb") as f:    b64 = base64.b64encode(f.read()).decode("utf-8")response = client.chat.completions.create(    model="deepseek-flash",    messages=[        {            "role": "user",            "content": [                {"type": "text", "text": "What is in this image?"},                {                    "type": "image_url",                    "image_url": {"url": f"data:image/jpeg;base64,{b64}"},                },            ],        }    ],)print(response.choices[0].message.content)
+import base64
+from openai import OpenAI
+
+client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
+
+with open("image.jpg", "rb") as f:
+    b64 = base64.b64encode(f.read()).decode("utf-8")
+
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What is in this image?"},
+                {
+                    "type": "image_url",
+                    "image_url": {"url": f"data:image/jpeg;base64,{b64}"},
+                },
+            ],
+        }
+    ],
+)
+print(response.choices[0].message.content)
 ```
 
  
 
 ```bash
-curl https://api.deepseek.com/chat/completions \  -H "Content-Type: application/json" \  -H "Authorization: Bearer <DeepSeek API Key>" \  -d '{    "model": "deepseek-flash",    "messages": [      {        "role": "user",        "content": [          {"type": "text", "text": "What is in this image?"},          {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64,<BASE64_DATA>"}}        ]      }    ]  }'
+curl https://api.deepseek.com/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <DeepSeek API Key>" \
+  -d '{
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {"type": "text", "text": "What is in this image?"},
+          {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64,<BASE64_DATA>"}}
+        ]
+      }
+    ]
+  }'
 ```
 
  
@@ -33,19 +70,46 @@ curl https://api.deepseek.com/chat/completions \  -H "Content-Type: application/
 Pass a publicly accessible `http(s)` link and the model downloads the image for you. The URL must be at most **8192 characters** , the image file may be at most **32 MiB** , and the download must complete within **60 seconds**. If your link is longer, use a base64 data URL or the Files API instead.
 
 ```python
-response = client.chat.completions.create(    model="deepseek-flash",    messages=[        {            "role": "user",            "content": [                {"type": "text", "text": "Describe this image."},                {                    "type": "image_url",                    "image_url": {"url": "https://example.com/image.jpg"},                },            ],        }    ],)print(response.choices[0].message.content)
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Describe this image."},
+                {
+                    "type": "image_url",
+                    "image_url": {"url": "https://example.com/image.jpg"},
+                },
+            ],
+        }
+    ],
+)
+print(response.choices[0].message.content)
 ```
 
  
 
 ### 3\. Reference a file uploaded via the Files API
 
-Upload an image once with the [Files API](</guides/files_api>), then reference its `file_id` in your requests. This is the best option when you reuse the same image across multiple requests, or when the image pushes the request body over the 48 MiB inline limit. Unlike inline images, images referenced via Files API `file_id` may be up to 64 MiB and are not subject to the 32 MiB per-image check.
+Upload an image once with the [Files API](<./files_api.md>), then reference its `file_id` in your requests. This is the best option when you reuse the same image across multiple requests, or when the image pushes the request body over the 48 MiB inline limit. Unlike inline images, images referenced via Files API `file_id` may be up to 64 MiB and are not subject to the 32 MiB per-image check.
 
 Use a `file` content block with the returned `file_id` (which has the form `file-api-...`):
 
 ```python
-response = client.chat.completions.create(    model="deepseek-flash",    messages=[        {            "role": "user",            "content": [                {"type": "text", "text": "What is in this image?"},                {"type": "file", "file_id": "file-api-xxxxxxxxxxxxxxxx"},            ],        }    ],)print(response.choices[0].message.content)
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What is in this image?"},
+                {"type": "file", "file_id": "file-api-xxxxxxxxxxxxxxxx"},
+            ],
+        }
+    ],
+)
+print(response.choices[0].message.content)
 ```
 
  
@@ -53,7 +117,11 @@ response = client.chat.completions.create(    model="deepseek-flash",    message
 Alternatively, a `file` block can carry the image inline as base64 via `file_data` instead of `file_id` (the two are mutually exclusive):
 
 ```json
-{  "type": "file",  "file_data": "data:image/jpeg;base64,<BASE64_DATA>",  "filename": "image.jpg"}
+{
+  "type": "file",
+  "file_data": "data:image/jpeg;base64,<BASE64_DATA>",
+  "filename": "image.jpg"
+}
 ```
 
  
@@ -72,7 +140,10 @@ Value| Behavior
 `auto`| Automatic selection. Currently equivalent to `original`.  
 
 ```json
-{  "type": "image_url",  "image_url": {"url": "https://example.com/image.jpg", "detail": "low"}}
+{
+  "type": "image_url",
+  "image_url": {"url": "https://example.com/image.jpg", "detail": "low"}
+}
 ```
 
  
@@ -81,7 +152,7 @@ Value| Behavior
 
 ## When to Use the Files API
 
-Inline images (base64 or `file_data`) count toward the request body size limit of **48 MiB**. Consider the [Files API](</guides/files_api>) when:
+Inline images (base64 or `file_data`) count toward the request body size limit of **48 MiB**. Consider the [Files API](<./files_api.md>) when:
 
   * A single request would exceed the body size limit.
   * The image is larger than 32 MiB, which is only possible through the Files API.
@@ -100,7 +171,7 @@ Before inference, every image is automatically resized:
 
 As a result, there is an upper bound of **1024** tokens per image: for example, a 2000×2000 image and a 5000×5000 image consume the same number of tokens after resizing. When a request contains multiple images, each image is counted independently under the same rule — there is no separate calculation for multi-image requests.
 
-To estimate the token cost of an image of a specific size, use the image token calculator on the [Token & Token Usage](</quick_start/token_usage>) page.
+To estimate the token cost of an image of a specific size, use the image token calculator on the [Token & Token Usage](<../quick_start/token_usage.md>) page.
 
 * * *
 
@@ -117,7 +188,7 @@ Max images per request| 600
 Max total image size per request| 64 MiB without `file_id` images; up to 200 MiB including `file_id` images  
 Max image dimension| 8192 px per side; drops to 4096 px per side when a request contains 15 or more images  
   
-For storage and upload quotas of files uploaded via the Files API, see [Files API: Limits](</guides/files_api#limits>).
+For storage and upload quotas of files uploaded via the Files API, see [Files API: Limits](<./files_api.md#limits>).
 
 * * *
 
@@ -129,12 +200,36 @@ For storage and upload quotas of files uploaded via the Files API, see [Files AP
 
 ## Using Images with the Anthropic API
 
-In addition to the OpenAI-compatible endpoint above, you can send images through the Anthropic-compatible `/messages` endpoint (`base_url` = `https://api.deepseek.com/anthropic`). For general setup, see [Anthropic API](</guides/anthropic_api>).
+In addition to the OpenAI-compatible endpoint above, you can send images through the Anthropic-compatible `/messages` endpoint (`base_url` = `https://api.deepseek.com/anthropic`). For general setup, see [Anthropic API](<./anthropic_api.md>).
 
 The difference is the shape of the image content block. Instead of `image_url`, Anthropic uses an `image` block with a `source` object whose `type` is one of `base64`, `url`, or `file`:
 
 ```python
-import anthropicclient = anthropic.Anthropic()  # ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicmessage = client.messages.create(    model="deepseek-flash",    max_tokens=1024,    messages=[        {            "role": "user",            "content": [                {"type": "text", "text": "What is in this image?"},                {                    "type": "image",                    "source": {                        "type": "base64",                        "media_type": "image/jpeg",                        "data": "<BASE64_DATA>",                    },                },            ],        }    ],)print(message.content)
+import anthropic
+
+client = anthropic.Anthropic()  # ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+
+message = client.messages.create(
+    model="deepseek-flash",
+    max_tokens=1024,
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "What is in this image?"},
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": "image/jpeg",
+                        "data": "<BASE64_DATA>",
+                    },
+                },
+            ],
+        }
+    ],
+)
+print(message.content)
 ```
 
  
@@ -151,14 +246,26 @@ The three `source` variants mirror the OpenAI methods above:
 
 ## Using Images with the Responses API
 
-The `deepseek-flash` model also accepts images through the OpenAI-compatible [Responses API](</guides/responses_api#image-input>). The same three input methods (base64 data URL, external `http(s)` URL, Files API `file_id`) and the same limits apply; only the content part shape differs — images are carried in `input_image` parts, either in `user` / `developer` messages or in the output of `function_call_output` / `custom_tool_call_output` items:
+The `deepseek-flash` model also accepts images through the OpenAI-compatible [Responses API](<./responses_api.md#image-input>). The same three input methods (base64 data URL, external `http(s)` URL, Files API `file_id`) and the same limits apply; only the content part shape differs — images are carried in `input_image` parts, either in `user` / `developer` messages or in the output of `function_call_output` / `custom_tool_call_output` items:
 
 ```python
-response = client.responses.create(    model="deepseek-flash",    input=[        {            "role": "user",            "content": [                {"type": "input_text", "text": "What is in this image?"},                {"type": "input_image", "image_url": "https://example.com/image.jpg", "detail": "low"},            ],        }    ],)print(response.output_text)
+response = client.responses.create(
+    model="deepseek-flash",
+    input=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "input_text", "text": "What is in this image?"},
+                {"type": "input_image", "image_url": "https://example.com/image.jpg", "detail": "low"},
+            ],
+        }
+    ],
+)
+print(response.output_text)
 ```
 
  
 
 The `input_image` part supports a `detail` field with the same semantics as above (`low` / `high` / `original` / `auto`). `detail` is ignored when the image is provided via `file_id`, and `image_url` and `file_id` are mutually exclusive.
 
-For field semantics, restrictions (images in `system` / `assistant` messages are rejected with a `400` error), and tool-output images, see the [Responses API guide](</guides/responses_api#image-input>).
+For field semantics, restrictions (images in `system` / `assistant` messages are rejected with a `400` error), and tool-output images, see the [Responses API guide](<./responses_api.md#image-input>).

@@ -8,7 +8,7 @@ With simple configuration, you can integrate the capabilities of DeepSeek into t
 
 ## Use DeepSeek in Claude Code
 
-Please refer to [Integrate with Claude Code](</quick_start/agent_integrations/claude_code>).
+Please refer to [Integrate with Claude Code](<../quick_start/agent_integrations/claude_code.md>).
 
 ## Invoke DeepSeek Model via Anthropic API
 
@@ -22,14 +22,35 @@ pip install anthropic
   2. Config Environment Variables
 
 ```text
-export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropicexport ANTHROPIC_API_KEY=${YOUR_API_KEY}
+export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+export ANTHROPIC_API_KEY=${YOUR_API_KEY}
 ```
 
  
   3. Invoke the API
 
 ```text
-import anthropicclient = anthropic.Anthropic()message = client.messages.create(    model="deepseek-flash",    max_tokens=1000,    system="You are a helpful assistant.",    messages=[        {            "role": "user",            "content": [                {                    "type": "text",                    "text": "Hi, how are you?"                }            ]        }    ])print(message.content)
+import anthropic
+
+client = anthropic.Anthropic()
+
+message = client.messages.create(
+    model="deepseek-flash",
+    max_tokens=1000,
+    system="You are a helpful assistant.",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Hi, how are you?"
+                }
+            ]
+        }
+    ]
+)
+print(message.content)
 ```
 
  
@@ -59,7 +80,7 @@ This section lists the compatibility details of the DeepSeek API with the Anthro
 
 Field| Support Status  
 ---|---  
-anthropic-beta| Ignored for `/messages`; required (`files-api-2025-04-14`) for Files API endpoints — see [Files API](</guides/files_api#anthropic-compatible-files-api>)  
+anthropic-beta| Ignored for `/messages`; required (`files-api-2025-04-14`) for Files API endpoints — see [Files API](<./files_api.md#anthropic-compatible-files-api>)  
 anthropic-version| Ignored  
 x-api-key| Fully Supported  
   
@@ -72,7 +93,7 @@ max_tokens| Fully Supported
 container| Ignored  
 mcp_servers| Ignored  
 metadata| `user_id` is supported, others are ignored  
-Please refer to [Rate Limit & Isolation](</quick_start/rate_limit>) for more information about `user_id` parameter.  
+Please refer to [Rate Limit & Isolation](<../quick_start/rate_limit.md>) for more information about `user_id` parameter.  
 service_tier| Ignored  
 stop_sequences| Fully Supported  
 stream| Fully Supported  

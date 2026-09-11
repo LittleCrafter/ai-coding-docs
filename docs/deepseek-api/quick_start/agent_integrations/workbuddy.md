@@ -37,7 +37,24 @@ setx DEEPSEEK_API_KEY "<your DeepSeek API Key>"
 Then add the following configuration:
 
 ```json
-{  "models": [    {      "id": "deepseek-flash",      "name": "DeepSeek Flash",      "vendor": "DeepSeek",      "url": "https://api.deepseek.com/v1/chat/completions",      "apiKey": "${DEEPSEEK_API_KEY}",      "maxInputTokens": 128000,      "maxOutputTokens": 8192,      "supportsToolCall": true,      "supportsImages": true    }  ],  "availableModels": [    "deepseek-flash"  ]}
+{
+  "models": [
+    {
+      "id": "deepseek-flash",
+      "name": "DeepSeek Flash",
+      "vendor": "DeepSeek",
+      "url": "https://api.deepseek.com/v1/chat/completions",
+      "apiKey": "${DEEPSEEK_API_KEY}",
+      "maxInputTokens": 128000,
+      "maxOutputTokens": 8192,
+      "supportsToolCall": true,
+      "supportsImages": true
+    }
+  ],
+  "availableModels": [
+    "deepseek-flash"
+  ]
+}
 ```
 
  
@@ -61,7 +78,12 @@ DeepSeek Flash
 Windows users can verify the API Key in PowerShell:
 
 ```powershell
-$env:DEEPSEEK_API_KEY="<your DeepSeek API Key>"curl https://api.deepseek.com/v1/chat/completions `  -H "Content-Type: application/json" `  -H "Authorization: Bearer $env:DEEPSEEK_API_KEY" `  -d '{"model":"deepseek-flash","messages":[{"role":"user","content":"hi"}],"stream":false}'
+$env:DEEPSEEK_API_KEY="<your DeepSeek API Key>"
+
+curl https://api.deepseek.com/v1/chat/completions `
+  -H "Content-Type: application/json" `
+  -H "Authorization: Bearer $env:DEEPSEEK_API_KEY" `
+  -d '{"model":"deepseek-flash","messages":[{"role":"user","content":"hi"}],"stream":false}'
 ```
 
  

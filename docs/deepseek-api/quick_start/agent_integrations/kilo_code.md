@@ -25,7 +25,8 @@ kilo --version
 Enter the project directory and run `kilo`:
 
 ```text
-cd /path/to/my-projectkilo
+cd /path/to/my-project
+kilo
 ```
 
  

@@ -241,8 +241,18 @@ def main(argv: list[str] | None = None) -> int:
         from . import pipeline, reporting
         from .core import link_checker
 
+        # The illustrative-link exemptions belong to the sources, so the
+        # registry is read here -- the CLI is the boundary that may know about
+        # concrete sources -- and handed to the checker as plain data.
+        exempt_targets_by_source = {
+            source.CONFIG.name: source.CONFIG.illustrative_link_targets
+            for source in pipeline.SOURCES
+        }
+
         with pipeline._log_file_context(args.log_file):
-            issues, scanned_files = link_checker.check_source_links(args.source)
+            issues, scanned_files = link_checker.check_source_links(
+                args.source, exempt_targets_by_source
+            )
             reporting.link_check_report(
                 issues, scanned_files=scanned_files, source_name=args.source
             )

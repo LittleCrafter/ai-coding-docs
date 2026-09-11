@@ -490,6 +490,40 @@ def test_discover_raises_on_truncated_tree():
         opencode.discover(client)
 
 
+def test_discover_skips_a_file_with_no_basename(capsys):
+    """A path that is nothing but an extension (``.mdx``) leaves no slug at
+    all. It must be skipped QUIETLY: building a Page from it would fail
+    validation and surface as a warning about a page nobody can name, and
+    the remaining entries must still be discovered."""
+    prefix = "packages/web/src/content/docs"
+    client = tree_client(
+        [
+            blob_entry(f"{prefix}/.mdx"),
+            blob_entry(f"{prefix}/getting-started/overview.mdx"),
+        ]
+    )
+    pages = opencode.discover(client)
+    assert [p.slug for p in pages] == ["getting-started/overview"]
+    assert capsys.readouterr().err == ""
+
+
+def test_discover_skips_a_locale_file_with_no_inner_path(capsys):
+    """The same degenerate filename directly inside a selected locale
+    directory leaves nothing usable after the locale prefix is stripped, so
+    it is skipped the same quiet way while the locale's real pages are
+    still discovered."""
+    prefix = "packages/web/src/content/docs"
+    client = tree_client(
+        [
+            blob_entry(f"{prefix}/pt-br/.mdx"),
+            blob_entry(f"{prefix}/pt-br/getting-started.mdx"),
+        ]
+    )
+    pages = opencode.discover(client, locales=("pt-br",))
+    assert [p.slug for p in pages] == ["pt-br/getting-started"]
+    assert capsys.readouterr().err == ""
+
+
 # --- Fetch error propagation --------------------------------------------------
 
 
@@ -1706,6 +1740,10 @@ def _make_opencode_page(slug="getting-started"):
 def test_fetch_markdown_returns_markdown_and_hash():
     """The happy path: raw MDX is fetched, converted to Markdown, and
     returned as a ``(markdown, sha256_hash)`` tuple."""
+    # The hook refuses to convert without a discovered slug set, so seed the
+    # one the module's autouse fixture clears.
+    opencode._KNOWN_SLUGS.clear()
+    opencode._KNOWN_SLUGS.update({"overview", "intro"})
     mdx_body = """---
 title: Overview
 ---
@@ -1750,8 +1788,45 @@ def test_fetch_markdown_rejects_non_markdown():
     the previous manifest entry forward instead of writing garbage."""
     client = _FakeClient([_Resp(200, "not markdown at all")])
     page = _make_opencode_page("bad")
+    opencode._KNOWN_SLUGS.update({"bad"})
     with pytest.raises(fetch.FetchError):
         opencode.fetch_markdown(client, page)
+
+
+def test_fetch_markdown_wraps_a_conversion_failure(monkeypatch):
+    """An exception out of the conversion is re-raised as ``FetchError``,
+    naming the page and keeping the original on ``__cause__``. The pipeline
+    isolates failures per page for that exception type only, so an unforeseen
+    markup shape must fail just this page instead of aborting the whole
+    run -- and chaining keeps a genuine programming error visible as the
+    cause rather than flattened into the page failure."""
+    opencode._KNOWN_SLUGS.update({"overview"})
+    page = _make_opencode_page("overview")
+
+    def explode(text: str) -> str:
+        raise ValueError("unforeseen markup shape")
+
+    monkeypatch.setattr(opencode, "_mdx_to_md", explode)
+    client = _FakeClient([_Resp(200, "# Title\n\nEnough prose to be Markdown.\n")])
+    with pytest.raises(fetch.FetchError) as exc_info:
+        opencode.fetch_markdown(client, page)
+    assert page.slug in str(exc_info.value)
+    assert isinstance(exc_info.value.__cause__, ValueError)
+
+
+def test_fetch_markdown_refuses_to_convert_without_discovered_slugs():
+    """Converting with no discovered slug set would rewrite every internal
+    link on the page to its upstream URL (see ``ensure_known_slugs``), so the
+    hook must fail loudly instead -- and as a ``FetchError``, the one type the
+    pipeline isolates per page rather than aborting the source. The refusal
+    comes before the download, so a run that skipped discovery stops at the
+    first page instead of fetching the whole source and then failing."""
+    assert opencode._KNOWN_SLUGS == set()
+    page = _make_opencode_page("overview")
+    client = _FakeClient([_Resp(200, "# Title\n\nEnough prose to be Markdown.\n")])
+    with pytest.raises(fetch.FetchError, match="no discovered slugs"):
+        opencode.fetch_markdown(client, page)
+    assert client.calls == 0
 
 
 # --- Link rewriting: site-absolute ``/docs/...`` references -------------------

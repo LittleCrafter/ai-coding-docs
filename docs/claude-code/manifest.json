@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.268",
-  "last_updated": "2026-09-11T02:50:04Z",
+  "last_updated": "2026-09-11T03:55:11Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1520,8 +1520,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "2801c51aa697850354c96c4522491ea0e4940d7ce18902855ce85d0ce32125f4",
-      "last_updated": "2026-09-11T02:41:59Z"
+      "hash": "c54aa6f857ad53360bb388b2afac561a8f55e771ebe8a54519d5548aca093328",
+      "last_updated": "2026-09-11T03:55:11Z"
     },
     "setup": {
       "slug": "setup",
@@ -1540,8 +1540,8 @@
       "source_url": "https://code.claude.com/docs/en/skills",
       "source_md_url": "https://code.claude.com/docs/en/skills.md",
       "source_id": "skills",
-      "hash": "a50757f7cebb2d25bceb72242e943cbb31eaa42920f95344863cea817d636708",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "0e74a421c50e70387eddd67ae4872512abdfc8b33b1b6d5e30a7031d07904a26",
+      "last_updated": "2026-09-11T03:55:11Z"
     },
     "slack": {
       "slug": "slack",
@@ -1915,8 +1915,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-11T02:50:04Z",
-    "fetch_duration_seconds": 71.435,
+    "last_fetch_completed": "2026-09-11T03:55:11Z",
+    "fetch_duration_seconds": 69.575,
     "total_pages_discovered": 191,
     "pages_fetched_successfully": 191,
     "pages_failed": 0,

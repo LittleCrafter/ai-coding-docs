@@ -26,17 +26,26 @@ from __future__ import annotations
 import posixpath
 import re
 import sys
-from bisect import bisect_right
 from collections.abc import Iterator
 from typing import TYPE_CHECKING
 
 from .. import config
 from ..core import fetch
+from ..core.fenced_code import (
+    MAX_FENCE_INDENT,
+    iter_indented_fence_spans,
+    protect_fenced_code,
+    restore_fenced_code,
+)
 from ..core.github import fetch_git_tree, fetch_latest_release_tag
-from ..core.html_markdown import iter_code_block_spans
 from ..core.media import AssetSourceConfig
 from ..core.page import Page
-from .base import SourceConfig, try_make_page, warn_duplicate_slug
+from .base import (
+    SourceConfig,
+    ensure_known_slugs,
+    try_make_page,
+    warn_duplicate_slug,
+)
 
 if TYPE_CHECKING:
     import httpx
@@ -314,14 +323,6 @@ _LIST_ITEM_RE = re.compile(
     r"^(?P<indent>[ \t]*)(?P<marker>[-*+]|\d{1,9}[.)])(?P<gap>[ \t]+)\S"
 )
 
-# Maximum column a re-indented fence may sit at and still be a fence.  A list
-# item deeper than three columns (``10. ...`` and any nested list) has a
-# content column of four or more, and indenting a fence that far would put it
-# right back into indented-code-block territory -- the bug being fixed.  The
-# fence is pulled up to this column instead, which leaves the list item but
-# keeps the sample a code block.
-_MAX_FENCE_INDENT = 3
-
 # Known non-English locale directories at the top level of the upstream docs
 # tree (``packages/web/src/content/docs/`` in ``anomalyco/opencode@dev``),
 # verified against the live repository via the GitHub contents API.  Upstream
@@ -509,19 +510,20 @@ _TYPE_RE = re.compile(r"type\s*=\s*[\"'](\w+)[\"']", re.IGNORECASE)
 # the value freely.
 _TITLE_RE = re.compile(r"title\s*=\s*([\"'])(.*?)\1", re.IGNORECASE)
 
-# ``iter_code_block_spans`` (imported from ``core/html_markdown.py``)
+# ``iter_indented_fence_spans`` (imported from ``core/fenced_code.py``)
 # locates every complete fenced code block (CommonMark): an opening fence
 # of 3+ backticks OR 3+ tildes, an optional info string on the opening
 # fence line, a body of any number of lines, and a closing fence that is
-# the EXACT same character sequence as the opening fence.  Used by
-# ``_protect_fenced_code`` to lift code samples out of the raw MDX before
-# the JSX / import transformations run, so that a line which looks like a
-# JS ``import``/``export`` statement or a JSX tag inside a code sample is
-# never stripped or rewritten -- it is code, not MDX wiring.  The scanner
-# is shared with the HTML-to-Markdown adapters (which use it for their
-# blank-line-collapse pass); see its definition in
-# ``core/html_markdown.py`` for the full matching rules and for why it is
-# a linear line scan rather than a regex (the regex form was a
+# the EXACT same character sequence as the opening fence -- with a fence
+# indented up to three columns recognised as well, because upstream writes
+# samples inside list items.  Used by ``_protect_fenced_code`` to lift code
+# samples out of the raw MDX before the JSX / import transformations run,
+# so that a line which looks like a JS ``import``/``export`` statement or a
+# JSX tag inside a code sample is never stripped or rewritten -- it is
+# code, not MDX wiring.  The scanner is shared with the HTML-to-Markdown
+# adapters (which use it for their blank-line-collapse pass); see its
+# definition in ``core/fenced_code.py`` for the full matching rules and for
+# why it is a linear line scan rather than a regex (the regex form was a
 # quadratic-time hazard on unclosed fences, and this protector runs on
 # raw network MDX).
 
@@ -778,9 +780,13 @@ def _list_content_column(text: str, position: int) -> int:
     Only a list marker there means the container is inside a list item, and
     the column reported is the marker's content column; any other line means
     the container stands on its own, at column zero.  A content column too
-    deep to indent a fence is capped (see ``_MAX_FENCE_INDENT``).  The walk is
-    bounded by the run of blank lines above the container, so it is linear in
-    the size of that run and never revisits a line twice.
+    deep to indent a fence is capped at ``core.fenced_code.MAX_FENCE_INDENT``:
+    a list item deeper than that column (``10. ...`` and any nested list) has a
+    content column of four or more, and indenting a fence that far would put it
+    right back into indented-code-block territory.  The fence is pulled up to
+    this column instead, which leaves the list item but keeps the sample a code
+    block.  The walk is bounded by the run of blank lines above the container,
+    so it is linear in the size of that run and never revisits a line twice.
     """
     line_start = text.rfind("\n", 0, position) + 1
     prefix = text[line_start:position]
@@ -808,7 +814,7 @@ def _list_content_column(text: str, position: int) -> int:
             content_column = (
                 indent + len(marker.group("marker")) + len(marker.group("gap"))
             )
-            return min(content_column, _MAX_FENCE_INDENT)
+            return min(content_column, MAX_FENCE_INDENT)
         cursor = previous_start - 1
     return 0
 
@@ -997,55 +1003,27 @@ def _convert_tab_items(text: str) -> str:
 def _iter_fence_spans(text: str) -> Iterator[tuple[int, int]]:
     """Yield the ``(start, end)`` span of every fenced code block in *text*.
 
-    Same spans as the shared :func:`iter_code_block_spans` scanner, with one
-    difference: a fence indented by up to three columns is recognised here,
-    where the shared scanner sees column-zero fences only.  Upstream indents
-    a sample that sits inside a list item -- the list marker pushes the whole
-    item's content right -- and CommonMark still reads a fence indented that
-    far as a fence.  Those blocks need shielding exactly like a top-level
-    one: the JSX and import/export strips below would otherwise reach inside
-    them, and a sample such as ``<TAB>`` would come out of the conversion
-    empty.
-
-    The fence semantics stay with the shared scanner, which is fed a copy of
-    *text* with up to three leading spaces removed from every line -- exactly
-    the transformation that turns an indented fence into a column-zero one.
-    A line indented four columns or more is an indented code block, not a
-    fence, in either form: removing three of its spaces leaves it indented,
-    so the copy can neither gain nor lose a fence there.  A tab is left
-    alone: it advances to the next multiple of four columns, which is out of
-    fence range however it is written, and its width is not knowable here.
-
-    Each span the scanner reports in that copy is mapped back through the
-    per-line offsets, so the caller receives the original text of the block.
-    The span starts where the opening fence character sits in *text*: at the
-    line start for a column-zero fence, and past the indentation for an
-    indented one.  The indentation is deliberately left outside the span, so
-    the shielded line keeps the column the page gave it -- the container
-    re-indent pass reads that column to tell where its content sat.
+    A thin naming of the shared
+    :func:`core.fenced_code.iter_indented_fence_spans` scanner -- the same
+    spans the column-zero :func:`core.html_markdown.iter_code_block_spans`
+    reports, extended to the fences upstream indents inside a list item (see
+    that function for the full rule, including why the indentation stays
+    outside the span, and for the linear-time argument).  Those blocks need
+    shielding exactly like a top-level one: the JSX and import/export strips
+    below would otherwise reach inside them, and a sample such as ``<TAB>``
+    would come out of the conversion empty.
     """
-    lines = text.split("\n")
-    shifts = [
-        min(len(line) - len(line.lstrip(" ")), _MAX_FENCE_INDENT) for line in lines
-    ]
-    starts: list[int] = []
-    indented_starts: list[int] = []
-    offset = 0
-    indented_offset = 0
-    for line, shift in zip(lines, shifts):
-        starts.append(offset)
-        indented_starts.append(indented_offset)
-        offset += len(line) + 1
-        indented_offset += len(line) - shift + 1
-    indented = "\n".join(line[shift:] for line, shift in zip(lines, shifts))
+    return iter_indented_fence_spans(text, MAX_FENCE_INDENT)
 
-    def to_source(index: int) -> int:
-        """Map an offset of the de-indented copy back to one of *text*."""
-        line = bisect_right(indented_starts, index) - 1
-        return starts[line] + shifts[line] + (index - indented_starts[line])
 
-    for start, end in iter_code_block_spans(indented):
-        yield to_source(start), to_source(end)
+def _fence_placeholder(index: int) -> str:
+    """Return the placeholder token that stands for one shielded block.
+
+    A bare uppercase sentinel that upstream never produces and that no
+    downstream transformation can invent, so it passes through every regex in
+    this module untouched and cannot collide with the document's own text.
+    """
+    return f"OPENCODEFENCEBLOCK{index}PLACEHOLDER"
 
 
 def _protect_fenced_code(content: str) -> tuple[str, list[str]]:
@@ -1069,36 +1047,20 @@ def _protect_fenced_code(content: str) -> tuple[str, list[str]]:
     containing JSX tokens could be altered, but this is an acceptable
     limitation for our current documentation structure.
 
-    The placeholder token is a bare uppercase sentinel that is never
-    produced upstream and cannot be confused with prose or code, so it
-    passes through every downstream regex untouched and does not collide
-    with the document's own text.
-
-    The blocks are located by :func:`_iter_fence_spans`, which delegates the
-    fence semantics -- matching fence characters and lengths, an opener with
-    no closer not being a block at all -- to the shared
-    :func:`iter_code_block_spans` scanner, so those rules live in exactly one
-    place.  It widens one of them for this adapter's benefit: a fence
-    indented by up to three columns, which CommonMark still reads as a fence,
-    is shielded too.  Upstream writes samples inside list items, and without
-    that shield the JSX strip below reaches into them.
+    The extraction loop and the splice come from :mod:`core.fenced_code`,
+    which is where the mechanism every fence-shielding adapter shares is
+    kept; this module contributes its own scanner and its own token shape.
+    The scanner delegates the fence semantics -- matching fence characters
+    and lengths, an opener with no closer not being a block at all -- to the
+    shared :func:`iter_code_block_spans` scanner, so those rules live in
+    exactly one place.  It widens one of them for this adapter's benefit: a
+    fence indented by up to three columns, which CommonMark still reads as a
+    fence, is shielded too.  Upstream writes samples inside list items, and
+    without that shield the JSX strip below reaches into them.
     """
-
-    blocks: list[str] = []
-    segments: list[str] = []
-    pos = 0
-    for start, end in _iter_fence_spans(content):
-        # Copy the text between the previous block and this one verbatim,
-        # then stash the full spanned fenced block (fences included) and
-        # emit a unique placeholder token keyed by the block's position in
-        # document order, so each block restores to its original location.
-        segments.append(content[pos:start])
-        index = len(blocks)
-        blocks.append(content[start:end])
-        segments.append(f"OPENCODEFENCEBLOCK{index}PLACEHOLDER")
-        pos = end
-    segments.append(content[pos:])
-    return "".join(segments), blocks
+    return protect_fenced_code(
+        content, spans=_iter_fence_spans, placeholder=_fence_placeholder
+    )
 
 
 def _restore_fenced_code(text: str, blocks: list[str]) -> str:
@@ -1107,12 +1069,9 @@ def _restore_fenced_code(text: str, blocks: list[str]) -> str:
     The inverse of ``_protect_fenced_code``: each placeholder token is
     replaced with the exact fenced block that was stashed in its place, so
     the code samples reappear verbatim -- no transformation was applied to
-    them while they were lifted out.  Blocks are spliced in ascending
-    index order, matching the order in which they were stashed.
+    them while they were lifted out.
     """
-    for index, block in enumerate(blocks):
-        text = text.replace(f"OPENCODEFENCEBLOCK{index}PLACEHOLDER", block)
-    return text
+    return restore_fenced_code(text, blocks, _fence_placeholder)
 
 
 # YAML frontmatter block at the very start of a page source: an opening
@@ -1947,6 +1906,12 @@ def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
     ``FetchError`` so the pipeline carries the previous manifest entry forward
     rather than writing garbage to disk.
     """
+    # The link pass resolves each reference against the pages this run mirrors;
+    # without that set every internal link would become its upstream URL (see
+    # ``ensure_known_slugs``). The guard runs BEFORE the download: a hook
+    # invoked without discovery must fail immediately, not fetch every page
+    # first and then fail on each one.
+    ensure_known_slugs("opencode", _KNOWN_SLUGS, page.slug)
     raw = fetch.get_with_retry(client, page.source_md_url)
     try:
         md = _mdx_to_md(raw)

@@ -3897,7 +3897,7 @@ Skills from plugins, `.claude/skills/`, and `.claude/commands/` are unaffected. 
 
 ### `disableSkillShellExecution`
 
-Turn off inline shell execution for `` !`...` `` and ` ```! ` blocks in [skills](/en/skills) and custom commands from user, project, plugin, or additional-directory sources. Claude Code replaces each command with `[shell command execution disabled by policy]` instead of running it.
+Turn off inline shell execution for `` !`...` `` and ` ```! ` blocks in [skills](./skills.md) and custom commands from user, project, plugin, or additional-directory sources. Claude Code replaces each command with `[shell command execution disabled by policy]` instead of running it.
 
 * **Scope**: [`Any file`](#scopes). A `true` in managed settings can't be overridden by `false` elsewhere.
 * **Type**: Boolean

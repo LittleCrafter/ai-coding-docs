@@ -6,12 +6,23 @@ With a simple configuration, you can use DeepSeek models in Codex.
 
 ## Integrating DeepSeek Models into Codex
 
-Please refer to [Integrate with Codex](</quick_start/agent_integrations/codex>).
+Please refer to [Integrate with Codex](<../quick_start/agent_integrations/codex.md>).
 
 ## Calling DeepSeek Models via the Responses API
 
 ```python
-# Please install OpenAI SDK first: `pip3 install openai`from openai import OpenAIclient = OpenAI(api_key="<your DeepSeek API Key>", base_url="https://api.deepseek.com")response = client.responses.create(    model="deepseek-flash",    instructions="You are a helpful assistant.",    input="Hi, how are you?",)print(response.output_text)
+# Please install OpenAI SDK first: `pip3 install openai`
+from openai import OpenAI
+
+client = OpenAI(api_key="<your DeepSeek API Key>", base_url="https://api.deepseek.com")
+
+response = client.responses.create(
+    model="deepseek-flash",
+    instructions="You are a helpful assistant.",
+    input="Hi, how are you?",
+)
+
+print(response.output_text)
 ```
 
  
@@ -21,7 +32,16 @@ Please refer to [Integrate with Codex](</quick_start/agent_integrations/codex>).
 Set `stream: true` to receive the response as a sequence of semantic server-sent events (SSE). Each event carries an `event` field indicating the event type, and a monotonically increasing `sequence_number`. The stream ends with a `response.completed` / `response.incomplete` / `response.failed` event — there is no `data: [DONE]` message.
 
 ```python
-stream = client.responses.create(    model="deepseek-flash",    instructions="You are a helpful assistant.",    input="Hi, how are you?",    stream=True,)for event in stream:    if event.type == "response.output_text.delta":        print(event.delta, end="")
+stream = client.responses.create(
+    model="deepseek-flash",
+    instructions="You are a helpful assistant.",
+    input="Hi, how are you?",
+    stream=True,
+)
+
+for event in stream:
+    if event.type == "response.output_text.delta":
+        print(event.delta, end="")
 ```
 
  
@@ -44,12 +64,24 @@ Event| Description
   
 ## Image Input
 
-The Responses API accepts images with the `deepseek-flash` model. The same image limits and supported formats as [Chat Completions](</guides/vision#limits>) apply.
+The Responses API accepts images with the `deepseek-flash` model. The same image limits and supported formats as [Chat Completions](<./vision.md#limits>) apply.
 
-Images are provided via an `input_image` content part in a `message` item, with either `image_url` (an `http(s)` URL or a base64 data URL) or `file_id` (an image uploaded via the [Files API](</guides/files_api>)):
+Images are provided via an `input_image` content part in a `message` item, with either `image_url` (an `http(s)` URL or a base64 data URL) or `file_id` (an image uploaded via the [Files API](<./files_api.md>)):
 
 ```python
-response = client.responses.create(    model="deepseek-flash",    input=[        {            "role": "user",            "content": [                {"type": "input_text", "text": "What is in this image?"},                {"type": "input_image", "image_url": "https://example.com/image.jpg", "detail": "low"},            ],        }    ],)print(response.output_text)
+response = client.responses.create(
+    model="deepseek-flash",
+    input=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "input_text", "text": "What is in this image?"},
+                {"type": "input_image", "image_url": "https://example.com/image.jpg", "detail": "low"},
+            ],
+        }
+    ],
+)
+print(response.output_text)
 ```
 
  
@@ -57,7 +89,12 @@ response = client.responses.create(    model="deepseek-flash",    input=[       
 `input_image` parts may also appear in the `output` of `function_call_output` / `custom_tool_call_output` items, so the model can receive images produced by your tools:
 
 ```python
-input=[    {"role": "user", "content": "Read the screenshot the tool returned."},    {"type": "function_call", "call_id": "fc1", "name": "take_screenshot", "arguments": "{}"},    {"type": "function_call_output", "call_id": "fc1",     "output": [{"type": "input_image", "image_url": "data:image/png;base64,<BASE64_DATA>"}]},]
+input=[
+    {"role": "user", "content": "Read the screenshot the tool returned."},
+    {"type": "function_call", "call_id": "fc1", "name": "take_screenshot", "arguments": "{}"},
+    {"type": "function_call_output", "call_id": "fc1",
+     "output": [{"type": "input_image", "image_url": "data:image/png;base64,<BASE64_DATA>"}]},
+]
 ```
 
  
@@ -65,7 +102,7 @@ input=[    {"role": "user", "content": "Read the screenshot the tool returned."}
 ### `input_image` Fields
 
   * `image_url`: An `http(s)` URL (at most 8192 characters) or a base64-encoded data URL (`data:image/jpeg;base64,...`). Supported formats: JPEG, PNG, GIF, WebP.
-  * `file_id`: The ID of an image uploaded via the [Files API](</guides/files_api>), of the form `file-api-...`.
+  * `file_id`: The ID of an image uploaded via the [Files API](<./files_api.md>), of the form `file-api-...`.
   * `detail`: `low` / `high` / `original` / `auto`. `low` downsamples the image to 512x512 before inference; the other values keep the original image. Ignored when `file_id` is set.
 
 `image_url` and `file_id` are mutually exclusive: passing neither returns a `400` error ("input_image must have image_url or file_id"), and passing both returns a `400` error ("input_image cannot have both image_url and file_id").
@@ -74,7 +111,7 @@ input=[    {"role": "user", "content": "Read the screenshot the tool returned."}
 
   * Images are allowed only in `user` / `developer` message items and in `function_call_output` / `custom_tool_call_output` outputs. Images in `system` or `assistant` messages return a `400` error.
   * `deepseek-flash` processes `input_image` parts as real images.
-  * The same shared image limits as Chat Completions apply (32 MiB per inline image, 64 MiB per `file_id` image, 64 MiB total without `file_id` images or up to 200 MiB with them, 600 images per request, etc.) — see [Vision: Limits](</guides/vision#limits>).
+  * The same shared image limits as Chat Completions apply (32 MiB per inline image, 64 MiB per `file_id` image, 64 MiB total without `file_id` images or up to 200 MiB with them, 600 images per request, etc.) — see [Vision: Limits](<./vision.md#limits>).
 
 ## Compatibility Details
 
@@ -84,7 +121,7 @@ This section lists the compatibility details of the DeepSeek API with the Respon
 
 Parameter| Support Status  
 ---|---  
-`model`| Supported. `deepseek-flash`, see [Models & Pricing](</quick_start/pricing>)  
+`model`| Supported. `deepseek-flash`, see [Models & Pricing](<../quick_start/pricing.md>)  
 `input`| Supported. String or input item list; at least one of `input` and `instructions` is required  
 `instructions`| Supported. Inserted as the first system message  
 `stream`| Supported  
@@ -96,7 +133,7 @@ Parameter| Support Status
 `tool_choice`| Supported. `none` / `auto` / `required` / a specific tool (`{"type": "function", "name": ...}`)  
 `reasoning`| Partially supported. `effort` supported; `summary` accepted but no summary is generated  
 `text`| Partially supported. `format` fully supported; `verbosity` accepted but has no effect  
-`user`| Supported. See [Rate Limit & Isolation](</quick_start/rate_limit>)  
+`user`| Supported. See [Rate Limit & Isolation](<../quick_start/rate_limit.md>)  
 `parallel_tool_calls`| Ignored (parallel tool calling is always enabled)  
 `max_tool_calls`| Ignored  
 `previous_response_id`| Not supported (stateless API)  
@@ -109,7 +146,7 @@ Parameter| Support Status
 `truncation`| Not supported. Requests exceeding the context window return a `400` error  
 `service_tier`| Not supported  
 `safety_identifier`| Not supported  
-`prompt_cache_key` / `prompt_cache_retention`| Not supported. Context caching is managed automatically, see [Context Caching](</guides/kv_cache>)  
+`prompt_cache_key` / `prompt_cache_retention`| Not supported. Context caching is managed automatically, see [Context Caching](<./kv_cache.md>)  
 `context_management`| Not supported  
 `stream_options`| Not supported  
   
@@ -142,5 +179,5 @@ The response object is compatible with the OpenAI Responses API `response` struc
 
 Token usage is returned in `usage`:
 
-  * `input_tokens`: number of input tokens, where `input_tokens_details.cached_tokens` is the number of tokens hitting the [context cache](</guides/kv_cache>)
+  * `input_tokens`: number of input tokens, where `input_tokens_details.cached_tokens` is the number of tokens hitting the [context cache](<./kv_cache.md>)
   * `output_tokens`: number of output tokens, where `output_tokens_details.reasoning_tokens` is the number of chain-of-thought tokens

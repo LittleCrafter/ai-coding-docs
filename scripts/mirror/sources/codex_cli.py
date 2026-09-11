@@ -62,9 +62,15 @@ from typing import TYPE_CHECKING
 from urllib.parse import urlparse
 
 from ..core import fetch
+from ..core.fenced_code import protect_fenced_code, restore_fenced_code
 from ..core.github import fetch_git_tree, fetch_latest_release_tag
 from ..core.page import Page
-from .base import SourceConfig, try_make_page, warn_duplicate_slug
+from .base import (
+    SourceConfig,
+    ensure_known_slugs,
+    try_make_page,
+    warn_duplicate_slug,
+)
 
 if TYPE_CHECKING:
     # Annotation-only import: ``from __future__ import annotations`` keeps the
@@ -733,6 +739,71 @@ def _find_fence_close(text: str, opener: str, start: int) -> int | None:
     return None if match is None else match.start(1) + len(match.group(1))
 
 
+def _iter_fence_spans(text: str) -> Iterator[tuple[int, int]]:
+    """Yield the ``(start, end)`` span of every complete fenced code block.
+
+    The spans are the ones this adapter's fence rules select: an opening line
+    at ANY indentation (a sample inside a list item is indented by the list,
+    and shielding it is what keeps the example out of the component
+    converters), and a closing fence of the same character that is AT LEAST
+    as long as the opener -- so a four-backtick block documenting
+    three-backtick fences closes at its own four-backtick line rather than at
+    the first inner run.
+
+    Both rules are deliberately WIDER than the shared column-zero scanner in
+    ``core/fenced_code`` (the one the other shielded adapters use), which is
+    why this adapter supplies its own span finder to
+    ``core.fenced_code.protect_fenced_code`` instead of the shared one: a
+    page's indentation and fence lengths are properties of the page, and
+    narrowing them here would stop shielding blocks this adapter's
+    transformations must not touch. The extraction loop itself is shared.
+
+    An opener with no closing fence is not a block: skipping it leaves the
+    text exactly as it was, where shielding a run to the end of the document
+    would hide the components that follow.
+
+    A failed closer search is remembered per fence RUN -- the first position
+    from which that run's closer is known to be absent -- and every later
+    opener of the same run starts further right, so the absence still holds
+    and the search is skipped instead of repeated. Without that, a document
+    full of opener lines that no fence closes costs one scan to
+    end-of-document PER OPENER, which is quadratic in the document length: a
+    520 KB page of them took 50 s to scan. Each distinct fence run now
+    reaches the end of the document at most once.
+    """
+    # Fence run -> the earliest index from which that run's closer search
+    # failed. The closer pattern depends on the run's character AND its
+    # length, so runs are keyed by their own text rather than by their
+    # character alone: three backticks close a three-backtick fence but not a
+    # four-backtick one, and the two therefore fail independently.
+    no_closer_from: dict[str, int] = {}
+    position = 0
+    while (open_match := _FENCE_OPENER_RE.search(text, position)) is not None:
+        fence = open_match.group(1)
+        known_absent = no_closer_from.get(fence)
+        if known_absent is not None and open_match.end() >= known_absent:
+            position = open_match.end()
+            continue
+        close_at = _find_fence_close(text, fence, open_match.end())
+        if close_at is None:
+            no_closer_from[fence] = open_match.end()
+            position = open_match.end()
+            continue
+        yield open_match.start(), close_at
+        position = close_at
+
+
+def _fence_placeholder(index: int) -> str:
+    """Return the placeholder token that stands for one shielded block.
+
+    An HTML comment: it survives every regex this module runs (the component
+    and link passes match Markdown and JSX, not comments), it is invisible in
+    a rendered document if a token ever leaked, and its shape cannot occur in
+    the upstream MDX by accident.
+    """
+    return f"<!--__FENCED_CODE_BLOCK_{index}__-->"
+
+
 def _protect_fenced_code(text: str) -> tuple[str, list[str]]:
     """Protect fenced code blocks by replacing them with unique placeholder tokens.
 
@@ -741,38 +812,20 @@ def _protect_fenced_code(text: str) -> tuple[str, list[str]]:
     returns the protected text alongside the list of original code block
     strings.
 
-    The closing fence is derived from the opening one (see ``_find_fence_close``),
-    which is what keeps a longer fence intact: a four-backtick block that
-    documents three-backtick fences closes at its own four-backtick line, not
-    at the first inner run, so the example's second half is still shielded and
-    reaches the mirrored page exactly as upstream wrote it.
+    The extraction loop and the splice come from :mod:`core.fenced_code`,
+    which is where the mechanism every fence-shielding adapter shares is kept
+    (the same extract -> transform -> splice principle the HTML-to-Markdown
+    adapters apply to ``<pre>`` elements); this module contributes its own
+    fence rules and its own token shape.
     """
-    code_blocks: list[str] = []
-    parts: list[str] = []
-    cursor = 0
-    position = 0
-    while (open_match := _FENCE_OPENER_RE.search(text, position)) is not None:
-        close_at = _find_fence_close(text, open_match.group(1), open_match.end())
-        if close_at is None:
-            # An opener with no closing fence is not a code block: skipping it
-            # leaves the text exactly as it was, where shielding a run to the
-            # end of the document would hide the components that follow.
-            position = open_match.end()
-            continue
-        parts.append(text[cursor : open_match.start()])
-        code_blocks.append(text[open_match.start() : close_at])
-        parts.append(f"<!--__FENCED_CODE_BLOCK_{len(code_blocks) - 1}__-->")
-        cursor = close_at
-        position = close_at
-    parts.append(text[cursor:])
-    return "".join(parts), code_blocks
+    return protect_fenced_code(
+        text, spans=_iter_fence_spans, placeholder=_fence_placeholder
+    )
 
 
 def _restore_fenced_code(text: str, code_blocks: list[str]) -> str:
     """Restore previously protected fenced code blocks from placeholder tokens."""
-    for i, block in enumerate(code_blocks):
-        text = text.replace(f"<!--__FENCED_CODE_BLOCK_{i}__-->", block)
-    return text
+    return restore_fenced_code(text, code_blocks, _fence_placeholder)
 
 
 @dataclass(frozen=True, slots=True)
@@ -2177,7 +2230,20 @@ def fetch_markdown(client: httpx.Client, page: Page) -> tuple[str, str]:
        These link passes run with fenced code blocks shielded, so a link written
        inside a code example reaches the mirrored page unchanged.
     7. Returns `(text, content_hash(text))`.
+
+    The link passes of step 6 resolve each reference against the pages the
+    current run mirrors, so the hook refuses to run without that set (see
+    ``ensure_known_slugs``): with an empty one every internal link would be
+    rewritten to its upstream URL and the manifest would record the result as
+    the page's correct content. The guard runs BEFORE the download, so a hook
+    invoked without discovery fails immediately instead of fetching every page
+    first and failing on each one in turn.
+
+    Raises:
+        fetch.FetchError: When no discovered slug set is available.
     """
+    ensure_known_slugs("codex-cli", _KNOWN_SLUGS, page.slug)
+
     raw_text, _ = fetch.fetch_validated(client, page.source_md_url)
     if (
         page.source_id.startswith("llms:")

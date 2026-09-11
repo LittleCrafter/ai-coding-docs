@@ -145,36 +145,6 @@ _FRONTMATTER_TITLE_RE = re.compile(
 _HEADING_MARKER_RE = re.compile(
     r"(?:^\s*#{1,6}\s+\S|^(?>[^\n]*?[^-=\s][^\n]*)\n[-=]{2,}\s*$)", re.MULTILINE
 )
-# Fenced code block stripping, in either CommonMark fence style: an opening
-# fence of three backticks or three tildes (optionally followed by an info
-# string on the same line), a body of any number of lines, and a matching
-# closing fence of the SAME style (exactly three fence characters plus
-# optional trailing spaces/tabs). Used by `extract_title` to strip code
-# blocks before scanning for headings, so a heading-shaped line inside a
-# code sample is never mistaken for the document title.
-#
-# Both fence styles are handled in ONE left-to-right pass (see
-# `_strip_fenced_code_blocks`): a ``~~~`` line *inside* a backtick block is
-# never mistaken for that block's closing fence, and whichever fence style
-# opens first wins -- exactly like CommonMark's own left-to-right parse.
-#
-# BACKTRACKING HAZARD (why this is a line scanner, not a regex): the
-# natural regex form ``^```[^\n]*\n.*?^```[ \t]*$`` (with a tilde
-# alternative, DOTALL|MULTILINE) is O(N x body length) on input with N
-# unclosed opening fences. When no closing fence exists, the lazy ``.*?``
-# expands all the way to end-of-string looking for a closer, fails, and the
-# regex engine then retries the whole scan from the NEXT unclosed opener --
-# so every unclosed fence costs one full scan of the remaining body. The
-# pattern runs on raw network input and ``MAX_RESPONSE_BYTES`` allows bodies
-# of several MiB, making this a remotely-triggerable hang (measured: 20,000
-# lines of ``"```python\n"`` -- ~140 KB, well under the size cap -- did not
-# finish in 180 s; 2,000/4,000/8,000 openers took 0.34/1.33/5.26 s, the
-# classic 4x-per-2x quadratic signature). A tempered body such as
-# ``(?:(?!^```[ \t]*$)[\s\S])*`` does NOT fix this: it only changes which
-# lines the body may contain, not the per-opener scan-to-end failure cost.
-# The line scanner below is linear instead: each line is examined a bounded
-# number of times, and the closer lookup per opener is a ``bisect`` over a
-# precomputed index list (O(log n)) rather than a re-scan of the tail.
 # An ATX heading in the body, used by `extract_title` as the first
 # heading-fallback: one to six leading hashes, required whitespace, then the
 # heading text (captured, non-greedy) up to the end of the line. ``\s*$``
@@ -568,16 +538,56 @@ def validate_markdown(text: str) -> bool:
     return is_markdown
 
 
+# Fenced code block stripping, in either CommonMark fence style: an opening
+# fence of three backticks or three tildes (optionally followed by an info
+# string on the same line), a body of any number of lines, and a matching
+# closing fence of the SAME style (the exact same fence string plus optional
+# trailing spaces/tabs). Used by `extract_title` to strip code blocks before
+# scanning for headings, so a heading-shaped line inside a code sample is
+# never mistaken for the document title.
+#
+# Both fence styles are handled in ONE left-to-right pass (see
+# `_strip_fenced_code_blocks`): a ``~~~`` line *inside* a backtick block is
+# never mistaken for that block's closing fence, and whichever fence style
+# opens first wins -- exactly like CommonMark's own left-to-right parse.
+#
+# The closing-fence rule is deliberately STRICTER than CommonMark, which
+# accepts any run of the same character at least as long as the opener: here
+# the closer must be the very same fence string. Every document this scan
+# runs on comes from a converter that closes a block with a byte-identical
+# fence, so the strict form costs nothing and keeps the two fence styles
+# unambiguous against each other.
+#
+# Line starts are recognised only after ``\n`` (never after a bare ``\r`` or
+# a Unicode line separator), matching the behaviour of a MULTILINE ``^``
+# anchor. A carriage return is NOT tolerated after a closing fence, so a
+# CRLF-encoded document's fences never close: the whole fence is treated as
+# unclosed and its lines are kept, headings and all.
+#
+# BACKTRACKING HAZARD (why this is a line scanner, not a regex): the
+# natural regex form ``^```[^\n]*\n.*?^```[ \t]*$`` (with a tilde
+# alternative, DOTALL|MULTILINE) is O(N x body length) on input with N
+# unclosed opening fences. When no closing fence exists, the lazy ``.*?``
+# expands all the way to end-of-string looking for a closer, fails, and the
+# regex engine then retries the whole scan from the NEXT unclosed opener --
+# so every unclosed fence costs one full scan of the remaining body. The
+# pattern runs on raw network input and ``MAX_RESPONSE_BYTES`` allows bodies
+# of several MiB, making this a remotely-triggerable hang (measured: 20,000
+# lines of ``"```python\n"`` -- ~140 KB, well under the size cap -- did not
+# finish in 180 s; 2,000/4,000/8,000 openers took 0.34/1.33/5.26 s, the
+# classic 4x-per-2x quadratic signature). A tempered body such as
+# ``(?:(?!^```[ \t]*$)[\s\S])*`` does NOT fix this: it only changes which
+# lines the body may contain, not the per-opener scan-to-end failure cost.
+# The line scanner below is linear instead: each line is examined a bounded
+# number of times, and the closer lookup per opener is a ``bisect`` over a
+# precomputed index list (O(log n)) rather than a re-scan of the tail.
 def _is_fence_closer(line: str, fence: str) -> bool:
     """Return True when *line* is a valid closing fence for *fence*.
 
-    Mirrors the closing-fence half of the former ``_CODE_FENCE_RE`` pattern
-    exactly: the line must be the three-character fence string followed by
-    nothing but spaces or tabs. A longer fence run (e.g. four backticks) is
-    NOT a closer for a three-backtick opener, and a carriage return is NOT
-    tolerated -- the old pattern's ``[ \t]*$`` accepted neither, so a
-    CRLF-encoded document's fences never close (the whole fence is treated
-    as unclosed and its lines are kept, headings and all).
+    The rule is the exact-fence one described in the comment above: the line
+    must be the three-character fence string followed by nothing but spaces
+    or tabs. A longer fence run (e.g. four backticks) is NOT a closer for a
+    three-backtick opener, and a trailing carriage return is NOT tolerated.
     """
     return line.startswith(fence) and all(c in " \t" for c in line[len(fence) :])
 
@@ -585,44 +595,40 @@ def _is_fence_closer(line: str, fence: str) -> bool:
 def _strip_fenced_code_blocks(text: str) -> str:
     """Remove every complete fenced code block from *text* in one linear pass.
 
-    This is a drop-in, semantics-identical replacement for the former
-    ``_CODE_FENCE_RE.sub("", text)`` call: a block runs from an opening
-    fence line (`` ``` `` or ``~~~`` plus an optional info string, and a
-    terminating newline -- an opener on the very last line without one can
-    never open a block, exactly as the old pattern's required ``\n``
-    dictated) through the first following line that is a bare closing fence
-    of the same style. Both fence lines and the body between them are
-    dropped; everything else -- including UNCLOSED fences, which the old
-    regex simply never matched -- is kept verbatim.
+    A block runs from an opening fence line (`` ``` `` or ``~~~`` plus an
+    optional info string, and a terminating newline -- an opener on the very
+    last line without one can never open a block) through the first
+    following line that is a bare closing fence of the same style. Both
+    fence lines and the body between them are dropped; everything else --
+    including UNCLOSED fences, which match nothing here -- is kept verbatim.
 
-    The scan replicates the old substitution's left-to-right, first-opener-
-    wins behaviour: the earliest opening fence claims the block, its body is
-    consumed up to its closer (inner fence lines of either style are body
-    text, never openers or closers in their own right), and scanning resumes
-    on the line after the closer. An opener with no closer anywhere after it
-    matches nothing and is emitted as ordinary text, and -- this is the key
-    linear-time observation -- no LATER opener of the same style can close
-    either, because a closer for it would also have closed this one. That
+    The scan is strictly left to right and first-opener-wins: the earliest
+    opening fence claims the block, its body is consumed up to its closer
+    (inner fence lines of either style are body text, never openers or
+    closers in their own right), and scanning resumes on the line after the
+    closer. An opener with no closer anywhere after it matches nothing and
+    is emitted as ordinary text, and -- this is the key linear-time
+    observation -- no LATER opener of the same style can close either,
+    because a closer for it would also have closed this one. That
     monotonicity lets each style's closer candidates be precomputed once as
     a sorted list of line indices; each opener then finds its first possible
     closer with one ``bisect_right`` instead of re-scanning the document
     tail, so N unclosed openers cost O(N log N) total rather than
-    O(N x body length) -- see the hazard comment where ``_CODE_FENCE_RE``
-    used to be defined for why the regex form was a remotely-triggerable
-    hang on network-controlled input.
+    O(N x body length) -- see the hazard comment above `_is_fence_closer`
+    for why a regex form of this scan is a remotely-triggerable hang on
+    network-controlled input.
     """
-    # Split on "\n" only (never ``str.splitlines``): the old pattern's ``^``
-    # anchor recognised line starts exclusively after ``\n``, so a `` ``` ``
-    # following a bare ``\r`` or a Unicode line separator must NOT count as
-    # fence-shaped. Every part except the last ended with ``\n`` in the
-    # original text, which is also how the opener's required trailing
-    # newline is detected below.
+    # Split on "\n" only (never ``str.splitlines``): a line start here means
+    # a position right after ``\n``, so a `` ``` `` following a bare ``\r``
+    # or a Unicode line separator must NOT count as fence-shaped. Every part
+    # except the last ended with ``\n`` in the original text, which is also
+    # how the opener's required trailing newline is detected below.
     parts = text.split("\n")
     # Closer-candidate line indices per fence style, precomputed in one
     # pass. A line qualifies as a closer candidate even when it also LOOKS
     # like an opener (a bare "```" line is both): which role it plays is
-    # decided by the scan order below, matching the regex's leftmost-match
-    # resolution.
+    # decided by the scan order below, i.e. by which end of the block the
+    # scan reaches first.
     closers = {
         "```": [i for i, p in enumerate(parts) if _is_fence_closer(p, "```")],
         "~~~": [i for i, p in enumerate(parts) if _is_fence_closer(p, "~~~")],
@@ -633,9 +639,10 @@ def _strip_fenced_code_blocks(text: str) -> str:
     while i <= last:
         part = parts[i]
         # Opener check: the line must start with a fence AND be followed by
-        # a newline (i.e. not be the final part), mirroring the old
-        # pattern's ``^```[^\n]*\n``. The info string needs no validation --
-        # ``[^\n]*`` accepted anything, including extra fence characters.
+        # a newline (i.e. not be the final part), because the opening fence
+        # is only an opening fence once a body can follow it. The rest of
+        # the line -- the info string -- needs no validation: anything may
+        # follow the fence run, including further fence characters.
         fence = None
         if i < last:
             if part.startswith("```"):
@@ -648,12 +655,12 @@ def _strip_fenced_code_blocks(text: str) -> str:
             k = bisect_right(candidates, i)
             if k < len(candidates):
                 # Complete block: skip opener, body, and closer wholesale.
-                # Lines inside are never reconsidered as openers, exactly
-                # like the consumed body of a regex match.
+                # Lines inside are never reconsidered as openers -- the
+                # block is consumed as a unit.
                 i = candidates[k] + 1
                 continue
         # Not an opener, or an opener with no closer: keep the line as
-        # ordinary text and move on, as the failed regex match did.
+        # ordinary text and move on.
         out.append(part)
         i += 1
     return "\n".join(out)

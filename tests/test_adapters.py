@@ -281,6 +281,18 @@ def test_claude_code_sitemap_index_skips_foreign_host_child_sitemaps():
 # --- deepseek: HTML -> Markdown conversion -----------------------------------
 
 
+def _seed_deepseek_slugs(*slugs: str) -> None:
+    """Publish *slugs* as the page set the current run mirrors.
+
+    ``deepseek.fetch_markdown`` refuses to convert without one -- an empty set
+    would send every internal link to its upstream URL -- so each test that
+    reaches the hook seeds the set the way ``discover`` would, rather than
+    relying on a test earlier in the module having left one behind.
+    """
+    deepseek._KNOWN_SLUGS.clear()
+    deepseek._KNOWN_SLUGS.update(slugs or {"index", "quickstart"})
+
+
 def test_deepseek_html_to_markdown_extracts_theme_doc_markdown():
     """Conversion must isolate the `div.theme-doc-markdown` content node and
     strip Docusaurus chrome living inside it (nav/breadcrumbs), so the
@@ -1521,13 +1533,42 @@ def test_claude_normalize_resolves_internal_cross_links():
 def test_claude_normalize_resolves_links_idempotently():
     """Resolution is applied once per page fetch, but the page a later pass
     sees is already the output of the earlier one -- so the same text must
-    resolve to itself. Both passes only match a leading ``/docs/en`` path and
-    neither result starts with one, which is what makes the second run a
-    no-op and keeps the content hash stable across mirror runs."""
-    raw = "# Page\n\nSee [hooks](/docs/en/hooks).\n"
-    known = {"hooks", "sample"}
+    resolve to itself. Both passes only match a leading ``/docs/en`` or
+    ``/en`` path and neither result starts with one, which is what makes the
+    second run a no-op and keeps the content hash stable across mirror
+    runs."""
+    raw = "# Page\n\nSee [hooks](/docs/en/hooks) and [skills](/en/skills).\n"
+    known = {"hooks", "skills", "sample"}
     once = claude_code._normalize_page(raw, "sample", known)
     assert claude_code._normalize_page(once, "sample", known) == once
+
+
+def test_claude_normalize_resolves_the_unprefixed_en_link_form():
+    """A few upstream cross-links omit the ``docs`` segment (``/en/skills``)
+    while the site serves that spelling as the same page. Without covering
+    it, those links reach the mirror as literal site-root-absolute paths,
+    which resolve to nothing in a local checkout."""
+    raw = (
+        "# Page\n\nSee [skills](/en/skills) and "
+        "[tool](/en/tools-reference#powershell-tool) and "
+        '[html](<a href="/en/skills">s</a>).\n'
+    )
+    known = {"skills", "tools-reference", "sample"}
+    md = claude_code._normalize_page(raw, "sample", known)
+    assert "[skills](./skills.md)" in md
+    assert "[tool](./tools-reference.md#powershell-tool)" in md
+    assert '<a href="./skills.md">' in md
+    assert "](/en/" not in md
+
+
+def test_claude_normalize_sends_an_unmirrored_en_link_upstream():
+    """The unprefixed form resolves against the same slug set as the
+    ``/docs/en`` form, so a route this run does not mirror falls back to its
+    CANONICAL upstream URL -- the ``/docs/en`` spelling -- rather than the
+    alias the page happened to use."""
+    raw = "# Page\n\nSee [gone](/en/retired-page#top).\n"
+    md = claude_code._normalize_page(raw, "sample", {"sample"})
+    assert "[gone](https://code.claude.com/docs/en/retired-page#top)" in md
 
 
 def test_claude_normalize_keeps_component_definitions_structural():
@@ -1744,6 +1785,19 @@ def test_claude_shield_many_unterminated_fences_complete_quickly():
     assert elapsed < 2.0, f"shielding {len(text)} characters took {elapsed:.2f}s"
 
 
+def _seed_claude_slugs(*slugs: str) -> None:
+    """Publish *slugs* as the page set the current run mirrors.
+
+    ``claude_code.fetch_markdown`` refuses to normalise without one -- an
+    empty set would send every internal link to its upstream URL -- so each
+    test that reaches the hook seeds the set the way ``discover`` would,
+    rather than relying on a test earlier in the module having left one
+    behind.
+    """
+    claude_code._KNOWN_SLUGS.clear()
+    claude_code._KNOWN_SLUGS.update(slugs or {"overview", "hooks"})
+
+
 def _claude_page(slug: str = "overview") -> Page:
     """Build the ``Page`` a ``fetch_markdown`` test needs, with realistic URLs."""
     return Page(
@@ -1769,6 +1823,7 @@ def test_claude_fetch_markdown_returns_normalized_markdown_and_hash():
         "<Note>\nInstall it first.\n</Note>\n"
     )
     page = _claude_page()
+    _seed_claude_slugs("overview")
     md, digest = claude_code.fetch_markdown(_FakeClient([_Resp(200, raw)]), page)
     assert md.startswith("> ## Documentation Index")
     assert "# Overview" in md
@@ -1783,6 +1838,7 @@ def test_claude_fetch_markdown_rejects_non_markdown():
     that exception type only, so this is also what keeps one bad response from
     aborting the whole source."""
     client = _FakeClient([_Resp(200, "<html><body><p>404 Not Found</p></body></html>")])
+    _seed_claude_slugs("hooks")
     with pytest.raises(fetch.FetchError):
         claude_code.fetch_markdown(client, _claude_page("hooks"))
 
@@ -1794,6 +1850,7 @@ def test_claude_fetch_markdown_wraps_a_normalisation_failure(monkeypatch):
     type only, so an unforeseen markup shape (or a bug in a pass) must fail
     just this page instead of aborting the whole source's run."""
     page = _claude_page("hooks")
+    _seed_claude_slugs("hooks")
 
     def _explode(text: str, slug: str, known_slugs=None) -> str:
         raise ValueError("unforeseen markup shape")
@@ -1804,6 +1861,21 @@ def test_claude_fetch_markdown_wraps_a_normalisation_failure(monkeypatch):
         claude_code.fetch_markdown(client, page)
     assert page.slug in str(exc_info.value)
     assert isinstance(exc_info.value.__cause__, ValueError)
+
+
+def test_claude_fetch_markdown_refuses_to_normalise_without_discovered_slugs():
+    """Normalising with no discovered slug set would rewrite every internal
+    link on the page to its upstream URL (see ``ensure_known_slugs``), so the
+    hook must fail loudly instead -- and as a ``FetchError``, the one type the
+    pipeline isolates per page rather than aborting the source. The refusal
+    comes before the download, so a run that skipped discovery stops at the
+    first page instead of fetching the whole source and then failing."""
+    claude_code._KNOWN_SLUGS.clear()
+    page = _claude_page("hooks")
+    client = _FakeClient([_Resp(200, "# Hooks\n\nSome prose.\n")])
+    with pytest.raises(fetch.FetchError, match="no discovered slugs"):
+        claude_code.fetch_markdown(client, page)
+    assert client.calls == 0
 
 
 # --- DeepSeek code-block blank-line preservation ------------------------------
@@ -1854,6 +1926,7 @@ def test_deepseek_fetch_markdown_rejects_non_markdown():
         source_id="x",
         group="",
     )
+    _seed_deepseek_slugs()
     with pytest.raises(fetch.FetchError):
         deepseek.fetch_markdown(client, page)
 
@@ -1884,11 +1957,70 @@ def test_deepseek_fetch_markdown_returns_markdown_and_hash():
         source_id="quickstart",
         group="root",
     )
+    _seed_deepseek_slugs("quickstart")
     md, digest = deepseek.fetch_markdown(client, page)
     assert "# Quickstart" in md  # converted ATX heading present
     assert "create your first chat completion" in md  # prose converted
     assert "site header" not in md and "site footer" not in md  # chrome gone
     assert digest == fetch.content_hash(md)
+
+
+# --- codex_cli: fetch_markdown hook -------------------------------------------
+
+
+def _seed_codex_slugs(*slugs: str) -> None:
+    """Publish *slugs* as the page set the current run mirrors.
+
+    ``codex_cli.fetch_markdown`` refuses to run without one -- an empty set
+    would send every internal link to its upstream URL -- so each test that
+    reaches the hook seeds the set the way ``discover`` would, rather than
+    relying on a test earlier in the module having left one behind.
+    """
+    codex_cli._KNOWN_SLUGS.clear()
+    codex_cli._KNOWN_SLUGS.update(slugs or {"config", "overview"})
+
+
+def test_codex_fence_spans_of_unclosed_fences_complete_quickly():
+    """A page of fence opener lines that no fence line ever closes must not be
+    quadratic: once a closer search has failed for a fence run, every later
+    opener of that run is known to have no closer either and skips the search
+    entirely. An opener with no closer is not a code block, so the scan
+    reports nothing and the text is left exactly as it was.
+
+    The openers carry an info string, which is what stops one opener from
+    closing the one before it. The threshold is deliberately far above the
+    cost of the linear walk and far below the cost of the quadratic one
+    (50 s for this input), so the test measures the shape of the scan rather
+    than the speed of the machine it runs on."""
+    text = "# Page\n\n" + "```text\nunterminated code\n" * 20000
+    started = time.monotonic()
+    spans = list(codex_cli._iter_fence_spans(text))
+    elapsed = time.monotonic() - started
+    assert spans == []
+    assert elapsed < 2.0, f"scanning {len(text)} characters took {elapsed:.2f}s"
+
+
+def test_codex_fetch_markdown_refuses_to_fetch_without_discovered_slugs():
+    """The link passes resolve each reference against the pages this run
+    mirrors, so a hook that ran without that set would rewrite every internal
+    link to its upstream URL (see ``ensure_known_slugs``) and the manifest
+    would record the result as the page's correct content. The guard fails
+    loudly instead -- as a ``FetchError``, the one type the pipeline isolates
+    per page -- and does so BEFORE the download, so a run that skipped
+    discovery stops at the first page rather than downloading the whole
+    source and then failing on every page."""
+    codex_cli._KNOWN_SLUGS.clear()
+    client = _FakeClient([_Resp(200, "# Config\n\nSome prose.\n")])
+    page = Page(
+        slug="config",
+        source_url="https://github.com/openai/codex/blob/main/docs/config.md",
+        source_md_url="https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
+        source_id="config",
+        group="",
+    )
+    with pytest.raises(fetch.FetchError, match="no discovered slugs"):
+        codex_cli.fetch_markdown(client, page)
+    assert client.calls == 0
 
 
 def test_codex_fetch_markdown_rewrites_root_links_with_anchors():
@@ -1909,6 +2041,7 @@ def test_codex_fetch_markdown_rewrites_root_links_with_anchors():
         source_id="config",
         group="",
     )
+    _seed_codex_slugs("config")
     md, digest = codex_cli.fetch_markdown(client, page)
     assert "https://github.com/openai/codex/blob/main/SECURITY.md" in md
     assert "https://github.com/openai/codex/blob/main/SECURITY.md#policy" in md
@@ -1982,6 +2115,7 @@ def test_codex_fetch_markdown_resolves_pure_stub():
         source_id="docs/agents_md.md",
         group="root",
     )
+    _seed_codex_slugs("agents_md")
     md, digest = codex_cli.fetch_markdown(client, page)
     # Heading # AGENTS.md is retained because rich_twin lacked an H1
     assert md.startswith("# AGENTS.md\n\n")
@@ -2012,6 +2146,7 @@ def test_codex_fetch_markdown_resolves_pure_stub_with_remote_h1():
         source_id="docs/authentication.md",
         group="root",
     )
+    _seed_codex_slugs("authentication")
     md, digest = codex_cli.fetch_markdown(client, page)
     # Exactly one "# Authentication" heading
     assert md.count("# Authentication") == 1
@@ -2036,6 +2171,7 @@ def test_codex_fetch_markdown_fallback_on_error(capsys):
         source_id="docs/agents_md.md",
         group="root",
     )
+    _seed_codex_slugs("agents_md")
     md, digest = codex_cli.fetch_markdown(client, page)
     # Gracefully returns the original stub text
     assert md == stub_raw
@@ -2082,6 +2218,7 @@ def test_codex_fetch_markdown_resolves_hybrid_page():
         source_id="docs/config.md",
         group="root",
     )
+    _seed_codex_slugs("config")
     md, digest = codex_cli.fetch_markdown(client, page)
 
     # Top heading # Configuration remains
@@ -2124,6 +2261,7 @@ def test_codex_fetch_markdown_hybrid_page_partial_fallback(capsys):
         source_id="docs/config.md",
         group="root",
     )
+    _seed_codex_slugs("config")
     md, digest = codex_cli.fetch_markdown(client, page)
 
     # Basic section resolved
@@ -2340,10 +2478,7 @@ def test_codex_fetch_markdown_for_llms_page():
         source_id="llms:extend/record-and-replay",
         group="extend",
     )
-    codex_cli._KNOWN_SLUGS.clear()
-    codex_cli._KNOWN_SLUGS.update(
-        {"extend/record-and-replay", "agent-configuration/subagents"}
-    )
+    _seed_codex_slugs("extend/record-and-replay", "agent-configuration/subagents")
     md, digest = codex_cli.fetch_markdown(client, page)
     assert "[Subagents](../agent-configuration/subagents.md)" in md
     assert digest == fetch.content_hash(md)
@@ -3111,6 +3246,7 @@ def test_codex_fetch_markdown_strips_frontmatter_and_keeps_title(capsys):
         source_id="llms:codex-manual",
         group="root",
     )
+    _seed_codex_slugs("codex-manual")
     md, digest = codex_cli.fetch_markdown(client, page)
     assert not md.startswith("---")
     assert "hidden: true" not in md
@@ -3181,8 +3317,7 @@ def test_codex_fetch_markdown_keeps_long_fences_and_their_examples():
         source_id="llms:config",
         group="root",
     )
-    codex_cli._KNOWN_SLUGS.clear()
-    codex_cli._KNOWN_SLUGS.update({"config", "quickstart"})
+    _seed_codex_slugs("config", "quickstart")
     md, digest = codex_cli.fetch_markdown(client, page)
     # The example block reached the page exactly as upstream wrote it.
     fenced = raw.split("````markdown\n", 1)[1].rsplit("````", 1)[0]
@@ -3215,10 +3350,7 @@ def test_codex_fetch_markdown_rewrites_body_site_absolute_links():
         source_id="llms:sandboxing/auto-review",
         group="sandboxing",
     )
-    codex_cli._KNOWN_SLUGS.clear()
-    codex_cli._KNOWN_SLUGS.update(
-        {"sandboxing/auto-review", "config-file/config-advanced"}
-    )
+    _seed_codex_slugs("sandboxing/auto-review", "config-file/config-advanced")
     md, digest = codex_cli.fetch_markdown(client, page)
     assert (
         "[`[auto_review].policy`](../config-file/config-advanced.md"
@@ -3504,19 +3636,22 @@ def test_deepseek_html_to_markdown_fences_docusaurus_code_block_verbatim():
     scanner ``iter_code_block_spans`` (backtick/tilde fenced blocks) cannot
     recognize as code, so the blank-line collapsing pass would eat blank runs
     inside code samples. The double blank line below (a 3-newline run) is
-    exactly what collapsing would destroy."""
+    exactly what collapsing would destroy.
+
+    The fixture reproduces the REAL markup the site serves: every code line
+    is a ``<span class="token-line">`` followed by a ``<br>``, and the line
+    content itself is split into per-token ``<span>`` elements. A fixture
+    built from literal newlines inside ``<pre>`` would pass whether or not
+    the extraction honours ``<br>``, because the raw text already carries the
+    breaks -- which is precisely how a conversion that drops every newline
+    went unnoticed. Blank lines are the empty ``token-line`` spans."""
     html = """
     <div class="theme-doc-markdown markdown">
       <h1>Your First API Call</h1>
       <div class="theme-code-block">
         <div class="language-python codeBlockContainer_abc theme-code-block">
           <div class="codeBlockContent_def">
-            <pre class="prism-code language-python codeBlock_ghi"><code class="codeBlockLines_jkl">from openai import OpenAI
-
-client = OpenAI(base_url="https://api.deepseek.com")
-
-
-response = client.chat.completions.create(model="deepseek-chat")</code></pre>
+            <pre class="prism-code language-python codeBlock_ghi"><code class="codeBlockLines_jkl"><span class="token-line"><span class="token keyword">from</span><span class="token plain"> openai </span><span class="token keyword">import</span><span class="token plain"> OpenAI</span><br></span><span class="token-line"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line"><span class="token plain">client </span><span class="token operator">=</span><span class="token plain"> OpenAI</span><span class="token punctuation">(</span><span class="token plain">base_url</span><span class="token operator">=</span><span class="token string">"https://api.deepseek.com"</span><span class="token punctuation">)</span><br></span><span class="token-line"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line"><span class="token plain">response </span><span class="token operator">=</span><span class="token plain"> client.chat.completions.create</span><span class="token punctuation">(</span><span class="token plain">model</span><span class="token operator">=</span><span class="token string">"deepseek-chat"</span><span class="token punctuation">)</span><br></span></code></pre>
             <div class="buttonGroup_mno"><button type="button">Copy</button></div>
           </div>
         </div>
@@ -3566,6 +3701,207 @@ def test_deepseek_html_to_markdown_fence_outlives_inner_backticks():
     """
     md = deepseek._html_to_markdown(html)
     assert "````\nUse ``` for fences.\n````" in md
+
+
+# --- DeepSeek page-shape normalisation ----------------------------------------
+
+
+def test_deepseek_html_to_markdown_keeps_heading_text_in_the_heading():
+    """The embedded API renderer wraps a heading's text in a paragraph
+    (``<h3><p>Body</p></h3>``). Left alone, html2text emits the heading
+    marker alone and the text as the paragraph beneath it, so the document
+    outline loses the heading and the reader sees a stray ``###``."""
+    html = (
+        '<div class="theme-doc-markdown">'
+        '<h3 class="openapi-markdown__details-summary-header-body"><p>Body</p></h3>'
+        "<p>Prose after the heading.</p></div>"
+    )
+    md = deepseek._html_to_markdown(html)
+    assert "### Body" in md
+    assert "###\n" not in md
+
+
+def test_deepseek_html_to_markdown_labels_tab_panels():
+    """A Docusaurus tab strip is an HTML list, so converting it as-is turns
+    the tab labels into a bullet list that names content further down the
+    page with nothing connecting the two. Every panel is content (the mirror
+    is a document, not an interactive page), so each keeps its label on a
+    bold line directly above it and the strip itself is dropped."""
+    html = (
+        '<div class="theme-doc-markdown">'
+        '<div class="tabs-container tabList_x"><ul role="tablist" class="tabs">'
+        '<li role="tab" class="tabs__item tabs__item--active">curl</li>'
+        '<li role="tab" class="tabs__item">python</li></ul>'
+        '<div class="margin-top--md">'
+        '<div role="tabpanel" class="tabItem_a"><pre><code class="language-bash">curl x</code></pre></div>'
+        '<div role="tabpanel" class="tabItem_a" hidden=""><pre><code class="language-python">py x</code></pre></div>'
+        "</div></div></div>"
+    )
+    md = deepseek._html_to_markdown(html)
+    assert "**curl**\n\n```bash\ncurl x\n```" in md
+    assert "**python**\n\n```python\npy x\n```" in md
+    assert "* curl" not in md  # the strip is gone, not converted to a list
+
+
+def test_deepseek_html_to_markdown_labels_nested_tab_groups():
+    """Tab groups NEST on the embedded OpenAPI pages: a schema's groups render
+    inside the request-body panel that holds them. A strip's panels are
+    therefore only the ones up to the next panel boundary -- counting the
+    nested groups' panels too would make the counts disagree, and every strip
+    on the page would go unlabelled, taking its labels off the page with it.
+
+    Both groups are paired here, the outer one included its nested panel, so
+    no label is lost and no label is attached to the wrong sample."""
+    html = (
+        '<div class="theme-doc-markdown">'
+        '<div class="tabs-container">'
+        '<div class="tabs__container">'
+        '<div class="openapi-tabs__mime-container">'
+        '<ul role="tablist" class="tabs openapi-tabs__mime">'
+        '<li role="tab" class="tabs__item tabs__item--active">application/json</li>'
+        "</ul></div></div>"
+        '<div class="margin-top--md">'
+        '<div role="tabpanel" class="tabItem_a">'
+        '<div class="openapi-tabs__schema-container">'
+        '<div class="openapi-tabs__schema-tabs-container">'
+        '<ul role="tablist" class="tabs openapi-tabs__schema">'
+        '<li role="tab" class="tabs__item">System message</li>'
+        '<li role="tab" class="tabs__item">User message</li>'
+        "</ul></div>"
+        '<div class="margin-top--md">'
+        '<div role="tabpanel" class="tabItem_b">'
+        '<pre><code class="language-json">{"role": "system"}</code></pre></div>'
+        '<div role="tabpanel" class="tabItem_b" hidden="">'
+        '<pre><code class="language-json">{"role": "user"}</code></pre></div>'
+        "</div></div></div></div></div></div>"
+    )
+    md = deepseek._html_to_markdown(html)
+    # Every label survived, each on the bold line above the panel it names.
+    assert "**application/json**\n\n**System message**" in md
+    assert '**System message**\n\n```json\n{"role": "system"}\n```' in md
+    assert '**User message**\n\n```json\n{"role": "user"}\n```' in md
+    # Both strips are gone, and no label was left behind as a bullet list.
+    assert "* application/json" not in md
+    assert "* System message" not in md
+
+
+def test_deepseek_html_to_markdown_keeps_tab_labels_when_they_do_not_pair():
+    """The label/panel pairing is positional, so it is only made when the two
+    counts agree. A mismatch means the markup changed shape: nothing is
+    labelled, because attaching a label to the wrong sample is worse than the
+    bare list it replaced. The strip is KEPT in that case -- dropping it
+    would delete the labels from the page entirely, and the panel they name
+    would lose the only thing that says which sample it is."""
+    html = (
+        '<div class="theme-doc-markdown">'
+        '<div class="tabs-container tabList_x"><ul role="tablist" class="tabs">'
+        '<li role="tab" class="tabs__item">curl</li>'
+        '<li role="tab" class="tabs__item">python</li></ul>'
+        '<div class="margin-top--md">'
+        '<div role="tabpanel" class="tabItem_a"><pre><code class="language-bash">curl x</code></pre></div>'
+        "</div></div></div>"
+    )
+    md = deepseek._html_to_markdown(html)
+    assert "**curl**" not in md
+    assert "* curl" in md  # the labels survive as the list they were written as
+    assert "* python" in md
+    assert "```bash\ncurl x\n```" in md  # the panel content still survives
+
+
+def test_deepseek_html_to_markdown_keeps_a_strip_whose_panels_are_missing():
+    """A strip with no panels of its own has nothing to label, so it is left
+    alone rather than removed: the labels are the only text it carries, and
+    deleting them would lose them from the page."""
+    html = (
+        '<div class="theme-doc-markdown">'
+        '<div class="tabs-container"><ul role="tablist" class="tabs">'
+        '<li role="tab" class="tabs__item">curl</li></ul>'
+        "</div>"
+        "<p>Prose that follows the strip.</p></div>"
+    )
+    md = deepseek._html_to_markdown(html)
+    assert "* curl" in md
+    assert "Prose that follows the strip." in md
+
+
+def test_deepseek_html_to_markdown_resolves_site_absolute_links():
+    """A ``/guides/...`` href resolves on the upstream site only: in a local
+    checkout a leading ``/`` means the filesystem root, so every such link is
+    dead where the mirror is read. A mirrored route becomes a relative link
+    to the page that holds it, an unmirrored one becomes its upstream URL,
+    and the anchor survives both branches."""
+    html = (
+        '<div class="theme-doc-markdown">'
+        '<p><a href="/guides/vision#limits">Vision</a> and '
+        '<a href="/img/diagram.png">Diagram</a> and '
+        '<a href="/">Home</a> and '
+        '<a href="https://example.com/x">External</a>.</p></div>'
+    )
+    md = deepseek._html_to_markdown(
+        html, "guides/tool_calls", {"index", "guides/vision", "guides/tool_calls"}
+    )
+    assert "[Vision](<./vision.md#limits>)" in md
+    assert "[Diagram](<https://api-docs.deepseek.com/img/diagram.png>)" in md
+    assert "[Home](<../index.md>)" in md
+    assert "[External](<https://example.com/x>)" in md
+
+
+def test_deepseek_html_to_markdown_leaves_links_alone_without_a_page_set():
+    """An absent page set means "which pages this run mirrors is unknown", not
+    "nothing is mirrored": resolving against an empty set would rewrite every
+    internal link to its upstream URL, so the links are left exactly as
+    upstream wrote them instead."""
+    html = (
+        '<div class="theme-doc-markdown">'
+        '<p><a href="/guides/vision">Vision</a></p></div>'
+    )
+    md = deepseek._html_to_markdown(html)
+    assert "[Vision](</guides/vision>)" in md
+
+
+def test_deepseek_html_to_markdown_keeps_code_samples_out_of_the_link_pass():
+    """The cross-link pass runs on the DOM after the ``<pre>`` blocks have
+    been lifted out, so a snippet that shows a site path keeps showing
+    exactly what it showed. Fenced code that reached the text-level passes
+    would have to be shielded explicitly; here the ordering does it."""
+    html = (
+        '<div class="theme-doc-markdown">'
+        '<p><a href="/guides/vision">Real link</a></p>'
+        '<pre><code class="language-json">{"url": "/guides/vision"}</code></pre>'
+        "</div>"
+    )
+    md = deepseek._html_to_markdown(html, "index", {"index", "guides/vision"})
+    assert "[Real link](<./guides/vision.md>)" in md
+    assert '{"url": "/guides/vision"}' in md
+
+
+def test_deepseek_fetch_markdown_refuses_to_convert_without_discovered_slugs():
+    """Converting with no discovered slug set would rewrite every internal
+    link on the page to its upstream URL (see ``ensure_known_slugs``), so the
+    hook must fail loudly instead -- and as a ``FetchError``, the one type the
+    pipeline isolates per page. The refusal comes before the download, so a
+    run that skipped discovery stops at the first page instead of fetching
+    the whole source and then failing."""
+    client = _FakeClient(
+        [
+            _Resp(
+                200,
+                '<div class="theme-doc-markdown"><h1>Quickstart</h1>'
+                "<p>Enough prose to validate as Markdown.</p></div>",
+            )
+        ]
+    )
+    page = Page(
+        slug="quickstart",
+        source_url="https://api-docs.deepseek.com/quickstart",
+        source_md_url="https://api-docs.deepseek.com/quickstart",
+        source_id="quickstart",
+        group="root",
+    )
+    deepseek._KNOWN_SLUGS.clear()
+    with pytest.raises(fetch.FetchError, match="no discovered slugs"):
+        deepseek.fetch_markdown(client, page)
+    assert client.calls == 0
 
 
 # --- discovery under HTTP fetch errors ----------------------------------------
@@ -4065,6 +4401,38 @@ def test_kimi_normalize_keeps_semantic_markup_and_fenced_code_intact():
     assert "<div>\n\nkept content\n\n</div>" in md
     assert '<div class="step">\n::: tip sample\n<Badge type="tip" text="v1" />' in md
     assert "[!TIP]" not in md
+
+
+def test_kimi_normalize_protects_a_fence_indented_inside_a_list_item():
+    """Upstream nests code samples inside list steps, which indents the whole
+    fence. The conversions match their constructs anywhere on a line -- a
+    ``<div class="step">`` needs no anchor, a ``:::`` marker accepts any
+    indentation -- so an indented sample quoting one would be rewritten as
+    page structure unless its fence counts as a fence."""
+    raw = (
+        "# Guide\n"
+        "\n"
+        "1. Apply the patch:\n"
+        "\n"
+        "   ```html\n"
+        '   <div class="step">\n'
+        "   ::: tip sample\n"
+        '   <Badge type="tip" text="v1" />\n'
+        "   ```\n"
+    )
+    md = kimi_code._normalize_page(raw)
+    assert "[!TIP]" not in md
+    assert '<div class="step">' in md
+    assert '<Badge type="tip" text="v1" />' in md
+
+
+def test_kimi_normalize_still_converts_a_fence_indented_too_far_to_be_one():
+    """Four columns is an indented code block, not a fence, so the content
+    there is ordinary page text to the conversions -- the guard widens the
+    fence rule the way CommonMark does and no further."""
+    raw = "# Guide\n\n    ::: tip sample\n    body\n    :::\n"
+    md = kimi_code._normalize_page(raw)
+    assert "[!TIP]" in md
 
 
 def test_kimi_fetch_markdown_returns_normalized_markdown_and_hash():
