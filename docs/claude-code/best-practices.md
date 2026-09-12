@@ -438,7 +438,7 @@ Pick the parallel approach that fits how much coordination you want to do yourse
 
 * [Worktrees](./worktrees.md): run separate CLI sessions in isolated git checkouts so edits don't collide
 * [Cross-session messaging](./cross-session-messaging.md): let the sessions you run yourself pass findings to each other
-* [Desktop app](./desktop.md#work-in-parallel-with-sessions): manage multiple local sessions visually, each in its own worktree
+* [Desktop app](./desktop.md#work-in-parallel-with-sessions): manage multiple local sessions visually, optionally each in its own worktree
 * [Claude Code on the web](./claude-code-on-the-web.md): run sessions in the cloud, on Anthropic-managed infrastructure by default
 * [Agent view](./agent-view.md): research preview. Run `claude agents` to dispatch sessions that keep running in the background and watch them from one screen
 * [Agent teams](./agent-teams.md): experimental and disabled by default. Automated coordination of multiple sessions with shared tasks, messaging, and a team lead
