@@ -1510,11 +1510,11 @@ GPT-Live manages the live conversation. When you use Voice in an existing
 Codex task, the task's selected model handles the work. See
 [ChatGPT Voice](./features/voice.md#start-talking) for availability and setup.
 
-- **Plus:** Approximately 15–30 minutes
-- **Pro 5x ($100/month):** Approximately 1–2.5 hours
+- **Plus:** Approximately 30 minutes–1 hour
+- **Pro 5x ($100/month):** Approximately 3–6 hours
 - **Pro 20x ($200/month):** Unlimited voice access
-- **Business:** Approximately 45 minutes
-- **Enterprise / Edu (legacy):** Approximately 45 minutes
+- **Business:** Approximately 30 minutes–1 hour
+- **Enterprise / Edu (legacy):** Approximately 30 minutes–1 hour
 
 Unlimited voice access doesn't make Codex tasks unlimited. Tasks started through
 ChatGPT Voice continue to use your existing Codex usage budget.
@@ -1718,7 +1718,7 @@ efficiently](./prompting.md#use-work-efficiently).
 #### Feature availability
 
 - Feature is currently limited to only specific regions. Check the
-  individual feature documentation to learn more about geo restrictions.
+  individual feature documentation to learn more about geographic restrictions.
 
   † Some first party plugins are not available.
 

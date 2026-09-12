@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.269",
-  "last_updated": "2026-09-11T22:51:18Z",
+  "last_updated": "2026-09-12T01:40:08Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -410,8 +410,8 @@
       "source_url": "https://code.claude.com/docs/en/authentication",
       "source_md_url": "https://code.claude.com/docs/en/authentication.md",
       "source_id": "authentication",
-      "hash": "e0d4a3afc36ee80fe1b36edf3a7c94bb6acb59bd83a289de43ce30aa82ae8f29",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "a9e83ac99dad9e27aef1723e7ff77a714a2687697b57945782c88618257e4e44",
+      "last_updated": "2026-09-12T01:40:08Z"
     },
     "auto-mode-config": {
       "slug": "auto-mode-config",
@@ -1110,8 +1110,8 @@
       "source_url": "https://code.claude.com/docs/en/managed-settings",
       "source_md_url": "https://code.claude.com/docs/en/managed-settings.md",
       "source_id": "managed-settings",
-      "hash": "b1cfff1cd153cc0610aba22cef9cbe1f848353b5086160cf4ed9435fc735b3e3",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "a0af763d494d64d98e8fe3a49a454c24112548526df2c0577b4dc21bd8c20f54",
+      "last_updated": "2026-09-12T01:40:08Z"
     },
     "mcp": {
       "slug": "mcp",
@@ -1490,8 +1490,8 @@
       "source_url": "https://code.claude.com/docs/en/server-managed-settings",
       "source_md_url": "https://code.claude.com/docs/en/server-managed-settings.md",
       "source_id": "server-managed-settings",
-      "hash": "08576b3cb7051de7623b696951e674dc68c223515f1a1eed2aab8be93122173e",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "a0b84bffcddd2162ba83a20c3a4ad9a5eed30a7510ebc7d5b6eb4001631f7a4d",
+      "last_updated": "2026-09-12T01:40:08Z"
     },
     "sessions": {
       "slug": "sessions",
@@ -1530,8 +1530,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "25ce6db3c472da2d5283abf17d93a42703b94c514ef92b94884209b3e33ee5de",
-      "last_updated": "2026-09-11T17:58:39Z"
+      "hash": "54f16d7e771c633d13596a5b0c1a9079e342abe32c4a45ef888b2ec255628196",
+      "last_updated": "2026-09-12T01:40:08Z"
     },
     "setup": {
       "slug": "setup",
@@ -1925,8 +1925,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-11T22:51:18Z",
-    "fetch_duration_seconds": 69.538,
+    "last_fetch_completed": "2026-09-12T01:40:08Z",
+    "fetch_duration_seconds": 69.378,
     "total_pages_discovered": 192,
     "pages_fetched_successfully": 192,
     "pages_failed": 0,
