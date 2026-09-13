@@ -11403,8 +11403,15 @@ They cannot access privileged browser APIs such as `window.alert`,
 `window.prompt`, `window.confirm`, or `navigator.clipboard`. The CSP controls
 standard `fetch` requests. Nested frames are unavailable by default; enable
 specific origins in resource CSP metadata such as
-`_meta.ui.csp.frameDomains`. Work with your OpenAI partner if you need a
-specific domain added to the allowlist.
+`_meta.ui.csp.frameDomains`. Plugins can embed pages from their MCP server's
+own registrable domain, including existing editors and admin interfaces. See
+the [iframe policy](https://developers.openai.com/plugins/app-guidelines#iframes-and-embedded-pages) for
+domain ownership, required justifications, and review requirements.
+
+The widget CSP restricts which iframe destinations can load. An embedded
+page uses its own CSP; the widget `connectDomains` and `resourceDomains`
+allowlists do not restrict network requests made inside that page. Keep iframe
+origins specific and include the embedded experience in your security review.
 
 Server-side code has no network restrictions beyond what your hosting environment enforces. Follow normal best practices for outbound calls (TLS verification, retries, timeouts).
 
@@ -21056,6 +21063,13 @@ Declare the exact domains the component connects to or loads resources from:
 Nested frames are blocked by default. Keep each allowlist as narrow as possible.
 The plugin review process checks the declared policy against the UI behavior.
 
+You can embed an existing editor or admin interface from your MCP server's own
+registrable domain. For example, a server at `https://api.example.com/mcp` can
+declare `https://app.example.com` in `frameDomains`. Provide the required
+justification at submission and follow the
+[iframe policy](https://developers.openai.com/plugins/app-guidelines#iframes-and-embedded-pages), including
+its restrictions on shared hosting and its review requirements.
+
 Component UI templates are the recommended path for production.
 
 During development you can rebuild the component bundle whenever your React code changes and hot-reload the server.
@@ -27546,14 +27560,26 @@ disparaging alternatives.
 
 #### Iframes and embedded pages
 
-Plugins with UI can opt in to iframe usage by setting `frameDomains` in the
-resource CSP (`_meta.ui.csp.frameDomains`), but we strongly encourage you to
-build the UI without this pattern. If you choose to use `frameDomains`, be
-aware that:
+Plugins with UI can embed pages from their MCP server's own registrable domain,
+including full existing editors and admin interfaces. For example, a server at
+`https://api.example.com/mcp` can embed `https://app.example.com`: both use the
+registrable domain `example.com`. Separate tenants on a shared hosting service
+count as different domains; using the same hosting provider does not establish
+ownership.
 
-- It is only intended for cases where embedding a third-party experience is essential (for example, a notebook, IDE, or similar environment).
-- Those plugins receive extra manual review and are often not approved for broad distribution.
-- During development, any developer can test `frameDomains` in developer mode, but approval for public listing is limited to trusted scenarios.
+Declare each required iframe origin in the resource CSP using
+`_meta.ui.csp.frameDomains` (or the legacy
+`_meta["openai/widgetCSP"].frame_domains`). For third-party domains, iframe
+embeds should be limited to cases where the embedded experience is essential.
+
+You must still provide a justification when submitting a plugin that uses
+iframes. Explain what each embedded page does, why the plugin embeds it, and
+who controls its domain. Iframe use can require additional review or
+escalation and may lead to slower approval or rejection if the content cannot
+be assessed. Sharing the MCP server's domain does not guarantee approval.
+
+All other plugin requirements still apply to embedded pages, including the
+[checkout](#checkout) and [privacy](#privacy) requirements.
 
 #### Privacy
 
@@ -28631,7 +28657,7 @@ The standard `_meta.ui.csp` object is generally preferred for new UI and support
 
 - `connectDomains`: `string[]`. Domains the widget may contact via fetch/XHR.
 - `resourceDomains`: `string[]`. Domains for static assets (images, fonts, scripts, styles).
-- `frameDomains?`: `string[]`. Optional list of origins allowed for iframe embeds. By default, widgets can't render subframes; adding `frameDomains` opts in to iframe usage and triggers stricter plugin review.
+- `frameDomains?`: `string[]`. Optional list of origins allowed for iframe embeds. By default, widgets can't render subframes. Plugins can embed their own domain, including existing editors and admin interfaces, under the [iframe policy](https://developers.openai.com/plugins/app-guidelines#iframes-and-embedded-pages). A justification is required at submission, and iframe use can require additional review or lead to slower approval.
 
 However, `_meta.ui.csp` does not support `redirect_domains` for `window.openai.openExternal(...)` links. To allowlist redirect targets, you must still set `_meta["openai/widgetCSP"].redirect_domains`.
 
@@ -30368,7 +30394,7 @@ Immersive experiences that expand beyond the inline card, giving users space for
 **Rules of thumb**
 
 - **Design your UX to work with the system composer**. The composer is always present in fullscreen, so make sure your experience supports conversational prompts that can trigger tool calls and feel natural for users.
-- **Use fullscreen to deepen engagement**, not to replicate your native app wholesale.
+- **Use fullscreen for work that benefits from more space.** Existing editors and admin interfaces can be embedded when they meet the [iframe policy](https://developers.openai.com/plugins/app-guidelines#iframes-and-embedded-pages).
 
 #### Picture-in-picture (PiP)
 
