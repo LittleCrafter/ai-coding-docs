@@ -79,7 +79,7 @@ Connecting GitHub is a one-time step. If you already use the GitHub CLI, you can
 
 ### Connect from your terminal
 
-If you already use the GitHub CLI (`gh`), you can set up Claude Code on the web without opening a browser. This requires the [Claude Code CLI](./quickstart.md). On Team and Enterprise plans, `/web-setup` is available only after an Owner turns on [Quick web setup](./claude-code-on-the-web.md#github-authentication-options).
+If you already use the GitHub CLI (`gh`), you can set up Claude Code on the web from your terminal. This requires the [Claude Code CLI](./quickstart.md). On Team and Enterprise plans, `/web-setup` is available only after an Owner turns on [Quick web setup](./claude-code-on-the-web.md#github-authentication-options).
 
 When you run `/web-setup`, Claude Code reads the token that `gh auth token` prints, asks you to confirm, and sends the token to Anthropic. Anthropic stores it encrypted with your claude.ai account, and your cloud sessions use it for GitHub access until you [remove it](#remove-the-web-setup-token). A cloud session can then access any repository that token can access, with no Claude GitHub App installation.
 

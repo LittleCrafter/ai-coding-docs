@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.270",
-  "last_updated": "2026-09-12T22:41:27Z",
+  "last_updated": "2026-09-13T19:55:40Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -40,8 +40,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/agent-loop",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/agent-loop.md",
       "source_id": "agent-sdk/agent-loop",
-      "hash": "5e0614901a23c96877e85bf3d37195ba3232d3e65d595f53f1922a9af7f777cc",
-      "last_updated": "2026-09-11T17:58:39Z"
+      "hash": "abb491e4a25ff529168d79767fa8c12c8a3be37b9cd868b13ecc7b59434b0d1c",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/claude-code-features": {
       "slug": "agent-sdk/claude-code-features",
@@ -50,8 +50,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/claude-code-features",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/claude-code-features.md",
       "source_id": "agent-sdk/claude-code-features",
-      "hash": "65bac6fef201bc9e514790720e320f2fe07b6b7cd2d8f1f1d316448e754d631c",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "098d381084712dd720dc0a7cde0539de683af19a72471ed126521bc608e9a84d",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/cost-tracking": {
       "slug": "agent-sdk/cost-tracking",
@@ -100,8 +100,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/hooks",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/hooks.md",
       "source_id": "agent-sdk/hooks",
-      "hash": "83b78c9ec750487f84acee1bf6736e1fcd63223a811860d016b36cf6d720646c",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "97fbc303aa86684b05d390654df176051109c6b712d0c705b1446b3157d7a3a2",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/hosting": {
       "slug": "agent-sdk/hosting",
@@ -120,8 +120,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/mcp",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/mcp.md",
       "source_id": "agent-sdk/mcp",
-      "hash": "7971b0669595ebcdd028c507c5671454df245997437ab55a1d9a42df08d3ee3c",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "7c205b9689918ee77a113e7d0571dd8ac8a9bdb995ae230337d79aa0a93ba08a",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/migration-guide": {
       "slug": "agent-sdk/migration-guide",
@@ -140,8 +140,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts.md",
       "source_id": "agent-sdk/modifying-system-prompts",
-      "hash": "f36495d46cea145b85148d172f0a5231f223187f79e3de4f56a4360b56920347",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "ed18625c5f85ffa0bb53f28508c212a7d68314ba26c3ee5c45e3bc029060b856",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/observability": {
       "slug": "agent-sdk/observability",
@@ -160,8 +160,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/overview",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/overview.md",
       "source_id": "agent-sdk/overview",
-      "hash": "c8c508e0e14ce4392c2c120154b54d94f9dca29f95b3bb95aaf5ab84b2a0bb0e",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "c427808d55ddfbc6dbf8b62aeb57e912d81494143d5dee80e58a78f2f06e7812",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/permissions": {
       "slug": "agent-sdk/permissions",
@@ -190,8 +190,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/python",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/python.md",
       "source_id": "agent-sdk/python",
-      "hash": "05b945b6edd7ec99af662e1ffa80d8be2bb217396852b0fdbe04872f283383ef",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "249c42a5c14767cb1ab16435a1fc6b81917dd435d865f07538b253fa6703f696",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/quickstart": {
       "slug": "agent-sdk/quickstart",
@@ -240,8 +240,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/skills",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/skills.md",
       "source_id": "agent-sdk/skills",
-      "hash": "33056ffe7e5bde5d054215cf9dbdedd65899711cb42243af05a8f5e8a23464ad",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "5ad8a105a36eb475cfbc391e807f6cf0e2f5bbf2beac5b64359e78fdede7bfe0",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/streaming-output": {
       "slug": "agent-sdk/streaming-output",
@@ -250,8 +250,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/streaming-output",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/streaming-output.md",
       "source_id": "agent-sdk/streaming-output",
-      "hash": "6f37f7e13d085ca6bef59adebbe67bfe56cf6514b82562133755684fc7244cfb",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "e0702c800baff32f35597d81b597e40134a0527f2f6e60e369128f9ddc8011ff",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/streaming-vs-single-mode": {
       "slug": "agent-sdk/streaming-vs-single-mode",
@@ -320,8 +320,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/typescript",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/typescript.md",
       "source_id": "agent-sdk/typescript",
-      "hash": "c824133d5dba85806ab22eb9f89b7b8b417ae379787d51bbcf611278ee104639",
-      "last_updated": "2026-09-12T07:23:43Z"
+      "hash": "5abfc95a4ec87a3ecf63308b725cd22abb90e6cf6bfe6b959b934d65b7113d54",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "agent-sdk/typescript-v2-preview": {
       "slug": "agent-sdk/typescript-v2-preview",
@@ -560,8 +560,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-code-on-the-web",
       "source_md_url": "https://code.claude.com/docs/en/claude-code-on-the-web.md",
       "source_id": "claude-code-on-the-web",
-      "hash": "2cc59fcda12e98b709daba38ce64e7dbf237af3724c81121b19f44df15934454",
-      "last_updated": "2026-09-11T17:58:39Z"
+      "hash": "8ec06819d9b697a45d38b411848571eda72de6ef77f55d089f5b23454cafe5ec",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "claude-directory": {
       "slug": "claude-directory",
@@ -670,8 +670,8 @@
       "source_url": "https://code.claude.com/docs/en/computer-use",
       "source_md_url": "https://code.claude.com/docs/en/computer-use.md",
       "source_id": "computer-use",
-      "hash": "a7273f02dc159be422a6c9d2f1492a439732237cfacdf2d577ead799799df8ea",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "aeba249ff9948d02dccc5f32a0d097674bc1761f585944742761bd898babd37e",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "context-window": {
       "slug": "context-window",
@@ -920,8 +920,8 @@
       "source_url": "https://code.claude.com/docs/en/github-enterprise-server",
       "source_md_url": "https://code.claude.com/docs/en/github-enterprise-server.md",
       "source_id": "github-enterprise-server",
-      "hash": "c0999ac58184e482f2843451c369c7184dfa0b54f4af7969fa9d27c039809d4f",
-      "last_updated": "2026-09-11T01:50:12Z"
+      "hash": "05cabadbededf10b4e6ba58ac64dbf826ccac5b061852d7168e2dc4300483f7c",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "gitlab-ci-cd": {
       "slug": "gitlab-ci-cd",
@@ -1670,8 +1670,8 @@
       "source_url": "https://code.claude.com/docs/en/web-quickstart",
       "source_md_url": "https://code.claude.com/docs/en/web-quickstart.md",
       "source_id": "web-quickstart",
-      "hash": "9dab19200b9c9540f06298432493724aeb212ff9c9195d6e2a8acd47d6fa036d",
-      "last_updated": "2026-09-11T17:58:39Z"
+      "hash": "28d4d63133bab1d61a89572676dbf3d6f577429ffa8f72daea61cf6c83e1a717",
+      "last_updated": "2026-09-13T19:55:40Z"
     },
     "whats-new": {
       "slug": "whats-new",
@@ -1925,8 +1925,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-12T22:41:27Z",
-    "fetch_duration_seconds": 68.822,
+    "last_fetch_completed": "2026-09-13T19:55:40Z",
+    "fetch_duration_seconds": 69.429,
     "total_pages_discovered": 192,
     "pages_fetched_successfully": 192,
     "pages_failed": 0,
