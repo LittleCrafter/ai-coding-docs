@@ -1006,8 +1006,7 @@ Both messages report a rejection the API returned for a request Claude Code sent
 
 ```text theme={null}
 OAuth token revoked · Please run /login
-OAuth token has expired · Please run /login
-API Error: 401 ... authentication_error
+Please run /login · API Error: 401 OAuth token has expired ...
 ```
 
 **What to do:**
@@ -1049,7 +1048,7 @@ In [non-interactive mode](./headless.md) (`-p`) and the [Agent SDK](./agent-sdk/
 Failed to authenticate: OAuth session expired and could not be refreshed
 ```
 
-This is not the same state as [OAuth token revoked or expired](#oauth-token-revoked-or-expired). Those messages report a 401 the API returned. Claude Code itself produces `Login expired` for a login it already failed to renew, so it sends no request. When the renewal fails because the account itself is suspended rather than the login being stale, Claude Code shows [Your account is on hold](#your-account-is-on-hold) instead.
+This is not the same state as [OAuth token revoked or expired](#oauth-token-revoked-or-expired). Those messages report a rejection the API returned. Claude Code itself produces `Login expired` for a login it already failed to renew, so it sends no request. When the renewal fails because the account itself is suspended rather than the login being stale, Claude Code shows [Your account is on hold](#your-account-is-on-hold) instead.
 
 Sessions authenticated with an API key, [`CLAUDE_CODE_OAUTH_TOKEN`](./env-vars.md), or a third-party provider don't use the saved login and never see this message.
 
@@ -1645,7 +1644,7 @@ See [Explore the context window](./context-window.md) for an interactive view of
 Context exceeds the 200k-token limit by 94k tokens — run /compact or /clear to continue.
 ```
 
-When the limit you exceeded is a compaction window smaller than the model's context window, such as the 200K boundary on 1M-context models, the warning reads differently. Requests still succeed past a compaction window; run the named command to bring usage back under it.
+When the limit you exceeded is a compaction window, such as the 200K boundary on 1M-context models, the warning reads differently. A compaction window can sit below the model's context window, so requests past it can still succeed.
 
 ```text theme={null}
 Context is 94k tokens past the 200k-token compaction window — run /compact to reduce usage.

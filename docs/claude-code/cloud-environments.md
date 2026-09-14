@@ -457,7 +457,6 @@ With **Trusted** network access, sessions can reach the following domains by def
 **Anthropic services**
 
 * api.anthropic.com
-* statsig.anthropic.com
 * docs.claude.com
 * platform.claude.com
 * code.claude.com
@@ -529,6 +528,7 @@ With **Trusted** network access, sessions can reach the following domains by def
 * [www.java.net](http://www.java.net)
 * download.oracle.com
 * yum.oracle.com
+* \*.r2.cloudflarestorage.com
 
 **JavaScript and Node package managers**
 
@@ -539,6 +539,8 @@ With **Trusted** network access, sessions can reach the following domains by def
 * npmjs.org
 * yarnpkg.com
 * registry.yarnpkg.com
+* jsr.io
+* npm.jsr.io
 
 **Python package managers**
 
@@ -593,11 +595,13 @@ With **Trusted** network access, sessions can reach the following domains by def
 * central.maven.org
 * repo1.maven.org
 * repo.maven.apache.org
+* maven.google.com
 * jcenter.bintray.com
 * gradle.org
 * [www.gradle.org](http://www.gradle.org)
 * services.gradle.org
 * plugins.gradle.org
+* plugins-artifacts.gradle.org
 * kotlinlang.org
 * [www.kotlinlang.org](http://www.kotlinlang.org)
 * spring.io
@@ -675,14 +679,7 @@ With **Trusted** network access, sessions can reach the following domains by def
 
 **Cloud services and monitoring**
 
-* statsig.com
-* [www.statsig.com](http://www.statsig.com)
-* api.statsig.com
-* sentry.io
-* \*.sentry.io
-* downloads.sentry-cdn.com
 * http-intake.logs.datadoghq.com
-* browser-intake-us5-datadoghq.com
 * \*.datadoghq.com
 * \*.datadoghq.eu
 * api.honeycomb.io

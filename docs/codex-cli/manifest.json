@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.154.0",
-  "last_updated": "2026-09-13T22:43:45Z",
+  "last_updated": "2026-09-14T21:06:48Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -240,8 +240,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "102f0937de70d17a65ac26ec41f534cc51363ca48e9468241167b764f3113ab5",
-      "last_updated": "2026-09-13T22:43:45Z"
+      "hash": "9ef52e8fa1ca563dfed32296d839c64e7590dec0f98a85ab397c65b269a29ddc",
+      "last_updated": "2026-09-14T21:06:48Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -350,8 +350,8 @@
       "source_url": "https://learn.chatgpt.com/docs/configuration",
       "source_md_url": "https://learn.chatgpt.com/docs/configuration.md",
       "source_id": "llms:configuration",
-      "hash": "a3f71d58a71c35f9103c97f207d1cf65ba307e28c21aaaa5797e4abfe06f4372",
-      "last_updated": "2026-09-10T23:35:40Z"
+      "hash": "a993e0b8d89de4fe498beccd83494d871e5ee8348df1ff146d59b5aa290dd258",
+      "last_updated": "2026-09-14T21:06:48Z"
     },
     "contributing": {
       "slug": "contributing",
@@ -840,8 +840,8 @@
       "source_url": "https://learn.chatgpt.com/docs/features/voice",
       "source_md_url": "https://learn.chatgpt.com/docs/features/voice.md",
       "source_id": "llms:features/voice",
-      "hash": "90c3108bd5a19bbb32fa1bd05864ca5c2b78d8d43a807490ec3a061ad491f954",
-      "last_updated": "2026-09-10T23:35:40Z"
+      "hash": "e96d051c31b585ea31c2b5fe80b51e38e96bb7960dbeb4c1ceb47700f33eeb52",
+      "last_updated": "2026-09-14T21:06:48Z"
     },
     "get-started-with-work": {
       "slug": "get-started-with-work",
@@ -960,8 +960,8 @@
       "source_url": "https://learn.chatgpt.com/docs/linux/linux-app",
       "source_md_url": "https://learn.chatgpt.com/docs/linux/linux-app.md",
       "source_id": "llms:linux/linux-app",
-      "hash": "f272cab3d9681667f3e5e652ece601ce562c380ba779acc647d397d26db7d46b",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "fc83fcd34e52518e69f04eda7b3992a2d3cce72178009edb0dbdd5457b68c268",
+      "last_updated": "2026-09-14T21:06:48Z"
     },
     "long-running-work": {
       "slug": "long-running-work",
@@ -1090,8 +1090,8 @@
       "source_url": "https://learn.chatgpt.com/docs/pricing",
       "source_md_url": "https://learn.chatgpt.com/docs/pricing.md",
       "source_id": "llms:pricing",
-      "hash": "2582443c23180c143199c1a000094a4e78e7581d95d632c2d007b250fd9dfbb6",
-      "last_updated": "2026-09-12T01:41:04Z"
+      "hash": "5dc821d1686114f5b754582e1c11c7347aee7726999543018345b63226160fac",
+      "last_updated": "2026-09-14T21:06:48Z"
     },
     "projects": {
       "slug": "projects",
@@ -1595,8 +1595,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-13T22:43:45Z",
-    "fetch_duration_seconds": 55.396,
+    "last_fetch_completed": "2026-09-14T21:06:48Z",
+    "fetch_duration_seconds": 55.441,
     "total_pages_discovered": 159,
     "pages_fetched_successfully": 159,
     "pages_failed": 0,

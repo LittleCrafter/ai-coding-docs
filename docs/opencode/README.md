@@ -3,8 +3,8 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 36
-- **Version:** 1.18.30
-- **Last updated:** 2026-09-13T17:48:42Z
+- **Version:** 1.18.31
+- **Last updated:** 2026-09-14T21:07:45Z
 - **Official docs:** https://opencode.ai/docs
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 

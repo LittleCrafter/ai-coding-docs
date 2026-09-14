@@ -16,7 +16,7 @@ Local and always-up-to-date mirror of the documentation for various **AI coding 
 | [**Codex CLI**](./docs/codex-cli/)                           | 0.154.0 | learn.chatgpt.com (`/docs/`) + github.com/openai/codex (`docs/`) | scraping (learn.chatgpt.com pages listed in the codex/llms.txt index + the openai/codex git tree) |     —     |
 | [**DeepSeek API**](./docs/deepseek-api/)                     |    —    | api-docs.deepseek.com                                            | scraping (HTML → Markdown via `html2text`)                                                        |     —     |
 | [**Kimi Code**](./docs/kimi-code/)                           | 0.43.0  | github.com/MoonshotAI/kimi-code (`docs/en/`)                     | scraping (GitHub tree → VitePress `.md` → Markdown)                                               |     —     |
-| [**OpenCode**](./docs/opencode/)                             | 1.18.30 | github.com/anomalyco/opencode (`packages/web/src/content/docs/`) | scraping (GitHub tree → raw `.mdx` → `.md` conversion)                                            |     —     |
+| [**OpenCode**](./docs/opencode/)                             | 1.18.31 | github.com/anomalyco/opencode (`packages/web/src/content/docs/`) | scraping (GitHub tree → raw `.mdx` → `.md` conversion)                                            |     —     |
 
 <!-- SOURCES_TABLE:END -->
 

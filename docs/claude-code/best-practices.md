@@ -483,8 +483,6 @@ You can also integrate Claude into existing data/processing pipelines:
 claude -p "<your prompt>" --output-format json | your_command
 ```
 
-Use `--verbose` for debugging during development, and turn it off in production.
-
 ### Run autonomously with auto mode
 
 For uninterrupted execution with background safety checks, use [auto mode](./permission-modes.md#eliminate-prompts-with-auto-mode). A classifier model reviews commands before they run, blocking scope escalation, unknown infrastructure, and hostile-content-driven actions while letting routine work proceed without prompts.

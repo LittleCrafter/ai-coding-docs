@@ -46,7 +46,7 @@ Package knowledge, connect services, and add capabilities.
 
 Install and update ChatGPT on a supported Linux desktop.
 
-- [ChatGPT desktop app](./linux/linux-app.md) — Install the Linux preview on Ubuntu, Debian, or Fedora.
+- [ChatGPT desktop app](./linux/linux-app.md) — Install the Linux preview on Ubuntu, Debian, Fedora, or Arch Linux.
 
 ## Windows
 

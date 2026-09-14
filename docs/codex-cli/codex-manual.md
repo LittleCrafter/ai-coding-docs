@@ -1297,8 +1297,6 @@ Everything in Plus and:
 - Access to GPT-5.3-Codex-Spark (research preview), a fast Codex model
   for day-to-day coding tasks
 - 5x or 20x more Codex usage than Plus\*
-- Unlimited ChatGPT Voice on the $200/month tier; tasks still draw from
-  your Codex usage budget
 - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
   Pro plan
 
@@ -1374,11 +1372,6 @@ credit rewards; review the
 invitation.
 
 #### Frequently asked questions
-
-#### How much does Sites cost?
-
-[Sites](./sites.md) is included with eligible ChatGPT plans during public
-beta. Availability depends on your plan, region, and workspace settings.
 
 #### What are the usage limits for my plan?
 
@@ -1500,28 +1493,24 @@ for ChatGPT Pro users only, and isn't available in the API at launch. Because it
 runs on specialized low-latency hardware, usage is governed by a separate usage
 limit that may adjust based on demand.
 
-#### ChatGPT Voice in Desktop
+#### How much does Sites cost?
 
-ChatGPT Voice on desktop uses a separate, plan-dependent allowance measured in
-rolling five-hour windows. Tasks started through Voice use your existing Codex
-usage budget. ChatGPT notifies you when you reach either limit.
+[Sites](./sites.md) is included with eligible ChatGPT plans during public
+beta. Availability depends on your plan, region, and workspace settings.
 
-GPT-Live manages the live conversation. When you use Voice in an existing
-Codex task, the task's selected model handles the work. See
-[ChatGPT Voice](./features/voice.md#start-talking) for availability and setup.
+#### How much does Voice cost?
 
-- **Plus:** Approximately 30 minutes–1 hour
-- **Pro 5x ($100/month):** Approximately 3–6 hours
-- **Pro 20x ($200/month):** Unlimited voice access
-- **Business:** Approximately 30 minutes–1 hour
-- **Enterprise / Edu (legacy):** Approximately 30 minutes–1 hour
+Voice in Desktop uses your existing Codex usage budget at $0.05 per
+minute.
 
-Unlimited voice access doesn't make Codex tasks unlimited. Tasks started through
-ChatGPT Voice continue to use your existing Codex usage budget.
+GPT-Live manages the live conversation. The model handling your task is billed
+separately at its standard token rates. Voice and tasks share your plan's usage
+limits.
 
-For Business, Edu, and Enterprise workspaces with credit-based or pay-as-you-go
-billing, Desktop voice costs approximately 6 credits per minute. ChatGPT Voice
-in Desktop is not available via API Key currently.
+For Business, Edu, and Enterprise workspaces with credit-based billing, desktop
+voice costs 1.25 credits per minute. This rate also applies when Plus and Pro
+users spend additional credits. ChatGPT Voice in Desktop isn't available via API
+key.
 
 #### What happens when you hit usage limits?
 
@@ -15087,7 +15076,7 @@ Package knowledge, connect services, and add capabilities.
 
 Install and update ChatGPT on a supported Linux desktop.
 
-- [ChatGPT desktop app](./linux/linux-app.md): Install the Linux preview on Ubuntu, Debian, or Fedora.
+- [ChatGPT desktop app](./linux/linux-app.md): Install the Linux preview on Ubuntu, Debian, Fedora, or Arch Linux.
 
 #### Windows
 
@@ -16725,17 +16714,7 @@ speech into prompt text before sending it.
 
 #### Limits and troubleshooting
 
-Only one voice chat can be active across the ChatGPT desktop app at a time.
-Voice conversations use a separate, plan-dependent allowance measured in rolling
-five-hour windows. Tasks started through Voice continue to use your Codex usage
-budget. ChatGPT notifies you when you reach either limit. See [Voice pricing and
-limits](./pricing.md#chatgpt-voice-in-desktop).
-
-If you can't start a voice chat, confirm that ChatGPT Voice is available for your
-plan, rollout, and workspace. Then check microphone permissions and whether a
-voice chat is already active in another app window. If screen context isn't
-available, check **Settings > Voice**, Appshots permissions, and your
-organization's restrictions.
+Only one voice chat can be active across the ChatGPT desktop app at a time. If you can't start a voice chat, confirm that ChatGPT Voice is available for your plan, rollout, and workspace. Then check microphone permissions and whether a voice chat is already active in another app window. If screen context isn't available, check **Settings > Voice**, Appshots permissions, and your organization's restrictions.
 
 ### CLI customization
 
@@ -39650,6 +39629,7 @@ The preview supports the desktop versions of these Linux distributions:
 - Ubuntu 24.04 LTS and 26.04 LTS
 - Debian 13
 - Fedora 43 and 44
+- Arch Linux (current, fully updated rolling releases)
 
 Each supported distribution has packages for x64 and ARM64 processors. To check
 your processor architecture, run:
@@ -39663,7 +39643,8 @@ The output `x86_64` identifies an x64 processor. The output `aarch64` or
 
 #### Download the right package
 
-Choose `.deb` for Ubuntu or Debian, and `.rpm` for Fedora:
+Choose `.deb` for Ubuntu or Debian, `.rpm` for Fedora, or the installation script
+for Arch Linux:
 
 | Distribution     | Architecture | Download                                                                                                          |
 | ---------------- | ------------ | ----------------------------------------------------------------------------------------------------------------- |
@@ -39671,6 +39652,8 @@ Choose `.deb` for Ubuntu or Debian, and `.rpm` for Fedora:
 | Ubuntu or Debian | ARM64        | [Download `.deb` for ARM64](https://persistent.oaistatic.com/codex-app-prod/linux/deb/latest/chatgpt_arm64.deb)   |
 | Fedora           | x64          | [Download `.rpm` for x64](https://persistent.oaistatic.com/codex-app-prod/linux/rpm/latest/chatgpt.x86_64.rpm)    |
 | Fedora           | ARM64        | [Download `.rpm` for ARM64](https://persistent.oaistatic.com/codex-app-prod/linux/rpm/latest/chatgpt.aarch64.rpm) |
+| Arch Linux       | x64          | [Install using the script](#install-on-arch-linux)                                                                |
+| Arch Linux       | ARM64        | [Install using the script](#install-on-arch-linux)                                                                |
 
 #### Install on Ubuntu or Debian
 
@@ -39706,9 +39689,26 @@ Open **ChatGPT** from your applications menu, or run `chatgpt` in a terminal.
 Sign in with your ChatGPT account and follow the
 [desktop app quickstart](./quickstart.md).
 
+#### Install on Arch Linux
+
+On Arch Linux, open a terminal, download the installation script, and run it:
+
+```bash
+curl --proto '=https' --tlsv1.2 -fL -o install-arch.sh \
+  https://persistent.oaistatic.com/codex-app-prod/linux/install-arch.sh
+sudo bash install-arch.sh
+```
+
+The script detects your architecture, configures the signed OpenAI package
+repository, and installs ChatGPT. Installation performs a full system upgrade
+and prompts for confirmation.
+
+Open **ChatGPT** from your applications menu. Sign in with your ChatGPT account
+and follow the [desktop app quickstart](./quickstart.md).
+
 #### Update the app
 
-The package configures the signed OpenAI package repository during installation.
+Installation configures a signed OpenAI package repository.
 Use your distribution's package manager to install later updates.
 
 On Ubuntu or Debian, run:
@@ -39722,6 +39722,12 @@ On Fedora, run:
 
 ```bash
 sudo dnf upgrade --refresh chatgpt
+```
+
+On Arch Linux, update the app as part of a full system upgrade:
+
+```bash
+sudo pacman -Syu
 ```
 
 #### Compatibility and limitations
