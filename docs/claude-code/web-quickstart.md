@@ -246,4 +246,4 @@ Now that you can submit and review tasks, these pages cover what comes next: sta
 * [Configure cloud environments](./cloud-environments.md): network access levels, environment variables, and setup scripts for cloud sessions
 * [Routines](./routines.md): automate work on a schedule, via API call, or in response to GitHub events
 * [CLAUDE.md](./memory.md): give Claude persistent instructions and context that load at the start of every session
-* Install the Claude mobile app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) or [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude) to monitor sessions from your phone. From the Claude Code CLI, `/mobile` shows a QR code.
+* Install the Claude mobile app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) or [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude) to monitor sessions from your phone. From the Claude Code CLI, `/mobile` shows a QR code for [claude.ai/mobile](https://claude.ai/mobile) that opens the right app store for your phone.

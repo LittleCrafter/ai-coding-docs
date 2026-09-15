@@ -124,7 +124,7 @@ By default, Claude Code computes every cost figure it shows developers at list p
    Enter the per-million-token rates from your contract. Claude Code doesn't fetch them from the Claude Console, so update the setting when the contract changes.
 2. **Write the setting**
 
-   Set `multiplier` for a flat percentage off list price, list each model's four per-token rates under `overrides`, or do both. The [`modelPricing` entry](./settings-reference.md#modelpricing) has the shape and a paste-ready example.
+   Set `multiplier` below 1 for a flat discount or above 1 for a markup, list each model's four per-token rates under `overrides`, or do both. A markup requires Claude Code v2.1.271 or later. The [`modelPricing` entry](./settings-reference.md#modelpricing) has the shape and a paste-ready example.
 3. **Deploy it through managed settings**
 
    Deliver it as [managed settings](./managed-settings.md): server-managed settings, an MDM policy, `managed-settings.json`, or a [policy helper](./managed-settings.md#compute-the-policy-with-a-helper-program). Claude Code ignores the key in user, project, and local settings and in `--settings`.

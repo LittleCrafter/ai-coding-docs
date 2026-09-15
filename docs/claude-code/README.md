@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 192
-- **Version:** 2.1.270
-- **Last updated:** 2026-09-14T21:05:52Z
+- **Pages mirrored:** 195
+- **Version:** 2.1.272
+- **Last updated:** 2026-09-15T01:58:18Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -214,3 +214,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Week 32 · August 3–7, 2026 | [whats-new/2026-w32.md](./whats-new/2026-w32.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w32>) |
 | Week 33 · August 10–14, 2026 | [whats-new/2026-w33.md](./whats-new/2026-w33.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w33>) |
 | Week 34 · August 17–21, 2026 | [whats-new/2026-w34.md](./whats-new/2026-w34.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w34>) |
+| Week 35 · August 24–28, 2026 | [whats-new/2026-w35.md](./whats-new/2026-w35.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w35>) |
+| Week 36 · August 31 – September 4, 2026 | [whats-new/2026-w36.md](./whats-new/2026-w36.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w36>) |
+| Week 37 · September 7–11, 2026 | [whats-new/2026-w37.md](./whats-new/2026-w37.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w37>) |

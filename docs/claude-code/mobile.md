@@ -18,7 +18,7 @@ The Claude app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id647
    Install the Claude app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) or [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude). On an iPad, install the same iOS app.
 
    > [!TIP]
-   > Run `/mobile` in a Claude Code session to display a download QR code you can scan. `/ios` and `/android` do the same thing.
+   > Run `/mobile` in a Claude Code session to show a QR code for [claude.ai/mobile](https://claude.ai/mobile), which opens the right app store for your phone. `/ios` and `/android` do the same thing.
 2. **Sign in**
 
    Sign in with the same claude.ai account and organization you use for Claude Code. Cloud sessions and Remote Control require a claude.ai account, so they aren't reachable with an Anthropic Console API key or from a third-party provider such as Amazon Bedrock.
