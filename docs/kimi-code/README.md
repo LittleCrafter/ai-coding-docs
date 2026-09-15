@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 29
-- **Version:** 0.43.0
-- **Last updated:** 2026-09-14T15:20:45Z
+- **Pages mirrored:** 28
+- **Version:** 0.43.1
+- **Last updated:** 2026-09-15T08:06:06Z
 - **Official docs:** https://moonshotai.github.io/kimi-code/en
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -41,7 +41,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Getting started | [guides/getting-started.md](./guides/getting-started.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/getting-started.html>) |
-| Goals | [guides/goals.md](./guides/goals.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/goals.html>) |
 | Using Kimi Code CLI in IDEs | [guides/ides.md](./guides/ides.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/ides.html>) |
 | Interaction and input | [guides/interaction.md](./guides/interaction.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/interaction.html>) |
 | Migrating from kimi-cli | [guides/migration.md](./guides/migration.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/migration.html>) |
