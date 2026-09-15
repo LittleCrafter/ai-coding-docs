@@ -490,6 +490,6 @@ Every file and setting this page covers, what it controls, and how to deliver it
 * [Decide what to enforce](./admin-setup.md#decide-what-to-enforce): MCP restrictions alongside permission rules, sandboxing, and the other admin controls
 * [Connect Claude Code to tools via MCP](./mcp.md): the full MCP reference, including transports, scopes, and authentication
 * [Settings](./settings.md): the settings hierarchy and how managed settings take precedence
-* [Server-managed settings](./server-managed-settings.md): deliver `allowedMcpServers` and `deniedMcpServers` from the Claude.ai admin console
+* [Server-managed settings](./server-managed-settings.md): deliver `allowedMcpServers` and `deniedMcpServers` from the claude.ai admin console
 * [Security](./security.md): the threat model these controls defend against
 * [Claude Enterprise Administrator Guide](https://claude.com/resources/tutorials/claude-enterprise-administrator-guide): SSO, SCIM, seat management, and rollout playbook

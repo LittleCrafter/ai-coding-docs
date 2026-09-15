@@ -33,7 +33,7 @@ Claude Code connects to Claude through one of several API providers. Your choice
 | Google Cloud's Agent Platform | You want to inherit existing GCP compliance controls and billing                                                                      |
 | Microsoft Foundry             | You want to inherit existing Azure compliance controls and billing                                                                    |
 
-Some Claude Code features require a claude.ai account. [Claude Code on the web](./claude-code-on-the-web.md), [Routines](./routines.md), [Code Review](./code-review.md), [Remote Control](./remote-control.md), and the [Chrome extension](./chrome.md) aren't available through Console API keys or cloud-provider credentials alone. If you deploy through Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry, plan whether developers also need Claude for Teams or Enterprise seats. Each feature page lists its plan requirements.
+Some Claude Code features require a claude.ai account. [Cloud sessions](./claude-code-on-the-web.md), [Routines](./routines.md), [Code Review](./code-review.md), [Remote Control](./remote-control.md), and the [Chrome extension](./chrome.md) aren't available through Console API keys or cloud-provider credentials alone. If you deploy through Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry, plan whether developers also need Claude for Teams or Enterprise seats. Each feature page lists its plan requirements.
 
 For the full provider comparison covering authentication, regions, and feature parity, see the [enterprise deployment overview](./third-party-integrations.md). Each provider's auth setup is in [Authentication](./authentication.md).
 
@@ -112,7 +112,7 @@ If your members sign in through claude.ai or the Anthropic API and you're on a C
 
 None of these controls reach sessions on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or [Claude Platform on AWS](./claude-platform-on-aws.md). On those providers, use managed settings instead: `availableModels` for restrictions, `model` for a default, and [`maxEffortLevel`](./settings-reference.md#maxeffortlevel) for an effort cap.
 
-[Claude Code on the web](./claude-code-on-the-web.md) has its own admin surface: on the Cloud environments page in admin settings, Owners create [organization-shared environments](./cloud-environments.md#organization-shared-environments) that set the [network access level](./cloud-environments.md#network-access), environment variables, and setup script for members' cloud sessions. Owners choose the organization's default environment separately, at [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code).
+[Cloud sessions](./claude-code-on-the-web.md) have their own admin surface: on the Cloud environments page in admin settings, Owners create [organization-shared environments](./cloud-environments.md#organization-shared-environments) that set the [network access level](./cloud-environments.md#network-access), environment variables, and setup script for members' cloud sessions. Owners choose the organization's default environment separately, at [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code).
 
 Permission rules and sandboxing cover different layers. Denying WebFetch blocks Claude's fetch tool, but if Bash is allowed, `curl` and `wget` can still reach any URL. Sandboxing closes that gap with a network domain allowlist enforced at the OS level.
 

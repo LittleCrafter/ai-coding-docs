@@ -174,7 +174,9 @@ The iMessage channel reads your Messages database directly and sends replies thr
    * `Marketplace "claude-plugins-official" not found`: add the marketplace with `/plugin marketplace add anthropics/claude-plugins-official`, then retry the install.
    * The plugin is [not found in the marketplace](./discover-plugins.md#install-plugins): check the plugin name.
 
-   When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects. If the install summary reports `Run /reload-plugins to activate.`, you can skip that here, because restarting in the next step picks up the plugin.
+   When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects.
+
+   If the install summary reports `Run /reload-plugins to activate.`, you don't need to act on it here, because restarting in the next step picks up the plugin.
 3. **Restart with channels enabled**
 
    Exit Claude Code and restart with the channel flag:
@@ -223,7 +225,9 @@ To try the fakechat demo, you'll need:
    * `Marketplace "claude-plugins-official" not found`: add the marketplace with `/plugin marketplace add anthropics/claude-plugins-official`, then retry the install.
    * The plugin is [not found in the marketplace](./discover-plugins.md#install-plugins): check the plugin name.
 
-   When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects. If the install summary reports `Run /reload-plugins to activate.`, you can skip that here, because restarting in the next step picks up the plugin.
+   When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects.
+
+   If the install summary reports `Run /reload-plugins to activate.`, you don't need to act on it here, because restarting in the next step picks up the plugin.
 2. **Restart with the channel enabled**
 
    Exit Claude Code, then restart with `--channels` and pass the fakechat plugin you installed:
@@ -326,12 +330,12 @@ Report issues or feedback on the [Claude Code GitHub repository](https://github.
 
 Several Claude Code features connect to systems outside the terminal, each suited to a different kind of work:
 
-| Feature                                              | What it does                                                          | Good for                                                  |
-| ---------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------- |
-| [Claude Code on the web](./claude-code-on-the-web.md) | Runs tasks in a fresh cloud sandbox, cloned from GitHub               | Delegating self-contained async work you check on later   |
-| [Claude in Slack](./slack.md)                         | Spawns a web session from an `@Claude` mention in a channel or thread | Starting tasks directly from team conversation context    |
-| Standard [MCP server](./mcp.md)                       | Claude queries it during a task; nothing is pushed to the session     | Giving Claude on-demand access to read or query a system  |
-| [Remote Control](./remote-control.md)                 | You drive your local session from claude.ai or the Claude mobile app  | Steering an in-progress session while away from your desk |
+| Feature                                      | What it does                                                            | Good for                                                  |
+| -------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------- |
+| [Cloud sessions](./claude-code-on-the-web.md) | Run tasks in a fresh cloud sandbox, cloned from GitHub                  | Delegating self-contained async work you check on later   |
+| [Claude in Slack](./slack.md)                 | Spawns a cloud session from an `@Claude` mention in a channel or thread | Starting tasks directly from team conversation context    |
+| Standard [MCP server](./mcp.md)               | Claude queries it during a task; nothing is pushed to the session       | Giving Claude on-demand access to read or query a system  |
+| [Remote Control](./remote-control.md)         | You drive your local session from claude.ai or the Claude mobile app    | Steering an in-progress session while away from your desk |
 
 Channels fill the gap in that list by pushing events from non-Claude sources into your already-running local session.
 

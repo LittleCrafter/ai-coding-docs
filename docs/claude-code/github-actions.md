@@ -11,7 +11,7 @@
 Several products share the Claude Code name. This page covers the `claude-code-action` workflow integration, which you configure with workflow files in your repository. For the related products, see:
 
 * [Code Review](./code-review.md): automatic review on every pull request, without writing a workflow
-* [Claude Code on the web](./claude-code-on-the-web.md): Claude Code sessions from your browser or phone
+* [Claude Code in the cloud](./claude-code-on-the-web.md): Claude Code sessions that run on cloud infrastructure instead of your machine
 * [Claude Agent SDK](./agent-sdk/overview.md): custom automation outside GitHub Actions. The Claude Code GitHub Action is built on the SDK
 * [GitHub Enterprise Server](./github-enterprise-server.md): Claude Code with self-hosted GitHub
 
@@ -113,7 +113,7 @@ If you configured a [cloud provider](./github-actions-cloud-providers.md), also 
 
 ### GitHub App permissions
 
-The [Claude GitHub App](https://github.com/apps/claude) is shared by every Claude feature that integrates with GitHub, including the Claude Code GitHub Action, [Code Review](./code-review.md), and [auto-fix for pull requests](./claude-code-on-the-web.md#auto-fix-pull-requests) on Claude Code on the web. A GitHub App has a single permission set covering all of its features, so the set includes some permissions that the Claude Code GitHub Action doesn't use.
+The [Claude GitHub App](https://github.com/apps/claude) is shared by every Claude feature that integrates with GitHub, including the Claude Code GitHub Action, [Code Review](./code-review.md), and [auto-fix for pull requests](./claude-code-on-the-web.md#auto-fix-pull-requests) in cloud sessions. A GitHub App has a single permission set covering all of its features, so the set includes some permissions that the Claude Code GitHub Action doesn't use.
 
 When you install the app, you grant the following permissions:
 

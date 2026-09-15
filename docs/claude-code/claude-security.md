@@ -59,10 +59,10 @@ The plugin adds one command, `/claude-security`, which opens a menu of its three
    A scan may take a while, may use a significant number of tokens, and needs Claude Code left open while it completes. Nothing runs until you confirm.
 4. **Read the report**
 
-   While the scan runs, it reports each stage as it starts, with the detail available under [`/workflows`](./workflows.md). Results land in a timestamped directory in your repository, described in [Read the scan results](#read-the-scan-results).
+   While the scan runs, it reports each stage as it starts, with the detail available under [`/workflows`](./workflows.md). Results are written to a timestamped directory in your repository, described in [Read the scan results](#read-the-scan-results).
 5. **Turn findings into patches**
 
-   Run `/claude-security` again and pick **Suggest patches**, then choose which findings to address. Reviewed patches land in the report's `patches/` folder; [Fix findings](#fix-findings) covers how each patch is built and reviewed.
+   Run `/claude-security` again and pick **Suggest patches**, then choose which findings to address. Reviewed patches are written to the report's `patches/` folder; [Fix findings](#fix-findings) covers how each patch is built and reviewed.
 6. **Apply the patches you accept**
 
    Apply each patch from your shell with `git apply`, in its own pull request. Patches are never applied automatically.
@@ -100,7 +100,7 @@ Before delivery, each patch is reviewed by an agent independent of the one that 
 
 ### Patches are never applied automatically
 
-Applying a patch is always your decision. Patches land in the report's `patches/` folder, one `F<n>.patch` per finding with a note beside it explaining the change. Apply one from your shell, or ask Claude to apply it and open a pull request:
+Applying a patch is always your decision. Patches are written to the report's `patches/` folder, one `F<n>.patch` per finding with a note beside it explaining the change. Apply one from your shell, or ask Claude to apply it and open a pull request:
 
 ```bash theme={null}
 git apply CLAUDE-SECURITY-<timestamp>/patches/F1.patch

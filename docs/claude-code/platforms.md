@@ -63,7 +63,7 @@ If you're not sure where to start, [install the CLI](./quickstart.md) and run it
 * [Desktop](./desktop.md): visual diff review, parallel sessions, computer use, and Dispatch
 * [VS Code](./vs-code.md): the Claude Code extension inside your editor
 * [JetBrains](./jetbrains.md): the extension for IntelliJ, PyCharm, and other JetBrains IDEs
-* [Claude Code on the web](./claude-code-on-the-web.md): cloud sessions that keep running when you disconnect
+* [Web](./claude-code-on-the-web.md): cloud sessions from your browser at claude.ai/code that keep running when you disconnect
 * [Mobile](./mobile.md): the Claude app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) and [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude) for starting and monitoring tasks while away from your computer
 
 ### Integrations

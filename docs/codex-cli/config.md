@@ -214,7 +214,7 @@ profile file; don't nest them under `[profiles.profile-name]`.
 
 ```toml
 # ~/.codex/deep-review.config.toml
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 approval_policy = "on-request"
 model_catalog_json = "/Users/me/.codex/model-catalogs/deep-review.json"
@@ -1038,7 +1038,7 @@ for examples and approval tradeoffs.
 
 | Key | Type | Description |
 | --- | --- | --- |
-| `model` | `string` | Model to use (e.g., `gpt-5.5`). |
+| `model` | `string` | Model to use (e.g., `gpt-5.6-sol`). |
 | `review_model` | `string` | Optional model override used by `/review` (defaults to the current session model). |
 | `model_provider` | `string` | Provider id from `model_providers` (default: `openai`). |
 | `openai_base_url` | `string` | Base URL override for the built-in `openai` model provider. |

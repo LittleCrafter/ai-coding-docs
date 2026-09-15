@@ -12,7 +12,7 @@ This changes how you work. Instead of writing code yourself and asking Claude to
 
 But this autonomy still comes with a learning curve. Claude works within certain constraints you need to understand.
 
-This guide covers patterns that have proven effective across Anthropic's internal teams and for engineers using Claude Code across various codebases, languages, and environments. For how the agentic loop works under the hood, see [How Claude Code works](./how-claude-code-works.md).
+This guide covers patterns that have proven effective across Anthropic's internal teams and for engineers using Claude Code across various codebases, languages, and environments. For how the agentic loop works, see [How Claude Code works](./how-claude-code-works.md).
 
 ***
 
@@ -439,7 +439,7 @@ Pick the parallel approach that fits how much coordination you want to do yourse
 * [Worktrees](./worktrees.md): run separate CLI sessions in isolated git checkouts so edits don't collide
 * [Cross-session messaging](./cross-session-messaging.md): let the sessions you run yourself pass findings to each other
 * [Desktop app](./desktop.md#work-in-parallel-with-sessions): manage multiple local sessions visually, optionally each in its own worktree
-* [Claude Code on the web](./claude-code-on-the-web.md): run sessions in the cloud, on Anthropic-managed infrastructure by default
+* [Use Claude Code in the cloud](./claude-code-on-the-web.md): run sessions on Anthropic-managed infrastructure by default
 * [Agent view](./agent-view.md): research preview. Run `claude agents` to dispatch sessions that keep running in the background and watch them from one screen
 * [Agent teams](./agent-teams.md): experimental and disabled by default. Automated coordination of multiple sessions with shared tasks, messaging, and a team lead
 

@@ -382,6 +382,19 @@ This weekly digest highlights ChatGPT and Codex features that can change how you
 work, with examples and links to learn more. For every versioned update, bug fix,
 and minor improvement, see the [Codex changelog](https://learn.chatgpt.com/docs/changelog).
 
+#### September 14–18, 2026
+
+#### Prepare for GPT-5.5 retirement
+
+GPT-5.5 will retire from ChatGPT, ChatGPT Work, and Codex on October 14, 2026,
+across all plans. The OpenAI API isn't affected.
+
+For Codex with ChatGPT sign-in, switch to **GPT-5.6 Sol** (`gpt-5.6-sol`).
+Update saved model settings, workspace defaults, custom agents, scheduled
+tasks, and scripts that still select GPT-5.5 before the retirement date.
+[Read the retirement notice](https://learn.chatgpt.com/docs/changelog#codex-2026-09-14-gpt-55-retirement)
+for details.
+
 #### September 7–11, 2026
 
 #### Start a quick chat from your pet
@@ -1257,6 +1270,10 @@ Source: [Pricing](./pricing.md)
 
 ChatGPT Work and Codex share usage. ChatGPT Work usage inside
 ChatGPT uses the same pricing, credits, and usage limits as Codex.
+
+GPT-5.5 retires from ChatGPT, ChatGPT Work, and Codex on all plans on
+October 14, 2026. The OpenAI API isn't affected. See
+[GPT-5.5 retirement](./models.md#gpt-55-retirement) for migration guidance.
 
 Pricing options
 
@@ -2711,6 +2728,10 @@ pricing, credits, and usage limits. See [Codex pricing](./pricing.md) for
 details.
 
 #### Fast mode
+
+GPT-5.5 retires from ChatGPT, ChatGPT Work, and Codex on all plans on
+October 14, 2026. The OpenAI API isn't affected. See
+[GPT-5.5 retirement](./models.md#gpt-55-retirement) for migration guidance.
 
 Codex offers the ability to increase the speed of the model for increased
 credit consumption.
@@ -11787,7 +11808,7 @@ for examples and approval tradeoffs.
 | `memories.min_rate_limit_remaining_percent`                   | `number`                                                                                                                                                      |         | Minimum remaining percentage required in Codex rate-limit windows before memory generation starts. Defaults to `25` and is clamped to `0`-`100`.                                                                                                                                                                                                                                                                                                                                            |
 | `memories.min_rollout_idle_hours`                             | `number`                                                                                                                                                      |         | Minimum idle time before a thread is considered for memory generation. Defaults to `6` and is clamped to `1`-`48`.                                                                                                                                                                                                                                                                                                                                                                          |
 | `memories.use_memories`                                       | `boolean`                                                                                                                                                     |         | When `false`, Codex skips injecting existing memories into future sessions. Defaults to `true`.                                                                                                                                                                                                                                                                                                                                                                                             |
-| `model`                                                       | `string`                                                                                                                                                      |         | Model to use (e.g., `gpt-5.5`).                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `model`                                                       | `string`                                                                                                                                                      |         | Model to use (e.g., `gpt-5.6-sol`).                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `model_auto_compact_token_limit`                              | `number`                                                                                                                                                      |         | Token threshold that triggers automatic history compaction (unset uses model defaults).                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `model_auto_compact_token_limit_scope`                        | `total \| body_after_prefix`                                                                                                                                  |         | Controls whether the auto-compaction threshold counts the full active context (`total`, the default) or only growth after the carried compaction-window prefix (`body_after_prefix`).                                                                                                                                                                                                                                                                                                       |
 | `model_catalog_json`                                          | `string (path)`                                                                                                                                               |         | Optional path to a JSON model catalog loaded on startup. A selected `$CODEX_HOME/profile-name.config.toml` profile file can override this per profile.                                                                                                                                                                                                                                                                                                                                      |
@@ -12254,7 +12275,7 @@ profile file; don't nest them under `[profiles.profile-name]`.
 
 ```toml
 # ~/.codex/deep-review.config.toml
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 approval_policy = "on-request"
 model_catalog_json = "/Users/me/.codex/model-catalogs/deep-review.json"
@@ -13615,6 +13636,20 @@ For lifecycle hook configuration, see [Hooks](./hooks.md).
 
 Source: [Models](./models.md)
 
+#### GPT-5.5 retirement
+
+On October 14, 2026, GPT-5.5 will retire from ChatGPT, ChatGPT Work, and Codex
+on all plans, including consumer, Business, Enterprise, and Edu plans. This
+retirement does not apply to the OpenAI API.
+
+If you use Codex with ChatGPT sign-in, switch to **GPT-5.6 Sol**
+(`gpt-5.6-sol`) before October 14. Replace `gpt-5.5` in workspace defaults,
+saved model settings, managed configurations, custom agents, scheduled tasks,
+and scripts that select a model.
+
+See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement)
+for administrator guidance.
+
 #### Choose a model
 
 In the ChatGPT desktop app, use the model and reasoning control beneath the
@@ -13783,6 +13818,10 @@ Support for the Chat Completions API is deprecated and will be removed in
 future releases of Codex.
 
 #### Deprecated Codex models
+
+GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026. Replace
+`gpt-5.5` with `gpt-5.6-sol`. See [GPT-5.5 retirement](./models.md#gpt-55-retirement)
+for the scope and migration checklist.
 
 The `gpt-5.4` and `gpt-5.4-mini` models retire from Codex with ChatGPT sign-in
 on August 31, 2026. Replace `gpt-5.4` with `gpt-5.6-terra` and
@@ -22895,10 +22934,10 @@ or UI resources:
 5. Start a new conversation and rerun the affected tests.
 
 This refresh flow applies to MCP servers connected in developer mode.
-Published plugins with MCP use reviewed
-[metadata snapshots](https://developers.openai.com/plugins/deploy/submission#how-published-mcp-metadata-versions-work).
-To update published metadata, scan the server, submit a new version, and
-publish the approved version.
+Published plugins use
+[continuous review](https://developers.openai.com/plugins/deploy/app-review#continuous-review-and-tool-updates)
+for tool updates. Changes to submitted plugin information or imported skills
+still require a new version, review, and publication.
 
 Before packaging the plugin, confirm that:
 
@@ -28969,38 +29008,56 @@ communications team.
 Treat the metadata exposed by your MCP server as a versioned API contract for
 the plugin. When you scan the MCP endpoint in the plugin submission portal,
 OpenAI stores the discovered metadata with that draft version. Submitting the
-version sends that stored snapshot for review. The published plugin uses this
-metadata snapshot while tool calls and UI resources continue to use your live
-MCP server.
+version sends that stored snapshot for review. After publication, continuous
+review updates tool definitions without requiring a new plugin version. Tool
+calls and UI resources continue to use your live MCP server.
+
+#### Continuous review and tool updates
+
+OpenAI periodically fetches your MCP server's tools and compares them with the
+published definitions, including their descriptions, schemas, and annotations.
+
+- **Deleted tools:** Removed from the published tool list as soon as a scan
+  detects the deletion, without waiting for automated checks.
+- **New tools:** Made available after they pass automated checks. Until then,
+  they aren't available to users.
+- **Changed tools:** The previous definition stays live until the updated
+  definition passes automated checks or a scan detects that you removed the tool.
+  Passing updates replace the previous definition automatically.
+
+Each tool can pass independently. For example, you add `create_note`, change
+`search` to accept a `folder` parameter, and delete `archive_note`. The next
+scan removes `archive_note` immediately. If `create_note` passes but the
+`search` update is held, users get `create_note` and keep the old `search`
+definition without `folder`.
+
+Keep your server compatible with the live definition while an update is held.
+OpenAI retains the definition, not a copy of your server implementation.
+An incomplete check doesn't approve an update, even if it has no findings.
+
+#### Other changes
 
 Use this table to determine how to ship each change:
 
-| Change                                                                                                                                                                                                   | Required action                                                                                                                                                                 | When users see the change                                                                                   |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Tool list, names, titles, descriptions, input or output schemas, annotations, tool security schemes, tool `_meta` fields (including UI resource references and visibility), or MCP server `instructions` | Deploy the change, create or update a draft version, scan the endpoint, submit the version for review, and publish it after approval.                                           | After you publish the approved version. Until then, users continue to use the currently published snapshot. |
-| UI resource URI or linked resource metadata, including content security policy (CSP) settings                                                                                                            | Deploy the change, create or update a draft version, scan the endpoint, submit the version for review, and publish it after approval.                                           | After you publish the approved version.                                                                     |
-| Backward-compatible content update served from the same published UI resource URI                                                                                                                        | Deploy the content update. You don't need to scan, submit, or publish a new version if the URI and published contract remain compatible.                                        | After deployment. ChatGPT may continue serving cached resource contents for up to one hour.                 |
-| Server-only fix or change to live tool results, including result `_meta`, or business data                                                                                                               | Deploy the server change. You don't need to scan, submit, or publish a new version if the change preserves the published contract.                                              | Through your live endpoint after deployment.                                                                |
-| MCP server origin (`scheme`, `hostname`, or `port`)                                                                                                                                                      | To change the origin, create a new plugin, then complete its scan, submission, review, and publication flow. To change only the endpoint path, use the normal new-version flow. | After you publish the new plugin or approved version.                                                       |
+| Change                                                                                                                                            | Required action                                                                                                                                                                 | When users see the change                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Tool security schemes, tool `_meta` fields, UI resource references, or linked resource metadata, including content security policy (CSP) settings | Deploy the change. These fields are reviewed with the tool definition through continuous review.                                                                                | After the updated tool definition passes automated checks.                                                      |
+| MCP server `instructions`                                                                                                                         | Deploy the change. Shared instructions are reviewed with the affected tools.                                                                                                    | After the required checks complete without holding existing tool updates or finding issues in the instructions. |
+| Backward-compatible content update served from the same published UI resource URI                                                                 | Deploy the content update. You don't need to scan, submit, or publish a new version if the URI and published contract remain compatible.                                        | After deployment. ChatGPT may continue serving cached resource contents for up to one hour.                     |
+| Server-only fix or change to live tool results, including result `_meta`, or business data                                                        | Deploy the server change. You don't need to scan, submit, or publish a new version if the change preserves the published contract.                                              | Through your live endpoint after deployment.                                                                    |
+| MCP server origin (`scheme`, `hostname`, or `port`)                                                                                               | To change the origin, create a new plugin, then complete its scan, submission, review, and publication flow. To change only the endpoint path, use the normal new-version flow. | After you publish the new plugin or approved version.                                                           |
 
-Breaking changes to the MCP server contract inside a published plugin aren't
-currently supported. Removing or renaming a tool, making a schema incompatible,
-or serving incompatible content at or removing content from a published UI
-resource URI can break the current version as soon as the server change
-deploys. Make backward-compatible updates instead:
-
-1. Add new tools, fields, or UI resources while continuing to honor the published contracts.
-2. Submit the updated metadata as a new version.
-3. Publish the approved version and keep the old contracts available.
-
-You can deploy server-only fixes without submitting a new version if they preserve the published contract. If a deployment breaks the published version, roll back the server change rather than waiting for a new version to complete review.
+Server changes take effect before a scan can discover or approve them. Keep
+existing input schemas and each published UI resource URI working during that gap.
+If a deployment breaks the live contract, roll back the server change rather
+than waiting for review.
 
 #### Submitting new versions for review
 
-Once your plugin is published, its submitted information and reviewed metadata
-snapshot are locked for safety. To update either, create a new draft version of
-the existing plugin and resubmit that version for review. Each resubmission
-starts a new review. In the release notes, describe what changed.
+To change submitted plugin information or imported skills, create a new draft
+version of the existing plugin and resubmit it for review. Continuous tool
+review doesn't replace this process. Each resubmission starts a new review.
+In the release notes, describe what changed.
 
 The MCP server origin (`scheme`, `hostname`, or `port`) can't change between
 versions. To use a different origin, submit a new plugin with the new MCP
@@ -30168,11 +30225,14 @@ appear in the Plugins Directory.
 
 #### How published MCP metadata versions work
 
-Remote MCP plugins publish reviewed server metadata and imported skill
-snapshots. To change a remote snapshot, scan the MCP server, submit a new
-version for review, and publish the approved version. For metadata-specific
-maintenance rules, see
-[Remote MCP server review requirements](https://developers.openai.com/plugins/deploy/app-review#how-published-mcp-metadata-versions-work).
+After publication, OpenAI periodically fetches your MCP tools. Deleted tools
+are removed as soon as a scan detects them. New and changed tool definitions
+become available after automated checks pass; held updates keep the previous
+definition live. See
+[Continuous review and tool updates](https://developers.openai.com/plugins/deploy/app-review#continuous-review-and-tool-updates).
+
+Changes to submitted plugin information or imported skills still require a new
+version, review, and publication.
 
 #### Final checklist
 
@@ -34086,6 +34146,12 @@ eligible plans can also run tasks from supported app events. Review active,
 paused, and completed tasks and recent runs in **Scheduled**. You can combine
 scheduled tasks with [skills](./build-skills.md) for more complex work.
 
+GPT-5.5 retires from ChatGPT, ChatGPT Work, and Codex on all plans on
+October 14, 2026. Review scheduled tasks that use GPT-5.5 and choose an
+available replacement before that date. For Codex with ChatGPT sign-in,
+replace `gpt-5.5` with `gpt-5.6-sol` (GPT-5.6 Sol). The OpenAI API isn't
+affected. See [GPT-5.5 retirement](./models.md#gpt-55-retirement).
+
 In the ChatGPT desktop app, scheduled tasks can work with local projects and
 run in the project directory or an isolated worktree. Keep the computer on and
 the app running when a scheduled task needs local files.
@@ -37493,6 +37559,12 @@ startup, they override the user's local `config.toml` and any CLI `--config`
 overrides. Users can still change those settings during the current run, and the
 defaults apply again the next time the client starts.
 
+If a managed default, macOS MDM profile, or saved configuration pins
+`gpt-5.5` for Codex users signed in with ChatGPT, replace it with
+`gpt-5.6-sol` before October 14, 2026. GPT-5.5 retires from ChatGPT,
+ChatGPT Work, and Codex on all plans on that date. The OpenAI API isn't
+affected. See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement).
+
 If a managed default, macOS MDM profile, or saved configuration pins `gpt-5.4`
 or `gpt-5.4-mini` for users signed in with ChatGPT, update it before August 31, 2026. Replace `gpt-5.4` with `gpt-5.6-terra` and `gpt-5.4-mini` with
 `gpt-5.6-luna`. The OpenAI API and Codex authenticated with your own API key
@@ -39465,6 +39537,24 @@ associated with the key. Enabling Astra in a ChatGPT workspace doesn't grant
 API access. Early access with an API key also requires client configuration;
 ask your OpenAI account team for setup instructions. Selecting a
 model or changing local configuration doesn't grant access by itself.
+
+#### Prepare for the GPT-5.5 retirement
+
+On October 14, 2026, GPT-5.5 will retire from ChatGPT, ChatGPT Work, and Codex
+on all plans, including consumer, Business, Enterprise, and Edu plans. This
+retirement does not apply to the OpenAI API.
+
+Before October 14, review workspace defaults for ChatGPT, ChatGPT Work, and
+Codex and choose an available replacement. For Codex with ChatGPT sign-in,
+replace `gpt-5.5` with `gpt-5.6-sol` (GPT-5.6 Sol) in workspace defaults,
+saved model settings, managed configurations, custom agents, and scheduled
+tasks. Check scripts and commands that explicitly select `gpt-5.5` too.
+
+Changing a default doesn't grant model access. Confirm that the replacement
+is available to the affected users on each client. See
+[Codex models](./models.md#gpt-55-retirement) and
+[managed configuration](./enterprise/managed-configuration.md)
+for migration guidance.
 
 #### Prepare for the GPT-5.4 retirement
 

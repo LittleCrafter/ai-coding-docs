@@ -51,6 +51,8 @@ Each review comment from Claude arrives with 👍 and 👎 already attached so b
 
 Replying to an inline comment does not prompt Claude to respond or update the PR. To act on a finding, fix the code and push. If the PR is subscribed to push-triggered reviews, the next run resolves the thread when the issue is fixed. To request a fresh review without pushing, comment `@claude review` as a [top-level PR comment](#manually-trigger-reviews).
 
+To dismiss a finding without a code change, resolve its thread; replying doesn't dismiss it.
+
 ### Check run output
 
 Beyond the inline review comments, each review populates the **Claude Code Review** check run that appears alongside your CI checks. Expand its **Details** link to see a summary of every finding in one place, sorted by severity:
@@ -165,7 +167,7 @@ For review-specific guidance that you don't want applied to general Claude Code 
 
 `REVIEW.md` is a file at your repository root that tailors Code Review to your repo. The agents in the review pipeline that find and verify findings receive its contents as your repository's review instructions, alongside Code Review's default review guidance, and the agents that rank and report findings consult it before settling severity and writing the review.
 
-The agents read the file's text as-is, so `REVIEW.md` is plain instructions: [`@` import syntax](./memory.md#import-additional-files) is not expanded, and referenced files are not read along with it. Put the rules you want enforced directly in the file.
+Put the rules you want enforced directly in `REVIEW.md`.
 
 #### What you can tune
 
@@ -307,7 +309,7 @@ The [`/code-review` command](./commands.md) reviews a diff in your terminal with
 
    Ask Claude to fix what the review found. If you passed `--fix` or `--comment`, the review has already applied or posted its findings.
 
-Claude reports the findings as text in the reply in both of these runs, even when a host application requests the findings list described below:
+Claude reports the findings as text in the reply in both of these runs, even when a host application requests a findings list:
 
 * In a terminal session, where `/code-review` runs the review as a [forked subagent](./skills.md#run-skills-in-a-subagent)
 * In a `-p` run with text or JSON output

@@ -51,14 +51,13 @@ ZDR does not extend to the following, even for organizations with ZDR enabled. T
 
 When ZDR is enabled for a Claude Code organization on Claude for Enterprise, certain features that require storing prompts or completions are automatically disabled at the backend level:
 
-| Feature                                                           | Reason                                                                                      |
-| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| [Claude Code on the Web](./claude-code-on-the-web.md)              | Requires server-side storage of conversation history.                                       |
-| [Cloud sessions](./desktop.md#cloud-sessions) from the Desktop app | Requires persistent session data that includes prompts and completions.                     |
-| [Claude Tag](./claude-tag.md)                                      | Retains channel memory and session transcripts.                                             |
-| [Artifacts](./artifacts.md)                                        | Requires storing published page content on Anthropic-operated infrastructure.               |
-| Feedback submission (`/feedback`, `/bug`, `/share`)               | Submitting feedback sends conversation data to Anthropic.                                   |
-| [Remote Control](./remote-control.md)                              | Stores the session transcript on Anthropic servers to sync the conversation across devices. |
+| Feature                                                                                                                  | Reason                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| [Cloud sessions](./claude-code-on-the-web.md), including those started from the [Desktop app](./desktop.md#cloud-sessions) | Requires server-side storage of session data, including conversation history with prompts and completions. |
+| [Claude Tag](./claude-tag.md)                                                                                             | Retains channel memory and session transcripts.                                                            |
+| [Artifacts](./artifacts.md)                                                                                               | Requires storing published page content on Anthropic-operated infrastructure.                              |
+| Feedback submission (`/feedback`, `/bug`, `/share`)                                                                      | Submitting feedback sends conversation data to Anthropic.                                                  |
+| [Remote Control](./remote-control.md)                                                                                     | Stores the session transcript on Anthropic servers to sync the conversation across devices.                |
 
 These features are blocked in the backend regardless of client-side display. If you see a disabled feature in the Claude Code terminal during startup, attempting to use it returns an error indicating the organization's policies do not allow that action.
 

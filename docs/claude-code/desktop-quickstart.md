@@ -59,7 +59,7 @@ With the Code tab open, choose a project and give Claude something to do.
 
    You can also select:
 
-   * **Cloud**: Run sessions in the cloud that continue even if you close the app. Cloud sessions use the same infrastructure as [Claude Code on the web](./claude-code-on-the-web.md).
+   * **Cloud**: Run sessions in the cloud that continue even if you close the app. See [Use Claude Code in the cloud](./claude-code-on-the-web.md) for how cloud sessions work.
    * **SSH**: Connect to a remote machine over SSH, such as your own servers, cloud VMs, or dev containers. Desktop installs Claude Code on the remote machine automatically the first time you connect.
    * **WSL** (Windows): Run the session inside a [WSL 2 distribution](./desktop-wsl.md); Claude Code, tools, and git execute on the Linux side with native paths.
 2. **Choose a model**
@@ -116,7 +116,7 @@ You've made your first edit. For the full reference on everything Desktop can do
 
 **Put Claude on a schedule.** Set up [scheduled tasks](./desktop-scheduled-tasks.md) to run Claude automatically on a recurring basis: a daily code review every morning, a weekly dependency audit, or a briefing that pulls from your connected tools.
 
-**Scale up when you're ready.** Open [parallel sessions](./desktop.md#work-in-parallel-with-sessions) from the sidebar to work on multiple tasks at once, optionally each in its own Git worktree, and open the [tasks pane](./desktop.md#watch-background-tasks) to watch the subagents and background commands a session has running. Open a [side chat](./desktop.md#ask-a-side-question-without-derailing-the-session) to ask a question without derailing the main thread. Send [long-running work to the cloud](./desktop.md#run-long-running-tasks-remotely) so it continues even if you close the app, or [continue a session on the web or in your IDE](./desktop.md#continue-in-another-surface) if a task takes longer than expected. [Connect external tools](./desktop.md#extend-claude-code) like GitHub, Slack, and Linear to bring your workflow together.
+**Scale up when you're ready.** Open [parallel sessions](./desktop.md#work-in-parallel-with-sessions) from the sidebar to work on multiple tasks at once, optionally each in its own Git worktree, and open the [tasks pane](./desktop.md#watch-background-tasks) to watch the subagents and background commands a session has running. Open a [side chat](./desktop.md#ask-a-side-question-without-derailing-the-session) to ask a question without derailing the main thread. Send [long-running work to the cloud](./desktop.md#run-long-running-tasks-in-the-cloud) so it continues even if you close the app, or [continue a session on the web or in your IDE](./desktop.md#continue-in-another-surface) if a task takes longer than expected. [Connect external tools](./desktop.md#extend-claude-code) like GitHub, Slack, and Linear to bring your workflow together.
 
 ## What's next
 

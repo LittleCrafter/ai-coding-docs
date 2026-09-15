@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-09-11T22:49:59Z",
+  "last_updated": "2026-09-15T23:13:18Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -200,8 +200,8 @@
       "source_url": "https://antigravity.google/docs/cli/mcp",
       "source_md_url": "https://antigravity.google/docs/cli/mcp.md",
       "source_id": "cli/mcp",
-      "hash": "ae5e06a2222c5cf38b8e72974213461c9e5ebf7861fc5a8d4675a2d732c6c9fc",
-      "last_updated": "2026-09-11T22:49:59Z"
+      "hash": "91bb1357ef627432039cc89ad3582a81a84237bd470407e477c529fc750c2964",
+      "last_updated": "2026-09-15T23:13:18Z"
     },
     "cli/modes": {
       "slug": "cli/modes",
@@ -365,8 +365,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-11T22:49:59Z",
-    "fetch_duration_seconds": 12.357,
+    "last_fetch_completed": "2026-09-15T23:13:18Z",
+    "fetch_duration_seconds": 12.326,
     "total_pages_discovered": 36,
     "pages_fetched_successfully": 36,
     "pages_failed": 0,

@@ -92,7 +92,7 @@ The same file with a comment above each key. Read it here; copy from the other t
 
 One team's shared settings, committed to the repository so everyone who clones it gets the same permissions, hooks, telemetry, and plugin marketplace. Save a file like this at `.claude/settings.json` at the top of the repository. What to know before you commit one:
 
-* **Cloud sessions read it too.** A [cloud session](./settings.md#settings-in-cloud-sessions) on Claude Code on the web starts from a clone of the repository, so the committed file applies there as well.
+* **Cloud sessions read it too.** A [cloud session](./settings.md#settings-in-cloud-sessions) starts from a clone of the repository, so the committed file applies there as well.
 * **Allow rules wait for trust.** Allow rules and `extraKnownMarketplaces` entries take effect after each person [trusts this folder itself](./permissions.md#project-allow-rules-and-workspace-trust), not only a parent folder; deny and ask rules apply in every session, trusted or not.
 * **The hook is a script in the repo.** This file's hook runs `.claude/hooks/block-rm.sh`; [How a hook resolves](./hooks.md#how-a-hook-resolves) walks through writing it.
 * **Rules match the command and path as written.** `Bash(git push *)` doesn't match [`git -C . push`](./permissions.md#bash-rule-limits). `Read(./.env)` on its own stops the file tools and commands that name the file, such as `cat .env`, but not [`grep -r` run over the directory](./permissions.md#read-and-edit); the `sandbox` block in this file closes that gap, because the sandbox [adds your `Read` deny paths](./settings-reference.md#sandbox-filesystem-denyread) to what every sandboxed command can't read.

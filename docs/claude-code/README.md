@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 195
-- **Version:** 2.1.272
-- **Last updated:** 2026-09-15T18:33:40Z
+- **Pages mirrored:** 196
+- **Version:** 2.1.273
+- **Last updated:** 2026-09-15T23:14:42Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -36,7 +36,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Deploy Claude apps gateway on AWS | [claude-apps-gateway-on-aws.md](./claude-apps-gateway-on-aws.md) | [source](<https://code.claude.com/docs/en/claude-apps-gateway-on-aws>) |
 | Deploy Claude apps gateway on Google Cloud | [claude-apps-gateway-on-gcp.md](./claude-apps-gateway-on-gcp.md) | [source](<https://code.claude.com/docs/en/claude-apps-gateway-on-gcp>) |
 | Claude apps gateway spend limits | [claude-apps-gateway-spend-limits.md](./claude-apps-gateway-spend-limits.md) | [source](<https://code.claude.com/docs/en/claude-apps-gateway-spend-limits>) |
-| Use Claude Code on the web | [claude-code-on-the-web.md](./claude-code-on-the-web.md) | [source](<https://code.claude.com/docs/en/claude-code-on-the-web>) |
+| Use Claude Code in the cloud | [claude-code-on-the-web.md](./claude-code-on-the-web.md) | [source](<https://code.claude.com/docs/en/claude-code-on-the-web>) |
 | Explore the .claude directory | [claude-directory.md](./claude-directory.md) | [source](<https://code.claude.com/docs/en/claude-directory>) |
 | Claude Code on Claude Platform on AWS | [claude-platform-on-aws.md](./claude-platform-on-aws.md) | [source](<https://code.claude.com/docs/en/claude-platform-on-aws>) |
 | Scan your codebase for vulnerabilities | [claude-security.md](./claude-security.md) | [source](<https://code.claude.com/docs/en/claude-security>) |
@@ -147,7 +147,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Find bugs with ultrareview | [ultrareview.md](./ultrareview.md) | [source](<https://code.claude.com/docs/en/ultrareview>) |
 | Voice dictation | [voice-dictation.md](./voice-dictation.md) | [source](<https://code.claude.com/docs/en/voice-dictation>) |
 | Use Claude Code in VS Code | [vs-code.md](./vs-code.md) | [source](<https://code.claude.com/docs/en/vs-code>) |
-| Get started with Claude Code on the web | [web-quickstart.md](./web-quickstart.md) | [source](<https://code.claude.com/docs/en/web-quickstart>) |
+| Get started with Claude Code in the cloud | [web-quickstart.md](./web-quickstart.md) | [source](<https://code.claude.com/docs/en/web-quickstart>) |
 | What's new | [whats-new.md](./whats-new.md) | [source](<https://code.claude.com/docs/en/whats-new>) |
 | Orchestrate subagents at scale with dynamic workflows | [workflows.md](./workflows.md) | [source](<https://code.claude.com/docs/en/workflows>) |
 | Run parallel sessions with worktrees | [worktrees.md](./worktrees.md) | [source](<https://code.claude.com/docs/en/worktrees>) |
@@ -159,6 +159,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | --- | --- | --- |
 | How the agent loop works | [agent-sdk/agent-loop.md](./agent-sdk/agent-loop.md) | [source](<https://code.claude.com/docs/en/agent-sdk/agent-loop>) |
 | Use Claude Code features in the SDK | [agent-sdk/claude-code-features.md](./agent-sdk/claude-code-features.md) | [source](<https://code.claude.com/docs/en/agent-sdk/claude-code-features>) |
+| Configure your agent | [agent-sdk/configuration.md](./agent-sdk/configuration.md) | [source](<https://code.claude.com/docs/en/agent-sdk/configuration>) |
 | Track cost and usage | [agent-sdk/cost-tracking.md](./agent-sdk/cost-tracking.md) | [source](<https://code.claude.com/docs/en/agent-sdk/cost-tracking>) |
 | Give Claude custom tools | [agent-sdk/custom-tools.md](./agent-sdk/custom-tools.md) | [source](<https://code.claude.com/docs/en/agent-sdk/custom-tools>) |
 | Examples | [agent-sdk/examples.md](./agent-sdk/examples.md) | [source](<https://code.claude.com/docs/en/agent-sdk/examples>) |

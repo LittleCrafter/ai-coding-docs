@@ -88,7 +88,7 @@ For most organizations, Claude for Teams or Claude for Enterprise provides the b
 
 Learn more about [Team plans](https://support.claude.com/en/articles/9266767-what-is-the-team-plan) and [Enterprise plans](https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan).
 
-The deployment options compared below cover where model inference runs. To run [Claude Code on the web](./claude-code-on-the-web.md) sessions on compute your organization operates, see [self-hosted environments](./self-hosted-environments.md).
+The deployment options compared below cover where model inference runs. To run Claude Code [cloud sessions](./claude-code-on-the-web.md) on compute your organization operates, see [self-hosted environments](./self-hosted-environments.md).
 
 If your organization has specific infrastructure requirements, compare the options below:
 
@@ -148,7 +148,7 @@ If your organization has specific infrastructure requirements, compare the optio
 
     <tr>
       <td>Authentication</td>
-      <td>Claude.ai SSO or email</td>
+      <td>claude.ai SSO or email</td>
       <td>API key or a [Console sign-in without one](./authentication.md#sign-in-without-an-api-key)</td>
       <td>API key or AWS credentials</td>
       <td>API key or AWS credentials</td>

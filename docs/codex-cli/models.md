@@ -2,6 +2,20 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
+## GPT-5.5 retirement
+
+On October 14, 2026, GPT-5.5 will retire from ChatGPT, ChatGPT Work, and Codex
+on all plans, including consumer, Business, Enterprise, and Edu plans. This
+retirement does not apply to the OpenAI API.
+
+If you use Codex with ChatGPT sign-in, switch to **GPT-5.6 Sol**
+(`gpt-5.6-sol`) before October 14. Replace `gpt-5.5` in workspace defaults,
+saved model settings, managed configurations, custom agents, scheduled tasks,
+and scripts that select a model.
+
+See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement)
+for administrator guidance.
+
 **Surface: Desktop app**
 
 <a id="app-choose-a-model"></a>
@@ -293,7 +307,7 @@ When you sign in with ChatGPT, Codex works best with the recommended models list
 
 ### `gpt-5.5`
 
-Previous-generation flagship model for complex coding, computer use, knowledge work, and research workflows.
+Previous-generation flagship model. Retires from ChatGPT, ChatGPT Work, and Codex on October 14, 2026; remains available on the OpenAI API.
 
 - **ChatGPT desktop app**: Supported
 - **ChatGPT web**: Supported
@@ -339,6 +353,10 @@ Support for the Chat Completions API is deprecated and will be removed in
 <a id="ide-deprecated-codex-models"></a>
 
 ## Deprecated Codex models
+
+GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026. Replace
+`gpt-5.5` with `gpt-5.6-sol`. See [GPT-5.5 retirement](./models.md#gpt-55-retirement)
+for the scope and migration checklist.
 
 The `gpt-5.4` and `gpt-5.4-mini` models retire from Codex with ChatGPT sign-in
 on August 31, 2026. Replace `gpt-5.4` with `gpt-5.6-terra` and
