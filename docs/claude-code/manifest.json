@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.272",
-  "last_updated": "2026-09-15T08:04:29Z",
+  "last_updated": "2026-09-15T18:33:40Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -170,8 +170,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/permissions",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/permissions.md",
       "source_id": "agent-sdk/permissions",
-      "hash": "b7cef3345f752dbca7108d0b7b48eb95bfd5e9a379cea0f95b1ca5718d02085a",
-      "last_updated": "2026-09-11T17:58:39Z"
+      "hash": "cbbdb3bf67d9c2c220a20ade52fa73a20b887a8e65b88f9eac39b3c39cb40593",
+      "last_updated": "2026-09-15T18:33:40Z"
     },
     "agent-sdk/plugins": {
       "slug": "agent-sdk/plugins",
@@ -320,8 +320,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/typescript",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/typescript.md",
       "source_id": "agent-sdk/typescript",
-      "hash": "0bc99a193180af542f29c7767d0bfe514f0ba7f7eb8389caed1d3ea22afb31c0",
-      "last_updated": "2026-09-15T01:58:18Z"
+      "hash": "e906667d58f4e79c0cf5ab8f3b14c2386e190076b303cc47cc39f6cdcd297350",
+      "last_updated": "2026-09-15T18:33:40Z"
     },
     "agent-sdk/typescript-v2-preview": {
       "slug": "agent-sdk/typescript-v2-preview",
@@ -710,8 +710,8 @@
       "source_url": "https://code.claude.com/docs/en/cross-session-messaging",
       "source_md_url": "https://code.claude.com/docs/en/cross-session-messaging.md",
       "source_id": "cross-session-messaging",
-      "hash": "9f46c39babd9eb432ea60c3ee6db3c7fe423c6943b41049a52f1a824dd5bf2ce",
-      "last_updated": "2026-09-15T08:04:29Z"
+      "hash": "a929c2e8b8e4975e531721b8bdaf724489592a45216620dd479387ef1cd9b340",
+      "last_updated": "2026-09-15T18:33:40Z"
     },
     "data-usage": {
       "slug": "data-usage",
@@ -1220,8 +1220,8 @@
       "source_url": "https://code.claude.com/docs/en/permission-modes",
       "source_md_url": "https://code.claude.com/docs/en/permission-modes.md",
       "source_id": "permission-modes",
-      "hash": "00bad015b3430f56f1eab47cb83995eedd10f7af993488740553575e92d0b016",
-      "last_updated": "2026-09-11T17:58:39Z"
+      "hash": "0fe2ed26dc37a8bf16df65b50a049c5335b2febd6855510434161b57f7d23e26",
+      "last_updated": "2026-09-15T18:33:40Z"
     },
     "permissions": {
       "slug": "permissions",
@@ -1230,8 +1230,8 @@
       "source_url": "https://code.claude.com/docs/en/permissions",
       "source_md_url": "https://code.claude.com/docs/en/permissions.md",
       "source_id": "permissions",
-      "hash": "6034224327cf5c5987dd8d6cf4c7466d8e01b678b86619d9266899cc51c4534b",
-      "last_updated": "2026-09-14T21:05:52Z"
+      "hash": "1fbac15a4ab81e334dba756ccc025ac561559aae8980ed51fdf7580cbd4b1a40",
+      "last_updated": "2026-09-15T18:33:40Z"
     },
     "platforms": {
       "slug": "platforms",
@@ -1280,8 +1280,8 @@
       "source_url": "https://code.claude.com/docs/en/plugin-marketplaces",
       "source_md_url": "https://code.claude.com/docs/en/plugin-marketplaces.md",
       "source_id": "plugin-marketplaces",
-      "hash": "ccfd0aacf773bf61318c14016cc655a7305eaf78efe6562f277e942e890b3330",
-      "last_updated": "2026-09-15T01:58:18Z"
+      "hash": "2dca8ff06d99abd2ff4c61b7ba7abcc9b5de461820dbf7e0b349faecb4bd0065",
+      "last_updated": "2026-09-15T18:33:40Z"
     },
     "plugin-relevance": {
       "slug": "plugin-relevance",
@@ -1530,8 +1530,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "c2b4ae24cddc22888fca036b19bfb73831a6ef6c777848c7921621dbf4d1862b",
-      "last_updated": "2026-09-15T01:58:18Z"
+      "hash": "8d1375ab6cccd7c1ea648c23adb4d74930f9823635f81c8365b3e89797b7de10",
+      "last_updated": "2026-09-15T18:33:40Z"
     },
     "setup": {
       "slug": "setup",
@@ -1955,8 +1955,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-15T08:04:29Z",
-    "fetch_duration_seconds": 69.8,
+    "last_fetch_completed": "2026-09-15T18:33:40Z",
+    "fetch_duration_seconds": 70.006,
     "total_pages_discovered": 195,
     "pages_fetched_successfully": 195,
     "pages_failed": 0,
