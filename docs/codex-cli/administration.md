@@ -61,6 +61,7 @@ Measure adoption and route reporting or audit data to the system that owns it.
 - [Governance](./enterprise/governance.md) — Choose the right analytics, spend, and audit surface for each question.
 - [Admin plugin](./enterprise/admin-plugin.md) — Use the Admin plugin for permissions, approvals, and supported administrative workflows.
 - [Workspace analytics](./enterprise/workspace-analytics.md) — Review workspace-level ChatGPT adoption and Codex usage.
+- [Usage Insights](./enterprise/usage-insights.md) — Explore usage across ChatGPT Work and Codex and assess workflow results with your team.
 - [Analytics API](./enterprise/analytics-api.md) — Automate developer activity and code review reporting with the Codex Analytics API.
 - [Compliance API and audit events](./enterprise/compliance-api.md) — Export activity records for audit and investigation workflows.
 

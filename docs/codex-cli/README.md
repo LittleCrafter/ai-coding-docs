@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 159
+- **Pages mirrored:** 160
 - **Version:** 0.154.0
-- **Last updated:** 2026-09-15T23:15:39Z
+- **Last updated:** 2026-09-16T23:20:16Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -157,6 +157,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Roles and workspace permissions | [enterprise/roles-and-workspace-permissions.md](./enterprise/roles-and-workspace-permissions.md) | [source](<https://learn.chatgpt.com/docs/enterprise/roles-and-workspace-permissions>) |
 | Service accounts | [enterprise/service-accounts.md](./enterprise/service-accounts.md) | [source](<https://learn.chatgpt.com/docs/enterprise/service-accounts>) |
 | Skill controls | [enterprise/skills.md](./enterprise/skills.md) | [source](<https://learn.chatgpt.com/docs/enterprise/skills>) |
+| Usage Insights for ChatGPT Work in Codex | [enterprise/usage-insights.md](./enterprise/usage-insights.md) | [source](<https://learn.chatgpt.com/docs/enterprise/usage-insights>) |
 | ChatGPT usage limits and spend controls | [enterprise/usage-limits.md](./enterprise/usage-limits.md) | [source](<https://learn.chatgpt.com/docs/enterprise/usage-limits>) |
 | User lifecycle management | [enterprise/user-lifecycle.md](./enterprise/user-lifecycle.md) | [source](<https://learn.chatgpt.com/docs/enterprise/user-lifecycle>) |
 | Deploy the Windows app | [enterprise/windows-deployment.md](./enterprise/windows-deployment.md) | [source](<https://learn.chatgpt.com/docs/enterprise/windows-deployment>) |

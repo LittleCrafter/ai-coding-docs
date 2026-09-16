@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.154.0",
-  "last_updated": "2026-09-15T23:15:39Z",
+  "last_updated": "2026-09-16T23:20:16Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "088bd3e88b9cbd2a7b8c83c0d38818edf729e3cd156a7980276fe969de904af3",
-      "last_updated": "2026-09-10T23:35:40Z"
+      "hash": "40f4a14397a685e87a8ab0abd8db90d22f0a67a72298986aa72dae7cb629c530",
+      "last_updated": "2026-09-16T23:20:16Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -240,8 +240,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "9706e6280a76819a04eb7c58172c2aa1f5451ce31e17fd68bf08a158b4c62ba8",
-      "last_updated": "2026-09-15T23:15:39Z"
+      "hash": "9872f87fe8573b7416fcf18cde65c2acebd725892e419b76664916f78b9bf26c",
+      "last_updated": "2026-09-16T23:20:16Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -540,8 +540,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-usage-and-cost",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-usage-and-cost.md",
       "source_id": "llms:enterprise/chatgpt-work-usage-and-cost",
-      "hash": "1b87d44a3c239542e74c050c50c08cda5aa26526c3542568c637b5c0dd69a066",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "5f49a071432f6760f00827ac963f91ca49747675bf479ae36108d1d655562211",
+      "last_updated": "2026-09-16T23:20:16Z"
     },
     "enterprise/compliance-api": {
       "slug": "enterprise/compliance-api",
@@ -653,6 +653,16 @@
       "hash": "9e9018dd5a23f46e911e580419b163b52a2f30c3c60866bb1fdec21f3a6477cb",
       "last_updated": "2026-09-10T23:15:02Z"
     },
+    "enterprise/usage-insights": {
+      "slug": "enterprise/usage-insights",
+      "title": "Usage Insights for ChatGPT Work in Codex",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/usage-insights",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/usage-insights.md",
+      "source_id": "llms:enterprise/usage-insights",
+      "hash": "e779964371eb39d33a2351dcfd38b93b483961989046a368314d0e0ecc745b98",
+      "last_updated": "2026-09-16T23:20:16Z"
+    },
     "enterprise/usage-limits": {
       "slug": "enterprise/usage-limits",
       "title": "ChatGPT usage limits and spend controls",
@@ -710,8 +720,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/workspace-analytics",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/workspace-analytics.md",
       "source_id": "llms:enterprise/workspace-analytics",
-      "hash": "1a0bd0c4e76b3b32f98a37a7bb44a1425f0dd71f0bfcad5a9d153d390696ff22",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "a8edbc740463893bf0577839583aa60b308fe7c28dbcd1f97b094a3bc6ee2172",
+      "last_updated": "2026-09-16T23:20:16Z"
     },
     "enterprise/workspace-model-availability": {
       "slug": "enterprise/workspace-model-availability",
@@ -1595,10 +1605,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-15T23:15:39Z",
-    "fetch_duration_seconds": 55.421,
-    "total_pages_discovered": 159,
-    "pages_fetched_successfully": 159,
+    "last_fetch_completed": "2026-09-16T23:20:16Z",
+    "fetch_duration_seconds": 55.726,
+    "total_pages_discovered": 160,
+    "pages_fetched_successfully": 160,
     "pages_failed": 0,
     "failed_pages": []
   }

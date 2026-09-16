@@ -39,6 +39,11 @@ focuses on Codex reporting. Use it for interactive exploration, not as a stable
 schema contract. Dashboard categories, fields, filters, and export formats can
 change independently of this page.
 
+For a walkthrough of the Insights dashboard, see
+[Usage Insights](./usage-insights.md).
+Explore Use cases and Tasks, compare activity with consumption and reach, and
+open a category to understand its details.
+
 For automated reporting, use the [Analytics API](./analytics-api.md)
 and follow its API reference. For auditable records, use the
 [Compliance API](./compliance-api.md).
