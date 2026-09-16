@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-09-16T13:49:50Z",
+  "last_updated": "2026-09-16T18:33:09Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -385,23 +385,23 @@
     },
     "news/news250120": {
       "slug": "news/news250120",
-      "title": "DeepSeek-R1 Release",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250120",
       "source_md_url": "https://api-docs.deepseek.com/news/news250120",
       "source_id": "news/news250120",
-      "hash": "c26512dcc9b13a6fdd79dca4287e33d5d465ddd814ac9153acc2e2c4c9d6cac5",
-      "last_updated": "2026-09-16T13:49:50Z"
+      "hash": "0ef027b02f48c1667e33fc925ca6bab407f52fcc020ebc424a0e991f4d666d8c",
+      "last_updated": "2026-09-16T18:33:09Z"
     },
     "news/news250325": {
       "slug": "news/news250325",
-      "title": "Your First API Call",
+      "title": "DeepSeek-V3-0324 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250325",
       "source_md_url": "https://api-docs.deepseek.com/news/news250325",
       "source_id": "news/news250325",
-      "hash": "0ef027b02f48c1667e33fc925ca6bab407f52fcc020ebc424a0e991f4d666d8c",
-      "last_updated": "2026-09-16T01:50:13Z"
+      "hash": "4c57940939c00fd1f395eb113013e78c40b220d45557470df976fa1be4f20086",
+      "last_updated": "2026-09-16T18:33:09Z"
     },
     "news/news250528": {
       "slug": "news/news250528",
@@ -725,8 +725,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-16T13:49:50Z",
-    "fetch_duration_seconds": 27.766,
+    "last_fetch_completed": "2026-09-16T18:33:09Z",
+    "fetch_duration_seconds": 28.529,
     "total_pages_discovered": 72,
     "pages_fetched_successfully": 72,
     "pages_failed": 0,
