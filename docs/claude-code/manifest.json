@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.273",
-  "last_updated": "2026-09-16T01:48:47Z",
+  "last_updated": "2026-09-16T07:57:56Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -580,8 +580,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-directory",
       "source_md_url": "https://code.claude.com/docs/en/claude-directory.md",
       "source_id": "claude-directory",
-      "hash": "bc871f1cb6ae4e81c311ebf93b87f817dc9eac273453b1316c7d08c3fb68384e",
-      "last_updated": "2026-09-15T23:14:42Z"
+      "hash": "fdd4fb978cc246c9f0266b0d4117cc24209a20c3cc28986ec081c3900153dfbd",
+      "last_updated": "2026-09-16T07:57:56Z"
     },
     "claude-platform-on-aws": {
       "slug": "claude-platform-on-aws",
@@ -840,8 +840,8 @@
       "source_url": "https://code.claude.com/docs/en/env-vars",
       "source_md_url": "https://code.claude.com/docs/en/env-vars.md",
       "source_id": "env-vars",
-      "hash": "d7b348802e0376c7d2347b6eadacbd5c9dae6d4e7506716888b348394aaa8b75",
-      "last_updated": "2026-09-15T23:14:42Z"
+      "hash": "09942d19b0f7672685267a27bd62410a7ca3d9cdaadb662fbca8050f3cf9c457",
+      "last_updated": "2026-09-16T07:57:56Z"
     },
     "errors": {
       "slug": "errors",
@@ -990,8 +990,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks",
       "source_md_url": "https://code.claude.com/docs/en/hooks.md",
       "source_id": "hooks",
-      "hash": "a4084ba525c1ac1a360e90af4766c50297f8c049c80687b4e678e682c7d60a49",
-      "last_updated": "2026-09-15T23:14:42Z"
+      "hash": "d8f2fe087b6d344a57c0ba18473a2ea1921f323a6db74e405d26ad3904fe5ac8",
+      "last_updated": "2026-09-16T07:57:56Z"
     },
     "hooks-guide": {
       "slug": "hooks-guide",
@@ -1290,8 +1290,8 @@
       "source_url": "https://code.claude.com/docs/en/plugin-marketplaces",
       "source_md_url": "https://code.claude.com/docs/en/plugin-marketplaces.md",
       "source_id": "plugin-marketplaces",
-      "hash": "1580f7457ac8618b332254ff9aae8af2d037ece78f86a70ec5d58514a30fea57",
-      "last_updated": "2026-09-15T23:14:42Z"
+      "hash": "d24bff824d0f61f08a3a73baed7ade7b90a504be3252bd28a9589a75c37710d7",
+      "last_updated": "2026-09-16T07:57:56Z"
     },
     "plugin-relevance": {
       "slug": "plugin-relevance",
@@ -1310,8 +1310,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins",
       "source_md_url": "https://code.claude.com/docs/en/plugins.md",
       "source_id": "plugins",
-      "hash": "f872554159362c632064da9b76f0670b9f6ad192ba094575e8f3bfbe215a5211",
-      "last_updated": "2026-09-11T20:15:37Z"
+      "hash": "ac40a7360ae2ab80c09f451f8062f51d5eab79f5419fc824a78a3e4b1596e713",
+      "last_updated": "2026-09-16T07:57:56Z"
     },
     "plugins-reference": {
       "slug": "plugins-reference",
@@ -1320,8 +1320,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins-reference",
       "source_md_url": "https://code.claude.com/docs/en/plugins-reference.md",
       "source_id": "plugins-reference",
-      "hash": "dcc913e71312771f2d57e8af0b18e202f9a5d9e1f0c06141b0c5e0aaf3a077ec",
-      "last_updated": "2026-09-15T23:14:42Z"
+      "hash": "043260c342ede70d4c43189b0f7e7eb9cf1729cd6d51c75d76f4180ff0443fbd",
+      "last_updated": "2026-09-16T07:57:56Z"
     },
     "prompt-caching": {
       "slug": "prompt-caching",
@@ -1965,8 +1965,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-16T01:48:47Z",
-    "fetch_duration_seconds": 69.529,
+    "last_fetch_completed": "2026-09-16T07:57:56Z",
+    "fetch_duration_seconds": 70.46,
     "total_pages_discovered": 196,
     "pages_fetched_successfully": 196,
     "pages_failed": 0,
