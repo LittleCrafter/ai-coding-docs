@@ -59,7 +59,7 @@ Connecting GitHub is a one-time step. If you already use the GitHub CLI, you can
 
 1. **Visit claude.ai/code**
 
-   Go to [claude.ai/code](https://claude.ai/code) and sign in with your claude.ai account. On macOS or Windows, the first screen offers the Claude Code desktop app and other ways to install Claude Code. To stay in the browser, click **Continue on web** at the bottom of the page.
+   Go to [claude.ai/code](https://claude.ai/code) and sign in with your claude.ai account.
 2. **Sign in with GitHub**
 
    After you sign in, claude.ai/code prompts you to connect GitHub. Follow the prompt, and claude.ai/code sends you to GitHub's authorization page. Approve the authorization request, and GitHub returns you to claude.ai/code. Cloud sessions work with existing GitHub repositories. To start a new project, [create an empty repository on GitHub](https://github.com/new) first.
