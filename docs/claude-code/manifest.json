@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.274",
-  "last_updated": "2026-09-17T01:52:56Z",
+  "last_updated": "2026-09-17T08:01:35Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -840,8 +840,8 @@
       "source_url": "https://code.claude.com/docs/en/env-vars",
       "source_md_url": "https://code.claude.com/docs/en/env-vars.md",
       "source_id": "env-vars",
-      "hash": "078d6053cf6a59e2e130adf608973a5d82def7e90f925a8042508b1563b3ed72",
-      "last_updated": "2026-09-16T23:19:20Z"
+      "hash": "a1e641317a2e8e51ee339dcc4ed2e51529dc0070e514bb301109d7c801721b7d",
+      "last_updated": "2026-09-17T08:01:35Z"
     },
     "errors": {
       "slug": "errors",
@@ -1130,8 +1130,8 @@
       "source_url": "https://code.claude.com/docs/en/mcp",
       "source_md_url": "https://code.claude.com/docs/en/mcp.md",
       "source_id": "mcp",
-      "hash": "8e51b42c9490b48b7ed7887e4edeb55a43594cfc24f45cd06980b85907201c06",
-      "last_updated": "2026-09-15T23:14:42Z"
+      "hash": "672afb76e23998aa32dc932f2ca6c0ca67ff501c9c09ca7239389e649f9badfc",
+      "last_updated": "2026-09-17T08:01:35Z"
     },
     "mcp-quickstart": {
       "slug": "mcp-quickstart",
@@ -1190,8 +1190,8 @@
       "source_url": "https://code.claude.com/docs/en/monitoring-usage",
       "source_md_url": "https://code.claude.com/docs/en/monitoring-usage.md",
       "source_id": "monitoring-usage",
-      "hash": "8379ed1b0843ee7df76f4d3d150479120e4bf04d02b1625a47cb99f1d4126267",
-      "last_updated": "2026-09-16T23:19:20Z"
+      "hash": "453a75b172d5e862e9f8b484c106a91d1325839b065b1b2a58a50889fc774f0c",
+      "last_updated": "2026-09-17T08:01:35Z"
     },
     "network-config": {
       "slug": "network-config",
@@ -1290,8 +1290,8 @@
       "source_url": "https://code.claude.com/docs/en/plugin-marketplaces",
       "source_md_url": "https://code.claude.com/docs/en/plugin-marketplaces.md",
       "source_id": "plugin-marketplaces",
-      "hash": "bfc81cfb2203e57505dd6ffe3788d3a6757da6f3d809d0566298601c88c175ca",
-      "last_updated": "2026-09-16T23:19:20Z"
+      "hash": "29967b9afd4493b0cdccaedf4f41005cd571403b6315ee98e62ece643debb0d7",
+      "last_updated": "2026-09-17T08:01:35Z"
     },
     "plugin-relevance": {
       "slug": "plugin-relevance",
@@ -1540,8 +1540,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "5d86cc6dbfb4867d9f081ba4d646205127416467439199c1abfa1322d659a5a9",
-      "last_updated": "2026-09-16T23:19:20Z"
+      "hash": "dfd4e6e02d61cdfede958b5495fb783c6f939b2ba00d17f13bc352a374becb85",
+      "last_updated": "2026-09-17T08:01:35Z"
     },
     "setup": {
       "slug": "setup",
@@ -1950,8 +1950,8 @@
       "source_url": "https://code.claude.com/docs/en/worktrees",
       "source_md_url": "https://code.claude.com/docs/en/worktrees.md",
       "source_id": "worktrees",
-      "hash": "0b1d282e4bd26de1d14ef1ac7f91791edfbbb68912145d6bfade1790d6af0561",
-      "last_updated": "2026-09-12T07:23:43Z"
+      "hash": "5b688d0fa9e8e532bce4a5cf5f27773da039c5bb8d57d7dc01672676e13e87f8",
+      "last_updated": "2026-09-17T08:01:35Z"
     },
     "zero-data-retention": {
       "slug": "zero-data-retention",
@@ -1965,8 +1965,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-17T01:52:56Z",
-    "fetch_duration_seconds": 70.711,
+    "last_fetch_completed": "2026-09-17T08:01:35Z",
+    "fetch_duration_seconds": 69.764,
     "total_pages_discovered": 196,
     "pages_fetched_successfully": 196,
     "pages_failed": 0,

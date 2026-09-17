@@ -2,8 +2,8 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 72
-- **Last updated:** 2026-09-17T01:54:23Z
+- **Pages mirrored:** 73
+- **Last updated:** 2026-09-17T08:03:01Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -72,7 +72,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | 🚀 Introducing DeepSeek-V3 | [news/news1226.md](./news/news1226.md) | [source](<https://api-docs.deepseek.com/news/news1226>) |
 | Introducing DeepSeek App | [news/news250115.md](./news/news250115.md) | [source](<https://api-docs.deepseek.com/news/news250115>) |
 | Your First API Call | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
-| Your First API Call | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
+| DeepSeek-V3-0324 Release | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
 | DeepSeek-R1-0528 Release | [news/news250528.md](./news/news250528.md) | [source](<https://api-docs.deepseek.com/news/news250528>) |
 | DeepSeek-V3.1 Release | [news/news250821.md](./news/news250821.md) | [source](<https://api-docs.deepseek.com/news/news250821>) |
 | DeepSeek-V3.1-Terminus | [news/news250922.md](./news/news250922.md) | [source](<https://api-docs.deepseek.com/news/news250922>) |
@@ -102,6 +102,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Integrate with OpenClaw | [quick_start/agent_integrations/openclaw.md](./quick_start/agent_integrations/openclaw.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/openclaw>) |
 | Integrate with OpenCode | [quick_start/agent_integrations/opencode.md](./quick_start/agent_integrations/opencode.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/opencode>) |
 | Integrate with Pi | [quick_start/agent_integrations/pi_mono.md](./quick_start/agent_integrations/pi_mono.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/pi_mono>) |
+| Integrate with Qoder | [quick_start/agent_integrations/qoder.md](./quick_start/agent_integrations/qoder.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/qoder>) |
 | Integrate with Reasonix | [quick_start/agent_integrations/reasonix.md](./quick_start/agent_integrations/reasonix.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/reasonix>) |
 | Integrate with WorkBuddy/CodeBuddy | [quick_start/agent_integrations/workbuddy.md](./quick_start/agent_integrations/workbuddy.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/workbuddy>) |
 | Error Codes | [quick_start/error_codes.md](./quick_start/error_codes.md) | [source](<https://api-docs.deepseek.com/quick_start/error_codes>) |
