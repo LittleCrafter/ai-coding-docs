@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 250" width="100%" fill="none">
+  <style>
+    text { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; fill: #D1D5DB; }
+    .label { font-size: 10px; fill: #9CA3AF; }
+    .title { font-size: 11px; font-weight: 600; fill: #D1D5DB; }
+    .box { rx: 8; ry: 8; stroke-width: 1.5; }
+  </style>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/>
+    </marker>
+  </defs>
+
+  
+  <rect class="box" x="10" y="95" width="70" height="50" fill="#262626" stroke="#9CA3AF"/>
+  <text class="title" x="45" y="124" text-anchor="middle">You</text>
+
+  
+  <rect class="box" x="120" y="70" width="150" height="100" fill="#1E293B" stroke="#818CF8"/>
+  <text class="title" x="195" y="100" text-anchor="middle">Project conversation</text>
+  <text class="label" x="195" y="118" text-anchor="middle">Claude answers here or</text>
+  <text class="label" x="195" y="132" text-anchor="middle">starts a thread</text>
+  <text class="label" x="195" y="152" text-anchor="middle">Instructions · memory · repos</text>
+
+  <line x1="80" y1="120" x2="118" y2="120" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  
+  <rect class="box" x="320" y="15" width="140" height="58" fill="#1F2A24" stroke="#22C55E"/>
+  <text class="title" x="390" y="39" text-anchor="middle">Thread</text>
+  <text class="label" x="390" y="56" text-anchor="middle">Cloud session · branch · PR</text>
+
+  <rect class="box" x="320" y="96" width="140" height="58" fill="#1F2A24" stroke="#22C55E"/>
+  <text class="title" x="390" y="120" text-anchor="middle">Thread</text>
+  <text class="label" x="390" y="137" text-anchor="middle">Cloud session · branch · PR</text>
+
+  <rect class="box" x="320" y="177" width="140" height="58" fill="#1F2A24" stroke="#22C55E"/>
+  <text class="title" x="390" y="201" text-anchor="middle">Thread</text>
+  <text class="label" x="390" y="218" text-anchor="middle">Cloud session · branch · PR</text>
+
+  <line x1="270" y1="105" x2="318" y2="50" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="270" y1="120" x2="318" y2="124" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="270" y1="135" x2="318" y2="200" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  
+  <rect class="box" x="500" y="55" width="92" height="140" fill="#2B2418" stroke="#F59E0B"/>
+  <text class="title" x="546" y="80" text-anchor="middle">Overview</text>
+  <text class="label" x="546" y="108" text-anchor="middle">Ready for review</text>
+  <text class="label" x="546" y="128" text-anchor="middle">Waiting on you</text>
+  <text class="label" x="546" y="148" text-anchor="middle">Working</text>
+  <text class="label" x="546" y="168" text-anchor="middle">Idle</text>
+
+  <line x1="460" y1="44" x2="498" y2="95" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="460" y1="125" x2="498" y2="125" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="460" y1="206" x2="498" y2="155" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arr)"/>
+</svg>

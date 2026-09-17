@@ -21481,6 +21481,231 @@ Both Python and TypeScript MCP software development kits include helpers so you 
 - [Python](https://github.com/modelcontextprotocol/python-sdk?tab=readme-ov-file#authentication)
 - [TypeScript](https://github.com/modelcontextprotocol/typescript-sdk?tab=readme-ov-file#proxy-authorization-requests-upstream)
 
+#### Support multiple accounts
+
+Multi-account lets users connect more than one account to the same plugin—for example, personal and work accounts. OpenAI routes each tool call using the selected connection’s authenticated credentials. Users can connect multiple accounts without a profile tool. To help users distinguish connections and recognize the same profile after reconnection, provide an authenticated profile tool with a stable ID and useful display metadata.
+
+#### How multi-account works for users
+
+Users can connect additional accounts from the plugin’s settings page. All connected accounts are available to the model, which selects the relevant account or accounts when invoking tools based on the user’s request. Each tool call uses the selected account’s credentials and permissions.
+
+#### Improve account identification
+
+To help OpenAI recognize connected profiles and show useful labels:
+
+- Provide an authenticated profile tool that returns an opaque ID uniquely and stably identifying the profile represented by the request’s credentials. This lets OpenAI recognize the same profile across reconnections and distinguish it from other profiles. A field named `id` is useful for this only if its value meets those guarantees.
+- Designate the profile tool in MCP metadata so OpenAI can discover which tool to call for authenticated profile information.
+
+When profile information is needed, OpenAI discovers the designated tool at runtime, calls it with the connection’s credentials, and validates the response before using the profile data. Without a profile tool, users can still connect accounts, but account labels, recognition, or duplicate detection may be less reliable. If you declare a profile tool, return a valid identity; an invalid response can prevent account connection.
+
+#### Define a stable profile identity
+
+A profile identifies the identity represented by the request’s authenticated credentials. Your service defines which profiles can be connected independently; this contract does not prescribe your service’s organization or authorization model.
+
+Return an opaque profile ID that is unique within your app. The same profile must retain its ID across token refresh and reconnection; distinct profiles must have distinct IDs. OpenAI compares these IDs without interpreting their contents.
+
+Use an existing immutable, opaque provider ID when it identifies the full profile. Otherwise, assign an opaque ID once, persist its association with that profile, and retrieve the same ID on future requests. Keep any internal relationships in your service; do not encode names, email addresses, or organizational relationships into the returned ID.
+
+Your `id` must:
+
+- Be a non-empty, non-whitespace string. Serialize numeric provider IDs as strings.
+- Remain the same for the same profile across token refresh, reconnect, and scope upgrades.
+- Differ for distinct profiles that can connect through the app.
+- Remain unchanged when the profile’s email, name, or display label changes.
+- Never be reassigned to a different profile after deletion.
+
+Do not generate a new ID per login, token, session, or tool call. Keep email and editable names in display metadata: an email address that can change or be reassigned cannot serve as the stable profile ID. For Google OIDC, use the stable `sub` rather than the email claim; Google documents that email may change while `sub` remains unchanged and is never reused. See Google identity documentation.
+
+Preserve existing profile IDs when updating your integration. A display-name change, new token, or new connection must not create a new profile identity.
+
+#### Implement and declare your profile tool
+
+Expose an authenticated, read-only tool that accepts an empty argument object and returns the current profile. The tool may be named `get_profile`, `whoami`, or another name; its metadata identifies it as the profile tool for runtime discovery. The response must satisfy the identity requirements below so OpenAI can use it correctly.
+
+- Resolve identity from the request’s validated credentials.
+- Make the operation read-only and available with the normal connection’s permissions.
+- Return exactly one profile: the profile represented by the current request’s credentials.
+- Do not require the caller to supply a user ID, email, or account selector.
+- On authentication failure, return the appropriate auth error instead of a placeholder ID or another account’s profile.
+
+The profile response must conform to this JSON Schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S",
+      "description": "Opaque profile identifier, unique within this app and unchanged across token refresh, reconnection, and display-metadata changes. Never reassigned to another profile."
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name for the authenticated profile."
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address for display; not used as the profile identity."
+    },
+    "nickname": {
+      "type": "string",
+      "description": "A useful label that helps users distinguish connected profiles."
+    }
+  },
+  "required": ["id"],
+  "additionalProperties": false
+}
+```
+
+The response must contain a non-empty, non-whitespace string `id`. Display fields are optional. The tool’s metadata tells OpenAI where to retrieve profile information; the response identifies the profile represented by the current credentials.
+
+Schema validation checks whether a response has the structure and field types needed for profile handling. Your service must also guarantee ID uniqueness, stability, and correct credential scoping; neither metadata nor a passing schema check proves those behavioral properties.
+
+Include `name`, `email`, and/or `nickname` when available so users can distinguish profiles. Omit unavailable optional values; do not invent them or add unrelated personal data. Put useful human-readable context in `nickname` rather than in the ID.
+
+Mark the tool with `_meta["openai/profile"]: true` and publish the profile response schema as its `outputSchema`. The marker tells OpenAI which tool supplies profile information; it does not enable the feature or grant eligibility. An absent or false marker means this tool is not designated as a profile source through this mechanism. Strings, numbers, and null are invalid marker values.
+
+```json
+{
+  "name": "get_profile",
+  "description": "Return the profile represented by this request's authenticated credentials. The opaque id is unique within this app and remains unchanged across token refresh, reconnection, and display-metadata changes.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S",
+        "description": "Opaque profile identifier, unique within this app and unchanged across token refresh, reconnection, and display-metadata changes. Never reassigned to another profile."
+      },
+      "name": {
+        "type": "string",
+        "description": "Display name for the authenticated profile."
+      },
+      "email": {
+        "type": "string",
+        "description": "Email address for display; not used as the profile identity."
+      },
+      "nickname": {
+        "type": "string",
+        "description": "A useful label that helps users distinguish connected profiles."
+      }
+    },
+    "required": ["id"],
+    "additionalProperties": false
+  },
+  "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "openWorldHint": false
+  },
+  "securitySchemes": [
+    {
+      "type": "oauth2",
+      "scopes": []
+    }
+  ],
+  "_meta": {
+    "openai/profile": true
+  }
+}
+```
+
+Use your integration’s actual OAuth scopes if profile access requires them. The declaration does not implement authentication; the server must validate credentials and enforce permissions. See [Implementing token verification](#implementing-token-verification) and the [tool reference](https://developers.openai.com/plugins/reference).
+
+Return the profile in `structuredContent` so it can be validated against `outputSchema`. For compatibility, also include the same profile serialized as JSON in a text content item:
+
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"id\":\"prf_8d7e4b19\",\"name\":\"Alex Chen\",\"email\":\"alex@example.com\",\"nickname\":\"Alex — Moonwaffle work\"}"
+    }
+  ],
+  "structuredContent": {
+    "id": "prf_8d7e4b19",
+    "name": "Alex Chen",
+    "email": "alex@example.com",
+    "nickname": "Alex — Moonwaffle work"
+  },
+  "isError": false
+}
+```
+
+Use a single JSON object with profile fields at the top level.
+
+**Already have a profile tool?** Keep its name, add the profile metadata declaration, and return the standard profile response. If the existing response has a different shape, adapt it on your server or expose a small wrapper tool that conforms to the schema. The standard integration path uses the same declaration and response shape for every app.
+
+#### Concrete example: Persistent Moonwaffle profiles
+
+Suppose Moonwaffle, a fictional service, lets Alex connect two profiles independently. Moonwaffle stores a different opaque ID for each profile. Request credentials resolve to one of those stored profiles, and the profile tool returns its existing ID.
+
+**Example stored profiles.** The labels can change; the identifiers remain the same:
+
+```text
+Alex — Moonwaffle personal: prf_42a9c6e0
+Alex — Moonwaffle work:     prf_8d7e4b19
+```
+
+These example IDs do not encode profile labels or internal relationships. They are persisted once per profile and reused across reconnection, token refresh, and changes to email or display name.
+
+**Build the response from the authenticated profile.** This JavaScript example shows handler logic you can connect to your MCP SDK. `loadAuthenticatedProfile` is your application’s integration code: it validates the request credentials, enforces their permissions, and retrieves the corresponding profile’s persisted ID and display metadata. `requestContext` comes from your server’s request handling; it is not a model-supplied tool argument.
+
+```javascript
+async function getProfile(requestContext) {
+  // Your auth/provider integration validates credentials and loads
+  // the existing profile. Auth failures use normal MCP auth handling.
+  const account = await loadAuthenticatedProfile(requestContext);
+  const id = account.profileId;
+
+  if (typeof id !== "string" || id.trim().length === 0) {
+    return {
+      isError: true,
+      content: [{ type: "text", text: "Profile identity unavailable." }],
+    };
+  }
+
+  // Return the persisted ID unchanged; do not generate an ID per call.
+  const profile = {
+    id,
+    ...(typeof account.name === "string" ? { name: account.name } : {}),
+    ...(typeof account.email === "string" ? { email: account.email } : {}),
+    ...(typeof account.nickname === "string"
+      ? { nickname: account.nickname }
+      : {}),
+  };
+
+  return {
+    isError: false,
+    structuredContent: profile,
+    content: [{ type: "text", text: JSON.stringify(profile) }],
+  };
+}
+```
+
+Register this handler with the metadata declaration and input/output schemas above. `loadAuthenticatedProfile` must resolve the same stored profile for equivalent credentials and after reconnection. It must not create a fresh profile ID for each OAuth grant or session. All other tools must use the request’s credentials to enforce the same profile’s permissions.
+
+**Verify identity behavior:**
+
+| Test                                                                | Expected result                                                      |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Moonwaffle work profile, called repeatedly                          | `prf_8d7e4b19` every time                                            |
+| The same profile after token refresh, reconnect, or a scope upgrade | `prf_8d7e4b19`                                                       |
+| The same profile after an email or display-label change             | `prf_8d7e4b19`; labels can change                                    |
+| Moonwaffle personal profile                                         | `prf_42a9c6e0`, distinct from the work profile                       |
+| The persisted profile ID is missing or blank                        | An error result; no invented identity or fallback to another profile |
+
+The identity guarantee must hold across all profiles and future changes to your integration. Preserve it independently of display metadata, token contents, and connection lifecycle events.
+
 #### Testing and rollout
 
 - **Local testing:** Start with a development tenant that issues short-lived tokens so you can iterate quickly.
@@ -21975,6 +22200,15 @@ model to decide whether a user has access.
 
 See [Authenticate users](https://developers.openai.com/plugins/build/auth) for OAuth discovery, security
 schemes, and authorization challenges.
+
+To improve the experience of using multiple accounts, expose an authenticated,
+read-only profile tool and mark it with `_meta["openai/profile"]: true`.
+OpenAI uses the profile information to identify connected accounts consistently
+and help users tell them apart. Resolve the profile from the request's validated
+credentials, and keep every tool call scoped to those credentials. Users can
+connect multiple accounts without a profile tool. See
+[Support multiple accounts](https://developers.openai.com/plugins/build/auth#support-multiple-accounts) for
+the schema and implementation example.
 
 #### Tool annotations and elicitation
 
@@ -28545,17 +28779,18 @@ Use these `_meta` fields on the tool descriptor. Prefer the MCP Apps standard
 key `_meta.ui.resourceUri` for linking a tool to a UI template. ChatGPT supports
 OpenAI-specific metadata for compatibility and optional extensions.
 
-| Key                                       |    Placement    | Type         | Limits                          | Purpose                                                                                                                         |
-| ----------------------------------------- | :-------------: | ------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `_meta["securitySchemes"]`                | Tool descriptor | array        | None                            | Back-compat mirror for clients that only read `_meta`.                                                                          |
-| `_meta.ui.resourceUri`                    | Tool descriptor | string (URI) | None                            | Standard resource URI for the UI template.                                                                                      |
-| `_meta.ui.visibility`                     | Tool descriptor | string[]     | default `["model", "app"]`      | Controls whether a tool is available to the model, the UI, or both. The `app` value is the MCP Apps protocol identifier for UI. |
-| `_meta["openai/outputTemplate"]`          | Tool descriptor | string (URI) | None                            | OpenAI-specific optional/compatibility alias for `_meta.ui.resourceUri` in ChatGPT.                                             |
-| `_meta["openai/widgetAccessible"]`        | Tool descriptor | boolean      | default `false`                 | OpenAI-specific compatibility field used by existing UI integrations; prefer `_meta.ui.visibility` + `tools/call`.              |
-| `_meta["openai/visibility"]`              | Tool descriptor | string       | `public` (default) or `private` | OpenAI-specific compatibility field used by existing UI integrations; prefer `_meta.ui.visibility`.                             |
-| `_meta["openai/toolInvocation/invoking"]` | Tool descriptor | string       | ≤ 64 chars                      | Short status text while the tool runs.                                                                                          |
-| `_meta["openai/toolInvocation/invoked"]`  | Tool descriptor | string       | ≤ 64 chars                      | Short status text after the tool completes.                                                                                     |
-| `_meta["openai/fileParams"]`              | Tool descriptor | string[]     | None                            | List of top-level input fields that represent files. Each field receives `{ download_url, file_id, mime_type?, file_name? }`.   |
+| Key                                       |    Placement    | Type         | Limits                                          | Purpose                                                                                                                                                                                                                                                                                     |
+| ----------------------------------------- | :-------------: | ------------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `_meta["securitySchemes"]`                | Tool descriptor | array        | None                                            | Back-compat mirror for clients that only read `_meta`.                                                                                                                                                                                                                                      |
+| `_meta.ui.resourceUri`                    | Tool descriptor | string (URI) | None                                            | Standard resource URI for the UI template.                                                                                                                                                                                                                                                  |
+| `_meta.ui.visibility`                     | Tool descriptor | string[]     | default `["model", "app"]`                      | Controls whether a tool is available to the model, the UI, or both. The `app` value is the MCP Apps protocol identifier for UI.                                                                                                                                                             |
+| `_meta["openai/outputTemplate"]`          | Tool descriptor | string (URI) | None                                            | OpenAI-specific optional/compatibility alias for `_meta.ui.resourceUri` in ChatGPT.                                                                                                                                                                                                         |
+| `_meta["openai/profile"]`                 | Tool descriptor | boolean      | Optional; only `true` designates a profile tool | Identifies the authenticated, read-only tool that returns the current profile. Implement it to help users recognize and manage multiple connected accounts. Users can connect multiple accounts without it. See [Support multiple accounts](https://developers.openai.com/plugins/build/auth#support-multiple-accounts). |
+| `_meta["openai/widgetAccessible"]`        | Tool descriptor | boolean      | default `false`                                 | OpenAI-specific compatibility field used by existing UI integrations; prefer `_meta.ui.visibility` + `tools/call`.                                                                                                                                                                          |
+| `_meta["openai/visibility"]`              | Tool descriptor | string       | `public` (default) or `private`                 | OpenAI-specific compatibility field used by existing UI integrations; prefer `_meta.ui.visibility`.                                                                                                                                                                                         |
+| `_meta["openai/toolInvocation/invoking"]` | Tool descriptor | string       | ≤ 64 chars                                      | Short status text while the tool runs.                                                                                                                                                                                                                                                      |
+| `_meta["openai/toolInvocation/invoked"]`  | Tool descriptor | string       | ≤ 64 chars                                      | Short status text after the tool completes.                                                                                                                                                                                                                                                 |
+| `_meta["openai/fileParams"]`              | Tool descriptor | string[]     | None                                            | List of top-level input fields that represent files. Each field receives `{ download_url, file_id, mime_type?, file_name? }`.                                                                                                                                                               |
 
 Example:
 

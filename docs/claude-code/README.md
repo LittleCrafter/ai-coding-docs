@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 196
+- **Pages mirrored:** 197
 - **Version:** 2.1.274
-- **Last updated:** 2026-09-17T08:01:35Z
+- **Last updated:** 2026-09-17T18:39:50Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -39,6 +39,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Use Claude Code in the cloud | [claude-code-on-the-web.md](./claude-code-on-the-web.md) | [source](<https://code.claude.com/docs/en/claude-code-on-the-web>) |
 | Explore the .claude directory | [claude-directory.md](./claude-directory.md) | [source](<https://code.claude.com/docs/en/claude-directory>) |
 | Claude Code on Claude Platform on AWS | [claude-platform-on-aws.md](./claude-platform-on-aws.md) | [source](<https://code.claude.com/docs/en/claude-platform-on-aws>) |
+| Let Claude coordinate ongoing work with Projects | [claude-projects.md](./claude-projects.md) | [source](<https://code.claude.com/docs/en/claude-projects>) |
 | Scan your codebase for vulnerabilities | [claude-security.md](./claude-security.md) | [source](<https://code.claude.com/docs/en/claude-security>) |
 | Claude Tag | [claude-tag.md](./claude-tag.md) | [source](<https://code.claude.com/docs/en/claude-tag>) |
 | CLI reference | [cli-reference.md](./cli-reference.md) | [source](<https://code.claude.com/docs/en/cli-reference>) |

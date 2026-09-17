@@ -330,7 +330,7 @@ Use the controls at the top of the sidebar to filter sessions by status, project
 
 To check context usage, see [Check usage](#check-usage). When context fills up, Claude automatically summarizes the conversation and continues working. You can also type `/compact` to trigger summarization earlier and free up context space. See [the context window](./how-claude-code-works.md#the-context-window) for details on how compaction works.
 
-The desktop app sends an OS notification when a Code session finishes a task and you aren't currently viewing that session.
+The desktop app sends an OS notification when a Code session finishes a task and you aren't currently viewing that session. For sessions that belong to a [project](./claude-projects.md#see-what-needs-you-in-overview), you get the project's notifications instead.
 
 ### Ask a side question without derailing the session
 
@@ -369,7 +369,7 @@ For large refactors, test suites, migrations, or other long-running tasks, selec
 
 Cloud sessions also support multiple repositories. After selecting a cloud environment, click the **+** button next to the selected repository to add more repositories to the session. Each repo gets its own branch selector. This is useful for tasks that span multiple codebases, such as updating a shared library and its consumers.
 
-See [Use Claude Code in the cloud](./claude-code-on-the-web.md) for more on how cloud sessions work.
+See [Use Claude Code in the cloud](./claude-code-on-the-web.md) for more on how cloud sessions work. When one body of work needs many cloud sessions, select **Projects** in the sidebar to create a [project](./claude-projects.md), where Claude starts and tracks the sessions for you from one conversation.
 
 ### Continue in another surface
 

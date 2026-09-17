@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.154.0",
-  "last_updated": "2026-09-16T23:20:16Z",
+  "last_updated": "2026-09-17T18:40:46Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -240,8 +240,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "9872f87fe8573b7416fcf18cde65c2acebd725892e419b76664916f78b9bf26c",
-      "last_updated": "2026-09-16T23:20:16Z"
+      "hash": "b502bc4e8899f21a59ef1693d4640ce20198bf31c93498031702d0ffd2467b37",
+      "last_updated": "2026-09-17T18:40:46Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -1605,8 +1605,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-16T23:20:16Z",
-    "fetch_duration_seconds": 55.726,
+    "last_fetch_completed": "2026-09-17T18:40:46Z",
+    "fetch_duration_seconds": 55.802,
     "total_pages_discovered": 160,
     "pages_fetched_successfully": 160,
     "pages_failed": 0,

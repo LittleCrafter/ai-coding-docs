@@ -109,7 +109,7 @@ After installing, launch Claude, sign in, and click the **Code** tab to start co
 
 **Web**
 
-Run Claude Code in your browser with no local setup. Kick off long-running tasks and check back when they're done, work on repos you don't have locally, or run multiple tasks in parallel. Available on desktop browsers and [the Claude app for iOS and Android](./mobile.md).
+Run Claude Code in your browser with no local setup. Kick off long-running tasks and check back when they're done, work on repos you don't have locally, or run multiple tasks in parallel. For a longer body of work, create a [project](./claude-projects.md) and let Claude coordinate the parallel sessions for you. Available on desktop browsers and [the Claude app for iOS and Android](./mobile.md).
 
 Start coding at [claude.ai/code](https://claude.ai/code).
 
