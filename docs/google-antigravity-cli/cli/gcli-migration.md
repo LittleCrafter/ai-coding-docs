@@ -98,6 +98,6 @@ When manually migrating remote websocket or SSE server definitions, update the U
 
 Begin configuring your new visual parameters and troubleshooting any setup anomalies:
 
-*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys, themes, and screen buffers.
+*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys, themes, and screen buffers.
 *   **[Troubleshooting](./troubleshooting.md)**: Learn how to resolve authentication lockouts or path issues.
 *   **[CLI Reference](./reference.md)**: Access standard parameters lists and slash command mappings.

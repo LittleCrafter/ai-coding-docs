@@ -133,6 +133,6 @@ agy --mode=plan
 
 ## Next steps
 
-*   [Permissions](./permissions.md): Configure fine-grained tool approval rules and wildcard matching
-*   [Settings, Rendering & Keybindings](./settings.md): Customize configuration overrides and interactive preferences
-*   [Background Tasks & Subagents](./subagents.md): Manage parallel subagent execution and asynchronous task queues
+*   [Permissions](https://antigravity.google/docs/cli/permissions): Configure fine-grained tool approval rules and wildcard matching
+*   [Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings): Customize configuration overrides and interactive preferences
+*   [Background Tasks & Subagents](https://antigravity.google/docs/cli/subagents): Manage parallel subagent execution and asynchronous task queues

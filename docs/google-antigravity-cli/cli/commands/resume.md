@@ -120,4 +120,4 @@ When you use the `-c` / `--continue` flag, the CLI resolves the target session u
 
 *   **[Managing Conversations](../conversations.md)**: Learn about workspace scoping and branching with `/fork`.
 *   **[CLI Reference](../reference.md)**: See all available slash commands and default keybindings.
-*   **[Settings & Keybindings](../settings.md)**: Configure rendering modes and customize keyboard shortcuts.
+*   **[Settings & Keybindings](https://antigravity.google/docs/cli/settings)**: Configure rendering modes and customize keyboard shortcuts.

@@ -42,7 +42,7 @@ Set `editorMode` in your configuration profile:
 
 The CLI loads this file from `~/.gemini/antigravity-cli/settings.json` at startup. `editorMode` accepts `"default"` and `"vim"`. `vimInsertFirst` controls which mode each new prompt starts in and applies only when `editorMode` is `"vim"`; see [Start in Insert mode](#start-in-insert-mode).
 
-> **Note:** `editorMode` is unrelated to the [`editor` setting](./settings.md). `editor` picks the external program that `Ctrl+G` launches, so setting `editor` to `"vim"` opens Vim in a separate window and does nothing to the prompt. `editorMode` is the one that controls modal editing inside the CLI prompt itself.
+> **Note:** `editorMode` is unrelated to the [`editor` setting](https://antigravity.google/docs/cli/settings). `editor` picks the external program that `Ctrl+G` launches, so setting `editor` to `"vim"` opens Vim in a separate window and does nothing to the prompt. `editorMode` is the one that controls modal editing inside the CLI prompt itself.
 
 ## Switch between modes
 
@@ -281,6 +281,6 @@ echo "$input" | jq -r '.model.display_name'
 
 ## Next steps
 
-*   **[Settings, Rendering & Keybindings](./settings.md)**: Configure the rest of your preferences and remap keys.
+*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Configure the rest of your preferences and remap keys.
 *   **[Status Line Customization](./statusline.md)**: Control what the status line reports alongside the Vim mode badge.
 *   **[CLI Reference](./reference.md)**: Look up every configuration key and default keybinding.

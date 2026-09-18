@@ -33,10 +33,10 @@ If you are transitioning from Gemini CLI, the onboarding process supports a one-
 Explore the guides below to set up your environment and begin working with autonomous agents:
 
 *   **[Installation & Auth](./install.md)**: Set up the CLI, configure enterprise parameters, and complete silent authentication.
-*   **[Getting Started](./getting-started.md)**: Explore the onboarding roadmap, first-launch setups, and core conceptual models.
+*   **[Getting Started](https://antigravity.google/docs/cli/getting-started)**: Explore the onboarding roadmap, first-launch setups, and core conceptual models.
 *   **[Tutorial](./tutorial.md)**: Run your first multi-file generation task with an active agent.
 *   **[Prompting & Interaction](./prompting.md)**: Master multiline composing, prompt editing, and pasting terminal media.
 *   **[Reviewing Artifacts](./artifacts.md)**: Leverage transparency and review agent plans, diffs, and test runs.
 *   **[AI Credits](./credits.md)**: Configure and monitor AI Premium credits fallback, pricing links, and settings.
-*   **[Plugins & Skills](./plugins.md)**: Create your own custom skills slash commands, manage hooks, and configure MCP servers.
+*   **[Plugins & Skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom skills slash commands, manage hooks, and configure MCP servers.
 *   **[Best Practices](./best-practices.md)**: Master workflow pipelines, verification loops, and session course-corrections.

@@ -40,4 +40,4 @@ Use the following keyboard shortcuts to navigate the panel:
 ## Next steps
 
 *   **[CLI Reference](../reference.md)**: See all available slash commands and keybindings.
-*   **[Settings & Rendering](../settings.md)**: Configure your default models and credit usage preferences.
+*   **[Settings & Rendering](https://antigravity.google/docs/cli/settings)**: Configure your default models and credit usage preferences.

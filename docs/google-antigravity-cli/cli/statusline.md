@@ -134,5 +134,5 @@ chmod +x ~/.gemini/antigravity-cli/statusline.sh
 
 *   **[Status Line Command](./commands/statusline.md)**: Toggle status line elements interactively.
 *   **[Terminal Title Customization](./title.md)**: Configure dynamic window titles.
-*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys and buffers.
-*   **[Permissions & Sandbox](./sandbox.md)**: Manage secure directory permissions.
+*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage secure directory permissions.

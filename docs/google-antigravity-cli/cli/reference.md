@@ -33,6 +33,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **[`/permissions`](./commands/permissions.md)** | Configurations | — | Open the interactive tool permissions manager panel. |
 | **`/planning`** | Configurations | — | Enable multi-turn plan generation mode for complex engineering tasks. |
 | **`/rename <name>`** | Conversations | — | Rename the current session thread. |
+| **[`/remote-control`](https://antigravity.google/docs/remote-control?tab=cli#interactive-mode) \[on/off\]** | Utilities | — | Toggle Remote Control for the active terminal session. |
 | **[`/resume`](./commands/resume.md)** | Conversations | `/switch`, `/conversation` | Open the [conversation picker overlay](./commands/resume.md) to select and load previous threads. |
 | **`/rewind`** | Conversations | `/undo` | Roll back your conversation history to a previous message. |
 | **`/skills`** | Tools & Tasks | — | Browse loaded local and global Agent Skills. |
@@ -140,6 +141,6 @@ Primary settings key names, data types, system defaults, and expected parameters
 
 Learn how to safely deploy permission policies, sandboxes, and customize plugins:
 
-*   **[Permissions & Sandbox](./sandbox.md)**: Enforce command-line containment rules.
-*   **[Plugins & Skills](./plugins.md)**: Create your own custom skills slash commands.
+*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Enforce command-line containment rules.
+*   **[Plugins & Skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom skills slash commands.
 *   **[Installation & Auth](./install.md)**: Update your CLI install.

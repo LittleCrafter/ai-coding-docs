@@ -6,7 +6,7 @@ Manage your fine-grained agent permission rules interactively within the TUI.
 
 Antigravity CLI uses a fine-grained permissions engine to secure your workstation. While you can configure these rules manually in your settings file, the `/permissions` command opens an interactive **Permissions Manager** TUI panel to view, add, edit, and delete rules live.
 
-For details on how the permission engine works, supported actions, and manual configuration, see the conceptual **[Permissions Guide](../permissions.md)**.
+For details on how the permission engine works, supported actions, and manual configuration, see the conceptual **[Permissions Guide](https://antigravity.google/docs/cli/permissions)**.
 
 ## Managing permissions interactively
 
@@ -97,6 +97,6 @@ To remove a rule and revert to prompting for those actions:
 
 ## Next steps
 
-*   **[Permissions Guide](../permissions.md)**: Learn about the security model, action types, and wildcard matching.
-*   **[Sandbox & Security](../sandbox.md)**: Configure the native OS container for running commands.
+*   **[Permissions Guide](https://antigravity.google/docs/cli/permissions)**: Learn about the security model, action types, and wildcard matching.
+*   **[Sandbox & Security](https://antigravity.google/docs/cli/sandbox)**: Configure the native OS container for running commands.
 *   **[CLI Reference](../reference.md)**: See all available slash commands and keybindings.

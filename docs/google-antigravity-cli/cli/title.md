@@ -47,5 +47,5 @@ chmod +x ~/.gemini/antigravity-cli/title.sh
 
 *   **[Window Title Command](./commands/title.md)**: Toggle or set the terminal title interactively.
 *   **[Status Line Customization](./statusline.md)**: Customize dynamic TUI status bars.
-*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys and buffers.
-*   **[Permissions & Sandbox](./sandbox.md)**: Manage secure directory permissions.
+*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage secure directory permissions.

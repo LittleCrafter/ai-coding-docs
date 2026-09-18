@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 36
+- **Pages mirrored:** 28
 - **Version:** 1.2.0
-- **Last updated:** 2026-09-15T23:13:18Z
+- **Last updated:** 2026-09-18T01:38:57Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -18,21 +18,13 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Managing AI Credits &amp; Quotas | [cli/credits.md](./cli/credits.md) | [source](<https://antigravity.google/docs/cli/credits>) |
 | Antigravity CLI Features | [cli/features.md](./cli/features.md) | [source](<https://antigravity.google/docs/cli/features>) |
 | Migrating from Gemini CLI | [cli/gcli-migration.md](./cli/gcli-migration.md) | [source](<https://antigravity.google/docs/cli/gcli-migration>) |
-| Getting Started with Antigravity CLI | [cli/getting-started.md](./cli/getting-started.md) | [source](<https://antigravity.google/docs/cli/getting-started>) |
 | Headless mode | [cli/headless.md](./cli/headless.md) | [source](<https://antigravity.google/docs/cli/headless>) |
 | Installation &amp; auth | [cli/install.md](./cli/install.md) | [source](<https://antigravity.google/docs/cli/install>) |
-| Model Context Protocol (MCP) | [cli/mcp.md](./cli/mcp.md) | [source](<https://antigravity.google/docs/cli/mcp>) |
 | Choose an execution mode | [cli/modes.md](./cli/modes.md) | [source](<https://antigravity.google/docs/cli/modes>) |
 | Antigravity CLI Overview | [cli/overview.md](./cli/overview.md) | [source](<https://antigravity.google/docs/cli/overview>) |
-| Permissions | [cli/permissions.md](./cli/permissions.md) | [source](<https://antigravity.google/docs/cli/permissions>) |
-| Plugins &amp; skills | [cli/plugins.md](./cli/plugins.md) | [source](<https://antigravity.google/docs/cli/plugins>) |
-| Projects | [cli/projects.md](./cli/projects.md) | [source](<https://antigravity.google/docs/cli/projects>) |
 | Prompting &amp; interaction | [cli/prompting.md](./cli/prompting.md) | [source](<https://antigravity.google/docs/cli/prompting>) |
 | CLI reference | [cli/reference.md](./cli/reference.md) | [source](<https://antigravity.google/docs/cli/reference>) |
-| Sandbox | [cli/sandbox.md](./cli/sandbox.md) | [source](<https://antigravity.google/docs/cli/sandbox>) |
-| Settings, rendering &amp; keybindings | [cli/settings.md](./cli/settings.md) | [source](<https://antigravity.google/docs/cli/settings>) |
 | Status line customization | [cli/statusline.md](./cli/statusline.md) | [source](<https://antigravity.google/docs/cli/statusline>) |
-| Background tasks &amp; subagents | [cli/subagents.md](./cli/subagents.md) | [source](<https://antigravity.google/docs/cli/subagents>) |
 | Terminal title customization | [cli/title.md](./cli/title.md) | [source](<https://antigravity.google/docs/cli/title>) |
 | Troubleshooting | [cli/troubleshooting.md](./cli/troubleshooting.md) | [source](<https://antigravity.google/docs/cli/troubleshooting>) |
 | Antigravity CLI Tutorial | [cli/tutorial.md](./cli/tutorial.md) | [source](<https://antigravity.google/docs/cli/tutorial>) |

@@ -43,6 +43,6 @@ Note
 
 Explore how the agent handles complex, asynchronous operations and parallel tasks:
 
-*   **[Background Tasks & Subagents](./subagents.md)**: Monitor subagents and handle fast-path approvals.
-*   **[Settings, Rendering & Keybindings](./settings.md)**: Configure rendering buffers and override JSON preferences.
-*   **[Permissions & Sandbox](./sandbox.md)**: Manage security profiles and system command lists.
+*   **[Background Tasks & Subagents](https://antigravity.google/docs/cli/subagents)**: Monitor subagents and handle fast-path approvals.
+*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Configure rendering buffers and override JSON preferences.
+*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage security profiles and system command lists.

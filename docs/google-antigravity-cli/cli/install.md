@@ -142,4 +142,4 @@ Once you complete installation and authentication, start interacting with your l
 
 *   **[Tutorial](./tutorial.md)**: Create and run a basic Python project with an agent.
 *   **[Prompting & Interaction](./prompting.md)**: Explore multiline text editing, interrupt commands, and terminal media pasting.
-*   **[Permissions & Sandbox](./sandbox.md)**: Configure secure filesystem directories and command limits.
+*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Configure secure filesystem directories and command limits.

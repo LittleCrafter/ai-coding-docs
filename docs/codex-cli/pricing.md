@@ -42,8 +42,6 @@ Choose 5x or 20x higher rate limits than Plus.
 
 [Get Pro](https://chatgpt.com/explore/pro?utm_internal_source=openai_developers_codex)
 
-- Access to GPT-5.3-Codex-Spark (research preview), a fast Codex model
-  for day-to-day coding tasks
 - 5x or 20x more Codex usage than Plus*
 - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
   Pro plan
@@ -173,10 +171,7 @@ Speed configurations increase credit consumption for all applicable models, so
 they also use included limits faster. Fast mode consumes credits at a higher
 rate for supported models. See [Speed](./agent-configuration/speed.md) for supported models and
 rates. Image generations also use included limits ~3-5x faster on average,
-depending on image quality and size. GPT-5.3-Codex-Spark is in research preview
-for ChatGPT Pro users only, and isn't available in the API at launch. Because it
-runs on specialized low-latency hardware, usage is governed by a separate usage
-limit that may adjust based on demand.
+depending on image quality and size.
 
 ### How much does Sites cost?
 
@@ -341,12 +336,6 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         <td style="text-align:center">113 credits</td>
       </tr>
       <tr>
-        <td>GPT-5.3-Codex-Spark</td>
-        <td colspan="3" style="text-align:center">
-          research preview
-        </td>
-      </tr>
-      <tr>
         <td>GPT-Image-2 (image)</td>
         <td style="text-align:center">200 credits</td>
         <td style="text-align:center">50 credits</td>
@@ -447,7 +436,6 @@ efficiently](./prompting.md#use-work-efficiently).
 | --- | --- | --- | --- | --- | --- |
 | [GPT-5.6](./models.md) | Yes | Yes | Yes | Yes | Yes |
 | [Fast mode](./agent-configuration/speed.md) | Yes | Yes | Yes | Yes | Yes |
-| [Codex-Spark research preview](./models.md) | No | Yes | No | No | No |
 | [Image generation and editing](./image-generation.md) | Yes | Yes | Yes | Yes | Yes |
 | [Voice dictation](./prompting.md#use-voice-dictation) | Yes | Yes | Yes | Yes | No |
 | [ChatGPT Voice](./features/voice.md) | Yes | Yes | Yes | Yes | No |

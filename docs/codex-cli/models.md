@@ -164,18 +164,6 @@ Fast and affordable GPT-5.6 model that delivers strong capability at the lowest 
 - **ChatGPT Credits**: Supported
 - **API Access**: Supported
 
-### `gpt-5.3-codex-spark`
-
-Text-only research preview model optimized for near-instant, real-time coding iteration. Available to ChatGPT Pro users.
-
-- **ChatGPT desktop app**: Supported
-- **ChatGPT web**: Not supported
-- **Codex CLI**: Supported
-- **Codex IDE extension**: Supported
-- **Codex cloud**: Not supported
-- **ChatGPT Credits**: Not supported
-- **API Access**: Not supported
-
 Availability depends on the rollout, your sign-in method, and your client.
 See [pricing](./pricing.md) for plan access and usage, and
 [workspace model availability](./enterprise/workspace-model-availability.md#gpt-6-astra-in-enterprise)
@@ -265,8 +253,8 @@ for tasks that need more planning, analysis, or checking.
 - **High** and **Extra High** suit difficult work with multiple steps, sources,
   or tradeoffs.
 
-There is no exact mapping from GPT-5.5 reasoning efforts to GPT-5.6. Try a
-familiar task at a lower setting and adjust based on the result.
+GPT-5.5 reasoning efforts don't map exactly to GPT-5.6. Try a familiar task
+at a lower setting and adjust based on the result.
 
 <a id="app-know-when-to-use-max-or-ultra"></a>
 <a id="web-know-when-to-use-max-or-ultra"></a>

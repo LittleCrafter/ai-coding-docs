@@ -33,12 +33,3 @@ apply. API Priority processing has its own billing rate; for GPT-5.6, it costs
 2x the Standard API token rate.
 
 [Video Demo](https://developers.openai.com/videos/codex/fast-mode-demo.mp4)
-
-## Codex-Spark
-
-GPT-5.3-Codex-Spark is a separate fast, less-capable Codex model optimized for
-near-instant, real-time coding iteration. Unlike fast mode, which speeds up a
-supported model at a higher credit rate, Codex-Spark is its own model choice
-and has its own usage limits.
-
-During research preview Codex-Spark is only available for ChatGPT Pro subscribers.

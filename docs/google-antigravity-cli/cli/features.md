@@ -68,6 +68,7 @@ The Antigravity CLI supports a variety of slash commands typed directly into the
 | **`/mcp`** | Tools & Monitoring | Open the panel to configure and manage Model Context Protocol servers. |
 | **`/open <path>`** | Utility | Immediately open a file in your preferred external editor. |
 | **`/diff`** | Utility | Open the [interactive diff viewer](./commands/diff.md) to review changes and steer the agent. |
+| **[`/remote-control`](https://antigravity.google/docs/remote-control?tab=cli#interactive-mode)** | Utility | Turn on or off Remote Control for the active terminal session. |
 | **`/usage`** | Utility | Open the inline interactive help manual inside the terminal. |
 | **`/logout`** | Account | Log out of your Google session and clear cached credentials. |
 

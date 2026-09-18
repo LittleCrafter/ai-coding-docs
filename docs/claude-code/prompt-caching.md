@@ -217,7 +217,7 @@ Switching between [permission modes](./permission-modes.md), such as from Manual
 
 ### Changing output style
 
-When you switch [output styles](./output-styles.md) mid-session with `/config` or the `outputStyle` setting, Claude uses the new style starting with your next message. Claude Code delivers the new style's instructions as a message in the conversation, so that request still reads the system prompt and the earlier conversation from the cache.
+When you switch [output styles](./output-styles.md) mid-session with [`/output-style`](./output-styles.md#change-your-output-style), `/config`, or the `outputStyle` setting, Claude uses the new style starting with your next message. Claude Code delivers the new style's instructions as a message in the conversation, so that request still reads the system prompt and the earlier conversation from the cache.
 
 Before v2.1.251, a mid-session style switch kept the cache but didn't apply until you ran `/clear` or started a new session.
 

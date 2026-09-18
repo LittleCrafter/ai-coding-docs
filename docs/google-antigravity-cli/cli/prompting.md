@@ -58,4 +58,4 @@ After mastering interaction patterns, explore how the agent presents actions and
 
 *   **[Reviewing Artifacts](./artifacts.md)**: Learn to inspect and manage file edits, plans, and test executions.
 *   **[Managing Conversations](./conversations.md)**: Resume prior threads and fork active sessions.
-*   **[Background Tasks & Subagents](./subagents.md)**: Monitor asynchronous background agents.
+*   **[Background Tasks & Subagents](https://antigravity.google/docs/cli/subagents)**: Monitor asynchronous background agents.

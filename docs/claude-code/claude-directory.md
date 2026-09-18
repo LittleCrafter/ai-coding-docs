@@ -703,7 +703,7 @@ Same as project commands/ but scoped to your user account. Each markdown file be
 
 Each markdown file defines an output style: a set of instructions for Claude that, by default, also replaces the built-in software-engineering task instructions. Use this to adapt Claude Code for uses beyond coding, or to add teaching or review modes.
 
-Select a built-in or custom style with `/config` or the `outputStyle` key in settings. Styles here are available in every project; project-level styles with the same name take precedence.
+Select a built-in or custom style with `/output-style`, `/config`, or the `outputStyle` key in settings. Styles here are available in every project; project-level styles with the same name take precedence.
 
 **Tips**
 

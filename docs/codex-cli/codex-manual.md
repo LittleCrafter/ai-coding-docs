@@ -1311,8 +1311,6 @@ Choose 5x or 20x higher rate limits than Plus.
 
 Everything in Plus and:
 
-- Access to GPT-5.3-Codex-Spark (research preview), a fast Codex model
-  for day-to-day coding tasks
 - 5x or 20x more Codex usage than Plus\*
 - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
   Pro plan
@@ -1505,10 +1503,7 @@ Speed configurations increase credit consumption for all applicable models, so
 they also use included limits faster. Fast mode consumes credits at a higher
 rate for supported models. See [Speed](./agent-configuration/speed.md) for supported models and
 rates. Image generations also use included limits ~3-5x faster on average,
-depending on image quality and size. GPT-5.3-Codex-Spark is in research preview
-for ChatGPT Pro users only, and isn't available in the API at launch. Because it
-runs on specialized low-latency hardware, usage is governed by a separate usage
-limit that may adjust based on demand.
+depending on image quality and size.
 
 #### How much does Sites cost?
 
@@ -1651,10 +1646,6 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         18.75 credits
         1.875 credits
         113 credits
-
-        GPT-5.3-Codex-Spark
-
-          research preview
 
         GPT-Image-2 (image)
         200 credits
@@ -2379,7 +2370,7 @@ max_concurrent_threads_per_session = 8
 ```toml
 name = "pr_explorer"
 description = "Read-only codebase explorer for gathering evidence before changes are proposed."
-model = "gpt-5.3-codex-spark"
+model = "gpt-5.6-luna"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = """
@@ -2477,7 +2468,7 @@ startup_timeout_sec = 20
 ```toml
 name = "ui_fixer"
 description = "Implementation-focused agent for small, targeted fixes after the issue is understood."
-model = "gpt-5.3-codex-spark"
+model = "gpt-5.6-luna"
 model_reasoning_effort = "medium"
 developer_instructions = """
 Own the fix once the issue is reproduced.
@@ -2752,15 +2743,6 @@ sign in with ChatGPT. Fast mode is a ChatGPT credit feature. With an API key,
 Codex uses API token pricing instead, and ChatGPT credit multipliers don't
 apply. API Priority processing has its own billing rate; for GPT-5.6, it costs
 2x the Standard API token rate.
-
-#### Codex-Spark
-
-GPT-5.3-Codex-Spark is a separate fast, less-capable Codex model optimized for
-near-instant, real-time coding iteration. Unlike fast mode, which speeds up a
-supported model at a higher credit rate, Codex-Spark is its own model choice
-and has its own usage limits.
-
-During research preview Codex-Spark is only available for ChatGPT Pro subscribers.
 
 ### Developers
 
@@ -13783,8 +13765,8 @@ for tasks that need more planning, analysis, or checking.
 - **High** and **Extra High** suit difficult work with multiple steps, sources,
   or tradeoffs.
 
-There is no exact mapping from GPT-5.5 reasoning efforts to GPT-5.6. Try a
-familiar task at a lower setting and adjust based on the result.
+GPT-5.5 reasoning efforts don't map exactly to GPT-5.6. Try a familiar task
+at a lower setting and adjust based on the result.
 
 #### Know when to use Max or Ultra
 

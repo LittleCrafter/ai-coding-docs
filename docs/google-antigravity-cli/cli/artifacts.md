@@ -167,5 +167,5 @@ Press `Esc` to close the Detail Viewer and return back to the primary picker che
 Configure settings preferences and review agent autonomy parameters:
 
 *   **[Managing Conversations](./conversations.md)**: Resume prior sessions and fork branches.
-*   **[Settings, Rendering & Keybindings](./settings.md)**: Customize keyboard hotkeys and visual buffers.
-*   **[Permissions & Sandbox](./sandbox.md)**: Configure security parameters and containment lists.
+*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and visual buffers.
+*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Configure security parameters and containment lists.

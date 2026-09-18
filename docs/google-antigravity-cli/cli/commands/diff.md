@@ -136,6 +136,6 @@ Highlight any commit and press Enter to load and review its diff:
 
 ## See also
 
-*   **[Settings & Keybindings](../settings.md)**: Customize your TUI theme, alt-screen preferences, and keybindings.
+*   **[Settings & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize your TUI theme, alt-screen preferences, and keybindings.
 *   **[Conversations](../conversations.md)**: Learn how to manage, fork, and rewind conversation threads.
 *   **[CLI Reference](../reference.md)**: Quick reference for all slash commands and default shortcuts.
