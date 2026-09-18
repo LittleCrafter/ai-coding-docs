@@ -16,7 +16,8 @@ Use Intune's Microsoft Store integration to install and update the app.
    **Create**. Select **Microsoft Store app (new)**.
 2. Search for **ChatGPT** from **OpenAI**, or enter the Store
    product ID `9PLM9XGG6VKS`. Select the app and review its installation settings.
-3. Under **Required**, add your target group so Intune installs the app
+3. On **App information**, set **Install behavior** to **System**.
+4. Under **Required**, add your target group so Intune installs the app
    automatically, then select **Create**.
 
 For optional installation through Company Portal, use **Available for enrolled
@@ -244,6 +245,29 @@ For update policy and rollout guidance, see
 updater doesn't disable updates from the Microsoft Store or your management tool.
 
 ## Troubleshooting
+
+<details>
+<summary>Users are prompted for administrator credentials when installing</summary>
+
+For self-install, this is expected. An administrator must approve the installation.
+
+For an Intune deployment through the Microsoft Store:
+
+1. In the Intune admin center, go to **Apps** > **All apps** and select ChatGPT.
+2. Check **Install behavior** in the app's **Properties**. If it's **User**, add
+   the app again as a **Microsoft Store app (new)** and select **System** on
+   **App information**.
+3. Assign the app to your target group under **Required** or **Available for
+   enrolled devices**. If you added a new app, remove that group's assignment
+   from the original app.
+4. Sync the affected device with Intune, then check **Device install status**.
+   For an available assignment, retry the installation in Company Portal.
+
+If the app is already installed, deploying it with **System** install behavior may
+cause Intune to report `0x87D1041C`. Installation still succeeds in this scenario.
+Verify the app on the affected device.
+
+</details>
 
 <details>
 <summary>Installation fails with error `0x80073D28`</summary>
