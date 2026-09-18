@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.0.0",
-  "last_updated": "2026-09-17T18:41:28Z",
+  "last_updated": "2026-09-18T07:41:29Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -10,8 +10,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/config-files.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/config-files.md",
       "source_id": "docs/en/configuration/config-files.md",
-      "hash": "c6219d031577e3696d56a817920e17d15ff84e500a604ad5f92b6dfef2c12058",
-      "last_updated": "2026-09-17T18:41:28Z"
+      "hash": "0c3360deb3846dcf9761006547f7dc340d094e5af6a235c51cebed4ef74f5676",
+      "last_updated": "2026-09-18T07:41:29Z"
     },
     "configuration/data-locations": {
       "slug": "configuration/data-locations",
@@ -30,8 +30,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/env-vars.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/env-vars.md",
       "source_id": "docs/en/configuration/env-vars.md",
-      "hash": "83438cab7899cf90515047b9828e6ee93fc866d524521750de45f8f8f7c6eb2a",
-      "last_updated": "2026-09-17T18:41:28Z"
+      "hash": "498dc1f61fdd56bfe594d061e35402f7775550de225d55abdc17d4f1b88b2c04",
+      "last_updated": "2026-09-18T07:41:29Z"
     },
     "configuration/overrides": {
       "slug": "configuration/overrides",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-17T18:41:28Z",
-    "fetch_duration_seconds": 9.659,
+    "last_fetch_completed": "2026-09-18T07:41:29Z",
+    "fetch_duration_seconds": 9.536,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,

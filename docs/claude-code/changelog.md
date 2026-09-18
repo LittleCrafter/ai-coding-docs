@@ -10,6 +10,12 @@ This page is generated from the [CHANGELOG.md on GitHub](https://github.com/anth
 
 Run `claude --version` to check your installed version.
 
+## 2.1.276
+
+*September 18, 2026*
+
+* Fixed every request failing with `400 … Input tag 'advisor_20260301'` when `ANTHROPIC_BASE_URL` points at a proxy or gateway (2.1.275 regression)
+
 ## 2.1.275
 
 *September 17, 2026*
