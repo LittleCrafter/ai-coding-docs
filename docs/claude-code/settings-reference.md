@@ -4571,7 +4571,7 @@ The denylist takes precedence over [`allowedMcpServers`](#allowedmcpservers), so
 
 ### `disableClaudeAiConnectors`
 
-Turn off the [claude.ai MCP connectors](./mcp.md#use-mcp-servers-from-claude-ai) [Claude Code fetches itself](./mcp.md#how-connectors-reach-claude-code), so it neither fetches nor connects them. A `true` in any settings file applies: a checked-in project `.claude/settings.json` can opt a repository out of those connectors, but a project-level `false` can't override a user- or managed-level `true`. Requires Claude Code v2.1.182 or later.
+Turn off the [claude.ai MCP connectors](./mcp.md#use-mcp-servers-from-claude-ai) [Claude Code fetches itself](./mcp.md#how-connectors-reach-claude-code), so it neither fetches nor connects them. A `true` in any settings file applies: a checked-in project `.claude/settings.json` can opt a repository out of those connectors, but a project-level `false` can't override a user- or managed-level `true`.
 
 * **Scope**: [`Any file`](#scopes)
 * **Type**: Boolean
@@ -4586,7 +4586,7 @@ Turn off the [claude.ai MCP connectors](./mcp.md#use-mcp-servers-from-claude-ai)
 }
 ```
 
-Servers you pass explicitly with `--mcp-config` are unaffected. To block individual connectors instead of all of them, use [`deniedMcpServers`](#deniedmcpservers). See [Disable claude.ai connectors](./mcp.md#disable-claude-ai-connectors). Requires Claude Code v2.1.182 or later.
+Servers you pass explicitly with `--mcp-config` are unaffected. To block individual connectors instead of all of them, use [`deniedMcpServers`](#deniedmcpservers). See [Disable claude.ai connectors](./mcp.md#disable-claude-ai-connectors).
 
 ### `disabledMcpjsonServers`
 

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.155.0",
-  "last_updated": "2026-09-18T01:41:13Z",
+  "last_updated": "2026-09-18T17:57:41Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "40f4a14397a685e87a8ab0abd8db90d22f0a67a72298986aa72dae7cb629c530",
-      "last_updated": "2026-09-16T23:20:16Z"
+      "hash": "77bed61cc403a37ed3cf74b0b78b71da9b01a79a2da09dbcd7c8ee576bde7835",
+      "last_updated": "2026-09-18T17:57:41Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -140,8 +140,8 @@
       "source_url": "https://learn.chatgpt.com/docs/auth",
       "source_md_url": "https://learn.chatgpt.com/docs/auth.md",
       "source_id": "llms:auth",
-      "hash": "82bc43a55b75346d5ed16f19619a1a03171b4aefa82549392ea53e65ea3f2779",
-      "last_updated": "2026-09-11T01:17:26Z"
+      "hash": "c51c88d4f0beed7ddd889100150559205760bd83390490eabbc84530811db898",
+      "last_updated": "2026-09-18T17:57:41Z"
     },
     "automations": {
       "slug": "automations",
@@ -240,8 +240,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "885b0404a38aad8ff45bbb9854fb25f5e654ac3840fab6b01afad2836ed2939c",
-      "last_updated": "2026-09-18T01:41:13Z"
+      "hash": "683151b2db08ca759127cc20c05d8079a18028e82717ad74342007b3c8b451ca",
+      "last_updated": "2026-09-18T17:57:41Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -340,8 +340,8 @@
       "source_url": "https://learn.chatgpt.com/docs/config-file/environment-variables",
       "source_md_url": "https://learn.chatgpt.com/docs/config-file/environment-variables.md",
       "source_id": "llms:config-file/environment-variables",
-      "hash": "4e7bc9f522ccdad7c51a16fba16fcf32d8f0414b6c1520a53a95e40927c29c8d",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "6b06606ce0d4818e1d30b1a254f4031fdc13f0e5436827792aa6a3dc61d17ac1",
+      "last_updated": "2026-09-18T17:57:41Z"
     },
     "configuration": {
       "slug": "configuration",
@@ -703,16 +703,6 @@
       "hash": "ba384eb27055effb8e5e0dfa734ade9e2d4b6ebaa8cd26eb40d22532f511c656",
       "last_updated": "2026-09-10T23:15:02Z"
     },
-    "enterprise/workload-identity": {
-      "slug": "enterprise/workload-identity",
-      "title": "Workload identity federation",
-      "group": "enterprise",
-      "source_url": "https://learn.chatgpt.com/docs/enterprise/workload-identity",
-      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/workload-identity.md",
-      "source_id": "llms:enterprise/workload-identity",
-      "hash": "8a7ae51c2b55ea3987d74e6346d3ea29f4c3e229850c6323370be528674c9e18",
-      "last_updated": "2026-09-11T13:05:28Z"
-    },
     "enterprise/workspace-analytics": {
       "slug": "enterprise/workspace-analytics",
       "title": "Workspace analytics",
@@ -1010,8 +1000,8 @@
       "source_url": "https://learn.chatgpt.com/docs/non-interactive-mode",
       "source_md_url": "https://learn.chatgpt.com/docs/non-interactive-mode.md",
       "source_id": "llms:non-interactive-mode",
-      "hash": "b1fbc41cfae1a9c7d7d7227b2f4354c0917650a0224896ab6ebdce8dfbcd6440",
-      "last_updated": "2026-09-11T01:15:25Z"
+      "hash": "2e920034370c9edcdd586f188964eb7c5a6abaf103470c11593241fae6ac48e1",
+      "last_updated": "2026-09-18T17:57:41Z"
     },
     "notifications": {
       "slug": "notifications",
@@ -1605,10 +1595,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-18T01:41:13Z",
-    "fetch_duration_seconds": 55.707,
-    "total_pages_discovered": 160,
-    "pages_fetched_successfully": 160,
+    "last_fetch_completed": "2026-09-18T17:57:41Z",
+    "fetch_duration_seconds": 55.428,
+    "total_pages_discovered": 159,
+    "pages_fetched_successfully": 159,
     "pages_failed": 0,
     "failed_pages": []
   }

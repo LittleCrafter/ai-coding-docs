@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 160
+- **Pages mirrored:** 159
 - **Version:** 0.155.0
-- **Last updated:** 2026-09-18T01:41:13Z
+- **Last updated:** 2026-09-18T17:57:41Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -162,7 +162,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | User lifecycle management | [enterprise/user-lifecycle.md](./enterprise/user-lifecycle.md) | [source](<https://learn.chatgpt.com/docs/enterprise/user-lifecycle>) |
 | Deploy the Windows app | [enterprise/windows-deployment.md](./enterprise/windows-deployment.md) | [source](<https://learn.chatgpt.com/docs/enterprise/windows-deployment>) |
 | ChatGPT Work admin FAQ | [enterprise/work-admin-faq.md](./enterprise/work-admin-faq.md) | [source](<https://learn.chatgpt.com/docs/enterprise/work-admin-faq>) |
-| Workload identity federation | [enterprise/workload-identity.md](./enterprise/workload-identity.md) | [source](<https://learn.chatgpt.com/docs/enterprise/workload-identity>) |
 | Workspace analytics | [enterprise/workspace-analytics.md](./enterprise/workspace-analytics.md) | [source](<https://learn.chatgpt.com/docs/enterprise/workspace-analytics>) |
 | Workspace model availability | [enterprise/workspace-model-availability.md](./enterprise/workspace-model-availability.md) | [source](<https://learn.chatgpt.com/docs/enterprise/workspace-model-availability>) |
 

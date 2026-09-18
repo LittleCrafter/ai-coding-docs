@@ -29,7 +29,6 @@ Review the ChatGPT Work overview and administration reference.
 Choose how people sign in and issue credentials for programmatic workflows.
 
 - [Authentication overview](./auth.md) — Compare sign-in methods, credential storage, and enforcement controls.
-- [Workload identity](./enterprise/workload-identity.md) — Let trusted workloads use Codex without long-lived credentials.
 - [Personal Access Tokens](./enterprise/access-tokens.md) — Create and manage tokens for programmatic access.
 - [Service accounts](./enterprise/service-accounts.md) — Create and manage workspace identities for automated workflows.
 

@@ -62,8 +62,6 @@ name itself is not a fixed Codex environment variable.
 For automation secret handling, see
 [Use API key auth](../non-interactive-mode.md#use-api-key-auth).
 For access token setup, see [Access tokens](../enterprise/access-tokens.md).
-For workload identity setup, see
-[Workload identity federation](../enterprise/workload-identity.md).
 
 ## Diagnostics
 
