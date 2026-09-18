@@ -1235,7 +1235,7 @@ Claude Code's context window holds everything Claude knows about your session: y
 
 The session walks through a realistic flow with representative token counts:
 
-* **Before you type anything**: CLAUDE.md, auto memory, MCP tool names, and skill descriptions all load into context. Your own setup may add more here, like an [output style](./output-styles.md) or text from [`--append-system-prompt`](./cli-reference.md).
+* **Before you type anything**: CLAUDE.md, auto memory, MCP tool names, and skill descriptions all load into context. [AGENTS.md files](./memory.md#agents-md) can load too, on their own or alongside CLAUDE.md. Your own setup may add more here, like an [output style](./output-styles.md) or text from [`--append-system-prompt`](./cli-reference.md).
 * **As Claude works**: each file read adds to context, [path-scoped rules](./memory.md#path-specific-rules) load automatically alongside matching files, and a [PostToolUse hook](./hooks-guide.md) fires after each edit.
 * **The follow-up prompt**: a [subagent](./sub-agents.md) handles the research in its own separate context window, so the large file reads stay out of yours. Only the summary and a small metadata trailer come back.
 * **At the end**: `/compact` replaces the conversation with a structured summary. Most startup content reloads automatically; the table below shows what happens to each mechanism.

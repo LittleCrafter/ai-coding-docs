@@ -157,7 +157,7 @@ The [Model Context Protocol (MCP)](./mcp.md) is an open standard for connecting 
 
 **Customize with instructions, skills, and hooks**
 
-[`CLAUDE.md`](./memory.md) is a markdown file you add to your project root that Claude Code reads at the start of every session. Use it to set coding standards, architecture decisions, preferred libraries, and review checklists. Claude also builds [auto memory](./memory.md#auto-memory) as it works, saving learnings across sessions without you writing anything.
+[`CLAUDE.md`](./memory.md) is a markdown file you add to your project root that Claude Code reads at the start of every session. Use it to set coding standards, architecture decisions, preferred libraries, and review checklists. If your repository already has an `AGENTS.md` for other coding agents, Claude Code [can read that](./memory.md#agents-md) on its own or alongside `CLAUDE.md`. Claude also builds [auto memory](./memory.md#auto-memory) as it works, saving learnings across sessions without you writing anything.
 
 Create [skills](./skills.md) to package repeatable workflows your team can share, like `/review-pr` or `/deploy-staging`.
 
