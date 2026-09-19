@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-09-19T12:46:08Z",
+  "last_updated": "2026-09-19T19:40:26Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -385,13 +385,13 @@
     },
     "news/news250120": {
       "slug": "news/news250120",
-      "title": "Your First API Call",
+      "title": "DeepSeek-R1 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250120",
       "source_md_url": "https://api-docs.deepseek.com/news/news250120",
       "source_id": "news/news250120",
-      "hash": "24695569fe96dbbcfd810be23f00c4aab3a0bed4821feaaa9561730e07f38a31",
-      "last_updated": "2026-09-19T07:36:45Z"
+      "hash": "c26512dcc9b13a6fdd79dca4287e33d5d465ddd814ac9153acc2e2c4c9d6cac5",
+      "last_updated": "2026-09-19T19:40:26Z"
     },
     "news/news250325": {
       "slug": "news/news250325",
@@ -735,8 +735,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-19T12:46:08Z",
-    "fetch_duration_seconds": 29.919,
+    "last_fetch_completed": "2026-09-19T19:40:26Z",
+    "fetch_duration_seconds": 30.405,
     "total_pages_discovered": 73,
     "pages_fetched_successfully": 73,
     "pages_failed": 0,
