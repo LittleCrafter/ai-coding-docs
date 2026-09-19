@@ -41,7 +41,7 @@ response = client.chat.completions.create(
 
 Thinking mode does not support the `temperature`, `presence_penalty`, or `frequency_penalty` parameters. Please note that, for compatibility with existing software, setting these parameters will not trigger an error but will also have no effect.
 
-`top_p` takes effect in thinking mode, but with a lower bound of `0.95`: values below `0.95` are raised to `0.95`. In non-thinking mode it is fixed at `1.0` and your value is ignored.
+`top_p` only takes effect in thinking mode, where the effective range is `0.95`–`1.0`: values below `0.95` are treated as `0.95`. In non-thinking mode it is fixed at `1.0` and your value is ignored.
 
 In thinking mode, the chain-of-thought content is returned via the `reasoning_content` parameter, at the same level as `content`. In subsequent requests, whether `reasoning_content` should be passed back and whether it will be concatenated into the context depends on whether the request carries the `tools` parameter:
 

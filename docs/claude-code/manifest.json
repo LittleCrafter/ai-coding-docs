@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.277",
-  "last_updated": "2026-09-19T01:44:17Z",
+  "version": "2.1.278",
+  "last_updated": "2026-09-19T07:35:21Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -460,8 +460,8 @@
       "source_url": "https://code.claude.com/docs/en/changelog",
       "source_md_url": "https://code.claude.com/docs/en/changelog.md",
       "source_id": "changelog",
-      "hash": "5461be520b943a5ca49942d8aa838223b888daea5b8b6982aa7339e19ff6dc22",
-      "last_updated": "2026-09-19T01:44:17Z"
+      "hash": "306ab838f70987c848129af896d6674f24fc6347c1b85aac50a24f444a649363",
+      "last_updated": "2026-09-19T07:35:21Z"
     },
     "channels": {
       "slug": "channels",
@@ -1240,8 +1240,8 @@
       "source_url": "https://code.claude.com/docs/en/permission-modes",
       "source_md_url": "https://code.claude.com/docs/en/permission-modes.md",
       "source_id": "permission-modes",
-      "hash": "960f6ce82cda6e81c4ae7983a8443392299451a4cc36d8d19714ec7f0f0fafe5",
-      "last_updated": "2026-09-19T01:44:17Z"
+      "hash": "6703e580cf5401d4be88604ca21179b118f89a9e5908e1af7055150c0b5824be",
+      "last_updated": "2026-09-19T07:35:21Z"
     },
     "permissions": {
       "slug": "permissions",
@@ -1975,8 +1975,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-19T01:44:17Z",
-    "fetch_duration_seconds": 74.218,
+    "last_fetch_completed": "2026-09-19T07:35:21Z",
+    "fetch_duration_seconds": 70.565,
     "total_pages_discovered": 197,
     "pages_fetched_successfully": 197,
     "pages_failed": 0,

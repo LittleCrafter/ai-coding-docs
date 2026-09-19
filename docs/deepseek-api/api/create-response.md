@@ -266,7 +266,7 @@ What sampling temperature to use, between 0 and 2. Higher values like 0.8 will m
 
 **Default value:** `1`
 
-An alternative to sampling with temperature, called nucleus sampling. It takes effect in thinking mode, but values below 0.95 are raised to 0.95; in non-thinking mode it is fixed at 1.0 and the value you pass is ignored.
+An alternative to sampling with temperature, called nucleus sampling. It only takes effect in thinking mode, where the effective range is 0.95–1.0: values below 0.95 are treated as 0.95. In non-thinking mode it is fixed at 1.0 and the value you pass is ignored.
 
 **
 
