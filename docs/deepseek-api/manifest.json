@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-09-18T20:04:10Z",
+  "last_updated": "2026-09-19T01:45:42Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -445,13 +445,13 @@
     },
     "news/news251201": {
       "slug": "news/news251201",
-      "title": "Your First API Call",
+      "title": "DeepSeek-V3.2 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news251201",
       "source_md_url": "https://api-docs.deepseek.com/news/news251201",
       "source_id": "news/news251201",
-      "hash": "0ef027b02f48c1667e33fc925ca6bab407f52fcc020ebc424a0e991f4d666d8c",
-      "last_updated": "2026-09-18T20:04:10Z"
+      "hash": "fde80d36807c7d3a387a41378f74cc486923bb33164a514e792e6442dc51a1ac",
+      "last_updated": "2026-09-19T01:45:42Z"
     },
     "news/news260424": {
       "slug": "news/news260424",
@@ -695,13 +695,13 @@
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
-      "title": "Models & Pricing",
+      "title": "Your First API Call",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "822aab6e33914254ca09c1ba98733d976be4ac7fe621d1fc750ab949f6ab79f5",
-      "last_updated": "2026-09-18T20:04:10Z"
+      "hash": "b0619d9d78b6ca2898db274fe55c2fdb8a9b2e85395b0e260f1e908bc07a45d9",
+      "last_updated": "2026-09-19T01:45:42Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -735,8 +735,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-18T20:04:10Z",
-    "fetch_duration_seconds": 28.783,
+    "last_fetch_completed": "2026-09-19T01:45:42Z",
+    "fetch_duration_seconds": 27.276,
     "total_pages_discovered": 73,
     "pages_fetched_successfully": 73,
     "pages_failed": 0,

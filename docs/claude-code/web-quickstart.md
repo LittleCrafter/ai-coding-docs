@@ -167,6 +167,8 @@ When Claude finishes, review the changes, leave feedback on specific lines, and 
 1. **Open the diff view**
 
    A diff indicator shows lines added and removed across the session, for example `+42 -18`. Select it to open the diff view, with a file list on the left and changes on the right.
+
+   The diff compares the session's changes against its base branch by default. To compare against a different branch, select **Compare against** and pick one.
 2. **Leave inline comments**
 
    Select any line in the diff, type your feedback, and press Enter. Comments queue up until you send your next message, then they're bundled with it. Claude sees "at `src/auth.ts:47`, don't catch the error here" alongside your main instruction, so you don't have to describe where the problem is.
