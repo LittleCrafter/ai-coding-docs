@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.278",
-  "last_updated": "2026-09-19T07:35:21Z",
+  "last_updated": "2026-09-20T22:46:25Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -410,8 +410,8 @@
       "source_url": "https://code.claude.com/docs/en/artifacts",
       "source_md_url": "https://code.claude.com/docs/en/artifacts.md",
       "source_id": "artifacts",
-      "hash": "b494bb192153fc1683dc70450e0aaa9dfdd70032dfb3923de32200e983c2336d",
-      "last_updated": "2026-09-18T17:56:44Z"
+      "hash": "d1fe531f31aa9e730d87354c99842af0f13acc1ae46a7ca5394989d53eff5694",
+      "last_updated": "2026-09-20T22:46:25Z"
     },
     "authentication": {
       "slug": "authentication",
@@ -660,8 +660,8 @@
       "source_url": "https://code.claude.com/docs/en/commands",
       "source_md_url": "https://code.claude.com/docs/en/commands.md",
       "source_id": "commands",
-      "hash": "42e820e22848983217f48b9b62d2140fbb68b834862c1288468eb3ad2ba08d7a",
-      "last_updated": "2026-09-18T17:56:44Z"
+      "hash": "59b949167291300f96e24fdaf9cc2a7ebb5b92098d0b750d75716a618b51907b",
+      "last_updated": "2026-09-20T22:46:25Z"
     },
     "common-workflows": {
       "slug": "common-workflows",
@@ -1975,8 +1975,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-19T07:35:21Z",
-    "fetch_duration_seconds": 70.565,
+    "last_fetch_completed": "2026-09-20T22:46:25Z",
+    "fetch_duration_seconds": 70.697,
     "total_pages_discovered": 197,
     "pages_fetched_successfully": 197,
     "pages_failed": 0,
