@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.278",
-  "last_updated": "2026-09-21T15:23:22Z",
+  "last_updated": "2026-09-21T21:17:29Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -850,8 +850,8 @@
       "source_url": "https://code.claude.com/docs/en/env-vars",
       "source_md_url": "https://code.claude.com/docs/en/env-vars.md",
       "source_id": "env-vars",
-      "hash": "d041fec8d40105c4a31c4c774dd75edd2f7ecae8983f35be9e3a2d79c1ad4c5d",
-      "last_updated": "2026-09-19T01:44:17Z"
+      "hash": "d7413b0d0d36ee244b6017e2f230e969d40a5db07d0476a9068cfec7e4b3cc49",
+      "last_updated": "2026-09-21T21:17:29Z"
     },
     "errors": {
       "slug": "errors",
@@ -1190,8 +1190,8 @@
       "source_url": "https://code.claude.com/docs/en/model-config",
       "source_md_url": "https://code.claude.com/docs/en/model-config.md",
       "source_id": "model-config",
-      "hash": "a91978b26d5179c503da05ca7f972a3d74ab87d60bc9dcca8d2dca24e24baf85",
-      "last_updated": "2026-09-15T23:14:42Z"
+      "hash": "bf2d4372622f28d3d91a96e800145e023c10aa7fdb8e2ebd55d03fc2be40c6f8",
+      "last_updated": "2026-09-21T21:17:29Z"
     },
     "monitoring-usage": {
       "slug": "monitoring-usage",
@@ -1550,8 +1550,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "ffe3f3d2bbd0ec67b695e48f21ca69b8c40954d0779f26134144c7e3591bc5a0",
-      "last_updated": "2026-09-18T22:54:29Z"
+      "hash": "33cb9b154802ed9597049d6e02836df3d9b753524e810c52853ebe6e0a6093ca",
+      "last_updated": "2026-09-21T21:17:29Z"
     },
     "setup": {
       "slug": "setup",
@@ -1975,8 +1975,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-21T15:23:22Z",
-    "fetch_duration_seconds": 71.934,
+    "last_fetch_completed": "2026-09-21T21:17:29Z",
+    "fetch_duration_seconds": 71.255,
     "total_pages_discovered": 197,
     "pages_fetched_successfully": 197,
     "pages_failed": 0,
