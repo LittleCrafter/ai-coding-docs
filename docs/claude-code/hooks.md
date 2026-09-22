@@ -1326,7 +1326,7 @@ An [Agent SDK callback hook](./agent-sdk/hooks.md) on `UserPromptSubmit` that re
 
 #### UserPromptSubmit input
 
-In addition to the [common input fields](#common-input-fields), UserPromptSubmit hooks receive the `prompt` field containing the text the user submitted.
+In addition to the [common input fields](#common-input-fields), UserPromptSubmit hooks receive the `prompt` field containing the text the user submitted. Pasted content that collapsed to a `[Pasted text #N]` placeholder arrives expanded in place. In sessions where Claude Code [marks pasted text for Claude](./terminal-config.md#how-claude-treats-pasted-text), that expanded content sits between a `<pasted_content id="…">` line and a `</pasted_content id="…">` line, so account for those lines if your hook parses the prompt.
 
 ```json theme={null}
 {

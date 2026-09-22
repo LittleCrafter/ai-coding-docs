@@ -253,7 +253,7 @@ Press `Shift+Tab` again to leave plan mode without approving a plan.
 
 When the plan is ready, Claude presents it and asks how to proceed. From that prompt you can choose:
 
-* **Yes, and use auto mode**: approve and start in [auto mode](#eliminate-prompts-with-auto-mode). When auto mode is unavailable, this option reads **Yes, auto-accept edits**. If you started the session with bypass permissions enabled, the option reads **Yes, and switch to BYPASS PERMISSIONS (no further prompts) for this session** instead.
+* **Yes, and use auto mode**: approve and start in [auto mode](#eliminate-prompts-with-auto-mode). If auto mode isn't [available to your session](#eliminate-prompts-with-auto-mode), for example because your organization turned it off, this option reads **Yes, auto-accept edits**. If you started the session with bypass permissions enabled, the option reads **Yes, and switch to BYPASS PERMISSIONS (no further prompts) for this session** instead.
 * **Yes, manually approve edits**: approve and review each edit individually.
 * **No, keep planning**: stay in plan mode and tell Claude what to change.
 
@@ -433,6 +433,14 @@ Whatever you answer, Claude keeps working:
 The classifier treats boundaries you state in the conversation as a block signal. If you tell Claude "don't push" or "wait until I review before deploying", the classifier blocks matching actions even when the default rules would allow them. A boundary stays in force until you lift it in a later message. Claude's own judgment that a condition was met does not lift it.
 
 Boundaries are not stored as rules. The classifier re-reads them from the transcript on each check, so a boundary can be lost if [context compaction](./costs.md#reduce-token-usage) removes the message that stated it. For a hard guarantee, add a [deny rule](./permissions.md#permission-rule-syntax) instead.
+
+### Approvals you state in conversation
+
+If you tell Claude that a blocked action is allowed, the classifier reads that as your approval and can clear the block. How you worded it decides whether the action runs, and how far the approval reaches:
+
+* **Name the action and its specifics**: your message has to name the action and the specific thing that makes it dangerous, such as the branch of a force push. Naming the verb alone clears nothing, so "you can force-push" leaves the block in place.
+* **Expect it to cover one action**: an approval covers the destructive action you named, so a later action is blocked again unless you granted the approval as standing. To stop approving a routine pattern one action at a time, add it to [`autoMode.allow`](./auto-mode-config.md#override-the-block-and-allow-rules).
+* **Some blocks stay in place**: [the classifier's precedence order](./auto-mode-config.md#override-the-block-and-allow-rules) sets out which blocks your approval can reach. To run a step it won't clear, [leave auto mode](#switch-permission-modes) and answer the permission prompt.
 
 ### When auto mode falls back
 

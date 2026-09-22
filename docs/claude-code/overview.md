@@ -229,6 +229,7 @@ Once you've installed Claude Code, these guides help you go deeper.
 * [Quickstart](./quickstart.md): walk through your first real task, from exploring a codebase to committing a fix
 * [Store instructions and memories](./memory.md): give Claude persistent instructions with CLAUDE.md files and auto memory
 * [Common workflows](./common-workflows.md) and [best practices](./best-practices.md): patterns for getting the most out of Claude Code
+* [Claude Academy](https://academy.claude.com/): free self-paced courses, including [Claude Code 101](https://academy.claude.com/courses/claude-code-101) and [Claude Code in Action](https://academy.claude.com/courses/claude-code-in-action)
 * [A harness for every task](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code): how the Claude Code team uses [dynamic workflows](./workflows.md) to orchestrate many subagents at once
 * [Settings](./settings.md): customize Claude Code for your workflow
 * [Troubleshooting](./troubleshooting.md): solutions for common issues

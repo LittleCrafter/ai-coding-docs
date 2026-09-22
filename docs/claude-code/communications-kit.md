@@ -96,7 +96,7 @@ Data usage → https://code.claude.com/docs/en/data-usage
 📚 Quickstart · VS Code · Free 1-hr course
    https://code.claude.com/docs/en/quickstart
    https://code.claude.com/docs/en/vs-code
-   https://anthropic.skilljar.com/claude-code-in-action
+   https://academy.claude.com/courses/claude-code-in-action
 
 Questions → this thread. [Owner] is on point.
 ```

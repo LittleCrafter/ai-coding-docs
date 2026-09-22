@@ -562,7 +562,7 @@ Every key below links to its entry. Scope lists the [files](./settings.md#settin
 | [`hooks`](#hooks)                                                                                     | Run your own commands as [hooks](./hooks.md) at points in Claude Code's lifecycle                                                                                                                                            | Hooks and automation               | Any file                |
 | [`httpHookAllowedEnvVars`](#httphookallowedenvvars)                                                   | Limit which env vars [HTTP hooks](./hooks.md) can put in headers                                                                                                                                                             | Hooks and automation               | Any file                |
 | [`includeCoAuthoredBy`](#includecoauthoredby)                                                         | Deprecated; use `attribution` to hide or change commit and PR attribution                                                                                                                                                   | Git and attribution                | Any file                |
-| [`includeGitInstructions`](#includegitinstructions)                                                   | Remove the built-in commit and PR instructions from the [system prompt](./sub-agents.md#what-loads-at-startup)                                                                                                               | Git and attribution                | Any file                |
+| [`includeGitInstructions`](#includegitinstructions)                                                   | Remove the built-in commit and PR instructions from Claude's context                                                                                                                                                        | Git and attribution                | Any file                |
 | [`inputNeededNotifEnabled`](#inputneedednotifenabled)                                                 | Get a [push notification](./remote-control.md#mobile-push-notifications) when Claude is waiting on you                                                                                                                       | Remote, desktop, and notifications | Any file                |
 | [`isolatePeerMachines`](#isolatepeermachines)                                                         | Ask you before Claude [messages one of your sessions on another machine](./cross-session-messaging.md#require-approval-for-cross-machine-messages)                                                                           | Agents, sessions, and worktrees    | Any file                |
 | [`keybindingFlavor`](#keybindingflavor)                                                               | Deprecated and has no effect; the word-editing shortcuts always [follow readline conventions](./interactive-mode.md#make-ctrl-w-delete-back-to-whitespace)                                                                   | Interface and terminal             | Any file                |
@@ -3586,6 +3586,8 @@ This example replaces the commit attribution, removes pull request attribution, 
 
 To hide all attribution, set [`commit`](#attribution-commit) and [`pr`](#attribution-pr) to empty strings and [`sessionUrl`](#attribution-sessionurl) to `false`. Once you set `commit` or `pr`, Claude Code ignores the deprecated `includeCoAuthoredBy` setting and uses its default text for whichever of the two you left unset.
 
+Claude Code tells Claude that your own instructions about attribution, such as a CLAUDE.md or [memory](./memory.md) rule, take precedence over these commit and PR lines, unless the line is set in [managed settings](./managed-settings.md).
+
 ### `includeCoAuthoredBy`
 
 > [!WARNING]
@@ -3609,7 +3611,9 @@ To hide all attribution today, set [`attribution.commit`](#attribution-commit) a
 
 ### `includeGitInstructions`
 
-At session start, Claude Code adds two git-related pieces to Claude's prompt: its built-in instructions for how to write commits and pull requests, in the Bash tool's description, and a git status snapshot of your repository in the system prompt, meaning the current branch, the main branch, `git status` output, and recent commits. Set this key to `false` to leave both out, for example when you use your own git workflow skills.
+Claude Code gives Claude two git-related pieces of context: its built-in instructions for how to write commits and pull requests, in the Bash tool's description, and a git status snapshot of your repository. The snapshot holds the current branch, the main branch, `git status` output, and recent commits. Claude Code reads it when a conversation starts.
+
+Set this key to `false` to leave both out, for example when you use your own git workflow skills.
 
 * **Scope**: [`Any file`](#scopes)
 * **Type**: Boolean
