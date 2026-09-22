@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.280",
-  "last_updated": "2026-09-22T18:23:38Z",
+  "last_updated": "2026-09-22T23:19:48Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -890,8 +890,8 @@
       "source_url": "https://code.claude.com/docs/en/features-overview",
       "source_md_url": "https://code.claude.com/docs/en/features-overview.md",
       "source_id": "features-overview",
-      "hash": "ebbaaf2d5361cc9f1edcb8ac04fadb001a27da415fb3e120565dd47712e90a9c",
-      "last_updated": "2026-09-22T07:59:36Z"
+      "hash": "054e60a328a2c22ad141475739ebeac1ceebe9fe2e332bcf268dd5b068112193",
+      "last_updated": "2026-09-22T23:19:48Z"
     },
     "fullscreen": {
       "slug": "fullscreen",
@@ -1220,8 +1220,8 @@
       "source_url": "https://code.claude.com/docs/en/output-styles",
       "source_md_url": "https://code.claude.com/docs/en/output-styles.md",
       "source_id": "output-styles",
-      "hash": "ac01ff681745bae5e80532e34a6545b59cff900e6691905812a9e15f32be4bf6",
-      "last_updated": "2026-09-22T18:23:38Z"
+      "hash": "87efef99084cca10ed0312539fe64d835850948b65a4d210cf3f139fcddc1693",
+      "last_updated": "2026-09-22T23:19:48Z"
     },
     "overview": {
       "slug": "overview",
@@ -1975,8 +1975,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-22T18:23:38Z",
-    "fetch_duration_seconds": 69.273,
+    "last_fetch_completed": "2026-09-22T23:19:48Z",
+    "fetch_duration_seconds": 70.055,
     "total_pages_discovered": 197,
     "pages_fetched_successfully": 197,
     "pages_failed": 0,
