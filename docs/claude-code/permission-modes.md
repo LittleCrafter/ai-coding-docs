@@ -486,8 +486,6 @@ The classifier checks [subagent](./sub-agents.md) work at three points:
 2. While the subagent runs, each of its actions goes through the classifier with the same rules as the parent session, and any `permissionMode` in the subagent's frontmatter is ignored.
 3. When the subagent finishes, the classifier reviews its work and its final report before the parent reads the report. When the classifier flags the subagent's work or report, or a separate API safety check refuses the review, the report is still delivered, prepended with a security warning. When the classifier is unavailable for the review, the report arrives with a note to verify the subagent's work before acting on it.
 
-Step 1 requires Claude Code v2.1.178 or later. Earlier versions applied the classifier at steps 2 and 3, but did not evaluate the task description before the subagent started.
-
 **Cost and latency**
 
 The classifier runs on Claude Sonnet 5 by default rather than on your `/model` selection. A classifier model that Anthropic configures server-side takes precedence over that default. When your session's model is Claude Sonnet 4.6, or when [`availableModels`](./model-config.md#restrict-model-selection) excludes Sonnet 5, the classifier runs on the session's model instead, or on an Opus model when the session runs on a [Fable model](./model-config.md#work-with-fable); on providers other than the Anthropic API, that Opus fallback is the provider's default Opus model.
@@ -624,6 +622,13 @@ Claude Code treats an `rm` or `rmdir` target as a critical path when it is any o
 * Your additional working directories and their parents, but only when the removal is a glob under one of them, such as `rm -rf <dir>/*`. `rm -rf <dir>` on the directory itself doesn't trigger this check
 
 Claude Code also treats a glob or trailing slash directly under a shell variable, such as `rm -rf "$DIR"/*`, as a critical-path removal, because the command becomes a removal from the filesystem root when the variable is empty.
+
+The prompt for this variable case names the flagged `rm` and says how to rewrite it so the check passes:
+
+* For a variable such as `$DIR`, guard each expansion so the shell stops with an error when the variable is unset or empty, as in `rm -rf "${DIR:?}"/*`, or use a literal path
+* For a variable that is normally set, such as `$HOME`, use a literal path
+
+A removal whose expansions are all guarded that way isn't a critical-path removal, so in `bypassPermissions` mode it runs without a prompt.
 
 Hiding the removal inside a subshell with `(...)`, a brace group with `{ ...; }`, command substitution with `$(...)` or backticks, or process substitution with `<(...)`, doesn't skip the check. Claude Code finds a critical-path removal whether it sits inside the nested form, as in `(rm -rf ~)` or `echo "$(rm -rf ~)"`, or elsewhere in the same command.
 

@@ -35,7 +35,11 @@ To install a plugin from the official marketplace, use `/plugin install <name>@c
 /plugin install github@claude-plugins-official
 ```
 
-`/plugin` opens an interactive panel in the terminal CLI. If Claude replies that `/plugin` isn't available in this environment, use the [plugin browser](./desktop.md#install-plugins) in the Claude desktop app, or declare the plugin under [`enabledPlugins`](./settings-reference.md#enabledplugins) in `.claude/settings.json` for cloud sessions.
+`/plugin` opens an interactive panel in the terminal CLI. If Claude replies that `/plugin` isn't available in this environment, install the plugin another way:
+
+* **Claude desktop app**: use the [plugin browser](./desktop.md#install-plugins).
+* **VS Code extension**: install from the [**Manage plugins** dialog](./vs-code.md#manage-plugins).
+* **Cloud sessions**: enable the plugin for your claude.ai account so Claude Code loads it as a [synced plugin](./plugins-reference.md#synced-plugins).
 
 If the install fails, match the message Claude Code reports:
 
