@@ -5,7 +5,7 @@
 ## Find By Topic
 
 - `pricing`, `plans`, `ChatGPT`, `API key`, `Plus`, `Pro`, `Business`, `Enterprise`, `Edu`, `feature maturity`, `what's new`: [Surfaces and experiences](#surfaces-and-modes)
-- `prompting`, `threads`, `context window`, `multi_agent`, `subagents`, `projects`, `long-running work`, `/plan`, `workflow`: [Execution Model and Workflows](#execution-model-and-workflows)
+- `prompting`, `model selection`, `threads`, `context window`, `multi_agent`, `subagents`, `projects`, `long-running work`, `/plan`, `workflow`: [Execution Model and Workflows](#execution-model-and-workflows)
 - `approval_policy`, `sandbox_mode`, `permissions`, `permission profiles`, `network access`, `read-only`, `workspace-write`, `danger-full-access`, `security`, `cyber`: [Approvals, Sandboxing, and Security](#approvals-sandboxing-and-security)
 - `config.toml`, `.codex/config.toml`, `auth.json`, `ChatGPT sign-in`, `API key login`, `models`, `providers`, `model_reasoning_effort`: [Configuration, Authentication, and Models](#configuration-auth-and-models)
 - `codex exec`, `codex cloud`, `codex mcp`, `worktrees`, `cloud environments`, `internet access`, `Voice`, `remote connections`, `web search`, `image generation`: [CLI, IDE, App, and Cloud Behavior](#surface-behavior)
@@ -381,6 +381,19 @@ Source: [What's new](./whats-new.md)
 This weekly digest highlights ChatGPT and Codex features that can change how you
 work, with examples and links to learn more. For every versioned update, bug fix,
 and minor improvement, see the [Codex changelog](https://learn.chatgpt.com/docs/changelog).
+
+#### September 21–25, 2026
+
+#### Choose GPT-6 Sol and Luna
+
+GPT-6 Sol and GPT-6 Luna are rolling out in Codex at lower token prices than
+their GPT-5.6 predecessors. Start with **Sol Medium** for everyday and complex
+coding, or **Luna High** for focused, repeatable tasks. Availability depends
+on your plan, client, and workspace settings.
+
+See [Models](./models.md) for model selection, [Pricing](./pricing.md) for
+usage and credit rates, and the [launch announcement](https://learn.chatgpt.com/docs/changelog#codex-2026-09-22-gpt-6-sol-luna)
+for availability details.
 
 #### September 14–18, 2026
 
@@ -1281,11 +1294,15 @@ Pricing options
 
 Explore Codex capabilities on quick coding tasks.
 
+- GPT-6 Luna at Standard speed in the desktop app, subject to rollout
+
 [Get Free](https://chatgpt.com/plans/free/)
 
 **Go** ($8 /month):
 
 Use Codex for lightweight coding tasks.
+
+- GPT-6 Luna at Standard speed in the desktop app, subject to rollout
 
 [Get Go](https://chatgpt.com/plans/go)
 
@@ -1296,9 +1313,7 @@ Power a few focused coding sessions each week.
 - Codex on the web, in the CLI, in the IDE extension, and on iOS
 - Cloud-based integrations like automatic code review and Slack
   integration
-- The GPT-5.6 model family, including Sol, Terra, and Luna
-- GPT-5.6 Luna for higher usage limits on lighter-weight or high-volume
-  workloads
+- GPT-6 Sol and GPT-6 Luna
 - Flexibly extend usage with [ChatGPT credits](#credits-overview)
 - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
   Plus plan
@@ -1400,15 +1415,7 @@ Tasks that look similar can consume different amounts of your allowance. Model
 choice, context, reasoning, tool use, retrieval, and caching all affect usage,
 so prompt length alone isn't a reliable estimate.
 
-Choose the GPT-5.6 model that best fits your work:
-
-- **Sol** is built for the hardest work—complex reasoning, ambiguous problems,
-  advanced coding, and high-stakes decisions.
-- **Terra** is the everyday workhorse for production tasks, reporting, document
-  analysis, coding, and work that requires sound judgment.
-- **Luna** is optimized for fast, high-volume work such as routing,
-  classification, extraction, support, background automation, and focused coding
-  tasks.
+For model recommendations, see [Models](./models.md).
 
 The estimates below show local messages per five-hour period. Cloud chats on
 ChatGPT plans use GPT-5.6 Sol and may use more of your allowance than local
@@ -1433,6 +1440,22 @@ and reset times.
       25-225
       100-900
       5-45
+
+        [Usage-based](https://platform.openai.com/docs/pricing)
+
+      GPT-6 Sol
+      15-150
+      70-700
+      300-3,000
+      15-150
+
+        [Usage-based](https://platform.openai.com/docs/pricing)
+
+      GPT-6 Luna
+      350-3,000
+      1,750-14,000
+      7,000-56,000
+      350-3,000
 
         [Usage-based](https://platform.openai.com/docs/pricing)
 
@@ -1537,9 +1560,6 @@ Business, Edu, and Enterprise plans with [flexible
 pricing](https://help.openai.com/en/articles/11487671-flexible-pricing-for-the-enterprise-edu-and-business-plans)
 can purchase additional workspace credits to continue working.
 
-If you are approaching usage limits, you can also switch to a smaller model to
-make your usage limits last longer.
-
 All users may also run extra local chats using an API key, with usage charged at
 [standard API rates](https://platform.openai.com/docs/pricing).
 
@@ -1578,11 +1598,16 @@ or agreement.
 
 #### Token rates
 
-The token rates below are quoted in credits per million input tokens, cached
-input tokens, and output tokens. [Learn more about
+The rates below are for Standard speed, quoted in credits per million input
+tokens, cached input tokens, and output tokens. [Learn more about
 tokens](https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them).
 
-Fast mode applies a 2.5x multiplier to Astra's Standard rate.
+Codex credit billing has no separate cache-write charge. API-key usage follows
+[API pricing](https://developers.openai.com/api/docs/pricing).
+
+GPT-5.6 Sol, Terra, and Luna rates remain unchanged. Credit prices alone don't determine
+included subscription usage; check your
+[usage dashboard](#where-can-i-see-my-current-usage-limits) for current limits.
 
 A small subset of Enterprise customers should continue using the legacy rate
 card until we migrate you to the new token-based pricing. For more information,
@@ -1601,6 +1626,16 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         250 credits
         25 credits
         1,250 credits
+
+        GPT-6 Sol
+        50 credits
+        5 credits
+        250 credits
+
+        GPT-6 Luna
+        2.5 credits
+        0.25 credits
+        12.5 credits
 
         GPT-5.6 Sol
         100 credits
@@ -1659,8 +1694,10 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
 
           GPT-5.6 usage averages 5-30 credits per message.
 
-          Fast mode consumes credits at a higher rate for supported models. See
-          Speed for rates.
+          Fast mode uses 2.5x the Standard credit rate for GPT-6 Astra, Sol, and
+          Luna where available. See
+          Speed for details and
+          other models.
 
           Daybreak access requires [Trusted Access for
           Cyber](./cyber-safety.md#trusted-access-for-cyber) approval.
@@ -1668,10 +1705,6 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
           separate approval and provisioning.
 
 _GPT-5.6 Sol’s promotional pricing is available at least through November 21, 2026._
-
-Speed configurations will increase credit consumption for all models that apply.
-Fast mode consumes credits at a higher rate for supported models. See
-[Speed](./agent-configuration/speed.md) for supported models and rates.
 
 [Learn more about credits in ChatGPT Plus and
 Pro.](https://help.openai.com/en/articles/12642688)
@@ -1705,9 +1738,6 @@ tips to maximize your limits:
 - **Limit the number of MCP servers you use.** Every
   [MCP](./extend/mcp.md) server adds more context to your messages and uses
   more of your limit. Disable MCP servers when you don’t need them.
-- **Switch to a smaller model for routine tasks.** Using GPT-5.6 Terra or
-  GPT-5.6 Luna can extend your local-message usage limits, depending on the
-  model you switch from.
 
 For guidance on choosing and scoping tasks, see [Use Work
 efficiently](./prompting.md#use-work-efficiently).
@@ -1841,7 +1871,7 @@ A good default is to include four things in your prompt:
 
 This helps Codex stay scoped, make fewer assumptions, and produce work that's easier to review.
 
-Choose a reasoning level based on how hard the task is and test what works best for your workflow. Different users and tasks work best with different settings.
+Start with **Medium** for GPT-6 Sol, **High** for GPT-6 Luna, or **Light** for GPT-6 Astra (`low` in configuration). Adjust based on the task and the result. See [Models](./models.md) for available reasoning levels.
 
 - Low for faster, well-scoped tasks
 - Medium or High for more complex changes or debugging
@@ -2172,27 +2202,30 @@ reasoning effort. To balance intelligence, speed, and price for each task,
 request a specific model or reasoning effort in your prompt,
 configure `[agents]` defaults in `config.toml`, or set `model` and
 `model_reasoning_effort` directly in the custom agent file.
-For example, use `gpt-5.6-terra` for fast scans or a higher-effort `gpt-5.6` configuration for more demanding reasoning.
+For example, use `gpt-6-luna` for fast scans or a higher-effort `gpt-6-sol` configuration for more demanding reasoning.
 
 For most tasks in Codex, start with
-`gpt-5.6`. Use
-`gpt-5.6-terra` when you want
-a faster, lower-cost option for lighter subagent work.
+`gpt-6-sol`. Use
+`gpt-6-luna` when you want a faster, lower-cost option for lighter subagent
+work.
 
 #### Model choice
 
-- **`gpt-5.6`**: Start here for demanding agents. It's strongest for ambiguous, multi-step work that needs planning, tool use, validation, and follow-through across a larger context.
-- **`gpt-5.6-terra`**: Use for agents that favor speed and efficiency over depth, such as exploration, read-heavy scans, large-file review, or processing supporting documents. It works well for parallel workers that return distilled results to the main agent.
-- **`gpt-5.6-luna`**: Use for fast, narrowly scoped agents handling clear, repeatable, or high-volume work.
+- **`gpt-6-sol`**: Start here for demanding agents. It's strongest for ambiguous, multi-step work that needs planning, tool use, validation, and follow-through across a larger context.
+- **`gpt-6-luna`**: Use for fast, narrowly scoped agents handling clear, repeatable, or high-volume work.
 
 #### Reasoning effort (`model_reasoning_effort`)
+
+For explicit model settings, start with `medium` for GPT-6 Sol, `high` for
+GPT-6 Luna, or `low` for GPT-6 Astra. Adjust for the task using a level the
+selected model supports.
 
 - **`ultra`**: Use for the deepest reasoning when the selected model supports
   it.
 - **`max`** and **`xhigh`**: Use for especially demanding reasoning when the
   selected model supports these levels.
 - **`high`**: Use when an agent needs to trace complex logic, check assumptions, or work through edge cases (for example, reviewer or security-focused agents).
-- **`medium`**: A balanced default for most agents.
+- **`medium`**: Balances speed and depth; the starting point for GPT-6 Sol.
 - **`low`**: Use when the task is straightforward and speed matters most.
 
 Higher reasoning effort increases response time and token usage, but it can improve quality for complex work. For details, see [Models](./models.md), [Config basics](./config-file/config-basic.md), and [Configuration Reference](./config-file/config-reference.md).
@@ -2370,8 +2403,8 @@ max_concurrent_threads_per_session = 8
 ```toml
 name = "pr_explorer"
 description = "Read-only codebase explorer for gathering evidence before changes are proposed."
-model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
+model = "gpt-6-luna"
+model_reasoning_effort = "high"
 sandbox_mode = "read-only"
 developer_instructions = """
 Stay in exploration mode.
@@ -2385,8 +2418,8 @@ Prefer fast search and targeted file reads over broad scans.
 ```toml
 name = "reviewer"
 description = "PR reviewer focused on correctness, security, and missing tests."
-model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model = "gpt-6-sol"
+model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = """
 Review code like an owner.
@@ -2400,8 +2433,8 @@ Lead with concrete findings, include reproduction steps when possible, and avoid
 ```toml
 name = "docs_researcher"
 description = "Documentation specialist that uses the docs MCP server to verify APIs and framework behavior."
-model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
+model = "gpt-6-luna"
+model_reasoning_effort = "high"
 sandbox_mode = "read-only"
 developer_instructions = """
 Use the docs MCP server to confirm APIs, options, and version-specific behavior.
@@ -2435,8 +2468,8 @@ max_concurrent_threads_per_session = 6
 ```toml
 name = "code_mapper"
 description = "Read-only codebase explorer for locating the relevant frontend and backend code paths."
-model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
+model = "gpt-6-luna"
+model_reasoning_effort = "high"
 sandbox_mode = "read-only"
 developer_instructions = """
 Map the code that owns the failing UI flow.
@@ -2449,8 +2482,8 @@ Identify entry points, state transitions, and likely files before the worker sta
 ```toml
 name = "browser_debugger"
 description = "UI debugger that uses browser tooling to reproduce issues and capture evidence."
-model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model = "gpt-6-sol"
+model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = """
 Reproduce the issue in the browser, capture exact steps, and report what the UI actually does.
@@ -2468,8 +2501,8 @@ startup_timeout_sec = 20
 ```toml
 name = "ui_fixer"
 description = "Implementation-focused agent for small, targeted fixes after the issue is understood."
-model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
+model = "gpt-6-luna"
+model_reasoning_effort = "high"
 developer_instructions = """
 Own the fix once the issue is reproduced.
 Make the smallest defensible change, keep unrelated files untouched, and validate only the behavior you changed.
@@ -2731,8 +2764,8 @@ For GPT-5.6, GPT-5.5, and GPT-5.4, Fast mode increases model speed by 1.5x.
 GPT-5.6 and GPT-5.5 consume credits at 2.5x the Standard rate; GPT-5.4 consumes
 credits at 2x the Standard rate.
 
-GPT-6 Astra Fast mode consumes credits at 2.5x the Standard rate where
-available. See [Models](./models.md) for model availability and
+For GPT-6 Astra, GPT-6 Sol, and GPT-6 Luna, Fast mode consumes credits at
+2.5x the Standard rate where available. See [Models](./models.md) for model availability and
 [Pricing](./pricing.md#token-rates) for token rates.
 
 Use `/fast on`, `/fast off`, or `/fast status` in the CLI to change or inspect
@@ -2915,7 +2948,7 @@ Learn more about [plugins](./plugins.md).
 
 Choose [GPT-6 Astra](./models.md#gpt-6-astra) for demanding work that needs
 careful reasoning, visual judgment, or a polished final file. For simpler tasks,
-consider Sol, Terra, or Luna. Select from the models
+consider Sol or Luna. Select from the models
 available in your model selector and check [plan usage](./pricing.md)
 before starting a large task.
 
@@ -3051,6 +3084,57 @@ or is ready for review.
 - [Projects and chats](./projects.md)
 - [Scheduled tasks](./automations.md)
 - [Sandbox and permissions](./sandboxing.md)
+
+### Model selection
+
+Source: [Model selection](./model-selection.md)
+
+import {
+ModelOverview,
+ModelRecommender,
+} from "@components/react/models/ModelSelection.react";
+
+#### Meet the models
+
+Availability, tools, reasoning settings, and usage limits differ by product and
+model version. Check the [models available in ChatGPT](./models.md) or the
+[API model catalog](https://developers.openai.com/api/docs/models).
+
+#### Find the right model for your workflow
+
+Choose your work and task and get a recommendation.
+
+#### How to think about models and reasoning effort
+
+Luna is the most cost-efficient model, while Astra is our state-of-the-art,
+most powerful model. If cost and latency aren't a concern, you can default to
+Astra. To reduce costs or latency, use the guidance below to choose a model
+and reasoning effort for your needs.
+
+Luna is our most efficient model, while Astra is our state-of-the-art, most
+powerful model. If you don't need to think about usage or how long it takes to
+complete a task, you can default to Astra. To optimize usage, use the guidance
+below to choose a model and reasoning effort for your needs.
+
+#### Experiment
+
+Treat the guidance on this page as a starting point. The best way to find the right
+model for your workflow is to experiment with different models and reasoning
+settings to see what works.
+
+Start by considering:
+
+- **How often does your workflow run?** A frequent automation makes usage and cost
+  add up faster than an occasional project.
+- **How quickly do you need the result?** A task you're waiting on may need a
+  faster setting than one that runs overnight.
+- **How will you use the output?** A draft for your review may need less polish
+  than something you'll share externally.
+- **How important is the quality of the result?** Depending on your use case or
+  industry, you might want to use a stronger model to put an emphasis on quality.
+
+If you can, experiment using the same inputs to compare results and keep the
+lightest setting that meets your quality bar.
 
 ### Prompting
 
@@ -4183,8 +4267,8 @@ different model and effort when the task requires them:
 
 ```bash
 npx @openai/codex-security scan "$REPOSITORY" \
-  --model gpt-5.6-terra \
-  --effort high
+  --model gpt-6-sol \
+  --effort medium
 ```
 
 Supported effort levels are `minimal`, `low`, `medium`, `high`, `xhigh`, and
@@ -4889,14 +4973,14 @@ Codex configuration value.
 To select a different model and reasoning effort without writing TOML:
 
 ```bash
-npx @openai/codex-security scan . --model gpt-5.6-terra --effort high
+npx @openai/codex-security scan . --model gpt-6-sol --effort medium
 ```
 
 Quote string values passed through `--codex` so the TOML parser receives a
 string:
 
 ```bash
-npx @openai/codex-security scan . --codex 'model="gpt-5.6-terra"'
+npx @openai/codex-security scan . --codex 'model="gpt-6-sol"'
 ```
 
 #### `codex-security install-hook`
@@ -4944,7 +5028,7 @@ repositories interactively. This flow requires a GitHub CLI sign-in.
 To choose a model and reasoning effort during interactive discovery:
 
 ```bash
-npx @openai/codex-security bulk-scan --model gpt-5.6-terra --effort high
+npx @openai/codex-security bulk-scan --model gpt-6-sol --effort medium
 ```
 
 For a prepared repository list, provide a CSV and `--output-dir`:
@@ -6870,8 +6954,8 @@ const security = new CodexSecurity({
   pluginPath: "/path/to/codex-security-plugin",
   pythonPath: "/path/to/python",
   codexOverrides: {
-    model: "gpt-5.6-terra",
-    model_reasoning_effort: "high",
+    model: "gpt-6-sol",
+    model_reasoning_effort: "medium",
   },
 });
 ```
@@ -8117,14 +8201,14 @@ choose another model and effort for a CSV campaign:
 npx @openai/codex-security bulk-scan repositories.csv \
   --output-dir /path/outside/repositories/security-scans \
   --workers 4 \
-  --model gpt-5.6-terra \
-  --effort high
+  --model gpt-6-sol \
+  --effort medium
 ```
 
 The same options work during interactive repository discovery:
 
 ```bash
-npx @openai/codex-security bulk-scan --model gpt-5.6-terra --effort high
+npx @openai/codex-security bulk-scan --model gpt-6-sol --effort medium
 ```
 
 Supported effort levels are `minimal`, `low`, `medium`, `high`, and `xhigh`.
@@ -11790,7 +11874,7 @@ for examples and approval tradeoffs.
 | `memories.min_rate_limit_remaining_percent`                   | `number`                                                                                                                                                      |         | Minimum remaining percentage required in Codex rate-limit windows before memory generation starts. Defaults to `25` and is clamped to `0`-`100`.                                                                                                                                                                                                                                                                                                                                            |
 | `memories.min_rollout_idle_hours`                             | `number`                                                                                                                                                      |         | Minimum idle time before a thread is considered for memory generation. Defaults to `6` and is clamped to `1`-`48`.                                                                                                                                                                                                                                                                                                                                                                          |
 | `memories.use_memories`                                       | `boolean`                                                                                                                                                     |         | When `false`, Codex skips injecting existing memories into future sessions. Defaults to `true`.                                                                                                                                                                                                                                                                                                                                                                                             |
-| `model`                                                       | `string`                                                                                                                                                      |         | Model to use (e.g., `gpt-5.6-sol`).                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `model`                                                       | `string`                                                                                                                                                      |         | Model to use (e.g., `gpt-6-sol`).                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `model_auto_compact_token_limit`                              | `number`                                                                                                                                                      |         | Token threshold that triggers automatic history compaction (unset uses model defaults).                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `model_auto_compact_token_limit_scope`                        | `total \| body_after_prefix`                                                                                                                                  |         | Controls whether the auto-compaction threshold counts the full active context (`total`, the default) or only growth after the carried compaction-window prefix (`body_after_prefix`).                                                                                                                                                                                                                                                                                                       |
 | `model_catalog_json`                                          | `string (path)`                                                                                                                                               |         | Optional path to a JSON model catalog loaded on startup. A selected `$CODEX_HOME/profile-name.config.toml` profile file can override this per profile.                                                                                                                                                                                                                                                                                                                                      |
@@ -11821,7 +11905,7 @@ for examples and approval tradeoffs.
 | `model_providers..wire_api`                                   | `responses`                                                                                                                                                   |         | Protocol used by the provider. `responses` is the only supported value, and it is the default when omitted.                                                                                                                                                                                                                                                                                                                                                                                 |
 | `model_providers.amazon-bedrock.aws.profile`                  | `string`                                                                                                                                                      |         | AWS profile name used by the built-in `amazon-bedrock` provider.                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `model_providers.amazon-bedrock.aws.region`                   | `string`                                                                                                                                                      |         | AWS region used by the built-in `amazon-bedrock` provider.                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| `model_reasoning_effort`                                      | `minimal \| low \| medium \| high \| xhigh`                                                                                                                   |         | Adjust reasoning effort for supported models (Responses API only; `xhigh` is model-dependent).                                                                                                                                                                                                                                                                                                                                                                                              |
+| `model_reasoning_effort`                                      | `string`                                                                                                                                                      |         | Reasoning effort advertised by the selected model, such as `low`, `medium`, `high`, `xhigh`, `max`, or `ultra`. Available levels depend on the model and client.                                                                                                                                                                                                                                                                                                                            |
 | `model_reasoning_summary`                                     | `auto \| concise \| detailed \| none`                                                                                                                         |         | Select reasoning summary detail or disable summaries entirely.                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `model_supports_reasoning_summaries`                          | `boolean`                                                                                                                                                     |         | Force Codex to send or not send reasoning metadata.                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `model_verbosity`                                             | `low \| medium \| high`                                                                                                                                       |         | Optional GPT-5 Responses API verbosity override; when unset, the selected model/preset default is used.                                                                                                                                                                                                                                                                                                                                                                                     |
@@ -11874,7 +11958,7 @@ for examples and approval tradeoffs.
 | `permissions..workspace_roots`                                | `table`                                                                                                                                                       |         | Profile-defined workspace roots that receive `:workspace_roots` filesystem rules alongside the session's runtime workspace roots.                                                                                                                                                                                                                                                                                                                                                           |
 | `permissions..workspace_roots.`                               | `boolean`                                                                                                                                                     |         | Opt a path into the profile's workspace root set when `true`. Disabled entries remain inactive.                                                                                                                                                                                                                                                                                                                                                                                             |
 | `personality`                                                 | `none \| friendly \| pragmatic`                                                                                                                               |         | Default communication style for models that advertise `supportsPersonality`; can be overridden per thread/turn or via `/personality`.                                                                                                                                                                                                                                                                                                                                                       |
-| `plan_mode_reasoning_effort`                                  | `none \| minimal \| low \| medium \| high \| xhigh`                                                                                                           |         | Plan-mode-specific reasoning override. When unset, Plan mode uses its built-in preset default.                                                                                                                                                                                                                                                                                                                                                                                              |
+| `plan_mode_reasoning_effort`                                  | `string`                                                                                                                                                      |         | Plan-mode-specific reasoning override using a level supported by the selected model. When unset, Plan mode uses its built-in preset default.                                                                                                                                                                                                                                                                                                                                                |
 | `plugins..enabled`                                            | `boolean`                                                                                                                                                     |         | Enable or disable a local-marketplace plugin using a `plugin-name@marketplace-name` key. Read from the effective merged config; trusted-project settings can override user, cloud-managed, and system defaults. Marketplace refresh can install or refresh configured plugins even when disabled. This does not override workspace-managed enabled states.                                                                                                                                  |
 | `plugins..mcp_servers..default_tools_approval_mode`           | `auto \| prompt \| writes \| approve`                                                                                                                         |         | Default approval behavior for tools on a plugin-provided MCP server.                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `plugins..mcp_servers..disabled_tools`                        | `array`                                                                                                                                                       |         | Deny list applied after `enabled_tools` for a plugin-provided MCP server.                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -12255,8 +12339,8 @@ profile file; don't nest them under `[profiles.profile-name]`.
 
 ```toml
 # ~/.codex/deep-review.config.toml
-model = "gpt-5.6-sol"
-model_reasoning_effort = "xhigh"
+model = "gpt-6-sol"
+model_reasoning_effort = "medium"
 approval_policy = "on-request"
 model_catalog_json = "/Users/me/.codex/model-catalogs/deep-review.json"
 ```
@@ -12289,10 +12373,10 @@ Examples:
 
 ```shell
 # Dedicated flag
-codex --model gpt-5.6-terra
+codex --model gpt-6-sol
 
 # Generic key/value override (value is TOML, not JSON)
-codex --config model='"gpt-5.6-terra"'
+codex --config model='"gpt-6-sol"'
 codex --config sandbox_workspace_write.network_access=true
 codex --config 'shell_environment_policy.include_only=["PATH","HOME"]'
 ```
@@ -12401,7 +12485,7 @@ A model provider defines how Codex connects to a model (base URL, wire API, auth
 Define additional providers and point `model_provider` at them:
 
 ```toml
-model = "gpt-5.6-terra"
+model = "gpt-6-sol"
 model_provider = "proxy"
 
 [model_providers.proxy]
@@ -13444,7 +13528,7 @@ Here are a few options people change most often:
 Choose the model Codex uses by default in the CLI and IDE.
 
 ```toml
-model = "gpt-5.6"
+model = "gpt-6-sol"
 ```
 
 #### Approval prompts
@@ -13505,7 +13589,7 @@ web_search = "cached"  # default; serves results from the web search cache
 Tune how much reasoning effort the model applies when supported.
 
 ```toml
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 ```
 
 #### Communication style
@@ -13617,18 +13701,24 @@ On October 14, 2026, GPT-5.5 will retire from ChatGPT, ChatGPT Work, and Codex
 on all plans, including consumer, Business, Enterprise, and Edu plans. This
 retirement does not apply to the OpenAI API.
 
-If you use Codex with ChatGPT sign-in, switch to **GPT-5.6 Sol**
-(`gpt-5.6-sol`) before October 14. Replace `gpt-5.5` in workspace defaults,
-saved model settings, managed configurations, custom agents, scheduled tasks,
-and scripts that select a model.
+If you use Codex with ChatGPT sign-in, choose an available replacement before
+October 14:
+
+- On Plus, Pro, Business, Enterprise, and Edu plans, choose **GPT-6 Sol**
+  (`gpt-6-sol`) when available.
+- On Free and Go plans, choose **GPT-6 Luna** (`gpt-6-luna`) in the desktop app
+  when available.
+
+Replace `gpt-5.5` in workspace defaults, saved model settings, managed
+configurations, custom agents, scheduled tasks, and scripts that select a model.
 
 See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement)
 for administrator guidance.
 
 #### Choose a model
 
-In the ChatGPT desktop app, use the model and reasoning control beneath the
-composer to choose an available model and adjust its reasoning effort.
+In Work or Codex in the ChatGPT desktop app, use the model and reasoning control
+beneath the composer to choose an available model and adjust its reasoning effort.
 
 Higher reasoning effort can improve results for complex tasks, but it takes
 longer and uses more tokens. Start with the default effort and increase it when
@@ -13661,13 +13751,13 @@ reasoning effort. You can also choose a model when you launch Codex with
 `--model` or its `-m` alias:
 
 ```bash
-codex --model gpt-5.6
+codex --model gpt-6-sol
 ```
 
 The same option works with non-interactive runs. For example:
 
 ```bash
-codex exec -m gpt-5.6 "Review the current changes"
+codex exec -m gpt-6-sol "Review the current changes"
 ```
 
 Higher reasoning effort can improve results for complex tasks, but it takes
@@ -13695,20 +13785,30 @@ making it useful for larger tasks that can be split across subagents.
 
 #### Recommended models
 
+GPT-6 Sol and GPT-6 Luna bring improved coding, factual reliability, and
+communication to lower-cost models. Use Sol for complex coding and agentic
+workflows, and Luna for focused, repeatable tasks. Select `gpt-6-sol` or
+`gpt-6-luna` in your model picker or saved configuration when available.
+
+In ChatGPT, GPT-6 Sol and GPT-6 Luna are available in Work and Codex. They
+aren't available in Chat.
+
+GPT-5.6 Sol, GPT-5.6 Terra, and GPT-5.6 Luna remain available during the rollout. Selecting a
+new model doesn't change workspace permissions or grant access to it.
+
 Availability depends on the rollout, your sign-in method, and your client.
 See [pricing](./pricing.md) for plan access and usage, and
-[workspace model availability](./enterprise/workspace-model-availability.md#gpt-6-astra-in-enterprise)
+[workspace model availability](./enterprise/workspace-model-availability.md)
 for Enterprise access.
 
 Start with the default Power setting available to your account. Move toward
 **Smarter** for deeper reasoning or **Faster** for faster, lower-cost work.
-Open **Advanced** when you want `gpt-5.6-luna` or a specific model, reasoning
-effort, or speed.
+Open **Advanced** to choose a specific model, reasoning effort, or speed.
 
-The picker illustrations show GPT-5.6 controls. For eligible Pro, Business
-($100), and Enterprise accounts, the Astra rollout updates the Power options
-to Terra Light, Sol Light, Sol Medium, Astra Light, Astra Medium, and Astra
-Extra High. Options can differ by plan and rollout stage.
+The six Power presets shown are Luna High, Sol Light (the starting
+preset), Sol Medium, Astra Light, Astra Medium, and Astra Extra High. Some paid plans omit
+Astra Extra High. Advanced controls are illustrative; available options
+and defaults vary by plan, client, workspace settings, and rollout.
 
 #### Experimental context management
 
@@ -13723,10 +13823,10 @@ To opt in, set `features.context_management.experimental_mode = true` in your
 for the setting and [configuration basics](./config-file/config-basic.md)
 for the file location. Workspace requirements still apply.
 
-#### Choosing Astra, Sol, Terra, and Luna
+#### Choosing Astra, Sol, and Luna
 
 Choose **Astra** when a task needs the strongest capability across multiple
-steps and tools. **Sol** offers depth and polish, **Terra** suits everyday work,
+steps and tools. **Sol** suits everyday work and complex coding,
 and **Luna** suits clear, repeatable tasks.
 
 #### Where each model shines
@@ -13736,21 +13836,19 @@ and **Luna** suits clear, repeatable tasks.
   Give it the sources, templates, constraints, and checks that define a useful
   result. Astra is better at asking focused questions and incorporating your
   guidance while keeping the original goal and constraints in view.
-- **Sol, for complex, open-ended work.** Choose Sol for ambiguous, difficult, or
+- **Sol, for everyday and complex work.** Choose Sol for ambiguous, difficult, or
   high-value tasks that need extra analysis, judgment, or polish, such as
   complex code changes, deep research, or polished documents. For narrower
   tasks, define what done looks like to keep the work focused.
-- **Terra, the pragmatic all-rounder.** Choose Terra for everyday work that
-  needs strong reasoning and tool use when you do not need Sol's full depth. It
-  is a natural starting point for work you previously gave GPT-5.5.
 - **Luna, for clear, repeatable tasks.** Choose Luna for specific, high-volume
   tasks when you know what a good result looks like, such as extraction,
   classification, transformation, and structured summaries.
 
 #### Pick a reasoning effort
 
-Use the lowest reasoning effort that produces the result you need. Increase it
-for tasks that need more planning, analysis, or checking.
+Start with **Medium** for Sol, **High** for Luna, or **Light** for Astra.
+In configuration, Astra's Light setting is `low`. Increase the effort for tasks
+that need more planning, analysis, or checking.
 
 - **Light** in the ChatGPT desktop app, ChatGPT Work on the web, and IDE extension, or **Low** in the
   CLI, suits quick, well-scoped tasks.
@@ -13758,7 +13856,7 @@ for tasks that need more planning, analysis, or checking.
 - **High** and **Extra High** suit difficult work with multiple steps, sources,
   or tradeoffs.
 
-GPT-5.5 reasoning efforts don't map exactly to GPT-5.6. Try a familiar task
+Reasoning efforts don't map exactly between model generations. Try a familiar task
 at a lower setting and adjust based on the result.
 
 #### Know when to use Max or Ultra
@@ -13771,19 +13869,15 @@ don't see Max in your options, you'll have to enable it in your app settings.
 separate parts of a complex task in parallel. Choose it when you can divide the
 work into meaningful parts. Most tasks do not need Max or Ultra.
 
-If Ultra doesn't appear in the desktop app's model slider, go to
-**Settings** > **Configuration**, then turn on **Ultra in model picker slider**.
+GPT-6 Luna supports reasoning efforts up to **Max**, but not **Ultra**.
+
+If your model supports Ultra but it doesn't appear in the desktop app's model
+slider, go to **Settings** > **Configuration**, then turn on
+**Ultra in model picker slider**.
 
 #### Other models
 
 When you sign in with ChatGPT, Codex works best with the recommended models listed above.
-
-    GPT-5.4 and GPT-5.4 mini retire from Codex on August 31, 2026.
-
-If you sign in with ChatGPT, replace `gpt-5.4` with `gpt-5.6-terra` and
-`gpt-5.4-mini` with `gpt-5.6-luna` in saved configurations, custom agents, and
-scheduled tasks. The OpenAI API and Codex authenticated with your own API key
-aren't affected.
 
 #### View other models
 
@@ -13795,13 +13889,16 @@ future releases of Codex.
 #### Deprecated Codex models
 
 GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026. Replace
-`gpt-5.5` with `gpt-5.6-sol`. See [GPT-5.5 retirement](./models.md#gpt-55-retirement)
-for the scope and migration checklist.
+`gpt-5.5` with a model available to your account and client. See
+[GPT-5.5 retirement](./models.md#gpt-55-retirement) for plan-specific
+replacements and the migration checklist.
 
-The `gpt-5.4` and `gpt-5.4-mini` models retire from Codex with ChatGPT sign-in
-on August 31, 2026. Replace `gpt-5.4` with `gpt-5.6-terra` and
-`gpt-5.4-mini` with `gpt-5.6-luna` in workspace defaults, saved model
-settings, managed configurations, custom agents, and scheduled tasks.
+The `gpt-5.4` and `gpt-5.4-mini` models retired from Codex with ChatGPT sign-in
+on August 31, 2026. Replace `gpt-5.4` with `gpt-6-sol` and
+`gpt-5.4-mini` with `gpt-6-luna` when available to your plan and client.
+In Enterprise and Edu, an administrator must enable Luna first. Update workspace
+defaults, saved model settings, managed configurations, custom agents, and
+scheduled tasks with an available replacement.
 
 The `gpt-5.2` and `gpt-5.3-codex` models are already deprecated in Codex when
 you sign in with ChatGPT. Update scripts, configuration files, and
@@ -13819,7 +13916,7 @@ The ChatGPT desktop app, Codex CLI, and IDE extension use the same `config.toml`
 ChatGPT desktop app, Codex CLI, or IDE extension uses a recommended model.
 
 ```toml
-model = "gpt-5.6"
+model = "gpt-6-sol"
 ```
 
 #### Choose a model for cloud chats
@@ -13859,9 +13956,9 @@ Use the snippet below as a reference. Copy only the keys and sections you need i
 
 ################################################################################
 
-# Primary model used by Codex. Recommended example for most users: "gpt-5.6".
+# Primary model used by Codex. Recommended example for most users: "gpt-6-sol".
 
-model = "gpt-5.6"
+model = "gpt-6-sol"
 
 # Communication style for supported models. Allowed values: none | friendly | pragmatic
 
@@ -13869,7 +13966,7 @@ model = "gpt-5.6"
 
 # Optional model override for /review. Default: unset (uses current session model).
 
-# review_model = "gpt-5.6"
+# review_model = "gpt-6-sol"
 
 # Provider id selected from [model_providers]. Default: "openai".
 
@@ -13907,11 +14004,11 @@ model_provider = "openai"
 
 ################################################################################
 
-# Reasoning effort: minimal | low | medium | high | xhigh
+# Reasoning effort advertised by the selected model; supported levels vary by model and client.
 
 # model_reasoning_effort = "medium"
 
-# Optional override used when Codex runs in plan mode: none | minimal | low | medium | high | xhigh
+# Optional reasoning effort override for Plan mode; use a level supported by the selected model.
 
 # plan_mode_reasoning_effort = "high"
 
@@ -14187,11 +14284,11 @@ web_search = "cached"
 
 # Default model for spawned agents. An explicit spawn model takes precedence.
 
-# default_subagent_model = "gpt-5.6-terra"
+# default_subagent_model = "gpt-6-sol"
 
 # Default reasoning effort for spawned agents. An explicit spawn effort takes precedence.
 
-# default_subagent_reasoning_effort = "high"
+# default_subagent_reasoning_effort = "medium"
 
 # Record a model-visible message when an agent turn is interrupted. Default: true
 
@@ -14499,7 +14596,7 @@ show_tooltips = true
 
 # [tui.model_availability_nux]
 
-# "gpt-5.6-terra" = 1
+# "gpt-6-sol" = 1
 
 # Enable or disable analytics for this machine. When unset, Codex uses its default behavior.
 
@@ -14525,7 +14622,7 @@ enabled = true
 
 # "hide_gpt-5.1-codex-max_migration_prompt" = true
 
-# model_migrations = { "gpt-5.4" = "gpt-5.6-terra" }
+# model_migrations = { "gpt-5.4" = "gpt-6-sol" }
 
 ################################################################################
 
@@ -14907,7 +15004,7 @@ enabled = true
 
 # For example, a CI profile could live at $CODEX_HOME/ci.config.toml:
 
-# model = "gpt-5.6-terra"
+# model = "gpt-6-sol"
 
 # approval_policy = "on-request"
 
@@ -15203,7 +15300,7 @@ information.
 | `--enable`                                           | `feature`                                                     |         | Force-enable a feature flag (translates to `-c features.=true`). Repeatable.                                                                                                                                                |
 | `--image, -i`                                        | `path[,path...]`                                              |         | Attach one or more image files to the initial prompt. Separate multiple paths with commas or repeat the flag.                                                                                                               |
 | `--local-provider`                                   | `lmstudio \| ollama`                                          |         | Choose the local provider used with `--oss`, overriding `oss_provider` for this run.                                                                                                                                        |
-| `--model, -m`                                        | `string`                                                      |         | Override the model set in configuration (for example `gpt-5.6-terra`).                                                                                                                                                      |
+| `--model, -m`                                        | `string`                                                      |         | Override the model set in configuration (for example `gpt-6-sol`).                                                                                                                                                          |
 | `--no-alt-screen`                                    | `boolean`                                                     | `false` | Disable alternate screen mode for the TUI (overrides `tui.alternate_screen` for this run).                                                                                                                                  |
 | `--oss`                                              | `boolean`                                                     | `false` | Use a local open source model provider. Codex uses `--local-provider`, your configured `oss_provider`, or prompts you to choose between LM Studio and Ollama.                                                               |
 | `--profile, -p`                                      | `string`                                                      |         | Layer `$CODEX_HOME/profile-name.config.toml` on top of the base user config.                                                                                                                                                |
@@ -18051,7 +18148,7 @@ completion still works before you queue the command.
 | [`/logout`](#sign-out-with-logout)                                                          | Sign out of Codex.                                              | Clear local credentials when using a shared machine.                                                       |
 | [`/mcp`](#list-mcp-tools-with-mcp)                                                          | List configured Model Context Protocol (MCP) tools.             | Check which external tools Codex can call during the session; add `verbose` for server details.            |
 | [`/mention`](#highlight-files-with-mention)                                                 | Attach a file to the chat.                                      | Point Codex at specific files or folders you want it to inspect next.                                      |
-| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Switch between models such as `gpt-5.6-luna` and `gpt-5.6-terra` before running a task.                    |
+| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Switch between models such as `gpt-6-luna` and `gpt-6-sol` before running a task.                          |
 | [`/fast`](#toggle-fast-mode-with-fast)                                                      | Toggle a Fast service tier when the model catalog exposes one.  | Turn the current model's Fast tier on or off and persist the selection.                                    |
 | [`/plan`](#switch-to-plan-mode-with-plan)                                                   | Switch to plan mode and optionally send a prompt.               | Ask Codex to propose an execution plan before implementation work starts.                                  |
 | [`/goal`](#set-or-view-a-task-goal-with-goal)                                               | Set, edit, pause, resume, view, or clear a task goal.           | Give Codex a persistent target to track while a larger task runs.                                          |
@@ -18089,7 +18186,7 @@ The following workflows keep your session on track without restarting Codex.
 
 1. Start Codex and open the composer.
 2. Type `/model` and press Enter.
-3. Choose a model such as `gpt-5.6-luna` or `gpt-5.6-terra` from the popup.
+3. Choose a model such as `gpt-6-luna` or `gpt-6-sol` from the popup.
 
 Expected: Codex confirms the new model in the transcript. Run `/status` to verify the change.
 
@@ -29856,10 +29953,10 @@ page and signed-in session.
 In the [built-in browser](./browser.md) in the ChatGPT desktop app, ChatGPT
 Work and Codex can discover and use these tools when they are available.
 
-Use GPT-5.6 Sol or GPT-5.6 Terra for site tools. GPT-5.6 Luna currently has
-WebMCP disabled. Update the ChatGPT desktop app to the latest version. Site
-tools aren't available in Enterprise or Edu workspaces. Availability also
-depends on rollout and the tools provided by the current page.
+Use GPT-5.6 Sol or GPT-6 Sol for site tools. GPT-5.6 Luna currently has WebMCP
+disabled. Update the ChatGPT desktop app to the latest version. Site tools
+aren't available in Enterprise or Edu workspaces. Availability also depends on
+rollout and the tools provided by the current page.
 
 #### WebMCP vs. MCP
 
@@ -31454,7 +31551,7 @@ increasing delay and jitter.
 Requests include `method`, `params`, and `id`:
 
 ```json
-{ "method": "thread/start", "id": 10, "params": { "model": "gpt-5.6-terra" } }
+{ "method": "thread/start", "id": 10, "params": { "model": "gpt-6-sol" } }
 ```
 
 Responses echo the `id` with either `result` or `error`:
@@ -31534,7 +31631,7 @@ send({
   },
 });
 send({ method: "initialized", params: {} });
-send({ method: "thread/start", id: 1, params: { model: "gpt-5.6-terra" } });
+send({ method: "thread/start", id: 1, params: { model: "gpt-6-sol" } });
 ```
 
 #### Core primitives
@@ -31736,18 +31833,22 @@ those plugins.
 
 Call `model/list` to discover available models and their capabilities before rendering model or personality selectors.
 
+The response below illustrates the structure. Available models, reasoning
+efforts, and defaults depend on the client and account; use the returned
+values rather than hard-coding this example.
+
 ```json
 { "method": "model/list", "id": 6, "params": { "limit": 20, "includeHidden": false } }
 { "id": 6, "result": {
   "data": [{
-    "id": "gpt-5.6-sol",
-    "model": "gpt-5.6-sol",
-    "displayName": "GPT-5.6-Sol",
+    "id": "gpt-6-sol",
+    "model": "gpt-6-sol",
+    "displayName": "GPT-6 Sol",
     "hidden": false,
-    "defaultReasoningEffort": "low",
+    "defaultReasoningEffort": "medium",
     "supportedReasoningEfforts": [{
-      "reasoningEffort": "low",
-      "description": "Fast responses with lighter reasoning"
+      "reasoningEffort": "medium",
+      "description": "Balances speed and reasoning depth for everyday tasks"
     }],
     "inputModalities": ["text", "image"],
     "supportsPersonality": true,
@@ -31835,7 +31936,7 @@ Start a fresh thread when you need a new Codex conversation.
 
 ```json
 { "method": "thread/start", "id": 10, "params": {
-  "model": "gpt-5.6-terra",
+  "model": "gpt-6-sol",
   "cwd": "/Users/me/project",
   "approvalPolicy": "never",
   "sandbox": "workspaceWrite",
@@ -32320,7 +32421,7 @@ Examples:
     "writableRoots": ["/Users/me/project"],
     "networkAccess": true
   },
-  "model": "gpt-5.6-terra",
+  "model": "gpt-6-sol",
   "effort": "medium",
   "summary": "concise",
   "personality": "friendly",
@@ -33907,7 +34008,7 @@ from openai_codex import Codex, Sandbox
 
 with Codex() as codex:
     thread = codex.thread_start(
-        model="gpt-5.6-terra",
+        model="gpt-6-sol",
         sandbox=Sandbox.workspace_write,
     )
     result = thread.run("Make a plan to diagnose and fix the CI failures")
@@ -33923,7 +34024,7 @@ from openai_codex import AsyncCodex
 
 async def main() -> None:
     async with AsyncCodex() as codex:
-        thread = await codex.thread_start(model="gpt-5.6-terra")
+        thread = await codex.thread_start(model="gpt-6-sol")
         result = await thread.run("Implement the plan")
         print(result.final_response)
 
@@ -34353,9 +34454,10 @@ scheduled tasks with [skills](./build-skills.md) for more complex work.
 
 GPT-5.5 retires from ChatGPT, ChatGPT Work, and Codex on all plans on
 October 14, 2026. Review scheduled tasks that use GPT-5.5 and choose an
-available replacement before that date. For Codex with ChatGPT sign-in,
-replace `gpt-5.5` with `gpt-5.6-sol` (GPT-5.6 Sol). The OpenAI API isn't
-affected. See [GPT-5.5 retirement](./models.md#gpt-55-retirement).
+available replacement before that date. For Codex with ChatGPT sign-in, choose
+`gpt-6-sol` (GPT-6 Sol) if your plan and workspace provide access. The OpenAI API isn't
+affected. See [GPT-5.5 retirement](./models.md#gpt-55-retirement) for
+plan-specific replacements.
 
 In the ChatGPT desktop app, scheduled tasks can work with local projects and
 run in the project directory or an isolated worktree. Keep the computer on and
@@ -34444,9 +34546,8 @@ project directory.
 You can also leave the model and reasoning effort on their default settings, or
 choose them explicitly if you want more control over how the scheduled task runs.
 
-If a scheduled task uses `gpt-5.4` or `gpt-5.4-mini` with ChatGPT sign-in,
-update it before those models retire on August 31, 2026. Replace `gpt-5.4` with
-`gpt-5.6-terra` and `gpt-5.4-mini` with `gpt-5.6-luna`.
+If a scheduled task uses a retired model, update it to an available replacement.
+See [model migration guidance](./models.md#deprecated-codex-models).
 
 Scheduled tasks run unattended with your default sandbox settings. Start with the
 narrowest access that lets the task succeed, and grant network or broader file
@@ -37971,16 +38072,14 @@ overrides. Users can still change those settings during the current run, and the
 defaults apply again the next time the client starts.
 
 If a managed default, macOS MDM profile, or saved configuration pins
-`gpt-5.5` for Codex users signed in with ChatGPT, replace it with
-`gpt-5.6-sol` before October 14, 2026. GPT-5.5 retires from ChatGPT,
+`gpt-5.5` for Codex users signed in with ChatGPT, replace it with an available
+model before October 14, 2026. Choose `gpt-6-sol` once an administrator has
+enabled it for the affected users. GPT-5.5 retires from ChatGPT,
 ChatGPT Work, and Codex on all plans on that date. The OpenAI API isn't
 affected. See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement).
 
-If a managed default, macOS MDM profile, or saved configuration pins `gpt-5.4`
-or `gpt-5.4-mini` for users signed in with ChatGPT, update it before August 31, 2026. Replace `gpt-5.4` with `gpt-5.6-terra` and `gpt-5.4-mini` with
-`gpt-5.6-luna`. The OpenAI API and Codex authenticated with your own API key
-aren't affected. See [workspace model
-availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-54-retirement).
+For configurations that still pin `gpt-5.4` or `gpt-5.4-mini`, follow the
+[GPT-5.4 migration guidance](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-54-retirement).
 
 Make sure your managed defaults meet your requirements; the local runtime
 rejects disallowed values.
@@ -39732,6 +39831,14 @@ enforced `features.fast_mode` setting in
 This setting can pin Fast mode on or off for managed local Codex clients; it
 isn't a starting default and can't override workspace or product availability.
 
+#### GPT-6 Sol and Luna in Enterprise
+
+GPT-6 Sol and GPT-6 Luna are off by default in Enterprise workspaces at
+launch. An administrator must enable each model before members can select
+it. Review your [workspace model settings](https://help.openai.com/en/articles/8411955)
+and confirm access on each client. Choosing a model in local configuration
+doesn't override workspace controls.
+
 #### GPT-6 Astra in Enterprise
 
 During the initial rollout, your organization must have Daybreak access before
@@ -39761,8 +39868,9 @@ on all plans, including consumer, Business, Enterprise, and Edu plans. This
 retirement does not apply to the OpenAI API.
 
 Before October 14, review workspace defaults for ChatGPT, ChatGPT Work, and
-Codex and choose an available replacement. For Codex with ChatGPT sign-in,
-replace `gpt-5.5` with `gpt-5.6-sol` (GPT-5.6 Sol) in workspace defaults,
+Codex and choose an available replacement for each surface. For Work and Codex
+with ChatGPT sign-in, choose `gpt-6-sol` (GPT-6 Sol) once an administrator has
+enabled it for the affected users. Replace `gpt-5.5` in workspace defaults,
 saved model settings, managed configurations, custom agents, and scheduled
 tasks. Check scripts and commands that explicitly select `gpt-5.5` too.
 
@@ -39774,12 +39882,14 @@ for migration guidance.
 
 #### Prepare for the GPT-5.4 retirement
 
-On August 31, 2026, GPT-5.4 and GPT-5.4 mini retire from Codex for users signed
-in with ChatGPT. Update affected workspace defaults, saved model settings,
-managed configurations, custom agents, and scheduled tasks before then:
+GPT-5.4 and GPT-5.4 mini retired from Codex for users signed in with ChatGPT
+on August 31, 2026. Update any remaining workspace defaults, saved model
+settings, managed configurations, custom agents, and scheduled tasks with
+models available to the affected users' plans and clients:
 
-- Replace `gpt-5.4` with `gpt-5.6-terra` (GPT-5.6 Terra).
-- Replace `gpt-5.4-mini` with `gpt-5.6-luna` (GPT-5.6 Luna).
+- Replace `gpt-5.4` with `gpt-6-sol` (GPT-6 Sol) when available.
+- Replace `gpt-5.4-mini` with `gpt-6-luna` (GPT-6 Luna) when available. In
+  Enterprise and Edu, an administrator must enable Luna first.
 
 The OpenAI API and Codex authenticated with your own API key aren't affected.
 See [Codex models](./models.md#deprecated-codex-models) and

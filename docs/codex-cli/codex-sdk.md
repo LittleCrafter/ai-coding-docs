@@ -95,7 +95,7 @@ from openai_codex import Codex, Sandbox
 
 with Codex() as codex:
     thread = codex.thread_start(
-        model="gpt-5.6-terra",
+        model="gpt-6-sol",
         sandbox=Sandbox.workspace_write,
     )
     result = thread.run("Make a plan to diagnose and fix the CI failures")
@@ -112,7 +112,7 @@ from openai_codex import AsyncCodex
 
 async def main() -> None:
     async with AsyncCodex() as codex:
-        thread = await codex.thread_start(model="gpt-5.6-terra")
+        thread = await codex.thread_start(model="gpt-6-sol")
         result = await thread.run("Implement the plan")
         print(result.final_response)
 

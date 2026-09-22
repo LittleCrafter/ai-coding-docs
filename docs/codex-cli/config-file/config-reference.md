@@ -29,7 +29,7 @@ for examples and approval tradeoffs.
 
 | Key | Type | Description |
 | --- | --- | --- |
-| `model` | `string` | Model to use (e.g., `gpt-5.6-sol`). |
+| `model` | `string` | Model to use (e.g., `gpt-6-sol`). |
 | `review_model` | `string` | Optional model override used by `/review` (defaults to the current session model). |
 | `model_provider` | `string` | Provider id from `model_providers` (default: `openai`). |
 | `openai_base_url` | `string` | Base URL override for the built-in `openai` model provider. |
@@ -211,8 +211,8 @@ for examples and approval tradeoffs.
 | `model_providers.<id>.auth.cwd` | `string (path)` | Working directory for the token command. |
 | `model_providers.amazon-bedrock.aws.profile` | `string` | AWS profile name used by the built-in `amazon-bedrock` provider. |
 | `model_providers.amazon-bedrock.aws.region` | `string` | AWS region used by the built-in `amazon-bedrock` provider. |
-| `model_reasoning_effort` | `minimal \| low \| medium \| high \| xhigh` | Adjust reasoning effort for supported models (Responses API only; `xhigh` is model-dependent). |
-| `plan_mode_reasoning_effort` | `none \| minimal \| low \| medium \| high \| xhigh` | Plan-mode-specific reasoning override. When unset, Plan mode uses its built-in preset default. |
+| `model_reasoning_effort` | `string` | Reasoning effort advertised by the selected model, such as `low`, `medium`, `high`, `xhigh`, `max`, or `ultra`. Available levels depend on the model and client. |
+| `plan_mode_reasoning_effort` | `string` | Plan-mode-specific reasoning override using a level supported by the selected model. When unset, Plan mode uses its built-in preset default. |
 | `model_reasoning_summary` | `auto \| concise \| detailed \| none` | Select reasoning summary detail or disable summaries entirely. |
 | `model_verbosity` | `low \| medium \| high` | Optional GPT-5 Responses API verbosity override; when unset, the selected model/preset default is used. |
 | `model_supports_reasoning_summaries` | `boolean` | Force Codex to send or not send reasoning metadata. |

@@ -16,11 +16,15 @@ October 14, 2026. The OpenAI API isn't affected. See
 Explore Codex capabilities on quick coding tasks.
 
 [Get Free](https://chatgpt.com/plans/free/)
+
+- GPT-6 Luna at Standard speed in the desktop app, subject to rollout
 ### Go ($8/month)
 
 Use Codex for lightweight coding tasks.
 
 [Get Go](https://chatgpt.com/plans/go)
+
+- GPT-6 Luna at Standard speed in the desktop app, subject to rollout
 ### Plus ($20/month)
 
 Power a few focused coding sessions each week.
@@ -30,9 +34,7 @@ Power a few focused coding sessions each week.
 - Codex on the web, in the CLI, in the IDE extension, and on iOS
 - Cloud-based integrations like automatic code review and Slack
   integration
-- The GPT-5.6 model family, including Sol, Terra, and Luna
-- GPT-5.6 Luna for higher usage limits on lighter-weight or high-volume
-  workloads
+- GPT-6 Sol and GPT-6 Luna
 - Flexibly extend usage with [ChatGPT credits](#credits-overview)
 - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
   Plus plan
@@ -132,15 +134,7 @@ Tasks that look similar can consume different amounts of your allowance. Model
 choice, context, reasoning, tool use, retrieval, and caching all affect usage,
 so prompt length alone isn't a reliable estimate.
 
-Choose the GPT-5.6 model that best fits your work:
-
-- **Sol** is built for the hardest work—complex reasoning, ambiguous problems,
-  advanced coding, and high-stakes decisions.
-- **Terra** is the everyday workhorse for production tasks, reporting, document
-  analysis, coding, and work that requires sound judgment.
-- **Luna** is optimized for fast, high-volume work such as routing,
-  classification, extraction, support, background automation, and focused coding
-  tasks.
+For model recommendations, see [Models](./models.md).
 
 The estimates below show local messages per five-hour period. Cloud chats on
 ChatGPT plans use GPT-5.6 Sol and may use more of your allowance than local
@@ -151,6 +145,8 @@ and reset times.
 | Model | Plus | Pro 5x | Pro 20x | Standard Business | API Key |
 | --- | :---: | :---: | :---: | :---: | :---: |
 | GPT-6 Astra | 5-45 | 25-225 | 100-900 | 5-45 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| GPT-6 Sol | 15-150 | 70-700 | 300-3,000 | 15-150 | [Usage-based](https://platform.openai.com/docs/pricing) |
+| GPT-6 Luna | 350-3,000 | 1,750-14,000 | 7,000-56,000 | 350-3,000 | [Usage-based](https://platform.openai.com/docs/pricing) |
 | GPT-5.6 Sol | 10-100 | 50-500 | 200-2,000 | 10-100 | [Usage-based](https://platform.openai.com/docs/pricing) |
 | GPT-5.6 Terra | 25-200 | 125-1,000 | 500-4,000 | 25-200 | [Usage-based](https://platform.openai.com/docs/pricing) |
 | GPT-5.6 Luna | 250-2,000 | 1,250-10,000 | 5,000-40,000 | 250-2,000 | [Usage-based](https://platform.openai.com/docs/pricing) |
@@ -205,9 +201,6 @@ Business, Edu, and Enterprise plans with [flexible
 pricing](https://help.openai.com/en/articles/11487671-flexible-pricing-for-the-enterprise-edu-and-business-plans)
 can purchase additional workspace credits to continue working.
 
-If you are approaching usage limits, you can also switch to a smaller model to
-make your usage limits last longer.
-
 All users may also run extra local chats using an API key, with usage charged at
 [standard API rates](https://platform.openai.com/docs/pricing).
 
@@ -248,11 +241,16 @@ or agreement.
 
 #### Token rates
 
-The token rates below are quoted in credits per million input tokens, cached
-input tokens, and output tokens. [Learn more about
+The rates below are for Standard speed, quoted in credits per million input
+tokens, cached input tokens, and output tokens. [Learn more about
 tokens](https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them).
 
-Fast mode applies a 2.5x multiplier to Astra's Standard rate.
+Codex credit billing has no separate cache-write charge. API-key usage follows
+[API pricing](https://developers.openai.com/api/docs/pricing).
+
+GPT-5.6 Sol, Terra, and Luna rates remain unchanged. Credit prices alone don't determine
+included subscription usage; check your
+[usage dashboard](#where-can-i-see-my-current-usage-limits) for current limits.
 
 A small subset of Enterprise customers should continue using the legacy rate
 card until we migrate you to the new token-based pricing. For more information,
@@ -280,6 +278,18 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         <td style="text-align:center">250 credits</td>
         <td style="text-align:center">25 credits</td>
         <td style="text-align:center">1,250 credits</td>
+      </tr>
+      <tr>
+        <td>GPT-6 Sol</td>
+        <td style="text-align:center">50 credits</td>
+        <td style="text-align:center">5 credits</td>
+        <td style="text-align:center">250 credits</td>
+      </tr>
+      <tr>
+        <td>GPT-6 Luna</td>
+        <td style="text-align:center">2.5 credits</td>
+        <td style="text-align:center">0.25 credits</td>
+        <td style="text-align:center">12.5 credits</td>
       </tr>
       <tr>
         <td>GPT-5.6 Sol</td>
@@ -356,8 +366,10 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
       </tr>
       <tr>
         <td colspan="4" style="text-align:center">
-          Fast mode consumes credits at a higher rate for supported models. See
-          [Speed](./agent-configuration/speed.md) for rates.
+          Fast mode uses 2.5x the Standard credit rate for GPT-6 Astra, Sol, and
+          Luna where available. See
+          [Speed](./agent-configuration/speed.md) for details and
+          other models.
         </td>
       </tr>
       <tr>
@@ -372,10 +384,6 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
   </table>
 
 _GPT-5.6 Sol’s promotional pricing is available at least through November 21, 2026._
-
-Speed configurations will increase credit consumption for all models that apply.
-Fast mode consumes credits at a higher rate for supported models. See
-[Speed](./agent-configuration/speed.md) for supported models and rates.
 
 [Learn more about credits in ChatGPT Plus and
 Pro.](https://help.openai.com/en/articles/12642688)
@@ -409,9 +417,6 @@ tips to maximize your limits:
 - **Limit the number of MCP servers you use.** Every
   [MCP](./extend/mcp.md) server adds more context to your messages and uses
   more of your limit. Disable MCP servers when you don’t need them.
-- **Switch to a smaller model for routine tasks.** Using GPT-5.6 Terra or
-  GPT-5.6 Luna can extend your local-message usage limits, depending on the
-  model you switch from.
 
 For guidance on choosing and scoping tasks, see [Use Work
 efficiently](./prompting.md#use-work-efficiently).
@@ -434,7 +439,7 @@ efficiently](./prompting.md#use-work-efficiently).
 
 | Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
 | --- | --- | --- | --- | --- | --- |
-| [GPT-5.6](./models.md) | Yes | Yes | Yes | Yes | Yes |
+| [GPT-6 Sol and Luna](./models.md) | Yes | Yes | Yes | Yes | Yes |
 | [Fast mode](./agent-configuration/speed.md) | Yes | Yes | Yes | Yes | Yes |
 | [Image generation and editing](./image-generation.md) | Yes | Yes | Yes | Yes | Yes |
 | [Voice dictation](./prompting.md#use-voice-dictation) | Yes | Yes | Yes | Yes | No |

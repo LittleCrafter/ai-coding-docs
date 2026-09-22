@@ -230,7 +230,7 @@ When you are using compact, please focus on test output and code changes
 
 ### Choose the right model
 
-Sonnet handles most coding tasks well and costs less than Opus. Reserve Opus for complex architectural decisions or multi-step reasoning. Use `/model` to switch models mid-session, or set a default in `/config`. For simple subagent tasks, specify `model: haiku` in your [subagent configuration](./sub-agents.md#choose-a-model).
+Sonnet handles most coding tasks well and costs less than Opus. Reserve Opus for complex architectural decisions or multi-step reasoning. Use `/model` to switch models mid-session, or set a default in `/config`. A switch to Opus also applies to the [subagents that inherit your session's model](./model-config.md#setting-your-model). For simple subagent tasks, specify `model: haiku` in your [subagent configuration](./sub-agents.md#choose-a-model).
 
 ### Reduce MCP server overhead
 
@@ -302,7 +302,7 @@ Your [CLAUDE.md](./memory.md) file is loaded into context at session start. If i
 
 Extended thinking is enabled by default because it significantly improves performance on complex planning and reasoning tasks. Thinking tokens are billed as output tokens, and the default budget can be tens of thousands of tokens per request depending on the model.
 
-For simpler tasks where deep reasoning isn't needed, you can reduce costs by lowering the [effort level](./model-config.md#adjust-effort-level) with `/effort` or in `/model`, or by disabling thinking in `/config`. You can't turn off thinking on Fable models, which always use extended thinking.
+For simpler tasks where deep reasoning isn't needed, you can reduce costs by lowering the [effort level](./model-config.md#adjust-effort-level) with `/effort` or in `/model`, or by disabling thinking in `/config`. You can't turn off thinking on Opus 5.5 or the Fable models, which always use extended thinking.
 
 On models with a [fixed thinking budget](./model-config.md#adaptive-reasoning-and-fixed-thinking-budgets), you can also lower the budget by setting the `MAX_THINKING_TOKENS` [environment variable](./env-vars.md), for example `MAX_THINKING_TOKENS=8000`. Adaptive-reasoning models ignore nonzero budgets, so use effort levels there instead.
 

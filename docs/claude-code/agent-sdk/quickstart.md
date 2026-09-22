@@ -213,7 +213,7 @@ The `async for` loop keeps running as Claude thinks, calls tools, observes resul
 The message handling inside the loop filters for human-readable output. Without filtering, you'd see raw message objects including system initialization and internal state, which is useful for debugging but noisy otherwise.
 
 > [!NOTE]
-> This example uses streaming to show progress in real-time. If you don't need live output (e.g., for background jobs or CI pipelines), you can collect all messages at once. See [Streaming vs. single-turn mode](./streaming-vs-single-mode.md) for details.
+> This example uses streaming to show progress in real-time. If you don't need live output (for example, for background jobs or CI pipelines), you can collect all messages at once. See [Streaming vs. single-turn mode](./streaming-vs-single-mode.md) for details.
 
 ### Run your agent
 

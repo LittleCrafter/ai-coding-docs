@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 159
+- **Pages mirrored:** 160
 - **Version:** 0.155.1
-- **Last updated:** 2026-09-19T07:36:17Z
+- **Last updated:** 2026-09-22T18:24:35Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -58,6 +58,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | License | [license.md](./license.md) | [source](<https://github.com/openai/codex/blob/main/docs/license.md>) |
 | Long-running work | [long-running-work.md](./long-running-work.md) | [source](<https://learn.chatgpt.com/docs/long-running-work>) |
 | Codex MCP server removal | [mcp-server.md](./mcp-server.md) | [source](<https://learn.chatgpt.com/docs/mcp-server>) |
+| Model selection | [model-selection.md](./model-selection.md) | [source](<https://learn.chatgpt.com/docs/model-selection>) |
 | Models | [models.md](./models.md) | [source](<https://learn.chatgpt.com/docs/models>) |
 | Non-interactive mode | [non-interactive-mode.md](./non-interactive-mode.md) | [source](<https://learn.chatgpt.com/docs/non-interactive-mode>) |
 | Notifications | [notifications.md](./notifications.md) | [source](<https://learn.chatgpt.com/docs/notifications>) |

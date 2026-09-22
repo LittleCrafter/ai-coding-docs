@@ -28,19 +28,19 @@ To install Claude Code, use one of the following methods:
 
 **macOS, Linux, WSL:**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
 **Windows PowerShell:**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 irm https://claude.ai/install.ps1 | iex
 ```
 
 **Windows CMD:**
 
-```batch theme={null}
+```batch theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
@@ -55,7 +55,7 @@ If the install command fails with `syntax error near unexpected token '<'`, a `4
 
 **Homebrew**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 brew install --cask claude-code
 ```
 
@@ -66,7 +66,7 @@ Homebrew offers two casks. `claude-code` tracks the stable release channel, whic
 
 **WinGet**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 winget install Anthropic.ClaudeCode
 ```
 
@@ -338,7 +338,7 @@ Customize with CLAUDE.md, skills, hooks, MCP, and more
 
 ## Getting help
 
-* **In Claude Code**: Type `/help` or ask "how do I..."
+* **In Claude Code**: Type `/help` or ask a "how do I" question
 * **Documentation**: You're here! Browse other guides
 * **Courses**: Take [Claude Code 101](https://academy.claude.com/courses/claude-code-101) and other free self-paced courses on [Claude Academy](https://academy.claude.com/)
 * **Community**: Join our [Discord](https://www.anthropic.com/discord) for tips and support

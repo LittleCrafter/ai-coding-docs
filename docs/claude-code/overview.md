@@ -22,19 +22,19 @@ To install Claude Code, use one of the following methods:
 
 **macOS, Linux, WSL:**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
 **Windows PowerShell:**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 irm https://claude.ai/install.ps1 | iex
 ```
 
 **Windows CMD:**
 
-```batch theme={null}
+```batch theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
@@ -49,7 +49,7 @@ If the install command fails with `syntax error near unexpected token '<'`, a `4
 
 **Homebrew**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 brew install --cask claude-code
 ```
 
@@ -60,7 +60,7 @@ Homebrew offers two casks. `claude-code` tracks the stable release channel, whic
 
 **WinGet**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 winget install Anthropic.ClaudeCode
 ```
 
@@ -210,7 +210,7 @@ Each [surface](./glossary.md#surface) connects to the same underlying Claude Cod
 
 Beyond the [Terminal](./quickstart.md), [VS Code](./vs-code.md), [JetBrains](./jetbrains.md), [Desktop](./desktop.md), and [Web](./claude-code-on-the-web.md) surfaces above, Claude Code integrates with CI/CD, chat, and browser workflows:
 
-| I want to...                                                                    | Best option                                                                                                     |
+| What I want to do                                                               | Best option                                                                                                     |
 | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | Continue a local session from my phone or another device                        | [Remote Control](./remote-control.md)                                                                            |
 | Push events from Telegram, Discord, iMessage, or my own webhooks into a session | [Channels](./channels.md)                                                                                        |

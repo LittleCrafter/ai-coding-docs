@@ -325,7 +325,7 @@ completion still works before you queue the command.
 | [`/logout`](#sign-out-with-logout)                                                          | Sign out of Codex.                                              | Clear local credentials when using a shared machine.                                                       |
 | [`/mcp`](#list-mcp-tools-with-mcp)                                                          | List configured Model Context Protocol (MCP) tools.             | Check which external tools Codex can call during the session; add `verbose` for server details.            |
 | [`/mention`](#highlight-files-with-mention)                                                 | Attach a file to the chat.                                      | Point Codex at specific files or folders you want it to inspect next.                                      |
-| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Switch between models such as `gpt-5.6-luna` and `gpt-5.6-terra` before running a task.                    |
+| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Switch between models such as `gpt-6-luna` and `gpt-6-sol` before running a task.                          |
 | [`/fast`](#toggle-fast-mode-with-fast)                                                      | Toggle a Fast service tier when the model catalog exposes one.  | Turn the current model's Fast tier on or off and persist the selection.                                    |
 | [`/plan`](#switch-to-plan-mode-with-plan)                                                   | Switch to plan mode and optionally send a prompt.               | Ask Codex to propose an execution plan before implementation work starts.                                  |
 | [`/goal`](#set-or-view-a-task-goal-with-goal)                                               | Set, edit, pause, resume, view, or clear a task goal.           | Give Codex a persistent target to track while a larger task runs.                                          |
@@ -363,7 +363,7 @@ The following workflows keep your session on track without restarting Codex.
 
 1. Start Codex and open the composer.
 2. Type `/model` and press Enter.
-3. Choose a model such as `gpt-5.6-luna` or `gpt-5.6-terra` from the popup.
+3. Choose a model such as `gpt-6-luna` or `gpt-6-sol` from the popup.
 
 Expected: Codex confirms the new model in the transcript. Run `/status` to verify the change.
 

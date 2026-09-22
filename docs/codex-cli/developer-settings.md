@@ -113,9 +113,9 @@ Use a dedicated flag when one exists. Common examples include `--model`,
 `--config` to override any supported configuration key for one run:
 
 ```shell
-codex --model gpt-5.6-sol
+codex --model gpt-6-sol
 codex --profile deep-review
-codex --config model_reasoning_effort='"high"'
+codex --config model_reasoning_effort='"medium"'
 ```
 
 Command-line flags and `--config` values have the highest precedence. For the

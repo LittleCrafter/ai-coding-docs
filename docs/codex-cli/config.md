@@ -48,7 +48,7 @@ Here are a few options people change most often:
 Choose the model Codex uses by default in the CLI and IDE.
 
 ```toml
-model = "gpt-5.6"
+model = "gpt-6-sol"
 ```
 
 ##### Approval prompts
@@ -103,7 +103,7 @@ web_search = "cached"  # default; serves results from the web search cache
 Tune how much reasoning effort the model applies when supported.
 
 ```toml
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 ```
 
 ##### Communication style
@@ -214,8 +214,8 @@ profile file; don't nest them under `[profiles.profile-name]`.
 
 ```toml
 # ~/.codex/deep-review.config.toml
-model = "gpt-5.6-sol"
-model_reasoning_effort = "xhigh"
+model = "gpt-6-sol"
+model_reasoning_effort = "medium"
 approval_policy = "on-request"
 model_catalog_json = "/Users/me/.codex/model-catalogs/deep-review.json"
 ```
@@ -247,10 +247,10 @@ Examples:
 
 ```shell
 # Dedicated flag
-codex --model gpt-5.6-terra
+codex --model gpt-6-sol
 
 # Generic key/value override (value is TOML, not JSON)
-codex --config model='"gpt-5.6-terra"'
+codex --config model='"gpt-6-sol"'
 codex --config sandbox_workspace_write.network_access=true
 codex --config 'shell_environment_policy.include_only=["PATH","HOME"]'
 ```
@@ -353,7 +353,7 @@ A model provider defines how Codex connects to a model (base URL, wire API, auth
 Define additional providers and point `model_provider` at them:
 
 ```toml
-model = "gpt-5.6-terra"
+model = "gpt-6-sol"
 model_provider = "proxy"
 
 [model_providers.proxy]
@@ -1038,7 +1038,7 @@ for examples and approval tradeoffs.
 
 | Key | Type | Description |
 | --- | --- | --- |
-| `model` | `string` | Model to use (e.g., `gpt-5.6-sol`). |
+| `model` | `string` | Model to use (e.g., `gpt-6-sol`). |
 | `review_model` | `string` | Optional model override used by `/review` (defaults to the current session model). |
 | `model_provider` | `string` | Provider id from `model_providers` (default: `openai`). |
 | `openai_base_url` | `string` | Base URL override for the built-in `openai` model provider. |
@@ -1220,8 +1220,8 @@ for examples and approval tradeoffs.
 | `model_providers.<id>.auth.cwd` | `string (path)` | Working directory for the token command. |
 | `model_providers.amazon-bedrock.aws.profile` | `string` | AWS profile name used by the built-in `amazon-bedrock` provider. |
 | `model_providers.amazon-bedrock.aws.region` | `string` | AWS region used by the built-in `amazon-bedrock` provider. |
-| `model_reasoning_effort` | `minimal \| low \| medium \| high \| xhigh` | Adjust reasoning effort for supported models (Responses API only; `xhigh` is model-dependent). |
-| `plan_mode_reasoning_effort` | `none \| minimal \| low \| medium \| high \| xhigh` | Plan-mode-specific reasoning override. When unset, Plan mode uses its built-in preset default. |
+| `model_reasoning_effort` | `string` | Reasoning effort advertised by the selected model, such as `low`, `medium`, `high`, `xhigh`, `max`, or `ultra`. Available levels depend on the model and client. |
+| `plan_mode_reasoning_effort` | `string` | Plan-mode-specific reasoning override using a level supported by the selected model. When unset, Plan mode uses its built-in preset default. |
 | `model_reasoning_summary` | `auto \| concise \| detailed \| none` | Select reasoning summary detail or disable summaries entirely. |
 | `model_verbosity` | `low \| medium \| high` | Optional GPT-5 Responses API verbosity override; when unset, the selected model/preset default is used. |
 | `model_supports_reasoning_summaries` | `boolean` | Force Codex to send or not send reasoning metadata. |

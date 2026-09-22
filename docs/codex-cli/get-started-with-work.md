@@ -136,7 +136,7 @@ Learn more about [plugins](./plugins.md).
 
 Choose [GPT-6 Astra](./models.md#gpt-6-astra) for demanding work that needs
 careful reasoning, visual judgment, or a polished final file. For simpler tasks,
-consider Sol, Terra, or Luna. Select from the models
+consider Sol or Luna. Select from the models
 available in your model selector and check [plan usage](./pricing.md)
 before starting a large task.
 
