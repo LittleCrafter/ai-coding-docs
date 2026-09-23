@@ -180,6 +180,15 @@ You can also attach images and files to your message:
 * To attach files, hold `Shift` while dragging them into the prompt box.
 * To remove an attachment from context, click the X on it.
 
+### Paste text
+
+Text you paste stays visible in the prompt box, rather than collapsing to a placeholder as it does [in the terminal](./terminal-config.md#paste-large-content). In sessions where Claude Code [marks pasted text](./terminal-config.md#how-claude-treats-pasted-text), Claude still sees a large paste as text you pasted rather than typed.
+
+Claude Code also removes [invisible Unicode characters](./interactive-mode.md#invisible-characters-in-prompts) from text you paste into the prompt box and from anything else you send:
+
+* If a notice such as `Removed 3 invisible characters from the pasted text` appears when you paste, the text went in without those characters.
+* If a notice about removed characters appears when you send, nothing was sent. The cleaned text is back in the prompt box. Send again to send the text as shown.
+
 ### Resume past conversations
 
 Click the **Session history** button at the top of the Claude Code panel to access your conversation history. You can search by keyword or browse by time.

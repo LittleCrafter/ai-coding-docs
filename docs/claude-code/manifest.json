@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.280",
-  "last_updated": "2026-09-23T01:54:20Z",
+  "last_updated": "2026-09-23T08:05:50Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1680,8 +1680,8 @@
       "source_url": "https://code.claude.com/docs/en/vs-code",
       "source_md_url": "https://code.claude.com/docs/en/vs-code.md",
       "source_id": "vs-code",
-      "hash": "fd8d562300b0a990e561128bfa170289393e5b5dbe5ac669790e149a1fafd7aa",
-      "last_updated": "2026-09-23T01:54:20Z"
+      "hash": "90ec7171d54b913e89d892f2370d0dd6772d3d5f7dd9e7be9b1958d420b09135",
+      "last_updated": "2026-09-23T08:05:50Z"
     },
     "web-quickstart": {
       "slug": "web-quickstart",
@@ -1975,8 +1975,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-23T01:54:20Z",
-    "fetch_duration_seconds": 70.607,
+    "last_fetch_completed": "2026-09-23T08:05:50Z",
+    "fetch_duration_seconds": 71.151,
     "total_pages_discovered": 197,
     "pages_fetched_successfully": 197,
     "pages_failed": 0,

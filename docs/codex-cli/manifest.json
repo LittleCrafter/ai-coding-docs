@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "0.156.0",
-  "last_updated": "2026-09-22T23:20:45Z",
+  "version": "0.156.1",
+  "last_updated": "2026-09-23T08:06:46Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -90,8 +90,8 @@
       "source_url": "https://learn.chatgpt.com/docs/amazon-bedrock",
       "source_md_url": "https://learn.chatgpt.com/docs/amazon-bedrock.md",
       "source_id": "llms:amazon-bedrock",
-      "hash": "3530f5fa5cb445ebfb1ca2fe6fa963f4890af7ceeb21fbad741619ac92702140",
-      "last_updated": "2026-09-22T23:20:45Z"
+      "hash": "450cd6f7b8945af32dcfb1d89051651c3aea4372ae1f744265e8aca66a48d68c",
+      "last_updated": "2026-09-23T08:06:46Z"
     },
     "app": {
       "slug": "app",
@@ -240,8 +240,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "40655113ef9c0a9807496be5aed0a26d963112efb0c369b61022e862033da6c3",
-      "last_updated": "2026-09-22T23:20:45Z"
+      "hash": "bccf44ff92aa90381fc9b7e5c58a26a3382f94995f20b61222eea1743f162b5f",
+      "last_updated": "2026-09-23T08:06:46Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -1605,8 +1605,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-22T23:20:45Z",
-    "fetch_duration_seconds": 55.815,
+    "last_fetch_completed": "2026-09-23T08:06:46Z",
+    "fetch_duration_seconds": 55.747,
     "total_pages_discovered": 160,
     "pages_fetched_successfully": 160,
     "pages_failed": 0,
