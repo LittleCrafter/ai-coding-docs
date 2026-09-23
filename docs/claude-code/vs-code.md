@@ -100,15 +100,23 @@ The prompt box supports several features:
   * **Auto**: a classifier reviews most actions instead of asking you. See [auto mode](./permission-modes.md#eliminate-prompts-with-auto-mode) for what it reviews and blocks.
   * **Manual**: Claude asks permission before file edits and most shell commands.
   * **Plan**: Claude describes what it will do and waits for approval before making changes. VS Code automatically opens the plan as a full Markdown document where you can add inline comments to give feedback before Claude begins.
+
+    You can also type `/plan` in the prompt box. Requires Claude Code v2.1.280 or later.
+
+    * `/plan`: switches to plan mode. If you're already in plan mode, shows the current plan instead.
+    * `/plan` with a task, such as `/plan fix the auth bug`: switches to plan mode and starts planning that task.
+    * `/plan open`: when you're already in plan mode, opens the plan file in the editor.
   * **Edit automatically**: Claude makes edits without asking.
 * **Model**: select **Switch model…** from the command menu to change the model mid-session. You can also click the model name at the bottom of the prompt box to open the same picker.
 
   When the current model supports [effort levels](./model-config.md#adjust-effort-level), the picker also shows an **Effort** row and the model name button shows the selected level. When you pick a level other than `max`, Claude Code saves it for the current model as your default, under [`modelSettings`](./settings-reference.md#modelsettings) in your user settings; `max` applies to the current session only. The model name button and the **Effort** row require Claude Code v2.1.257 or later.
 * **Command menu**: click `/` or type `/` to open the command menu. Options include attaching files, switching models, and toggling extended thinking.
 
-  The Customize section provides access to MCP servers, commands, output styles, hooks, memory, instructions, permissions, and plugins. Items with a terminal icon open in the integrated terminal.
+  The Customize section includes entries such as MCP servers, commands, output styles, hooks, memory, instructions, permissions, and plugins. Items with a terminal icon open in the integrated terminal.
 
   * To browse commands such as `/usage` or [`/remote-control`](./remote-control.md), select **Slash commands** in the Customize section. A dialog lists them with a filter box. Pick one to run it. Typing `/` in the prompt box still suggests commands inline. Requires Claude Code v2.1.257 or later.
+
+    Typing `/skills` also opens this dialog. Each [skill](./skills.md) row shows its [visibility](./skills.md#override-skill-visibility-from-settings), such as **On** or **Name only**. Click the visibility to change it, except on rows marked **locked**, such as plugin skills. The `/skills` shortcut and the visibility controls require Claude Code v2.1.280 or later.
   * Select **Output styles** in the Customize section to pick an [output style](./output-styles.md), including your custom styles. Requires Claude Code v2.1.257 or later.
 
     To create a custom style instead, select **Build a custom style** from the **Output styles** menu. Claude Code writes the [style file](./output-styles.md#create-a-custom-output-style) for you at the project or user level. Requires Claude Code v2.1.261 or later.
@@ -118,6 +126,10 @@ The prompt box supports several features:
 
     Click a saved memory to read it in the dialog, where you can edit the text, delete the memory, or open its file in the editor. Viewing, editing, and deleting a memory in the dialog require Claude Code v2.1.275 or later.
   * Select **Instructions** in the Customize section to edit the [CLAUDE.md files](./memory.md#claude-md-files) Claude reads. Pick a file to open it in the editor. If the file doesn't exist yet, Claude Code creates it first. Requires Claude Code v2.1.274 or later.
+  * Select **Status** in the Customize section, or type `/status`, to check the session's Claude Code version, account, model, and MCP server details. Requires Claude Code v2.1.280 or later.
+  * Select **Sandbox** in the Customize section, or type `/sandbox`, to see whether Claude's Bash commands run [sandboxed](./sandboxing.md). You can switch the sandbox mode and add [excluded commands](./settings-reference.md#sandbox-excludedcommands) there. Requires Claude Code v2.1.280 or later.
+  * Select **Claude in Chrome** in the Customize section, or type `/chrome`, to check and manage the [Claude in Chrome](./chrome.md) connection. Both require signing in with a claude.ai account. Requires Claude Code v2.1.280 or later.
+  * Select **Export conversation** in the Context section, or type `/export`, to copy the conversation as plain text or save it to a file. Add a file name, such as `/export notes.txt`, to skip the dialog and choose where to save the file. Requires Claude Code v2.1.280 or later.
   * The Settings section includes **Enable Remote Control for all sessions**, which sets [`remoteControlAtStartup`](./settings-reference.md#remotecontrolatstartup) to control whether [new interactive sessions connect to Remote Control automatically](./remote-control.md#enable-remote-control-for-all-sessions). Requires Claude Code v2.1.203 or later.
 
     When you turn the toggle on or off in a VS Code window, the change applies to the sessions already open in that VS Code window, not only to sessions you start afterwards. If you turn it off, the open sessions disconnect. With Claude Code v2.1.261 or later, the change also reaches sessions open in your other VS Code windows.
