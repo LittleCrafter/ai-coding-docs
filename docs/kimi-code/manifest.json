@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.0.2",
-  "last_updated": "2026-09-22T13:45:19Z",
+  "version": "2.1.0",
+  "last_updated": "2026-09-23T13:56:36Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -10,8 +10,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/config-files.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/config-files.md",
       "source_id": "docs/en/configuration/config-files.md",
-      "hash": "e967182f20d7ca322b0fd7a367266f34b0b5d064ce896330443b0c0976b56d6d",
-      "last_updated": "2026-09-22T13:45:19Z"
+      "hash": "c9c9149aaba9b203bf30e5c7d167ff2c263fa0cbb109002c742d2dc215bf0643",
+      "last_updated": "2026-09-23T13:56:36Z"
     },
     "configuration/data-locations": {
       "slug": "configuration/data-locations",
@@ -30,8 +30,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/env-vars.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/env-vars.md",
       "source_id": "docs/en/configuration/env-vars.md",
-      "hash": "2c4c575863fd214ae7efa27aebaacfed2d1aa233eb9418df67e8b357e87a6ae2",
-      "last_updated": "2026-09-19T12:46:19Z"
+      "hash": "a5c52fd159ada600035445a564b9b01b2e5917812b99517aebe555703645bf70",
+      "last_updated": "2026-09-23T13:56:36Z"
     },
     "configuration/overrides": {
       "slug": "configuration/overrides",
@@ -170,8 +170,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/remote-control.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/remote-control.md",
       "source_id": "docs/en/guides/remote-control.md",
-      "hash": "25c63b453b238f7beeb213dce390a7b786281abf7e94783df22b6922a87cbdc2",
-      "last_updated": "2026-09-11T00:08:41Z"
+      "hash": "bbcc759e0e809d52714011f4ea61bd8df06a3a6d38bdb3be1de45ac5942ba4c6",
+      "last_updated": "2026-09-23T13:56:36Z"
     },
     "guides/sessions": {
       "slug": "guides/sessions",
@@ -280,13 +280,13 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/release-notes/changelog.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/release-notes/changelog.md",
       "source_id": "docs/en/release-notes/changelog.md",
-      "hash": "7ecb9707198e1541f245f5452add64658522c43d0263147ae9b064c867a10cc6",
-      "last_updated": "2026-09-19T17:33:11Z"
+      "hash": "43ae82bfe0e0e748296302365d2972021cf8856b864c81c57aa11b01233b5e60",
+      "last_updated": "2026-09-23T13:56:36Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-22T13:45:19Z",
-    "fetch_duration_seconds": 9.565,
+    "last_fetch_completed": "2026-09-23T13:56:36Z",
+    "fetch_duration_seconds": 9.546,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,
