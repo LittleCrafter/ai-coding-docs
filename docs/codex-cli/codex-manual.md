@@ -9616,6 +9616,8 @@ automatic approval review can still be part of a task that monitoring later paus
 
 #### Network access
 
+For Codex cloud, see [agent internet access](./cloud/internet-access.md) to enable full internet access or a domain allow list.
+
 For the ChatGPT desktop app, Codex CLI, or IDE extension, the default `workspace-write` sandbox mode keeps network access turned off unless you enable it in your configuration:
 
 ```toml
@@ -9989,7 +9991,7 @@ To try it:
 
 1. Install Visual Studio Code and the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 2. Copy the Codex example `.devcontainer` setup into your repository, or start from the Codex repository directly.
-3. In VS Code, run **Dev Containers: Open Folder in Container...** and select `.devcontainer/devcontainer.secure.json`.
+3. In VS Code, run `Dev Containers: Open Folder in Container...` and select `.devcontainer/devcontainer.secure.json`.
 4. After the container starts, open a terminal and run `codex`.
 
 You can also start the container from the CLI:
@@ -16339,13 +16341,15 @@ Removing a domain from the allowlist means ChatGPT asks again before using it.
 Removing a domain from the blocklist means ChatGPT can ask again instead of
 treating the domain as blocked.
 
-#### Allow for all sites If you select **Allow for all sites**, ChatGPT no longer asks for confirmation
+#### Allow for all sites
 
+If you select **Allow for all sites**, ChatGPT no longer asks for confirmation
 before using websites. Only choose this option if you trust ChatGPT to use any
 website open in the browser.
 
-#### Browser history Browser history can include sensitive telemetry, internal URLs, search terms,
+#### Browser history
 
+Browser history can include sensitive telemetry, internal URLs, search terms,
 and activity from browser sessions on signed-in devices. If you allow ChatGPT to
 access browser history, relevant history entries can become part of the context
 ChatGPT uses for the task. Malicious or misleading page content can increase the
@@ -40406,8 +40410,7 @@ Supported models and inference profile IDs:
 
 Codex's built-in Runtime model picker lists the United States Geo and Global
 variants. AWS also lists India geographic inference profile IDs `in.openai.gpt-5.6-terra` and
-`in.openai.gpt-5.6-luna` for `ap-south-1` (Mumbai) and `ap-south-2` (Hyderabad).
-See the AWS Terra and Luna model pages for details.
+`in.openai.gpt-5.6-luna` for `ap-south-1` (Mumbai) and `ap-south-2` (Hyderabad). Refer to Bedrock model cards for GPT-5.6 Terra and GPT-5.6 Luna for details.
 
 Model and CRIS availability vary by source AWS Region. See AWS Supported Regions and models for inference profiles, which links to each model's exact inference profile IDs and regional
 availability, and AWS Regional availability by models before selecting a provider and a model.
@@ -40793,7 +40796,7 @@ codex
 
 #### Work on code inside WSL
 
-- Working in Windows-mounted paths like /mnt/c/... can be slower than working in Windows-native paths. Keep your repositories under your Linux home directory (like ~/code/my-app) for faster I/O and fewer symlink and permission issues:
+- Working in Windows-mounted paths like `/mnt/c/...` can be slower than working in Windows-native paths. Keep your repositories under your Linux home directory (like ~/code/my-app) for faster I/O and fewer symlink and permission issues:
   ```bash
   mkdir -p ~/code && cd ~/code
   git clone https://github.com/your/repo.git
@@ -40805,7 +40808,7 @@ codex
 
 Large repositories feel slow in WSL
 
-- Make sure you're not working under /mnt/c. Move the repository to WSL (for example, ~/code/...).
+- Make sure you're not working under /mnt/c. Move the repository to WSL (for example, `~/code/...`).
 - Increase memory and CPU for WSL if needed; update WSL to the latest version:
   ```powershell
   wsl --update
