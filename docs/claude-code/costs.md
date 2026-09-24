@@ -336,6 +336,8 @@ Claude Code uses tokens for some background functionality even when idle:
 
 These background processes consume a small amount of tokens (typically under \$0.04 per session) even without active interaction.
 
+When prompt suggestions are on, Claude Code also sends a short request to the model your session is using after Claude responds, to [suggest your next prompt](./interactive-mode.md#prompt-suggestions). That request reuses the conversation's prompt cache, so it is mostly cache reads plus a few output tokens. Claude Code [skips it while your account is close to or at its usage limit](./interactive-mode.md#when-claude-code-skips-suggestions). To stop these requests, [turn prompt suggestions off](./interactive-mode.md#turn-prompt-suggestions-off).
+
 ## Why usage climbs in a long session
 
 A session that has been open for hours can use far more of your plan limits than your activity suggests, usually for one of these reasons:
