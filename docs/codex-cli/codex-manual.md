@@ -5871,7 +5871,7 @@ Source: [Codex Security plugin changelog](./security/plugin/changelog.md)
 
 Use this changelog to see what changed in the Codex Security plugin.
 
-**Latest plugin version:** `0.1.24`.
+**Newest release notes:** `0.1.30`.
 
 Check the plugin version in your current Codex environment before you use a
 feature from a newer release.
@@ -5879,6 +5879,34 @@ feature from a newer release.
 Changelog entries follow the plugin version, not the package version. CLI and
 SDK users can run `npx @openai/codex-security info --json` to check the
 package and bundled plugin versions together.
+
+#### 0.1.30 (September 24, 2026)
+
+- This release updates the plugin version. It has the same behavior as `0.1.25`.
+
+#### 0.1.25 (September 23, 2026)
+
+#### Keep scan artifacts with saved results
+
+- Store retained scan evidence and supplemental documents with the scan, while
+  keeping disposable build and test output in temporary storage.
+- Save artifacts through the plugin during a running scan so they remain
+  available with its final results and recovery checkpoints.
+
+#### Follow scan progress and results
+
+- See standard scan progress advance through threat modeling, discovery,
+  validation, attack-path analysis, and reporting as each phase begins.
+
+#### Review more files with fewer interruptions
+
+- Include changed GitHub Actions workflow files in change scans and recognize
+  `.cjs`, `.cts`, `.mts`, and `.tf` files during repository review.
+- Continue a scan without an access warning when the Daybreak check is
+  unavailable or inconclusive. A fresh result that reports access isn't granted
+  still shows the enrollment warning.
+- Use `OPENAI_API_KEY` for deep scan workers without a Codex account when the
+  selected provider requires OpenAI authentication.
 
 #### 0.1.24 (September 9, 2026)
 
@@ -26379,7 +26407,7 @@ It includes:
   Cursor.
 - **API key setup:** create, save, and connect a project API key from Codex, or
   get guided local `OPENAI_API_KEY` setup in Claude Code and Cursor.
-- **Agents SDK:** build and deploy OpenAI Agents SDK apps from an idea, a repo,
+- **Agents SDK:** work with applications that need the Agents SDK, from an idea, a repo,
   or a prior Codex task.
 - **Troubleshooting:** identify common OpenAI API failures and route
   you to the right next step.
@@ -26532,14 +26560,14 @@ Frontend:
 - If the Frontend skill is not installed, install the Frontend skill and use it.
 ```
 
-#### Build an agent with the Agents SDK
+#### Build an agent with the Agents API
 
 Create a launch-planning agent with a frontend, useful tools, and observability hooks.
 
 **Prompt**
 
 ```text
-Build a working launch-planning agent app called "Launch Desk" using the current OpenAI Agents SDK.
+Build a working launch-planning agent app called "Launch Desk" using the current OpenAI Agents API.
 
 The app should help an engineering team turn a rough launch idea into an actionable release plan. Users should enter a product brief, audience, launch date, constraints, and available assets in a frontend UI. The agent should respond with a prioritized plan, risk register, owner checklist, launch copy suggestions, and follow-up questions when key details are missing.
 
@@ -26549,11 +26577,11 @@ Requirements:
 - Build the agent with clear instructions and a project structure that separates frontend UI, server/API routes, agent setup, tools, and tests.
 - Include useful tool patterns, such as extracting tasks from the brief, checking launch readiness against a rubric, generating owner checklists, and drafting channel-specific launch copy.
 - Include streaming or progressive response updates, and verify them end-to-end by posting to the local API route and reading the stream until at least one tool progress event and one model text delta are received.
-- Include tracing or observability hooks if idiomatic.
+- Include session tracing and usage reporting through documented Agents API surfaces.
 - Include OPENAI_API_KEY environment variable setup and local setup instructions.
-- Make it easy for a developer to understand, run, test, and extend with new tools or handoffs.
+- Make it easy for a developer to understand, run, test, and extend with new tools or multi-agent delegation.
 - Add a README and a validation checklist for the agent behavior, frontend flow, and tool outputs.
-- Use current OpenAI API and Agents SDK patterns. Do not use deprecated Assistants API or legacy Chat Completions scaffolding unless you explicitly explain why a compatibility shim is needed.
+- Use the managed Codex harness through the Agents API and current OpenAI SDK patterns. Do not use deprecated Assistants API or legacy Chat Completions scaffolding unless you explicitly explain why a compatibility shim is needed.
 
 Local run and verification requirement:
 After implementing, start the frontend and backend dev servers in a way that can actually reach the OpenAI API from the server process. If the environment uses sandboxed command execution, do not assume localhost success means OpenAI API access works. Verify the agent endpoint with a real streamed POST request to the local API and confirm that it emits at least one tool event and one model text delta. If the server cannot reach the OpenAI API, diagnose and fix the server run mode or clearly report the exact blocker.
@@ -26622,7 +26650,7 @@ Please:
 
 - Find all OpenAI SDK calls, model names, prompt construction, streaming paths, structured outputs, tool usage, and tests.
 - Identify outdated model usage or legacy API patterns.
-- Recommend the safest current API path for this app, such as Responses API for general multimodal/tool-using workflows, Agents SDK for agentic orchestration, or Realtime API for low-latency voice experiences.
+- Recommend the safest current API path for this app, such as Responses API for general multimodal/tool-using workflows, Agents API for new agent applications, or Realtime API for low-latency voice experiences.
 - Produce a step-by-step implementation plan that preserves behavior and public interfaces where possible.
 - Flag risky changes, compatibility concerns, and areas that need manual review.
 - Recommend the tests, fixtures, and docs that should be added or updated.
@@ -26673,23 +26701,23 @@ Frontend:
 - If the Frontend skill is not installed, install the Frontend skill and use it.
 ```
 
-#### Migrate from Responses API to Agents SDK
+#### Evaluate moving to the Agents API
 
-Create a no-code-change migration plan for whether and how to move to the Agents SDK.
+Create a no-code-change migration plan for whether and how to move to the Agents API.
 
 **Prompt**
 
 ```text
-Inspect this existing app built with the Responses API and create a migration plan for whether it should move to the OpenAI Agents SDK. Do not change code.
+Inspect this existing app built with the Responses API and create a migration plan for whether it should move to the OpenAI Agents API. Do not change code.
 
 Please:
 
 - Map the current Responses API workflows, prompts, tools, streaming behavior, and state management.
-- Decide whether the app benefits from a more agentic architecture with tools, handoffs, tracing, or streaming orchestration.
-- If the migration is justified, produce a scoped migration plan toward the Agents SDK while preserving key behavior and user experience.
+- Decide whether the app benefits from a more agentic architecture with tools, delegation, session tracing, or streaming orchestration.
+- If the migration is justified, produce a scoped migration plan toward the Agents API while preserving key behavior and user experience.
 - If only part of the app should migrate, define the boundary and explain what should remain on the Responses API.
 - Recommend tests and setup docs to add or update.
-- Explain the proposed architecture changes, especially where tools, handoffs, tracing, or streaming add value.
+- Explain the proposed architecture changes, especially where tools, delegation, session tracing, or streaming add value.
 - Finish with a migration plan, rollback notes, and a validation checklist.
 
 Documentation:
@@ -28965,15 +28993,16 @@ server.registerTool(
 
 Set these keys on the resource template that serves your component (`registerResource`). They help ChatGPT describe and frame the rendered iframe without leaking metadata to other clients.
 
-| Key                                   |     Placement     | Type            | Purpose                                                                                                                                                                                           |
-| ------------------------------------- | :---------------: | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `_meta.ui.prefersBorder`              | Resource contents | boolean         | Hint that the component should render inside a bordered card when supported.                                                                                                                      |
-| `_meta.ui.csp`                        | Resource contents | object          | Preferred metadata surface for standard widget CSP fields: `connectDomains`, `resourceDomains`, and optional `frameDomains`.                                                                      |
-| `_meta.ui.domain`                     | Resource contents | string (origin) | Dedicated origin for hosted components (required when submitting a plugin with UI; must be unique per plugin). Defaults to `https://web-sandbox.oaiusercontent.com`.                              |
-| `_meta["openai/widgetDescription"]`   | Resource contents | string          | Human-readable summary surfaced to the model when the component loads, reducing redundant assistant narration.                                                                                    |
-| `_meta["openai/widgetPrefersBorder"]` | Resource contents | boolean         | OpenAI-specific compatibility alias for `_meta.ui.prefersBorder` in ChatGPT.                                                                                                                      |
-| `_meta["openai/widgetCSP"]`           | Resource contents | object          | Legacy ChatGPT compatibility key for widget CSP metadata. Standard CSP fields are superseded by `_meta.ui.csp`, but `redirect_domains` is still required for trusted `openExternal` destinations. |
-| `_meta["openai/widgetDomain"]`        | Resource contents | string (origin) | OpenAI-specific compatibility alias for `_meta.ui.domain` in ChatGPT.                                                                                                                             |
+| Key                                        |     Placement     | Type            | Purpose                                                                                                                                                                                           |
+| ------------------------------------------ | :---------------: | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `_meta.ui.prefersBorder`                   | Resource contents | boolean         | Hint that the component should render inside a bordered card when supported.                                                                                                                      |
+| `_meta.ui.csp`                             | Resource contents | object          | Preferred metadata surface for standard widget CSP fields: `connectDomains`, `resourceDomains`, and optional `frameDomains`.                                                                      |
+| `_meta.ui.domain`                          | Resource contents | string (origin) | Dedicated origin for hosted components (required when submitting a plugin with UI; must be unique per plugin). Defaults to `https://web-sandbox.oaiusercontent.com`.                              |
+| `_meta["openai/ui"].availableDisplayModes` | Resource contents | string[]        | Supported display modes: `inline`, `fullscreen`, and `pip`. Lets ChatGPT choose a display mode before loading the component.                                                                      |
+| `_meta["openai/widgetDescription"]`        | Resource contents | string          | Human-readable summary surfaced to the model when the component loads, reducing redundant assistant narration.                                                                                    |
+| `_meta["openai/widgetPrefersBorder"]`      | Resource contents | boolean         | OpenAI-specific compatibility alias for `_meta.ui.prefersBorder` in ChatGPT.                                                                                                                      |
+| `_meta["openai/widgetCSP"]`                | Resource contents | object          | Legacy ChatGPT compatibility key for widget CSP metadata. Standard CSP fields are superseded by `_meta.ui.csp`, but `redirect_domains` is still required for trusted `openExternal` destinations. |
+| `_meta["openai/widgetDomain"]`             | Resource contents | string (origin) | OpenAI-specific compatibility alias for `_meta.ui.domain` in ChatGPT.                                                                                                                             |
 
 ChatGPT supports the legacy `_meta["openai/widgetCSP"]` compatibility key with the following snake_case field names:
 
@@ -28989,6 +29018,33 @@ The standard `_meta.ui.csp` object is generally preferred for new UI and support
 - `frameDomains?`: `string[]`. Optional list of origins allowed for iframe embeds. By default, widgets can't render subframes. Plugins can embed their own domain, including existing editors and admin interfaces, under the [iframe policy](https://developers.openai.com/plugins/app-guidelines#iframes-and-embedded-pages). A justification is required at submission, and iframe use can require additional review or lead to slower approval.
 
 However, `_meta.ui.csp` does not support `redirect_domains` for `window.openai.openExternal(...)` links. To allowlist redirect targets, you must still set `_meta["openai/widgetCSP"].redirect_domains`.
+
+#### Declare display modes before the UI loads
+
+Set `_meta["openai/ui"].availableDisplayModes` on the resource contents returned
+by your server. For a fullscreen-only component, this lets ChatGPT open it in
+fullscreen immediately, without showing an inline loading state first.
+
+Return this object in the resource's `contents` array, with `html` set to your
+component's HTML:
+
+```ts
+const resource = {
+  uri: "ui://widget/viewer.html",
+  mimeType: "text/html;profile=mcp-app",
+  text: html,
+  _meta: {
+    "openai/ui": {
+      availableDisplayModes: ["fullscreen"],
+    },
+  },
+};
+```
+
+List every mode your component supports, such as `["inline", "fullscreen"]`.
+Keep declaring `availableDisplayModes` during MCP Apps initialization too;
+the server declaration supplements that flow, which also supports dynamic
+display modes.
 
 #### Tool results
 

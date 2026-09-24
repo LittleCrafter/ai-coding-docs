@@ -94,9 +94,10 @@ The same file with a comment above each key. Read it here; copy from the other t
   A team's shared settings
 </h2>
 
-One team's shared settings, committed to the repository so everyone who clones it gets the same permissions, hooks, telemetry, and plugin marketplace. Save a file like this at `.claude/settings.json` at the top of the repository. What to know before you commit one:
+One team's shared settings, committed to the repository so everyone who clones it gets the same permissions, hooks, and plugin marketplace. Save a file like this at `.claude/settings.json` at the top of the repository. What to know before you commit one:
 
 * **Cloud sessions read it too.** A [cloud session](./settings.md#settings-in-cloud-sessions) starts from a clone of the repository, so the committed file applies there as well.
+* **Telemetry goes in managed or personal settings.** Claude Code ignores the [OpenTelemetry exporter variables](./settings-reference.md#variables-claude-code-ignores-in-env) in a repository's settings files, apart from some values that turn telemetry off. Set them in [managed settings](./monitoring-usage.md#administrator-configuration) for your organization, or in each person's `~/.claude/settings.json`.
 * **Allow rules wait for trust.** Allow rules and `extraKnownMarketplaces` entries take effect after each person [trusts this folder itself](./permissions.md#project-allow-rules-and-workspace-trust), not only a parent folder; deny and ask rules apply in every session, trusted or not.
 * **The hook is a script in the repo.** This file's hook runs `.claude/hooks/block-rm.sh`; [How a hook resolves](./hooks.md#how-a-hook-resolves) walks through writing it.
 * **Rules match the command and path as written.** `Bash(git push *)` doesn't match [`git -C . push`](./permissions.md#bash-rule-limits). `Read(./.env)` on its own stops the file tools and commands that name the file, such as `cat .env`, but not [`grep -r` run over the directory](./permissions.md#read-and-edit); the `sandbox` block in this file closes that gap, because the sandbox [adds your `Read` deny paths](./settings-reference.md#sandbox-filesystem-denyread) to what every sandboxed command can't read.
@@ -119,12 +120,6 @@ Save this as `.claude/settings.json` at the top of the repository and commit it.
       "Read(./.env.*)",
       "Read(./secrets/**)"
     ]
-  },
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "OTEL_METRICS_EXPORTER": "otlp",
-    "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
-    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://collector.example.com:4317"
   },
   "hooks": {
     "PreToolUse": [
@@ -189,13 +184,6 @@ The same file with a comment above each key. Read it here; copy from the other t
       "Read(./.env.*)",
       "Read(./secrets/**)"
     ]
-  },
-  // Send OpenTelemetry metrics to the team's collector over gRPC; replace the endpoint with your collector's URL
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "OTEL_METRICS_EXPORTER": "otlp",
-    "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
-    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://collector.example.com:4317"
   },
   // Before every Bash command, run a script in the repo that can block it
   "hooks": {

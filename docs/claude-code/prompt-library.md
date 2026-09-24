@@ -282,7 +282,7 @@ read coverage/coverage-summary.json and add tests for the lowest-covered files u
 migrate everything from the old logging API to the structured logger: identify every place that needs to change, then make the changes
 ```
 
-* **Why this works**: Describe the old pattern and the new one. Asking Claude to identify every place first means the call sites are listed in the response, so you can check none were missed. For a migration across many files, run [/batch](./commands.md). Claude splits the work into units for you to approve, then background subagents make the changes and open one pull request per unit.
+* **Why this works**: Describe the old pattern and the new one. Asking Claude to identify every place first means the call sites are listed in the response, so you can check none were missed. For a migration across many files, run [/batch](./commands.md). Claude splits the work into units for you to approve, then background subagents make the changes.
 * **From**: [Common workflows](./common-workflows.md)
 
 #### Port code to another language
