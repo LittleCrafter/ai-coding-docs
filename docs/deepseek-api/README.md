@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 73
-- **Last updated:** 2026-09-23T08:07:13Z
+- **Last updated:** 2026-09-24T07:53:58Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -14,7 +14,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | FAQ | [faq.md](./faq.md) | [source](<https://api-docs.deepseek.com/faq>) |
 | Your First API Call | [index.md](./index.md) | [source](<https://api-docs.deepseek.com>) |
 | 提示库 | [prompt-library.md](./prompt-library.md) | [source](<https://api-docs.deepseek.com/prompt-library>) |
-| Change Log | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
+| Your First API Call | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
 
 ## api
 
@@ -47,7 +47,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 | Page | Local | Source |
 | --- | --- | --- |
-| Using the Anthropic API | [guides/anthropic_api.md](./guides/anthropic_api.md) | [source](<https://api-docs.deepseek.com/guides/anthropic_api>) |
+| Your First API Call | [guides/anthropic_api.md](./guides/anthropic_api.md) | [source](<https://api-docs.deepseek.com/guides/anthropic_api>) |
 | Chat Prefix Completion (Beta) | [guides/chat_prefix_completion.md](./guides/chat_prefix_completion.md) | [source](<https://api-docs.deepseek.com/guides/chat_prefix_completion>) |
 | Integrate with AI Tools | [guides/coding_agents.md](./guides/coding_agents.md) | [source](<https://api-docs.deepseek.com/guides/coding_agents>) |
 | Files API | [guides/files_api.md](./guides/files_api.md) | [source](<https://api-docs.deepseek.com/guides/files_api>) |
@@ -81,7 +81,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DeepSeek V4 Preview Release | [news/news260424.md](./news/news260424.md) | [source](<https://api-docs.deepseek.com/news/news260424>) |
 | DeepSeek-V4-Pro GA Release | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
 | DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live | [news/news260821.md](./news/news260821.md) | [source](<https://api-docs.deepseek.com/news/news260821>) |
-| DeepSeek-V4.1-Flash: Smarter, Faster, More Efficient | [news/news260910.md](./news/news260910.md) | [source](<https://api-docs.deepseek.com/news/news260910>) |
+| Your First API Call | [news/news260910.md](./news/news260910.md) | [source](<https://api-docs.deepseek.com/news/news260910>) |
 
 ## quick_start
 

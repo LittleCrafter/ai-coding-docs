@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.0",
-  "last_updated": "2026-09-23T13:56:36Z",
+  "version": "2.1.1",
+  "last_updated": "2026-09-24T07:54:09Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -10,8 +10,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/config-files.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/config-files.md",
       "source_id": "docs/en/configuration/config-files.md",
-      "hash": "c9c9149aaba9b203bf30e5c7d167ff2c263fa0cbb109002c742d2dc215bf0643",
-      "last_updated": "2026-09-23T13:56:36Z"
+      "hash": "fd6d5763f1f25e8d69d5180a985bb4f76699d18a4794081a84e90aa7ebfc0aa9",
+      "last_updated": "2026-09-24T07:54:09Z"
     },
     "configuration/data-locations": {
       "slug": "configuration/data-locations",
@@ -30,8 +30,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/env-vars.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/env-vars.md",
       "source_id": "docs/en/configuration/env-vars.md",
-      "hash": "a5c52fd159ada600035445a564b9b01b2e5917812b99517aebe555703645bf70",
-      "last_updated": "2026-09-23T13:56:36Z"
+      "hash": "8c8ac598a73a86e12aa372266df0d076b23187a2c217c30cd7e83c87b2ddd77f",
+      "last_updated": "2026-09-24T07:54:09Z"
     },
     "configuration/overrides": {
       "slug": "configuration/overrides",
@@ -280,13 +280,13 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/release-notes/changelog.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/release-notes/changelog.md",
       "source_id": "docs/en/release-notes/changelog.md",
-      "hash": "43ae82bfe0e0e748296302365d2972021cf8856b864c81c57aa11b01233b5e60",
-      "last_updated": "2026-09-23T13:56:36Z"
+      "hash": "3c0a6221375ca44fb9635bcd9503bd8660d31280010cb028d108df2e9d17d98f",
+      "last_updated": "2026-09-24T07:54:09Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-23T13:56:36Z",
-    "fetch_duration_seconds": 9.546,
+    "last_fetch_completed": "2026-09-24T07:54:09Z",
+    "fetch_duration_seconds": 9.539,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,
