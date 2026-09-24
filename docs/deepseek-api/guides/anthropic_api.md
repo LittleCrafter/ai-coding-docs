@@ -1,97 +1,153 @@
-# Your First API Call
+# Using the Anthropic API
 
-The DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.
+To meet the demand for using the Anthropic API ecosystem, our API has added support for the Anthropic API format, with the `base_url` being `https://api.deepseek.com/anthropic`.
 
-PARAM| VALUE  
----|---  
-base_url (OpenAI)| `https://api.deepseek.com`  
-base_url (Anthropic)| `https://api.deepseek.com/anthropic`  
-api_key| apply for an [API key](<https://platform.deepseek.com/api_keys>)  
-model| `deepseek-flash`(1)  
-`deepseek-v4-pro`  
-  
-(1) Use `deepseek-flash` as the model name. The legacy names `deepseek-v4-flash` and `deepseek-v4-flash-vision-exp` are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.
+With simple configuration, you can integrate the capabilities of DeepSeek into the Anthropic API ecosystem.
 
-## Integrate with Agent Tools
+* * *
 
-DeepSeek Harness is now in developer preview for agent harness developers worldwide. See the [DeepSeek Harness Guide](<https://deepseek-harness.github.io/deepseek-harness/en/guide/quickstart>) for details.
+## Use DeepSeek in Claude Code
 
-The DeepSeek API is supported by many popular AI agent and coding assistant tools. If you use tools like Claude Code, GitHub Copilot, or OpenCode, you can use DeepSeek as the backend model directly — no code required.
+Please refer to [Integrate with Claude Code](<../quick_start/agent_integrations/claude_code.md>).
 
-See the [Agent Integrations Guide](<../quick_start/agent_integrations/claude_code.md>) for details.
+## Invoke DeepSeek Model via Anthropic API
 
-## Invoke The Chat API
+  1. Install Anthropic SDK
 
-Once you have obtained an API key, you can access the DeepSeek model using the following example scripts in the OpenAI API format. This is a non-stream example, you can set the `stream` parameter to `true` to get stream response.
-
-For examples using the Anthropic API format, please refer to [Anthropic API](<./anthropic_api.md>).
-
-**curl**
-
-```bash
-curl https://api.deepseek.com/chat/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" \
-  -d '{
-        "model": "deepseek-flash",
-        "messages": [
-          {"role": "system", "content": "You are a helpful assistant."},
-          {"role": "user", "content": "Hello!"}
-        ],
-        "thinking": {"type": "enabled"},
-        "reasoning_effort": "high",
-        "stream": false
-      }'
+```text
+pip install anthropic
 ```
 
-**python**
+ 
+  2. Config Environment Variables
 
-```python
-# Please install OpenAI SDK first: `pip3 install openai`
-import os
-from openai import OpenAI
+```text
+export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+export ANTHROPIC_API_KEY=${YOUR_API_KEY}
+```
 
-client = OpenAI(
-    api_key=os.environ.get('DEEPSEEK_API_KEY'),
-    base_url="https://api.deepseek.com")
+ 
+  3. Invoke the API
 
-response = client.chat.completions.create(
+```text
+import anthropic
+
+client = anthropic.Anthropic()
+
+message = client.messages.create(
     model="deepseek-flash",
+    max_tokens=1000,
+    system="You are a helpful assistant.",
     messages=[
-        {"role": "system", "content": "You are a helpful assistant"},
-        {"role": "user", "content": "Hello"},
-    ],
-    stream=False,
-    reasoning_effort="high",
-    extra_body={"thinking": {"type": "enabled"}}
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Hi, how are you?"
+                }
+            ]
+        }
+    ]
 )
-
-print(response.choices[0].message.content)
+print(message.content)
 ```
 
-**nodejs**
+ 
 
-```javascript
-// Please install OpenAI SDK first: `npm install openai`
+**Note:** When you pass an unsupported model name to DeepSeek's Anthropic API, the API backend will automatically map it to the `deepseek-flash` model.
 
-import OpenAI from "openai";
+* * *
 
-const openai = new OpenAI({
-        baseURL: 'https://api.deepseek.com',
-        apiKey: process.env.DEEPSEEK_API_KEY,
-});
+## Anthropic Model Mapping
 
-async function main() {
-  const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: "You are a helpful assistant." }],
-    model: "deepseek-flash",
-    thinking: {"type": "enabled"},
-    reasoning_effort: "high",
-    stream: false,
-  });
+When you use the Anthropic API, we map the Claude model names you pass in:
 
-  console.log(completion.choices[0].message.content);
-}
+  * Models starting with claude-opus are mapped to `deepseek-v4-pro`
+  * Models starting with claude-haiku or claude-sonnet are mapped to `deepseek-flash`
 
-main();
-```
+The claude-opus mapping points to `deepseek-v4-pro`, which is billed at the V4 Pro price.
+
+With this mapping, when using the developer mode of the new Claude Desktop APP, you can bypass the APP's model name restrictions by simply changing the base_url and api_key to connect to DeepSeek models.
+
+* * *
+
+## Anthropic API Compatibility Details
+
+This section lists the compatibility details of the DeepSeek API with the Anthropic API. For the full Anthropic API format definition, please refer to the [official Anthropic API reference](<https://platform.claude.com/docs/en/api/python/beta/messages/create>).
+
+### HTTP Header
+
+Field| Support Status  
+---|---  
+anthropic-beta| Ignored for `/messages`; required (`files-api-2025-04-14`) for Files API endpoints — see [Files API](<./files_api.md#anthropic-compatible-files-api>)  
+anthropic-version| Ignored  
+x-api-key| Fully Supported  
+  
+### Simple Fields
+
+Field| Support Status  
+---|---  
+model| Use DeepSeek Model Instead  
+max_tokens| Fully Supported  
+container| Ignored  
+mcp_servers| Ignored  
+metadata| `user_id` is supported, others are ignored  
+Please refer to [Rate Limit & Isolation](<../quick_start/rate_limit.md>) for more information about `user_id` parameter.  
+service_tier| Ignored  
+stop_sequences| Fully Supported  
+stream| Fully Supported  
+system| Fully Supported  
+temperature| Fully Supported (range [0.0 ~ 2.0])  
+thinking| Supported (`budget_tokens` is ignored)  
+output_config| Only `effort` is supported  
+top_k| Ignored  
+top_p| Only takes effect in thinking mode (with a lower bound of `0.95`); in non-thinking mode it is fixed at `1.0`  
+  
+### Tool Fields
+
+#### tools
+
+Field| Support Status  
+---|---  
+name| Fully Supported  
+input_schema| Fully Supported  
+description| Fully Supported  
+cache_control| Ignored  
+  
+#### tool_choice
+
+Value| Support Status  
+---|---  
+none| Fully Supported  
+auto| Supported (`disable_parallel_tool_use` is ignored)  
+any| Supported (`disable_parallel_tool_use` is ignored)  
+tool| Supported (`disable_parallel_tool_use` is ignored)  
+  
+### Message Fields
+
+Field| Variant| Sub-Field| Support Status  
+---|---|---|---  
+content |  string | | Fully Supported  
+array, type="text"|  text |  Fully Supported   
+cache_control |  Ignored   
+citations |  Ignored   
+array, type="image" |  source |  Supported. `source.type` can be base64 (media types: jpeg, png, gif, webp), url, or file (the file variant requires the header `anthropic-beta: files-api-2025-04-14`)   
+array, type = "document" | |  Not Supported   
+array, type = "search_result" | |  Not Supported   
+array, type = "thinking" | |  Supported   
+array, type="redacted_thinking" | |  Not Supported   
+array, type = "tool_use" |  id |  Fully Supported   
+input |  Fully Supported   
+name |  Fully Supported   
+cache_control |  Ignored   
+array, type = "tool_result" |  tool_use_id |  Fully Supported   
+content |  Fully Supported   
+cache_control |  Ignored   
+is_error |  Ignored   
+array, type = "server_tool_use" | |  Supported   
+array, type = "web_search_tool_result" | |  Supported   
+array, type = "code_execution_tool_result" | |  Not Supported   
+array, type = "mcp_tool_use" | |  Not Supported   
+array, type = "mcp_tool_result" | |  Not Supported   
+array, type = "container_upload" | |  Not Supported

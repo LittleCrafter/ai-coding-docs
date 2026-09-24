@@ -45,19 +45,9 @@ The maximum value for `logprobs` is 20.
 
 The maximum number of tokens that can be generated in the completion.
 
-**
-
-stop
-
-**
-
-object
-
-**
+**stop** string | string[]
 
 nullable
-
-**
 
 Up to 16 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
 

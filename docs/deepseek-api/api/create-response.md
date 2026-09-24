@@ -26,19 +26,9 @@ required
 
 ID of the model to use. Use `deepseek-flash` or `deepseek-v4-pro`.
 
-**
-
-input
-
-**
-
-object
-
-**
+**input** string | object[]
 
 nullable
-
-**
 
 The input to the model. Either a plain string (treated as a single `user` message), or a list of input items.
 
@@ -68,13 +58,7 @@ The type of the input item. For `message` items, this field can be omitted if `r
 
 For `message` items. The role of the message author. `developer` is treated as `user`.
 
-**
-
-content
-
-**
-
-object
+**content** string | object[]
 
 For `message` items, the message content, either a plain string or a list of `input_text` / `output_text` / `input_image` content parts. For `reasoning` items, a list of `reasoning_text` content parts.
 
@@ -150,13 +134,7 @@ For `function_call` items. The name of the function to call.
 
 For `function_call` items. The arguments to call the function with, in JSON format.
 
-**
-
-output
-
-**
-
-object
+**output** string | object[]
 
 For `function_call_output` / `custom_tool_call_output` items. The output of the tool call, either a plain string or a list of `input_text` / `input_image` content parts.
 
@@ -352,19 +330,9 @@ Omitting `parameters` defines a function with an empty parameter list.
 
   * ]
 
-**
-
-tool_choice
-
-**
-
-object
-
-**
+**tool_choice** string | object
 
 nullable
-
-**
 
 Controls which (if any) tool is called by the model.
 

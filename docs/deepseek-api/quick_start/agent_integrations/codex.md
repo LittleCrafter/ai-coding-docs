@@ -32,10 +32,10 @@ The script performs the following steps:
 
   1. **Back up your existing configuration** : `~/.codex/config.toml` is backed up to `~/.codex/backup-deepseek/`, so you can restore it at any time.
   2. **Write the model catalog`~/.codex/models.json`**: this declares the metadata of DeepSeek models to Codex (context window size, supported reasoning effort levels, tool call formats, etc.), so that Codex can use DeepSeek models just like its built-in models.
-  3. **Modify`~/.codex/config.toml`**: only the necessary fields are rewritten (see the field reference below), and a `[model_providers.deepseek]` section is added; your existing settings such as MCP servers and project trust levels are all preserved. If any existing fields conflict with the DeepSeek configuration, the script removes them and prints the reason for each removal.
+  3. **Modify`~/.codex/config.toml`**: only the necessary fields are rewritten (see the field reference below), a `[model_providers.deepseek]` section is added, and `enabled-reasoning-efforts` is written into the `[desktop]` section (other settings in an existing `[desktop]` section are kept); your existing settings such as MCP servers and project trust levels are all preserved. If any existing fields conflict with the DeepSeek configuration, the script removes them and prints the reason for each removal.
   4. **Validate** : the script validates the syntax of `config.toml` / `models.json` before writing; if validation fails, it aborts without modifying any file.
 
-Run the script again at any time to rewrite the configuration (menu option 1), or to restore it to its pre-installation state (menu option 9). If an older version of the script had installed the `deepseek-v4-flash` / `deepseek-v4-flash-vision-exp` entries, re-running the script removes them and leaves only `deepseek-flash` and `deepseek-v4-pro`.
+Run the script again at any time to rewrite the configuration (menu option 1 or 2), or to restore it to its pre-installation state (menu option 9). Re-running menu option 1 or 2 also adds any settings introduced by newer versions of the script (such as `show_raw_agent_reasoning` and the reasoning effort levels), leaving the rest of your configuration untouched. If an older version of the script had installed the `deepseek-v4-flash` / `deepseek-v4-flash-vision-exp` entries, re-running the script removes them and leaves only `deepseek-flash` and `deepseek-v4-pro`.
 
 ### Option 2: Edit the Configuration File Manually
 
@@ -194,6 +194,7 @@ preferred_auth_method = "apikey"
 forced_login_method = "api"
 model_reasoning_effort = "high"
 web_search = "disabled"
+show_raw_agent_reasoning = true
 model_catalog_json = "~/.codex/models.json"
 
 [model_providers.deepseek]
@@ -201,9 +202,14 @@ name = "deepseek"
 base_url = "https://api.deepseek.com/"
 wire_api = "responses"
 experimental_bearer_token = "<your DeepSeek API Key>"
+
+[desktop]
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra", "max"]
 ```
 
  
+
+If `config.toml` already has a `[desktop]` section, add `enabled-reasoning-efforts` to that section instead of creating a second `[desktop]` — a duplicate section makes the file invalid.
 
 ### config.toml Field Reference
 
@@ -214,11 +220,13 @@ Field| Description
 `preferred_auth_method`, `forced_login_method`| Authenticate with an API Key, skipping the ChatGPT account login  
 `model_reasoning_effort`| Reasoning effort. Higher values make the model think more deeply, producing better answers at the cost of longer response time  
 `web_search`| Built-in web search, disabled for the DeepSeek models  
+`show_raw_agent_reasoning`| Show the model's raw reasoning (thinking) content. Only takes effect in Codex CLI: press `Ctrl + T` to view the thinking process  
 `model_catalog_json`| Path to the custom model catalog file (`models.json`), from which Codex reads model metadata  
 `name` in `[model_providers.deepseek]`| Display name of the model provider  
 `base_url` in `[model_providers.deepseek]`| Endpoint of the DeepSeek API  
 `wire_api` in `[model_providers.deepseek]`| The protocol used to communicate with the model; `"responses"` means the [Responses API](<../../guides/responses_api.md>)  
 `experimental_bearer_token` in `[model_providers.deepseek]`| Your API Key, stored directly in the configuration file  
+`enabled-reasoning-efforts` in `[desktop]`| Reasoning effort levels available in the ChatGPT desktop app  
   
 ## 2\. Get Started
 

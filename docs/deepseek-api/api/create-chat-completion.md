@@ -54,19 +54,9 @@ An optional name for the participant. Provides the model information to differen
 
 **User message**
 
-**
-
-content
-
-**
-
-object
-
-**
+**content** string | object[]
 
 required
-
-**
 
 The contents of the user message. Either a string, or an array of content parts (for image input). See the [Vision guide](<../guides/vision.md>) for details.
 
@@ -186,19 +176,9 @@ An optional name for the participant. Provides the model information to differen
 
 The role of the messages author, in this case `tool`.
 
-**
-
-content
-
-**
-
-object
-
-**
+**content** string | object[]
 
 required
-
-**
 
 The contents of the tool message. Either a string, or an array of content parts (for image input). See the [Vision guide](<../guides/vision.md>) for details.
 
@@ -344,29 +324,19 @@ An object specifying the format that the model must output. Setting to { "type":
 
 Must be one of `text` or `json_object`.
 
-**
-
-stop
-
-**
-
-object
-
-**
+**stop** string | string[]
 
 nullable
-
-**
 
 Up to 16 sequences where the API will stop generating further tokens.
 
 oneOf
 
-**MOD1**
+**Single stop sequence**
 
 string
 
-**MOD2**
+**Stop sequence list**
 
   * Array [
 
@@ -480,19 +450,9 @@ If set to true, the API will use strict-mode for the tool calls to ensure the ou
 
   * ]
 
-**
-
-tool_choice
-
-**
-
-object
-
-**
+**tool_choice** string | object
 
 nullable
-
-**
 
 Controls which (if any) tool is called by the model.
 
