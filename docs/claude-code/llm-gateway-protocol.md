@@ -137,7 +137,7 @@ Whether a request carries them depends on where Claude Code sends it:
 
 Setting `CLAUDE_CODE_GATEWAY_HINT_HEADERS` to `0` stops the headers on every connection.
 
-The headers carry only what the rows below list: fixed vocabularies, tool names, and durations, never prompt text or file contents. Every value is printable ASCII.
+The headers carry only what the rows below list: fixed vocabularies, tool names, durations, and a random prompt identifier, never prompt text or file contents. Every value is printable ASCII.
 
 | Header                              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | :---------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -146,6 +146,7 @@ The headers carry only what the rows below list: fixed vocabularies, tool names,
 | `x-claude-code-compaction`          | Present on the request that summarizes the conversation during a [compaction](./prompt-caching.md#compacting-the-conversation). The value says what triggered it: `auto` when the context window approached capacity, `manual` for `/compact`, or `reactive` when the API rejected a request as too long. Absent on every other request                                                                                                                                                   |
 | `x-claude-code-context-compacted`   | Present once, on the first main-conversation request after a compaction, with the same values as `x-claude-code-compaction`. The conversation prefix before this request is no longer used, so a cache keyed on it can be dropped                                                                                                                                                                                                                                                        |
 | `x-claude-code-prev-tool-durations` | Measured run time of the tool calls whose results this request carries, as `<name>=<ms>;<name>=<ms>`, for example `Bash=742;Read=9`. Sent on the next request of the same conversation after a batch of tool calls, from the main session or a subagent                                                                                                                                                                                                                                  |
+| `x-claude-code-prompt-id`           | Random UUID that identifies the user prompt a request serves. Requests serving one prompt share the value, including the turns of subagents that prompt started. Requests not attributed to a prompt omit it. Use it to group a session's requests by prompt. Requires Claude Code v2.1.283 or later                                                                                                                                                                                     |
 
 Before parsing `x-claude-code-prev-tool-durations`, check how Claude Code builds the value and what it leaves out:
 
@@ -232,7 +233,9 @@ The retry logic matches on the upstream's error wording, so forward error respon
 
 ### Disable pre-release capabilities
 
-`CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` stops Claude Code from sending pre-release capabilities and their body fields on every provider, including context management and the beta tool fields. The variable doesn't affect adaptive reasoning, which is selected by model rather than by beta. It never suppresses the OAuth capability that subscription authentication requires.
+`CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` stops Claude Code from sending pre-release capabilities and their body fields, including context management and the beta tool fields. The variable doesn't affect adaptive reasoning, which is selected by model rather than by beta. It never suppresses the OAuth capability that subscription authentication requires.
+
+When a host platform that embeds Claude Code sets [`CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST`](./env-vars.md), `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` doesn't stop auto mode sessions on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or a [Claude apps gateway](./claude-apps-gateway.md) from asking the server for [classifier review](./permission-modes.md#server-side-classifier-review). That review adds an `anthropic-beta` value and a `safeguards` request field. Set `CLAUDE_CODE_AUTO_MODE_SERVER=0` to stop it there.
 
 On Claude Code v2.1.227 or later, your organization can keep [MCP tool search](./mcp.md#scale-with-mcp-tool-search) on under this variable through [managed settings](./managed-settings.md). What Claude Code sends with that override in place depends on how you connect:
 

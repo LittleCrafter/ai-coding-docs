@@ -113,7 +113,12 @@ Run persistent container instances, often hosting multiple SDK processes per con
 
 Example workloads include an email agent that triages and responds to incoming mail, a site builder that hosts a per-user editable site through container ports, and a chat bot that handles continuous traffic from a platform like Slack.
 
-The container exposes an HTTP or WebSocket endpoint and maps each active session to a long-lived query and the subprocess behind it. In TypeScript, use [`streamInput()`](./typescript.md#query-object) to add turns to an active session and [`startup()`](./typescript.md#startup) to pre-warm subprocesses ahead of incoming traffic. In Python, use [`ClaudeSDKClient`](./python.md#claudesdkclient) to hold a session open across turns. Size the container so it can hold the maximum number of concurrent sessions in memory.
+The container exposes an HTTP or WebSocket endpoint and maps each active session to a long-lived query and the subprocess behind it. The calls that keep sessions open and warm differ between the SDKs:
+
+* **TypeScript**: use [`streamInput()`](./typescript.md#query-object) to add turns to an active session. Call [`startup()`](./typescript.md#startup) to pre-warm subprocesses ahead of incoming traffic. If you don't know a session's working directory until its first request arrives, pre-warm with [`prewarm()`](./typescript.md#prewarm) instead.
+* **Python**: use [`ClaudeSDKClient`](./python.md#claudesdkclient) to hold a session open across turns.
+
+Size the container so it can hold the maximum number of concurrent sessions in memory.
 
 ### Hybrid sessions
 

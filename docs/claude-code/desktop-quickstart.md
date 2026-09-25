@@ -4,9 +4,9 @@
 
 # Get started with the desktop app
 
-> Install Claude Code on desktop and start your first coding session
+> Install the Claude desktop app, open the Code tab, and start your first Claude Code session on a project folder on your computer.
 
-The desktop app gives you Claude Code with a graphical interface built for running multiple sessions side by side: a sidebar for managing parallel work, a drag-and-drop layout with an integrated terminal and file editor, visual diff review, live app preview, GitHub PR monitoring with auto-merge, and scheduled tasks. No terminal required.
+The desktop app gives you Claude Code with a graphical interface, so you can ask Claude to work on the code in a folder on your computer and review its changes without using a terminal. This page walks through installing the app and starting your first session in the **Code** tab. Claude Code requires a [Pro, Max, Team, or Enterprise subscription](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_pricing).
 
 **[Download for macOS](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect?utm_source=claude_code&utm_medium=docs)**
 
@@ -23,14 +23,15 @@ apt or .deb for Ubuntu and Debian
 For Windows ARM64, download the [ARM64 installer](https://claude.ai/api/desktop/win32/arm64/setup/latest/redirect?utm_source=claude_code\&utm_medium=docs). On Linux, install with apt; see [Claude Desktop on Linux](./desktop-linux.md).
 
 > [!NOTE]
-> Claude Code requires a [Pro, Max, Team, or Enterprise subscription](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_pricing).
-
-This page walks through installing the app and starting your first session. If you're already set up, see [Use Claude Code Desktop](./desktop.md) for the full reference.
+> These cases are covered on other pages:
+>
+> * **Already set up**: see [Use Claude Code Desktop](./desktop.md) for everything the Code tab can do
+> * **Want `claude` in your terminal**: [install the CLI](./quickstart.md) separately
 
 The desktop app has three tabs:
 
 * **Chat**: General conversation with no file access, similar to claude.ai.
-* **Cowork**: An autonomous background agent that works on tasks in a sandboxed virtual machine with its own environment, running independently while you do other work. On-device Cowork sessions run the VM on your computer; remote Cowork sessions run on an Anthropic-managed VM instead.
+* **Cowork**: An autonomous background agent that works on tasks independently while you do other work.
 * **Code**: An interactive coding assistant with direct access to your local files. Depending on the permission mode, you approve each change as Claude proposes it or review the changes after Claude makes them.
 
 Chat and Cowork are covered in the [Claude Help Center](https://support.claude.com/); installing and deploying the desktop app is covered in the [Claude Desktop support articles](https://support.claude.com/en/collections/16163169-claude-desktop). This page focuses on the **Code** tab.
@@ -44,7 +45,7 @@ Chat and Cowork are covered in the [Claude Help Center](https://support.claude.c
 
    Click the **Code** tab at the top center. If clicking Code prompts you to upgrade, you need to [subscribe to a paid plan](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_upgrade) first. If it prompts you to sign in online, complete the sign-in and restart the app. If you see a 403 error, see [authentication troubleshooting](./desktop.md#403-or-authentication-errors-in-the-code-tab).
 
-The desktop app includes Claude Code. You don't need to install Node.js or the CLI separately. To use `claude` from the terminal, install the CLI separately. See [Get started with the CLI](./quickstart.md).
+The desktop app includes Claude Code, so you don't need to install Node.js or the CLI to use the Code tab.
 
 ## Start your first session
 
