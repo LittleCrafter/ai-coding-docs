@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.157.0",
-  "last_updated": "2026-09-25T08:15:41Z",
+  "last_updated": "2026-09-25T14:15:21Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -170,8 +170,8 @@
       "source_url": "https://learn.chatgpt.com/docs/build-plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/build-plugins.md",
       "source_id": "llms:build-plugins",
-      "hash": "ff7de4f11ccb6b849a55b2822a4225064db6c18331521c35d569ed13b508fbb6",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "314de97e274008029e40d52dcd8c9a02ea7cd01af9eaee4cf5652685b0e131c8",
+      "last_updated": "2026-09-25T14:15:21Z"
     },
     "build-skills": {
       "slug": "build-skills",
@@ -240,8 +240,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "9102e4877328069de40fa1563f95483ca5a327ef8f85b9ea5ec59ebb0349ea30",
-      "last_updated": "2026-09-25T08:15:41Z"
+      "hash": "bb2c4030fe6bed98b20d76c536de09fb6889fb6ef02896d16c638d62cde48b39",
+      "last_updated": "2026-09-25T14:15:21Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -820,8 +820,8 @@
       "source_url": "https://learn.chatgpt.com/docs/features",
       "source_md_url": "https://learn.chatgpt.com/docs/features.md",
       "source_id": "llms:features",
-      "hash": "9b6e99cefce4e4237cba18f6a174ccbaa4b02db893632b47450d30144d34de3c",
-      "last_updated": "2026-09-11T22:52:14Z"
+      "hash": "e125ca99afbfb9d1d941b48d84a2fc28b63a901aded83241aa3e768c5f0c1223",
+      "last_updated": "2026-09-25T14:15:21Z"
     },
     "features/codex-micro": {
       "slug": "features/codex-micro",
@@ -850,8 +850,8 @@
       "source_url": "https://learn.chatgpt.com/docs/get-started-with-work",
       "source_md_url": "https://learn.chatgpt.com/docs/get-started-with-work.md",
       "source_id": "llms:get-started-with-work",
-      "hash": "33143a9d6136cfe0f70614994e1db9faa5de138938f87c7cf2413b4eba45e4d1",
-      "last_updated": "2026-09-22T18:24:35Z"
+      "hash": "6954cdf50f69235354980102fdb01e84d9c3b53eff2186cdcc19b2c5475fe244",
+      "last_updated": "2026-09-25T14:15:21Z"
     },
     "getting-started": {
       "slug": "getting-started",
@@ -1100,8 +1100,8 @@
       "source_url": "https://learn.chatgpt.com/docs/plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/plugins.md",
       "source_id": "llms:plugins",
-      "hash": "ae4d94d60794ab1b2185f762a35f04141d519b53db83b9068fac09116bd17bbc",
-      "last_updated": "2026-09-11T01:15:25Z"
+      "hash": "a6e4ecfe141ad5f4bbd9e6721bb63068fa98bd49fd68bea5f5fc3b4d549e5f3a",
+      "last_updated": "2026-09-25T14:15:21Z"
     },
     "pricing": {
       "slug": "pricing",
@@ -1470,8 +1470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/skills-and-plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/skills-and-plugins.md",
       "source_id": "llms:skills-and-plugins",
-      "hash": "3e5e6cc3626848bba4d3ad36af7d0bff3b93b700bdfd2dae071c1853b4ff9a9a",
-      "last_updated": "2026-09-25T02:01:52Z"
+      "hash": "2196d056b58ed9afc091bc494d8b577cdf705559d1884a461afe60c8728020cf",
+      "last_updated": "2026-09-25T14:15:21Z"
     },
     "slash_commands": {
       "slug": "slash_commands",
@@ -1570,8 +1570,8 @@
       "source_url": "https://learn.chatgpt.com/docs/webmcp",
       "source_md_url": "https://learn.chatgpt.com/docs/webmcp.md",
       "source_id": "llms:webmcp",
-      "hash": "1594cb025be2f9a6f55e4e61d3c62f10aa87dc100a32990c5b202a081aa5c351",
-      "last_updated": "2026-09-22T18:24:35Z"
+      "hash": "3be61e4db938f159955cf140fedeac0274027fae0bc9dbaf402999c19b60a05c",
+      "last_updated": "2026-09-25T14:15:21Z"
     },
     "whats-new": {
       "slug": "whats-new",
@@ -1615,8 +1615,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-25T08:15:41Z",
-    "fetch_duration_seconds": 56.112,
+    "last_fetch_completed": "2026-09-25T14:15:21Z",
+    "fetch_duration_seconds": 56.073,
     "total_pages_discovered": 161,
     "pages_fetched_successfully": 161,
     "pages_failed": 0,

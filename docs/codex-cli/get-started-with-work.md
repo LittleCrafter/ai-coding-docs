@@ -128,7 +128,8 @@ project trackers.
 - Install the plugins most relevant to your work.
 - To point ChatGPT to a specific tool, type `@` and the plugin name in your prompt.
 
-Learn more about [plugins](./plugins.md).
+Learn more about [plugins](./plugins.md). To make a workflow reusable,
+[create and edit a plugin](./build-plugins.md) through a conversation with ChatGPT.
 
 <a id="use-work-mode-efficiently"></a>
 
