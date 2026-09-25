@@ -9,7 +9,10 @@
 A Claude Code plugin is a directory of skills, agents, hooks, MCP servers, or other components that Claude Code installs and loads as one unit. Most plugins come from a marketplace, which is a catalog that lists plugins and where to fetch each one. You can also load a plugin from a folder someone gives you, or [build your own](./create.md).
 
 > [!NOTE]
-> If you use claude.ai chat or Cowork and not Claude Code, see [Plugins on claude.ai and in Cowork](https://claude.com/docs/plugins/overview).
+> Start on claude.com instead if either of these describes you:
+>
+> * **You use claude.ai chat or Cowork and not Claude Code**: see [Plugins on claude.ai and in Cowork](https://claude.com/docs/plugins/overview)
+> * **You built an MCP server and want it in Anthropic's directory**: see [Publish to the directory](https://claude.com/docs/directory/publish)
 
 To try a plugin now, run `/plugin` in a Claude Code terminal session and install one from the **Discover** tab, which lists the plugins from Anthropic's official marketplace and any marketplace you've added. From there:
 
@@ -106,7 +109,7 @@ A plugin you install at user scope in the terminal, the desktop app's local sess
 A cloud session, including one in the browser at claude.ai/code, doesn't load the plugins in your local settings. For install steps in the terminal, VS Code, and the desktop app, and for what a cloud session loads, see [Install a plugin](./install.md#install-a-plugin).
 
 > [!NOTE]
-> The same plugin format also installs on claude.ai and in Cowork, where a different set of components loads. For those surfaces, see [Plugins on claude.ai and in Cowork](https://claude.com/docs/plugins/overview) on claude.com.
+> The same plugin format also installs on claude.ai and in Cowork, where a different set of components loads. For those surfaces, see [Plugins on claude.ai and in Cowork](https://claude.com/docs/plugins/overview) on claude.com and its [component support table](https://claude.com/docs/plugins/platform-support#compare-component-support-by-app).
 
 ## Next steps
 
@@ -116,7 +119,7 @@ To build your own, [Create a plugin](./create.md) starts with an empty directory
 
 Once you've installed or built a plugin, these pages cover what comes next:
 
-* **Share what you built**: [Publish and distribute a plugin](./publish.md)
+* **Share what you built**: [Publish and distribute a plugin](./publish.md), through your own marketplace or [Anthropic's directory](./publish.md#submit-to-anthropics-directory)
 * **Check whether it works and is used**: [Test plugins with evals](../plugin-evals.md) and [Measure plugin cost and usage](./measure.md)
 * **Run a marketplace for your team**: [Create a marketplace](./create-marketplace.md), then [Host and maintain a marketplace](./host-marketplace.md)
 * **Set plugin policy for an organization**: [Manage plugins for your organization](./org.md)
