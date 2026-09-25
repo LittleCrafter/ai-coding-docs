@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 197
+- **Pages mirrored:** 210
 - **Version:** 2.1.282
-- **Last updated:** 2026-09-24T23:36:31Z
+- **Last updated:** 2026-09-25T02:00:55Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -63,7 +63,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Schedule recurring tasks in Claude Code Desktop | [desktop-scheduled-tasks.md](./desktop-scheduled-tasks.md) | [source](<https://code.claude.com/docs/en/desktop-scheduled-tasks>) |
 | Claude Code Desktop in WSL | [desktop-wsl.md](./desktop-wsl.md) | [source](<https://code.claude.com/docs/en/desktop-wsl>) |
 | Development containers | [devcontainer.md](./devcontainer.md) | [source](<https://code.claude.com/docs/en/devcontainer>) |
-| Discover and install prebuilt plugins through marketplaces | [discover-plugins.md](./discover-plugins.md) | [source](<https://code.claude.com/docs/en/discover-plugins>) |
 | Environment variables | [env-vars.md](./env-vars.md) | [source](<https://code.claude.com/docs/en/env-vars>) |
 | Error reference | [errors.md](./errors.md) | [source](<https://code.claude.com/docs/en/errors>) |
 | Speed up responses with fast mode | [fast-mode.md](./fast-mode.md) | [source](<https://code.claude.com/docs/en/fast-mode>) |
@@ -106,13 +105,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Choose a permission mode | [permission-modes.md](./permission-modes.md) | [source](<https://code.claude.com/docs/en/permission-modes>) |
 | Configure permissions | [permissions.md](./permissions.md) | [source](<https://code.claude.com/docs/en/permissions>) |
 | Platforms and integrations | [platforms.md](./platforms.md) | [source](<https://code.claude.com/docs/en/platforms>) |
-| Constrain plugin dependency versions | [plugin-dependencies.md](./plugin-dependencies.md) | [source](<https://code.claude.com/docs/en/plugin-dependencies>) |
 | Test plugins with evals | [plugin-evals.md](./plugin-evals.md) | [source](<https://code.claude.com/docs/en/plugin-evals>) |
-| Recommend your plugin from your CLI | [plugin-hints.md](./plugin-hints.md) | [source](<https://code.claude.com/docs/en/plugin-hints>) |
-| Create and distribute a plugin marketplace | [plugin-marketplaces.md](./plugin-marketplaces.md) | [source](<https://code.claude.com/docs/en/plugin-marketplaces>) |
-| Recommend plugins for your org | [plugin-relevance.md](./plugin-relevance.md) | [source](<https://code.claude.com/docs/en/plugin-relevance>) |
-| Create plugins | [plugins.md](./plugins.md) | [source](<https://code.claude.com/docs/en/plugins>) |
-| Plugins reference | [plugins-reference.md](./plugins-reference.md) | [source](<https://code.claude.com/docs/en/plugins-reference>) |
 | How Claude Code uses prompt caching | [prompt-caching.md](./prompt-caching.md) | [source](<https://code.claude.com/docs/en/prompt-caching>) |
 | Prompt library | [prompt-library.md](./prompt-library.md) | [source](<https://code.claude.com/docs/en/prompt-library>) |
 | Quickstart | [quickstart.md](./quickstart.md) | [source](<https://code.claude.com/docs/en/quickstart>) |
@@ -190,6 +183,31 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Agent SDK reference - TypeScript | [agent-sdk/typescript.md](./agent-sdk/typescript.md) | [source](<https://code.claude.com/docs/en/agent-sdk/typescript>) |
 | TypeScript SDK V2 session API (removed) | [agent-sdk/typescript-v2-preview.md](./agent-sdk/typescript-v2-preview.md) | [source](<https://code.claude.com/docs/en/agent-sdk/typescript-v2-preview>) |
 | Handle approvals and user input | [agent-sdk/user-input.md](./agent-sdk/user-input.md) | [source](<https://code.claude.com/docs/en/agent-sdk/user-input>) |
+
+## plugins
+
+| Page | Local | Source |
+| --- | --- | --- |
+| Anthropic's marketplaces | [plugins/anthropic-marketplaces.md](./plugins/anthropic-marketplaces.md) | [source](<https://code.claude.com/docs/en/plugins/anthropic-marketplaces>) |
+| Recommend your plugin from your CLI | [plugins/cli-hints.md](./plugins/cli-hints.md) | [source](<https://code.claude.com/docs/en/plugins/cli-hints>) |
+| Plugin commands reference | [plugins/cli-reference.md](./plugins/cli-reference.md) | [source](<https://code.claude.com/docs/en/plugins/cli-reference>) |
+| Code intelligence plugins | [plugins/code-intelligence.md](./plugins/code-intelligence.md) | [source](<https://code.claude.com/docs/en/plugins/code-intelligence>) |
+| Add components to a plugin | [plugins/components.md](./plugins/components.md) | [source](<https://code.claude.com/docs/en/plugins/components>) |
+| Create a Claude Code plugin | [plugins/create.md](./plugins/create.md) | [source](<https://code.claude.com/docs/en/plugins/create>) |
+| Create a marketplace | [plugins/create-marketplace.md](./plugins/create-marketplace.md) | [source](<https://code.claude.com/docs/en/plugins/create-marketplace>) |
+| Plugin dependencies | [plugins/dependencies.md](./plugins/dependencies.md) | [source](<https://code.claude.com/docs/en/plugins/dependencies>) |
+| Host and maintain a marketplace | [plugins/host-marketplace.md](./plugins/host-marketplace.md) | [source](<https://code.claude.com/docs/en/plugins/host-marketplace>) |
+| Install and manage plugins | [plugins/install.md](./plugins/install.md) | [source](<https://code.claude.com/docs/en/plugins/install>) |
+| Plugin loading reference | [plugins/loading.md](./plugins/loading.md) | [source](<https://code.claude.com/docs/en/plugins/loading>) |
+| Plugin manifest reference | [plugins/manifest-reference.md](./plugins/manifest-reference.md) | [source](<https://code.claude.com/docs/en/plugins/manifest-reference>) |
+| Marketplace reference | [plugins/marketplace-reference.md](./plugins/marketplace-reference.md) | [source](<https://code.claude.com/docs/en/plugins/marketplace-reference>) |
+| Measure plugin cost and usage | [plugins/measure.md](./plugins/measure.md) | [source](<https://code.claude.com/docs/en/plugins/measure>) |
+| Manage Claude Code plugins for your organization | [plugins/org.md](./plugins/org.md) | [source](<https://code.claude.com/docs/en/plugins/org>) |
+| Plugins overview | [plugins/overview.md](./plugins/overview.md) | [source](<https://code.claude.com/docs/en/plugins/overview>) |
+| Publish and distribute a plugin | [plugins/publish.md](./plugins/publish.md) | [source](<https://code.claude.com/docs/en/plugins/publish>) |
+| Recommend plugins for your org | [plugins/relevance.md](./plugins/relevance.md) | [source](<https://code.claude.com/docs/en/plugins/relevance>) |
+| Plugin security and trust | [plugins/security.md](./plugins/security.md) | [source](<https://code.claude.com/docs/en/plugins/security>) |
+| Troubleshoot plugins | [plugins/troubleshooting.md](./plugins/troubleshooting.md) | [source](<https://code.claude.com/docs/en/plugins/troubleshooting>) |
 
 ## whats-new
 

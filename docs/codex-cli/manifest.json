@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.156.1",
-  "last_updated": "2026-09-24T23:37:28Z",
+  "last_updated": "2026-09-25T02:01:52Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "77bed61cc403a37ed3cf74b0b78b71da9b01a79a2da09dbcd7c8ee576bde7835",
-      "last_updated": "2026-09-18T17:57:41Z"
+      "hash": "b54f64c49be8679d44b9f47b820e1175400933f9ad5f3722b753dc4f59381bfa",
+      "last_updated": "2026-09-25T02:01:52Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -240,8 +240,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "a545be2e9c6d70f3cc6113b89067a5262f52302ef90c3e2f2717626b937e709c",
-      "last_updated": "2026-09-24T23:37:28Z"
+      "hash": "c6144fba5e2f05cdeb82098be1b9cde64be7376f8b10c129eb51b6e52313a312",
+      "last_updated": "2026-09-25T02:01:52Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -470,8 +470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/admin-plugin",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/admin-plugin.md",
       "source_id": "llms:enterprise/admin-plugin",
-      "hash": "8e942713e01e556d0fb120f225cf278882a0309de9176b7872acae44c4a6f512",
-      "last_updated": "2026-09-10T23:35:40Z"
+      "hash": "8a90b905890678b51565d548cada8520ad3c918dfcb7382bfc28f9a3799805a4",
+      "last_updated": "2026-09-25T02:01:52Z"
     },
     "enterprise/admin-setup": {
       "slug": "enterprise/admin-setup",
@@ -570,8 +570,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/gpts-and-sharing",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/gpts-and-sharing.md",
       "source_id": "llms:enterprise/gpts-and-sharing",
-      "hash": "6f84ba111a106bad0915319bddc9cf447ce16501b272050e029c9d11a08142d0",
-      "last_updated": "2026-09-10T23:35:40Z"
+      "hash": "4cf50467dc17ea55e65c6a1251d79816bbcc12219dfcb7d3dd860aa8300ea5e1",
+      "last_updated": "2026-09-25T02:01:52Z"
     },
     "enterprise/groups-and-provisioning": {
       "slug": "enterprise/groups-and-provisioning",
@@ -982,6 +982,16 @@
       "source_id": "llms:mcp-server",
       "hash": "3d5e664a43e3075755b94177f0af04277b0cf531fa4e2f06b8b9011b681d38ec",
       "last_updated": "2026-09-11T13:05:28Z"
+    },
+    "migrate-custom-gpts": {
+      "slug": "migrate-custom-gpts",
+      "title": "Moving your custom GPT workflows to plugins",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/migrate-custom-gpts",
+      "source_md_url": "https://learn.chatgpt.com/docs/migrate-custom-gpts.md",
+      "source_id": "llms:migrate-custom-gpts",
+      "hash": "574caa4fd1fb81855ad260a813449f978de05b9134d5b4fe508605c2c93b31df",
+      "last_updated": "2026-09-25T02:01:52Z"
     },
     "model-selection": {
       "slug": "model-selection",
@@ -1460,8 +1470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/skills-and-plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/skills-and-plugins.md",
       "source_id": "llms:skills-and-plugins",
-      "hash": "a2d1b952b23f834481ba64f861296b915f1348104a67803ade022d95ac26c446",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "3e5e6cc3626848bba4d3ad36af7d0bff3b93b700bdfd2dae071c1853b4ff9a9a",
+      "last_updated": "2026-09-25T02:01:52Z"
     },
     "slash_commands": {
       "slug": "slash_commands",
@@ -1605,10 +1615,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-24T23:37:28Z",
-    "fetch_duration_seconds": 55.725,
-    "total_pages_discovered": 160,
-    "pages_fetched_successfully": 160,
+    "last_fetch_completed": "2026-09-25T02:01:52Z",
+    "fetch_duration_seconds": 56.088,
+    "total_pages_discovered": 161,
+    "pages_fetched_successfully": 161,
     "pages_failed": 0,
     "failed_pages": []
   }

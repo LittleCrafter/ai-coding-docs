@@ -1,0 +1,31 @@
+<svg width="760" height="252" viewBox="0 0 760 252" fill="none" xmlns="http://www.w3.org/2000/svg">
+<title>You install a plugin from a marketplace</title>
+<rect width="760" height="252" rx="6" fill="#1A1A1A"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#C4C4C4"/></marker></defs>
+<text x="380" y="32" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#F5F5F5">You install a plugin from a marketplace</text>
+
+<rect x="30" y="104" width="160" height="72" rx="8" fill="#2C2C2C" stroke="#4A4A4A" stroke-width="1.5"/>
+<text x="110" y="134" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F5F5F5">Marketplace</text>
+<text x="110" y="154" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#C4C4C4">a catalog of plugins</text>
+<line x1="190" y1="140" x2="257" y2="140" stroke="#C4C4C4" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="224" y="131" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#C4C4C4">lists</text>
+
+<rect x="260" y="60" width="240" height="160" rx="8" fill="#383838" stroke="#D4A27F" stroke-width="1.5"/>
+<text x="380" y="86" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F5F5F5">Plugin</text>
+<text x="380" y="104" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#C4C4C4">one directory, installed as a unit</text>
+<rect x="275" y="118" width="102" height="26" rx="4" fill="#2C2C2C"/>
+<text x="326" y="135" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Skills</text>
+<rect x="383" y="118" width="102" height="26" rx="4" fill="#2C2C2C"/>
+<text x="434" y="135" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Agents</text>
+<rect x="275" y="152" width="102" height="26" rx="4" fill="#2C2C2C"/>
+<text x="326" y="169" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Hooks</text>
+<rect x="383" y="152" width="102" height="26" rx="4" fill="#2C2C2C"/>
+<text x="434" y="169" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">MCP servers</text>
+<text x="380" y="202" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#C4C4C4">and other components</text>
+<line x1="500" y1="140" x2="567" y2="140" stroke="#C4C4C4" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="534" y="131" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#C4C4C4">you install</text>
+
+<rect x="570" y="104" width="160" height="72" rx="8" fill="#383838"/>
+<text x="650" y="134" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F5F5F5">Claude Code</text>
+<text x="650" y="154" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#C4C4C4">loads its components</text>
+</svg>

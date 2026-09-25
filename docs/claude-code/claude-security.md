@@ -23,20 +23,20 @@ To run the plugin, you need:
 
 ## Install the plugin
 
-In a Claude Code session, install from the [official Anthropic marketplace](./discover-plugins.md#official-anthropic-marketplace):
+In a Claude Code session, install from the [official Anthropic marketplace](./plugins/anthropic-marketplaces.md):
 
 ```text theme={null}
 /plugin install claude-security@claude-plugins-official
 ```
 
-The command opens the plugin's details, where you choose an [installation scope](./discover-plugins.md#install-plugins) to start the install.
+The command opens the plugin's details, where you choose an [installation scope](./plugins/install.md#install-a-plugin) to start the install.
 
 If the install fails, the fix depends on which message Claude Code reports:
 
 * If it reports `Marketplace "claude-plugins-official" not found`, add the marketplace with `/plugin marketplace add anthropics/claude-plugins-official`, then retry the install.
-* If it reports that it [can't find the plugin in the marketplace](./discover-plugins.md#install-plugins), check the plugin name for a typo.
+* If it reports that it [can't find the plugin in the marketplace](./plugins/install.md#install-a-plugin), check the plugin name for a typo.
 
-Check the install summary. If it reports `Run /reload-plugins to activate.`, see [Apply plugin changes without restarting](./discover-plugins.md#apply-plugin-changes-without-restarting) to activate the plugin in your current session.
+Check the install summary. If it reports `Run /reload-plugins to activate.`, see [Apply plugin changes without restarting](./plugins/cli-reference.md#reload-plugins) to activate the plugin in your current session.
 
 Once the plugin is active, you're ready to [scan and fix your codebase](#scan-and-fix-your-codebase).
 
@@ -137,4 +137,4 @@ To go deeper on the pieces this page touches:
 * [Code Review](./code-review.md): set up the PR-time multi-agent review
 * [Claude Security](https://claude.com/product/claude-security): the managed service that monitors connected repositories
 * [Claude Code security](./security.md): how Claude Code approaches trust, permissions, and safeguards
-* [Discover and install plugins](./discover-plugins.md#official-anthropic-marketplace): browse other official plugins
+* [Install and manage plugins](./plugins/install.md): find and install other plugins from the official marketplace

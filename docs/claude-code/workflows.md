@@ -208,7 +208,7 @@ If a project workflow and a personal workflow share a name, the project one runs
 
 ### Distribute a workflow in a plugin
 
-To share a workflow across teams or repositories, include it in a [plugin](./plugins.md). Place the script in a `workflows/` directory at the plugin root, or point to a different location with the [`workflows` manifest field](./plugins-reference.md#component-path-fields).
+To share a workflow across teams or repositories, include it in a [plugin](./plugins/overview.md). Place the script in a `workflows/` directory at the plugin root, or point to a different location with the [`workflows` manifest field](./plugins/manifest-reference.md#fields).
 
 Plugin workflows are namespaced by the plugin name. A plugin called `acme-tools` containing a script whose `meta.name` is `release-audit` runs as `/acme-tools:release-audit`.
 

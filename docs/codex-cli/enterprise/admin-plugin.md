@@ -53,6 +53,8 @@ The analytics use cases need access to connected, approved data sources. ROI ana
 
 Pick a use case, replace each placeholder with a value from your approved request, and follow the steps in order. Start with a read-only request unless the task is a supported change that already has approval.
 
+Use [Migrate custom GPTs in bulk](../migrate-custom-gpts.md#admin-bulk-migration) to inventory GPTs, migrate eligible batches, and coordinate owner testing and access checks.
+
 ### List workspace roles
 
 **Prompt to try**

@@ -40,6 +40,7 @@ Assign ChatGPT workspace access and keep it separate from local runtime policy, 
 - [User lifecycle management](./enterprise/user-lifecycle.md) — Provision employees, update group access, and revoke departing users' credentials.
 - [Roles and workspace permissions](./enterprise/roles-and-workspace-permissions.md) — Use the canonical map of workspace, runtime, API, plugin, and source-system controls.
 - [GPTs and Sharing](./enterprise/gpts-and-sharing.md) — Manage GPT sharing, ownership, connected apps, and third-party actions across your workspace.
+- [Migrate custom GPTs to plugins](./migrate-custom-gpts.md) — Plan your workspace transition, migrate individual GPTs or eligible batches, and test and share replacement plugins.
 - [Managed configuration](./enterprise/managed-configuration.md) — Distribute managed settings where supported and enforce runtime requirements for covered capabilities in the ChatGPT desktop app, Codex CLI, and IDE extension.
 - [Prisma AIRS](./enterprise/prisma-airs.md) — Apply workspace-wide security policies to Codex prompts.
 - [HIPAA configuration](https://developers.openai.com/codex/hipaa-configuration) — Configure local runtime safeguards for workflows that may handle protected health information.

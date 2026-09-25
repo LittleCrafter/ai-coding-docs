@@ -200,7 +200,7 @@ Claude Code can also count other kinds of processes it starts against the same l
 * `mcp`: local [MCP servers](./mcp.md)
 * `lsp`: [language servers](#lsp-tool-behavior)
 * `hooks`: [hook](./hooks.md) commands
-* `plugin`: commands that [plugins](./plugins.md) run
+* `plugin`: commands that [plugins](./plugins/overview.md) run
 * `helper`: Claude Code's own helper commands, such as `git`
 * `agent`: child Claude Code processes, such as [agent teammates](./agent-teams.md)
 
@@ -313,7 +313,7 @@ The LSP tool gives Claude code intelligence from a running language server. Afte
 * Find implementations of an interface
 * Trace call hierarchies
 
-Claude Code keeps the tool inactive until you install a [code intelligence plugin](./discover-plugins.md#code-intelligence) for your language. In [cloud sessions](./claude-code-on-the-web.md), Claude Code doesn't start plugin language servers, so the LSP tool stays inactive there. Claude Code takes the language server's configuration from the plugin, and you install the server binary yourself.
+Claude Code keeps the tool inactive until you install a [code intelligence plugin](./plugins/code-intelligence.md) for your language. In [cloud sessions](./claude-code-on-the-web.md), Claude Code doesn't start plugin language servers, so the LSP tool stays inactive there. Claude Code takes the language server's configuration from the plugin, and you install the server binary yourself.
 
 Claude Code returns an error result for each LSP call on a file whose language server it can't start.
 
@@ -343,7 +343,7 @@ The [WebSocket source](#websocket-source) has its own approval prompt, which the
 
 The tool is not available on Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry. It is also not available when `DISABLE_TELEMETRY` or `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` is set.
 
-Plugins can declare monitors that start automatically when the plugin is active, instead of asking Claude to start them. See [plugin monitors](./plugins-reference.md#monitors).
+Plugins can declare monitors that start automatically when the plugin is active, instead of asking Claude to start them. See [plugin monitors](./plugins/components.md#monitors).
 
 ### WebSocket source
 

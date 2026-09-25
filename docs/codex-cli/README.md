@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 160
+- **Pages mirrored:** 161
 - **Version:** 0.156.1
-- **Last updated:** 2026-09-24T23:37:28Z
+- **Last updated:** 2026-09-25T02:01:52Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -58,6 +58,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | License | [license.md](./license.md) | [source](<https://github.com/openai/codex/blob/main/docs/license.md>) |
 | Long-running work | [long-running-work.md](./long-running-work.md) | [source](<https://learn.chatgpt.com/docs/long-running-work>) |
 | Codex MCP server removal | [mcp-server.md](./mcp-server.md) | [source](<https://learn.chatgpt.com/docs/mcp-server>) |
+| Moving your custom GPT workflows to plugins | [migrate-custom-gpts.md](./migrate-custom-gpts.md) | [source](<https://learn.chatgpt.com/docs/migrate-custom-gpts>) |
 | Model selection | [model-selection.md](./model-selection.md) | [source](<https://learn.chatgpt.com/docs/model-selection>) |
 | Models | [models.md](./models.md) | [source](<https://learn.chatgpt.com/docs/models>) |
 | Non-interactive mode | [non-interactive-mode.md](./non-interactive-mode.md) | [source](<https://learn.chatgpt.com/docs/non-interactive-mode>) |

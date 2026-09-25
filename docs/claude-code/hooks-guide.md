@@ -10,7 +10,7 @@ Hooks are user-defined shell commands. Claude Code runs them at specific points 
 
 For decisions that require judgment rather than deterministic rules, you can also use [prompt-based hooks](#prompt-based-hooks) or [agent-based hooks](#agent-based-hooks) that use a Claude model to evaluate conditions.
 
-For other ways to extend Claude Code, see [skills](./skills.md) for giving Claude additional instructions and executable commands, [subagents](./sub-agents.md) for running tasks in isolated contexts, and [plugins](./plugins.md) for packaging extensions to share across projects.
+For other ways to extend Claude Code, see [skills](./skills.md) for giving Claude additional instructions and executable commands, [subagents](./sub-agents.md) for running tasks in isolated contexts, and [plugins](./plugins/overview.md) for packaging extensions to share across projects.
 
 > [!TIP]
 > This guide covers common use cases and how to get started. For full event schemas, JSON input/output formats, and advanced features like async hooks and MCP tool hooks, see the [Hooks reference](./hooks.md).
@@ -662,7 +662,7 @@ Without a matcher, a hook fires on every occurrence of its event. Matchers let y
 }
 ```
 
-The `"Edit|Write"` matcher fires only when Claude uses the `Edit` or `Write` tool, not when it uses `Bash`, `Read`, or any other tool. On Claude Code v2.1.191 or later, a comma separates alternatives the same way, so `"Edit, Write"` is equivalent. See [Matcher patterns](./hooks.md#matcher-patterns) for how plain names and regular expressions are evaluated.
+The `"Edit|Write"` matcher fires only when Claude uses the `Edit` or `Write` tool, not when it uses `Bash`, `Read`, or any other tool. A comma separates alternatives the same way, so `"Edit, Write"` is equivalent. See [Matcher patterns](./hooks.md#matcher-patterns) for how plain names and regular expressions are evaluated.
 
 > [!NOTE]
 > Claude can also create or modify files by running shell commands. If your hook must see every file change, such as for compliance scanning or audit logging, add a [`Stop`](./hooks.md#stop) hook that scans the working tree once per turn. For per-call coverage instead, also match `Bash|PowerShell` and have your script list modified and untracked files with `git status --porcelain`. The [PowerShell hook input section](./hooks.md#powershell) explains why matching `Bash` alone is not enough. To run a hook when a specific file changes on disk, whatever wrote it, use a [FileChanged](./hooks.md#filechanged) hook.
@@ -805,15 +805,15 @@ The `if` field accepts the same patterns as permission rules: `"Bash(git *)"`, `
 
 Where you add a hook determines its scope:
 
-| Location                                 | Scope                                                                                                                     | Shareable                                             |
-| :--------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------- |
-| `~/.claude/settings.json`                | All your projects                                                                                                         | No, local to your machine                             |
-| `.claude/settings.json`                  | Single project                                                                                                            | Yes, can be committed to the repo                     |
-| `.claude/settings.local.json`            | Single project                                                                                                            | No, gitignored when Claude Code saves a setting to it |
-| Managed policy settings                  | Organization-wide                                                                                                         | Yes, admin-controlled                                 |
-| [Plugin](./plugins.md) `hooks/hooks.json` | When plugin is enabled                                                                                                    | Yes, bundled with the plugin                          |
-| [Skill](./skills.md) frontmatter          | The rest of the session once the skill is invoked. See [Hooks in skills and agents](./hooks.md#hooks-in-skills-and-agents) | Yes, defined in the skill file                        |
-| [Subagent](./sub-agents.md) frontmatter   | While that subagent is running                                                                                            | Yes, defined in the subagent file                     |
+| Location                                          | Scope                                                                                                                     | Shareable                                             |
+| :------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------- |
+| `~/.claude/settings.json`                         | All your projects                                                                                                         | No, local to your machine                             |
+| `.claude/settings.json`                           | Single project                                                                                                            | Yes, can be committed to the repo                     |
+| `.claude/settings.local.json`                     | Single project                                                                                                            | No, gitignored when Claude Code saves a setting to it |
+| Managed policy settings                           | Organization-wide                                                                                                         | Yes, admin-controlled                                 |
+| [Plugin](./plugins/overview.md) `hooks/hooks.json` | When plugin is enabled                                                                                                    | Yes, bundled with the plugin                          |
+| [Skill](./skills.md) frontmatter                   | The rest of the session once the skill is invoked. See [Hooks in skills and agents](./hooks.md#hooks-in-skills-and-agents) | Yes, defined in the skill file                        |
+| [Subagent](./sub-agents.md) frontmatter            | While that subagent is running                                                                                            | Yes, defined in the subagent file                     |
 
 Run [`/hooks`](./hooks.md#the-%2Fhooks-menu) in Claude Code to browse all configured hooks grouped by event.
 

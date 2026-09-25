@@ -38,7 +38,7 @@ Claude Code supports a range of restriction levels. Each pattern uses one or mor
 | **No restrictions**     | Users add anything                                                                                                                                                                                                                 | Don't deploy any managed MCP configuration                                                                     |
 
 > [!NOTE]
-> Claude Code doesn't have a built-in MCP server registry that users can browse and install from. For the approved-catalog pattern, share the approved list and its `claude mcp add` commands somewhere your users will find them, such as an internal wiki, or distribute the servers as plugins through a [managed plugin marketplace](./plugin-marketplaces.md#managed-marketplace-restrictions) so users can browse and install them from `/plugin`.
+> Claude Code doesn't have a built-in MCP server registry that users can browse and install from. For the approved-catalog pattern, share the approved list and its `claude mcp add` commands somewhere your users will find them, such as an internal wiki, or distribute the servers as plugins through a [managed plugin marketplace](./plugins/org.md#restrict-what-users-can-install) so users can browse and install them from `/plugin`.
 
 ## Exclusive control with managed-mcp.json
 

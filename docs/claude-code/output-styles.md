@@ -150,7 +150,7 @@ In the VS Code extension, you can also create the file from the [**Output styles
 
    Run `/output-style <style>` in the terminal, or run `/config` and select your style under **Output style**. Claude uses the new style starting with your next message. In the terminal, Claude Code reads style files when it starts, so if you create or edit one during a running session, restart Claude Code to pick up the change.
 
-[Plugins](./plugins-reference.md) can also ship output styles in an `output-styles/` directory.
+[Plugins](./plugins/manifest-reference.md) can also ship output styles in an `output-styles/` directory.
 
 <h3 id="frontmatter">
   Frontmatter reference
@@ -201,5 +201,5 @@ The built-in Explanatory and Learning styles produce longer responses than Defau
 
 * [Settings](./settings.md): where the `outputStyle` field lives and how settings precedence works
 * [Permission modes](./permission-modes.md): how the Proactive style compares to auto mode
-* [Plugins](./plugins.md): package and distribute output styles alongside skills, hooks, and agents
+* [Plugins](./plugins/overview.md): package and distribute output styles alongside skills, hooks, and agents
 * [Debug your configuration](./debug-your-config.md): diagnose why an output style isn't taking effect

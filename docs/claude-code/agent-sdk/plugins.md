@@ -13,13 +13,13 @@ Plugins let you extend Claude Code with custom functionality that can be shared 
 * **Hooks**: event handlers that respond to tool use and other events
 * **MCP servers**: external tool integrations via Model Context Protocol
 
-For complete information on plugin structure and how to create plugins, see [Plugins](../plugins.md).
+For complete information on plugin structure and how to create plugins, see [Plugins](../plugins/overview.md).
 
 ## Loading plugins
 
 Load plugins by providing their local file system paths in your options configuration. The `type` field must be `"local"`, the only value the SDK accepts. The SDK supports loading multiple plugins from different locations.
 
-To use a plugin distributed through a [marketplace](../plugin-marketplaces.md) or remote repository, download it first and provide the local directory path. For the directory layout a plugin needs, see the [Plugin structure reference](#plugin-structure-reference) below.
+To use a plugin distributed through a [marketplace](../plugins/overview.md) or remote repository, download it first and provide the local directory path. For the directory layout a plugin needs, see the [Plugin structure reference](#plugin-structure-reference) below.
 
 ```typescript TypeScript theme={null}
 import { query } from "@anthropic-ai/claude-agent-sdk";
@@ -127,7 +127,7 @@ async def main():
 asyncio.run(main())
 ```
 
-## Using plugin skills
+## Use plugin skills
 
 Skills from plugins are automatically namespaced with the plugin name to avoid conflicts. To invoke one directly, send `/plugin-name:skill-name` as the prompt.
 
@@ -318,8 +318,8 @@ If plugin skills don't work:
 
 ## See also
 
-* [Plugins](../plugins.md) - Complete plugin development guide
-* [Plugins reference](../plugins-reference.md) - Technical specifications
+* [Plugins](../plugins/overview.md) - Complete plugin development guide
+* [Plugins reference](../plugins/manifest-reference.md) - Technical specifications
 * [Commands](./skills.md#dispatch-commands-by-name) - Dispatching commands in the SDK
 * [Subagents](./subagents.md) - Working with specialized agents
 * [Skills](./skills.md) - Using Agent Skills

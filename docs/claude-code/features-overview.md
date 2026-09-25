@@ -26,7 +26,7 @@ Extensions plug into different parts of the agentic loop:
 * **[Dynamic workflows](./workflows.md)** run many subagents from a script Claude writes, returning one result
 * **[Cross-session messaging](./cross-session-messaging.md)** lets Claude pass a message from one of your sessions to another
 * **[Hooks](./hooks-guide.md)** run your script, HTTP request, MCP tool call, prompt, or subagent when Claude Code reaches a lifecycle event
-* **[Plugins](./plugins.md)** and **[marketplaces](./plugin-marketplaces.md)** package and distribute these features
+* **[Plugins](./plugins/overview.md)** and **[marketplaces](./plugins/overview.md)** package and distribute these features
 
 [Skills](./skills.md) are the most flexible extension. A skill is a markdown file containing knowledge, workflows, or instructions. You can invoke skills with a command like `/deploy`, or Claude can load them automatically when relevant. Skills can run in your current conversation or in an isolated context via subagents.
 
@@ -47,23 +47,23 @@ Features range from always-on context that Claude sees every session, to on-dema
 | **Hook**                                                       | Script, HTTP request, MCP tool call, prompt, or subagent triggered by events       | Automation that must run on every matching event                                                                     | Run ESLint after every file edit                                                                                  |
 | **[Artifact](./artifacts.md)**                                  | Publish session output as a private, interactive web page                          | Output you want to see or share visually rather than as terminal text                                                | An incident timeline that updates as Claude investigates                                                          |
 
-**[Plugins](./plugins.md)** are the packaging layer. A plugin bundles skills, hooks, subagents, and MCP servers into a single installable unit. Plugin skills are namespaced (like `/my-plugin:review`) so multiple plugins can coexist. Use plugins when you want to reuse the same setup across multiple repositories or distribute to others via a **[marketplace](./plugin-marketplaces.md)**.
+**[Plugins](./plugins/overview.md)** are the packaging layer. A plugin bundles skills, hooks, subagents, and MCP servers into a single installable unit. Plugin skills are namespaced (like `/my-plugin:review`) so multiple plugins can coexist. Use plugins when you want to reuse the same setup across multiple repositories or distribute to others via a **[marketplace](./plugins/overview.md)**.
 
 ### Build your setup over time
 
 You don't need to configure everything up front. Each feature has a recognizable trigger, and most teams add them in roughly this order:
 
-| Trigger                                                                          | Add                                                                                            |
-| :------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
-| Claude gets a convention or command wrong twice                                  | Add it to [CLAUDE.md](./memory.md)                                                              |
-| You keep asking Claude to be shorter, explain more, or answer in the same format | Set an [output style](./output-styles.md)                                                       |
-| You keep typing the same prompt to start a task                                  | Save it as a user-invocable [skill](./skills.md)                                                |
-| You paste the same playbook or multi-step procedure into chat for the third time | Capture it as a [skill](./skills.md)                                                            |
-| You keep copying data from a browser tab Claude can't see                        | Connect that system as an [MCP server](./mcp.md)                                                |
-| Claude reads many files to find where a symbol is defined or used                | Install a [code intelligence plugin](./discover-plugins.md#code-intelligence) for your language |
-| A side task floods your conversation with output you won't reference again       | Route it through a [subagent](./sub-agents.md)                                                  |
-| You want something to happen every time without asking                           | Write a [hook](./hooks-guide.md)                                                                |
-| A second repository needs the same setup                                         | Package it as a [plugin](./plugins.md)                                                          |
+| Trigger                                                                          | Add                                                                                   |
+| :------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------ |
+| Claude gets a convention or command wrong twice                                  | Add it to [CLAUDE.md](./memory.md)                                                     |
+| You keep asking Claude to be shorter, explain more, or answer in the same format | Set an [output style](./output-styles.md)                                              |
+| You keep typing the same prompt to start a task                                  | Save it as a user-invocable [skill](./skills.md)                                       |
+| You paste the same playbook or multi-step procedure into chat for the third time | Capture it as a [skill](./skills.md)                                                   |
+| You keep copying data from a browser tab Claude can't see                        | Connect that system as an [MCP server](./mcp.md)                                       |
+| Claude reads many files to find where a symbol is defined or used                | Install a [code intelligence plugin](./plugins/code-intelligence.md) for your language |
+| A side task floods your conversation with output you won't reference again       | Route it through a [subagent](./sub-agents.md)                                         |
+| You want something to happen every time without asking                           | Write a [hook](./hooks-guide.md)                                                       |
+| A second repository needs the same setup                                         | Package it as a [plugin](./plugins/overview.md)                                        |
 
 The same triggers tell you when to update what you already have. A repeated mistake or a recurring review comment is a CLAUDE.md edit, not a one-off correction in chat. A workflow you keep tweaking by hand is a skill that needs another revision.
 
@@ -194,7 +194,7 @@ Claude Code runs a hook at a lifecycle event; it loads a skill into context for 
 Features can be defined at multiple levels: user-wide, per-project, via plugins, or through managed policies. You can also nest CLAUDE.md files in subdirectories or place skills in specific packages of a monorepo. When the same feature exists at multiple levels, here's how they layer:
 
 * **CLAUDE.md files** are additive: all levels contribute content to Claude's context simultaneously. Files from your working directory and above load at launch; subdirectories load as you work in them. When instructions conflict, Claude uses judgment to reconcile them. See [how CLAUDE.md files load](./memory.md#how-claude-md-files-load).
-* **Skills and subagents** override by name: when the same name exists at multiple levels, one definition wins based on priority (managed > user > project for skills; managed > CLI flag > project > user > plugin for subagents). Plugin skills are [namespaced](./plugins.md#add-skills-to-your-plugin) to avoid conflicts. See [skill discovery](./skills.md#resolve-skills-that-share-a-name) and [subagent scope](./sub-agents.md#choose-the-subagent-scope).
+* **Skills and subagents** override by name: when the same name exists at multiple levels, one definition wins based on priority (managed > user > project for skills; managed > CLI flag > project > user > plugin for subagents). Plugin skills are [namespaced](./plugins/components.md#skills) to avoid conflicts. See [skill discovery](./skills.md#resolve-skills-that-share-a-name) and [subagent scope](./sub-agents.md#choose-the-subagent-scope).
 * **MCP servers** override by name: local > project > user. See [MCP scope](./mcp.md#scope-hierarchy-and-precedence).
 * **Hooks** merge: all registered hooks fire for their matching events regardless of source. See [hooks](./hooks.md).
 
@@ -287,7 +287,7 @@ Skills are extra capabilities in Claude's toolkit. They can be reference materia
 **Context cost:** Low. Symbol lookups often replace broad file reads, so net context use can go down.
 
 > [!TIP]
-> The LSP tool is inactive until you install a [code intelligence plugin](./discover-plugins.md#code-intelligence) for your language.
+> The LSP tool is inactive until you install a [code intelligence plugin](./plugins/code-intelligence.md) for your language.
 
 **Subagents**
 
@@ -350,10 +350,10 @@ Connect Claude to external services
 
 Automate actions with hooks
 
-**[Plugins](./plugins.md)**
+**[Plugins](./plugins/overview.md)**
 
 Bundle and share feature sets
 
-**[Marketplaces](./plugin-marketplaces.md)**
+**[Marketplaces](./plugins/create-marketplace.md)**
 
 Host and distribute plugin collections

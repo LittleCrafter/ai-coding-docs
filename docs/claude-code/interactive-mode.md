@@ -117,7 +117,7 @@ When the transcript viewer is open (toggled with `Ctrl+O`), these shortcuts are 
 
 ## Commands
 
-Type `/` in Claude Code to see the commands available to you, or type `/` followed by any letters to filter. The `/` menu lists built-in commands, bundled and user-authored [skills](./skills.md), and commands contributed by [plugins](./plugins.md) and [MCP servers](./mcp.md#use-mcp-prompts-as-commands). Not all built-in commands are visible to every user since some depend on your platform or plan, and [a few available commands are hidden from the menu by design](./commands.md#how-the-command-menu-matches-what-you-type) and run when you type their full name.
+Type `/` in Claude Code to see the commands available to you, or type `/` followed by any letters to filter. The `/` menu lists built-in commands, bundled and user-authored [skills](./skills.md), and commands contributed by [plugins](./plugins/overview.md) and [MCP servers](./mcp.md#use-mcp-prompts-as-commands). Not all built-in commands are visible to every user since some depend on your platform or plan, and [a few available commands are hidden from the menu by design](./commands.md#how-the-command-menu-matches-what-you-type) and run when you type their full name.
 
 In [fullscreen rendering](./fullscreen.md#use-the-mouse), the `/` command and `@` file suggestion lists also respond to the mouse: hovering highlights a row and clicking accepts it.
 

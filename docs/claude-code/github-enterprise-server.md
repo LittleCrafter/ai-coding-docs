@@ -54,17 +54,17 @@ The guided setup generates a GitHub App manifest and redirects you to your GHES 
 
 The manifest configures the GitHub App with the permissions and webhook events below, which together cover cloud sessions, Code Review, Claude Security, plugin marketplaces, and contribution metrics:
 
-| Permission           | Access         | Used for                                                                                                                                                                                        |
-| :------------------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Contents             | Read and write | Cloning repositories and pushing branches                                                                                                                                                       |
-| Pull requests        | Read and write | Creating PRs and posting review comments                                                                                                                                                        |
-| Issues               | Read and write | Responding to issue mentions                                                                                                                                                                    |
-| Checks               | Read and write | Posting Code Review check runs                                                                                                                                                                  |
-| Actions              | Read           | Reading CI status for auto-fix                                                                                                                                                                  |
-| Commit statuses      | Read           | Reading CI status from providers that report commit statuses instead of check runs                                                                                                              |
-| Repository hooks     | Read and write | Creating a webhook on a plugin marketplace repository when **Sync automatically** is turned on for a marketplace in [Organization settings > Plugins](https://claude.ai/admin-settings/plugins) |
-| Metadata             | Read           | Required by GitHub for all apps                                                                                                                                                                 |
-| Organization members | Read           | Matching the Claude GitHub App on github.com, which uses it to check a connecting user's organization role when linking an installation                                                         |
+| Permission           | Access         | Used for                                                                                                                                                                                                                     |
+| :------------------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Contents             | Read and write | Cloning repositories and pushing branches                                                                                                                                                                                    |
+| Pull requests        | Read and write | Creating PRs and posting review comments                                                                                                                                                                                     |
+| Issues               | Read and write | Responding to issue mentions                                                                                                                                                                                                 |
+| Checks               | Read and write | Posting Code Review check runs                                                                                                                                                                                               |
+| Actions              | Read           | Reading CI status for auto-fix                                                                                                                                                                                               |
+| Commit statuses      | Read           | Reading CI status from providers that report commit statuses instead of check runs                                                                                                                                           |
+| Repository hooks     | Read and write | Creating a webhook on a plugin marketplace repository when **Sync automatically** is turned on for a marketplace in [**Organization settings > Plugins & skills**](https://claude.ai/admin-settings/skills?tab=marketplaces) |
+| Metadata             | Read           | Required by GitHub for all apps                                                                                                                                                                                              |
+| Organization members | Read           | Matching the Claude GitHub App on github.com, which uses it to check a connecting user's organization role when linking an installation                                                                                      |
 
 The app subscribes to `pull_request`, `issue_comment`, `pull_request_review_comment`, `pull_request_review`, `check_run`, and `status` events.
 
@@ -134,7 +134,7 @@ SSH URLs work if the machine already trusts your GHES host:
 
 Claude Code runs git non-interactively and rejects SSH connections to hosts that are not in the machine's `known_hosts` file. An HTTPS URL with a git credential helper avoids the `known_hosts` requirement.
 
-See [Create and distribute a plugin marketplace](./plugin-marketplaces.md) for the full guide to building marketplaces.
+See [Create and distribute a plugin marketplace](./plugins/create-marketplace.md) for the full guide to building marketplaces.
 
 ### Pre-register GHES marketplaces with managed settings
 
@@ -216,7 +216,7 @@ These pages cover the features referenced throughout this guide in more depth:
 
 * [Use Claude Code in the cloud](./claude-code-on-the-web.md): run Claude Code sessions on cloud infrastructure
 * [Code Review](./code-review.md): automated PR reviews
-* [Plugin marketplaces](./plugin-marketplaces.md): build and distribute plugin catalogs
+* [Plugin marketplaces](./plugins/host-marketplace.md): build and distribute plugin catalogs
 * [Analytics](./analytics.md): track usage and contribution metrics
 * [Managed settings](./settings.md): organization-wide policy configuration
 * [Network configuration](./network-config.md): firewall and IP allowlist requirements
