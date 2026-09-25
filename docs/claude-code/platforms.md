@@ -29,14 +29,14 @@ You can mix surfaces on the same project. Configuration, project memory, and MCP
 
 Integrations let Claude work with services outside your codebase.
 
-| Integration                          | What it does                                                                       | Use it for                                                                          |
-| :----------------------------------- | :--------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
-| [Chrome](./chrome.md)                 | Controls your browser with your logged-in sessions                                 | Testing web apps, filling forms, automating sites without an API                    |
-| [GitHub Actions](./github-actions.md) | Runs Claude in your CI pipeline                                                    | Automated PR reviews, issue triage, scheduled maintenance                           |
-| [GitLab CI/CD](./gitlab-ci-cd.md)     | Same as GitHub Actions for GitLab                                                  | CI-driven automation on GitLab                                                      |
-| [Code Review](./code-review.md)       | Reviews every PR automatically                                                     | Catching bugs before human review                                                   |
-| [Slack](./slack.md)                   | Responds to `@Claude` mentions in your channels                                    | Turning bug reports into pull requests from team chat                               |
-| [Claude Tag](./claude-tag.md)         | Runs `@Claude` as your organization's shared identity with admin-configured access | Shared team access on Team and Enterprise plans, instead of per-user Slack sessions |
+| Integration                                      | What it does                                                                       | Use it for                                                                          |
+| :----------------------------------------------- | :--------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
+| [Chrome](./chrome.md)                             | Controls your browser with your logged-in sessions                                 | Testing web apps, filling forms, automating sites without an API                    |
+| [GitHub Actions](./github-actions.md)             | Runs Claude in your CI pipeline                                                    | Automated PR reviews, issue triage, scheduled maintenance                           |
+| [GitLab CI/CD](./gitlab-ci-cd.md)                 | Same as GitHub Actions for GitLab                                                  | CI-driven automation on GitLab                                                      |
+| [Code Review](./code-review.md)                   | Reviews every PR automatically                                                     | Catching bugs before human review                                                   |
+| [Slack](./slack.md)                               | Responds to `@Claude` mentions in your channels                                    | Turning bug reports into pull requests from team chat                               |
+| [Claude Tag](https://claude.com/docs/claude-tag) | Runs `@Claude` as your organization's shared identity with admin-configured access | Shared team access on Team and Enterprise plans, instead of per-user Slack sessions |
 
 For integrations not listed here, [MCP servers](./mcp.md) and [connectors](./desktop.md#connect-external-tools) let you connect almost anything: Linear, Notion, Google Drive, or your own internal APIs.
 
@@ -75,7 +75,7 @@ If you're not sure where to start, [install the CLI](./quickstart.md) and run it
 * [GitLab CI/CD](./gitlab-ci-cd.md): the same for GitLab
 * [Code Review](./code-review.md): automatic review on every pull request
 * [Slack](./slack.md): send tasks from team chat, get PRs back
-* [Claude Tag](./claude-tag.md): run `@Claude` as your organization's shared identity on Team and Enterprise plans
+* [Claude Tag](https://claude.com/docs/claude-tag): run `@Claude` as your organization's shared identity on Team and Enterprise plans
 
 ### Remote access
 

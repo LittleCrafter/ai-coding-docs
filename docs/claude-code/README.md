@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 210
+- **Pages mirrored:** 209
 - **Version:** 2.1.282
-- **Last updated:** 2026-09-25T02:00:55Z
+- **Last updated:** 2026-09-25T08:14:43Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -41,7 +41,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Claude Code on Claude Platform on AWS | [claude-platform-on-aws.md](./claude-platform-on-aws.md) | [source](<https://code.claude.com/docs/en/claude-platform-on-aws>) |
 | Let Claude coordinate ongoing work with Projects | [claude-projects.md](./claude-projects.md) | [source](<https://code.claude.com/docs/en/claude-projects>) |
 | Scan your codebase for vulnerabilities | [claude-security.md](./claude-security.md) | [source](<https://code.claude.com/docs/en/claude-security>) |
-| Claude Tag | [claude-tag.md](./claude-tag.md) | [source](<https://code.claude.com/docs/en/claude-tag>) |
 | CLI reference | [cli-reference.md](./cli-reference.md) | [source](<https://code.claude.com/docs/en/cli-reference>) |
 | Configure cloud environments | [cloud-environments.md](./cloud-environments.md) | [source](<https://code.claude.com/docs/en/cloud-environments>) |
 | Code Review | [code-review.md](./code-review.md) | [source](<https://code.claude.com/docs/en/code-review>) |
