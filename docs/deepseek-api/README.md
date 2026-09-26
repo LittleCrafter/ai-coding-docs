@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 52
-- **Last updated:** 2026-09-26T08:04:08Z
+- **Last updated:** 2026-09-26T18:08:32Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -53,7 +53,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DeepSeek-V2.5: A New Open-Source Model Combining General and Coding Capabilities | [news/news0905.md](./news/news0905.md) | [source](<https://api-docs.deepseek.com/news/news0905>) |
 | 🚀 DeepSeek-R1-Lite-Preview is now live: unleashing supercharged reasoning power! | [news/news1120.md](./news/news1120.md) | [source](<https://api-docs.deepseek.com/news/news1120>) |
 | 🚀 DeepSeek V2.5: The Grand Finale 🎉 | [news/news1210.md](./news/news1210.md) | [source](<https://api-docs.deepseek.com/news/news1210>) |
-| 🚀 Introducing DeepSeek-V3 | [news/news1226.md](./news/news1226.md) | [source](<https://api-docs.deepseek.com/news/news1226>) |
+| Your First API Call | [news/news1226.md](./news/news1226.md) | [source](<https://api-docs.deepseek.com/news/news1226>) |
 | Introducing DeepSeek App | [news/news250115.md](./news/news250115.md) | [source](<https://api-docs.deepseek.com/news/news250115>) |
 | Your First API Call | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
 | DeepSeek-V3-0324 Release | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |

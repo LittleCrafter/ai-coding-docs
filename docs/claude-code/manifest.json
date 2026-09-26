@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.283",
-  "last_updated": "2026-09-26T08:02:47Z",
+  "last_updated": "2026-09-26T18:07:14Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -720,8 +720,8 @@
       "source_url": "https://code.claude.com/docs/en/cross-session-messaging",
       "source_md_url": "https://code.claude.com/docs/en/cross-session-messaging.md",
       "source_id": "cross-session-messaging",
-      "hash": "37a8f980d4bd79342499b4035a6cefc05b760aa1019a94147496430039ce68bb",
-      "last_updated": "2026-09-15T23:14:42Z"
+      "hash": "5d819a2ada841b3ae9f7e917d468fb670a9c396e86976d4cf475da73ed055e07",
+      "last_updated": "2026-09-26T18:07:14Z"
     },
     "data-usage": {
       "slug": "data-usage",
@@ -2095,8 +2095,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-26T08:02:47Z",
-    "fetch_duration_seconds": 75.883,
+    "last_fetch_completed": "2026-09-26T18:07:14Z",
+    "fetch_duration_seconds": 76.581,
     "total_pages_discovered": 209,
     "pages_fetched_successfully": 209,
     "pages_failed": 0,
