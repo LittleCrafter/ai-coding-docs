@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.18.32",
-  "last_updated": "2026-09-25T19:01:44Z",
+  "last_updated": "2026-09-26T13:28:18Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -120,8 +120,8 @@
       "source_url": "https://opencode.ai/docs/go",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/go.mdx",
       "source_id": "packages/web/src/content/docs/go.mdx",
-      "hash": "5fbf70fc5b34c82cad4bb26fa7d896fc36306d9a89d877232947f83781194b49",
-      "last_updated": "2026-09-25T19:01:44Z"
+      "hash": "d560860ac60f7aec11a9c9bb7a15ffba3662be7b6cd3d0962542885915e93c84",
+      "last_updated": "2026-09-26T13:28:18Z"
     },
     "ide": {
       "slug": "ide",
@@ -360,13 +360,13 @@
       "source_url": "https://opencode.ai/docs/zen",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/zen.mdx",
       "source_id": "packages/web/src/content/docs/zen.mdx",
-      "hash": "275a2da91168187b81e7a3061714bcd96c65ce2acdc9e684e0ac588678ed8827",
-      "last_updated": "2026-09-25T14:16:11Z"
+      "hash": "7b152ad92e355ef37a5dee7e68d24454ac688f9e7e46bec2f5ec0cba61d1956a",
+      "last_updated": "2026-09-26T13:28:18Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-25T19:01:44Z",
-    "fetch_duration_seconds": 12.325,
+    "last_fetch_completed": "2026-09-26T13:28:18Z",
+    "fetch_duration_seconds": 12.262,
     "total_pages_discovered": 36,
     "pages_fetched_successfully": 36,
     "pages_failed": 0,
