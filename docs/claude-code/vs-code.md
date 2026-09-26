@@ -219,10 +219,16 @@ If you run [cloud sessions](./claude-code-on-the-web.md), you can resume them di
    The dialog shows two tabs: Local and Web. Click **Web** to see sessions from claude.ai.
 3. **Select a session to resume**
 
-   Browse or search your cloud sessions. Click any session to download it and continue the conversation locally.
+   Browse or search the sessions. Click one to continue the conversation locally.
 
 > [!NOTE]
-> Only cloud sessions started with a GitHub repository appear in the Web tab. Resuming loads the conversation history locally; changes are not synced back to claude.ai.
+> When the folder you have open is a GitHub repository, the Web tab shows only sessions from that repository.
+>
+> When you resume a cloud session, the extension downloads a copy of the conversation history; changes don't sync back to claude.ai.
+
+The Web tab also lists your [Remote Control](./remote-control.md) sessions. If you click one that ran in the folder you have open, the extension opens that local conversation instead of downloading a copy, and focuses the tab already showing it if there is one. If the extension can't rule out that another Claude process has the conversation open, you get a downloaded copy instead.
+
+If any part of a conversation fails to download, an error appears and no copy is saved. Select the session again to retry. If you select a session that has no conversation to download yet, an error tells you where to continue it instead.
 
 ### Check account and usage
 
@@ -628,6 +634,8 @@ When the extension is active, it runs a local MCP server that the CLI connects t
 The server is named `ide` and is hidden from `/mcp` because there's nothing to configure. If your organization uses a `PreToolUse` hook to allowlist MCP tools, though, you'll need to know it exists.
 
 **Selection and open-file context.** While connected, the CLI includes your current editor selection and the path of the active file as context on each prompt you send. The transcript shows a `⧉ Selected N lines from <file>` line when this happens.
+
+If you [queue a message while Claude works](./interactive-mode.md#queue-messages-while-claude-works), it keeps the selection you had when you pressed `Enter`, whatever you select afterward.
 
 To exclude a sensitive file such as `.env`, add a [`Read` deny rule](./permissions.md#read-and-edit) for its path. A matching deny rule prevents both the selected text and the open-file notice for that file from reaching Claude.
 
