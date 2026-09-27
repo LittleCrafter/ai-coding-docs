@@ -46,14 +46,14 @@ for examples and approval tradeoffs.
 | `approval_policy.granular.skill_approval` | `boolean` | When `true`, skill-script approval prompts are allowed to surface. |
 | `approvals_reviewer` | `user \| auto_review` | Who reviews eligible approval prompts under `on-request` or granular approval policies. Defaults to `user`; `auto_review` uses the reviewer subagent. This setting doesn't change sandboxing or review actions already allowed inside the sandbox. |
 | `auto_review.policy` | `string` | Local Markdown policy instructions for automatic review. Managed `guardian_policy_config` takes precedence. Blank values are ignored. |
+| `auto_review.extra_policy` | `string` | Additional local Markdown policy for automatic review, included alongside the main policy. Managed `guardian_extra_policy` takes precedence. Blank values are ignored. |
 | `allow_login_shell` | `boolean` | Allow shell-based tools to use login-shell semantics. Defaults to `true`; when `false`, `login = true` requests are rejected and omitted `login` defaults to non-login shells. |
 | `sandbox_mode` | `read-only \| workspace-write \| danger-full-access` | Sandbox policy for filesystem and network access during command execution. |
 | `sandbox_workspace_write.writable_roots` | `array<string>` | Additional writable roots when `sandbox_mode = "workspace-write"`. |
 | `sandbox_workspace_write.network_access` | `boolean` | Allow outbound network access inside the workspace-write sandbox. |
 | `sandbox_workspace_write.exclude_tmpdir_env_var` | `boolean` | Exclude `$TMPDIR` from writable roots in workspace-write mode. |
 | `sandbox_workspace_write.exclude_slash_tmp` | `boolean` | Exclude `/tmp` from writable roots in workspace-write mode. |
-| `windows.sandbox` | `unelevated \| elevated` | Windows-only native sandbox mode when running Codex natively on Windows. |
-| `windows.sandbox_private_desktop` | `boolean` | Run the final sandboxed child process on a private desktop by default on native Windows. Set `false` only for compatibility with the older `Winsta0\\Default` behavior. |
+| `windows.sandbox` | `unelevated \| elevated \| mxc` | Windows-only native sandbox mode when running Codex natively on Windows. |
 | `browser_use.allow_history_access` | `boolean` | Set to `false` to restrict browser-history access. Managed requirements can enforce this restriction. |
 | `browser_use.default_origin_policy` | `table` | Fallback browser-origin restrictions. Supports `access`, `uploads`, `downloads`, and `full_cdp_access`, each set to `allow` or `deny`. |
 | `browser_use.origins.<origin>` | `table` | Per-origin browser restrictions with the same fields as `browser_use.default_origin_policy`. Include an HTTP or HTTPS scheme and optional port; omit paths, queries, and fragments. Local values cannot relax managed denies. |
@@ -398,10 +398,18 @@ from either one wins.
 | `allowed_approval_policies` | `array<string>` | Allowed approval policies, such as `on-request`, `never`, and `granular`. Include `untrusted` to permit the stricter policy derived from an untrusted project; it cannot be selected directly with `approval_policy`. |
 | `allowed_approvals_reviewers` | `array<string>` | Allowed values for `approvals_reviewer`, such as `user` and `auto_review`. |
 | `guardian_policy_config` | `string` | Managed Markdown policy instructions for automatic review. This takes precedence over local `[auto_review].policy`. Blank values are ignored. |
+| `guardian_extra_policy` | `string` | Additional managed Markdown policy for automatic review, included alongside the main policy. This takes precedence over local `[auto_review].extra_policy`. Blank values are ignored. |
+| `additional_developer_instructions` | `string` | Managed developer instructions added as a separate developer message. Codex rejects instructions that exceed a limit of 10,000 estimated tokens, including context markers. |
+| `auto_review` | `table` | Managed automatic-review requirements. |
+| `auto_review.required_on_models` | `array<string>` | Model slugs that must use automatic review. Slugs must be non-empty, omit provider namespaces, and have no surrounding whitespace. Lists from multiple requirements sources are combined. |
+| `auto_review.ignore_rules` | `array<string>` | Full model slugs for which Codex ignores `allow` prefix rules in command execution policy. Match the slug exactly, including its provider namespace when present; unlike `required_on_models`, this does not accept a namespace-free alias. Deny and network rules still apply. |
 | `allowed_permission_profiles` | `table<boolean>` | Complete list of allowed permission profiles. Profiles set to `true` are allowed. Profiles that are omitted or set to `false` are denied, including profiles added in future versions. When requirements sources are combined, entries are matched by profile name. |
 | `allowed_permission_profiles.<name>` | `boolean` | Allow or deny a built-in or custom permission profile defined in a loaded config or requirements source. A later, higher-precedence requirements source can use `false` to turn off a profile allowed by an earlier, lower-precedence source. |
 | `default_permissions` | `string` | Managed default permission profile. The profile must be allowed by `allowed_permission_profiles`. Set this explicitly for predictable behavior; if omitted, Codex defaults to `:workspace` only when both `:workspace` and `:read-only` are explicitly allowed. |
 | `enforce_residency` | `string` | Require Codex service traffic to use a supported data residency. Currently accepts `us`. |
+| `model_provider` | `string` | Enforce the model provider ID, overriding local and session configuration. |
+| `model_providers` | `map<string, table>` | Managed model provider definitions. Each entry replaces the complete configured provider with the same ID; fields aren't merged with the user's definition. Providers with other IDs remain available. |
+| `model_providers.<id>` | `table` | Complete managed provider definition. Uses the same provider fields as `config.toml`, including `name`, `base_url`, authentication, and transport settings. |
 | `models` | `table` | Contains the `[models.new_thread]` table. |
 | `models.new_thread` | `table` | Optional defaults to apply when a new local thread starts. They take priority over user and project defaults, but can be superseded by explicit overrides. |
 | `models.new_thread.model` | `string` | Default model for new threads. An explicit override of either the model or reasoning effort causes both fields to be ignored. |
@@ -411,8 +419,7 @@ from either one wins.
 | `permissions.<name>` | `table` | Admin-defined permission profile. The name can't start with `:`, use the reserved name `filesystem`, or duplicate a profile from a loaded config. Uses the same profile fields as `config.toml`; see the Permissions guide for the complete profile schema. |
 | `allowed_sandbox_modes` | `array<string>` | Allowed values for `sandbox_mode`. |
 | `windows` | `table` | Native Windows sandbox requirements. |
-| `windows.allowed_sandbox_implementations` | `array<string>` | Allowed native Windows sandbox implementations for `windows.sandbox` (`elevated` and `unelevated`). The list must not be empty. When both are allowed and no mode is selected, Codex prefers `elevated`. |
-| `windows.sandbox_private_desktop` | `boolean` | Enforce whether the native Windows sandbox starts its child process on a private desktop. |
+| `windows.allowed_sandbox_implementations` | `array<string>` | Allowed legacy native Windows sandbox implementations (`elevated` and `unelevated`). The list must not be empty. When both are allowed and no mode is selected, Codex prefers `elevated`. This list does not restrict the `mxc` sandbox when it is available. |
 | `remote_sandbox_config` | `array<table>` | Host-specific sandbox requirements. The first entry whose `hostname_patterns` match the resolved host name overrides top-level `allowed_sandbox_modes` for that requirements source. Host-specific entries currently override sandbox modes only. |
 | `remote_sandbox_config[].hostname_patterns` | `array<string>` | Case-insensitive host name patterns. Supports `*` for any sequence of characters and `?` for one character. |
 | `remote_sandbox_config[].allowed_sandbox_modes` | `array<string>` | Allowed sandbox modes to apply when this host-specific entry matches. |
@@ -427,6 +434,9 @@ from either one wins.
 | `features.apps` | `boolean` | Pin Apps integration availability on or off for managed users. |
 | `features.in_app_updates` | `boolean` | Set to `false` in `requirements.toml` to disable in-app updates. Updates remain enabled by default when this requirement is omitted. |
 | `features.in_app_browser` | `boolean` | Set to `false` in `requirements.toml` to disable the built-in browser pane that users open and control directly. |
+| `features.in_app_chat` | `boolean` | Set to `false` to hide ChatGPT and ChatGPT Work conversation screens and related cloud automation UI in the ChatGPT desktop app. This setting does not block ChatGPT Voice or stop existing cloud tasks. Setting it to `true` does not bypass account, workspace-permission, or rollout checks. |
+| `features.in_app_dictation` | `boolean` | Set to `false` to disable in-app dictation in the desktop app. Setting it to `true` does not bypass other availability checks. |
+| `features.in_app_local_automation` | `boolean` | Set to `false` to disable local scheduled tasks in the desktop app. Setting it to `true` does not bypass other availability checks. |
 | `features.browser_use` | `boolean` | Set to `false` in `requirements.toml` to disable agent-driven Browser Use. |
 | `features.browser_use_external` | `boolean` | Set to `false` in `requirements.toml` to prevent Codex from operating supported browsers through the ChatGPT browser extension, including existing tabs and signed-in sessions. |
 | `features.browser_use_full_cdp_access` | `boolean` | Set to `false` in `requirements.toml` to disable full Chrome DevTools Protocol access in the local runtime, including Browser Developer mode, and prevent the ChatGPT desktop app from enabling the corresponding setting. If omitted, normal product availability applies. |
@@ -436,6 +446,7 @@ from either one wins.
 | `features.multi_agent` | `boolean` | Pin multi-agent availability on or off for managed users. |
 | `features.plugins` | `boolean` | Pin plugin availability on or off for managed users. |
 | `features.remote_plugin` | `boolean` | Pin remote plugin catalog availability on or off for managed users. |
+| `features.realtime_conversation` | `boolean` | Set to `false` to disable the experimental `/voice` command in the Codex CLI. Do not rely on this setting to block [ChatGPT Voice](../features/voice.md) in the desktop app or app-server voice sessions. Setting it to `true` does not bypass client or rollout checks. |
 | `features.computer_use` | `boolean` | Set to `false` in `requirements.toml` to disable Computer Use, Record & Replay, and related install or enablement flows. |
 | `features.workspace_dependencies` | `boolean` | Pin bundled workspace-dependency runtime availability on or off for managed users. |
 | `in_app_browser` | `table` | Requirements for the built-in browser pane. These settings do not control agent-driven Browser Use. |
@@ -484,10 +495,12 @@ from either one wins.
 | `experimental_network.dangerously_allow_non_loopback_proxy` | `boolean` | Permit non-loopback listener addresses for `[experimental_network]` requirements. Enabling it can expose listeners beyond localhost. |
 | `experimental_network.dangerously_allow_all_unix_sockets` | `boolean` | Permit arbitrary Unix socket destinations instead of allowlist-only access. Use only in tightly controlled environments. |
 | `experimental_network.domains` | `map<string, allow \| deny>` | Map-shaped administrator domain policy for sandboxed networking. Supports exact hosts, `*.example.com` for subdomains only, `**.example.com` for apex plus subdomains, and global `*` allow rules; prefer scoped rules because `*` broadly opens public outbound access. `deny` wins on conflicts. Do not combine this with `experimental_network.allowed_domains` or `experimental_network.denied_domains`. |
+| `experimental_network.domains.<pattern>` | `allow \| deny` | Allow or deny sandboxed network access for the matching domain pattern. A deny rule wins when several patterns match. |
 | `experimental_network.allowed_domains` | `array<string>` | Administrator allow rules for sandboxed-command networking while the managed network proxy is enabled. These rules do not apply to web search, apps, or MCP servers. Do not combine this with `experimental_network.domains`. |
 | `experimental_network.denied_domains` | `array<string>` | List-shaped administrator deny rules for sandboxed networking. Do not combine this with `experimental_network.domains`. |
 | `experimental_network.managed_allowed_domains_only` | `boolean` | When `true`, only administrator-managed allow rules remain effective while sandboxed networking requirements are active; user allowlist additions are ignored. Without managed allow rules, user-added domain allow rules do not remain effective. |
-| `experimental_network.unix_sockets` | `map<string, allow \| deny>` | Administrator-managed Unix socket policy for sandboxed networking. |
+| `experimental_network.unix_sockets` | `map<string, allow \| deny>` | Administrator-managed Unix socket allowlist for sandboxed networking on macOS. Paths must be absolute. |
+| `experimental_network.unix_sockets.<path>` | `allow \| deny` | On macOS, `allow` adds an absolute Unix socket path to the allowlist; `deny` leaves it out. A `deny` entry cannot block a socket when allow-all Unix sockets is enabled. |
 | `experimental_network.allow_local_binding` | `boolean` | Permit broader local/private-network access for sandboxed networking. Exact local IP literal or `localhost` allow rules can still permit specific local targets when this stays `false`. |
 | `hooks` | `table` | Admin-enforced managed lifecycle hooks. Requires a managed hook directory and uses the same event schema as inline `[hooks]` in `config.toml`. |
 | `hooks.managed_dir` | `string (absolute path)` | Directory containing managed hook scripts on macOS and Linux. Codex validates that it is absolute and exists before loading managed hooks. |
