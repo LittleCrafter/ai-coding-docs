@@ -10,17 +10,17 @@ This page covers Agent SDK errors in CLI startup, CLI process exit, and structur
 
 Symptoms tied to a feature, such as a hook not firing or a skill not being used, have a troubleshooting section on that feature's page. The table names the section or page that covers each symptom:
 
-| Symptom                                                                                                                                                                                                                                                                               | Go to                                                                                                                          |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------- |
-| Skills not found, a skill not being used, `Invalid skill name` error                                                                                                                                                                                                                  | [Skills troubleshooting](./skills.md#troubleshooting)                                                                 |
-| MCP server shows `failed` status, tools not being called, connection timeouts, tool output that exceeds the maximum allowed tokens                                                                                                                                                    | [MCP troubleshooting](./mcp.md#troubleshooting)                                                                       |
-| Plugin not loading, plugin skills not appearing                                                                                                                                                                                                                                       | [Plugins troubleshooting](./plugins.md#troubleshooting)                                                               |
-| Claude not delegating to subagents, filesystem-based agents not loading                                                                                                                                                                                                               | [Subagents troubleshooting](./subagents.md#troubleshooting)                                                           |
-| Checkpointing options not recognized, user messages without UUIDs, `No file checkpoint found`, `File rewinding is not enabled`, `ProcessTransport is not ready for writing`                                                                                                           | [File checkpointing troubleshooting](./file-checkpointing.md#troubleshooting)                                         |
-| Hook not firing, matcher not filtering as expected, hook timeout, tool blocked unexpectedly, modified input not applied, session hooks not available in Python, subagent permission prompts multiplying, recursive hook loops with subagents, `systemMessage` not appearing in output | [Fix common issues](./hooks.md#fix-common-issues) on the hooks page                                                   |
-| An agent that works on your machine fails in a deployed service or container                                                                                                                                                                                                          | [Troubleshoot deployment failures](./hosting.md#troubleshoot-deployment-failures)                                     |
-| `Not logged in`, `Invalid API key`, `API Error`, `429`, `There's an issue with the selected model`                                                                                                                                                                                    | [Error reference](../errors.md#find-your-error)                                                                                  |
-| `CLINotFoundError`, `CLIConnectionError`, `ProcessError`, `Claude Code process exited with code N`, `Claude Code returned an error result`, `structured_output` is `None`                                                                                                             | [CLI startup](#cli-startup), [CLI process exit](#cli-process-exit), and [Structured outputs](#structured-outputs) on this page |
+| Symptom | Go to |
+| :- | :- |
+| Skills not found, a skill not being used, `Invalid skill name` error | [Skills troubleshooting](./skills.md#troubleshooting) |
+| MCP server shows `failed` status, tools not being called, connection timeouts, tool output that exceeds the maximum allowed tokens | [MCP troubleshooting](./mcp.md#troubleshooting) |
+| Plugin not loading, plugin skills not appearing | [Plugins troubleshooting](./plugins.md#troubleshooting) |
+| Claude not delegating to subagents, filesystem-based agents not loading | [Subagents troubleshooting](./subagents.md#troubleshooting) |
+| Checkpointing options not recognized, user messages without UUIDs, `No file checkpoint found`, `File rewinding is not enabled`, `ProcessTransport is not ready for writing` | [File checkpointing troubleshooting](./file-checkpointing.md#troubleshooting) |
+| Hook not firing, matcher not filtering as expected, hook timeout, tool blocked unexpectedly, modified input not applied, session hooks not available in Python, subagent permission prompts multiplying, recursive hook loops with subagents, `systemMessage` not appearing in output | [Fix common issues](./hooks.md#fix-common-issues) on the hooks page |
+| An agent that works on your machine fails in a deployed service or container | [Troubleshoot deployment failures](./hosting.md#troubleshoot-deployment-failures) |
+| `Not logged in`, `Invalid API key`, `API Error`, `429`, `There's an issue with the selected model` | [Error reference](../errors.md#find-your-error) |
+| `CLINotFoundError`, `CLIConnectionError`, `ProcessError`, `Claude Code process exited with code N`, `Claude Code returned an error result`, `structured_output` is `None` | [CLI startup](#cli-startup), [CLI process exit](#cli-process-exit), and [Structured outputs](#structured-outputs) on this page |
 
 ## CLI startup
 
@@ -72,12 +72,12 @@ Before `claude-agent-sdk` 0.2.124, the Python SDK spawned batch scripts through 
 
 The SDK found a file at the resolved path but couldn't launch it. Python raises these failures as a `CLIConnectionError`. TypeScript rejects the message iteration with an error carrying no SDK class. The table below maps each message to what it tells you. Match the message you see:
 
-| Message                                                           | SDK        | What it tells you                                                    |
-| ----------------------------------------------------------------- | ---------- | -------------------------------------------------------------------- |
-| `Failed to start Claude Code: <detail>`                           | Python     | The rest of the message is the operating system's own error          |
-| `Claude Code executable at <path> exists but failed to launch`    | TypeScript | The script at the configured path can't run                          |
+| Message | SDK | What it tells you |
+| - | - | - |
+| `Failed to start Claude Code: <detail>` | Python | The rest of the message is the operating system's own error |
+| `Claude Code executable at <path> exists but failed to launch` | TypeScript | The script at the configured path can't run |
 | `Claude Code native binary at <path> exists but failed to launch` | TypeScript | The binary can't run, with a libc suggestion appended to the message |
-| `Failed to spawn Claude Code process: <detail>`                   | TypeScript | Any other launch failure                                             |
+| `Failed to spawn Claude Code process: <detail>` | TypeScript | Any other launch failure |
 
 In both SDKs, the usual cause is a resolved path that points at something that can't run, such as a text file, a directory, or a file without execute permission. Read the native-binary message's libc suggestion as one possible cause.
 

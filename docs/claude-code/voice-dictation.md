@@ -35,12 +35,12 @@ Voice mode enabled (hold). Hold space to record. Dictation language: en (/config
 
 `/voice` accepts an optional mode argument:
 
-| Command       | Effect                                        |
-| :------------ | :-------------------------------------------- |
-| `/voice`      | Toggle on or off, keep the current mode       |
-| `/voice hold` | Enable in [hold mode](#hold-to-record)        |
-| `/voice tap`  | Enable in [tap mode](#tap-to-record-and-send) |
-| `/voice off`  | Disable                                       |
+| Command | Effect |
+| :- | :- |
+| `/voice` | Toggle on or off, keep the current mode |
+| `/voice hold` | Enable in [hold mode](#hold-to-record) |
+| `/voice tap` | Enable in [tap mode](#tap-to-record-and-send) |
+| `/voice off` | Disable |
 
 Voice dictation persists across sessions. Set it directly in your [user settings file](./settings.md) instead of running `/voice`:
 
@@ -106,28 +106,28 @@ Voice dictation uses the same [`language` setting](./settings-reference.md#langu
 
 **Supported dictation languages**
 
-| Language   | Code |
-| :--------- | :--- |
-| Czech      | `cs` |
-| Danish     | `da` |
-| Dutch      | `nl` |
-| English    | `en` |
-| French     | `fr` |
-| German     | `de` |
-| Greek      | `el` |
-| Hindi      | `hi` |
+| Language | Code |
+| :- | :- |
+| Czech | `cs` |
+| Danish | `da` |
+| Dutch | `nl` |
+| English | `en` |
+| French | `fr` |
+| German | `de` |
+| Greek | `el` |
+| Hindi | `hi` |
 | Indonesian | `id` |
-| Italian    | `it` |
-| Japanese   | `ja` |
-| Korean     | `ko` |
-| Norwegian  | `no` |
-| Polish     | `pl` |
+| Italian | `it` |
+| Japanese | `ja` |
+| Korean | `ko` |
+| Norwegian | `no` |
+| Polish | `pl` |
 | Portuguese | `pt` |
-| Russian    | `ru` |
-| Spanish    | `es` |
-| Swedish    | `sv` |
-| Turkish    | `tr` |
-| Ukrainian  | `uk` |
+| Russian | `ru` |
+| Spanish | `es` |
+| Swedish | `sv` |
+| Turkish | `tr` |
+| Ukrainian | `uk` |
 
 Set the language in `/config` or directly in settings. You can use either the [BCP 47 language code](https://en.wikipedia.org/wiki/IETF_language_tag) or the language name:
 

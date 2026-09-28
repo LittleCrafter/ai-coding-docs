@@ -37,16 +37,16 @@ The session doesn't close when the branch is pushed. PR creation and further edi
 
 Claude Code behaves the same everywhere. What changes is where the session runs and whether your local configuration is available:
 
-|                                              | Cloud session                                                                                                  | Local session                                                                                                                      | Local session with [Remote Control](./remote-control.md)         |
-| :------------------------------------------- | :------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------- |
-| **Code runs on**                             | Cloud VM, Anthropic-managed by default                                                                         | Your machine                                                                                                                       | Your machine                                                    |
-| **You start it from**                        | claude.ai/code, the Claude mobile app, the Desktop app with **Cloud** selected, or `claude --cloud`            | Your terminal, your IDE, or the Desktop app with **Local** selected                                                                | Your terminal, the VS Code extension, or the Desktop app        |
-| **You chat from**                            | claude.ai, the mobile app, or the Desktop app                                                                  | Where you started it                                                                                                               | claude.ai or the mobile app, as well as where you started it    |
-| **Uses your local config**                   | No, repo only                                                                                                  | Yes                                                                                                                                | Yes                                                             |
-| **Requires GitHub**                          | Yes, or [bundle a local repo](./claude-code-on-the-web.md#send-local-repositories-without-github) via `--cloud` | No                                                                                                                                 | No                                                              |
-| **Keeps running if you disconnect**          | Yes                                                                                                            | No                                                                                                                                 | While the session stays open on your machine                    |
-| **[Permission modes](./permission-modes.md)** | Accept edits, Plan, Auto                                                                                       | All modes in the terminal; see [Switch permission modes](./permission-modes.md#switch-permission-modes) for the IDE and Desktop app | Manual, Accept edits, or Plan from claude.ai and the mobile app |
-| **Network access**                           | Configurable per environment                                                                                   | Your machine's network                                                                                                             | Your machine's network                                          |
+| | Cloud session | Local session | Local session with [Remote Control](./remote-control.md) |
+| :- | :- | :- | :- |
+| **Code runs on** | Cloud VM, Anthropic-managed by default | Your machine | Your machine |
+| **You start it from** | claude.ai/code, the Claude mobile app, the Desktop app with **Cloud** selected, or `claude --cloud` | Your terminal, your IDE, or the Desktop app with **Local** selected | Your terminal, the VS Code extension, or the Desktop app |
+| **You chat from** | claude.ai, the mobile app, or the Desktop app | Where you started it | claude.ai or the mobile app, as well as where you started it |
+| **Uses your local config** | No, repo only | Yes | Yes |
+| **Requires GitHub** | Yes, or [bundle a local repo](./claude-code-on-the-web.md#send-local-repositories-without-github) via `--cloud` | No | No |
+| **Keeps running if you disconnect** | Yes | No | While the session stays open on your machine |
+| **[Permission modes](./permission-modes.md)** | Accept edits, Plan, Auto | All modes in the terminal; see [Switch permission modes](./permission-modes.md#switch-permission-modes) for the IDE and Desktop app | Manual, Accept edits, or Plan from claude.ai and the mobile app |
+| **Network access** | Configurable per environment | Your machine's network | Your machine's network |
 
 See the [terminal quickstart](./quickstart.md), [Desktop app](./desktop.md), or [Remote Control](./remote-control.md) docs to set up local sessions.
 
@@ -147,12 +147,12 @@ With GitHub connected and an environment created, you're ready to submit tasks.
 
 You can prefill the prompt, repositories, and environment for a new session by adding query parameters to the [claude.ai/code](https://claude.ai/code) URL. Use this to build integrations such as a button in your issue tracker that opens Claude Code with the issue description as the prompt.
 
-| Parameter      | Description                                                                                                                                                      |
-| :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `prompt`       | Prompt text to prefill in the input box. The alias `q` is also accepted.                                                                                         |
-| `prompt_url`   | URL to fetch the prompt text from, for prompts too long to embed in a query string. The URL must allow cross-origin requests. Ignored when `prompt` is also set. |
-| `repositories` | Comma-separated list of `owner/repo` slugs to preselect. The alias `repo` is also accepted.                                                                      |
-| `environment`  | Name or ID of the [environment](#connect-github) to preselect.                                                                                                   |
+| Parameter | Description |
+| :- | :- |
+| `prompt` | Prompt text to prefill in the input box. The alias `q` is also accepted. |
+| `prompt_url` | URL to fetch the prompt text from, for prompts too long to embed in a query string. The URL must allow cross-origin requests. Ignored when `prompt` is also set. |
+| `repositories` | Comma-separated list of `owner/repo` slugs to preselect. The alias `repo` is also accepted. |
+| `environment` | Name or ID of the [environment](#connect-github) to preselect. |
 
 URL-encode each value. The example below opens the form with a prompt and a repository already selected:
 

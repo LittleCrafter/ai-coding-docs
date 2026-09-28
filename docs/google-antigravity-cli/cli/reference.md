@@ -32,6 +32,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **`/open <path>`** | Utilities | — | Force the path to open inside your default system editor. |
 | **[`/permissions`](./commands/permissions.md)** | Configurations | — | Open the interactive tool permissions manager panel. |
 | **`/planning`** | Configurations | — | Enable multi-turn plan generation mode for complex engineering tasks. |
+| **[`/plugin`](https://antigravity.google/docs/plugins?tab=cli)** | Tools & Tasks | `/plugins` | Open the interactive [Plugins Manager](https://antigravity.google/docs/marketplace?tab=cli) or run inline `install`, `uninstall`, `enable`, `disable`, and `list` commands. |
 | **`/rename <name>`** | Conversations | — | Rename the current session thread. |
 | **[`/remote-control`](https://antigravity.google/docs/remote-control?tab=cli#interactive-mode) \[on/off\]** | Utilities | — | Toggle Remote Control for the active terminal session. |
 | **[`/resume`](./commands/resume.md)** | Conversations | `/switch`, `/conversation` | Open the [conversation picker overlay](./commands/resume.md) to select and load previous threads. |

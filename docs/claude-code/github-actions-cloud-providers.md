@@ -89,16 +89,16 @@ Beyond the prerequisites, you create a GitHub identity for the Claude Code GitHu
 
    In the repository where the Claude Code GitHub Action runs, add the secrets for your provider, plus the two app secrets if you created a custom GitHub App in the first step. See GitHub's guide to [using secrets in GitHub Actions](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 
-   | Secret                           | Needed for                    | Value                                       |
-   | -------------------------------- | ----------------------------- | ------------------------------------------- |
-   | `AWS_ROLE_TO_ASSUME`             | Amazon Bedrock                | The ARN of the IAM role                     |
-   | `GCP_WORKLOAD_IDENTITY_PROVIDER` | Google Cloud's Agent Platform | The provider's full resource name           |
-   | `GCP_SERVICE_ACCOUNT`            | Google Cloud's Agent Platform | The service account's email address         |
-   | `AZURE_CLIENT_ID`                | Microsoft Foundry             | The Entra application's client ID           |
-   | `AZURE_TENANT_ID`                | Microsoft Foundry             | Your Microsoft Entra tenant ID              |
-   | `AZURE_SUBSCRIPTION_ID`          | Microsoft Foundry             | Your Azure subscription ID                  |
-   | `APP_ID`                         | Custom GitHub App             | The GitHub App's ID                         |
-   | `APP_PRIVATE_KEY`                | Custom GitHub App             | The contents of the `.pem` private key file |
+   | Secret | Needed for | Value |
+   | - | - | - |
+   | `AWS_ROLE_TO_ASSUME` | Amazon Bedrock | The ARN of the IAM role |
+   | `GCP_WORKLOAD_IDENTITY_PROVIDER` | Google Cloud's Agent Platform | The provider's full resource name |
+   | `GCP_SERVICE_ACCOUNT` | Google Cloud's Agent Platform | The service account's email address |
+   | `AZURE_CLIENT_ID` | Microsoft Foundry | The Entra application's client ID |
+   | `AZURE_TENANT_ID` | Microsoft Foundry | Your Microsoft Entra tenant ID |
+   | `AZURE_SUBSCRIPTION_ID` | Microsoft Foundry | Your Azure subscription ID |
+   | `APP_ID` | Custom GitHub App | The GitHub App's ID |
+   | `APP_PRIVATE_KEY` | Custom GitHub App | The contents of the `.pem` private key file |
 4. **Create the workflow file**
 
    Create a workflow file for your provider, such as `.github/workflows/claude.yml`. Each example responds to `@claude` mentions, authenticates to GitHub with a custom app, and includes the `id-token: write` permission, which GitHub requires to issue the OIDC token that your cloud provider exchanges for credentials.

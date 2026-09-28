@@ -260,25 +260,25 @@ On the Claude API, the program prints `First turn model: claude-sonnet-5`, then 
 
 The table below maps each option to the feature it configures. For options this page doesn't cover, see the [TypeScript](./typescript.md#options) and [Python](./python.md#claudeagentoptions) references. If you know your goal but not which option serves it, start from [Choose the right feature](./claude-code-features.md#choose-the-right-feature).
 
-| TypeScript                | Python                      | Controls                                 | Covered in                                                                                                                                                                                                        |
-| ------------------------- | --------------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `permissionMode`          | `permission_mode`           | What the agent can do without approval   | [Configure permissions](./permissions.md)                                                                                                                                                                |
-| `allowedTools`            | `allowed_tools`             | Which tool calls are pre-approved        | [Configure permissions](./permissions.md)                                                                                                                                                                |
-| `canUseTool`              | `can_use_tool`              | Your approval callback for tool calls    | [Handle tool approval requests](./user-input.md#handle-tool-approval-requests)                                                                                                                           |
-| `systemPrompt`            | `system_prompt`             | The agent's instructions                 | [Modifying system prompts](./modifying-system-prompts.md)                                                                                                                                                |
-| `settingSources`          | `setting_sources`           | Which filesystem settings load           | [Use Claude Code features in the SDK](./claude-code-features.md)                                                                                                                                         |
-| `mcpServers`              | `mcp_servers`               | External tool servers                    | [Connect to external tools with MCP](./mcp.md)                                                                                                                                                           |
-| `agents`                  | `agents`                    | Subagent definitions                     | [Subagents](./subagents.md)                                                                                                                                                                              |
-| `hooks`                   | `hooks`                     | Callbacks at lifecycle points            | [Hooks](./hooks.md)                                                                                                                                                                                      |
-| `skills`                  | `skills`                    | Which skills load                        | [Extend agents with skills](./skills.md)                                                                                                                                                                 |
-| `plugins`                 | `plugins`                   | Which plugins load                       | [Plugins](./plugins.md)                                                                                                                                                                                  |
-| `outputFormat`            | `output_format`             | Structured output schemas                | [Structured outputs](./structured-outputs.md)                                                                                                                                                            |
-| `resume`                  | `resume`                    | Continuing a stored session              | [Sessions](./sessions.md)                                                                                                                                                                                |
-| `forkSession`             | `fork_session`              | Branching a session                      | [Sessions](./sessions.md)                                                                                                                                                                                |
-| `sessionStore`            | `session_store`             | External session persistence             | [Session storage](./session-storage.md)                                                                                                                                                                  |
-| `enableFileCheckpointing` | `enable_file_checkpointing` | Rewindable file edits                    | [File checkpointing](./file-checkpointing.md)                                                                                                                                                            |
-| `effort`                  | `effort`                    | How much work Claude puts into responses | [Effort level](./agent-loop.md#effort-level)                                                                                                                                                             |
-| `sandbox`                 | `sandbox`                   | Sandbox behavior for tool execution      | [TypeScript](./typescript.md#sandbox-configuration) and [Python](./python.md#sandbox-configuration) references, with deployment context in [Secure deployment](./secure-deployment.md) |
+| TypeScript | Python | Controls | Covered in |
+| - | - | - | - |
+| `permissionMode` | `permission_mode` | What the agent can do without approval | [Configure permissions](./permissions.md) |
+| `allowedTools` | `allowed_tools` | Which tool calls are pre-approved | [Configure permissions](./permissions.md) |
+| `canUseTool` | `can_use_tool` | Your approval callback for tool calls | [Handle tool approval requests](./user-input.md#handle-tool-approval-requests) |
+| `systemPrompt` | `system_prompt` | The agent's instructions | [Modifying system prompts](./modifying-system-prompts.md) |
+| `settingSources` | `setting_sources` | Which filesystem settings load | [Use Claude Code features in the SDK](./claude-code-features.md) |
+| `mcpServers` | `mcp_servers` | External tool servers | [Connect to external tools with MCP](./mcp.md) |
+| `agents` | `agents` | Subagent definitions | [Subagents](./subagents.md) |
+| `hooks` | `hooks` | Callbacks at lifecycle points | [Hooks](./hooks.md) |
+| `skills` | `skills` | Which skills load | [Extend agents with skills](./skills.md) |
+| `plugins` | `plugins` | Which plugins load | [Plugins](./plugins.md) |
+| `outputFormat` | `output_format` | Structured output schemas | [Structured outputs](./structured-outputs.md) |
+| `resume` | `resume` | Continuing a stored session | [Sessions](./sessions.md) |
+| `forkSession` | `fork_session` | Branching a session | [Sessions](./sessions.md) |
+| `sessionStore` | `session_store` | External session persistence | [Session storage](./session-storage.md) |
+| `enableFileCheckpointing` | `enable_file_checkpointing` | Rewindable file edits | [File checkpointing](./file-checkpointing.md) |
+| `effort` | `effort` | How much work Claude puts into responses | [Effort level](./agent-loop.md#effort-level) |
+| `sandbox` | `sandbox` | Sandbox behavior for tool execution | [TypeScript](./typescript.md#sandbox-configuration) and [Python](./python.md#sandbox-configuration) references, with deployment context in [Secure deployment](./secure-deployment.md) |
 
 ## Next steps
 

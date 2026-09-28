@@ -2,8 +2,7 @@
 
 ### Plugins
 
-**How Plugins Work**  
-Plugins are namespaced bundles that can contain skills, agents, rules, MCP servers, and hooks as a single deployable unit.
+**How Plugins Work** Plugins are namespaced bundles that can contain skills, agents, rules, MCP servers, and hooks as a single deployable unit.
 
 When you install a plugin, the CLI stages the files in your home directory under `~/.gemini/antigravity-cli/plugins/<plugin_name>/`. The Antigravity Agent automatically discovers and loads these staged customizations.
 
@@ -20,8 +19,41 @@ When you install a plugin, the CLI stages the files in your home directory under
 └── import_manifest.json        # Tracking manifest
 ```
 
-**Accessing Plugin Components**  
-Once staged and loaded, you can interact with the plugin components inside the CLI using slash commands.
+### Manage plugins with `/plugin` (Marketplace and Installed)
+
+Trigger the interactive Plugins Manager in the CLI through the `/plugin` slash command (alias `/plugins`), and press Tab to switch between the **Installed** tab and the **Discover** tab:
+
+*   **Discover tab**:
+    
+    ![Plugin discover tab](../assets/image/docs/plugins/plugin-discover-tab.png)
+    
+    *   Type to start searching for specific plugins.
+    *   Press Enter to select **Install from local directory** and provide a local path for plugin installation.
+    *   Press Enter on a plugin to expand its details view (includes description, components such as MCP and skills, marketplace, and version).
+    *   Press Ctrl + S on an uninstalled plugin to install it (or Ctrl + S on an installed plugin to uninstall it).
+    *   **After installation**: A green dot (`●`) appears beside the plugin name in the **Discover** tab denoting its installed status, and the plugin name appears in the **Installed** tab.
+*   **Installed tab**:
+    
+    ![Plugin installed tab](../assets/image/docs/plugins/plugin-install-tab.png)
+    
+    *   Type to start searching for installed plugins.
+    *   Press Space to toggle enabling or disabling a plugin.
+    *   Press Enter on an installed plugin to expand its details view (includes description, skills if applicable, MCP if applicable, marketplace, local installation path, and version).
+*   **Inline commands**:
+    
+    *   `/plugin` provides inline `install`, `uninstall`, `enable`, `disable`, and `list` subcommands without needing to open the interactive Plugins Manager panel.
+    *   To install inline, run `/plugin install <plugin-name>@<marketplace-name>` or `/plugin install <local-path>`. For example, running `/plugin install firebase@agent-marketplace` outputs:
+        
+        ```
+        Successfully installed plugin "firebase" from "agent-marketplace"
+        ```
+        
+
+Cross-surface synchronization
+
+Plugins installed in Antigravity 2.0 are automatically updated and shown in the CLI’s **Installed** tab. For more details, see the [Marketplace guide](https://antigravity.google/docs/marketplace?tab=cli).
+
+**Accessing Plugin Components** Once staged and loaded, you can interact with the plugin components inside the CLI using slash commands.
 
 ### Terminal Sandbox
 
@@ -29,8 +61,7 @@ The Terminal Sandbox is a lightweight security isolation mechanism that protects
 
 Rather than running heavy virtual machines or containers, the CLI leverages native operating system features (`nsjail` on Linux, `sandbox-exec` on macOS, and `AppContainer` on Windows) to enforce strict containment boundaries with zero startup overhead.
 
-**Configuration**  
-You can configure the sandbox behavior in your `settings.json` file (located at `~/.gemini/antigravity-cli/settings.json`):
+**Configuration** You can configure the sandbox behavior in your `settings.json` file (located at `~/.gemini/antigravity-cli/settings.json`):
 
 ```
 {
@@ -40,8 +71,7 @@ You can configure the sandbox behavior in your `settings.json` file (located at 
 
 *   **`enableTerminalSandbox`** (boolean, default: `false`): Enables general execution containment barriers on all local agent processes.
 
-**Interactive Approvals**  
-When the agent proposes a terminal command that requires your confirmation, the CLI prompt adapts dynamically based on your settings:
+**Interactive Approvals** When the agent proposes a terminal command that requires your confirmation, the CLI prompt adapts dynamically based on your settings:
 
 *   **When the Sandbox is Enabled**: The confirmation prompt will include a specific option to **Yes, and run without sandbox restrictions** if you need to temporarily bypass the containment boundary for a single trusted command.
 *   **When the Sandbox is Disabled**: The prompt will include an option to **Yes, and run in sandbox** if you want to force a specific, potentially risky command to execute within the safety boundary.
@@ -64,6 +94,7 @@ The Antigravity CLI supports a variety of slash commands typed directly into the
 | **`/keybindings`** | Configuration | Open the interactive keyboard shortcut editor. |
 | **`/statusline`** | Configuration | Customize real-time indicators displayed in the CLI status bar. |
 | **`/tasks`** | Tools & Monitoring | Monitor, view logs for, or terminate active background tasks. |
+| **`/plugin`** _(alias `/plugins`)_ | Tools & Monitoring | Open the interactive [Plugins Manager](https://antigravity.google/docs/marketplace?tab=cli) to discover, install, enable, disable, or uninstall plugins. |
 | **`/skills`** | Tools & Monitoring | Browse local and global encapsulated agent workflows. |
 | **`/mcp`** | Tools & Monitoring | Open the panel to configure and manage Model Context Protocol servers. |
 | **`/open <path>`** | Utility | Immediately open a file in your preferred external editor. |
@@ -91,8 +122,7 @@ For power users, several slash commands support deep customization via your `~/.
 
 Antigravity CLI features an asynchronous subagents framework that allows the main agent to delegate parallel work, perform background research, and run system tests without blocking your active conversation.
 
-**What are Subagents?**  
-Subagents are independent, concurrent agent sessions designed to tackle specific background tasks in parallel with the main conversation.
+**What are Subagents?** Subagents are independent, concurrent agent sessions designed to tackle specific background tasks in parallel with the main conversation.
 
 *   **Purpose**: The main agent automatically spawns subagents to perform background operations such as looking up documentation, running builds, or validating a fix.
 *   **Capabilities**: Subagents have full access to tools such as code search, file editing, terminal commands, and web searches to complete their assigned tasks.
@@ -109,18 +139,15 @@ Note
 
 Selecting a subagent from the panel opens a full-screen detail view. This view shows the entirety of the subagent’s conversation, including its steps, thoughts, and tool execution logs.
 
-**Tool Confirmations & Approvals**  
-When a subagent wants to execute a tool that requires user permissions (such as running a local command or writing a file), it will surface the request. You can manage approvals in two ways:
+**Tool Confirmations & Approvals** When a subagent wants to execute a tool that requires user permissions (such as running a local command or writing a file), it will surface the request. You can manage approvals in two ways:
 
-1.  **Detail View Approvals**  
-    The Subagent Detail View features an interaction section containing all pending approvals, where you can selectively approve or deny requests.
+1.  **Detail View Approvals** The Subagent Detail View features an interaction section containing all pending approvals, where you can selectively approve or deny requests.
 
 Note
 
 **Tip**: Use the keyboard shortcut `ctrl+j` to “teleport” from the main conversation directly to the detailed view of the next subagent waiting for your approval.
 
-2.  **Fast Path Alerts**  
-    To keep you in your flow, Antigravity CLI displays a Fast Path Alert directly above your prompt box when a subagent requests permission.
+2.  **Fast Path Alerts** To keep you in your flow, Antigravity CLI displays a Fast Path Alert directly above your prompt box when a subagent requests permission.
 
 Note
 
