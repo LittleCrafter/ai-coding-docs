@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.18.33",
-  "last_updated": "2026-09-28T09:02:39Z",
+  "last_updated": "2026-09-28T17:23:35Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -120,8 +120,8 @@
       "source_url": "https://opencode.ai/docs/go",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/go.mdx",
       "source_id": "packages/web/src/content/docs/go.mdx",
-      "hash": "d560860ac60f7aec11a9c9bb7a15ffba3662be7b6cd3d0962542885915e93c84",
-      "last_updated": "2026-09-26T13:28:18Z"
+      "hash": "e8e34e7cb788250896ac54a2470b145e73f6e8e3467cfe44e75280b0cad16ab5",
+      "last_updated": "2026-09-28T17:23:35Z"
     },
     "ide": {
       "slug": "ide",
@@ -365,8 +365,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-28T09:02:39Z",
-    "fetch_duration_seconds": 12.263,
+    "last_fetch_completed": "2026-09-28T17:23:35Z",
+    "fetch_duration_seconds": 12.266,
     "total_pages_discovered": 36,
     "pages_fetched_successfully": 36,
     "pages_failed": 0,
