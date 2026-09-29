@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.284",
-  "last_updated": "2026-09-29T02:50:23Z",
+  "last_updated": "2026-09-29T09:09:37Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -420,8 +420,8 @@
       "source_url": "https://code.claude.com/docs/en/authentication",
       "source_md_url": "https://code.claude.com/docs/en/authentication.md",
       "source_id": "authentication",
-      "hash": "a54f6306cb89e9ac4eb77e19284101657a237ca7e89430dcfc69e1cb09831bf1",
-      "last_updated": "2026-09-29T02:50:23Z"
+      "hash": "f99180feb0161fd3e1aa5e9fcf122933c9918bafb6fa627187b17f7111b79195",
+      "last_updated": "2026-09-29T09:09:37Z"
     },
     "auto-mode-config": {
       "slug": "auto-mode-config",
@@ -2095,8 +2095,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-29T02:50:23Z",
-    "fetch_duration_seconds": 72.914,
+    "last_fetch_completed": "2026-09-29T09:09:37Z",
+    "fetch_duration_seconds": 73.157,
     "total_pages_discovered": 209,
     "pages_fetched_successfully": 209,
     "pages_failed": 0,
