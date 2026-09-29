@@ -1,6 +1,11 @@
-# Agent internet access
+# Codex Cloud (Legacy): internet access
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
+
+These settings apply to [Codex Cloud
+  (Legacy)](../environments/cloud-environment.md). For the current Codex Cloud
+  experience, see [Connect to
+  services](../environments/cloud-environments.md#connect-to-services).
 
 By default, Codex blocks internet access during the agent phase. Setup scripts still run with internet access so you can install dependencies. You can enable agent internet access per environment when you need it.
 
@@ -141,3 +146,9 @@ ubuntu.com
 visualstudio.com
 yarnpkg.com
 ```
+
+## Agent Security command-network requirements
+
+On supported managed Codex Cloud execution paths, Agent Security requirements constrain command networking. Codex Cloud environment internet settings apply separately. An allowed domain in Agent Security does not override a restriction in the Cloud environment's internet settings. These command-network controls do not, by themselves, disable hosted web search, apps, or MCP. ChatGPT Work Cloud has separate capability permissions and does not inherit these Agent Security requirements.
+
+A managed command allowlist applies to commands using the managed proxy. Where policy permits full sandbox escalation and it is approved, that execution can bypass the command proxy. A narrow network grant is different from full sandbox escalation. Configure enforced approval and sandbox requirements for the intended boundary, and test both ordinary and escalated commands. See [Managed configuration](../enterprise/managed-configuration.md#configure-network-access-requirements) for inheritance and proxy limits.

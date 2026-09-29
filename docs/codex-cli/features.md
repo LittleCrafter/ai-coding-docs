@@ -31,12 +31,34 @@ Tools ChatGPT can use to understand, create, and take action.
 - [Computer use](./computer-use.md) — Let ChatGPT interact with apps through the visual interface.
 - [ChatGPT Voice](./features/voice.md) — Try voice in Chat, Work, and Codex in the ChatGPT desktop app.
 - [Plugins](./plugins.md) — Install reusable workflows, connected tools, and shared context.
+- [Sign in with ChatGPT](./sign-in-with-chatgpt.md) — Use your ChatGPT account in other apps and choose how they use your plan.
 - [Web search](./web-search.md) — Find current information and bring sources into a task.
 - [Image generation](./image-generation.md) — Create and edit images as part of your work.
 - [Image inputs](./image-inputs.md) — Use screenshots and images as context for ChatGPT.
 - [Appshots](./appshots.md) — Capture app state for visual inspection and debugging.
 - [Browser extension](./chrome-extension.md) — Use Chrome, Edge, Brave, Opera, or Vivaldi with ChatGPT.
 - [Work with files](./artifacts-viewer.md) — Create, preview, and refine documents and other generated files.
+
+## ChatGPT dots
+
+Set up your dot and manage its ongoing work.
+
+- [Overview](./dots.md) — Understand your dot and its connections.
+- [Getting started](./dots/getting-started.md) — Create your dot and give it a responsibility.
+- [Messaging](./dots/channels.md) — Contact your dot in ChatGPT and connected channels.
+- [Tasks and memory](./dots/tasks-and-memory.md) — Understand scheduled work, context, and research.
+- [Computers and apps](./dots/computers-and-apps.md) — Connect tools and inspect computer work.
+- [Controls](./dots/controls.md) — Review activity, manage rules, and stop work.
+
+## ChatGPT Space
+
+Develop shared work in Pages with ChatGPT and collaborators.
+
+- [Space overview](./space.md) — Find files and Pages, and develop your work with ChatGPT.
+- [Getting started](./space/getting-started.md) — Draft your first Page.
+- [Pages](./space/pages.md) — Write, organize, and revise your work.
+- [Work with the agent](./space/agents.md) — Give ChatGPT context, boundaries, and a clear task.
+- [Collaboration](./space/collaboration.md) — Choose who can view, comment on, or edit your work.
 
 ## Reference
 

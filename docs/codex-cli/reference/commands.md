@@ -71,9 +71,10 @@ Choose your platform to see its default shortcuts. Some shortcuts appear only wh
 | Search files (Codex only) | **⌘+P** |
 | Toggle file tree (Codex only) | **⌘+⇧+E** |
 | Open review tab (Codex only) | **⌃+⇧+G** |
-| Toggle review panel (Codex only) | **⌘+⌥+B** |
+| Switch between chat and tabs (In full view; shows or hides tabs in split view) | **⌘+⌥+B** |
 | Open browser tab (When the built-in browser is available) | **⌘+T** |
-| Toggle browser panel (When the built-in browser is available) | **⌘+⇧+B** |
+| Cycle workspace layout (Full view, split view, or hidden tabs) | **⌘+⇧+B** |
+| Enter or exit full view | **⌘+⇧+F** |
 | Go to line or focus browser address bar (Depends on the focused view) | **⌘+L** |
 | Browser back (When the built-in browser is focused) | **⌘+←** |
 | Browser forward (When the built-in browser is focused) | **⌘+→** |
@@ -150,9 +151,10 @@ Choose your platform to see its default shortcuts. Some shortcuts appear only wh
 | Search files (Codex only) | **Ctrl+P** |
 | Toggle file tree (Codex only) | **Ctrl+Shift+E** |
 | Open review tab (Codex only) | **Ctrl+Shift+G** |
-| Toggle review panel (Codex only) | **Ctrl+Alt+B** |
+| Switch between chat and tabs (In full view; shows or hides tabs in split view) | **Ctrl+Alt+B** |
 | Open browser tab (When the built-in browser is available) | **Ctrl+T** |
-| Toggle browser panel (When the built-in browser is available) | **Ctrl+Shift+B** |
+| Cycle workspace layout (Full view, split view, or hidden tabs) | **Ctrl+Shift+B** |
+| Enter or exit full view | **Ctrl+Shift+F** |
 | Go to line or focus browser address bar (Depends on the focused view) | **Ctrl+L** |
 | Browser back (When the built-in browser is focused) | **Alt+←** |
 | Browser forward (When the built-in browser is focused) | **Alt+→** |
@@ -227,9 +229,10 @@ Choose your platform to see its default shortcuts. Some shortcuts appear only wh
 | Search files (Codex only) | **Ctrl+P** |
 | Toggle file tree (Codex only) | **Ctrl+Shift+E** |
 | Open review tab (Codex only) | **Ctrl+Shift+G** |
-| Toggle review panel (Codex only) | **Ctrl+Alt+B** |
+| Switch between chat and tabs (In full view; shows or hides tabs in split view) | **Ctrl+Alt+B** |
 | Open browser tab (When the built-in browser is available) | **Ctrl+T** |
-| Toggle browser panel (When the built-in browser is available) | **Ctrl+Shift+B** |
+| Cycle workspace layout (Full view, split view, or hidden tabs) | **Ctrl+Shift+B** |
+| Enter or exit full view | **Ctrl+Shift+F** |
 | Go to line or focus browser address bar (Depends on the focused view) | **Ctrl+L** |
 | Browser back (When the built-in browser is focused) | **Alt+←** |
 | Browser forward (When the built-in browser is focused) | **Alt+→** |

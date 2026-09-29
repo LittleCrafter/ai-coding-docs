@@ -118,6 +118,24 @@ the AppArmor unprivileged user namespace restriction with:
 sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 ```
 
+<a id="synced-chatgpt-work"></a>
+
+<a id="app-local-computer-access-with-work-cloud"></a>
+<a id="web-local-computer-access-with-work-cloud"></a>
+
+#### Local computer access with Work Cloud
+
+For tasks using Local computer access with Work Cloud, OpenAI's cloud coordinates the conversation. Sandbox restrictions depend on where each step runs:
+
+- **Cloud execution:** Work cloud containers use existing Work Cloud policies. Desktop browser site rules do not automatically apply to cloud browsers.
+- **Local execution:** Supported local execution requirements govern steps on a connected computer.
+
+For Work with local access and dots, supported Global policy applies to the shared cloud orchestrator when managed policy is enabled. Work cloud containers and dots cloud computers use their own execution configuration and requirements. Test local and cloud execution separately to confirm which controls apply in each environment. A policy for one environment doesn't grant access to another.
+
+Within a policy, the order from highest to lowest is OS-specific environment override → all-OS environment override → Global. A higher-priority policy wins even when a lower-priority policy is more specific. For local execution, MDM and legacy managed-device requirements take precedence over Agent Security, which takes precedence over the device's system requirements file.
+
+Review [Managed configuration](./enterprise/managed-configuration.md) for field-specific merge rules and runtime limits, and check the effective file and network restrictions in [Work local security](./enterprise/chatgpt-work-local-security.md) and [Work cloud security](./enterprise/chatgpt-work-cloud-security.md).
+
 ## How permissions work
 
 Use the permissions control for your surface to change how Codex handles local

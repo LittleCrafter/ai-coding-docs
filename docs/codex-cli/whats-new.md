@@ -6,6 +6,16 @@ This weekly digest highlights ChatGPT and Codex features that can change how you
 work, with examples and links to learn more. For every versioned update, bug fix,
 and minor improvement, see the [Codex changelog](https://learn.chatgpt.com/docs/changelog).
 
+## September 28–October 2, 2026
+
+### Choose GPT-6.1 Sol for complex work
+
+[GPT-6.1 Sol](./models.md#gpt-61-sol) offers near-Astra performance at a
+lower cost than Astra. Consider it for repeated, long-running work across code,
+apps, and documents. Availability depends on your plan, client, and workspace
+settings. See the [launch announcement](https://learn.chatgpt.com/docs/changelog#codex-2026-09-29-gpt-61-sol)
+and [pricing](./pricing.md) for details.
+
 ## September 21–25, 2026
 
 ### Choose GPT-6 Sol and Luna
@@ -26,7 +36,9 @@ for availability details.
 GPT-5.5 will retire from ChatGPT, ChatGPT Work, and Codex on October 14, 2026,
 across all plans. The OpenAI API isn't affected.
 
-For Codex with ChatGPT sign-in, switch to **GPT-5.6 Sol** (`gpt-5.6-sol`).
+For Codex with ChatGPT sign-in, choose an available replacement for your plan
+and client. See [GPT-5.5 retirement](./models.md#gpt-55-retirement) for
+migration guidance.
 Update saved model settings, workspace defaults, custom agents, scheduled
 tasks, and scripts that still select GPT-5.5 before the retirement date.
 [Read the retirement notice](https://learn.chatgpt.com/docs/changelog#codex-2026-09-14-gpt-55-retirement)

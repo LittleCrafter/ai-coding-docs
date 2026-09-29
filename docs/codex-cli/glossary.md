@@ -23,14 +23,13 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 | [Chat](./projects.md#start-a-chat) | Desktop app, Web, Mobile, CLI, IDE extension, Cloud | A saved space for exchanging messages with ChatGPT or Codex, including shared context, results, and actions. Quick chat starts a ChatGPT chat from Codex. |
 | [ChatGPT sign-in](./auth.md#sign-in-with-chatgpt) | Desktop app, CLI, IDE extension, Cloud | Authentication using a ChatGPT account and workspace permissions. |
 | [Computer History](./customization/computer-history.md) | Desktop app | Opt-in macOS feature that builds memories and a timeline from interaction events across allowed apps and websites. |
-| [Cloud](./cloud.md) | Desktop app, IDE extension, Web | Mode where Codex works remotely in an OpenAI-managed environment. |
-| [Cloud environment](./environments/cloud-environment.md) | Cloud | Configured container setup used for Codex cloud chats. |
-| [Cloud chat](./environments/cloud-environment.md#how-codex-cloud-tasks-run) | Cloud | A Codex chat that runs remotely in a cloud environment. |
+| [Codex Cloud](./cloud.md) | Desktop app, IDE extension, Web | Coding tasks that run in the cloud with their own workspaces, repositories, and tools. |
+| [Cloud environment](./environments/cloud-environments.md) | Cloud | Reusable repositories, dependencies, tools, and access settings for tasks in Codex Cloud. |
+| [Cloud chat](./environments/cloud-environments.md#how-codex-cloud-tasks-run) | Cloud | A Codex chat that runs remotely in a cloud environment. |
 | [Codex](https://developers.openai.com/codex) | Desktop app, CLI, IDE extension, Web, Cloud, SDK | OpenAI's coding agent for software development tasks. |
 | [ChatGPT desktop app](./app.md) | Desktop | Desktop app with ChatGPT and Codex, including Chat and Work, projects, file previews, scheduled tasks, and developer tools. |
 | [Codex app-server](./app-server.md) | Desktop app, IDE extension, SDK | Local JSON-RPC server for embedding Codex threads, turns, approvals, history, and streamed events in custom clients. |
 | [Codex CLI](https://developers.openai.com/codex/cli) | Terminal | Terminal client for running Codex interactively or in scripts. |
-| [Codex cloud](./cloud.md) | Web, Desktop app, IDE extension | OpenAI-managed execution environment where Codex can work on repository tasks remotely. |
 | [codex exec](./non-interactive-mode.md) | CLI | CLI command for running Codex non-interactively from scripts or CI. |
 | [Codex IDE extension](https://developers.openai.com/codex/ide) | IDE | Editor integration for using Codex inside IDEs like VS Code, JetBrains IDEs, Cursor, and Windsurf. |
 | [Codex SDK](./codex-sdk.md) | SDK | Programmatic interface for building Codex-powered workflows or integrations. |
@@ -42,15 +41,14 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 | [Connected host](./remote-connections.md#what-comes-from-the-connected-host) | Desktop app, Mobile | Computer or development environment that provides files, tools, and shell access for ChatGPT or Codex chats opened through Remote. |
 | [Connector](./plugins.md) | Desktop app (ChatGPT Work, Codex), Web (ChatGPT Work) | A component of a plugin that connects ChatGPT or Codex to data and actions in an external service. |
 | [Conversation](./projects.md#start-a-chat) | Desktop app, Web, Mobile, CLI, IDE extension, Cloud | The ongoing exchange of messages and shared context between a person and ChatGPT or Codex within a chat. |
-| [Container cache](./environments/cloud-environment.md#container-caching) | Cloud | Saved cloud container state reused to speed up future cloud chats. |
 | [Context](./prompting.md#context) | Desktop app, CLI, IDE extension, Cloud, SDK | Information Codex can use while working, such as files, prior messages, tool output, and instructions. |
 | [Context window](https://developers.openai.com/api/docs/guides/conversation-state#managing-the-context-window) | Desktop app, CLI, IDE extension, Cloud, SDK | The maximum amount of information the model can consider at once. |
 | [Custom agent](./agent-configuration/subagents.md#custom-agents) | Desktop app, CLI | User-defined agent role with its own instructions and settings. |
 | [Deny-read rule](./permissions.md#deny-reads-with-exact-paths-or-globs) | Desktop app, CLI, IDE extension, Enterprise | Filesystem permission rule that prevents Codex from reading sensitive paths or glob matches. |
 | [Diff](./code-review.md) | Desktop app, Git, Review | Set of Git file changes shown for inspection, comments, staging, or reverting. |
-| [Domain allowlist](./cloud/internet-access.md#domain-allowlist) | Cloud | Set of domains Codex cloud can reach when agent internet access is enabled. |
+| [Domain allowlist](./environments/cloud-environments.md#connect-to-services) | Cloud | Set of domains allowed by a Codex Cloud environment’s network policy. |
 | [Environment (local)](./environments/local-environment.md) | Desktop app, Worktree | Desktop app configuration that tells Codex how to set up worktrees for a project. |
-| [Environment variable](./environments/cloud-environment.md#environment-variables-and-secrets) | Cloud, CLI, IDE extension | Runtime configuration value available during task execution. |
+| [Environment variable](./environments/cloud-environments.md#environment-variables-and-secrets) | Cloud, CLI, IDE extension | Runtime configuration value available during task execution. |
 | [Ephemeral session](./non-interactive-mode.md#basic-usage) | CLI | Non-interactive run that skips saving session state after it completes. |
 | [Fast mode](./agent-configuration/speed.md#fast-mode) | CLI, IDE extension | Speed setting that makes supported models respond faster at a higher credit cost. |
 | [Filesystem permission](./permissions.md#filesystem-permissions) | Desktop app, CLI, IDE extension | Permission profile rule that grants or denies read and write access to paths. |
@@ -66,7 +64,6 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 | [Live web search](./config-file/config-basic.md#web-search-mode) | Desktop app, CLI, IDE extension | Real-time web lookup for current information. |
 | [Local](./environments/git-worktrees.md#working-between-local-and-worktree) | Desktop app, CLI, IDE extension | Mode where Codex works on the user's computer. |
 | [Local chat](./environments/modes.md) | Desktop app, CLI, IDE extension | A ChatGPT or Codex chat that runs on the user's machine. |
-| [Maintenance script](./environments/cloud-environment.md#container-caching) | Cloud | Optional script run when a cached cloud container resumes. |
 | [Managed configuration](./enterprise/managed-configuration.md) | Enterprise | Organization-controlled Codex defaults and restrictions. |
 | [MCP](./extend/mcp.md) | Desktop app, CLI, IDE extension | Model Context Protocol, a standard for connecting Codex to external tools and context. |
 | [MCP resource](./extend/mcp.md#supported-mcp-features) | Desktop app, CLI, IDE extension | Readable context exposed by an MCP server for Codex to inspect. |
@@ -101,7 +98,7 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 | [Sandbox mode](./config-file/config-basic.md#sandbox-level) | Desktop app, CLI, IDE extension | Configuration that defines Codex's filesystem and network limits. |
 | [Sandbox preset](./codex-sdk.md#sandbox-presets) | SDK | SDK shorthand for common sandbox policies such as read-only, workspace-write, or full access. |
 | [Schedule](./automations.md) | Desktop app | The timing rule for a scheduled task. |
-| [Secret](./environments/cloud-environment.md#environment-variables-and-secrets) | Cloud | Encrypted value available to setup scripts but removed before the agent phase. |
+| [Network secret](./environments/cloud-environments.md#environment-variables-and-secrets) | Codex Cloud | A credential for a specific HTTPS service. Programs receive a placeholder; the proxy substitutes the credential for allowed destinations during setup and tasks. |
 | [Setup script](./environments/local-environment.md#setup-scripts) | Desktop app worktrees | Script run before the agent starts to install dependencies or prepare tools. |
 | [Skill](./build-skills.md) | Desktop app, Web (ChatGPT Work), CLI, IDE extension | Reusable workflow package with instructions and optional scripts or references. |
 | [Skill invocation](./build-skills.md#how-codex-uses-skills) | Desktop app, Web (ChatGPT Work), CLI, IDE extension | Explicit or implicit activation of a skill. |
@@ -117,7 +114,6 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 | [Scheduled task in a chat](./automations.md#schedule-a-task-inside-a-chat) | Desktop app, Web | A scheduled task that uses an existing chat's context and returns each run's results to that chat. |
 | [Thread fork](./app-server.md#start-or-resume-a-thread) | App-server, SDK | New thread branched from the stored history of an existing thread. |
 | [Turn](./app-server.md#core-primitives) | Desktop app, CLI, IDE extension, Cloud, SDK | One exchange in a chat, usually a user prompt plus the agent's response and actions. |
-| [Universal image](./environments/cloud-environment.md#default-universal-image) | Cloud | Default Codex cloud container image with common tools preinstalled. |
 | [Web search cache](./config-file/config-basic.md#web-search-mode) | Desktop app, CLI, IDE extension | Pre-indexed search results Codex can use without live browsing. |
 | [ChatGPT Work](./get-started-with-work.md) | Desktop app, Web | The agent in ChatGPT for research, analysis, and creating documents, presentations, spreadsheets, and other finished work. |
 | [Worktree](./environments/git-worktrees.md) | Desktop app | Mode where Codex isolates changes in a separate Git worktree. |

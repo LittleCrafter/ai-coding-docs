@@ -1,72 +1,68 @@
-# Codex cloud
+# Codex Cloud
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-## Run coding tasks in parallel cloud environments
+## Run coding tasks in the cloud
 
-Run tasks in isolated cloud environments, work in parallel, and start work from the web, GitHub, GitLab, Linear, or Slack.
+Give Codex coding tasks to work through in the cloud, from investigating bugs to building features. Review changes and continue from the web, mobile, or desktop app.
 
-> Illustration: Codex cloud chat composer and chat list with interactive archiving
+> Illustration: A published cloud environment beside a new task composer with the same environment selected
 
 ### Start here
 
-- [Open Codex cloud](https://chatgpt.com/codex)
-- [Set up Codex cloud](#getting-started)
+- [Get started](#getting-started)
 
-### Why use Codex cloud
+### Why use Codex Cloud
 
-- **Run work in parallel:** Give longer tasks dedicated environments and let them continue while you work on something else.
-- **Reproduce the environment:** Configure the dependencies, tools, variables, and setup steps each repository needs.
-- **Review before you merge:** Inspect the summary and diff, request a follow-up, or open a pull request when the result is ready.
+- **Start with your project:** Choose repositories. Codex inspects the project, works through setup, and asks you for missing details or access.
+- **Keep work moving:** Start tasks from a published environment. Each task has its own workspace and can keep working while your computer is asleep.
+- **Review the work:** Inspect changed files and check results, request follow-up changes, and commit or open a pull request when you're ready.
 
 ## Getting started
 
-**Set up Codex cloud.**
+**Get started with Codex Cloud.**
 
-Connect GitHub or GitLab, create an environment, and start your first cloud chat.
+Create a cloud environment with the repositories, tools, and access your project needs, or select an existing one. Then start a task.
 
-### 1. Open Codex and sign in
+### 1. Open ChatGPT
 
-Go to [Codex](https://chatgpt.com/codex) and sign in with your ChatGPT account.
+Open ChatGPT on the web or in the [desktop app](./app.md), then sign in with your ChatGPT account.
 
-### 2. Connect GitHub or GitLab
+### 2. Create or select an environment
 
-Connect GitHub or GitLab (Beta) when prompted. For GitHub, choose the repositories Codex can access; for GitLab, select a project when you create the environment. For GitLab setup, webhook permissions, and merge request reviews, see [Use Codex with GitLab (Beta)](./third-party/gitlab.md).
+In a new task, choose Work in > Cloud and open Select environment. If this is your first time, select [Create environment](./environments/cloud-environments.md#create-and-publish-an-environment) and continue below. If an environment is already available, select it and begin working.
 
-### 3. Create an environment
+### 3. Let Codex prepare your project
 
-Open [environment settings](https://chatgpt.com/codex/settings/environments) and create an environment for the repository you selected. Configure any dependencies, tools, environment variables, or secrets the task needs.
+Choose your GitHub repositories and select Get started. Connect GitHub if prompted. Codex inspects your repositories, installs dependencies and tools, and tests the workflow. Provide any missing access or information when asked.
 
-For configuration details, see [Cloud environments](./environments/cloud-environment.md).
+### 4. Review and publish
 
-### 4. Start your first task
+For a new environment, review the setup and test results, save changes, and select Publish. Wait for Environment published.
 
-Return to [Codex](https://chatgpt.com/codex), choose your environment, and describe the result you want. You can watch the task logs or let the task run in the background.
+### 5. Start a task
 
-### 5. Review the result
-
-Review the summary and diff. Ask Codex to make follow-up changes, or open a pull request when the work is ready.
+After publishing a new environment, select Start a new task. If you selected an existing environment, you can start right away. Describe your task and send it. Review the changes and test results, request follow-ups, and commit or open a pull request when ready.
 
 ### Next steps
 
-- [Customize the cloud environment](./environments/cloud-environment.md)
-- [Configure agent internet access](./cloud/internet-access.md)
-- [Use Codex with GitHub](./third-party/github.md)
-- [Use Codex with GitLab (Beta)](./third-party/gitlab.md)
-- [Use Codex in Linear](./third-party/linear.md)
-- [Use Codex in Slack](./third-party/slack.md)
+- [Configure cloud environments](./environments/cloud-environments.md)
+- [Configure internet access](./environments/cloud-environments.md#connect-to-services)
+- [Set up environment variables and network secrets](./environments/cloud-environments.md#configure-environment-variables-and-network-secrets)
+- [Understand saved state](./environments/cloud-environments.md#reuse-and-update-saved-state)
+- [Use ChatGPT in Slack](./third-party/slack.md)
 
-## See what Codex cloud can do
+## See what Codex Cloud can do
 
-Give each task the environment it needs, then review the result on your schedule.
+Run coding tasks with your project tools and service access, then review the results.
 
-- [Delegate several tasks](./environments/cloud-environment.md): Start work in parallel and return as each task reaches a reviewable result.
-- [Build a reproducible environment](./environments/cloud-environment.md): Configure the dependencies, tools, variables, and setup steps a repository needs.
-- [Delegate from your integrations](./developers.md): Start work in Codex cloud from GitHub pull requests, GitLab merge requests and issues, Linear issues, or Slack channels and threads.
+- [Prepare your development workflow](./environments/cloud-environments.md#create-and-publish-an-environment): Let Codex inspect your repositories and prepare their dependencies and tools. Review the checks before publishing.
+- [Reuse your project setup](./environments/cloud-environments.md#reuse-and-update-saved-state): Reuse your repositories, dependencies, and tools across tasks. Each task has its own workspace. Update the setup as your project changes.
+- [Connect your tools and services](./environments/cloud-environments.md#connect-to-services): Give Codex access to the package registries, APIs, and private services your project needs. Configure network access and supply credentials in the environment settings.
 
-## Use Codex cloud when…
+## Use Codex Cloud when…
 
-- [Work needs to run in the background](./environments/cloud-environment.md): Delegate a longer task and return when it is ready.
-- [You want to compare several attempts](./environments/cloud-environment.md): Run tasks in parallel without tying up your local machine.
-- [Work starts in GitHub, GitLab, Linear, or Slack](./developers.md): Use integrations to hand off work without leaving the pull request, merge request, issue, channel, or thread.
-- [You are away from your development machine](./environments/cloud-environment.md): Start and review work from the web or Codex CLI.
+- [Work should run remotely](./environments/cloud-environments.md): Give Codex a cloud environment with the repositories and tools it needs.
+- [Several tasks need the same setup](./environments/cloud-environments.md): Start tasks from a published environment while keeping each task's working state separate.
+- [Your workflow needs service credentials](./environments/cloud-environments.md#connect-to-services): Use network secrets for allowed HTTPS services and limit the environment's network destinations.
+- [Start cloud work from the CLI](./developer-commands.md#cli-codex-cloud): Start a task from your terminal, or list recent cloud chats and check their status.

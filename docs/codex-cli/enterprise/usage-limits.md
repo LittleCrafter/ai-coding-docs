@@ -3,9 +3,8 @@
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
 ChatGPT workspace usage limits and spend controls apply to eligible activity
-under the plan for the workspace. Depending on the plan, this can include some
-Codex activity. These controls aren't a universal Codex limit system and don't
-govern OpenAI API Platform billing.
+under your workspace plan, which can include some Codex activity. They don't
+cover all Codex usage or govern OpenAI API Platform billing.
 
 For the complete administration model, see
 [Roles and workspace permissions](./roles-and-workspace-permissions.md).
@@ -23,6 +22,18 @@ Review ChatGPT workspace usage controls when:
 Usage controls don't configure feature entitlement or permissions, although
 exhausted limits can pause access to eligible features. They don't affect
 source-system permissions or govern Platform API usage or billing.
+
+## Ultrafast mode
+
+GPT-6 Astra Ultrafast is off by default in eligible Enterprise workspaces.
+Workspace owners can enable it through
+[workspace permissions](./roles-and-workspace-permissions.md).
+Existing per-user spend limits apply to eligible Ultrafast usage. Review
+those limits before enabling access because the higher usage rates can
+consume a user's budget faster.
+
+See [Ultrafast mode](../agent-configuration/speed.md#ultrafast-mode) for plan
+eligibility and billing details.
 
 ## Use current procedures
 

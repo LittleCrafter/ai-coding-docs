@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.1",
-  "last_updated": "2026-09-28T17:23:21Z",
+  "last_updated": "2026-09-29T17:06:57Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -150,8 +150,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/interaction.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/interaction.md",
       "source_id": "docs/en/guides/interaction.md",
-      "hash": "d45c66574919041bde86a187810cc7337e1742002af134afef255a215ff33059",
-      "last_updated": "2026-09-15T13:57:25Z"
+      "hash": "0f842714e6afd04a2ef6da8378deb545e071fd4518f05f69841d14ac75c6993e",
+      "last_updated": "2026-09-29T17:06:57Z"
     },
     "guides/migration": {
       "slug": "guides/migration",
@@ -270,8 +270,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/tools.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/tools.md",
       "source_id": "docs/en/reference/tools.md",
-      "hash": "d0bffac8e4889f43e4013fc5a56ec2c87dd35858d89760d6529556dcbc9cf6e0",
-      "last_updated": "2026-09-10T13:12:15Z"
+      "hash": "0e7f070a39c50878caa0eba74049e844716847438d8e960102a59498dd40bf53",
+      "last_updated": "2026-09-29T17:06:57Z"
     },
     "release-notes/changelog": {
       "slug": "release-notes/changelog",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-28T17:23:21Z",
-    "fetch_duration_seconds": 9.53,
+    "last_fetch_completed": "2026-09-29T17:06:57Z",
+    "fetch_duration_seconds": 9.568,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,

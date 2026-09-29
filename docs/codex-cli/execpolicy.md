@@ -8,6 +8,10 @@ Rules are experimental and may change.
 
 ## Create a rules file
 
+For Local computer access with Work Cloud, configure supported managed command rules with the `rules` TOML field in Agent Security. These rules apply to local executors; Work cloud containers use existing Work Cloud policies.
+
+These local `.rules` instructions apply to Codex; don't assume Local computer access with Work Cloud reads local rule files. See [Managed configuration](./enterprise/managed-configuration.md) and the [Configuration Reference](./config-file/config-reference.md) for managed Work requirements.
+
 1. Create a `.rules` file under a `rules/` folder next to an active config layer (for example, `~/.codex/rules/default.rules`).
 2. Add a rule. This example prompts before allowing `gh pr view` to run outside the sandbox.
 
@@ -74,7 +78,7 @@ Some tools wrap several shell commands into a single invocation, for example:
 ["bash", "-lc", "git add . && rm -rf /"]
 ```
 
-Because this kind of command can hide multiple actions inside one string, Codex treats `bash -lc`, `bash -c`, and their `zsh` / `sh` equivalents specially.
+Because this kind of command can hide more than one action inside one string, Codex treats `bash -lc`, `bash -c`, and their `zsh` / `sh` equivalents specially.
 
 ### When Codex can safely split the script
 
@@ -92,7 +96,7 @@ The script above is treated as two separate commands:
 
 Codex then evaluates each command against your rules, and the most restrictive result wins.
 
-Even if you allow `pattern=["git", "add"]`, Codex won't auto allow `git add . && rm -rf /`, because the `rm -rf /` portion is evaluated separately and prevents the whole invocation from being auto allowed.
+Even if you allow `pattern=["git", "add"]`, Codex won't automatically allow `git add . && rm -rf /` because it evaluates `rm -rf /` separately.
 
 This prevents dangerous commands from being smuggled in alongside safe ones.
 
@@ -132,4 +136,4 @@ The command emits JSON showing the strictest decision and any matching rules, in
 
 ## Understand the rules language
 
-The `.rules` file format uses `Starlark` (see the [language spec](https://github.com/bazelbuild/starlark/blob/master/spec.md)). Its syntax is like Python, but it's designed to be safe to run: the rules engine can run it without side effects (for example, touching the filesystem).
+The `.rules` file format uses `Starlark` (see the [language specification](https://github.com/bazelbuild/starlark/blob/master/spec.md)). Its syntax is like Python, but it's designed to be safe to run: the rules engine can run it without side effects (for example, touching the filesystem).

@@ -26,10 +26,10 @@ Find, understand, and remediate vulnerabilities.
 - [Codex Security plugin](./security/plugin.md) — Run security workflows from the ChatGPT desktop app and Codex CLI.
 - [Codex Security CLI](./security/cli.md) — Run local security scans and automate repository reviews.
 - [Codex Security TypeScript SDK](./security/sdk.md) — Integrate security scanning and progress reporting into developer tools.
-- [Codex Security cloud setup](./security/setup.md) — Connect repositories and configure cloud security scans.
+- [Codex Security Cloud setup](./security/setup.md) — Install the Cloud plugin, connect GitHub, and start a security scan.
 - [Security Review](./security/security-review.md) — Run in-depth security reviews on GitHub pull requests.
 - [Threat model](./security/threat-model.md) — Review and improve the threat model for your codebase.
-- [Codex Security cloud FAQ](./security/faq.md) — Get answers about cloud scans, findings, privacy, and access.
+- [Codex Security Cloud FAQ](./security/faq.md) — Get answers about cloud scans, findings, privacy, and access.
 
 ## Cyber safety
 

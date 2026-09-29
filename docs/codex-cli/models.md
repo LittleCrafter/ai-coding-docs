@@ -70,13 +70,13 @@ reasoning effort. You can also choose a model when you launch Codex with
 `--model` or its `-m` alias:
 
 ```bash
-codex --model gpt-6-sol
+codex --model gpt-6.1-sol
 ```
 
 The same option works with non-interactive runs. For example:
 
 ```bash
-codex exec -m gpt-6-sol "Review the current changes"
+codex exec -m gpt-6.1-sol "Review the current changes"
 ```
 
 Higher reasoning effort can improve results for complex tasks, but it takes
@@ -120,16 +120,21 @@ making it useful for larger tasks that can be split across subagents.
 
 ## Recommended models
 
-GPT-6 Sol and GPT-6 Luna bring improved coding, factual reliability, and
-communication to lower-cost models. Use Sol for complex coding and agentic
-workflows, and Luna for focused, repeatable tasks. Select `gpt-6-sol` or
-`gpt-6-luna` in your model picker or saved configuration when available.
+For complex coding and agentic workflows, use GPT-6.1 Sol when available to your
+account and client. Use Luna for focused, repeatable tasks. Select `gpt-6.1-sol`
+or `gpt-6-luna` in your model picker or saved configuration when available.
 
-In ChatGPT, GPT-6 Sol and GPT-6 Luna are available in Work and Codex. They
-aren't available in Chat.
+GPT-6.1 Sol offers near-Astra performance for complex work at a lower cost
+than Astra. See [GPT-6.1 Sol](#gpt-61-sol) for its separate rollout.
+
+In ChatGPT, GPT-6.1 Sol, GPT-6 Sol, and GPT-6 Luna are available in Work and
+Codex. They aren't available in Chat.
 
 GPT-5.6 Sol, GPT-5.6 Terra, and GPT-5.6 Luna remain available during the rollout. Selecting a
 new model doesn't change workspace permissions or grant access to it.
+
+For Astra Ultrafast availability and credit usage on Pro $500 and eligible
+Enterprise and Edu plans, see [Speed](./agent-configuration/speed.md#ultrafast-mode).
 
 <a id="app-compare-models"></a>
 
@@ -141,13 +146,12 @@ Our most capable model for complex work across code, apps, and research, combini
 - **ChatGPT web**: Supported
 - **Codex CLI**: Supported
 - **Codex IDE extension**: Supported
-- **Codex cloud**: Not supported
 - **ChatGPT Credits**: Supported
 - **API Access**: Supported
 
-### `gpt-6-sol`
+### `gpt-6.1-sol`
 
-Built for complex coding and agentic workflows, with stronger factual reliability and clearer communication than GPT-5.6 Sol.
+Near-Astra performance for complex work at a lower cost than Astra. Consider it for repeated, long-running work across code, apps, and documents.
 
 - **Work and Codex in the desktop app**: Supported
 - **ChatGPT Work on the web**: Supported
@@ -164,7 +168,6 @@ Our most efficient model for focused, high-volume tasks, including summarization
 - **ChatGPT Work on the web**: Supported
 - **Codex CLI**: Supported
 - **Codex IDE extension**: Supported
-- **Codex cloud**: Not supported
 - **ChatGPT Credits**: Supported
 - **API Access**: Supported
 
@@ -173,49 +176,58 @@ See [pricing](./pricing.md) for plan access and usage, and
 [workspace model availability](./enterprise/workspace-model-availability.md)
 for Enterprise access.
 
-Start with the default Power setting available to your account. Move toward
-  **Smarter** for deeper reasoning or **Faster** for faster, lower-cost work.
-  Open **Advanced** to choose a specific model, reasoning effort, or speed.
+<a id="gpt-6.1-sol"></a>
 
-The six Power presets shown are Luna High, Sol Light (the starting
-preset), Sol Medium, Astra Light, Astra Medium, and Astra Extra High. Some paid plans omit
-Astra Extra High. Advanced controls are illustrative; available options
-and defaults vary by plan, client, workspace settings, and rollout.
+### GPT-6.1 Sol
 
-<a id="app-experimental-context-management"></a>
-<a id="web-experimental-context-management"></a>
-<a id="cli-experimental-context-management"></a>
-<a id="ide-experimental-context-management"></a>
+The GPT-6.1 Sol launch rollout includes Plus, Pro, Business, Enterprise, and Edu
+in Codex in the desktop app and CLI, and ChatGPT Work on the web and mobile.
+For Enterprise and Edu, the plan keeps GPT-6.1 Sol off by default until an
+administrator enables it.
+Free and Go are not included at launch.
 
-<a id="app-experimental-context-management-2"></a>
-<a id="cli-experimental-context-management-2"></a>
-<a id="ide-experimental-context-management-2"></a>
+Standard and Fast modes are available at launch. Ultrafast support for
+GPT-6.1 Sol is coming later.
 
-### Experimental context management
+Use `gpt-6.1-sol`. Available controls depend on your plan, client, and workspace
+settings.
+Reasoning effort ranges from Light to Ultra. Max and Ultra depend on your settings.
 
-On supported Codex clients, users signed in with ChatGPT Plus or Pro can opt
-in to experimental context management. Astra keeps notes across context
-windows and can search earlier messages and tool results from the same task.
-This experiment is off by default and isn't available with Business, Enterprise, or
-API-key sign-in at launch.
+See [pricing](./pricing.md) for credit usage and
+[model selection](https://developers.openai.com/api/docs/guides/model-selection#when-to-consider-gpt-61-sol)
+for guidance on comparing it with Astra and Luna. To see how its API
+specifications differ from the previous Sol model, [compare GPT-6.1 Sol and
+GPT-6 Sol](https://developers.openai.com/api/docs/models/compare?model=gpt-6.1-sol&model2=gpt-6-sol).
 
-To opt in, set `features.context_management.experimental_mode = true` in your
-`config.toml`, then start a new task. See the [configuration reference](./config-file/config-reference.md)
-for the setting and [configuration basics](./config-file/config-basic.md)
-for the file location. Workspace requirements still apply.
+In the ChatGPT desktop app and ChatGPT Work on the web, start with the default
+  Power setting available to your account. Move toward **Smarter** for deeper
+  reasoning or **Faster** for faster, lower-cost work. Open **Advanced** to
+  choose a specific model, reasoning effort, or speed.
+
+The six Power presets shown are Luna High, GPT-6 Sol Light (selected
+in this example), GPT-6 Sol Medium, Astra Light, Astra Medium, and Astra Extra
+High. Some paid plans omit Astra Extra High. Advanced controls are illustrative;
+available options and defaults vary by plan, client, workspace settings, and rollout.
 
 <a id="choosing-sol-terra-and-luna"></a>
 
+<a id="choosing-astra-sol-and-luna"></a>
 <a id="app-choosing-astra-sol-and-luna"></a>
 <a id="web-choosing-astra-sol-and-luna"></a>
 <a id="cli-choosing-astra-sol-and-luna"></a>
 <a id="ide-choosing-astra-sol-and-luna"></a>
 
-## Choosing Astra, Sol, and Luna
+<a id="app-choosing-a-model"></a>
+<a id="web-choosing-a-model"></a>
+<a id="cli-choosing-a-model"></a>
+<a id="ide-choosing-a-model"></a>
 
-Choose **Astra** when a task needs the strongest capability across multiple
-steps and tools. **Sol** suits everyday work and complex coding,
-and **Luna** suits clear, repeatable tasks.
+## Choosing a model
+
+Choose **Astra** when a task needs the strongest capability across steps and
+tools. **GPT-6.1 Sol** offers near-Astra performance at a lower cost
+than Astra. Use **GPT-6.1 Sol** when available to your account and client, and
+**Luna** for clear, repeatable tasks.
 
 <a id="app-where-each-model-shines"></a>
 <a id="web-where-each-model-shines"></a>
@@ -229,10 +241,9 @@ and **Luna** suits clear, repeatable tasks.
   Give it the sources, templates, constraints, and checks that define a useful
   result. Astra is better at asking focused questions and incorporating your
   guidance while keeping the original goal and constraints in view.
-- **Sol, for everyday and complex work.** Choose Sol for ambiguous, difficult, or
-  high-value tasks that need extra analysis, judgment, or polish, such as
-  complex code changes, deep research, or polished documents. For narrower
-  tasks, define what done looks like to keep the work focused.
+- **GPT-6.1 Sol, for repeated, long-running work.** Consider GPT-6.1 Sol for
+  work across code, apps, and documents when cost matters. Keep Astra for your
+  most demanding work.
 - **Luna, for clear, repeatable tasks.** Choose Luna for specific, high-volume
   tasks when you know what a good result looks like, such as extraction,
   classification, transformation, and structured summaries.
@@ -244,7 +255,9 @@ and **Luna** suits clear, repeatable tasks.
 
 ### Pick a reasoning effort
 
-Start with **Medium** for Sol, **High** for Luna, or **Light** for Astra.
+For GPT-6.1 Sol, start with the reasoning effort available by default in your
+client and adjust based on the task. Start with **High** for Luna or **Light**
+for Astra.
 In configuration, Astra's Light setting is `low`. Increase the effort for tasks
 that need more planning, analysis, or checking.
 
@@ -266,13 +279,16 @@ at a lower setting and adjust based on the result.
 
 **Max** gives the selected model more time to reason about a single task. Use it
 for the hardest problems, when depth matters more than speed or usage. If you
-don't see Max in your options, you'll have to enable it in your app settings.
+don't see Max in the ChatGPT desktop app, check your app settings.
 
 **Ultra** uses [subagents](./agent-configuration/subagents.md) to handle
 separate parts of a complex task in parallel. Choose it when you can divide the
 work into meaningful parts. Most tasks do not need Max or Ultra.
 
 GPT-6 Luna supports reasoning efforts up to **Max**, but not **Ultra**.
+
+In the CLI, use `/model`, choose a model, then select **More reasoning…**
+to see its supported Max or Ultra options.
 
 If your model supports Ultra but it doesn't appear in the desktop app's model
 slider, go to **Settings** > **Configuration**, then turn on
@@ -297,31 +313,6 @@ Previous-generation flagship model. Retires from ChatGPT, ChatGPT Work, and Code
 - **ChatGPT web**: Supported
 - **Codex CLI**: Supported
 - **Codex IDE extension**: Supported
-- **Codex cloud**: Not supported
-- **ChatGPT Credits**: Supported
-- **API Access**: Supported
-
-### `gpt-5.4`
-
-Flagship model for professional work with strong coding, reasoning, tool use, and agentic workflow capabilities.
-
-- **ChatGPT desktop app**: Supported
-- **ChatGPT web**: Supported
-- **Codex CLI**: Supported
-- **Codex IDE extension**: Supported
-- **Codex cloud**: Not supported
-- **ChatGPT Credits**: Supported
-- **API Access**: Supported
-
-### `gpt-5.4-mini`
-
-Fast, efficient mini model for responsive coding tasks and subagents.
-
-- **ChatGPT desktop app**: Supported
-- **ChatGPT web**: Supported
-- **Codex CLI**: Supported
-- **Codex IDE extension**: Supported
-- **Codex cloud**: Not supported
 - **ChatGPT Credits**: Supported
 - **API Access**: Supported
 
@@ -337,6 +328,12 @@ Support for the Chat Completions API is deprecated and will be removed in
 <a id="ide-deprecated-codex-models"></a>
 
 ## Deprecated Codex models
+
+GPT-5.3-Codex-Spark retired on September 14, 2026, and is no longer available
+in the ChatGPT desktop app, Codex CLI, or IDE extension. Update saved
+configurations, custom agents, and scripts that select `gpt-5.3-codex-spark`
+to use an [available model](./models.md#recommended-models). See the
+[Spark retirement notice](https://learn.chatgpt.com/docs/changelog#codex-2026-09-14-codex-spark-deprecation).
 
 GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026. Replace
 `gpt-5.5` with a model available to your account and client. See
@@ -370,13 +367,5 @@ The ChatGPT desktop app, Codex CLI, and IDE extension use the same `config.toml`
 ChatGPT desktop app, Codex CLI, or IDE extension uses a recommended model.
 
 ```toml
-model = "gpt-6-sol"
+model = "gpt-6.1-sol"
 ```
-
-<a id="app-choose-a-model-for-cloud-chats"></a>
-<a id="cli-choose-a-model-for-cloud-chats"></a>
-<a id="ide-choose-a-model-for-cloud-chats"></a>
-
-## Choose a model for cloud chats
-
-Currently, you can't change the default model for Codex cloud chats.

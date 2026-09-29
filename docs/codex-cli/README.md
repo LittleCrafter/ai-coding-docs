@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 161
+- **Pages mirrored:** 182
 - **Version:** 0.159.0
-- **Last updated:** 2026-09-29T09:10:34Z
+- **Last updated:** 2026-09-29T17:06:26Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -17,6 +17,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Agent approvals &amp; security | [agent-approvals-security.md](./agent-approvals-security.md) | [source](<https://learn.chatgpt.com/docs/agent-approvals-security>) |
 | Custom instructions with AGENTS.md | [agents_md.md](./agents_md.md) | [source](<https://github.com/openai/codex/blob/main/docs/agents_md.md>) |
 | Use ChatGPT Work and Codex with Amazon Bedrock | [amazon-bedrock.md](./amazon-bedrock.md) | [source](<https://learn.chatgpt.com/docs/amazon-bedrock>) |
+| Annotations Extensibility | [annotations-extensibility.md](./annotations-extensibility.md) | [source](<https://learn.chatgpt.com/docs/annotations-extensibility>) |
 | ChatGPT desktop app | [app.md](./app.md) | [source](<https://learn.chatgpt.com/docs/app>) |
 | Codex App Server | [app-server.md](./app-server.md) | [source](<https://learn.chatgpt.com/docs/app-server>) |
 | Appshots | [appshots.md](./appshots.md) | [source](<https://learn.chatgpt.com/docs/appshots>) |
@@ -28,7 +29,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Build skills | [build-skills.md](./build-skills.md) | [source](<https://learn.chatgpt.com/docs/build-skills>) |
 | Browser extension | [chrome-extension.md](./chrome-extension.md) | [source](<https://learn.chatgpt.com/docs/chrome-extension>) |
 | CLI customization | [cli-customization.md](./cli-customization.md) | [source](<https://learn.chatgpt.com/docs/cli-customization>) |
-| Codex cloud | [cloud.md](./cloud.md) | [source](<https://learn.chatgpt.com/docs/cloud>) |
+| Codex Cloud | [cloud.md](./cloud.md) | [source](<https://learn.chatgpt.com/docs/cloud>) |
 | Code review | [code-review.md](./code-review.md) | [source](<https://learn.chatgpt.com/docs/code-review>) |
 | Codex Manual | [codex-manual.md](./codex-manual.md) | [source](<https://learn.chatgpt.com/docs/codex-manual>) |
 | Codex SDK | [codex-sdk.md](./codex-sdk.md) | [source](<https://learn.chatgpt.com/docs/codex-sdk>) |
@@ -41,6 +42,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Developer commands | [developer-commands.md](./developer-commands.md) | [source](<https://learn.chatgpt.com/docs/developer-commands>) |
 | Developer settings | [developer-settings.md](./developer-settings.md) | [source](<https://learn.chatgpt.com/docs/developer-settings>) |
 | Developers | [developers.md](./developers.md) | [source](<https://learn.chatgpt.com/docs/developers>) |
+| Meet dots | [dots.md](./dots.md) | [source](<https://learn.chatgpt.com/docs/dots>) |
 | Sample Configuration | [example-config.md](./example-config.md) | [source](<https://github.com/openai/codex/blob/main/docs/example-config.md>) |
 | Rules | [execpolicy.md](./execpolicy.md) | [source](<https://github.com/openai/codex/blob/main/docs/execpolicy.md>) |
 | Feature Maturity | [feature-maturity.md](./feature-maturity.md) | [source](<https://learn.chatgpt.com/docs/feature-maturity>) |
@@ -79,9 +81,11 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Sandbox | [sandboxing.md](./sandboxing.md) | [source](<https://learn.chatgpt.com/docs/sandboxing>) |
 | Codex Security | [security.md](./security.md) | [source](<https://learn.chatgpt.com/docs/security>) |
 | Security | [security-administration.md](./security-administration.md) | [source](<https://learn.chatgpt.com/docs/security-administration>) |
+| Sign in with ChatGPT | [sign-in-with-chatgpt.md](./sign-in-with-chatgpt.md) | [source](<https://learn.chatgpt.com/docs/sign-in-with-chatgpt>) |
 | Sites | [sites.md](./sites.md) | [source](<https://learn.chatgpt.com/docs/sites>) |
 | Skills &amp; Plugins | [skills-and-plugins.md](./skills-and-plugins.md) | [source](<https://learn.chatgpt.com/docs/skills-and-plugins>) |
 | Developer commands | [slash_commands.md](./slash_commands.md) | [source](<https://github.com/openai/codex/blob/main/docs/slash_commands.md>) |
+| ChatGPT Space | [space.md](./space.md) | [source](<https://learn.chatgpt.com/docs/space>) |
 | Use ChatGPT | [use-chatgpt.md](./use-chatgpt.md) | [source](<https://learn.chatgpt.com/docs/use-chatgpt>) |
 | Visualizations | [visualizations.md](./visualizations.md) | [source](<https://learn.chatgpt.com/docs/visualizations>) |
 | ChatGPT on the web | [web.md](./web.md) | [source](<https://learn.chatgpt.com/docs/web>) |
@@ -102,7 +106,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 | Page | Local | Source |
 | --- | --- | --- |
-| Agent internet access | [cloud/internet-access.md](./cloud/internet-access.md) | [source](<https://learn.chatgpt.com/docs/cloud/internet-access>) |
+| Codex Cloud (Legacy): internet access | [cloud/internet-access.md](./cloud/internet-access.md) | [source](<https://learn.chatgpt.com/docs/cloud/internet-access>) |
 
 ## codex
 
@@ -135,6 +139,16 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | --- | --- | --- |
 | Recommended configuration | [cyber-safety/recommended-configuration.md](./cyber-safety/recommended-configuration.md) | [source](<https://learn.chatgpt.com/docs/cyber-safety/recommended-configuration>) |
 
+## dots
+
+| Page | Local | Source |
+| --- | --- | --- |
+| Message your dot | [dots/channels.md](./dots/channels.md) | [source](<https://learn.chatgpt.com/docs/dots/channels>) |
+| Connect computers and apps to your dot | [dots/computers-and-apps.md](./dots/computers-and-apps.md) | [source](<https://learn.chatgpt.com/docs/dots/computers-and-apps>) |
+| Control your dot | [dots/controls.md](./dots/controls.md) | [source](<https://learn.chatgpt.com/docs/dots/controls>) |
+| Get started with your dot | [dots/getting-started.md](./dots/getting-started.md) | [source](<https://learn.chatgpt.com/docs/dots/getting-started>) |
+| Tasks and memory | [dots/tasks-and-memory.md](./dots/tasks-and-memory.md) | [source](<https://learn.chatgpt.com/docs/dots/tasks-and-memory>) |
+
 ## enterprise
 
 | Page | Local | Source |
@@ -142,12 +156,16 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Access tokens | [enterprise/access-tokens.md](./enterprise/access-tokens.md) | [source](<https://learn.chatgpt.com/docs/enterprise/access-tokens>) |
 | Using the Admin plugin in ChatGPT Work | [enterprise/admin-plugin.md](./enterprise/admin-plugin.md) | [source](<https://learn.chatgpt.com/docs/enterprise/admin-plugin>) |
 | Admin rollout guide | [enterprise/admin-setup.md](./enterprise/admin-setup.md) | [source](<https://learn.chatgpt.com/docs/enterprise/admin-setup>) |
+| Agent Security | [enterprise/agent-security.md](./enterprise/agent-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/agent-security>) |
 | Analytics API | [enterprise/analytics-api.md](./enterprise/analytics-api.md) | [source](<https://learn.chatgpt.com/docs/enterprise/analytics-api>) |
 | Plugin controls | [enterprise/apps-and-connectors.md](./enterprise/apps-and-connectors.md) | [source](<https://learn.chatgpt.com/docs/enterprise/apps-and-connectors>) |
+| Set up and manage @ChatGPT in Slack and Microsoft Teams | [enterprise/chatgpt-slack-and-teams.md](./enterprise/chatgpt-slack-and-teams.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-slack-and-teams>) |
+| Manage ChatGPT Space and shared pages | [enterprise/chatgpt-space.md](./enterprise/chatgpt-space.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-space>) |
 | ChatGPT Work cloud security | [enterprise/chatgpt-work-cloud-security.md](./enterprise/chatgpt-work-cloud-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-cloud-security>) |
 | ChatGPT Work local security | [enterprise/chatgpt-work-local-security.md](./enterprise/chatgpt-work-local-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-local-security>) |
 | ChatGPT Work Overview | [enterprise/chatgpt-work-overview.md](./enterprise/chatgpt-work-overview.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-overview>) |
 | ChatGPT Work: usage and cost | [enterprise/chatgpt-work-usage-and-cost.md](./enterprise/chatgpt-work-usage-and-cost.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-usage-and-cost>) |
+| Local computer access for Work Cloud and dots | [enterprise/cloud-local-access.md](./enterprise/cloud-local-access.md) | [source](<https://learn.chatgpt.com/docs/enterprise/cloud-local-access>) |
 | Compliance API and audit events | [enterprise/compliance-api.md](./enterprise/compliance-api.md) | [source](<https://learn.chatgpt.com/docs/enterprise/compliance-api>) |
 | Governance | [enterprise/governance.md](./enterprise/governance.md) | [source](<https://learn.chatgpt.com/docs/enterprise/governance>) |
 | GPTs and Sharing | [enterprise/gpts-and-sharing.md](./enterprise/gpts-and-sharing.md) | [source](<https://learn.chatgpt.com/docs/enterprise/gpts-and-sharing>) |
@@ -158,7 +176,10 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Prisma AIRS | [enterprise/prisma-airs.md](./enterprise/prisma-airs.md) | [source](<https://learn.chatgpt.com/docs/enterprise/prisma-airs>) |
 | Roles and workspace permissions | [enterprise/roles-and-workspace-permissions.md](./enterprise/roles-and-workspace-permissions.md) | [source](<https://learn.chatgpt.com/docs/enterprise/roles-and-workspace-permissions>) |
 | Service accounts | [enterprise/service-accounts.md](./enterprise/service-accounts.md) | [source](<https://learn.chatgpt.com/docs/enterprise/service-accounts>) |
+| Workspace connections | [enterprise/shared-connections.md](./enterprise/shared-connections.md) | [source](<https://learn.chatgpt.com/docs/enterprise/shared-connections>) |
+| Sites administration | [enterprise/sites.md](./enterprise/sites.md) | [source](<https://learn.chatgpt.com/docs/enterprise/sites>) |
 | Skill controls | [enterprise/skills.md](./enterprise/skills.md) | [source](<https://learn.chatgpt.com/docs/enterprise/skills>) |
+| Set up and manage teams and Team Tasks | [enterprise/teams.md](./enterprise/teams.md) | [source](<https://learn.chatgpt.com/docs/enterprise/teams>) |
 | Usage Insights for ChatGPT Work in Codex | [enterprise/usage-insights.md](./enterprise/usage-insights.md) | [source](<https://learn.chatgpt.com/docs/enterprise/usage-insights>) |
 | ChatGPT usage limits and spend controls | [enterprise/usage-limits.md](./enterprise/usage-limits.md) | [source](<https://learn.chatgpt.com/docs/enterprise/usage-limits>) |
 | User lifecycle management | [enterprise/user-lifecycle.md](./enterprise/user-lifecycle.md) | [source](<https://learn.chatgpt.com/docs/enterprise/user-lifecycle>) |
@@ -171,7 +192,8 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 | Page | Local | Source |
 | --- | --- | --- |
-| Cloud environments | [environments/cloud-environment.md](./environments/cloud-environment.md) | [source](<https://learn.chatgpt.com/docs/environments/cloud-environment>) |
+| Codex Cloud (Legacy) | [environments/cloud-environment.md](./environments/cloud-environment.md) | [source](<https://learn.chatgpt.com/docs/environments/cloud-environment>) |
+| Cloud environments | [environments/cloud-environments.md](./environments/cloud-environments.md) | [source](<https://learn.chatgpt.com/docs/environments/cloud-environments>) |
 | Worktrees | [environments/git-worktrees.md](./environments/git-worktrees.md) | [source](<https://learn.chatgpt.com/docs/environments/git-worktrees>) |
 | Local environments | [environments/local-environment.md](./environments/local-environment.md) | [source](<https://learn.chatgpt.com/docs/environments/local-environment>) |
 | Codex environments | [environments/modes.md](./environments/modes.md) | [source](<https://learn.chatgpt.com/docs/environments/modes>) |
@@ -220,7 +242,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Run Codex Security in GitLab CI/CD | [security/cli/ci/gitlab.md](./security/cli/ci/gitlab.md) | [source](<https://learn.chatgpt.com/docs/security/cli/ci/gitlab>) |
 | Codex Security CLI FAQ | [security/cli/faq.md](./security/cli/faq.md) | [source](<https://learn.chatgpt.com/docs/security/cli/faq>) |
 | Codex Security CLI reference | [security/cli/reference.md](./security/cli/reference.md) | [source](<https://learn.chatgpt.com/docs/security/cli/reference>) |
-| Codex Security cloud FAQ | [security/faq.md](./security/faq.md) | [source](<https://learn.chatgpt.com/docs/security/faq>) |
+| Codex Security Cloud FAQ | [security/faq.md](./security/faq.md) | [source](<https://learn.chatgpt.com/docs/security/faq>) |
 | Codex Security plugin quickstart | [security/plugin.md](./security/plugin.md) | [source](<https://learn.chatgpt.com/docs/security/plugin>) |
 | Codex Security plugin changelog | [security/plugin/changelog.md](./security/plugin/changelog.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/changelog>) |
 | Review code changes for security | [security/plugin/code-changes.md](./security/plugin/code-changes.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/code-changes>) |
@@ -234,8 +256,17 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Use the Codex Security workbench | [security/plugin/workbench.md](./security/plugin/workbench.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/workbench>) |
 | Codex Security TypeScript SDK | [security/sdk.md](./security/sdk.md) | [source](<https://learn.chatgpt.com/docs/security/sdk>) |
 | Security Review | [security/security-review.md](./security/security-review.md) | [source](<https://learn.chatgpt.com/docs/security/security-review>) |
-| Codex Security cloud setup | [security/setup.md](./security/setup.md) | [source](<https://learn.chatgpt.com/docs/security/setup>) |
+| Codex Security Cloud setup | [security/setup.md](./security/setup.md) | [source](<https://learn.chatgpt.com/docs/security/setup>) |
 | Improving the threat model | [security/threat-model.md](./security/threat-model.md) | [source](<https://learn.chatgpt.com/docs/security/threat-model>) |
+
+## space
+
+| Page | Local | Source |
+| --- | --- | --- |
+| Work with agents in Space | [space/agents.md](./space/agents.md) | [source](<https://learn.chatgpt.com/docs/space/agents>) |
+| Collaborate in Space | [space/collaboration.md](./space/collaboration.md) | [source](<https://learn.chatgpt.com/docs/space/collaboration>) |
+| Get started with ChatGPT Space | [space/getting-started.md](./space/getting-started.md) | [source](<https://learn.chatgpt.com/docs/space/getting-started>) |
+| Work with pages | [space/pages.md](./space/pages.md) | [source](<https://learn.chatgpt.com/docs/space/pages>) |
 
 ## third-party
 
@@ -244,7 +275,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Review GitHub pull requests with Codex | [third-party/github.md](./third-party/github.md) | [source](<https://learn.chatgpt.com/docs/third-party/github>) |
 | Review GitLab merge requests with Codex | [third-party/gitlab.md](./third-party/gitlab.md) | [source](<https://learn.chatgpt.com/docs/third-party/gitlab>) |
 | Use Codex in Linear | [third-party/linear.md](./third-party/linear.md) | [source](<https://learn.chatgpt.com/docs/third-party/linear>) |
-| Use Codex in Slack | [third-party/slack.md](./third-party/slack.md) | [source](<https://learn.chatgpt.com/docs/third-party/slack>) |
+| Use ChatGPT in Slack | [third-party/slack.md](./third-party/slack.md) | [source](<https://learn.chatgpt.com/docs/third-party/slack>) |
 
 ## windows
 

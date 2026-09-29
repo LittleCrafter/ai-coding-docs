@@ -1,101 +1,72 @@
-# Codex Security cloud setup
+# Codex Security Cloud setup
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-This page walks you from initial access to reviewed findings and remediation
-pull requests in Codex Security cloud.
+Use the Codex Security Cloud plugin to scan connected GitHub repositories,
+review findings, and monitor new commits.
 
-Confirm you've set up Codex cloud first. If not, see [Codex
-  cloud](../cloud.md) to get started.
+Codex Security Cloud runs scans in [Codex cloud](../cloud.md). For scans of a
+  local repository in the desktop app or CLI, use the separate [Codex Security
+  plugin](./plugin.md).
 
-## 1. Access and environment
+## 1. Install and open the plugin
 
-Codex Security cloud scans GitHub repositories connected through
-[Codex cloud](../cloud.md).
+1. Open **Plugins** in ChatGPT on the web or in the desktop app.
+2. Search the plugin marketplace for **Codex Security Cloud**.
+3. Install and enable the plugin, then open **Security Cloud** from your
+   installed plugins or sidebar.
 
-- Confirm your workspace has access to Codex Security cloud.
-- Confirm the repository you want to scan is available in Codex cloud.
+[Open plugin marketplace](https://chatgpt.com/plugins)
 
-Go to [Codex environments](https://chatgpt.com/codex/settings/environments) and check whether the repository already has an environment. If it doesn't, create one there before continuing.
+If access is unavailable, check with your workspace administrator.
 
-[Open environments](https://chatgpt.com/codex/settings/environments)
+## 2. Connect GitHub
 
-> Illustration: Codex environments
+Confirm that [Codex cloud](../cloud.md) is set up for your workspace. In the
+plugin, select **New scan**. If prompted, select **Connect GitHub** and grant
+access to the repositories you want to scan.
 
-## 2. New security scan
+If a repository is missing, check its GitHub connection and permissions.
 
-After the environment exists, go to [Create a security scan](https://chatgpt.com/codex/security/scans/new) and choose the repository you just connected.
+## 3. Start a repository scan
 
-[Create a security scan](https://chatgpt.com/codex/security/scans/new)
+1. In **New scan**, choose the repository.
+2. Select a compatible **Cloud environment**. If none exists, select
+   **Create environment** to configure one. See [Codex cloud
+   environments](../environments/cloud-environment.md) for setup details.
+3. Under **What to scan**, select **Repository**, the default.
+4. Select **Start scan**.
 
-Codex Security scans repositories from newest commits backward first. It uses this to build and refresh scan context as new commits come in.
+Open the scan in **Scans** to follow its progress and review its findings and
+artifacts.
 
-To configure a repository:
+## 4. Review findings and available fixes
 
-1. Select the GitHub organization.
-2. Select the repository.
-3. Select the branch you want to scan.
-4. Select the environment.
-5. Choose a **history window**. Longer windows provide more context, but backfill takes longer.
-6. Click **Create**.
+Open **Findings** and select an issue to review its affected code, validation
+evidence, and remediation guidance.
 
-> Illustration: Create a security scan
+When a finding offers **Fix with Codex**, select it to generate a proposed
+patch. Review the patch before selecting **Create draft pull request**.
 
-## 3. Initial scans can take a while
+## 5. Monitor new commits
 
-When you create the scan, Codex Security first runs a commit-level security pass across the selected history window.
-The initial backfill can take a few hours, especially for larger repositories or longer windows.
-If findings aren't visible right away, this is expected. Wait for the initial scan to finish before opening a ticket or troubleshooting.
+To review changes as new commits arrive:
 
-Initial scan setup is automatic and thorough. This can take a few hours. Don’t
-  be alarmed if the first set of findings is delayed.
+1. Select **New scan**, then choose the repository and Cloud environment.
+2. Under **What to scan**, select **Commit changes**.
+3. Select **Create**.
 
-## 4. Review scans and improve the threat model
+To adjust monitoring, open **Repositories**, select the repository, and open
+**Monitoring settings**. You can change the Cloud environment, choose how
+many days of history to review, and pause or enable monitoring.
+Select **Save** to apply changes.
 
-[Review scans](https://chatgpt.com/codex/security/scans)
-
-> Illustration: Threat model editor in Codex Security
-
-When the initial scan finishes, open the scan and review the threat model that was generated.
-After initial findings appear, update the threat model so it matches your architecture, trust boundaries, and business context.
-This helps Codex Security rank issues for your team.
-
-If you want scan results to change, you can edit the threat model with your
-  updated scope, priorities, and assumptions.
-
-After initial findings appear, revisit the model so scan guidance stays aligned with current priorities.
-Keeping it current helps Codex Security produce better suggestions.
-
-For a deeper explanation of threat models and how they affect criticality and triage, see [Improving the threat model](./threat-model.md).
-
-## 5. Review findings and patch
-
-After the initial backfill completes, review findings from the **Findings** view.
-
-[Open findings](https://chatgpt.com/codex/security/findings)
-
-You can use two views:
-
-- **Recommended Findings**: an evolving top 10 list of the most critical issues in the repo
-- **All Findings**: a sortable, filterable table of findings across the repository
-
-> Illustration: Recommended findings view
-
-Click a finding to open its detail page, which includes:
-
-- a concise description of the issue
-- key metadata such as commit details and file paths
-- contextual reasoning about impact
-- relevant code excerpts
-- call-path or data-flow context when available
-- validation steps and validation output
-
-You can review each finding and create a PR directly from the finding detail page.
-
-[Review findings and create a PR](https://chatgpt.com/codex/security/findings)
+Review and edit the generated threat model under **Project context**, then
+select **Save**. See [Improving the threat model](./threat-model.md)
+for guidance.
 
 ## Related docs
 
 - [Codex Security](../security.md) gives the product overview.
-- [Codex Security cloud FAQ](./faq.md) covers common cloud questions.
+- [Codex Security Cloud FAQ](./faq.md) covers common Cloud questions.
 - [Improving the threat model](./threat-model.md) explains how to improve scan context and finding prioritization.

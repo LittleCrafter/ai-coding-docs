@@ -6,7 +6,7 @@
 
 ChatGPT web has its own composer command menu. Type `/` to see the actions
 available in the current chat. It doesn't expose the ChatGPT desktop app or CLI
-command set; the Codex slash commands, CLI subcommands, and flags in this
+command set; the Codex slash commands, CLI commands, and flags in this
 reference don't apply to ChatGPT web.
 
 **Surface: Desktop app**
@@ -356,12 +356,12 @@ Check for and apply a Codex CLI update when the installed release supports self-
 
 - Type `@` to search for a file in the workspace and add its path to the prompt.
 - Press <kbd>Up</kbd> or <kbd>Down</kbd> to restore draft history.
-- Press <kbd>Ctrl</kbd>+<kbd>R</kbd> to search prompt history, then press <kbd>Enter</kbd> to use a match or <kbd>Esc</kbd> to cancel.
+- Press <kbd>Ctrl</kbd>+<kbd>R</kbd> to search prompt history, then press <kbd>Enter</kbd> to use a match or <kbd>Escape</kbd> to cancel.
 - Press <kbd>Ctrl</kbd>+<kbd>O</kbd> or run `/copy` to copy the latest completed Codex output.
 - Prefix a line with `!` to run a local shell command under the current approval and sandbox settings.
 - Press <kbd>Tab</kbd> while Codex is working to queue a follow-up prompt, slash command, or shell command for the next turn.
 - Press <kbd>Enter</kbd> while Codex is working to inject new instructions into the current turn.
-- Press <kbd>Esc</kbd> twice with an empty composer to edit the previous user message and fork the chat from that point.
+- Press <kbd>Escape</kbd> twice with an empty composer to edit the previous user message and fork the chat from that point.
 - Press <kbd>Ctrl</kbd>+<kbd>C</kbd> or run `/exit` to close the session.
 
 <a id="cli-related-resources"></a>
@@ -426,7 +426,7 @@ completion still works before you queue the command.
 | [`/logout`](#sign-out-with-logout)                                                          | Sign out of Codex.                                              | Clear local credentials when using a shared machine.                                                       |
 | [`/mcp`](#list-mcp-tools-with-mcp)                                                          | List configured Model Context Protocol (MCP) tools.             | Check which external tools Codex can call during the session; add `verbose` for server details.            |
 | [`/mention`](#highlight-files-with-mention)                                                 | Attach a file to the chat.                                      | Point Codex at specific files or folders you want it to inspect next.                                      |
-| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Switch between models such as `gpt-6-luna` and `gpt-6-sol` before running a task.                          |
+| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Use `gpt-6-luna` or `gpt-6.1-sol` if shown.            |
 | [`/fast`](#toggle-fast-mode-with-fast)                                                      | Toggle a Fast service tier when the model catalog exposes one.  | Turn the current model's Fast tier on or off and persist the selection.                                    |
 | [`/plan`](#switch-to-plan-mode-with-plan)                                                   | Switch to plan mode and optionally send a prompt.               | Ask Codex to propose an execution plan before implementation work starts.                                  |
 | [`/goal`](#set-or-view-a-task-goal-with-goal)                                               | Set, edit, pause, resume, view, or clear a task goal.           | Give Codex a persistent target to track while a larger task runs.                                          |
@@ -466,9 +466,12 @@ The following workflows keep your session on track without restarting Codex.
 
 ### Set the active model with `/model`
 
+The picker only shows models available to your account and workspace. If GPT-6.1
+Sol isn't listed, choose another model. See [GPT-6.1 Sol availability by plan](./models.md#gpt-6.1-sol).
+
 1. Start Codex and open the composer.
 2. Type `/model` and press Enter.
-3. Choose a model such as `gpt-6-luna` or `gpt-6-sol` from the popup.
+3. Choose a model such as `gpt-6-luna` or `gpt-6.1-sol` from the popup.
 
 Expected: Codex confirms the new model in the transcript. Run `/status` to verify the change.
 

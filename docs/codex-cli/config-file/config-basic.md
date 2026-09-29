@@ -18,6 +18,15 @@ The CLI and IDE extension share the same configuration layers. You can use them 
 
 ## Configuration precedence
 
+Requirements constrain behavior; configuration values provide defaults. Local computer access with Work Cloud follows these requirements:
+
+- **Across policies:** A higher-priority policy wins over a lower-priority policy, even when the lower-priority policy is more specific.
+- **Within one policy:** OS-specific environment overrides take priority over all-OS environment overrides, followed by Global.
+- **For local execution:** MDM and legacy managed-device requirements rank above Agent Security. The device's system requirements file ranks below Agent Security.
+- **For Work Cloud:** Work cloud containers retain existing Work Cloud policies. For Work with local access and dots, supported Global policy governs the shared cloud orchestrator when managed policy is enabled; applicable local execution requirements govern the connected computer.
+
+Some requirements have field-specific merge rules. See [Managed configuration](../enterprise/managed-configuration.md) for policy scope and runtime limits, and the [Configuration Reference](./config-reference.md) for Work compatibility.
+
 Codex resolves values in this order (highest precedence first):
 
 1. CLI flags and `--config` overrides
@@ -53,7 +62,7 @@ Here are a few options people change most often:
 Choose the model Codex uses by default in the CLI and IDE.
 
 ```toml
-model = "gpt-6-sol"
+model = "gpt-6.1-sol"
 ```
 
 #### Approval prompts
@@ -95,7 +104,7 @@ sandbox = "elevated"   # Recommended
 
 #### Web search mode
 
-Codex enables web search by default for local chats and serves results from a web search cache. The cache is an OpenAI-maintained index of web results, so cached mode returns pre-indexed results instead of fetching live pages. This reduces exposure to prompt injection from arbitrary live content, but you should still treat web results as untrusted. If you are using `--yolo` or another [full access sandbox setting](../agent-approvals-security.md#common-sandbox-and-approval-combinations), web search defaults to live results. Choose a mode with `web_search`:
+Codex enables web search by default for local chats and serves results from a web search cache. The cache is an OpenAI-maintained index of web results, so cached mode returns pre-indexed results instead of fetching live pages. This reduces exposure to prompt injection from arbitrary live content. Treat web results as untrusted. If you are using `--yolo` or another [full access sandbox setting](../agent-approvals-security.md#common-sandbox-and-approval-combinations), web search defaults to live results. Choose a mode with `web_search`:
 
 - `"cached"` (default) serves results from the web search cache.
 - `"indexed"` permits external web access only when the search index gates the request.

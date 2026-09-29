@@ -7,6 +7,8 @@ eligible plans can also run tasks from supported app events. Review active,
 paused, and completed tasks and recent runs in **Scheduled**. You can combine
 scheduled tasks with [skills](./build-skills.md) for more complex work.
 
+**For workspace admins:** See [Set up and manage teams and Team Tasks](./enterprise/teams.md) for recurring or event-triggered work shared by a team, including permissions and connection setup. Team Tasks run in the cloud through the team's service account and configured app connections.
+
 GPT-5.5 retires from ChatGPT, ChatGPT Work, and Codex on all plans on
 October 14, 2026. Review scheduled tasks that use GPT-5.5 and choose an
 available replacement before that date. For Codex with ChatGPT sign-in, choose
@@ -141,8 +143,6 @@ choose them explicitly if you want more control over how the scheduled task runs
 If a scheduled task uses a retired model, update it to an available replacement.
 See [model migration guidance](./models.md#deprecated-codex-models).
 
-> Illustration: ChatGPT composer ready to create a scheduled task with 6 Sol Medium selected.
-
 Scheduled tasks run unattended with your default sandbox settings. Start with the
 narrowest access that lets the task succeed, and grant network or broader file
 access only when required. [Understand sandboxing](./sandboxing.md).
@@ -156,8 +156,6 @@ app sidebar.
 
 The **Scheduled** view acts as your inbox. Scheduled task runs with findings
 appear there, and an unread indicator shows when a run needs your attention.
-
-> Illustration: Scheduled tasks page with All, Active, and Paused filters and three scheduled tasks.
 
 Standalone scheduled tasks start a new chat for each scheduled run and report
 results in **Scheduled**. Use them when each run should be independent or when one

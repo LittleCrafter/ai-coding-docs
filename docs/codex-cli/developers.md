@@ -22,6 +22,7 @@ Package development workflows and run deterministic automation.
 - [Build skills](./build-skills.md) — Package instructions and resources for repeatable tasks in ChatGPT and Codex.
 - [Build plugins](./build-plugins.md) — Package skills and MCP servers for ChatGPT and Codex.
 - [Site tools (WebMCP)](./webmcp.md) — Use WebMCP to give AI agents a direct way to work with your website.
+- [Annotations Extensibility](./annotations-extensibility.md) — Customize website selection, context, and controls for browser annotations.
 - [Hooks](./hooks.md) — Run custom commands when Codex emits lifecycle events.
 
 ## Environments
@@ -30,8 +31,13 @@ Choose where development work runs and how it is isolated.
 
 - [Environments](./environments/modes.md) — Compare local, cloud, and other ways to run a task.
 - [Local environments](./environments/local-environment.md) — Configure setup scripts and actions for projects and worktrees.
-- [Cloud environment](./environments/cloud-environment.md) — Delegate work to a configured cloud environment.
 - [Git worktrees](./environments/git-worktrees.md) — Isolate parallel changes in separate working trees.
+
+## Codex Cloud
+
+Run coding tasks in the cloud with your project tools and service access.
+
+- [Cloud environments](./environments/cloud-environments.md) — Create, configure, and share reusable setups for cloud tasks.
 
 ## Build with Codex
 
@@ -48,7 +54,7 @@ Delegate and track work from tools your team already uses.
 
 - [GitHub](./third-party/github.md) — Assign work, review changes, and move toward a pull request.
 - [GitLab (Beta)](./third-party/gitlab.md) — Connect projects, delegate work, and review merge requests.
-- [Slack](./third-party/slack.md) — Start Codex chats from external discussions and return results.
+- [Slack](./third-party/slack.md) — Start requests with ChatGPT in Slack and delegate repository work to Codex Cloud.
 - [Linear](./third-party/linear.md) — Assign issues to Codex and follow work through delivery.
 
 ## Reference
