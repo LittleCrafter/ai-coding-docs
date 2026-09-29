@@ -250,7 +250,7 @@ For details on settings file resolution, see [settings](./settings.md).
 
 Hooks from settings files, managed policy settings, and plugins also run inside [subagents](./sub-agents.md). When a subagent calls a tool, tool events such as `PreToolUse` and `PostToolUse` fire the same configured hooks as in the main conversation, and the input carries the `agent_id` and `agent_type` [common input fields](#common-input-fields) that identify the subagent.
 
-Enterprise administrators can use `allowManagedHooksOnly` to restrict which hooks run:
+Administrators can use [`allowManagedHooksOnly`](./settings-reference.md#allowmanagedhooksonly) in [managed settings](./managed-settings.md) to restrict which hooks run:
 
 * Your user, project, local, and plugin hooks are blocked. Hooks from plugins force-enabled in managed settings `enabledPlugins` are exempt
 * Claude Code also narrows your [`statusLine`](./statusline.md), [`fileSuggestion`](./settings-reference.md#filesuggestion), and [`subagentStatusLine`](./statusline.md#subagent-status-lines) settings to managed settings
@@ -2222,7 +2222,7 @@ You receive these hook events even with desktop notifications turned off: the `p
 | `elicitation_url_dialog` | An MCP server asks you to open a browser URL and you haven't typed for about six seconds |
 | `elicitation_complete` | An MCP server reports that a [URL-mode elicitation](#elicitation-input) is complete |
 | `elicitation_response` | An MCP elicitation response is sent back to the server |
-| `agent_needs_input` | A background session starts waiting on your input while [agent view](./agent-view.md) is open in a terminal, or the current session asks you an [agent team teammate's terminal setup question](./agent-teams.md#choose-a-display-mode) and you haven't typed for about six seconds |
+| `agent_needs_input` | A background session starts waiting on your input while [agent view](./agent-view.md) is open in a terminal. Also fires when a terminal session shows you an [agent team teammate's terminal setup question](./agent-teams.md#choose-a-display-mode) or auto mode's notice about [classifier request charges](https://code.claude.com/docs/en/auto-mode-classifier-billing) and you haven't typed for about six seconds |
 | `agent_completed` | A background session finishes or fails. Fires only while [agent view](./agent-view.md) is open in a terminal |
 | `quota_auto_resume_fired` | Claude Code continues your task after a claude.ai usage limit paused it: at the reset, or sooner when something you do in Claude Code during the wait, such as adding usage credits, upgrading your plan, or switching models, makes usage available again, with the [model-setting exception](./interactive-mode.md#wait-for-a-usage-limit-to-reset) |
 | `quota_auto_resume_stale` | A claude.ai usage limit reset while your computer slept for more than about 30 minutes. Claude Code waits for you to press `Enter` instead of continuing. After a shorter sleep it continues and fires `quota_auto_resume_fired` instead |

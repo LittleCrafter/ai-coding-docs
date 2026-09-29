@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 182
-- **Version:** 0.159.0
-- **Last updated:** 2026-09-29T17:06:26Z
+- **Pages mirrored:** 184
+- **Version:** 0.159.1
+- **Last updated:** 2026-09-29T21:35:57Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -276,6 +276,13 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Review GitLab merge requests with Codex | [third-party/gitlab.md](./third-party/gitlab.md) | [source](<https://learn.chatgpt.com/docs/third-party/gitlab>) |
 | Use Codex in Linear | [third-party/linear.md](./third-party/linear.md) | [source](<https://learn.chatgpt.com/docs/third-party/linear>) |
 | Use ChatGPT in Slack | [third-party/slack.md](./third-party/slack.md) | [source](<https://learn.chatgpt.com/docs/third-party/slack>) |
+
+## whats-new
+
+| Page | Local | Source |
+| --- | --- | --- |
+| DevDay 2026 | [whats-new/devday-2026.md](./whats-new/devday-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/devday-2026>) |
+| September 28–October 2, 2026 | [whats-new/september-28-october-2-2026.md](./whats-new/september-28-october-2-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/september-28-october-2-2026>) |
 
 ## windows
 

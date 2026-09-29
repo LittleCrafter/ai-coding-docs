@@ -25,6 +25,139 @@ Source: [ChatGPT on the web](./web.md)
 
 Use ChatGPT on the web to research, analyze, and create files.
 
+### DevDay 2026
+
+Source: [DevDay 2026](./whats-new/devday-2026.md)
+
+#### ChatGPT
+
+#### Meet your dot
+
+Dots are always-on agents that take on ongoing responsibility. Give your dot a goal and define what it can do on its own. It works across connected apps on its own computer, keeps making progress between conversations, and brings back results for your review. It reaches out when a decision needs your judgment. Dots are rolling out gradually to eligible accounts.
+
+[Meet your dot](./dots.md)
+[Availability](./dots.md#access)
+[Admin guide](https://learn.chatgpt.com/docs/enterprise/o-admin-guide)
+
+#### Work across devices
+
+Start a new synced ChatGPT Work task on desktop and continue on web or mobile. An online, connected computer can run steps that need its local files and tools. Existing tasks keep their original mode.
+
+[Get started with Work](./get-started-with-work.md#continue-work-across-devices)
+[Set up sync](./enterprise/cloud-local-access.md)
+
+#### ChatGPT Space
+
+Bring files and Pages together. Draft and revise with ChatGPT, edit your work directly, and invite collaborators to view, comment, or edit.
+
+[Get started](./space/getting-started.md)
+[Pages](./space/pages.md)
+[Work with the agent](./space/agents.md)
+[Collaboration](./space/collaboration.md)
+[Admin guide](./enterprise/chatgpt-space.md)
+
+#### Codex
+
+#### Astra Ultrafast in Codex
+
+Use GPT-6 Astra Ultrafast in Codex and ChatGPT Work on the Pro $500/month plan and eligible Enterprise and Edu plans. Enterprise owners control access; workspaces requiring inference residency outside the US aren't eligible.
+
+[Ultrafast mode](./agent-configuration/speed.md#ultrafast-mode)
+[Plans and usage](./pricing.md)
+
+#### Reusable cloud environments
+
+Describe your development setup, let Codex prepare and test it, then publish the environment. New tasks start in isolated workspaces using the prepared filesystem. Continue cloud tasks from web, mobile, or desktop while your computer sleeps.
+
+[Cloud environments](./environments/cloud-environments.md)
+
+#### Codex Security Cloud
+
+Scan connected GitHub repositories or monitor new commits with the Security Cloud plugin, available in research preview. Review findings, validation evidence, and patches before creating a draft pull request.
+
+[Set up Security Cloud](./security/setup.md)
+[Threat model](./security/threat-model.md)
+
+#### Sites & plugins
+
+#### Sign in with ChatGPT
+
+Let users sign in with ChatGPT and, for eligible Plus and Pro users, use their ChatGPT plan for AI requests in your app. Commercial sign-in is in a limited trial with selected partners. ChatGPT plan usage is available to open-source partners and selected private clients.
+
+[Quickstart](https://developers.openai.com/siwc/quickstart)
+[Open-source apps](https://developers.openai.com/siwc/token-sharing-open-source)
+
+#### Sites with connected data
+
+Build a Site that uses each visitor's own connected apps. Plugins in Sites are available for workspace-private Sites where enabled; visitors choose their accounts and consent to access.
+
+[Build with plugins](./sites.md#load-visitor-data-via-plugins)
+[Sharing and access](./sites.md#control-access-and-secrets)
+
+#### Plugin Extensions
+
+Add sidebar apps, conversation panels, file viewers and editors, and forms to ChatGPT. Composer mentions are available only in the desktop app. Free and Go web extensions are coming soon. Package the interface alongside your plugin's tools and skills.
+
+[Build extensions](https://developers.openai.com/plugins/build/extensions)
+[Package a plugin](https://developers.openai.com/plugins/build/plugins)
+
+#### MCP Events
+
+Let users ask ChatGPT to monitor updates from your MCP server and act when matching events arrive. ChatGPT requires MCP 2.0 and supports webhook delivery from the draft MCP Events specification.
+
+[Build event subscriptions](https://developers.openai.com/plugins/build/mcp-events)
+
+#### Website annotations
+
+Choose what people can select, attach useful context, and add controls to preview changes before sending feedback to ChatGPT. The Browser Annotation API works in supported desktop app browsers.
+
+[Annotations Extensibility](./annotations-extensibility.md)
+
+#### API
+
+#### GPT-6.1 Sol
+
+GPT-6.1 Sol offers near-Astra performance at a lower cost for complex coding and professional work. Use it in the API and Codex, where available. It supports Multi-agent beta in Responses and EU data residency with Standard, Flex, and Batch processing.
+
+[API model](https://developers.openai.com/api/docs/models/gpt-6.1-sol)
+[Codex availability](./models.md#gpt-61-sol)
+[Multi-agent beta](https://developers.openai.com/api/docs/guides/responses-multi-agent)
+
+#### Astra Ultrafast in the API
+
+Reduce the time between generated output tokens with GPT-6 Astra Ultrafast in the Responses API. Availability is subject to rate limits, with global processing and US data residency.
+
+[Ultrafast guide](https://developers.openai.com/api/docs/guides/ultrafast-mode)
+[Pricing](https://developers.openai.com/api/docs/pricing?latest-pricing=ultrafast)
+
+#### Enterprise
+
+#### ChatGPT in Slack and Teams
+
+Bring ChatGPT into approved conversations with your deployment's connected tools. Configure who can use each deployment and which channels it can access.
+
+[Slack and Teams guide](./enterprise/chatgpt-slack-and-teams.md)
+
+#### Team Tasks
+
+Run scheduled or event-triggered work through a team's service account and approved connections.
+
+[Set up Team Tasks](./enterprise/teams.md)
+
+#### Workspace connections
+
+Connect company-managed accounts for supported teams and workflows. Each connection uses the connected account's permissions.
+
+[Manage shared connections](./enterprise/shared-connections.md)
+
+#### Agent Security
+
+Control which tools agents can use and how they access files and the network. Set workspace policies for local and Codex Cloud execution; Work Cloud has separate controls.
+
+[Agent Security](./enterprise/agent-security.md)
+[Managed configuration](./enterprise/managed-configuration.md)
+[Work sync](./enterprise/cloud-local-access.md)
+
 ### Features
 
 Source: [Features](./features.md)
@@ -138,6 +271,125 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 Source: [Resources](https://learn.chatgpt.com/resources.md)
 
 Find Codex videos, community programs, and OpenAI resources
+
+### September 28–October 2, 2026
+
+Source: [September 28–October 2, 2026](./whats-new/september-28-october-2-2026.md)
+
+#### Choose GPT-6.1 Sol for complex work
+
+[GPT-6.1 Sol](./models.md#gpt-61-sol) offers near-Astra performance at a
+lower cost than Astra. Consider it for repeated, long-running work across code,
+apps, and documents. Availability depends on your plan, client, and workspace
+settings. See the [launch announcement](https://learn.chatgpt.com/docs/changelog#codex-2026-09-29-gpt-61-sol)
+and [pricing](./pricing.md) for details.
+
+#### Delegate ongoing work to your dot
+
+[Dots](./dots.md) are always-on agents that take on ongoing responsibility
+in ChatGPT. Give your dot a goal, such as preparing meeting briefs or
+tracking project updates, and define what it can do on its own. It keeps
+making progress between conversations, using connected apps, creating
+files, and delegating tasks to ChatGPT Work or Codex.
+
+Start with one dot, give it a name, and make it your own. Your dot has its
+own cloud computer and browser. It brings back results for your review
+and reaches out through supported contact methods when a decision needs
+your judgment. You can review its work or give it a new direction anytime.
+Dots are rolling out gradually. See [availability](./dots.md#access) for eligible plans, regions, and setup requirements.
+
+#### Use GPT-6 Astra Ultrafast
+
+[Ultrafast mode](./agent-configuration/speed.md#ultrafast-mode) is available
+in Codex and ChatGPT Work on the Pro \$500/month plan and eligible Enterprise and Edu
+plans. On Pro, it draws from included usage or available credits. Enterprise
+usage follows the workspace's credit-based or USD usage-based agreement.
+
+Enterprise access is off by default; workspace owners can enable it for
+selected users or the workspace. Ultrafast isn't available to workspaces
+that require inference residency outside the United States.
+
+#### Prepare reusable Codex Cloud environments
+
+Describe your development setup and let Codex install dependencies, prepare
+tools, and test the workflow. [Publish the environment](./environments/cloud-environments.md)
+to reuse its prepared filesystem. Each new task gets its own isolated
+workspace. Access depends on your plan and workspace settings.
+
+#### Scan repositories with Codex Security Cloud
+
+[Codex Security Cloud](./security/setup.md) is available in research preview
+on the web and in the desktop app. In a workspace with access, install the
+plugin to scan connected GitHub repositories or monitor new commits. Review
+findings, validation evidence, and available patches before creating a draft
+pull request.
+
+#### Continue Work across devices
+
+When your workspace enables Local computer access with Work Cloud, start a new ChatGPT Work task on desktop
+and continue the conversation from web or mobile. Tasks can use approved
+files and tools on a connected computer; keep that computer online for steps
+that need it. Existing tasks keep their original mode.
+
+See [Work across devices](./get-started-with-work.md#continue-work-across-devices)
+and the [administrator setup guide](./enterprise/cloud-local-access.md).
+
+#### Work together in ChatGPT Space
+
+Where available, [ChatGPT Space](./space.md) brings Pages and saved files
+together. Ask ChatGPT to draft or revise a Page, edit it directly, and share
+it with collaborators. Use `@ChatGPT` or `@dot` to ask for help in a Page,
+or use slash commands to generate text, images, and visualizations.
+Review the available permissions before sharing.
+
+Start with the [Space getting-started guide](./space/getting-started.md)
+or learn how to [work on Pages together](./space/collaboration.md).
+
+#### Set up shared team workflows
+
+- **ChatGPT in Slack and Microsoft Teams:** Request work in approved
+  conversations using your deployment's connected tools. Workspace admins
+  can [configure deployments and access](./enterprise/chatgpt-slack-and-teams.md).
+- **Team Tasks:** Run [scheduled or event-triggered work](./enterprise/teams.md), such as
+  project digests, through a team's service account and approved connections.
+- **Workspace connections:** Admins can [connect company-managed accounts](./enterprise/shared-connections.md)
+  for eligible teams and workflows. Each connection uses the connected
+  account's permissions.
+
+Availability and supported controls depend on your workspace and rollout.
+
+#### Sign in to apps with ChatGPT
+
+[Sign in with ChatGPT](https://developers.openai.com/siwc/quickstart) lets users sign in to your app and,
+where eligible, use their ChatGPT plan for AI requests. Eligible Plus and Pro
+users can bring their plan usage to participating apps.
+
+Commercial sign-in is in a limited trial with selected partners. ChatGPT plan
+usage is available to open-source partners and selected private clients.
+Start with the [open-source integration](https://developers.openai.com/siwc/token-sharing-open-source).
+
+#### Extend your plugin's interface
+
+[Plugin Extensions](https://developers.openai.com/plugins/build/extensions) let developers add sidebar
+apps, conversation panels, file viewers and editors, and forms to ChatGPT.
+Composer mentions are available only in the desktop app. Free and Go web extensions are coming soon.
+
+#### Respond to MCP events
+
+[MCP Events](https://developers.openai.com/plugins/build/mcp-events) lets users ask ChatGPT to monitor
+updates from your server and act when matching events arrive. For example,
+a user can ask ChatGPT to summarize new messages or respond to document feedback.
+
+This integration requires MCP 2.0. ChatGPT supports webhook delivery from
+the draft MCP Events specification; polling and streaming aren't supported.
+
+#### Customize website annotations
+
+Use [Annotations Extensibility](./annotations-extensibility.md) to choose
+what people can select on your website, attach relevant context, and provide
+controls for previewing changes before sending feedback to ChatGPT. The
+Browser Annotation API is available in supported versions of the desktop
+app's built-in browser.
 
 ### Use ChatGPT
 
@@ -412,19 +664,182 @@ a]:min-w-0 [&>a]:no-underline">
 
 Source: [What's new](./whats-new.md)
 
-This weekly digest highlights ChatGPT and Codex features that can change how you
-work, with examples and links to learn more. For every versioned update, bug fix,
-and minor improvement, see the [Codex changelog](https://learn.chatgpt.com/docs/changelog).
+For every versioned update, bug fix, and minor improvement, see the [Codex changelog](https://learn.chatgpt.com/docs/changelog) and [API changelog](https://developers.openai.com/api/docs/changelog).
 
-#### September 28–October 2, 2026
+#### [DevDay 2026](./whats-new/devday-2026.md)
+
+#### Meet your dot
+
+Give your dot ongoing responsibility. Dots keep making progress between conversations and are rolling out gradually to eligible accounts.
+
+[Meet your dot](./dots.md)
+[Availability](./dots.md#access)
+[Admin guide](https://learn.chatgpt.com/docs/enterprise/o-admin-guide)
+
+#### Work across devices
+
+Start a synced Work task on desktop and continue on web or mobile.
+
+[Get started with Work](./get-started-with-work.md#continue-work-across-devices)
+[Set up sync](./enterprise/cloud-local-access.md)
+
+#### ChatGPT Space
+
+Bring files and Pages together, and work with collaborators.
+
+[Get started](./space/getting-started.md)
+[Pages](./space/pages.md)
+[Work with the agent](./space/agents.md)
+[Collaboration](./space/collaboration.md)
+[Admin guide](./enterprise/chatgpt-space.md)
+
+#### Astra Ultrafast in Codex
+
+Faster responses in Codex and Work on Pro $500 and eligible Enterprise and Edu plans.
+
+[Ultrafast mode](./agent-configuration/speed.md#ultrafast-mode)
+[Plans and usage](./pricing.md)
+
+#### Reusable cloud environments
+
+Prepare a development setup once and reuse it in isolated cloud workspaces.
+
+[Cloud environments](./environments/cloud-environments.md)
+
+#### Codex Security Cloud
+
+Scan repositories, review findings, and prepare patches in research preview.
+
+[Set up Security Cloud](./security/setup.md)
+[Threat model](./security/threat-model.md)
+
+#### Sign in with ChatGPT
+
+Offer ChatGPT sign-in and eligible ChatGPT plan usage in your app. Commercial sign-in is in a limited trial with selected partners.
+
+[Quickstart](https://developers.openai.com/siwc/quickstart)
+[Open-source apps](https://developers.openai.com/siwc/token-sharing-open-source)
+
+#### Sites with connected data
+
+Build workspace-private Sites with each visitor’s connected apps, where enabled.
+
+[Build with plugins](./sites.md#load-visitor-data-via-plugins)
+[Sharing and access](./sites.md#control-access-and-secrets)
+
+#### Plugin Extensions
+
+Add sidebar apps, panels, editors, and forms to ChatGPT. Composer mentions require the desktop app; Free and Go web extensions are coming soon.
+
+[Build extensions](https://developers.openai.com/plugins/build/extensions)
+[Package a plugin](https://developers.openai.com/plugins/build/plugins)
+
+#### MCP Events
+
+Let users ask ChatGPT to act on updates from your MCP server. Requires MCP 2.0 and webhook delivery.
+
+[Build event subscriptions](https://developers.openai.com/plugins/build/mcp-events)
+
+#### Website annotations
+
+Add context and preview controls to feedback from supported desktop browsers.
+
+[Annotations Extensibility](./annotations-extensibility.md)
+
+#### GPT-6.1 Sol
+
+Use GPT-6.1 Sol for complex coding and professional work in the API and Codex, where available.
+
+[API model](https://developers.openai.com/api/docs/models/gpt-6.1-sol)
+[Codex availability](./models.md#gpt-61-sol)
+[Multi-agent beta](https://developers.openai.com/api/docs/guides/responses-multi-agent)
+
+#### Astra Ultrafast in the API
+
+Generate output tokens faster in the Responses API, subject to availability.
+
+[Ultrafast guide](https://developers.openai.com/api/docs/guides/ultrafast-mode)
+[Pricing](https://developers.openai.com/api/docs/pricing?latest-pricing=ultrafast)
+
+#### ChatGPT in Slack and Teams
+
+Bring ChatGPT and approved tools into Slack and Teams conversations.
+
+[Slack and Teams guide](./enterprise/chatgpt-slack-and-teams.md)
+
+#### Team Tasks
+
+Run scheduled or event-triggered work through a team’s service account and approved connections.
+
+[Set up Team Tasks](./enterprise/teams.md)
+
+#### Workspace connections
+
+Connect company-managed accounts for supported teams and workflows.
+
+[Manage shared connections](./enterprise/shared-connections.md)
+
+#### Agent Security
+
+Manage tool, file, and network access for local and cloud agents.
+
+[Agent Security](./enterprise/agent-security.md)
+[Managed configuration](./enterprise/managed-configuration.md)
+[Work sync](./enterprise/cloud-local-access.md)
+
+[Read the full update →](./whats-new/devday-2026.md)
+
+#### [September 28–October 2, 2026](./whats-new/september-28-october-2-2026.md)
 
 #### Choose GPT-6.1 Sol for complex work
 
-[GPT-6.1 Sol](./models.md#gpt-61-sol) offers near-Astra performance at a
-lower cost than Astra. Consider it for repeated, long-running work across code,
-apps, and documents. Availability depends on your plan, client, and workspace
-settings. See the [launch announcement](https://learn.chatgpt.com/docs/changelog#codex-2026-09-29-gpt-61-sol)
-and [pricing](./pricing.md) for details.
+Use [GPT-6.1 Sol](./models.md#gpt-61-sol) for coding and professional work at a lower cost than Astra. Access depends on your plan, client, and workspace settings.
+
+#### Delegate ongoing work to your dot
+
+[Dots](./dots.md) continue work between conversations and bring back results for review. [Access is rolling out gradually](./dots.md#access) to eligible accounts.
+
+#### Use GPT-6 Astra Ultrafast
+
+[Ultrafast](./agent-configuration/speed.md#ultrafast-mode) speeds up token generation in Codex and Work on Pro $500 and eligible Enterprise and Edu plans. Usage and workspace restrictions apply.
+
+#### Prepare reusable Codex Cloud environments
+
+[Prepare and publish a cloud environment](./environments/cloud-environments.md) once, then reuse its filesystem in isolated workspaces for new tasks.
+
+#### Scan repositories with Codex Security Cloud
+
+Install the [Security Cloud plugin](./security/setup.md) to scan connected repositories and review findings and patches. Available in research preview to workspaces with access.
+
+#### Continue Work across devices
+
+With [Local computer access with Work Cloud](./enterprise/cloud-local-access.md) enabled, continue eligible tasks from desktop, web, or mobile. Keep your computer online for steps that need its local resources.
+
+#### Work together in ChatGPT Space
+
+Create and share [Pages in Space](./space/pages.md). Mention ChatGPT or your dot and use [slash commands](./space/agents.md) while editing.
+
+#### Set up shared team workflows
+
+Run scheduled or event-triggered [Team Tasks](./enterprise/teams.md) with a service account and approved workspace connections. Admins also manage [ChatGPT access in Slack and Teams](./enterprise/chatgpt-slack-and-teams.md).
+
+#### Sign in to apps with ChatGPT
+
+Add [ChatGPT sign-in and eligible plan usage](https://developers.openai.com/siwc/quickstart) to your app. Commercial sign-in is in a limited trial; plan usage supports open-source partners and selected private clients.
+
+#### Extend your plugin's interface
+
+[Plugin Extensions](https://developers.openai.com/plugins/build/extensions) add interfaces to ChatGPT. Composer mentions are desktop-only, and Free and Go web extensions are coming soon.
+
+#### Respond to MCP events
+
+Build [webhook subscriptions](https://developers.openai.com/plugins/build/mcp-events) so users can ask ChatGPT to act on updates from your MCP server. Requires MCP 2.0.
+
+#### Customize website annotations
+
+Use the [Browser Annotation API](./annotations-extensibility.md) to attach context and preview controls to website feedback in supported desktop browsers.
+
+[Read the full update →](./whats-new/september-28-october-2-2026.md)
 
 #### September 21–25, 2026
 
