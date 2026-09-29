@@ -476,7 +476,7 @@ When a server silently disappears, the user gets no signal that policy is the re
 
 ## Monitor MCP usage
 
-When [OpenTelemetry export](./monitoring-usage.md) is configured, Claude Code can record which MCP servers and tools users invoke. Set `OTEL_LOG_TOOL_DETAILS=1` to include MCP server and tool names in tool events, then aggregate them in your collector to see which servers your users actually connect to. See [Monitoring](./monitoring-usage.md) to set up the exporter and for the full event schema.
+When you configure [OpenTelemetry export](./monitoring-usage.md), Claude Code can record which MCP servers and tools users invoke. Set `OTEL_LOG_TOOL_DETAILS=1` to include MCP server and tool names in tool events and on the [cost and token counters](./monitoring-usage.md#cost-counter), then aggregate them in your collector to see which servers your users actually connect to. See [Monitoring](./monitoring-usage.md) to set up the exporter and for the full event schema.
 
 ## Configuration summary
 

@@ -507,13 +507,16 @@ Every key below links to its entry. Scope lists the [files](./settings.md#settin
 | [`blockedMarketplaces`](#blockedmarketplaces) | Block [plugin marketplace](./plugins/overview.md) sources for your organization | Plugins and skills | Managed |
 | [`browserExternalPageTools`](#browserexternalpagetools) | Keep Claude's tools off external pages in the [desktop](./desktop.md) Browser pane | Tools | Managed |
 | [`channelsEnabled`](#channelsenabled) | Allow [channels](./channels.md#enable-channels-for-your-organization) for your organization | Plugins and skills | Managed |
+| [`claudeInChromeDefaultEnabled`](#claudeinchromedefaultenabled) | Turn on [Chrome integration](./chrome.md) in every interactive CLI session without passing `--chrome` | Global config settings | Global config |
 | [`claudeMd`](#claudemd) | Inject organization-wide [CLAUDE.md](./memory.md#deploy-organization-wide-claude-md) instructions from managed settings | Memory and context | Managed |
 | [`claudeMdExcludes`](#claudemdexcludes) | Skip specific [CLAUDE.md](./memory.md#exclude-specific-claude-md-files) files when memory loads | Memory and context | Any file |
 | [`cleanupPeriodDays`](#cleanupperioddays) | Choose how many days Claude Code keeps [transcripts](./data-usage.md#data-retention) before deleting them | Privacy and telemetry | Any file |
 | [`companyAnnouncements`](#companyannouncements) | Show your organization's announcements at startup | Interface and terminal | Any file |
+| [`copyFullResponse`](#copyfullresponse) | Make [`/copy`](./commands.md) copy the full response without showing the code block picker | Global config settings | Global config |
 | [`copyOnSelect`](#copyonselect) | Turn off automatic copying of text you select with the mouse in [fullscreen rendering](./fullscreen.md#use-the-mouse) and agent view | Global config settings | Global config |
 | [`crossSessionInbound`](#crosssessioninbound) | Choose whether Claude Code delivers [messages from your other sessions](./cross-session-messaging.md#control-inbound-messages), shows a notice without delivering them, or refuses them | Agents, sessions, and worktrees | Any file |
 | [`defaultShell`](#defaultshell) | Choose whether Bash or PowerShell runs the shell commands you type with the [`!` prefix](./interactive-mode.md#shell-mode-with-prefix) | Interface and terminal | Any file |
+| [`defaultToAgentsView`](#defaulttoagentsview) | Open [agent view](./agent-view.md) instead of a new conversation when you run `claude` with no arguments | Global config settings | Global config |
 | [`deniedMcpServers`](#deniedmcpservers) | Block specific [MCP servers](./mcp.md) by URL, command, or name | MCP | Any file |
 | [`deniedModels`](#deniedmodels) | [Block specific models](./model-config.md#block-specific-models-or-versions), even ones `availableModels` permits | Model and responses | Managed |
 | [`desktopSessionCleanupPeriodDays`](#desktopsessioncleanupperioddays) | Set an age limit in days for [Claude Desktop and Cowork transcripts](./claude-directory.md#cleaned-up-automatically) | Privacy and telemetry | User or managed |
@@ -569,6 +572,7 @@ Every key below links to its entry. Scope lists the [files](./settings.md#settin
 | [`isolatePeerMachines`](#isolatepeermachines) | Ask you before Claude [messages one of your sessions on another machine](./cross-session-messaging.md#require-approval-for-cross-machine-messages) | Agents, sessions, and worktrees | Any file |
 | [`keybindingFlavor`](#keybindingflavor) | Deprecated and has no effect; the word-editing shortcuts always [follow readline conventions](./interactive-mode.md#make-ctrl-w-delete-back-to-whitespace) | Interface and terminal | Any file |
 | [`language`](#language) | Have Claude respond in a language other than English | Model and responses | Any file |
+| [`leftArrowOpensAgents`](#leftarrowopensagents) | Turn off the `←` shortcut that [backgrounds the session and opens agent view](./agent-view.md#switch-sessions-without-leaving-the-terminal) | Global config settings | Global config |
 | [`managedMcpServers`](#managedmcpservers) | Provide remote [MCP servers](./managed-mcp.md#provide-servers-through-managed-settings) to every user alongside the ones they add | MCP | Managed |
 | [`managedSourcesBehavior`](#managedsourcesbehavior) | Compose every [managed source](./managed-settings.md#how-claude-code-combines-managed-sources) you deploy instead of using the highest-priority one alone | Enterprise and managed settings | Managed |
 | [`maxEffortLevel`](#maxeffortlevel) | Cap the [effort level](./model-config.md#adjust-effort-level) for every model or per model, on every provider | Model and responses | Any file |
@@ -604,6 +608,7 @@ Every key below links to its entry. Scope lists the [files](./settings.md#settin
 | [`processWrapper`](#processwrapper) | Run Claude Code's background processes through a [corporate launcher](./corporate-launcher.md) on macOS and Linux | Agents, sessions, and worktrees | User or managed |
 | [`promptCacheTtl`](#promptcachettl) | Choose the [prompt cache lifetime](./prompt-caching.md#cache-lifetime) for the main conversation | Model and responses | Any file |
 | [`promptSuggestionEnabled`](#promptsuggestionenabled) | Hide the grayed-out [prompt suggestions](./interactive-mode.md#prompt-suggestions) in the input box | Interface and terminal | Any file |
+| [`prStatusFooterEnabled`](#prstatusfooterenabled) | Turn off the prompt footer's [PR review status](./interactive-mode.md#pr-review-status) badge and the pull request check behind it | Global config settings | Global config |
 | [`prUrlTemplate`](#prurltemplate) | Point PR links at an internal code-review tool instead of github.com | Git and attribution | Any file |
 | [`remote.defaultEnvironmentId`](#remote-defaultenvironmentid) | Pick the default [cloud environment](./cloud-environments.md) for `claude --cloud`; a self-hosted `ccpool_` ID is read only from user and managed settings and `--settings` | Remote, desktop, and notifications | Any file |
 | [`remoteControlAtStartup`](#remotecontrolatstartup) | Connect [Remote Control](./remote-control.md#enable-remote-control-for-all-sessions) automatically when a session starts | Remote, desktop, and notifications | Any file |
@@ -838,7 +843,7 @@ In your user settings file, `~/.claude/settings.json`, this key is the older for
 
 ### `enforceAvailableModels`
 
-The `/model` picker has a **Default** option that resolves to your [organization default model](./model-config.md#organization-default-model) when one applies, and otherwise to your account type's default. An [`availableModels`](#availablemodels) allowlist limits the models you can name, but with the default [prefix matching](#availablemodelsmatch) it leaves **Default** alone, so **Default** can still resolve to a model outside the list. This key closes that gap. Requires Claude Code v2.1.175 or later.
+The `/model` picker has a **Default** option, and [`default` model setting](./model-config.md#default-model-setting) describes the model it resolves to. An [`availableModels`](#availablemodels) allowlist limits the models you can name, but with the default [prefix matching](#availablemodelsmatch) it doesn't remap your account type's default, so **Default** can still resolve to a model outside the list. This key closes that gap. Requires Claude Code v2.1.175 or later.
 
 When your organization deploys any managed settings, Claude Code reads this key from the managed source alone and ignores it in your other files.
 
@@ -938,7 +943,6 @@ Cap the [effort level](./model-config.md#adjust-effort-level) a session can use,
 * **Scope**: [`Any file`](#scopes). Deploy it in managed settings to enforce it for an organization. When several scopes set a cap, the lowest applies, so a cap set in one scope can't be raised from another
 * **Type**: string, one of `"low"`, `"medium"`, `"high"`, `"xhigh"`, or `"max"`. A `"max"` value sets no cap
 * **Default**: unset, so no cap applies
-* **Effect on ultracode**: a cap below `xhigh` makes [ultracode](#ultracode) unavailable on the models the cap applies to
 * **Per-model caps**: add `maxEffortLevel` to a model's [`modelSettings`](#modelsettings) entry. That entry replaces this key for the model only within the settings source that sets both, such as your user settings or one [managed source](./managed-settings.md#how-claude-code-combines-managed-sources). Set `"max"` there to exempt the model from that source's cap; Claude Code still applies caps from other sources
 
 This example caps every model at `medium` and exempts Sonnet 4.6:
@@ -1227,14 +1231,14 @@ See [Ask before switching](./model-config.md#ask-before-switching).
 
 ### `ultracode`
 
-Start sessions with [ultracode](./workflows.md#let-claude-decide-with-ultracode) on. With it on, Claude plans a workflow for each substantive task instead of waiting for you to ask. Claude plans workflows only when [dynamic workflows](./workflows.md) are enabled for you, your model supports `xhigh` effort, and no [effort cap](./model-config.md#organization-effort-limits) below `xhigh` applies. Either way, `ultracode: true` runs the session at `xhigh` effort, or at the cap when an effort cap is lower. Claude Code reads this key but never writes it: `/effort ultracode` turns ultracode on for the current session only.
+Start sessions with [ultracode](./workflows.md#let-claude-decide-with-ultracode) on. With it on, Claude plans a workflow for each substantive task instead of waiting for you to ask. Claude plans workflows only when [dynamic workflows](./workflows.md) are enabled for you and your model supports `xhigh` effort. The key doesn't change the session's effort level: ultracode runs at whichever level the session uses. Claude Code reads this key but never writes it: `/effort ultracode` turns ultracode on for the current session only.
 
 * **Scope**: [`Any file`](#scopes)
 * **Type**: Boolean
-  * `true`: sessions start at `xhigh` effort, with ultracode on when dynamic workflows are enabled for you, your model supports `xhigh`, and no effort cap is below `xhigh`
+  * `true`: sessions start with ultracode on when dynamic workflows are enabled for you and your model supports `xhigh`
   * `false`: sessions start with ultracode off
 * **Default**: unset, so ultracode is off
-* **Per-session overrides**: `/effort ultracode` turns ultracode on for one session without this key. The `--effort ultracode` flag also turns it on for one session and requires Claude Code v2.1.203 or later
+* **Per-session overrides**: `/effort ultracode` turns ultracode on for one session without this key, and `/effort ultracode off` turns it off for one session when this key is `true`. The `--effort ultracode` flag also turns it on for one session, at `xhigh` effort, and requires Claude Code v2.1.203 or later
 
 ```json settings.json theme={null}
 {
@@ -1242,7 +1246,7 @@ Start sessions with [ultracode](./workflows.md#let-claude-decide-with-ultracode)
 }
 ```
 
-Ultracode runs the session at `xhigh` effort and takes precedence over `effortLevel` and [`modelSettings`](#modelsettings) entries. If an [effort cap](./model-config.md#organization-effort-limits) below `xhigh` applies to the model, such as a [`maxEffortLevel`](#maxeffortlevel) setting, the session runs at the cap instead and ultracode stays off. Claude then doesn't plan workflows on its own, and `/effort` doesn't offer `ultracode`. An Agent SDK `apply_flag_settings` control request also accepts the key.
+The session's effort level comes from [`effortLevel`](#effortlevel), [`modelSettings`](#modelsettings), and the other [effort sources](./model-config.md#adjust-effort-level), and an [effort cap](./model-config.md#organization-effort-limits) such as [`maxEffortLevel`](#maxeffortlevel) lowers that level without turning ultracode off. This and the `/effort ultracode off` form require Claude Code v2.1.284 or later. Before v2.1.284, `ultracode: true` ran the session at `xhigh` effort, and an effort cap below `xhigh` kept ultracode off. An Agent SDK `apply_flag_settings` control request also accepts the key.
 
 ## Permission settings
 
@@ -5536,7 +5540,7 @@ Control how long Claude Code keeps session data and what it sends. The switches 
 
 ### `cleanupPeriodDays`
 
-Set how many days Claude Code keeps [session transcripts and other application data](./claude-directory.md#cleaned-up-automatically) before deleting them. Claude Code runs the deletion as a background sweep after a session starts, as long as it can safely determine the retention period.
+Set how many days Claude Code keeps [session transcripts and other application data](./claude-directory.md#cleaned-up-automatically) before deleting them. Claude Code runs the deletion as a background sweep after a session starts, as long as it can safely determine the retention period. The sweep deletes transcripts without showing a message, so a session you haven't used for longer than the retention period no longer appears in the [`/resume`](./sessions.md#resume-a-session) picker.
 
 * **Scope**: [`Any file`](#scopes)
 * **Type**: number of days, a whole number, minimum `1`
@@ -5848,11 +5852,11 @@ This example re-runs the helper every five minutes:
 
 ### `wslInheritsWindowsSettings`
 
-Have Claude Code on WSL read managed settings from the Windows policy chain, with HKLM and the Windows managed settings file taking priority over `/etc/claude-code` and HKCU below it. While the chain is on, Claude Code reads `/etc/claude-code` only when no managed settings file or drop-in under `C:\Program Files\ClaudeCode\` delivers a [policy key](./managed-settings.md#how-claude-code-combines-managed-sources). Set it to extend the policy you already deploy on Windows to WSL sessions on the same machine, so they follow the same rules as host sessions. Claude Code honors it only when set in the HKLM registry key or in a managed settings file or drop-in under `C:\Program Files\ClaudeCode\`, both of which require Windows admin to write.
+Have Claude Code on WSL read managed settings from the Windows policy chain, with HKLM and the Windows managed settings file taking priority over `/etc/claude-code` and HKCU below it. While the chain is on, Claude Code reads `/etc/claude-code` only when [no Windows admin document is present](./managed-settings.md#present-admin-documents) in the HKLM registry value or the `C:\Program Files\ClaudeCode\` folder. Set it to extend the policy you already deploy on Windows to WSL sessions on the same machine, so they follow the same rules as host sessions. Claude Code honors it only when set in the HKLM registry key or in a managed settings file or drop-in under `C:\Program Files\ClaudeCode\`, both of which require Windows admin to write.
 
 * **Scope**: [`Managed`](#scopes). In an admin-controlled Windows source.
 * **Type**: Boolean
-  * `true`: Claude Code on WSL reads managed settings from the Windows policy chain, and reads `/etc/claude-code` only when no managed settings file or drop-in under `C:\Program Files\ClaudeCode\` delivers a [policy key](./managed-settings.md#how-claude-code-combines-managed-sources)
+  * `true`: Claude Code on WSL reads managed settings from the Windows policy chain, and reads `/etc/claude-code` only when no Windows admin document is present
   * `false`: WSL reads only `/etc/claude-code`
 * **Default**: `false`, so WSL reads only `/etc/claude-code`
 
@@ -5862,7 +5866,9 @@ Have Claude Code on WSL read managed settings from the Windows policy chain, wit
 }
 ```
 
-Once an admin source turns the chain on, HKCU policy joins it on WSL only when HKCU also sets the key to `true`. That copy doesn't turn the chain on by itself. A Windows source that contains only this key doesn't count as a policy source, so a lower-priority source still supplies the policy. This key has no effect on native Windows.
+Once an admin source turns the chain on, HKCU policy joins it on WSL only when HKCU also sets the key to `true`. That copy doesn't turn the chain on by itself. A Windows source that contains only this key, set to `true` or `false`, doesn't count as a policy source, so a lower-priority source still supplies the policy. This key has no effect on native Windows.
+
+Claude Code reads `true` and `false` with or without quotes and reads `null` as removing the key. An admin-controlled Windows source that holds any other value counts as a [present admin document](./managed-settings.md#present-admin-documents) with the chain turned on: neither `/etc/claude-code` nor HKCU applies, and a startup warning names the key. An HKLM value or Windows-folder file that exists but can't be read also keeps `/etc/claude-code` from applying whether or not the chain is on. Requires Claude Code v2.1.282 or later.
 
 ## Global config settings
 
@@ -5906,6 +5912,43 @@ Install the Claude Code IDE extension automatically when you run Claude Code fro
 
 Claude Code ignores this key in `settings.json`.
 
+### `claudeInChromeDefaultEnabled`
+
+Start every interactive CLI session with [Chrome integration](./chrome.md) on, without passing `--chrome` each time. If you run [`claude remote-control`](./remote-control.md), a session it starts for one of your [project](./claude-projects.md) threads follows this key too, except in `bypassPermissions` mode. Running `/chrome` and selecting **Enabled by default** sets this key for you, as described in [Enable Chrome by default](./chrome.md#enable-chrome-by-default). Appears in `/config` as **Claude in Chrome enabled by default**.
+
+* **Scope**: [`Global config`](#scopes)
+* **Type**: Boolean
+  * `true`: Claude Code turns on Chrome integration when an interactive CLI session starts, as it does when you pass `--chrome`
+  * `false`: interactive CLI sessions start with Chrome integration off, and Claude Code stops [offering to set it up](./chrome.md#install-the-extension-when-claude-asks). Pass `--chrome` to turn it on for one interactive session
+* **Default**: unset, so Chrome integration is off and Claude Code can still offer to set it up
+* **Per-session overrides**: `--chrome` and [`--no-chrome`](./cli-reference.md) take precedence over this key for one interactive session
+
+```json ~/.claude.json theme={null}
+{
+  "claudeInChromeDefaultEnabled": true
+}
+```
+
+Claude Code ignores this key in `settings.json`.
+
+### `copyFullResponse`
+
+Make [`/copy`](./commands.md) copy the full response every time, without the picker it otherwise shows when the response contains code blocks. Selecting **Always copy full response** in that picker sets this key to `true`. Appears in `/config` as **Skip the /copy picker**.
+
+* **Scope**: [`Global config`](#scopes)
+* **Type**: Boolean
+  * `true`: `/copy` copies the full response without showing the picker
+  * `false`: when the response contains code blocks, `/copy` shows a picker where you choose one code block or the full response
+* **Default**: `false`
+
+```json ~/.claude.json theme={null}
+{
+  "copyFullResponse": true
+}
+```
+
+Claude Code ignores this key in `settings.json`.
+
 ### `copyOnSelect`
 
 Copy text to your clipboard automatically when you finish selecting it with the mouse in [fullscreen rendering](./fullscreen.md#use-the-mouse) or [agent view](./agent-view.md). Appears in `/config` as **Copy on select** while fullscreen rendering is on.
@@ -5919,6 +5962,24 @@ Copy text to your clipboard automatically when you finish selecting it with the 
 ```json ~/.claude.json theme={null}
 {
   "copyOnSelect": false
+}
+```
+
+Claude Code ignores this key in `settings.json`.
+
+### `defaultToAgentsView`
+
+Open [agent view](./agent-view.md) instead of a new conversation when you run `claude` with no arguments. Appears in `/config` as **Open agents view by default** unless agent view is [turned off](#disableagentview).
+
+* **Scope**: [`Global config`](#scopes)
+* **Type**: Boolean
+  * `true`: `claude` with no arguments opens agent view, unless agent view is [turned off](#disableagentview)
+  * `false`: `claude` with no arguments starts a new conversation
+* **Default**: `false`
+
+```json ~/.claude.json theme={null}
+{
+  "defaultToAgentsView": true
 }
 ```
 
@@ -5974,6 +6035,24 @@ Claude Code keeps the last 50 lines of the response and marks the cut with `# �
 
 Claude Code ignores this key in `settings.json`.
 
+### `leftArrowOpensAgents`
+
+Press `←` on an empty prompt to [background the session and open agent view](./agent-view.md#switch-sessions-without-leaving-the-terminal). Set this key to `false` to turn the shortcut off. Appears in `/config` as **← opens agents** when agent view is available.
+
+* **Scope**: [`Global config`](#scopes)
+* **Type**: Boolean
+  * `true`: pressing `←` on an empty prompt in a session you started in the terminal backgrounds it and opens agent view
+  * `false`: Claude Code turns the shortcut off; in a session you [attached to from agent view](./agent-view.md#attach-to-a-session), `←` on an empty prompt still detaches
+* **Default**: `true`
+
+```json ~/.claude.json theme={null}
+{
+  "leftArrowOpensAgents": false
+}
+```
+
+Claude Code ignores this key in `settings.json`.
+
 ### `permissionExplainerEnabled`
 
 > [!WARNING]
@@ -5984,6 +6063,24 @@ Through v2.1.256, you could press `Ctrl+E` on a Bash or PowerShell permission pr
 * **Scope**: [`Global config`](#scopes). On v2.1.256 and earlier.
 * **Type**: Boolean
 * **Default**: `true`
+
+### `prStatusFooterEnabled`
+
+Show a badge in the prompt footer for the current branch's open pull request or merge request, with a colored underline that shows its [status](./interactive-mode.md#pr-review-status). Appears in `/config` as **Show PR status footer**.
+
+* **Scope**: [`Global config`](#scopes)
+* **Type**: Boolean
+  * `true`: the footer shows the badge under the conditions in [PR review status](./interactive-mode.md#pr-review-status)
+  * `false`: Claude Code skips the footer's pull request and merge request check and doesn't show that badge. A session you [attached to from agent view](./agent-view.md#attach-to-a-session) can still show a plain link to a pull request [linked to it](./agent-view.md#pull-request-status)
+* **Default**: `true`
+
+```json ~/.claude.json theme={null}
+{
+  "prStatusFooterEnabled": false
+}
+```
+
+Claude Code ignores this key in `settings.json`.
 
 ### `teammateDefaultModel`
 
