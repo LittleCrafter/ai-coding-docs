@@ -39,7 +39,7 @@ Check these before planning a rollout:
 * **Zero Data Retention**: unavailable for organizations with [Zero Data Retention](./zero-data-retention.md) enabled.
 * **Model inference**: sessions use the Anthropic API, and inference can't be routed through [Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry](./third-party-integrations.md), or an [LLM gateway](./llm-gateway.md).
 * **Surfaces**: sessions started from [claude.ai/code](https://claude.ai/code), the mobile and desktop apps, [scheduled routines](./routines.md), and the terminal, with [`claude --cloud`](./claude-code-on-the-web.md#from-terminal-to-cloud) or an [`--environment` dispatch](./self-hosted-environments-testing.md#run-the-test-loop), can run in self-hosted environments. [Claude Tag](https://claude.com/docs/claude-tag/overview) sessions can run in them too, but Claude can't use [Access bundles](https://claude.com/docs/claude-tag/concepts/glossary#access-bundle) in those sessions yet. [Claude Security](./claude-security.md) and [Code Review](./code-review.md) sessions don't route to them yet. Support for those two surfaces follows separately.
-* **Repositories**: sessions check out repositories from GitHub; see [GitHub authentication options](./claude-code-on-the-web.md#github-authentication-options).
+* **Repositories**: sessions check out repositories from GitHub; see [GitHub authentication options](./claude-code-on-the-web.md#github-authentication-options). For a GitHub Enterprise Server host, see its [network requirements](./github-enterprise-server.md#network-requirements).
 * **Billing**: sessions in a self-hosted environment consume your organization's Claude Code usage the same way sessions in Anthropic-hosted environments do.
 
 ## Why self-host

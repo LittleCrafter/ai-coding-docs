@@ -477,7 +477,7 @@ Or inline in `plugin.json`:
   * In [cloud sessions](./claude-code-on-the-web.md), an MCP call to a plugin server that isn't connected yet, such as right after an idle session wakes, starts the server on demand and waits for it to connect
 * **Path placeholders**: `${CLAUDE_PLUGIN_ROOT}` resolves to the plugin's installation directory, `${CLAUDE_PLUGIN_DATA}` to its [persistent state](./plugins/components.md#path-variables-and-persistent-data) directory, and `${CLAUDE_PROJECT_DIR}` to the stable project root. Substitution applies to:
   * `stdio` servers: `command`, `args`, `env`
-  * `http`, `sse`, and `ws` servers: `url`, `headers`, and `headersHelper`. Before v2.1.195, `headersHelper` passed the placeholder through as a literal string
+  * `http`, `sse`, and `ws` servers: `url`, `headers`, and `headersHelper`
 * **User environment access**: access to the same environment variables as manually configured servers
 * **Multiple transport types**: support for stdio, SSE, HTTP, and WebSocket transports, though transport support may vary by server
 
@@ -978,7 +978,7 @@ Claude Code picks the `headersHelper` command's working directory from the confi
 
 | Where you configured the server | Working directory |
 | :- | :- |
-| A [plugin](./plugins/components.md#mcp-servers) | The plugin's root directory. Requires Claude Code v2.1.195 or later |
+| A [plugin](./plugins/components.md#mcp-servers) | The plugin's root directory |
 | A project `.mcp.json` or a [local-scope](#local-scope) server | The project directory the server is declared in |
 | An agent file in your project, a server from the SDK's `mcpServers` option or `setMcpServers()` method, or [`--mcp-config`](./cli-reference.md) | The session's [primary working directory](./permissions.md#working-directories) |
 | [User scope](#user-scope), [managed MCP](./managed-mcp.md), a [claude.ai connector](#use-mcp-servers-from-claude-ai), or an agent file from outside your project, including one from an `--add-dir` directory | Your configuration directory, `~/.claude` unless you set [`CLAUDE_CONFIG_DIR`](./env-vars.md) |
@@ -1275,7 +1275,7 @@ Tools with a root-level combinator stay available. Before sending the tool to th
 
 Your server receives whichever arguments Claude chose, so keep validating the combination server-side.
 
-When Claude Code can't produce a schema the API accepts, or on a deployment that doesn't receive the remote configuration that enables the rewrite, it skips that one tool, records the reason in the server's log, and leaves the server's other tools available. Versions earlier than v2.1.195 skip every tool whose input schema has a root-level `anyOf`, `oneOf`, or `allOf`.
+When Claude Code can't produce a schema the API accepts, or on a deployment that doesn't receive the remote configuration that enables the rewrite, it skips that one tool, records the reason in the server's log, and leaves the server's other tools available.
 
 ## Tools with invalid input schemas
 

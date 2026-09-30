@@ -1538,7 +1538,7 @@ Set the [permission mode](./permission-modes.md) new sessions start in. When you
   * `"default"`: Claude Code runs only reads without asking
   * `"acceptEdits"`: Claude Code also runs file edits and common filesystem commands such as `mkdir` and `mv` without asking
   * `"plan"`: Claude Code reads and plans but blocks edits until you approve a plan
-  * `"auto"`: Claude Code runs everything, with background safety checks
+  * `"auto"`: Claude Code runs without routine prompts; before actions such as shell commands and network requests run, a background classifier checks that they align with your request
   * `"dontAsk"`: Claude Code auto-denies every call that would otherwise prompt; reads, other actions that need no approval, and pre-approved tools still run
   * `"bypassPermissions"`: Claude Code runs everything without asking
   * `"manual"`: an alias for `"default"`, in Claude Code v2.1.200 or later
