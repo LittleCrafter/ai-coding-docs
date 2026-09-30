@@ -416,7 +416,7 @@ You can send a command while Claude is working, the same as any other message, a
 
 Local sessions load your personal skills from `~/.claude/skills/`. An [SSH](#ssh-sessions) session reads `~/.claude/skills/` from the remote host's home directory, not from your machine.
 
-Local and cloud sessions also load the skills enabled for your claude.ai account. Cloud sessions load them instead of `~/.claude/skills/`, as [Skills in Cowork and cloud sessions](./skills.md#skills-in-cowork-and-cloud-sessions) describes.
+Local and cloud sessions also load the skills enabled for your claude.ai account, except local sessions when your organization sets [`disableSideloadFlags`](./settings-reference.md#disablesideloadflags). Cloud sessions load them instead of `~/.claude/skills/`, as [Skills in Cowork and cloud sessions](./skills.md#skills-in-cowork-and-cloud-sessions) describes.
 
 ### Install plugins
 
@@ -424,7 +424,7 @@ Local and cloud sessions also load the skills enabled for your claude.ai account
 
 For local and [SSH](#ssh-sessions) sessions, click the **+** button next to the prompt box and select **Plugins** to see your installed plugins and their skills. To add a plugin, select **Add plugin** from the submenu to open the plugin browser, which shows available plugins from your configured [marketplaces](./plugins/overview.md) including the official Anthropic marketplace. Select **Manage plugins** to enable, disable, or uninstall plugins.
 
-You can scope plugins to your user account, a specific project, or local-only. If your organization manages plugins centrally, those plugins are available in desktop sessions the same way they are in the CLI.
+You can scope plugins to your user account, a specific project, or local-only. If your organization manages plugins centrally, those plugins are available in desktop sessions the same way they are in the CLI, except the ones the desktop app [withholds under `disableSideloadFlags`](./settings-reference.md#disablesideloadflags).
 
 The plugin browser is not available in cloud sessions, and plugins you install from the desktop app aren't available for cloud sessions. A cloud session also doesn't install plugins that the repository's `.claude/settings.json` declares, as [What carries over from your setup](./cloud-environments.md#what-carries-over-from-your-setup) explains. Plugins aren't available in WSL sessions. For the full plugin reference including creating your own plugins, see [plugins](./plugins/overview.md).
 

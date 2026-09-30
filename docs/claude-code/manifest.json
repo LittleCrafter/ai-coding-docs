@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.285",
-  "last_updated": "2026-09-30T09:04:17Z",
+  "last_updated": "2026-09-30T17:02:56Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -760,8 +760,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop",
       "source_md_url": "https://code.claude.com/docs/en/desktop.md",
       "source_id": "desktop",
-      "hash": "5fa8f3f7015e68cbd99ad5aa2f22524fe2ba24406c614624a6a21c0d17683f74",
-      "last_updated": "2026-09-30T02:31:35Z"
+      "hash": "35247ec998c6db4da67259cdff0fb8220a44fd361cd5c07f52f907831751dd5d",
+      "last_updated": "2026-09-30T17:02:56Z"
     },
     "desktop-ios-simulator": {
       "slug": "desktop-ios-simulator",
@@ -840,8 +840,8 @@
       "source_url": "https://code.claude.com/docs/en/errors",
       "source_md_url": "https://code.claude.com/docs/en/errors.md",
       "source_id": "errors",
-      "hash": "0b06466524fdfefc193290dc60ab48937718ef3c38e0eca733a931edcbe85151",
-      "last_updated": "2026-09-30T09:04:17Z"
+      "hash": "b4ae91baa89e6816ee06c13027bd8f8972deee655440bc9cb0b18d3e32d8b0ea",
+      "last_updated": "2026-09-30T17:02:56Z"
     },
     "fast-mode": {
       "slug": "fast-mode",
@@ -1120,8 +1120,8 @@
       "source_url": "https://code.claude.com/docs/en/mcp",
       "source_md_url": "https://code.claude.com/docs/en/mcp.md",
       "source_id": "mcp",
-      "hash": "3b0d344fe591a7b9f0c9d373a0b2c035bbca98cb40f2220fddf035e9483f59cf",
-      "last_updated": "2026-09-30T09:04:17Z"
+      "hash": "b4920e6fa2f0f2fdf54b4bffedee47b58fecf58778741bb7534ceb3dd683ba03",
+      "last_updated": "2026-09-30T17:02:56Z"
     },
     "mcp-quickstart": {
       "slug": "mcp-quickstart",
@@ -1670,8 +1670,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "4eec90fb88e053d1008f7891ec21e0a5301cb47cedf7d17cf22cbd39d471136f",
-      "last_updated": "2026-09-30T09:04:17Z"
+      "hash": "774663f95b5b51fefcc9cbaee3accb40f49f229d1292864adfefc3f05ee7ddde",
+      "last_updated": "2026-09-30T17:02:56Z"
     },
     "setup": {
       "slug": "setup",
@@ -2095,8 +2095,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-30T09:04:17Z",
-    "fetch_duration_seconds": 73.096,
+    "last_fetch_completed": "2026-09-30T17:02:56Z",
+    "fetch_duration_seconds": 72.921,
     "total_pages_discovered": 209,
     "pages_fetched_successfully": 209,
     "pages_failed": 0,
