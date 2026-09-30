@@ -318,10 +318,11 @@ Previous-generation flagship model. Retires from ChatGPT, ChatGPT Work, and Code
 
 </details>
 
-You can also point Codex at any model and provider that supports either the [Chat Completions](https://platform.openai.com/docs/api-reference/chat) or [Responses APIs](https://platform.openai.com/docs/api-reference/responses) to fit your specific use case.
-
-Support for the Chat Completions API is deprecated and will be removed in
-  future releases of Codex.
+For a custom model provider or gateway, use a compatible Responses API endpoint.
+See [Custom model providers](./config-file/config-advanced.md#custom-model-providers)
+for configuration and [Gateway compatibility](./enterprise/gateway-compatibility.md)
+for streaming, tool, and conversation requirements. Current Codex releases don't
+support `wire_api = "chat"` or a Chat Completions-only endpoint.
 
 <a id="app-deprecated-codex-models"></a>
 <a id="cli-deprecated-codex-models"></a>

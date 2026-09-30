@@ -374,6 +374,11 @@ project_root_markers = [".git", ".hg", ".sl"]
 Set `project_root_markers = []` to skip searching parent directories and treat the current working directory as the project root.
 
 ### Custom model providers
+If your organization provides a model gateway, follow
+[Connect to a gateway](./enterprise/connect-to-a-gateway.md) for client setup
+and verification. For organization-wide deployment, see
+[Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md).
+
 A model provider defines how Codex connects to a model (base URL, wire API, authentication, and optional HTTP headers). Custom providers can't reuse the reserved built-in provider IDs: `openai`, `ollama`, and `lmstudio`.
 
 Define more providers and point `model_provider` at them:

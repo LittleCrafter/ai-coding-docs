@@ -48,6 +48,10 @@ Deploy apps and configure updates, runtime settings, remote connections, and mod
 - [Remote connections](./remote-connections.md) — Start and control work on connected computers.
 - [Workspace model availability](./enterprise/workspace-model-availability.md) — Separate model access for ChatGPT, Codex in the ChatGPT desktop app, Codex CLI, the IDE extension, Codex cloud, and the Platform API.
 - [Amazon Bedrock](./amazon-bedrock.md) — Configure supported local clients to use models available through Bedrock.
+- [Connect to a gateway](./enterprise/connect-to-a-gateway.md) — Configure one Codex client to use your organization's model gateway and verify the connection.
+- [Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md) — Configure model routes, issue credentials, and deploy Codex through your organization’s gateway.
+- [Gateway compatibility](./enterprise/gateway-compatibility.md) — Check the Responses API behavior required for model requests, streaming, and tool calls.
+- [Bedrock through LiteLLM](./enterprise/bedrock-through-litellm.md) — Configure a LiteLLM gateway to route Codex model requests to Amazon Bedrock.
 
 ## ChatGPT Work
 

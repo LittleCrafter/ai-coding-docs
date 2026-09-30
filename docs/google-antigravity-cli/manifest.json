@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-09-28T22:39:26Z",
+  "last_updated": "2026-09-30T21:33:11Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -120,8 +120,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/voice",
       "source_md_url": "https://antigravity.google/docs/cli/commands/voice.md",
       "source_id": "cli/commands/voice",
-      "hash": "95675858f347cdef0b7b8ce7e7492cf10f6d4e3dc0c37a135bce7285c6b7612f",
-      "last_updated": "2026-09-11T03:06:29Z"
+      "hash": "7df812af5711a5cbeb5e7036691830d210839562cda3dea425c8f5909ddf647a",
+      "last_updated": "2026-09-30T21:33:11Z"
     },
     "cli/conversations": {
       "slug": "cli/conversations",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-28T22:39:26Z",
-    "fetch_duration_seconds": 9.532,
+    "last_fetch_completed": "2026-09-30T21:33:11Z",
+    "fetch_duration_seconds": 9.514,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,

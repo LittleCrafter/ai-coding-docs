@@ -13848,6 +13848,11 @@ Set `project_root_markers = []` to skip searching parent directories and treat t
 
 #### Custom model providers
 
+If your organization provides a model gateway, follow
+[Connect to a gateway](./enterprise/connect-to-a-gateway.md) for client setup
+and verification. For organization-wide deployment, see
+[Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md).
+
 A model provider defines how Codex connects to a model (base URL, wire API, authentication, and optional HTTP headers). Custom providers can't reuse the reserved built-in provider IDs: `openai`, `ollama`, and `lmstudio`.
 
 Define more providers and point `model_provider` at them:
@@ -14541,6 +14546,11 @@ See [Configuration Reference](./config-file/config-reference.md) for the full ke
 ### Authentication and sessions
 
 Source: [Authentication](./auth.md)
+
+For a local client using an organization-provided model gateway, follow
+[Connect to a gateway](./enterprise/connect-to-a-gateway.md) for the gateway
+credential and provider configuration. Direct Bedrock access uses the
+[Amazon Bedrock authentication options](./amazon-bedrock.md#authentication-options).
 
 #### OpenAI authentication
 
@@ -15282,10 +15292,11 @@ When you sign in with ChatGPT, Codex works best with the recommended models list
 
 #### View other models
 
-You can also point Codex at any model and provider that supports either the [Chat Completions](https://platform.openai.com/docs/api-reference/chat) or [Responses APIs](https://platform.openai.com/docs/api-reference/responses) to fit your specific use case.
-
-Support for the Chat Completions API is deprecated and will be removed in
-future releases of Codex.
+For a custom model provider or gateway, use a compatible Responses API endpoint.
+See [Custom model providers](./config-file/config-advanced.md#custom-model-providers)
+for configuration and [Gateway compatibility](./enterprise/gateway-compatibility.md)
+for streaming, tool, and conversation requirements. Current Codex releases don't
+support `wire_api = "chat"` or a Chat Completions-only endpoint.
 
 #### Deprecated Codex models
 
@@ -39138,6 +39149,11 @@ boundaries:
 Complete the steps in order for a new rollout, or use the linked pages to change
 one boundary.
 
+If you manage a model gateway for local Codex clients, use
+[Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md) for gateway
+qualification, credential distribution, and the client handoff. Configure
+workspace access separately where your deployment uses workspace features.
+
 In workspace settings, **Codex and Work Local** combines local Codex and Work
 access under **Allow members to use Codex and Work Locally**. Some workspaces
 instead provide independent **Codex Local** and **Work Local** sections. In
@@ -39579,6 +39595,185 @@ doesn't duplicate that contract.
 - [Admin rollout guide](./enterprise/admin-setup.md)
 - [Governance](./enterprise/governance.md)
 - [Compliance API](./enterprise/compliance-api.md)
+
+### Bedrock through LiteLLM
+
+Source: [Bedrock through LiteLLM](./enterprise/bedrock-through-litellm.md)
+
+Use this page when your organization routes Codex to Amazon Bedrock through
+LiteLLM. If a LiteLLM gateway already exists, connect Codex first. Deploy LiteLLM
+only when your organization needs a new gateway.
+
+To use an existing gateway, start with [Connect to an existing
+gateway](#connect-to-an-existing-gateway). To deploy LiteLLM on AWS, start
+with [Prepare a gateway](#prepare-a-gateway). For access without a gateway,
+see [Amazon Bedrock](./amazon-bedrock.md).
+
+Other gateway products follow the same [gateway requirements](./enterprise/gateway-compatibility.md)
+and [Codex connection flow](./enterprise/connect-to-a-gateway.md).
+
+#### Connect to an existing gateway
+
+Get these values from your gateway administrator:
+
+- The HTTPS base URL, such as `https://gateway.example.com/v1`.
+- The model alias that LiteLLM routes to an approved Bedrock model.
+- The provider ID to use in Codex configuration.
+- A scoped gateway credential or an authentication helper that returns it.
+- Any model catalog distributed with your organization's configuration.
+
+Then complete the connection in this order:
+
+1. Ask your gateway team to confirm that the gateway serves `POST /v1/responses`,
+   streams responses, preserves follow-up turns and tool calls, and routes the
+   approved alias. See [Gateway compatibility](./enterprise/gateway-compatibility.md).
+2. Follow [Connect to a gateway](./enterprise/connect-to-a-gateway.md#configure-the-provider)
+   to configure the provider, model, and credential.
+3. Verify the active provider and alias, send the short `gateway-ok` prompt from
+   the connection guide, and confirm that the LiteLLM record shows the expected
+   user and alias.
+4. For organization-wide distribution, continue with [Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md).
+
+Your gateway credential authenticates you to LiteLLM. The gateway manages its own Bedrock credentials; you don't need to copy those credentials to your workstation.
+
+#### Prepare a gateway
+
+Use this section only when you need to create a LiteLLM gateway before connecting
+Codex.
+
+#### Before you deploy
+
+Confirm that you have:
+
+- Permission to deploy the approved LiteLLM architecture in your AWS environment.
+- Bedrock access to the models or inference profiles you will route.
+- A reviewed LiteLLM image and deployment pattern.
+- A trusted HTTPS host name and certificate.
+- A restricted client network range.
+
+For the Runtime example below, the gateway's AWS identity needs `bedrock:InvokeModel` for the selected inference profile and the account's default project. See AWS's [GPT-6 Sol setup instructions](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-6-sol.html) for the required permissions.
+
+#### Architecture
+
+The deployment keeps LiteLLM between Codex and Bedrock, with HTTPS at the client
+boundary. The load balancer and LiteLLM are inside your organization's gateway
+boundary; the provider credential stays on the gateway.
+
+Restrict inbound access to approved clients, keep database and cache ports private, and grant the gateway only the Bedrock permissions it needs. Pin the deployed image by digest so that a restart doesn't silently change the implementation.
+
+Prompts, source excerpts, and tool results pass through the gateway and may enter its logs. Decide retention, access, and redaction before enabling request logging. MCP servers and plugins have separate connections and authentication; this gateway configuration doesn't configure them.
+
+#### Deployment checkpoints
+
+Complete these checkpoints in order before handing the gateway to developers:
+
+| Checkpoint                                                     | Output                                                                                    |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Deploy the proxy with private database and cache dependencies. | A stable HTTPS base URL ending in `/v1`, with gateway-managed Bedrock authentication.     |
+| Configure a model route and its matching client catalog.       | A stable Codex-facing alias mapped to the intended Bedrock target.                        |
+| Verify Responses support.                                      | A streamed `POST /v1/responses` response ending with `response.completed`.                |
+| Issue a test credential.                                       | A per-user virtual key restricted to the alias, with expiration, budget, and rate limits. |
+| Connect one developer.                                         | Codex provider configuration and a verified short prompt through the gateway.             |
+
+The sections below cover each checkpoint. For production rollout, also test
+follow-up turns, tools, and credential revocation.
+
+#### Choose the Bedrock route
+
+The LiteLLM upstream route determines the Bedrock endpoint, model identifier, and authentication method. Keep these choices together when you deploy or change the gateway.
+
+Use Bedrock Runtime for new configurations. The example below uses its OpenAI-compatible Responses endpoint.
+
+Hosted web search isn't available on Bedrock Runtime. If you need it, use
+Mantle and confirm that your gateway preserves the tool request and response.
+
+See LiteLLM's [Bedrock Mantle integration](https://docs.litellm.ai/docs/providers/bedrock_mantle) for the alternative route.
+
+For an AWS deployment example, use the pinned [LiteLLM on ECS reference](https://github.com/openai-on-aws/guidance-codex/blob/eb04fe0/docs/QUICKSTART_LLM_GATEWAY_LITELLM.md). That implementation uses Bedrock Runtime and refreshes authentication from the ECS task role. Follow its deployment and authentication steps together, and review its production requirements against your networking, TLS, logging, and resource-retention policies.
+
+Whichever route you choose, verify the deployed combination of gateway version, upstream endpoint, and model against [Gateway compatibility](./enterprise/gateway-compatibility.md). An upstream model appearing in the gateway's model list doesn't establish that its streaming, continuation, and tool behavior work with Codex.
+
+#### Configure a Runtime model route
+
+Map a stable Codex-facing alias to the approved upstream model. Confirm access in your AWS account and Region before using this Runtime example.
+
+```yaml
+model_list:
+  - model_name: company-coding-model
+    litellm_params:
+      model: openai/global.openai.gpt-6-sol
+      api_key: os.environ/AWS_BEARER_TOKEN_BEDROCK
+      api_base: https://bedrock-runtime.us-east-1.amazonaws.com/openai/v1
+```
+
+Supply a valid Bedrock API key as `AWS_BEARER_TOKEN_BEDROCK` through your secret-management system. For a short-lived key, issue a replacement before it expires, update the gateway process environment, and restart or redeploy the workers that use it. The ECS reference instead refreshes credentials in-process from its task role; use its configuration and entrypoint together.
+
+The `openai/` prefix selects LiteLLM's OpenAI-compatible adapter; the configured `api_base` sends requests to Bedrock Runtime. The Global inference profile can route requests outside the source Region. Choose a profile and Region that meet your AWS permissions and data-residency requirements, and replace both values as needed.
+
+The client sends `company-coding-model`; LiteLLM uses the configured upstream route. This custom alias requires the matching client catalog described next. A generic gateway does not inherit the built-in Bedrock provider's metadata adjustments.
+
+#### Prepare the client catalog
+
+For this GPT-6 Sol/Runtime example with Codex 0.158.0, start with the complete `gpt-6-sol` entry from that version's [model catalog](https://github.com/openai/codex/blob/rust-v0.158.0/codex-rs/models-manager/models.json). Apply all of these edits to that entry:
+
+| Field                        | Required edit                                                           |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `slug`                       | Set to `"company-coding-model"`, matching the LiteLLM alias.            |
+| `visibility`                 | Set to `"list"`.                                                        |
+| `availability_nux`           | Set to `null`.                                                          |
+| `upgrade`                    | Set to `null`.                                                          |
+| `use_responses_lite`         | Set to `false`.                                                         |
+| `tool_mode`                  | Set to `null`.                                                          |
+| `supported_reasoning_levels` | Remove the entry whose `effort` is `"ultra"`; retain the other entries. |
+| `additional_speed_tiers`     | Set to `[]`.                                                            |
+| `service_tiers`              | Set to `[]`.                                                            |
+| `default_service_tier`       | Set to `null`.                                                          |
+| `web_search_tool_type`       | Set to `"text"`.                                                        |
+| `multi_agent_version`        | Set to `"v1"`.                                                          |
+| `supports_search_tool`       | Set to `false` for Runtime.                                             |
+
+Preserve the remaining fields, including the model's instructions and context limits. Keep the edited entry in the catalog's top-level `models` array. These changes mirror the released [Bedrock metadata adjustments](https://github.com/openai/codex/blob/rust-v0.158.0/codex-rs/model-provider/src/amazon_bedrock/catalog.rs) and [Runtime search restriction](https://github.com/openai/codex/blob/rust-v0.158.0/codex-rs/model-provider/src/amazon_bedrock/runtime_catalog.rs). Recheck them against the matching source when changing the client version or upstream model.
+
+Distribute the complete JSON file and configure `model_catalog_json` using [Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md#supply-metadata-for-a-custom-alias). Keep `web_search = "disabled"` in the Runtime client configuration. Verify the edited catalog through the gateway before distributing it to more users.
+
+#### Verify Responses support
+
+Expose `POST /v1/responses` at the client-facing HTTPS endpoint. Configure the load balancer and any reverse proxy to pass streaming events without buffering. Preserve follow-up turns and function-call results. A working Chat Completions endpoint alone isn't sufficient for this connection.
+
+Complete the checks in [Gateway compatibility](./enterprise/gateway-compatibility.md) before distributing client configuration. Test through the same host name, network controls, and authentication path your users will use.
+
+#### Issue a test credential
+
+Create a scoped LiteLLM virtual key for one test user. Restrict it to the approved alias and configure expiration, rate limits, and a budget. See LiteLLM's [virtual-key documentation](https://docs.litellm.ai/docs/proxy/virtual_keys) for the applicable controls.
+
+Distribute the key through your secret-management process or an authentication helper. Don't give users the LiteLLM administrative key or embed gateway credentials in `config.toml`.
+
+#### Verify the user connection
+
+Complete these checks before expanding access:
+
+1. Confirm that the HTTPS certificate matches the gateway host name and the service is healthy.
+2. Connect one user through [Connect to a gateway](./enterprise/connect-to-a-gateway.md).
+3. Run a short prompt, a follow-up turn, and a read-only tool task.
+4. Confirm that gateway records show the expected identity, alias, and upstream route without exposing credentials or sensitive prompt content.
+5. Test credential expiration or revocation and confirm that unauthorized model aliases are rejected.
+
+Keep the deployed image version, route configuration, and test results with your rollout record. Continue with [Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md) for team distribution and ongoing operations.
+
+#### Troubleshoot the connection
+
+Use the failing layer to narrow the problem:
+
+| Symptom                                    | What to check                                                                                                                                                      |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| HTTPS fails before inference               | DNS, certificate host name, load-balancer health, and allowed client networks.                                                                                     |
+| Gateway returns `401` or `403`             | Distinguish a rejected user credential from an upstream Bedrock authentication or permission failure using gateway logs.                                           |
+| Requested model isn't found                | Confirm the exact client-facing alias and its upstream model or inference-profile mapping.                                                                         |
+| Request is blocked before reaching LiteLLM | Check load-balancer and web application firewall logs, including request-body limits. Preserve your security controls while testing representative Codex requests. |
+| Text works, but a turn doesn't finish      | Check streaming buffers, timeouts, terminal events, and the follow-up and tool-call checks in Gateway compatibility.                                               |
+| Upstream request times out                 | Check model availability in the source Region, routing configuration, quotas, and gateway logs before changing timeouts.                                           |
+
+Retest the same user path after a fix. A successful gateway health check doesn't verify an authenticated inference request or a complete Codex turn.
 
 ### ChatGPT usage limits and spend controls
 
@@ -41146,6 +41341,473 @@ This page doesn't duplicate that contract.
 - [Governance](./enterprise/governance.md)
 - [Analytics API](./enterprise/analytics-api.md)
 
+### Connect to a gateway
+
+Source: [Connect to a gateway](./enterprise/connect-to-a-gateway.md)
+
+Connect Codex to an LLM gateway using the gateway URL, model alias, and credential
+or token resolver your organization provides.
+
+To roll out a gateway for your organization, see [Deploy Codex through a
+gateway](./enterprise/roll-out-a-gateway.md). For the required API behavior,
+see [Gateway compatibility](./enterprise/gateway-compatibility.md). To
+connect directly to Bedrock without a gateway, see [Amazon
+Bedrock](./amazon-bedrock.md).
+
+#### Check for an existing configuration
+
+Before adding anything, check whether your administrator already configured Codex.
+
+- For the CLI, inspect the selected profile and run `codex doctor`. After startup,
+  use `/status` to confirm the active model and provider.
+- For the macOS app, inspect `~/.codex/config.toml` or the managed configuration
+  your organization delivers.
+- For the Windows app, inspect `%USERPROFILE%\.codex\config.toml` or the system
+  configuration your organization delivers.
+
+If the expected gateway provider and model are already active, continue to
+[Verify the connection](#verify-the-connection).
+
+#### Get your gateway connection details
+
+Install the [Codex CLI](./codex/cli.md) or the desktop app approved by your
+organization. To configure Codex yourself, get these values from your gateway team:
+
+- The HTTPS gateway base URL, including its API path, such as `https://gateway.example.com/v1`.
+- The model name and provider ID to use.
+- Your scoped gateway credential and its environment variable, or an installed
+  token resolver and its configuration.
+- Any required model catalog file and its absolute local path.
+
+#### Configure the provider
+
+Open `config.toml` at `~/.codex/config.toml` on macOS or Linux, or
+`%USERPROFILE%\.codex\config.toml` on Windows.
+
+Merge this example into your existing configuration, replacing the URL and model
+with the values your administrator supplied. Don't add a second definition of an
+existing key or table. This example uses `gpt-6-sol`; use it without a custom
+catalog only if your administrator confirms that your Codex version recognizes
+the model and its bundled metadata matches the gateway.
+
+Keep `model`, `model_provider`, `model_catalog_json`, and `web_search` before
+the first TOML table. Keys placed after a table header belong to that table,
+so Codex won't read them as top-level settings.
+
+```toml
+model = "gpt-6-sol"
+model_provider = "enterprise-gateway"
+web_search = "disabled"
+
+[model_providers.enterprise-gateway]
+name = "Organization Gateway"
+base_url = "https://gateway.example.com/v1"
+wire_api = "responses"
+env_key = "CODEX_GATEWAY_API_KEY"
+```
+
+If your administrator supplies a model catalog, save it locally and add
+`model_catalog_json` before the first TOML table, using the file's absolute path.
+Custom aliases need matching catalog metadata. For example:
+
+```toml
+model_catalog_json = "/etc/codex/gateway-models.json"
+```
+
+Use the model name and catalog supplied together by your administrator. Don't
+add a catalog path unless the file exists at that location.
+
+`enterprise-gateway` is an illustrative provider ID. Use the same ID in
+`model_provider`, `[model_providers.]`, and `[model_providers..auth]`.
+This example disables web search
+for the initial connection test; your administrator should verify feature support
+before enabling it.
+
+Make your gateway credential available as `CODEX_GATEWAY_API_KEY` in the
+environment of the process that launches Codex, using your organization's secret
+delivery mechanism. Don't put the credential in TOML or a repository. A variable
+set in a terminal may not be available to an app launched from the desktop.
+
+#### Use a custom authentication header
+
+If your gateway requires a header such as `X-API-Key` instead of a bearer token,
+replace `env_key` in the provider table with:
+
+```toml
+env_http_headers = { "X-API-Key" = "CODEX_GATEWAY_API_KEY" }
+```
+
+Use the exact header name your administrator provides. Codex reads the value from
+the named environment variable; keep the credential out of the configuration file.
+See the [configuration reference](./config-file/config-reference.md) for
+`model_providers..env_http_headers`.
+
+#### Use an organization credential helper
+
+If your administrator provides command-backed authentication, use their installed
+helper and configuration instead of `env_key`. Don't configure both mechanisms.
+The helper must exist on your machine; Codex doesn't install it. For example,
+replace the example `env_key` setting with this table, using the resolver path and
+arguments your administrator supplies:
+
+```toml
+[model_providers.enterprise-gateway.auth]
+command = "/usr/local/bin/fetch-codex-gateway-token"
+args = ["print-token"]
+timeout_ms = 30000
+refresh_interval_ms = 300000
+```
+
+The [custom provider authentication reference](./config-file/config-advanced.md#custom-model-providers)
+defines the command, arguments, timeout, refresh interval, and token output
+contract. Ask your administrator how to renew your sign-in if the helper can no
+longer retrieve a token.
+
+Use resolved absolute paths for helper executables and catalog files.
+
+#### Configure the CLI
+
+The CLI reads `~/.codex/config.toml` by default on macOS or Linux. After saving
+the provider settings, run `codex`. Inside WSL, use the Linux configuration and
+paths unless `CODEX_HOME` points elsewhere.
+
+#### Configure the macOS app
+
+The macOS app reads the same `~/.codex/config.toml`. After saving the provider
+settings, restart the app. If you use an environment variable for the credential,
+make sure it's available to the app process.
+
+#### Configure the Windows app
+
+Place the provider settings in `%USERPROFILE%\.codex\config.toml`, then restart
+the app. For command-backed authentication, use the resolver installed by your
+administrator. For example, replace the Unix auth table with:
+
+```toml
+[model_providers.enterprise-gateway.auth]
+command = 'C:\Program Files\OpenAI\Codex\fetch-codex-gateway-token.exe'
+args = ["print-token"]
+timeout_ms = 30000
+refresh_interval_ms = 300000
+```
+
+In Windows TOML, single-quoted literal strings preserve backslashes. Replace
+Unix catalog paths too, for example with
+`'C:\ProgramData\OpenAI\Codex\models.json'`, using the actual path your
+administrator supplied.
+
+Configure MCP servers and plugins separately. A model gateway credential doesn't
+authorize access to your tools or connected systems.
+
+#### Verify the connection
+
+Restart the client after changing the configuration. In the CLI, start `codex`
+and use `/status` to inspect the active model and provider. In the desktop app,
+check the selected model and configuration.
+
+Send this prompt in a new task:
+
+```text
+Reply with exactly: gateway-ok
+```
+
+Expect `gateway-ok`. A response alone doesn't prove which route handled it: ask
+your administrator to confirm that the gateway recorded your user, model alias,
+and intended upstream route. Don't identify the model by asking it its name.
+
+This verifies an initial connection. Administrators should also complete the
+[rollout checks](./enterprise/roll-out-a-gateway.md#test-the-client-and-gateway)
+for streaming, tools, and follow-up turns.
+
+#### Troubleshoot the connection
+
+| Symptom                                 | What to check                                                                                                                                                                                                       |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The expected provider isn't active.     | Check the selected profile and configuration precedence. Confirm that top-level keys aren't inside a provider table.                                                                                                |
+| Authentication fails.                   | Check that the credential variable reaches the client process, or that the installed helper can retrieve a current token. Ask the administrator to distinguish gateway authentication from upstream authentication. |
+| The model isn't found.                  | Confirm the supplied model name and ask the administrator to check its route.                                                                                                                                       |
+| The model uses unexpected capabilities. | Ask the administrator to check that the catalog metadata matches the model behind the alias.                                                                                                                        |
+| Streaming stalls or follow-ups fail.    | Ask the gateway owner to check proxy buffering, the terminal `response.completed` event, and [Gateway compatibility](./enterprise/gateway-compatibility.md).                                                      |
+| A catalog or helper path fails.         | Confirm that the file exists at the configured absolute path in the environment running Codex.                                                                                                                      |
+
+When requesting help, include the error message with tokens and sensitive prompts removed.
+
+#### Use an existing gateway deployment
+
+If your organization already uses a gateway with another coding tool, you may be
+able to reuse its network path, logging, and provider access. Work with your
+gateway team to configure and test a Codex connection:
+
+1. Identify the existing gateway URL, credential mechanism, required headers,
+   model routes, and configuration delivery method.
+2. Ask your gateway team to confirm that the gateway supports the
+   [API behavior Codex requires](./enterprise/gateway-compatibility.md) and to
+   configure a Codex model route.
+3. Obtain a scoped gateway credential or credential helper, the model name, and
+   any required model catalog from your gateway team.
+4. [Configure Codex](#configure-the-provider) with those values.
+5. [Verify the connection](#verify-the-connection) in the CLI or desktop app you
+   plan to use. Have your gateway team complete the
+   [streaming, tool, and follow-up checks](./enterprise/roll-out-a-gateway.md#test-the-client-and-gateway).
+6. After the pilot passes, follow
+   [Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md) to distribute the
+   configuration to other developers.
+
+For the administrator migration checklist and configuration mapping, see
+[Reuse an existing gateway deployment](./enterprise/roll-out-a-gateway.md#reuse-an-existing-gateway-deployment).
+
+#### Related docs
+
+- [Codex CLI](./codex/cli.md)
+- [MCP servers](./extend/mcp.md)
+- [Plugins](./plugins.md)
+
+### Deploy Codex through a gateway
+
+Source: [Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md)
+
+Deploy Codex through your organization’s LLM gateway. Configure model routes, issue developer credentials, and distribute a verified Codex configuration.
+
+To configure Codex on your own machine with values you were given, see
+[Connect to a gateway](./enterprise/connect-to-a-gateway.md). Before
+choosing or rolling out a gateway, review the [gateway compatibility
+requirements](./enterprise/gateway-compatibility.md).
+
+#### Prerequisites
+
+Before deploying Codex to developers, confirm that you have:
+
+- A gateway serving HTTPS at the exact base URL you will distribute.
+- An upstream provider credential held by the gateway.
+- Approved Codex-facing model aliases mapped to intended upstream models.
+- A scoped test gateway credential.
+- A secret delivery mechanism or a tested credential helper.
+- A way to distribute configuration, helper executables, and any catalog files.
+
+#### Gateway requirements
+
+Before connecting Codex, verify that the gateway product preserves these required behaviors:
+
+- Accept Codex Responses API requests at `POST /v1/responses`.
+- Stream SSE events without buffering and end with `response.completed`.
+- Preserve follow-up continuation with replayed input.
+- Preserve `previous_response_id` only when WebSocket or incremental transport is enabled.
+- Preserve function calls and matching `function_call_output` items.
+- Route each Codex-facing model alias to the intended upstream model.
+- Authenticate users separately and return useful errors without hiding the cause.
+
+A health endpoint, `/v1/models`, Chat Completions response, or one plain-text reply does not qualify the gateway. See [Gateway compatibility requirements](./enterprise/gateway-compatibility.md) for the detailed contract.
+
+Need an implementation starting point? The [Codex deployment guidance repository](https://github.com/openai-on-aws/guidance-codex/tree/adbc00f353effbf0252e667ba41eb89c99324c8f) includes worked setups for different LLM gateway products. Use it as a reference after confirming your gateway meets the requirements above.
+
+#### Roll out the gateway
+
+To move from a deployed gateway to a verified developer experience, complete these five checkpoints in order:
+
+1. [Choose model names and verify routes](#choose-model-names-and-routes).
+2. [Issue developer credentials](#issue-developer-credentials).
+3. [Test Codex through the gateway](#test-the-client-and-gateway).
+4. [Distribute the configuration](#distribute-the-configuration).
+5. [Verify from a developer machine](#verify-and-operate-the-rollout).
+
+#### Choose model names and routes
+
+Set Codex's `model` to the gateway's model name. Configure the gateway to route that name to the approved upstream model.
+
+| Gateway model name                                                                                                     | Codex configuration                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| A [built-in model name](./enterprise/gateway-compatibility.md#recognized-model-names) included in your Codex version | Set `model` in `config.toml` to this exact name.                                                   |
+| A custom alias, such as `company-coding-model`                                                                         | Set `model_catalog_json` to a catalog containing the alias and the corresponding model's metadata. |
+
+#### Use a model catalog for custom names
+
+Use [`model_catalog_json`](./config-file/config-reference.md) when your gateway uses a model name Codex does not recognize. The catalog supplies the instructions, reasoning options, context limits, and tool capabilities Codex uses for that name. Without a matching entry, a request can reach the intended upstream model while Codex uses generic settings.
+
+For example, to use `company-coding-model` as an alias for `gpt-6-luna`:
+
+1. Create the `company-coding-model` alias on the gateway and route it to the approved upstream `gpt-6-luna` model.
+2. Download the [Codex model catalog](https://github.com/openai/codex/blob/main/codex-rs/models-manager/models.json) for your Codex version and save a copy as `gateway-models.json`. Use this file as your starting point.
+3. Edit the `gpt-6-luna` entry in your copy: set `slug` to `company-coding-model` and check that the remaining metadata matches the upstream model and gateway capabilities. For an alias without a model migration, set `upgrade` to `null`.
+4. Keep the entries in the top-level `models` array and distribute the file to each client. A custom catalog replaces the bundled catalog, so include every model users need to select.
+
+To use a catalog for a specific Codex version, check `codex --version` and select the matching `rust-v` tag. For a custom build, use its exact source commit. For a desktop deployment, match the bundled CLI version.
+
+For Bedrock through LiteLLM, apply the [required catalog edits](./enterprise/bedrock-through-litellm.md#prepare-the-client-catalog).
+
+Set the gateway alias, catalog `slug`, and Codex `model` to `company-coding-model`. Add these settings before the first TOML table in the Codex configuration you distribute, using the file's actual absolute path:
+
+```toml
+model = "company-coding-model"
+model_catalog_json = "/absolute/path/to/gateway-models.json"
+```
+
+Restart the CLI or desktop app after changing the catalog because Codex loads it at startup.
+
+#### Verify model routes
+
+For each model, verify the route with a real Responses request and gateway
+records. A `/v1/models` response can help discover names but doesn't prove that a
+model supports the required request and tool behavior.
+
+Model routing and tool authorization are separate parts of the rollout. Configure
+MCP connections, plugin distribution, and their policies separately.
+
+#### Issue developer credentials
+
+1. Issue one scoped gateway credential per developer so you can attribute usage
+   and revoke access individually.
+2. Set the approved models, rate limits, budget, expiration, and renewal period
+   for each credential.
+3. Deliver credentials through your secret manager or an installed credential
+   helper. Keep upstream provider and gateway administrator credentials off
+   developer machines.
+4. If you use a helper, follow the
+   [command-backed authentication contract](./config-file/config-advanced.md#custom-model-providers)
+   and test token retrieval and refresh before distribution.
+5. Tell developers how to renew their credentials and whom to contact for help.
+
+#### Test Codex through the gateway
+
+Before distributing anything, follow [Connect to a gateway](./enterprise/connect-to-a-gateway.md) to configure one isolated test user with the provider block and credential mechanism you plan to distribute.
+
+Run the checks below from the same CLI or desktop surface developers will use:
+
+| Check                  | Action                                                                                                       | Passing evidence                                                                                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Connection             | Follow [Verify the connection](./enterprise/connect-to-a-gateway.md#verify-the-connection).                | The expected provider and alias are active, the test prompt succeeds, and gateway logs identify the test user.                                                  |
+| Streaming              | Ask for a short multi-paragraph answer.                                                                      | The gateway forwards SSE events without buffering, text arrives incrementally, and the stream ends with `response.completed`.                                   |
+| Local tool loop        | In a disposable folder with read-only permissions, ask Codex to list the top-level files and summarize them. | Codex issues a local tool call, returns the result, and produces a final answer without edits.                                                                  |
+| Follow-up              | Ask a follow-up in the same thread.                                                                          | The answer uses the prior turn; the gateway accepts replayed input. If WebSocket or incremental transport is enabled, it also preserves `previous_response_id`. |
+| Errors and attribution | Repeat with an intentionally invalid test alias or expired test credential.                                  | The client receives a useful routing or authentication error, and valid requests remain attributed to the test user.                                            |
+
+After these checks succeed, direct developers to [Connect to a gateway](./enterprise/connect-to-a-gateway.md) to configure and verify their own machine.
+
+#### Distribute the configuration
+
+To give every machine the same connection path, distribute the gateway base URL,
+provider ID, approved model alias, and credential mechanism.
+
+#### What to distribute
+
+To set provider defaults, distribute this `config.toml` block through the configuration layer you chose. Use a model recognized by your Codex version, or supply the matching catalog described above. Install your token resolver at the configured command path:
+
+Put `model` and `model_provider` before the first TOML table. If you set
+`model_catalog_json`, keep it there too. TOML treats keys after
+`[model_providers...]` as part of that table, not as top-level Codex
+configuration.
+
+```toml
+model = "gpt-6-sol"
+model_provider = "enterprise-gateway"
+web_search = "disabled"
+
+[model_providers.enterprise-gateway]
+name = "Organization Gateway"
+base_url = "https://gateway.example.com/v1"
+wire_api = "responses"
+
+[model_providers.enterprise-gateway.auth]
+command = "/usr/local/bin/fetch-codex-gateway-token"
+args = ["print-token"]
+timeout_ms = 30000
+refresh_interval_ms = 300000
+```
+
+For a short-lived static test key, remove the auth block and put `env_key = "CODEX_GATEWAY_API_KEY"` inside `[model_providers.enterprise-gateway]` and set that variable outside TOML. Do not combine `env_key` with command-backed auth.
+
+#### Distribute defaults and requirements
+
+Use [Configuration precedence](./config-file/config-basic.md#configuration-precedence)
+to choose where to distribute defaults. For enforced settings and macOS MDM
+payloads, see [Managed configuration](./enterprise/managed-configuration.md#admin-enforced-requirements-requirementstoml).
+
+For host-wide defaults on macOS or Linux, use `/etc/codex/config.toml`. On
+Windows, place `config.toml` in `%ProgramData%\OpenAI\Codex\`. Users and
+profiles can override these defaults. The linked references describe supported
+requirements and their file locations.
+
+Distribute any referenced helper executables and catalog files separately.
+
+`model_catalog_json` points to a local JSON file. If you enforce it through
+`requirements.toml`, the requirement pins the path; it doesn't distribute the
+file. Put the catalog at that absolute path before Codex starts.
+
+Write resolved absolute Windows paths in TOML. Codex doesn't expand
+`%ProgramData%` inside `model_catalog_json` or provider auth `command` values. For
+example, use these paths only if your deployment placed the files there:
+
+```toml
+model_catalog_json = 'C:\ProgramData\OpenAI\Codex\models.json'
+
+[model_providers.enterprise-gateway.auth]
+command = 'C:\ProgramData\OpenAI\Codex\fetch-gateway-token.cmd'
+args = ["print-token"]
+```
+
+A CLI inside WSL reads Linux paths and Linux `CODEX_HOME`; it doesn't automatically
+inherit native Windows configuration.
+
+#### Hand developers the configuration values
+
+If you do not have managed distribution, give each developer the gateway URL, provider ID, model alias, credential variable or resolver, and any catalog path. Send them to [Connect to a gateway](./enterprise/connect-to-a-gateway.md) to configure and verify their own machine.
+
+Manual setup is not an enforcement channel. Project-local `.codex/config.toml` cannot override sensitive provider or authentication routing keys.
+
+#### Verify from a developer machine
+
+To confirm that the distributed settings reached a developer machine:
+
+1. Restart Codex and confirm the expected provider and model.
+2. Run the short test in [Connect to a gateway](./enterprise/connect-to-a-gateway.md#verify-the-connection).
+3. Ask one follow-up to confirm continuation, then check the gateway logs for that
+   developer's request.
+
+#### Troubleshoot rollout failures
+
+Use the issue to find the configuration, credential, or gateway layer that needs attention:
+
+| Issue                                            | Remediation                                                                                                                                                                                                                     |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Expected provider is missing after restart.      | Inspect the winning configuration layer. User or profile configuration can override system defaults.                                                                                                                            |
+| Authentication fails for every user.             | Check gateway authentication and the upstream provider credential; identify which service rejected the request.                                                                                                                 |
+| Authentication fails for one user.               | Check that user's gateway credential or token resolver.                                                                                                                                                                         |
+| Streaming stalls.                                | Inspect gateway buffering and terminal `response.completed` forwarding.                                                                                                                                                         |
+| A model is missing or uses generic capabilities. | For a custom alias, confirm the gateway alias, Codex `model`, and catalog `slug` match. Check the [catalog](#use-a-model-catalog-for-custom-names) path and compatibility with the installed Codex version, then restart Codex. |
+| A Windows path fails.                            | Use resolved absolute paths. In TOML, use single-quoted strings for Windows paths with single backslashes.                                                                                                                      |
+
+#### Reuse an existing gateway deployment
+
+If your organization already uses Claude Code through a gateway, you may be able
+to reuse the gateway product, network path, logging, and Bedrock access. Add a
+Codex-facing Responses route, credential, model aliases, and `config.toml` while
+retaining the existing working setup. Claude client settings and the
+`/v1/messages` contract don't configure Codex.
+
+| Existing Claude deployment                                                                                         | Codex migration                                                                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Gateway product, DNS, TLS, private networking, logging, redaction, and monitoring                                  | Keep these services in place. Add a Codex-facing route that satisfies the [Gateway compatibility requirements](./enterprise/gateway-compatibility.md).                                                         |
+| Bedrock account, provider credential, IAM boundary, inference profiles, and credential rotation                    | Keep them only when they authorize the upstream models behind the new Codex aliases. The provider credential remains on the gateway.                                                                             |
+| Claude `/v1/messages` route, Bedrock InvokeModel shape, Anthropic headers, and Claude-specific retries or errors   | Do not reuse these as proof of compatibility. Codex needs `POST /v1/responses`, Responses streaming, continuation, tool calls, and useful errors.                                                                |
+| `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_API_KEY`, or `apiKeyHelper`                                                     | Codex does not support `apiKeyHelper`. Issue a scoped Codex gateway credential and configure it with `env_key` or a Codex command-backed token resolver.                                                         |
+| Claude model names, `ANTHROPIC_MODEL`, `ANTHROPIC_DEFAULT_*_MODEL`, `modelOverrides`, and Bedrock profile mappings | Have your gateway team [choose model names and configure any custom aliases](#choose-model-names-and-routes). Use the model name and any [model catalog JSON](./config-file/config-reference.md) they provide. |
+| Claude `settings.json`, `managed-settings.json`, JSON `env` blocks, `plist`, or registry payloads                  | Keep the same MDM or configuration-management channel, but distribute Codex `config.toml` and supported `requirements.toml` values instead.                                                                      |
+
+To migrate safely, complete these steps in order:
+
+1. Inventory the current Claude path: gateway URL, credential source, required headers, model aliases, Bedrock profile mappings, and managed delivery channel.
+2. Add a parallel Codex-facing Responses route and Codex model aliases.
+3. Issue one scoped Codex credential. If Codex will use a static credential, expose that new credential through `env_key`; if Claude uses a credential helper, implement and test the Codex command-backed resolver contract.
+4. Configure that developer with the [provider block](#what-to-distribute). For a managed rollout, translate the payload into the Codex paths and precedence described in [Deploy Codex through a gateway](#distribute-the-configuration).
+5. Run the short connection check on the developer's actual CLI or desktop surface, then run the full streaming, continuation, tool-call, error, logging, and alias-routing checks in [Test Codex through the gateway](#test-the-client-and-gateway).
+6. After the pilot passes, [distribute the configuration](#distribute-the-configuration) to the remaining developers.
+
+#### Related docs
+
+- [Connect to a gateway](./enterprise/connect-to-a-gateway.md)
+- [MCP](./extend/mcp.md)
+- [Plugins](./plugins.md)
+- [Managed configuration](./enterprise/managed-configuration.md)
+
 ### Deploy the Windows app
 
 Source: [Deploy the Windows app](./enterprise/windows-deployment.md)
@@ -41420,6 +42082,146 @@ For more information about the provisioning setting, see Microsoft's [applicatio
 
 - [Managed configuration](./enterprise/managed-configuration.md)
 - [ChatGPT desktop app for Windows](./windows/windows-app.md)
+
+### Gateway compatibility requirements
+
+Source: [Gateway compatibility requirements](./enterprise/gateway-compatibility.md)
+
+Codex gateways must preserve the Responses API behavior described here:
+endpoints, streaming, continuation, tool calls, authentication, routing, and
+useful errors.
+
+To roll out a gateway, see [Deploy Codex through a
+gateway](./enterprise/roll-out-a-gateway.md). To configure a developer
+machine, see [Connect to a gateway](./enterprise/connect-to-a-gateway.md).
+
+#### Requests and endpoints
+
+Configure a gateway provider with `wire_api = "responses"`. For a base URL such
+as `https://gateway.example.com/v1`, the gateway must accept
+`POST /v1/responses` and preserve the request and response fields the client uses.
+A working Chat Completions or Anthropic Messages endpoint doesn't establish
+Responses compatibility.
+
+Health and model-list endpoints are optional operational aids. They don't exercise
+a Codex conversation or prove tool support.
+
+#### Streaming
+
+Forward server-sent events (SSE) incrementally rather than buffering the entire
+answer. Preserve event types and payloads, including the successful terminal
+`response.completed` event. Forward error and failure events so the client can
+distinguish a failed response from a stalled connection.
+
+Verify the full stream through load balancers and reverse proxies as well as the
+gateway. A text reply without a completed stream is insufficient.
+
+#### Conversation continuation
+
+Preserve replayed conversation input across follow-up turns. The gateway must
+accept the prior messages, tool calls, and tool results needed for the next turn.
+
+If you enable WebSocket or incremental transport, verify its
+`previous_response_id` behavior too. A stateless HTTP Responses path can use
+replayed input without requiring that continuation mechanism.
+
+#### Tools
+
+Preserve function-call items and their matching `function_call_output` items,
+including the identifiers that associate calls with results. The full loop must
+work: Codex receives a call, executes the tool, submits its result, and receives a
+final answer.
+
+A successful text request doesn't verify this loop. Test the actual models and
+client features you plan to enable. A gateway accepting a request field doesn't
+prove that its upstream model implements the corresponding capability.
+
+#### Authentication and headers
+
+Support the client authentication mechanism selected for the deployment:
+`env_key` or command-backed bearer tokens, or `env_http_headers` for credentials
+sent in a custom header. Use environment variables for secret header values;
+don't hard-code them in configuration. See the
+[custom provider reference](./config-file/config-advanced.md#custom-model-providers)
+for the configuration and credential-helper contract.
+
+Authenticate developers separately from the gateway's upstream provider identity.
+Keep administrator keys and upstream credentials on the gateway. Preserve the
+headers your routing and attribution depend on, and test credential expiration,
+renewal, and revocation.
+
+#### Model routing and metadata
+
+Each Codex-facing model name must route to the intended upstream model. Verify
+the route in gateway records rather than relying on the model's self-description.
+
+Use a name recognized by the deployed Codex version, or
+[supply a matching catalog for a custom alias](./enterprise/roll-out-a-gateway.md#supply-metadata-for-a-custom-alias).
+Review model availability and migration metadata too: any replacement model must
+route through the gateway. For an organization-owned alias without a migration,
+set its catalog entry's `upgrade` to `null`. Catalog metadata informs client behavior;
+it doesn't add capabilities to a model
+or create gateway routes. Verify context limits, reasoning options, and tools
+against the actual upstream model and provider. A generic gateway connection
+doesn't automatically receive the metadata adjustments made by Codex's built-in
+provider integrations.
+
+#### Recognized model names
+
+Use the exact model name recognized by your deployed Codex version as the gateway
+alias and Codex `model`. Confirm that the upstream provider supports the model
+and your organization approves it.
+
+Check `codex --version` and select the matching `rust-v` tag in the [Codex model catalog](https://github.com/openai/codex/blob/main/codex-rs/models-manager/models.json).
+For a custom build, use its source commit; for desktop deployments, match the
+bundled CLI version. Check the entries' `slug` values to find the names that
+version recognizes. If the gateway changes the model's capabilities, supply
+catalog metadata that reflects those differences even when the name is recognized.
+
+#### Errors
+
+Preserve useful distinctions between client authentication errors, unknown model
+routes, rate limits, and upstream failures. Don't collapse all failures into a
+generic `500` response. Return enough information to diagnose the failing layer
+without exposing tokens, provider credentials, or sensitive request content.
+
+#### Data and tool boundaries
+
+Model traffic follows this path:
+
+```text
+Codex client -> LLM gateway -> model provider
+```
+
+The client authenticates to the gateway with a developer credential. The gateway
+uses its upstream provider credential to access the model. Prompts, source
+excerpts, tool arguments, and tool results included in model requests can pass
+through the gateway. Set logging, retention, redaction, access, and export controls
+accordingly.
+
+The model gateway does not route every connection made by Codex. Local commands
+run in the client execution environment. MCP servers, plugin services, browser
+and app interactions, and other enabled services can have separate network paths
+and credentials. Model-provider configuration doesn't grant those permissions or
+replace their network controls. See [Agent approvals and security](./agent-approvals-security.md)
+and [MCP](./extend/mcp.md) for those boundaries.
+
+#### Qualification checklist
+
+Record evidence for each deployed combination of client, gateway, and model:
+
+- Responses request and response fields.
+- Incremental SSE delivery and successful terminal completion.
+- Follow-up turns with replayed input.
+- `previous_response_id` when the selected transport uses it.
+- Function calls, matching results, and a final answer.
+- Correct model routing and matching metadata.
+- Per-user attribution, renewal, and revocation.
+- Useful authentication, routing, rate-limit, and upstream errors.
+- Redacted diagnostics and the intended logging policy.
+
+Use the [rollout test procedure](./enterprise/roll-out-a-gateway.md#test-the-client-and-gateway)
+to collect this evidence before distributing the configuration.
 
 ### Governance
 
@@ -45708,6 +46510,14 @@ Deploy apps and configure updates, runtime settings, remote connections, and mod
 
 - [Amazon Bedrock](./amazon-bedrock.md): Configure supported local clients to use models available through Bedrock.
 
+- [Connect to a gateway](./enterprise/connect-to-a-gateway.md): Configure one Codex client to use your organization's model gateway and verify the connection.
+
+- [Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md): Configure model routes, issue credentials, and deploy Codex through your organization’s gateway.
+
+- [Gateway compatibility](./enterprise/gateway-compatibility.md): Check the Responses API behavior required for model requests, streaming, and tool calls.
+
+- [Bedrock through LiteLLM](./enterprise/bedrock-through-litellm.md): Configure a LiteLLM gateway to route Codex model requests to Amazon Bedrock.
+
 #### ChatGPT Work
 
 Review the ChatGPT Work overview and administration reference.
@@ -46349,6 +47159,12 @@ Configure local ChatGPT Work and Codex surfaces to use OpenAI models available
 through Amazon Bedrock. In this setup, the local client sends model requests to
 Bedrock using AWS-managed authentication and access controls.
 
+This page covers direct access to Bedrock. If your organization already
+provides a model gateway, follow [Connect to a
+gateway](./enterprise/connect-to-a-gateway.md). To configure a gateway
+backed by Bedrock, see [Bedrock through
+LiteLLM](./enterprise/bedrock-through-litellm.md).
+
 #### How it works
 
 When you configure a local ChatGPT Work or Codex surface with Amazon Bedrock as
@@ -46364,9 +47180,13 @@ provider.
 
 Make sure you have:
 
-- Credentials for the AWS account you want to use
+- Credentials for the AWS account you want to use.
 - Access to supported OpenAI models in Amazon Bedrock.
 - Access to an AWS Region where the selected model is available.
+- AWS permission to invoke the selected model or inference profile.
+
+Check the model-specific IAM requirements. For example, GPT-6 Sol through Runtime
+also requires `bedrock:InvokeModel` on the account's default project. See AWS's [GPT-6 Sol setup instructions](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-6-sol.html).
 
 #### Configure the provider
 
@@ -46375,16 +47195,24 @@ Codex allows you to configure the provider by setting `model_provider` in `~/.co
 Choose the provider for the Amazon Bedrock endpoint you want to use: Bedrock
 Runtime for cross-Region inference (CRIS), or Bedrock Mantle for in-Region inference.
 
-For the Bedrock Runtime endpoint:
+Use Bedrock Runtime for new configurations:
 
 ```toml
 model_provider = "amazon-bedrock-runtime"
+web_search = "disabled"
 ```
+
+Hosted web search isn't available on Bedrock Runtime. If you need it, use
+[Bedrock Mantle](#use-mantle-for-hosted-web-search). The `amazon-bedrock`
+provider selects Mantle; `amazon-bedrock-runtime` selects Runtime.
+
+#### Use Mantle for hosted web search
 
 For the Bedrock Mantle endpoint:
 
 ```toml
 model_provider = "amazon-bedrock"
+web_search = "cached"
 ```
 
 #### Choose a model
@@ -46395,9 +47223,10 @@ model picker: models supported through the Bedrock Runtime endpoint for
 `amazon-bedrock`.
 
 You can optionally specify a [supported model](#supported-models) in the
-configuration file.
+configuration file. The built-in provider supplies its own model catalog.
+When switching endpoints, change the provider and any explicit model ID together.
 
-Model availability varies by AWS Region. Refer to AWS [Regional availability by models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html#model-regions-openai). Local ChatGPT Work and Codex surfaces don't support Bedrock Mantle endpoints in AWS GovCloud Regions.
+Model availability varies by AWS Region. Refer to AWS [Regional availability by models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html#model-regions-openai).
 
 #### Authentication options
 
@@ -46415,6 +47244,13 @@ specify a Region when using API-key authentication.
 ```shell
 export AWS_BEARER_TOKEN_BEDROCK=<your-bedrock-api-key>
 export AWS_REGION=us-east-2
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:AWS_BEARER_TOKEN_BEDROCK = "<your-bedrock-api-key>"
+$env:AWS_REGION = "us-east-2"
 ```
 
 #### Option 2: AWS SDK credentials
@@ -46469,7 +47305,7 @@ AWS profile's `credential_process` helper.
 
 Desktop apps and IDE extensions may not inherit environment variables from the
 shell. Put required values in `~/.codex/.env`, then restart the app or
-extension.
+extension. On Windows, the default path is `%USERPROFILE%\.codex\.env`.
 
 ```shell
 export AWS_BEARER_TOKEN_BEDROCK=<your-bedrock-api-key>
@@ -46487,6 +47323,17 @@ export AWS_REGION=us-east-2
 - Confirm the selected model is available in the configured AWS Region and that
   the AWS identity has permission to access it.
 
+Then send a short prompt in a new task:
+
+```text
+Reply with exactly: bedrock-ok
+```
+
+Expect `bedrock-ok`. Confirm the provider and model in the client; the reply alone
+doesn't identify the route. For rollout qualification, use a disposable folder
+with read-only permissions and verify a harmless local tool task and a follow-up
+turn.
+
 #### Supported models
 
 Use an inference profile ID for Bedrock Runtime provider or a model ID for Bedrock Mantle provider.
@@ -46497,6 +47344,7 @@ AWS identity.
 
 Global CRIS can route requests to supported
 commercial AWS Regions worldwide, whereas Geo CRIS routes requests within the profile's geography.
+Choose a routing scope that meets your AWS permissions and data-residency requirements.
 
 Use `model_provider = "amazon-bedrock-runtime"` with the optional `model` configuration set to an inference profile ID from the following lists. The provider uses
 `https://bedrock-runtime.{region}.amazonaws.com/openai/v1`, where `{region}` is
@@ -46509,9 +47357,6 @@ Supported models and inference profile IDs:
 - GPT-6 Astra: `global.openai.gpt-6-astra`
 - GPT-6 Sol: `global.openai.gpt-6-sol`
 - GPT-6 Luna: `global.openai.gpt-6-luna`
-- GPT-5.6 Sol: `global.openai.gpt-5.6-sol`
-- GPT-5.6 Terra: `global.openai.gpt-5.6-terra`
-- GPT-5.6 Luna: `global.openai.gpt-5.6-luna`
 
 For example, configure Astra with Global CRIS in `~/.codex/config.toml`:
 
@@ -46527,13 +47372,9 @@ Supported models and inference profile IDs:
 - GPT-6 Astra: `us.openai.gpt-6-astra`
 - GPT-6 Sol: `us.openai.gpt-6-sol`
 - GPT-6 Luna: `us.openai.gpt-6-luna`
-- GPT-5.6 Sol: `us.openai.gpt-5.6-sol`
-- GPT-5.6 Terra: `us.openai.gpt-5.6-terra`
-- GPT-5.6 Luna: `us.openai.gpt-5.6-luna`
 
 Codex's built-in Runtime model picker lists the United States Geo and Global
-variants. AWS also lists India geographic inference profile IDs `in.openai.gpt-5.6-terra` and
-`in.openai.gpt-5.6-luna` for `ap-south-1` (Mumbai) and `ap-south-2` (Hyderabad). Refer to Bedrock model cards for [GPT-5.6 Terra](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-56-terra.html) and [GPT-5.6 Luna](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-56-luna.html) for details.
+variants.
 
 Model and CRIS availability vary by source AWS Region. See AWS [Supported Regions and models for inference profiles](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html), which links to each model's exact inference profile IDs and regional
 availability, and AWS [Regional availability by models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html#model-regions-openai) before selecting a provider and a model.
@@ -46548,11 +47389,6 @@ Supported models and model IDs:
 - GPT-6 Astra: `openai.gpt-6-astra`
 - GPT-6 Sol: `openai.gpt-6-sol`
 - GPT-6 Luna: `openai.gpt-6-luna`
-- GPT-5.6 Sol: `openai.gpt-5.6-sol`
-- GPT-5.6 Terra: `openai.gpt-5.6-terra`
-- GPT-5.6 Luna: `openai.gpt-5.6-luna`
-- GPT-5.5: `openai.gpt-5.5`
-- GPT-5.4: `openai.gpt-5.4`
 
 GPT-6 Sol and Luna are available through Mantle in `us-east-1` (N. Virginia).
 Model availability varies by AWS Region. See AWS [Regional availability by models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html#model-regions-openai) before selecting a provider and a model. For GPT-6 Astra, refer to the [Bedrock model page for GPT-6 Astra](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-6-astra.html).
@@ -46561,8 +47397,13 @@ Model availability varies by AWS Region. See AWS [Regional availability by model
 
 This configuration supports local ChatGPT Work and Codex workflows. Hosted
 ChatGPT Work on the web, Codex cloud, and features that depend on OpenAI-hosted
-cloud services, hosted tools, or cloud-managed discovery aren't currently
-available.
+cloud services or cloud-managed discovery aren't currently
+available. Hosted web search is unavailable on Runtime; use
+[Mantle](#use-mantle-for-hosted-web-search) if you need it.
+
+Codex Security CLI uses its own provider configuration. Follow its
+[Amazon Bedrock setup](./security/cli/reference.md) rather than the native
+client settings above.
 
 Fast Mode isn't available with Amazon Bedrock. Fast Mode uses priority
 processing, and the initial Amazon Bedrock offering supports on-demand
@@ -46571,7 +47412,7 @@ inference only.
 #### Detailed feature availability
 
 - Feature is currently limited to only specific regions. Check
-  the individual feature documentation to learn more about geo restrictions.
+  the individual feature documentation to learn more about regional restrictions.
 
   † Local plugin bundles and OpenAI-curated plugins that don't
   require ChatGPT authentication, including Codex Security, are available.
@@ -46590,6 +47431,13 @@ If setup fails, check the following:
 - `AWS_BEARER_TOKEN_BEDROCK` isn't set to an expired or unintended key.
 - For desktop app or IDE extension usage, required environment variables are
   present in `~/.codex/.env`.
+
+For AWS SDK profile authentication, run `aws sts get-caller-identity --profile codex-bedrock`
+to confirm the identity for your selected profile. Replace `codex-bedrock` with
+your profile name, or omit `--profile` when using the default credential chain.
+This checks AWS identity, not permission to invoke a Bedrock model. Check
+`AWS_BEARER_TOKEN_BEDROCK` separately so an unintended API key doesn't select a
+different authentication path.
 
 #### Support boundaries
 

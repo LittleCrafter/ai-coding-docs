@@ -16,6 +16,11 @@ boundaries:
 Complete the steps in order for a new rollout, or use the linked pages to change
 one boundary.
 
+If you manage a model gateway for local Codex clients, use
+[Deploy Codex through a gateway](./roll-out-a-gateway.md) for gateway
+qualification, credential distribution, and the client handoff. Configure
+workspace access separately where your deployment uses workspace features.
+
 In workspace settings, **Codex and Work Local** combines local Codex and Work
 access under **Allow members to use Codex and Work Locally**. Some workspaces
 instead provide independent **Codex Local** and **Work Local** sections. In

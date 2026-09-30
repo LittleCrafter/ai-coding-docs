@@ -2,6 +2,11 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
+For a local client using an organization-provided model gateway, follow
+[Connect to a gateway](./enterprise/connect-to-a-gateway.md) for the gateway
+credential and provider configuration. Direct Bedrock access uses the
+[Amazon Bedrock authentication options](./amazon-bedrock.md#authentication-options).
+
 ## OpenAI authentication
 
 <a id="sign-in-with-chatgpt"></a>

@@ -74,20 +74,20 @@ agy mic-serve --addr 127.0.0.1:<UNUSED_PORT>
 
 Caution
 
-**Keep `mic-serve` on `localhost` (`127.0.0.1`)**. The microphone server is intended for local connections forwarded through SSH tunnels. Keep it bound to loopback so external devices on your network cannot access the audio stream.
+**Keep `mic-serve` on `127.0.0.1`**. The microphone server is intended for local connections forwarded through SSH tunnels. Keep it bound to loopback so external devices on your network cannot access the audio stream.
 
 ### 2\. Open a reverse tunnel
 
 From your local machine, forward the local audio port to the remote machine by opening a reverse SSH tunnel:
 
 ```
-ssh -R 24713:localhost:4713 <remote-machine>
+ssh -R 24713:127.0.0.1:4713 <remote-machine>
 ```
 
 The tunnel must remain active during dictation. To run the tunnel in the background without maintaining an interactive shell session, use the `-f` and `-N` flags with the `ssh` command. For example:
 
 ```
-ssh -f -N -R 24713:localhost:4713 <remote-machine>
+ssh -f -N -R 24713:127.0.0.1:4713 <remote-machine>
 ```
 
 ### 3\. Start the CLI with `ANTIGRAVITY_MIC`
@@ -95,19 +95,19 @@ ssh -f -N -R 24713:localhost:4713 <remote-machine>
 In your remote SSH session, launch the CLI with the `ANTIGRAVITY_MIC` environment variable set to the forwarded tunnel port. For example:
 
 ```
-ANTIGRAVITY_MIC=localhost:24713 agy
+ANTIGRAVITY_MIC=127.0.0.1:24713 agy
 ```
 
 If you are using a Windows remote host and use PowerShell, set the environment variable and start the CLI:
 
 ```
-$env:ANTIGRAVITY_MIC = "localhost:24713"; agy
+$env:ANTIGRAVITY_MIC = "127.0.0.1:24713"; agy
 ```
 
 Alternatively, if you are using a Windows remote host, but use Windows Command Prompt (`cmd.exe`):
 
 ```
-set ANTIGRAVITY_MIC=localhost:24713 && agy
+set ANTIGRAVITY_MIC=127.0.0.1:24713 && agy
 ```
 
 In the CLI, press F5 or use `/voice`, and speak into your microphone. The local `mic-serve` process logs a confirmation when the CLI initiates an audio connection. For example:
@@ -121,7 +121,7 @@ Recording for 127.0.0.1:54134.
 If no connection log appears in the `mic-serve` output when dictating, test whether the forwarded port is reachable by capturing a raw audio sample on the remote host. For example:
 
 ```
-timeout 5 nc localhost 24713 > /tmp/mic.raw
+timeout 5 nc 127.0.0.1 24713 > /tmp/mic.raw
 ```
 
 If `/tmp/mic.raw` accumulates data at approximately 32 kB/s, audio streaming across the reverse tunnel is operating correctly.
