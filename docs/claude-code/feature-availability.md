@@ -295,7 +295,7 @@ If you authenticate through Amazon Bedrock, Google Cloud's Agent Platform, Micro
 | [Computer use](./computer-use.md) | ✓ | ✓ | ✗ | ✗ |
 | Dispatch ([Desktop](./desktop.md#sessions-from-dispatch)) | ✓ | ✓ | ✗ | ✗ |
 | [Code Review](./code-review.md) | ✗ | ✗ | ✓ | ✓ |
-| [Artifacts](./artifacts.md) | ✓ | ✓ | ✓ | Admin-enabled |
+| [Artifacts](./artifacts.md) | ✓ | ✓ | ✓ | ✓ |
 | [Analytics dashboard and contribution metrics](./analytics.md) | ✗ | ✗ | ✓ | ✓ |
 | [Enterprise Analytics API](./analytics.md#access-data-programmatically) | ✗ | ✗ | ✗ | ✓ |
 | [Server-managed settings](./server-managed-settings.md) | ✗ | ✗ | ✓ | ✓ |

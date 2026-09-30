@@ -85,7 +85,10 @@ The prompt offers three choices:
 * **Not now**: continues the task without browser tools. Claude Code can ask again in a later session.
 * **Don't ask again**: stops the prompt in future sessions. You can still set up the integration anytime with `/chrome`.
 
-If your organization blocks the `claude-in-chrome` MCP server with the [`deniedMcpServers` managed setting](./managed-mcp.md#policy-based-control-with-allowlists-and-denylists), Claude Code doesn't show the install prompt.
+Two managed MCP policies turn the prompt off:
+
+* If your organization blocks the `claude-in-chrome` MCP server with the [`deniedMcpServers` managed setting](./managed-mcp.md#policy-based-control-with-allowlists-and-denylists), Claude Code doesn't show the install prompt.
+* If your organization deploys a [`managed-mcp.json`](./managed-mcp.md#exclusive-control-with-managed-mcp-json) file without [allowing Claude in Chrome alongside the managed set](./managed-mcp.md#allow-claude-in-chrome-alongside-the-managed-set), Claude Code doesn't show the install prompt.
 
 ### Enable Chrome by default
 

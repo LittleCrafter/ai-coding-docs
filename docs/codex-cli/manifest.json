@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "0.159.1",
-  "last_updated": "2026-09-29T21:35:57Z",
+  "version": "0.159.2",
+  "last_updated": "2026-09-30T02:32:40Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -1845,8 +1845,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-29T21:35:57Z",
-    "fetch_duration_seconds": 64.157,
+    "last_fetch_completed": "2026-09-30T02:32:40Z",
+    "fetch_duration_seconds": 64.138,
     "total_pages_discovered": 184,
     "pages_fetched_successfully": 184,
     "pages_failed": 0,
