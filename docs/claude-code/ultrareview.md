@@ -59,7 +59,7 @@ The command also accepts `#1234`, `PR 1234`, and pasted PR URLs; a pasted URL mu
 
 In PR mode, the cloud sandbox clones the pull request directly from the host rather than bundling your local working tree. PR mode works with repositories on `github.com` and on [GitHub Enterprise Server](./github-enterprise-server.md) instances that an Owner has connected to Claude Code.
 
-For repositories on `github.com`, the sandbox clones with the GitHub account connected to your Claude account, so the account must be able to read the PR's repository. Claude Code checks this before creating the cloud session, unless you've set [`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`](./env-vars.md#variables), and refuses the launch when [no account is connected](./errors.md#no-github-account-is-connected-to-your-claude-account) or [the account can't see the repository](./errors.md#your-connected-github-account-cant-see-the-repository); the refusal names the fix. Before v2.1.248, Claude Code didn't check this before launch.
+For repositories on `github.com`, the sandbox clones with the GitHub account connected to your Claude account, so the account must be able to read the PR's repository.
 
 Run [`/web-setup`](./web-quickstart.md#connect-from-your-terminal) to connect your GitHub CLI login to your Claude account.
 

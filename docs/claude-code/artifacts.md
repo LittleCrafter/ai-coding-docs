@@ -338,7 +338,7 @@ To turn artifacts off for your own sessions regardless of your organization's se
 | [Environment variable](./env-vars.md) | Set `CLAUDE_CODE_DISABLE_ARTIFACT=1` |
 | [Permission rule](./permissions.md) | Add `Artifact` to `permissions.deny` |
 
-Once you turn artifacts off in a [`--settings`](./cli-reference.md#cli-flags) file or with `CLAUDE_CODE_DISABLE_ARTIFACT`, or your administrator turns them off in [managed settings](./server-managed-settings.md), no settings file turns them back on. Before v2.1.242, a file higher in the [precedence stack](./settings.md#settings-precedence) could turn artifacts back on even when a lower-precedence file set `"enableArtifact": false`.
+Once you turn artifacts off in a [`--settings`](./cli-reference.md#cli-flags) file or with `CLAUDE_CODE_DISABLE_ARTIFACT`, or your administrator turns them off in [managed settings](./server-managed-settings.md), no settings file turns them back on.
 
 You can also set `"enableArtifact": false` in a project's `.claude/settings.json` or `.claude/settings.local.json` to turn artifacts off for sessions in that project. An `"enableArtifact": true` in either file doesn't turn them back on. Honoring the key in project and local settings requires Claude Code v2.1.242 or later.
 
