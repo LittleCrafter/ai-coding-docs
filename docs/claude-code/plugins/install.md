@@ -38,7 +38,7 @@ Start Claude Code with `claude` in your project, then:
    /plugin install commit-commands@claude-plugins-official
    ```
 
-   To browse instead, run `/plugin` with no plugin name: the panel opens on the **Discover** tab, which lists plugins from every marketplace you've added, and you can type to search, then press **Enter** on a plugin to open its details.
+   To browse instead, run `/plugin` with no plugin name: the panel opens on the **Discover** tab, which lists the plugins from your marketplaces, and you can type to search, then press **Enter** on a plugin to open its details.
 2. **Review what the plugin adds**
 
    The details pane shows the plugin's description. It can also show:

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 336" width="100%">
+  <defs>
+    <marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#C4C4C4"/>
+    </marker>
+  </defs>
+  <rect width="600" height="336" rx="6" fill="#1A1A1A"/>
+  <rect x="12" y="12" width="576" height="282" rx="8" fill="#232323" stroke="#444444" stroke-width="1"/>
+  <text x="26" y="34" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="500" fill="#C4C4C4">Transcript</text>
+  <rect x="24" y="42" width="230" height="22" rx="5" fill="#383838" stroke="#D4A27F" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="34" y="57.0" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Message</text>
+  <rect x="24" y="70" width="230" height="22" rx="5" fill="#383838" stroke="#D4A27F" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="34" y="85.0" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Tool call row</text>
+  <rect x="24" y="98" width="230" height="22" rx="5" fill="#4A372B" stroke="#D4A27F" stroke-width="1.5"/>
+  <text x="34" y="113.0" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Log line</text>
+  <rect x="300" y="24" width="92" height="36" rx="5" fill="#4A372B" stroke="#D4A27F" stroke-width="1.5"/>
+  <text x="310" y="46.0" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Toast</text>
+  <rect x="24" y="140" width="368" height="22" rx="5" fill="#383838" stroke="#D4A27F" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="34" y="155.0" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Spinner</text>
+  <rect x="24" y="168" width="368" height="26" rx="5" fill="#4A372B" stroke="#D4A27F" stroke-width="1.5"/>
+  <text x="34" y="185.0" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Band above the prompt</text>
+  <rect x="24" y="200" width="368" height="34" rx="5" fill="#383838"/>
+  <text x="34" y="221.0" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Prompt</text>
+  <rect x="24" y="240" width="368" height="22" rx="5" fill="#4A372B" stroke="#D4A27F" stroke-width="1.5"/>
+  <text x="34" y="255.0" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="500" fill="#F5F5F5">Status line</text>
+  <rect x="404" y="24" width="172" height="258" rx="5" fill="#4A372B" stroke="#D4A27F" stroke-width="1.5"/>
+  <text x="416" y="46" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#F5F5F5">Pane</text>
+  <text x="416" y="62" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="400" fill="#C4C4C4">as a sidebar</text>
+  <rect x="24" y="312" width="16" height="12" rx="3" fill="#4A372B" stroke="#D4A27F" stroke-width="1.5"/>
+  <text x="46" y="322" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="400" fill="#F5F5F5">A mod adds</text>
+  <rect x="132" y="312" width="16" height="12" rx="3" fill="#383838" stroke="#D4A27F" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="154" y="322" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="400" fill="#F5F5F5">A mod can redraw</text>
+  <rect x="272" y="312" width="16" height="12" rx="3" fill="#383838"/>
+  <text x="294" y="322" text-anchor="start" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="400" fill="#F5F5F5">Claude Code's own</text>
+</svg>

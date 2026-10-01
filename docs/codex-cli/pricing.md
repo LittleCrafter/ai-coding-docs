@@ -39,7 +39,7 @@ Power a few focused coding sessions each week.
 - Codex on the web, in the CLI, in the IDE extension, and on iOS
 - Cloud-based integrations like automatic code review and Slack
   integration
-- GPT-6 Sol and GPT-6 Luna
+- GPT-6.1 Sol and GPT-6 Luna
 - Flexibly extend usage with [ChatGPT credits](#credits-overview)
 - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
   Plus plan
@@ -366,7 +366,7 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
     <tfoot>
       <tr>
         <td colspan="4" style="text-align:center">
-          A typical GPT-5.6 Sol task may use 5-30 credits.
+          A typical GPT-5.6 Sol task may use 2-15 credits.
         </td>
       </tr>
       <tr>
@@ -431,6 +431,11 @@ efficiently](./prompting.md#use-work-efficiently).
 
 ## Feature availability
 
+In ChatGPT, GPT-6.1 Sol is available in Work and Codex, not Chat. For Enterprise
+and Edu, the model is off by default until an administrator enables it. Using
+it in ChatGPT Work or Codex also requires access to the respective surface.
+API-key access follows API model availability.
+
 ### Access and surfaces
 
 | Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
@@ -447,6 +452,7 @@ efficiently](./prompting.md#use-work-efficiently).
 
 | Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
 | --- | --- | --- | --- | --- | --- |
+| [GPT-6.1 Sol](./models.md#gpt-61-sol) | Yes | Yes | Yes | Yes | Yes |
 | [GPT-6 Sol and Luna](./models.md) | Yes | Yes | Yes | Yes | Yes |
 | [Fast mode](./agent-configuration/speed.md) | Yes | Yes | Yes | Yes | Yes |
 | [Astra Ultrafast (Pro $500 and eligible Enterprise/Edu plans)](./agent-configuration/speed.md#ultrafast-mode) | No | Yes | No | Yes | Yes |

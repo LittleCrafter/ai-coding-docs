@@ -186,12 +186,14 @@ The table lists each plugin policy key, what it enforces, and what it can't do.
 | `pluginTrustMessage` | Appends your text to the trust warning that `/plugin` shows before a plugin installs | Doesn't change the warning's own text |
 | `allowedChannelPlugins` | Replaces the default list of plugins allowed to push channel messages. Requires `channelsEnabled: true` | See [Restrict which channel plugins can run](../channels.md#restrict-which-channel-plugins-can-run) |
 | [`CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL=1`](../env-vars.md) | Stops interactive terminal sessions from auto-registering the official marketplace | Doesn't remove a marketplace already registered. The allowlist and blocklist gate the same auto-registration without it. A machine that started once with it set doesn't resume auto-registration after you unset it |
+| [`allowManagedModsOnly`](./mods/admin.md#stop-user-installed-mods-from-loading) | Stops every installed [mod](./mods/overview.md) that doesn't [count as your organization's](./mods/admin.md#install-your-organizations-mods) from loading | Doesn't stop a plugin that contains a mod from installing. For that, use the marketplace keys in this table |
 
-Every key in the table is a managed setting, apart from `enabledPlugins`, `syncClaudeAiPlugins`, and `CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL`:
+Every key in the table is a managed setting, apart from `enabledPlugins`, `syncClaudeAiPlugins`, `CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL`, and `allowManagedModsOnly`:
 
 * **`enabledPlugins`**: you can set it in any scope, and managed settings lock it.
 * **`syncClaudeAiPlugins`**: each user can also set it in their own user or local settings. See its [scope in the settings reference](../settings-reference.md#syncclaudeaiplugins).
 * **`CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL`**: this is an environment variable that you deliver through the managed `env` block shown under [Turn updates off for the whole fleet](#turn-updates-off-for-the-whole-fleet).
+* **`allowManagedModsOnly`**: this is an option on a built-in plugin, which you set under `pluginConfigs` in managed settings. See [Stop user-installed mods from loading](./mods/admin.md#stop-user-installed-mods-from-loading).
 
 Each settings key here has an entry in the [settings reference](../settings-reference.md).
 
@@ -393,5 +395,6 @@ If plugin policy doesn't behave as expected on a machine, check for these sympto
 * [Marketplace reference](./marketplace-reference.md#marketplace-sources): the `source` values `extraKnownMarketplaces`, `strictKnownMarketplaces`, and `blockedMarketplaces` accept
 * [Host and maintain a marketplace](./host-marketplace.md): run the marketplace your policy points at
 * [Plugin security and trust](./security.md): what a plugin can do on a machine and how to review one before installing
+* [Manage mods for your organization](./mods/admin.md): turn off or limit mods, the plugins that run JavaScript inside Claude Code
 * [Server-managed settings](../server-managed-settings.md): deliver these keys from the claude.ai admin console
 * [Troubleshoot plugins](./troubleshooting.md#blocked-by-your-organization): the messages users see when policy blocks them

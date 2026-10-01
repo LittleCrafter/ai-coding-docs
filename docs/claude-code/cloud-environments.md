@@ -47,7 +47,9 @@ Create, edit, and archive environments from the environment selector, which you 
    <img src="media/images/cloud-environment-selector.png" alt="The environment selector open above the message box at claude.ai/code. The cloud button showing the environment name Default sits in the row above the message box. The open menu lists a Local row with Download and Desktop only labels, a Cloud section where the Default environment is selected with a checkmark and shows a settings gear icon on hover, an Add cloud environment option, and a Remote Control section with setup instructions." width="1672" height="682" />
 2. **Add or edit an environment**
 
-   Select **Add cloud environment**, or hover over an existing environment and select the settings icon that appears on the right. The dialog includes the name, network access level, environment variables, and setup script. When you edit an existing cloud environment on a Pro or Max plan, the dialog also includes [API credentials](#add-api-credentials).
+   Select **Cloud** to list your environments. Then select **Add cloud environment**, or hover over an existing environment and select the settings icon that appears on the right.
+
+   The dialog includes the name, network access level, environment variables, and setup script. When you edit an existing cloud environment on a Pro or Max plan, the dialog also includes [API credentials](#add-api-credentials).
 
    <img src="media/images/cloud-environment-dialog.png" alt="The New cloud environment dialog. A Name field with the placeholder Default, a Network access selector set to Trusted with links to the network policy and access levels, an Environment variables box showing .env-format placeholder text with a note that values are visible to anyone using the environment, a Setup script box described as a Bash script that runs when a new session starts before Claude Code launches, and Cancel and Create environment buttons." width="874" height="1372" />
 
@@ -89,7 +91,6 @@ Two of these decide whether you can add a credential, and two decide whether the
 * **Role**: an organization admin role in your claude.ai organization
   * On Team and Enterprise, Owners hold it and Admins don't
   * On Pro and Max, you hold it in your own organization
-  * Without it, you see a note instead of the credential list, on your own environments too. Ask an Owner to add the credential to a shared environment and run your sessions there
 * **Environment type**: an Anthropic-hosted cloud environment that already exists. A [self-hosted environment](./self-hosted-environments.md) doesn't have API credentials
 * **API reachability**: the API accepts connections from the internet, because requests leave from Anthropic's network
 * **Encryption keys**: if your organization uses customer-managed encryption keys, you can't save credentials
@@ -100,7 +101,7 @@ You add credentials one at a time from the editor of an environment that already
 
 1. **Open the environment's API credentials**
 
-   [Open the environment for editing](#configure-your-environment) at [claude.ai/code](https://claude.ai/code). In the **Update cloud environment** dialog, find **API credentials** below **Environment variables**. You see the credentials already on the environment, each with the hosts it applies to.
+   [Open the environment for editing](#configure-your-environment) at [claude.ai/code](https://claude.ai/code). In the **Edit cloud environment** dialog, find **API credentials** below **Environment variables**. You see the credentials already on the environment, each with the hosts it applies to.
 2. **Add the credential**
 
    Select **Add credential** and fill in the form. Keep the default **Credential type**, **Bearer**, for an API key that travels in a request header, and fill in these fields:

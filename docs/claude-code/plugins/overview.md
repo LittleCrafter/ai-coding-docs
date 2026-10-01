@@ -14,7 +14,7 @@ A Claude Code plugin is a directory of skills, agents, hooks, MCP servers, or ot
 > * **You use claude.ai chat or Cowork and not Claude Code**: see [Plugins on claude.ai and in Cowork](https://claude.com/docs/plugins/overview)
 > * **You built an MCP server and want it in Anthropic's directory**: see [Publish to the directory](https://claude.com/docs/directory/publish)
 
-To try a plugin now, run `/plugin` in a Claude Code terminal session and install one from the **Discover** tab, which lists the plugins from Anthropic's official marketplace and any marketplace you've added. From there:
+To try a plugin now, run `/plugin` in a Claude Code terminal session and install one from the **Discover** tab, which lists the plugins from your marketplaces. From there:
 
 * [Install and manage plugins](./install.md): the full install steps, scopes, and other surfaces
 * [Create a plugin](./create.md): build your own
@@ -27,9 +27,10 @@ A plugin is a directory of components, usually with a manifest. The manifest, a 
 * [**Skills**](./components.md#skills): `SKILL.md` instructions Claude loads when relevant, and that you can also run as a command
 * [**Agents**](./components.md#agents): subagent definitions Claude can delegate to
 * [**Hooks**](./components.md#hooks): commands Claude Code runs at points in its lifecycle, such as after every edit
+* [**A hooks module**](./mods/overview.md): hooks written as JavaScript functions, which can also draw panes and add commands. A plugin that has one is called a mod
 * [**MCP servers**](./components.md#mcp-servers): tool servers Claude Code connects to while the plugin is enabled
 
-This diagram shows a plugin named `my-plugin` that holds one of each of those components, and what you get from each file once the plugin loads.
+This diagram shows a plugin named `my-plugin` that holds a skill, an agent, hooks, and an MCP server, and what you get from each file once the plugin loads.
 
 <img src="../media/images/plugin-directory.svg" alt="Diagram in two columns joined by five straight arrows. Left, the directory of a plugin named my-plugin, holding a manifest at .claude-plugin/plugin.json, skills/review/SKILL.md, agents/reviewer.md, hooks/hooks.json, .mcp.json, and other components. Right, what each file gives you in your session: the manifest sets the plugin name, my-plugin; the skill runs as /my-plugin:review; the agent file is a subagent Claude can delegate to; the hooks file holds hooks that run on lifecycle events; and .mcp.json adds an MCP server that gives Claude tools." width="760" height="336" />
 
@@ -64,7 +65,7 @@ A marketplace is a repository or directory with a `.claude-plugin/marketplace.js
 > [!NOTE]
 > A plugin marketplace isn't [Claude Marketplace](https://claude.com/marketplace). Claude Marketplace is the website at claude.com/marketplace where you browse plugins, connectors, partner products, and service partners. It isn't a marketplace you add with `/plugin marketplace add`.
 
-Claude Code adds Anthropic's official marketplace the first time you start an interactive terminal session, unless a [managed policy](./org.md#allow-the-official-marketplace-and-your-own) blocks it. Claude Code adds no other marketplace on its own, including Anthropic's community and demo marketplaces. To distinguish the three Anthropic marketplaces, read [Anthropic's marketplaces](./anthropic-marketplaces.md). To see what the official one lists, open the **Discover** tab of `/plugin` in a session or browse [Claude Marketplace](https://claude.com/marketplace/plugins).
+Claude Code adds Anthropic's official marketplace the first time you start an interactive terminal session, unless a [managed policy](./org.md#allow-the-official-marketplace-and-your-own) blocks it. Claude Code doesn't add Anthropic's community and demo marketplaces on its own. To distinguish the three Anthropic marketplaces, read [Anthropic's marketplaces](./anthropic-marketplaces.md). To see what the official one lists, open the **Discover** tab of `/plugin` in a session or browse [Claude Marketplace](https://claude.com/marketplace/plugins).
 
 This diagram shows the path from a marketplace to your session. A marketplace lists a plugin, you install that plugin, and Claude Code loads its components.
 

@@ -243,7 +243,7 @@ asyncio.run(main())
 ```
 
 > [!NOTE]
-> A `compact_boundary` message only arrives when compaction ran. With nothing to summarize, `/compact` reports the reason instead of raising. The run still ends with a `success` result and no `compact_boundary` message, and the result text carries the reason, for example `Not enough messages to compact.` after a single short exchange. A fresh one-shot `query()` call starts with empty context, so use this pattern in a session with prior turns, for example in [streaming input mode](./streaming-vs-single-mode.md) or when resuming a session.
+> A `compact_boundary` message only arrives when compaction ran. When a continued session has messages but nothing `/compact` can summarize, the run still ends with a `success` result rather than an error, and no `compact_boundary` message arrives. The result text then carries the reason, for example `Not enough messages to compact.` when the session holds a prompt but no reply from Claude yet. A fresh one-shot `query()` call starts with empty context, so use this pattern in a session with prior turns, for example in [streaming input mode](./streaming-vs-single-mode.md) or when resuming a session.
 
 ### Reset context with `/clear`
 

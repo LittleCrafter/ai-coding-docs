@@ -1871,7 +1871,7 @@ Power a few focused coding sessions each week.
 - Codex on the web, in the CLI, in the IDE extension, and on iOS
 - Cloud-based integrations like automatic code review and Slack
   integration
-- GPT-6 Sol and GPT-6 Luna
+- GPT-6.1 Sol and GPT-6 Luna
 - Flexibly extend usage with [ChatGPT credits](#credits-overview)
 - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
   Plus plan
@@ -2194,7 +2194,7 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         31.25 credits
         250 credits
 
-          A typical GPT-5.6 Sol task may use 5-30 credits.
+          A typical GPT-5.6 Sol task may use 2-15 credits.
 
           These are Standard credit rates. For purchased credits and Enterprise
           pay-as-you-go usage, Fast mode uses 2x the Standard rate where
@@ -2249,10 +2249,15 @@ efficiently](./prompting.md#use-work-efficiently).
 
 #### Feature availability
 
+In ChatGPT, GPT-6.1 Sol is available in Work and Codex, not Chat. For Enterprise
+and Edu, the model is off by default until an administrator enables it. Using
+it in ChatGPT Work or Codex also requires access to the respective surface.
+API-key access follows API model availability.
+
 - Feature is currently limited to only specific regions. Check the
   individual feature documentation to learn more about geographic restrictions.
 
-  † Some first party plugins are not available.
+† Some first party plugins are not available.
 
 ### Quickstart
 

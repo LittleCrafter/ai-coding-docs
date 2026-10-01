@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 209
-- **Version:** 2.1.286
-- **Last updated:** 2026-10-01T17:33:13Z
+- **Pages mirrored:** 218
+- **Version:** 2.1.287
+- **Last updated:** 2026-10-01T22:03:28Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -201,6 +201,15 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Plugin manifest reference | [plugins/manifest-reference.md](./plugins/manifest-reference.md) | [source](<https://code.claude.com/docs/en/plugins/manifest-reference>) |
 | Marketplace reference | [plugins/marketplace-reference.md](./plugins/marketplace-reference.md) | [source](<https://code.claude.com/docs/en/plugins/marketplace-reference>) |
 | Measure plugin cost and usage | [plugins/measure.md](./plugins/measure.md) | [source](<https://code.claude.com/docs/en/plugins/measure>) |
+| Manage mods for your organization | [plugins/mods/admin.md](./plugins/mods/admin.md) | [source](<https://code.claude.com/docs/en/plugins/mods/admin>) |
+| Use the mods API | [plugins/mods/api.md](./plugins/mods/api.md) | [source](<https://code.claude.com/docs/en/plugins/mods/api>) |
+| Create a mod | [plugins/mods/create.md](./plugins/mods/create.md) | [source](<https://code.claude.com/docs/en/plugins/mods/create>) |
+| React to events with a mod | [plugins/mods/events.md](./plugins/mods/events.md) | [source](<https://code.claude.com/docs/en/plugins/mods/events>) |
+| Draw in the interface with a mod | [plugins/mods/interface.md](./plugins/mods/interface.md) | [source](<https://code.claude.com/docs/en/plugins/mods/interface>) |
+| Mods overview | [plugins/mods/overview.md](./plugins/mods/overview.md) | [source](<https://code.claude.com/docs/en/plugins/mods/overview>) |
+| Mods reference | [plugins/mods/reference.md](./plugins/mods/reference.md) | [source](<https://code.claude.com/docs/en/plugins/mods/reference>) |
+| Test a mod | [plugins/mods/test.md](./plugins/mods/test.md) | [source](<https://code.claude.com/docs/en/plugins/mods/test>) |
+| Troubleshoot a mod | [plugins/mods/troubleshoot.md](./plugins/mods/troubleshoot.md) | [source](<https://code.claude.com/docs/en/plugins/mods/troubleshoot>) |
 | Manage Claude Code plugins for your organization | [plugins/org.md](./plugins/org.md) | [source](<https://code.claude.com/docs/en/plugins/org>) |
 | Plugins overview | [plugins/overview.md](./plugins/overview.md) | [source](<https://code.claude.com/docs/en/plugins/overview>) |
 | Publish and distribute a plugin | [plugins/publish.md](./plugins/publish.md) | [source](<https://code.claude.com/docs/en/plugins/publish>) |

@@ -493,6 +493,8 @@ Each action goes through a fixed decision order. The first matching step wins:
 3. Everything else goes to the classifier, apart from [critical-path removals](#critical-paths) under their default handling. The connector tools and `requiresUserInteraction` MCP tools that prompt you directly in step 1 never reach the classifier either, so neither an org-required approval nor a consent step is auto-approved
 4. If the classifier blocks, Claude receives the reason. In most sessions the reason names the rule the classifier matched, such as `[Data Exfiltration]`, rather than giving a written explanation; see [Review denials](./auto-mode-config.md#review-denials)
 
+A [mod](./plugins/mods/overview.md) you install that hooks `tool.check` can approve an action before step 3, and the classifier doesn't check an action the mod approves. See [Extend permissions with hooks](./permissions.md#extend-permissions-with-hooks).
+
 On entering auto mode, broad allow rules that grant arbitrary code execution are dropped:
 
 * Blanket `Bash(*)` or `PowerShell(*)`
@@ -626,6 +628,7 @@ Protected directories:
 * `.yarn`
 * `.mvn`
 * `.claude`, except for `.claude/worktrees` where Claude stores its own git worktrees
+* A directory you loaded with [`--plugin-dir`](./plugins/mods/create.md#change-a-mod-with-claude), because Claude Code reloads and runs a mod's code from it when a file changes
 
 Protected files:
 
