@@ -37,7 +37,7 @@ Dots are always-on agents that take on ongoing responsibility. Give your dot a g
 
 [Meet your dot](./dots.md)
 [Availability](./dots.md#access)
-[Admin guide](https://learn.chatgpt.com/docs/enterprise/o-admin-guide)
+[Admin guide](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide)
 
 #### Work across devices
 
@@ -680,7 +680,7 @@ Give your dot ongoing responsibility. Dots keep making progress between conversa
 
 [Meet your dot](./dots.md)
 [Availability](./dots.md#access)
-[Admin guide](https://learn.chatgpt.com/docs/enterprise/o-admin-guide)
+[Admin guide](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide)
 
 #### Work across devices
 
@@ -3536,7 +3536,7 @@ Use a rule's menu to edit or delete it. Select **Open Plugins** to review
 If your workspace disables custom rules, you can't edit saved rules, and they
 don't apply. See [Configure dots permissions](#for-workspace-admins).
 
-**For workspace admins:** See [Set up dots for work](https://learn.chatgpt.com/docs/enterprise/o-admin-guide) for workspace permissions, setup, and security and governance guidance.
+**For workspace admins:** See [Set up dots for work](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide) for workspace permissions, setup, and security and governance guidance.
 
 #### Manage data settings
 
@@ -4106,7 +4106,7 @@ Give your dot access to the relevant sources and tell it what to keep track of. 
 
 #### Access
 
-**For workspace admins:** See [Set up dots for work](https://learn.chatgpt.com/docs/enterprise/o-admin-guide) for workspace setup, permissions, and security and governance guidance.
+**For workspace admins:** See [Set up dots for work](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide) for workspace setup, permissions, and security and governance guidance.
 
 Dots are rolling out gradually. You may not see dots immediately, even if your plan is eligible.
 
@@ -28439,6 +28439,8 @@ MCP Events lets ChatGPT subscribe to updates from your MCP server, such as new m
 
 #### Before you start
 
+MCP Events is available in Work chats on ChatGPT web, in Work chats in the desktop app with **Cloud** selected, and with [dots](./dots.md). Workspace controls for plugins and event-triggered tasks apply.
+
 MCP Events in ChatGPT requires MCP 2.0 (protocol version `2026-07-28`). Configure your server in your plugin and provide persistent subscription storage and outbound HTTPS access to callback URLs.
 
 ChatGPT supports webhook delivery and callback verification from the [draft MCP Events specification](https://github.com/modelcontextprotocol/experimental-ext-triggers-events/blob/main/docs/design-sketch-proposal.md). Polling, streaming, and the draft’s `gap` and `terminated` control notifications are not supported by this integration.
@@ -28717,7 +28719,7 @@ With the event methods and webhook delivery in place, connect your MCP server to
 
    **_Plugin events._** _Discovered events appear alongside tools on the plugin page._
 
-3. Start a new chat, ask ChatGPT to subscribe to one of your events, and specify what it should do when an event arrives.
+3. Start a Work chat on ChatGPT web, or select **Work** and **Cloud** in the desktop app. Ask ChatGPT to subscribe to one of your events and specify what it should do when an event arrives. You can also test with a [dot](./dots.md).
 4. Confirm your server receives `events/subscribe` with the expected event name and arguments.
 5. Check that callback verification succeeds and the subscription is stored.
 6. Trigger a matching event in your app and confirm that the webhook delivery receives a `2xx` response.
@@ -34191,7 +34193,7 @@ If you’ve built a plugin and want to share it more broadly, the plugin directo
 
 Submit the package you’ve already built as a ZIP, resolve automated findings, and submit it for review. Once approved, you choose when to publish.
 
-After initial publication, changes to your MCP server are picked up automatically, and eligible updates go live once they pass automated checks. There’s no need to upload a new plugin ZIP or publish each update; changes to plugin metadata, skills, or the MCP server configuration in your package still require a new ZIP.
+After initial publication, changes to your MCP server are picked up automatically, and eligible updates go live once they pass automated checks. There’s no need to upload a new plugin ZIP or publish each update; changes to plugin metadata or skills still require a new ZIP.
 
 Before submitting, follow the [plugin package guide](https://developers.openai.com/plugins/build/plugins) and read the [plugin guidelines](https://developers.openai.com/plugins/plugin-guidelines). For help preparing your submission, use [Plugin Creator](https://chatgpt.com/plugins/plugin_connector_1p_e1a10c53223481918a42f1510ec46c1e?open_in_app), available in the plugin directory.
 

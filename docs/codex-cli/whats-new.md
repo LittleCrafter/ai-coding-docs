@@ -14,7 +14,7 @@ Give your dot ongoing responsibility. Dots keep making progress between conversa
 
 [Meet your dot](./dots.md)
 [Availability](./dots.md#access)
-[Admin guide](https://learn.chatgpt.com/docs/enterprise/o-admin-guide)
+[Admin guide](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide)
 
 ### Work across devices
 

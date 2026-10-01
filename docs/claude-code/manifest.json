@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.286",
-  "last_updated": "2026-10-01T09:29:08Z",
+  "last_updated": "2026-10-01T17:33:13Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -200,8 +200,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/python",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/python.md",
       "source_id": "agent-sdk/python",
-      "hash": "2721eb54baab7e7cf77b0044c15e4c332ecd353a31e0718e339fe684208fe66a",
-      "last_updated": "2026-10-01T09:29:08Z"
+      "hash": "bcfb66ee37ff396c18c37a3e70c0faffa628eaefac77b1f461f5f5285ebcee16",
+      "last_updated": "2026-10-01T17:33:13Z"
     },
     "agent-sdk/quickstart": {
       "slug": "agent-sdk/quickstart",
@@ -330,8 +330,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/typescript",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/typescript.md",
       "source_id": "agent-sdk/typescript",
-      "hash": "17cec6c5a1e2388c8f35bd8adbd45ee93ac566ac73b273e1f53b3ce696ec99cb",
-      "last_updated": "2026-10-01T09:29:08Z"
+      "hash": "3c2088642df9ff535ed3ad450af0ee29c5f5f054849c9649412cad0913613bd0",
+      "last_updated": "2026-10-01T17:33:13Z"
     },
     "agent-sdk/typescript-v2-preview": {
       "slug": "agent-sdk/typescript-v2-preview",
@@ -780,8 +780,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop-linux",
       "source_md_url": "https://code.claude.com/docs/en/desktop-linux.md",
       "source_id": "desktop-linux",
-      "hash": "5870082dde517e939f1f90f8934891feb2396621abf641fda8f3ec0b14ba0c83",
-      "last_updated": "2026-09-29T17:05:22Z"
+      "hash": "2b75fc8825513ca472de9b8d90d40efc9c0da08f719d089407f60ca5db983ad4",
+      "last_updated": "2026-10-01T17:33:13Z"
     },
     "desktop-quickstart": {
       "slug": "desktop-quickstart",
@@ -2095,8 +2095,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-01T09:29:08Z",
-    "fetch_duration_seconds": 73.273,
+    "last_fetch_completed": "2026-10-01T17:33:13Z",
+    "fetch_duration_seconds": 73.026,
     "total_pages_discovered": 209,
     "pages_fetched_successfully": 209,
     "pages_failed": 0,
