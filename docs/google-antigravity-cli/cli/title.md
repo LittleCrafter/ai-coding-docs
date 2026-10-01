@@ -4,7 +4,7 @@ Configure dynamic window titles, map custom scripting configurations, and format
 
 Note
 
-To toggle or set the terminal title interactively, see the **[Window Title Command](./commands/title.md)**.
+To toggle or set the terminal title interactively, refer to the **[Window title command](./commands/title.md)**.
 
 ## Overview
 
@@ -31,7 +31,7 @@ Whenever the agent state changes, the TUI executes your command script, pipes a 
 
 ### JSON state payload schema
 
-The JSON state payload is the same as the one sent to the custom status line script. It includes detailed properties representing `cwd`, `conversation_id`, `agent_state`, `vcs` details, and more. See the **[Status Line Schema](./statusline.md#available-json-fields)** for the complete property list.
+The JSON state payload is the same as the one sent to the custom status line script. It includes detailed properties representing `cwd`, `conversation_id`, `agent_state`, `vcs` details, and more. Refer to the **[Status line schema](./statusline.md#available-json-fields)** for the complete property list.
 
 ### Example script
 
@@ -45,7 +45,9 @@ chmod +x ~/.gemini/antigravity-cli/title.sh
 
 ## See also
 
-*   **[Window Title Command](./commands/title.md)**: Toggle or set the terminal title interactively.
-*   **[Status Line Customization](./statusline.md)**: Customize dynamic TUI status bars.
-*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
-*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage secure directory permissions.
+Explore the following guides to customize other CLI elements:
+
+*   **[Window title command](./commands/title.md)**: Toggle or set the terminal title interactively.
+*   **[Status line customization](./statusline.md)**: Customize dynamic TUI status bars.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions and sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage secure directory permissions.

@@ -4,7 +4,7 @@ Diagnose and resolve common anomalies with installation PATHs, local self-updati
 
 ## Quick reference
 
-Scan the lookup table below to identify symptoms and access immediate solutions:
+Scan the following lookup table to identify symptoms and access immediate solutions:
 
 | Error Symptom | Potential Cause | Target Resolution |
 | :-- | :-- | :-- |
@@ -27,13 +27,15 @@ bash: agy: command not found
 
 ### Cause
 
-The installation utility downloads the binary to `~/.local/bin` (or `C:\Users\<username>\AppData\Local\agy\bin`), but your shell’s active `$PATH` environment does not index this directory.
+The installation utility downloads the binary to `~/.local/bin` (or `C:\Users\<username>\AppData\Local\agy\bin`), but your shell’s active `$PATH` environment doesn’t index this directory.
 
 ### Resolution
 
 Ensure your terminal session loads the binary path.
 
-**macOS & Linux**:
+**macOS and Linux**:
+
+To add the binary directory to your path on macOS or Linux, follow these steps:
 
 1.  Open your shell configuration file (`~/.bashrc` or `~/.zshrc`).
 2.  Verify or append the following line at the end of the file:
@@ -51,7 +53,9 @@ Ensure your terminal session loads the binary path.
 
 **Windows (PowerShell)**:
 
-1.  Open a PowerShell terminal as an Administrator and execute:
+To add the binary directory to your path on Windows, follow these steps:
+
+1.  Open a PowerShell terminal as an Administrator and execute the following command:
     
     ```
     [System.Environment]::SetEnvironmentVariable("Path", [System.Environment]::GetEnvironmentVariable("Path", "User") + ";C:\Program Files\Google\antigravity-cli", "User")
@@ -65,7 +69,7 @@ Ensure your terminal session loads the binary path.
 
 ### Symptom
 
-When launching, the CLI hangs, prints DBUS warnings, or throws keyring access exceptions:
+When launching, the CLI hangs, prints D-Bus warnings, or throws keyring access exceptions:
 
 ```
 Error: failed to retrieve token: secret keyring is locked
@@ -73,16 +77,18 @@ Error: failed to retrieve token: secret keyring is locked
 
 ### Cause
 
-Antigravity CLI utilizes secure keychain libraries (Apple Keychain, Linux secret-service via dbus, or Windows Credential Manager) to encrypt your session tokens. If the background daemon is locked or headless, the CLI cannot read credentials.
+Antigravity CLI uses secure keychain libraries (Apple Keychain, Linux secret-service through D-Bus, or Windows Credential Manager) to encrypt your session tokens. If the background daemon is locked or headless, the CLI can’t read credentials.
 
 ### Resolution
 
 **macOS**:
 
-1.  Open **Keychain Access** app.
+To authorize keychain access on macOS, follow these steps:
+
+1.  Open the **Keychain Access** app.
 2.  Search for the `Antigravity CLI` security item.
 3.  Right-click, select **Get Info**, choose the **Access Control** tab, and verify that `agy` is on the allowed applications list.
-4.  If running inside a headless SSH session on Mac, run the following unlock sequence:
+4.  If you’re running inside a headless SSH session on macOS, run the following unlock sequence:
     
     ```
     security unlock-keychain -p "your_keychain_password" login.keychain
@@ -93,7 +99,7 @@ Antigravity CLI utilizes secure keychain libraries (Apple Keychain, Linux secret
 
 Ensure your system keyring (such as GNOME Keyring or KWallet) is unlocked and accessible.
 
-If you are running in a headless environment or over SSH, ensure that a D-Bus session is active and that your keyring daemon is running. You can typically initialize a D-Bus session by running:
+If you’re running in a headless environment or over SSH, ensure that a D-Bus session is active and that your keyring daemon is running. You can typically initialize a D-Bus session by running:
 
 ```
 export $(dbus-launch)
@@ -107,7 +113,7 @@ If you still experience access issues, ensure your user account has the necessar
 
 ### Symptom
 
-Pasting screenshots or media files via `Ctrl+V` within an SSH terminal returns a failure notification:
+Pasting screenshots or media files using `Ctrl+V` within an SSH terminal returns a failure notification:
 
 ```
 Error: local pasteboard is empty or unreachable over SSH connection
@@ -115,18 +121,18 @@ Error: local pasteboard is empty or unreachable over SSH connection
 
 ### Cause
 
-Standard SSH streams do not forward graphical clipboards. Graphic uploads require specific terminal multiplexer protocols.
+Standard SSH streams don’t forward graphical clipboards. Graphic uploads require specific terminal multiplexer protocols.
 
 ### Resolution
 
-Verify that you are utilizing supported terminal emulators and configurations.
+Verify that you’re using supported terminal emulators and configurations:
 
 1.  **Use iTerm2 or Ghostty**: These emulators support advanced clip channels.
-2.  **Configure iTerm2 Forwarding**:
+2.  **Configure iTerm2 forwarding**: Enable clipboard access in your terminal settings:
     *   Open iTerm2 Preferences (`Cmd+,`).
-    *   Go to the **General** tab, select **Selection** submenu.
-    *   Check **Applications in terminal may access clipboard** (enabling OSC 52 write channels).
-3.  **Bypass Multiplexers**: If running inside `tmux`, ensure your active configuration maps standard paste clips correctly:
+    *   Go to **General** > **Selection**.
+    *   Select **Applications in terminal may access clipboard** (enabling OSC 52 write channels).
+3.  **Bypass multiplexers**: If running inside `tmux`, ensure your active configuration maps standard paste clips:
     
     ```
     set -s set-clipboard on
@@ -151,13 +157,15 @@ Antigravity CLI contains a native, statically linked self-updater that runs in t
 
 ### Resolution
 
+Try any of the following steps to resolve the updater lock:
+
 *   **Release the advisory lock**: Purge the background lock file manually:
     
     ```
     rm -f ~/.gemini/antigravity-cli/updater/update.lock
     ```
     
-*   **Opt-out/Disable auto-updates**: Set the `AGY_CLI_DISABLE_AUTO_UPDATE` environment variable to `true` inside your shell profile (`~/.bashrc` or `~/.zshrc`):
+*   **Opt out or disable auto-updates**: Set the `AGY_CLI_DISABLE_AUTO_UPDATE` environment variable to `true` inside your shell profile (`~/.bashrc` or `~/.zshrc`):
     
     ```
     export AGY_CLI_DISABLE_AUTO_UPDATE=true
@@ -169,9 +177,9 @@ Antigravity CLI contains a native, statically linked self-updater that runs in t
 
 ## Next steps
 
-Access our quick reference sheets or configure advanced permissions:
+Access the quick reference sheets or configure advanced permissions:
 
-*   **[CLI Reference](./reference.md)**: Dense tables listing all slash commands and visual settings keys.
+*   **[CLI reference](./reference.md)**: Reference tables listing all slash commands and visual settings keys.
 *   **[Permissions](https://antigravity.google/docs/cli/permissions)**: Configure fine-grained allowed and denied action policies.
 *   **[Sandbox](https://antigravity.google/docs/cli/sandbox)**: Enforce OS-level container isolation boundaries.
-*   **[Plugins & Skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom skills.
+*   **[Plugins and skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom skills.

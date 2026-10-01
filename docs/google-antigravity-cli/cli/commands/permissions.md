@@ -1,4 +1,4 @@
-# Permissions Command (/permissions)
+# Permissions command (/permissions)
 
 Manage your fine-grained agent permission rules interactively within the TUI.
 
@@ -6,11 +6,11 @@ Manage your fine-grained agent permission rules interactively within the TUI.
 
 Antigravity CLI uses a fine-grained permissions engine to secure your workstation. While you can configure these rules manually in your settings file, the `/permissions` command opens an interactive **Permissions Manager** TUI panel to view, add, edit, and delete rules live.
 
-For details on how the permission engine works, supported actions, and manual configuration, see the conceptual **[Permissions Guide](https://antigravity.google/docs/cli/permissions)**.
+For details on how the permission engine works, supported actions, and manual configuration, refer to the conceptual **[Permissions guide](https://antigravity.google/docs/cli/permissions)**.
 
 ## Managing permissions interactively
 
-To open the Permissions Manager:
+To open the Permissions Manager, follow these steps:
 
 1.  Type `/permissions` in the prompt box.
 2.  Press Enter.
@@ -23,7 +23,7 @@ To open the Permissions Manager:
 
 The Permissions Manager operates in three panels:
 
-1.  **Scope Picker**: Select the configuration scope you want to edit:
+1.  **Scope picker**: Select the configuration scope you want to edit:
     
     *   **Project**: Rules applying only to the active project (disabled if no project is open).
     *   **Shared**: Rules shared across all Antigravity products.
@@ -31,17 +31,17 @@ The Permissions Manager operates in three panels:
     
     Use ↑/↓ (or J/K) to navigate, Enter to select, and Esc to exit.
     
-2.  **Rule Viewer**: View the rules configured for the selected scope.
+2.  **Rule viewer**: View the rules configured for the selected scope:
     
     *   Switch between **allowlist**, **denylist**, and **asklist** tabs using ←/→ (or Tab).
     *   Scroll through the rules using ↑/↓ (or J/K).
     *   Press A to add a new rule.
     *   Press E (or Ctrl + G) to edit the highlighted rule.
     *   Press D (or Backspace) to delete the highlighted rule.
-    *   Press Esc to return to the Scope Picker.
-3.  **Add/Edit Rule**: Type or edit a rule in the input field.
+    *   Press Esc to return to the **Scope Picker**.
+3.  **Add or edit rule**: Type or edit a rule in the input field:
     
-    *   Rules must follow the `action(target)` format (e.g., `command(git)`).
+    *   Rules must follow the `action(target)` format (for example, `command(git)`).
     *   Press Enter to validate and save the rule.
     *   Press Esc to cancel.
 
@@ -51,9 +51,9 @@ The Permissions Manager operates in three panels:
 
 Here is how to view, add, edit, and delete rules live in the TUI.
 
-### 1\. Selecting a scope and viewing rules
+### Selecting a scope and viewing rules
 
-When you run `/permissions`, you first see the **Scope Picker**. Select **Global** to manage your global rules:
+When you run `/permissions`, you first open the **Scope Picker**. Select **Global** to manage your global rules:
 
 ![Selecting Global Scope](../../assets/image/docs/cli/permissions-scope.png)
 
@@ -61,11 +61,11 @@ Press Enter to open the **Rule Viewer** for the selected scope. You can use ←/
 
 ![Global Rule Viewer](../../assets/image/docs/cli/permissions-viewer.png)
 
-### 2\. Adding a permission rule
+### Adding a permission rule
 
-To allow the agent to run `git` commands automatically without prompting:
+To allow the agent to run `git` commands automatically without prompting, follow these steps:
 
-1.  In the Rule Viewer, press A. The **Add Rule** panel opens at the bottom:
+1.  In the **Rule Viewer**, press A. The **Add Rule** panel opens at the bottom:
     
     ![Add Rule Panel](../../assets/image/docs/cli/permissions-add.png)
     
@@ -73,30 +73,32 @@ To allow the agent to run `git` commands automatically without prompting:
     
     ![Typing the Rule](../../assets/image/docs/cli/permissions-add-typed.png)
     
-3.  Press Enter. The rule is validated and saved. You are returned to the Rule Viewer, and `command(git)` now appears in your allowlist:
+3.  Press Enter. The rule is validated and saved, returning you to the **Rule Viewer** where `command(git)` now appears in your allowlist:
     
     ![Rule Saved Successfully](../../assets/image/docs/cli/permissions-viewer-with-rule.png)
     
 
-### 3\. Editing a permission rule
+### Editing a permission rule
 
 If you want to restrict the agent so it can only run `git diff` automatically, you can edit the rule:
 
-1.  In the Rule Viewer, use ↑/↓ to highlight `command(git)`.
+1.  In the **Rule Viewer**, use ↑/↓ to highlight `command(git)`.
 2.  Press E (or Ctrl + G). The input panel opens, prefilled with `command(git)`.
 3.  Modify the text to `command(git diff)`.
-4.  Press Enter to save. The old rule is replaced by the new one.
+4.  Press Enter to save. The new rule replaces the old one.
 
-### 4\. Deleting a permission rule
+### Deleting a permission rule
 
-To remove a rule and revert to prompting for those actions:
+To remove a rule and revert to prompting for those actions, follow these steps:
 
-1.  In the Rule Viewer, highlight the rule you want to delete (e.g., `command(git diff)`).
+1.  In the **Rule Viewer**, highlight the rule you want to delete (for example, `command(git diff)`).
 2.  Press D (or Backspace).
 3.  The rule is immediately removed from the list.
 
 ## Next steps
 
-*   **[Permissions Guide](https://antigravity.google/docs/cli/permissions)**: Learn about the security model, action types, and wildcard matching.
-*   **[Sandbox & Security](https://antigravity.google/docs/cli/sandbox)**: Configure the native OS container for running commands.
-*   **[CLI Reference](../reference.md)**: See all available slash commands and keybindings.
+Explore the following guides to learn more about security and permissions:
+
+*   **[Permissions guide](https://antigravity.google/docs/cli/permissions)**: Learn about the security model, action types, and wildcard matching.
+*   **[Sandbox and security](https://antigravity.google/docs/cli/sandbox)**: Configure the native OS container for running commands.
+*   **[CLI reference](../reference.md)**: View all available slash commands and keybindings.

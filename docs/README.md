@@ -5,11 +5,11 @@ Auto-generated mirror of documentation for several AI coding tools/CLIs.
 
 | Source | Version | Pages | Last updated | Whats-new |
 | --- | :---: | ---: | --- | :---: |
-| [Google Antigravity CLI](./google-antigravity-cli/) | 1.2.0 | 28 | 2026-09-30T21:33:11Z | yes |
-| [Claude Code](./claude-code/) | 2.1.286 | 209 | 2026-09-30T21:34:33Z | no |
-| [Codex CLI](./codex-cli/) | 0.159.2 | 188 | 2026-09-30T21:35:39Z | no |
+| [Google Antigravity CLI](./google-antigravity-cli/) | 1.2.0 | 28 | 2026-10-01T02:32:05Z | yes |
+| [Claude Code](./claude-code/) | 2.1.286 | 209 | 2026-10-01T02:33:31Z | no |
+| [Codex CLI](./codex-cli/) | 0.159.3 | 188 | 2026-10-01T02:34:38Z | no |
 | [DeepSeek API](./deepseek-api/) | — | 52 | 2026-09-30T17:04:20Z | no |
 | [Kimi Code](./kimi-code/) | 2.1.1 | 28 | 2026-09-29T17:06:57Z | no |
-| [OpenCode](./opencode/) | 1.18.33 | 36 | 2026-09-30T02:33:25Z | no |
+| [OpenCode](./opencode/) | 1.18.34 | 36 | 2026-10-01T02:35:26Z | no |
 
 Each subfolder has its own `README.md` index and `manifest.json`.

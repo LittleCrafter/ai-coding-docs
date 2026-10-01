@@ -4,20 +4,20 @@ Audit generated code, review implementation proposals, attach line-level feedbac
 
 ## Collaboration and co-steering
 
-An **Artifact** is a structured deliverable created by the agent to accomplish its task and communicate its progress and thinking to you. Artifacts include rich markdown outlines (such as Implementation Plans), code diffs, architecture diagrams, and visual media files.
+An **artifact** is a structured deliverable created by the agent to accomplish its task and communicate its progress and thinking to you. Artifacts include rich Markdown outlines (such as implementation plans), code diffs, architecture diagrams, and visual media files.
 
-As agents work with higher autonomy over longer periods, artifacts enable asynchronous collaboration. You do not need to carefully monitor every individual tool execution synchronously. Instead, you review high-level deliverables at key milestones.
+As agents work with higher autonomy over longer periods, artifacts enable asynchronous collaboration. You don’t need to carefully monitor every individual tool execution synchronously. Instead, you review high-level deliverables at key milestones.
 
-Because autonomous agents can occasionally go off-course or hallucinate solutions, the artifact workflow serves as a critical interactive co-steering mechanism. Depending on your configuration, the agent will pause at intermediate milestones, allowing you to inspect proposed plans or code edits, provide inline comments, and redirect the agent before any changes are physically written to your local filesystem.
+Because autonomous agents can occasionally go off-course or hallucinate solutions, the artifact workflow serves as a critical interactive co-steering mechanism. Depending on your configuration, the agent pauses at intermediate milestones, allowing you to inspect proposed plans or code edits, provide inline comments, and redirect the agent before any changes are physically written to your local filesystem.
 
 The TUI partitions these assets into two interactive layers:
 
-*   **The Artifact Picker Overlay**: A high-level checklist menu containing review status markers, quick preview toggles, and collapsible folders.
-*   **The Artifact Detail Viewer**: A full-screen code audit interface supporting inline commenting, syntax highlighting, and diagram scaling.
+*   **Artifact picker overlay**: A high-level checklist menu containing review status markers, quick preview toggles, and collapsible folders.
+*   **Artifact detail viewer**: A full-screen code audit interface supporting inline commenting, syntax highlighting, and diagram scaling.
 
 ## Overview of /artifact
 
-When the agent produces or modifies files, a notification updates in your TUI status bar (`/artifact to review`). Press `ctrl+r` inside the prompt box to open the full-screen **Artifact Picker Panel**.
+When the agent produces or modifies files, a notification updates in your TUI status bar (`/artifact to review`). Press `ctrl+r` inside the prompt box to open the full-screen **Artifact Picker** panel.
 
 ```
                                                                                                     10 artifacts · /artifact to review
@@ -52,15 +52,15 @@ Audit the file checklist using the following dedicated panel controls:
 | **`n`** | `confirm.reject` | Instantly rejects the highlighted file. The status marker updates to a red cross (`✗ rejected`). |
 | **`Shift+A`** | `confirm.approve_all` | Bulk-approves all pending actionable files in one action. |
 | **`Shift+R`** | `confirm.reject_all` | Bulk-rejects all pending actionable files in one action. |
-| **`Enter`** | `nav.confirm` | Executes the active focused button. If the `open` button is focused, it launches the full-screen Detail Viewer. |
+| **`Enter`** | `nav.confirm` | Executes the active focused button. If the `open` button is focused, it launches the full-screen detail viewer. |
 | **`Esc`** | `nav.escape` | Saves your active review state, submits approvals/rejections back to the agent thread, and returns focus to the prompt box. |
 
-### Code files vs visual media
+### Code files and visual media
 
 To organize workspace assets, the picker separates files by format types:
 
-*   **Actionable Code Files**: Standard programming codes, configs, and plan markdowns that require explicit approvals.
-*   **Collapsible Media Drawer**: Visual asset files (such as PNG, JPG, WebP, SVG, MP4, or WebM media) are grouped into a dedicated **“Media”** drawer header.
+*   **Actionable code files**: Standard programming code, configuration files, and plan Markdown files that require explicit approvals.
+*   **Collapsible media drawer**: Visual asset files (such as PNG, JPG, WebP, SVG, MP4, or WebM media) are grouped into a dedicated **Media** drawer header. Use the following actions to interact with media items:
     *   Highlight the **Media** header row and press `Enter` to expand or collapse the drawer list.
     *   Highlight a specific media item and press `Enter` to open the file inside your operating system’s native media viewer.
 
@@ -135,15 +135,17 @@ implementation_plan.md
   l hide lines · esc close
 ```
 
-### Auditing & navigation
+### Auditing and navigation
+
+Use the following keyboard shortcuts to navigate the detail viewer:
 
 *   **Scrolling**: Scroll page-by-page or line-by-line using `j`/`k` (or standard arrow keys).
-*   **Boundary Jump**: Press `g` to jump to the top of the file, and `Shift+G` to jump directly to the bottom.
-*   **Toggle Gutter**: Press `l` to toggle the line number gutter on and off for a cleaner presentation of the raw code.
+*   **Boundary jump**: Press `g` to jump to the top of the file, and `Shift+G` to jump directly to the bottom.
+*   **Toggle gutter**: Press `l` to toggle the line number gutter on and off for a cleaner presentation of the raw code.
 
 ### Granular line commenting
 
-If a specific block of code requires correction:
+If a specific block of code requires correction, follow these steps:
 
 1.  Navigate and position your cursor on the target line.
 2.  Press `c` to open an inline, multi-line text editor buffer attached directly to that line.
@@ -152,20 +154,20 @@ If a specific block of code requires correction:
 
 ### Custom Mermaid diagram rendering
 
-If the active document contains structured system flowcharts, database relationships, or architectural layouts:
+If the active document contains structured system flowcharts, database relationships, or architectural layouts, use the following controls:
 
-*   **Cycle Render Modes (`m`)**: Press `m` to cycle visual rendering modes:
-    *   **Kitty Graphics Image**: Renders diagrams natively as inline graphics within Kitty-compatible terminal emulators.
-    *   **ASCII Box Art** (Default): Renders diagrams as clean, high-performance text art compatible with all shells.
-    *   **Raw Code**: Shows the raw markdown code block fences.
-*   **Zooming Graphics**: When Kitty graphics image mode is active, press `ctrl+=` to zoom in and scale up the image, and `ctrl+-` to zoom out.
+*   **Cycle render modes (`m`)**: Press `m` to cycle through the following visual rendering modes:
+    *   **Kitty graphics image**: Renders diagrams natively as inline graphics within Kitty-compatible terminal emulators.
+    *   **ASCII box art** (default): Renders diagrams as clean, high-performance text art compatible with all shells.
+    *   **Raw code**: Shows the raw Markdown code block fences.
+*   **Zooming graphics**: When Kitty graphics image mode is active, press `ctrl+=` to zoom in and scale up the image, and `ctrl+-` to zoom out.
 
-Press `Esc` to close the Detail Viewer and return back to the primary picker checklist.
+Press `Esc` to close the detail viewer and return to the primary picker checklist.
 
 ## Next steps
 
 Configure settings preferences and review agent autonomy parameters:
 
-*   **[Managing Conversations](./conversations.md)**: Resume prior sessions and fork branches.
-*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and visual buffers.
-*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Configure security parameters and containment lists.
+*   **[Managing conversations](./conversations.md)**: Resume prior sessions and fork branches.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and visual buffers.
+*   **[Permissions and sandbox](https://antigravity.google/docs/cli/sandbox)**: Configure security parameters and containment lists.

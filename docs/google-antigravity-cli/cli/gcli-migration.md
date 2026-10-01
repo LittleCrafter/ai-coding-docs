@@ -10,17 +10,17 @@ Antigravity CLI preserves backward compatibility with the core developer-experie
 
 When you execute `agy` for the first time in an environment containing legacy configurations, the CLI automatically detects your existing profiles. An interactive checklist prompts you to choose which assets to migrate:
 
-1.  **Auto-conversion**: Select the extensions and global configurations you wish to convert.
+1.  **Auto-conversion**: Select the extensions and global configurations you want to convert.
 2.  **Keyring storage**: The CLI migrates your active session tokens securely into your operating system’s native keyring storage.
 3.  **Settings alignment**: Default visual parameters and rendering buffers map automatically to your new settings profile.
 
 Note
 
-**Partial Parity**: While we preserve support for workspace skills, rules, and MCP servers, certain customized terminal themes or experimental visual overlays from Gemini CLI may not be supported.
+**Partial parity**: While Antigravity CLI preserves support for workspace skills, rules, and MCP servers, certain customized terminal themes or experimental visual overlays from Gemini CLI might not be supported.
 
 ## Converting extensions to plugins
 
-Since Gemini CLI launched, the industry has standardized on the term **plugins**. You can manually convert your legacy Gemini extensions to native Antigravity plugins by executing:
+Since Gemini CLI launched, the industry has standardized on the term **plugins**. You can manually convert your legacy Gemini extensions to native Antigravity plugins by executing the following command:
 
 ```
 agy plugin import gemini
@@ -45,7 +45,7 @@ This utility searches your legacy local directories, parses your extension manif
 
 ## Context files and workspace rules
 
-Both CLI platforms utilize identical workspace context rules. No modifications are needed to your existing rule documents:
+Both CLI platforms use identical workspace context rules. No modifications are needed to your existing rule documents:
 
 *   **Workspace local context**: The agent continues to parse and enforce rule constraints defined inside your active directory’s `GEMINI.md` and `AGENTS.md` files.
 *   **Global developer context**: The agent automatically consults and enforces your global constraints located at `~/.gemini/GEMINI.md`.
@@ -61,7 +61,7 @@ While global shared skills remain in your user home directory, the target folder
 
 Note
 
-**Action Required**: If your project contains custom workspace skills defined in `.gemini/skills/`, you must manually rename or relocate the folder to `.agents/skills/` for the Antigravity agent to recognize them as active slash commands.
+**Action required**: If your project contains custom workspace skills defined in `.gemini/skills/`, you must manually rename or relocate the folder to `.agents/skills/` for the Antigravity agent to recognize them as active slash commands.
 
 ## MCP config formatting changes
 
@@ -69,14 +69,16 @@ Antigravity CLI separates Model Context Protocol servers into dedicated, lightwe
 
 ### Directory mapping
 
-*   **Legacy Gemini Config**: Servers were declared inline within `~/.gemini/settings.json`.
-*   **Antigravity CLI Config**: Servers are defined inside a standalone `mcp_config.json` profile:
-    *   Global servers: `~/.gemini/config/mcp_config.json`
-    *   Workspace servers: `.agents/mcp_config.json`
+The following paths compare the legacy and current MCP configuration files:
+
+*   **Legacy Gemini config**: Servers were declared inline within `~/.gemini/settings.json`.
+*   **Antigravity CLI config**: Servers are defined inside a standalone `mcp_config.json` profile:
+    *   **Global servers**: `~/.gemini/config/mcp_config.json`
+    *   **Workspace servers**: `.agents/mcp_config.json`
 
 ### Required schema updates
 
-When manually migrating remote websocket or SSE server definitions, update the URI key parameter to match the current standard:
+When manually migrating remote WebSocket or SSE server definitions, update the URI key parameter to match the current standard:
 
 *   **Legacy schema keys**: `url` or `httpUrl`
 *   **Modern schema key**: `serverUrl`
@@ -98,6 +100,6 @@ When manually migrating remote websocket or SSE server definitions, update the U
 
 Begin configuring your new visual parameters and troubleshooting any setup anomalies:
 
-*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys, themes, and screen buffers.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys, themes, and screen buffers.
 *   **[Troubleshooting](./troubleshooting.md)**: Learn how to resolve authentication lockouts or path issues.
-*   **[CLI Reference](./reference.md)**: Access standard parameters lists and slash command mappings.
+*   **[CLI reference](./reference.md)**: Access standard parameter lists and slash command mappings.

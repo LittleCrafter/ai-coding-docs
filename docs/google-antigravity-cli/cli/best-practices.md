@@ -6,10 +6,10 @@ Master the workflows, prompt architectures, and local configuration choices to m
 
 The single most effective way to ensure reliable, correct modifications from an autonomous agent is to provide the agent with a local verification mechanism (such as unit tests, build commands, or formatting scripts).
 
-Before asking the agent to implement a code change:
+Before asking the agent to implement a code change, follow these steps:
 
 1.  Ensure your workspace directory has a test suite ready.
-2.  If tests do not exist, direct the agent to write a standard test block _first_.
+2.  If tests don’t exist, direct the agent to write a standard test block _first_.
 3.  Once the agent proposes code, instruct it to run the local test command to verify its work.
 4.  Watch the agent execute the command and iterate on the test outputs automatically.
 
@@ -19,10 +19,10 @@ Before asking the agent to implement a code change:
 
 ## Explore, plan, then execute
 
-Autonomous local agents operate with highest accuracy when complex changes are partitioned into distinct exploration, planning, and execution phases.
+Autonomous local agents operate with the highest accuracy when complex changes are partitioned into distinct exploration, planning, and execution phases:
 
 *   **Exploration**: Ask the agent to explain how the target codebase resolves a particular problem or where an interface is defined before writing any changes.
-*   **Planning**: Request an implementation plan. The agent will list targeted files, required dependencies, and logic overrides in an implementation plan artifact.
+*   **Planning**: Request an implementation plan. The agent lists targeted files, required dependencies, and logic overrides in an implementation plan artifact.
 *   **Execution**: Once you approve the structured plan, direct the agent to apply the edits.
 
 ```
@@ -39,7 +39,7 @@ Type `@` within your prompt box to trigger the **Interactive Path Suggestion** o
 
 ### Attaching visual evidence
 
-If debugging visual UI issues, rendering bugs, or frontend layout inconsistencies, capture a screenshot or video recording, copy it, and press `ctrl+v` inside the prompt box to attach it. The agent will consult the media file to diagnose the issue.
+If you’re debugging visual UI issues, rendering bugs, or frontend layout inconsistencies, capture a screenshot or video recording, copy it, and press `ctrl+v` inside the prompt box to attach it. The agent consults the media file to diagnose the issue.
 
 ## Configure your workspace environment
 
@@ -53,7 +53,7 @@ Create a `GEMINI.md` or `AGENTS.md` file at your workspace root to outline speci
 
 Tune your safety barriers in `~/.gemini/antigravity-cli/settings.json` based on your project risk level:
 
-*   **`request-review`** (Default): Prompts you before executing any write operations, bash commands, or remote network calls.
+*   **`request-review`** (default): Prompts you before executing any write operations, Bash commands, or remote network calls.
 *   **`proceed-in-sandbox`**: Restricts all terminal executions to a secure sandbox containment ring. Safe commands execute autonomously, while risky commands prompt for reviews.
 *   **`strict`**: Always prompts for all non-read operations, providing complete line-by-line transparency.
 
@@ -74,11 +74,11 @@ If you watch an agent execute an incorrect search pattern or write code that dev
 
 ### Rewind history with `/rewind`
 
-If an agent has made several successive changes that introduce build errors, you do not need to discard the session. Type `/rewind` (or `/undo`) to roll back your conversation thread to a previous stable checkout.
+If an agent has made several successive changes that introduce build errors, you don’t need to discard the session. Type `/rewind` (or `/undo`) to roll back your conversation thread to a previous stable checkout.
 
 ### Branch experiments with `/fork`
 
-If you are unsure of the best implementation path:
+If you’re unsure of the best implementation path, follow these steps:
 
 1.  Reach a stable baseline thread.
 2.  Type `/fork` to spin up a duplicate parallel session.
@@ -91,7 +91,7 @@ Antigravity CLI is designed to operate seamlessly within standard shell pipeline
 
 ### Run non-interactive commands (`-p`)
 
-To automate quick queries or integrate agents into git hooks, use the one-shot prompt flag `-p`:
+To automate quick queries or integrate agents into Git hooks, use the one-shot prompt flag `-p`:
 
 ```
 agy -p "Review this git diff and draft a conventional commit message" --cwd $(pwd)
@@ -105,6 +105,6 @@ For large-scale sweeps or multi-file refactoring, direct the primary agent to sp
 
 Learn how to configure settings and customize visual layouts:
 
-*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
-*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Enforce filesystem containment.
-*   **[Plugins & Skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom slash commands.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions and sandbox](https://antigravity.google/docs/cli/sandbox)**: Enforce filesystem containment.
+*   **[Plugins and skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom slash commands.

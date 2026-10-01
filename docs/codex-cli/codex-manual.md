@@ -395,6 +395,12 @@ app's built-in browser.
 
 Source: [Use ChatGPT](./use-chatgpt.md)
 
+import {
+Chat,
+OpenBook,
+Settings,
+} from "@components/react/icons/openai/index.react";
+
 {/_ vale alex.Condescending = NO _/}
 
 #### Go from idea to useful result
@@ -2251,6 +2257,11 @@ efficiently](./prompting.md#use-work-efficiently).
 ### Quickstart
 
 Source: [Quickstart](./quickstart.md)
+
+import {
+CompareArrows,
+OpenBook,
+} from "@components/react/icons/openai/index.react";
 
 #### Where to use ChatGPT
 

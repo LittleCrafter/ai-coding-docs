@@ -4,7 +4,7 @@ Resume prior development threads, scope active histories to local workspaces, an
 
 ## Workspace scoping
 
-To maintain context hygiene, Antigravity CLI scopes conversation histories directly to your current working directory. When you launch `agy` from a specific directory, the agent only displays and resume sessions associated with that specific local repository or subdirectory.
+To maintain context hygiene, Antigravity CLI scopes conversation histories directly to your current working directory. When you launch `agy` from a specific directory, the agent only displays and resumes sessions associated with that specific local repository or subdirectory.
 
 This prevents context pollution, ensuring that the agent’s semantic memory and token limits remain focused solely on the relevant codebase.
 
@@ -14,11 +14,11 @@ You can return to a prior conversation at any time to continue an implementation
 
 Antigravity CLI supports both an interactive **Session Picker** TUI overlay and direct command-line flags (`agy -c` / `agy --continue`) to resume threads instantly based on your active workspace.
 
-For a complete walkthrough of the interactive picker, keyboard shortcuts, and details on how the directory-scoped session cache works, see the dedicated **[Resume Command Guide](./commands/resume.md)**.
+For a complete walkthrough of the interactive picker, keyboard shortcuts, and details on how the directory-scoped session cache works, refer to the dedicated **[Resume command guide](./commands/resume.md)**.
 
 ## Branching with `/fork`
 
-When engineering a complex feature, you may want to explore multiple design alternatives without losing your progress. The `/fork` command enables safe, parallel experimentation.
+When engineering a complex feature, you might want to explore multiple design alternatives without losing your progress. The `/fork` command enables safe, parallel experimentation.
 
 ```
 /fork
@@ -30,6 +30,8 @@ The `/fork` command clones your entire conversation history up to the current tu
 
 ### Forking workflow
 
+To fork an active conversation into a new branch, follow these steps:
+
 1.  Type `/fork` inside the prompt panel and press `Enter`.
 2.  The CLI allocates a new unique session ID and duplicates your existing workspace state and agent thread.
 3.  Your active terminal switches immediately to the new branch.
@@ -37,12 +39,12 @@ The `/fork` command clones your entire conversation history up to the current tu
 
 Note
 
-**Branching Filesystems**: Forking clones the _conversation thread_, not your local git checkout. To fully isolate files during parallel forks, use git branches or stash local changes before testing contrasting approaches.
+**Branching filesystems**: Forking clones the _conversation thread_, not your local Git checkout. To fully isolate files during parallel forks, use Git branches or stash local changes before testing contrasting approaches.
 
 ## Next steps
 
 Explore how the agent handles complex, asynchronous operations and parallel tasks:
 
-*   **[Background Tasks & Subagents](https://antigravity.google/docs/cli/subagents)**: Monitor subagents and handle fast-path approvals.
-*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Configure rendering buffers and override JSON preferences.
-*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage security profiles and system command lists.
+*   **[Background tasks and subagents](https://antigravity.google/docs/cli/subagents)**: Monitor subagents and handle fast-path approvals.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Configure rendering buffers and override JSON preferences.
+*   **[Permissions and sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage security profiles and system command lists.

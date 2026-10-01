@@ -1,14 +1,16 @@
-# Antigravity CLI Tutorial
+# Antigravity CLI tutorial
 
 Learn how to launch Antigravity CLI, collaborate with an autonomous local agent, review generated files, and execute terminal test commands.
 
 ## Overview
 
-This guide walks you through a rapid onboarding exercise. You will direct an autonomous agent to create a Python utility script, review the changes, and verify its execution.
+This guide walks you through a rapid onboarding exercise. In this exercise, you direct an autonomous agent to create a Python utility script, review the changes, and verify its execution.
 
 ## Step-by-step
 
-1.  **Create a clean project directory and launch the Antigravity TUI**
+Follow these steps to create and verify a Python script with the agent:
+
+1.  **Create a clean project directory and launch the Antigravity TUI**:
     
     ```
     mkdir agy-demo && cd agy-demo
@@ -17,9 +19,9 @@ This guide walks you through a rapid onboarding exercise. You will direct an aut
     
     Note
     
-    **First Launch**: If running `agy` for the first time, follow the terminal instructions to complete silent authentication. See [Installation & Auth](./install.md) for troubleshooting details.
+    **First launch**: If you’re running `agy` for the first time, follow the terminal instructions to complete silent authentication. Refer to [Installation and auth](./install.md) for troubleshooting details.
     
-2.  **Prompt the agent to generate a Python scraping script**
+2.  **Prompt the agent to generate a Python scraping script**:
     
     Type the following instruction in the prompt box at the bottom of your screen and press Enter:
     
@@ -27,17 +29,17 @@ This guide walks you through a rapid onboarding exercise. You will direct an aut
     Write a simple python script to fetch web page text
     ```
     
-    The agent reads the workspace, determines that no files exist, and formulates a plan to create a script. You will see real-time updates as the agent performs reasoning and schedules actions.
+    The agent reads the workspace, determines that no files exist, and formulates a plan to create a script. You receive real-time updates as the agent performs reasoning and schedules actions.
     
-3.  **Open the artifact review screen to inspect the proposed code**
+3.  **Open the artifact review screen to inspect the proposed code**:
     
-    Once the agent finishes generating the file, a notification appears. Press Ctrl + R to enter the **Artifact Review** screen.
+    Once the agent finishes generating the file, a notification appears. Press Ctrl + R to enter the **Artifact Review** screen and complete the review:
     
     *   Navigate to the newly created `main.py` using ↑/↓.
     *   Review the complete file content and diff.
     *   Press Y to approve the creation of `main.py`.
     *   Press Esc to close the review panel and return to the primary prompt.
-4.  **Execute a test command with the agent to verify the output**
+4.  **Execute a test command with the agent to verify the output**:
     
     Direct the agent to run the Python script to verify its behavior. Type the following command in the prompt box and press Enter:
     
@@ -47,15 +49,15 @@ This guide walks you through a rapid onboarding exercise. You will direct an aut
     
     The agent proposes to run `python3 main.py`. Press Y to confirm and execute the command. The agent runs the script locally and streams the standard output directly into your terminal screen.
     
-5.  **Exit the Antigravity session**
+5.  **Exit the Antigravity session**:
     
     Once you complete your task, press Ctrl + D (or type `/exit`) in the prompt box to close the TUI and restore your original shell session.
     
 
 ## Next steps
 
-Now that you have executed your first agent-assisted workflow, learn how to configure the CLI and master core concepts:
+Now that you’ve executed your first agent-assisted workflow, learn how to configure the CLI and master core concepts:
 
-*   **[Installation & Auth](./install.md)**: Detailed instructions on installing `agy` and setting up SSH profiles.
-*   **[Prompting & Interaction](./prompting.md)**: Best practices for multiline inputs, pasting media files, and active interrupt controls.
-*   **[Reviewing Artifacts](./artifacts.md)**: Deep dive into the “Trust through Transparency” architectural pattern.
+*   **[Installation and auth](./install.md)**: Detailed instructions on installing `agy` and setting up SSH profiles.
+*   **[Prompting and interaction](./prompting.md)**: Best practices for multiline inputs, pasting media files, and active interrupt controls.
+*   **[Reviewing artifacts](./artifacts.md)**: Deep dive into the artifact review workflow.

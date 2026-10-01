@@ -1,4 +1,4 @@
-# Model Quotas (/usage)
+# Model quotas (/usage)
 
 View your active model quota usage and refresh your configuration.
 
@@ -8,7 +8,7 @@ Antigravity CLI provides the `/usage` command (alias `/quota`) to help you monit
 
 ## Viewing your usage
 
-To open the Model Quotas panel:
+To open the **Model Quotas** panel, follow these steps:
 
 1.  Type `/usage` (or `/quota`) in the prompt box.
 2.  Press Enter.
@@ -19,14 +19,14 @@ To open the Model Quotas panel:
 
 ![Quota & Credits TUI](../../assets/image/docs/cli/usage-tui.png)
 
-### Interactive Panel Features
+### Interactive panel features
 
-The panel displays:
+The panel displays the following details:
 
-*   **Model Quotas**: A breakdown of your usage limits and remaining requests/tokens for each supported model (e.g., Gemini 3.5 Flash, Gemini 3.1 Pro).
-*   **Active Refresh**: The CLI automatically triggers a fresh check of your quotas on disk and from the backend service when you open this panel.
+*   **Model quotas**: A breakdown of your usage limits and remaining requests/tokens for each supported model (such as Gemini 3.5 Flash and Gemini 3.1 Pro).
+*   **Active refresh**: The CLI automatically triggers a fresh check of your quotas on disk and from the backend service when you open this panel.
 
-### Navigation Controls
+### Navigation controls
 
 Use the following keyboard shortcuts to navigate the panel:
 
@@ -39,5 +39,7 @@ Use the following keyboard shortcuts to navigate the panel:
 
 ## Next steps
 
-*   **[CLI Reference](../reference.md)**: See all available slash commands and keybindings.
-*   **[Settings & Rendering](https://antigravity.google/docs/cli/settings)**: Configure your default models and credit usage preferences.
+Explore the following guides to learn more about CLI commands and settings:
+
+*   **[CLI reference](../reference.md)**: View all available slash commands and keybindings.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Configure your default models and credit usage preferences.

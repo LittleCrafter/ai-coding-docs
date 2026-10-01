@@ -1,10 +1,10 @@
-# Installation & auth
+# Installation and auth
 
 Install Antigravity CLI, configure enterprise requirements, and establish secure authenticated sessions.
 
 ## Installation
 
-Antigravity CLI runs natively on macOS, Linux, and Windows. Use the platform-specific scripts below to install or upgrade the binary on your system.
+Antigravity CLI runs natively on macOS, Linux, and Windows. Use the following platform-specific scripts to install or upgrade the binary on your system.
 
 ### macOS and Linux
 
@@ -24,7 +24,7 @@ The installation script registers the `agy` binary to your local user directory:
 irm https://antigravity.google/cli/install.ps1 | iex
 ```
 
-**CMD**: Open a standard Command Prompt and execute:
+**CMD**: Open a standard Command Prompt and execute the following command:
 
 ```
 curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd && install.cmd && del install.cmd
@@ -43,16 +43,16 @@ Antigravity CLI uses secure credentials and token profiles to communicate with t
 
 ### Local silent keyring sign-in
 
-When launching `agy` on your local machine, the CLI attempts to access your operating system’s native secure keyring (such as Apple Keychain, Linux Secret Service/dbus, or Windows Credential Manager). If a valid token profile is found, the CLI authenticates your session silently without opening a browser.
+When launching `agy` on your local machine, the CLI attempts to access your operating system’s native secure keyring (such as Apple Keychain, Linux Secret Service/D-Bus, or Windows Credential Manager). If a valid token profile is found, the CLI authenticates your session silently without opening a browser.
 
-If no saved session is found:
+If no saved session is found, complete the sign-in flow:
 
 1.  The CLI automatically launches your local default web browser.
 2.  Sign in using your approved account credentials.
 
 ### Remote SSH OAuth flow
 
-When running over SSH, the CLI detects the remote connection environment. Because it cannot launch a local web browser, the CLI initiates a manual URL loop:
+When running over SSH, the CLI detects the remote connection environment. Because it can’t launch a local web browser, the CLI initiates a manual URL loop:
 
 1.  Launch `agy` in your remote terminal session.
 2.  The CLI detects the SSH environment and prints a unique, secure authorization URL.
@@ -65,9 +65,11 @@ When running over SSH, the CLI detects the remote connection environment. Becaus
 
 Run Antigravity CLI with your own Gemini API key instead of a signed-in Google account. Model requests go directly to the Gemini API, and the CLI never establishes an account session. This suits headless and CI runs, where no browser is available to complete a sign-in. Create a key in [Google AI Studio](https://aistudio.google.com/app/api-keys).
 
-To use a Gemini API key, you have to set a provider and an environment variable with the API key. Only setting a `GEMINI_API_KEY` environment variable on its own has no effect.
+To use a Gemini API key, you must set a provider and an environment variable with the API key. Setting a `GEMINI_API_KEY` environment variable on its own has no effect.
 
 ### Enable the Gemini API key
+
+To enable authentication with a Gemini API key, follow these steps:
 
 1.  Set `modelProvider` to `gemini` in `~/.gemini/antigravity-cli/settings.json`:
     
@@ -96,7 +98,7 @@ The CLI skips the sign-in screen and opens the main interface directly. The head
 
 ![Antigravity CLI authenticated with a Gemini API key, with "Gemini API key" shown in the header in place of an account email](../assets/image/docs/cli/install-gemini-api-key.png)
 
-> **Note:** When you use the authentication with a `GEMINI_API_KEY`, `/logout` has no effect because there is no stored session to clear.
+> **Note:** When you authenticate with a `GEMINI_API_KEY`, `/logout` has no effect because there is no stored session to clear.
 
 ### Point the CLI to a custom endpoint
 
@@ -108,12 +110,12 @@ export GOOGLE_GEMINI_BASE_URL="https://your-endpoint.example.com"
 
 ### Revert to default authentication
 
-If you want to revert back to using the default account based authentication:
+If you want to revert to using the default account-based authentication, follow these steps:
 
 1.  Remove `modelProvider` from `~/.gemini/antigravity-cli/settings.json`.
 2.  Restart the CLI to sign in to your account.
 
-> **Note:** The CLI cannot start if you unset the `GEMINI_API_KEY` environment variable, but still have the `modelProvider` set to `gemini`.
+> **Note:** The CLI can’t start if you unset the `GEMINI_API_KEY` environment variable while `modelProvider` is still set to `gemini`.
 
 ### Troubleshooting
 
@@ -141,5 +143,5 @@ To disconnect your account and purge saved authentication profiles from your ope
 Once you complete installation and authentication, start interacting with your local agent:
 
 *   **[Tutorial](./tutorial.md)**: Create and run a basic Python project with an agent.
-*   **[Prompting & Interaction](./prompting.md)**: Explore multiline text editing, interrupt commands, and terminal media pasting.
-*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Configure secure filesystem directories and command limits.
+*   **[Prompting and interaction](./prompting.md)**: Explore multiline text editing, interrupt commands, and terminal media pasting.
+*   **[Permissions and sandbox](https://antigravity.google/docs/cli/sandbox)**: Configure secure filesystem directories and command limits.

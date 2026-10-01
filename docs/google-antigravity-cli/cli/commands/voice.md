@@ -1,4 +1,4 @@
-# Voice Dictation (/voice)
+# Voice dictation (/voice)
 
 Speak your prompt instead of typing it.
 
@@ -6,11 +6,11 @@ Speak your prompt instead of typing it.
 
 The `/voice` command (alias `/record`) records audio from your microphone and streams real-time transcripts directly into the prompt box as you speak. You can also start dictation at any time using the F5 key.
 
-Voice dictation writes text into the prompt box; it does not automatically submit your prompt. When you stop recording, the transcript remains in the prompt box exactly as if you had typed it, allowing you to edit, expand, and submit the text when you are ready.
+Voice dictation writes text into the prompt box; it doesn’t automatically submit your prompt. When you stop recording, the transcript remains in the prompt box as if you had typed it, allowing you to edit, expand, and submit the text when you’re ready.
 
 Caution
 
-**Sign out and sign back in first.** Voice dictation requires an updated authentication permission granted at sign-in. If your active session was authenticated before voice dictation became available, transcription will fail. Run `/logout`, sign in again, and retry. This is a one-time setup step.
+**Sign out and sign back in first**: Voice dictation requires an updated authentication permission granted at sign-in. If your active session was authenticated before voice dictation became available, transcription fails. Run `/logout`, sign in again, and retry. This is a one-time setup step.
 
 ## Dictating a prompt
 
@@ -41,14 +41,14 @@ If the prompt box already contained text before starting dictation, the transcri
 
 Note
 
-The F5 key is remappable. Use [`/keybindings`](../reference.md#default-keybindings) to bind `voice.start_dictation` to a different shortcut; the on-screen hint will automatically update to reflect your custom keybinding.
+The F5 key is remappable. Use [`/keybindings`](../reference.md#default-keybindings) to bind `voice.start_dictation` to a different shortcut; the on-screen hint automatically updates to reflect your custom keybinding.
 
 ### Availability
 
 Voice dictation is subject to the following operating constraints:
 
 *   Dictation requires an interactive TUI session and is disabled in non-interactive print mode (`--print`).
-*   Dictation is not currently supported for business or enterprise accounts.
+*   Dictation isn’t currently supported for business or enterprise accounts.
 
 ## Voice over SSH
 
@@ -56,7 +56,7 @@ When the CLI runs on a remote machine over Secure Shell (SSH), the remote enviro
 
 The Antigravity CLI must be installed on both your local machine and the remote host.
 
-### 1\. Serve your local microphone
+### Serve your local microphone
 
 Start the microphone server on your local machine:
 
@@ -74,9 +74,9 @@ agy mic-serve --addr 127.0.0.1:<UNUSED_PORT>
 
 Caution
 
-**Keep `mic-serve` on `127.0.0.1`**. The microphone server is intended for local connections forwarded through SSH tunnels. Keep it bound to loopback so external devices on your network cannot access the audio stream.
+**Keep `mic-serve` on `127.0.0.1`**: The microphone server is intended for local connections forwarded through SSH tunnels. Keep it bound to loopback so external devices on your network can’t access the audio stream.
 
-### 2\. Open a reverse tunnel
+### Open a reverse tunnel
 
 From your local machine, forward the local audio port to the remote machine by opening a reverse SSH tunnel:
 
@@ -90,7 +90,7 @@ The tunnel must remain active during dictation. To run the tunnel in the backgro
 ssh -f -N -R 24713:127.0.0.1:4713 <remote-machine>
 ```
 
-### 3\. Start the CLI with `ANTIGRAVITY_MIC`
+### Start the CLI with `ANTIGRAVITY_MIC`
 
 In your remote SSH session, launch the CLI with the `ANTIGRAVITY_MIC` environment variable set to the forwarded tunnel port. For example:
 
@@ -98,13 +98,13 @@ In your remote SSH session, launch the CLI with the `ANTIGRAVITY_MIC` environmen
 ANTIGRAVITY_MIC=127.0.0.1:24713 agy
 ```
 
-If you are using a Windows remote host and use PowerShell, set the environment variable and start the CLI:
+If you’re using a Windows remote host with PowerShell, set the environment variable and start the CLI:
 
 ```
 $env:ANTIGRAVITY_MIC = "127.0.0.1:24713"; agy
 ```
 
-Alternatively, if you are using a Windows remote host, but use Windows Command Prompt (`cmd.exe`):
+Alternatively, if you’re using a Windows remote host with Windows Command Prompt (`cmd.exe`), run the following command:
 
 ```
 set ANTIGRAVITY_MIC=127.0.0.1:24713 && agy
@@ -116,7 +116,7 @@ In the CLI, press F5 or use `/voice`, and speak into your microphone. The local 
 Recording for 127.0.0.1:54134.
 ```
 
-### 4\. Verify the tunnel connection
+### Verify the tunnel connection
 
 If no connection log appears in the `mic-serve` output when dictating, test whether the forwarded port is reachable by capturing a raw audio sample on the remote host. For example:
 
@@ -124,21 +124,25 @@ If no connection log appears in the `mic-serve` output when dictating, test whet
 timeout 5 nc 127.0.0.1 24713 > /tmp/mic.raw
 ```
 
-If `/tmp/mic.raw` accumulates data at approximately 32 kB/s, audio streaming across the reverse tunnel is operating correctly.
+If `/tmp/mic.raw` accumulates data at approximately 32 kB/s, audio streaming across the reverse tunnel is operating properly.
 
 ## Troubleshooting
 
-*   **Transcription fails with a permissions message**: Your stored credentials predate voice dictation support. Execute `/logout`, sign in again to refresh permissions, and retry. Note that voice dictation is not available for business or enterprise accounts.
+If you encounter issues with voice dictation, review the following solutions:
+
+*   **Transcription fails with a permissions message**: Your stored credentials predate voice dictation support. Execute `/logout`, sign in again to refresh permissions, and retry. Note that voice dictation isn’t available for business or enterprise accounts.
 *   **Nothing is transcribed and the recording is silent**: The active terminal process lacks operating system microphone permissions (the terminal running the CLI for local sessions, or the terminal running `agy mic-serve` for SSH sessions):
-    *   **macOS**: Approve the system permission dialog, or grant access under **System Settings → Privacy & Security → Microphone**. Restart your terminal using CmdQ to apply the updated permission.
-    *   **Windows**: Enable microphone access under **Settings → Privacy & Security → Microphone**, and ensure **Let desktop apps access your microphone** is enabled.
+    *   **macOS**: Approve the system permission dialog, or grant access under **System Settings** > **Privacy & Security** > **Microphone**. Restart your terminal using Cmd+Q to apply the updated permission.
+    *   **Windows**: Enable microphone access under **Settings** > **Privacy & Security** > **Microphone**, and ensure **Let desktop apps access your microphone** is enabled.
 *   **Connecting fails immediately over SSH**: No process is listening on the forwarded port. Verify that both `agy mic-serve` on your local machine and the `ssh -R` reverse tunnel are running.
 *   **Dictation reports that the microphone server closed the connection**: The server process terminated or the network tunnel dropped. Inspect the output of `agy mic-serve` on your local machine for detailed error diagnostics.
-*   **The wrong microphone is used**: `mic-serve` captures audio from the system default input device. Verify your default input hardware under **System Settings → Sound → Input** (macOS) or **Settings → System → Sound → Input** (Windows).
+*   **The wrong microphone is used**: `mic-serve` captures audio from the system default input device. Verify your default input hardware under **System Settings** > **Sound** > **Input** (macOS) or **Settings** > **System** > **Sound** > **Input** (Windows).
 *   **The transcript is choppy or drops words**: Audio is streamed uncompressed across the SSH tunnel; high latency or bandwidth saturation on the SSH connection can result in dropped audio packets.
 
 ## Next steps
 
-*   **[CLI Reference](../reference.md)**: See all available slash commands and keybindings.
-*   **[Prompting & Interaction](../prompting.md)**: Multiline editing, interrupts, and pasting media into the prompt.
-*   **[Installation & Auth](../install.md)**: Sign-in flows, including the remote SSH OAuth loop.
+Explore the following guides to learn more about CLI commands and interaction:
+
+*   **[CLI reference](../reference.md)**: View all available slash commands and keybindings.
+*   **[Prompting and interaction](../prompting.md)**: Multiline editing, interrupts, and pasting media into the prompt.
+*   **[Installation and auth](../install.md)**: Sign-in flows, including the remote SSH OAuth loop.

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "1.18.33",
-  "last_updated": "2026-09-30T02:33:25Z",
+  "version": "1.18.34",
+  "last_updated": "2026-10-01T02:35:26Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -365,8 +365,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-09-30T02:33:25Z",
-    "fetch_duration_seconds": 12.264,
+    "last_fetch_completed": "2026-10-01T02:35:26Z",
+    "fetch_duration_seconds": 12.354,
     "total_pages_discovered": 36,
     "pages_fetched_successfully": 36,
     "pages_failed": 0,

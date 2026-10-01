@@ -18,16 +18,13 @@ Vim editor mode is off by default. Turn it on from the interactive settings pane
 
 ### Using the settings panel
 
+To enable Vim editor mode in the settings panel, follow these steps:
+
 1.  Type `/settings` inside the prompt panel and press `Enter`.
-    
 2.  Navigate to **Editor Mode** using `↑`/`↓`.
-    
 3.  Press `Enter` to select `vim`.
-    
-4.  Set **Editor Mode › Insert First** to choose which mode each prompt starts in. Leave it `off` to start in Normal mode, or set it `on` to start in Insert mode with a bare `Enter` that submits. See [Start in Insert mode](#start-in-insert-mode).
-    
+4.  Set **Editor Mode** > **Insert First** to choose which mode each prompt starts in. Leave it `off` to start in Normal mode, or set it `on` to start in Insert mode with a bare `Enter` that submits. Refer to [Start in insert mode](#start-in-insert-mode).
 5.  Press `Esc` to save and close the editor.
-    
 
 ### Using `settings.json`
 
@@ -40,7 +37,7 @@ Set `editorMode` in your configuration profile:
 }
 ```
 
-The CLI loads this file from `~/.gemini/antigravity-cli/settings.json` at startup. `editorMode` accepts `"default"` and `"vim"`. `vimInsertFirst` controls which mode each new prompt starts in and applies only when `editorMode` is `"vim"`; see [Start in Insert mode](#start-in-insert-mode).
+The CLI loads this file from `~/.gemini/antigravity-cli/settings.json` at startup. `editorMode` accepts `"default"` and `"vim"`. `vimInsertFirst` controls which mode each new prompt starts in and applies only when `editorMode` is `"vim"`; refer to [Start in insert mode](#start-in-insert-mode).
 
 > **Note:** `editorMode` is unrelated to the [`editor` setting](https://antigravity.google/docs/cli/settings). `editor` picks the external program that `Ctrl+G` launches, so setting `editor` to `"vim"` opens Vim in a separate window and does nothing to the prompt. `editorMode` is the one that controls modal editing inside the CLI prompt itself.
 
@@ -69,7 +66,7 @@ The status line reports the current mode:
 | VISUAL | `-- VISUAL --` |
 | VISUAL LINE | `-- V-LINE --` |
 
-An empty badge area means you are in NORMAL mode. If you run a [custom status line](#show-the-mode-in-a-custom-status-line), it replaces this badge unless you stack it with the default.
+An empty badge area means you’re in NORMAL mode. If you run a [custom status line](#show-the-mode-in-a-custom-status-line), it replaces this badge unless you stack it with the default.
 
 > **Tip:** Press `?` in NORMAL mode to open the shortcuts overlay, or run `/help` and select the `vim` tab for a full cheat sheet.
 
@@ -85,7 +82,7 @@ Enter behaves differently in each mode, so you can compose multi-line prompts wi
 
 `ZZ` submits from NORMAL and VISUAL mode, matching the muscle memory of writing and quitting a buffer.
 
-### Start in Insert mode
+### Start in insert mode
 
 Set `vimInsertFirst` when you want each new prompt to begin in INSERT mode with a bare `Enter` that submits. This keeps the default typing experience while leaving NORMAL mode one `Esc` away.
 
@@ -96,7 +93,7 @@ Set `vimInsertFirst` when you want each new prompt to begin in INSERT mode with 
 }
 ```
 
-The **Editor Mode › Insert First** option appears in `/settings` only when Editor Mode is set to `vim`. It has no effect in default mode.
+The **Editor Mode** > **Insert First** option appears in `/settings` only when **Editor Mode** is set to `vim`. It has no effect in default mode.
 
 ## Move the cursor
 
@@ -213,7 +210,7 @@ Three Vim actions are remappable in `~/.gemini/antigravity-cli/keybindings.json`
 }
 ```
 
-Motions, operators, and text objects are fixed and cannot be remapped.
+Motions, operators, and text objects are fixed and can’t be remapped.
 
 ### Submit with Enter in NORMAL mode only
 
@@ -281,6 +278,8 @@ echo "$input" | jq -r '.model.display_name'
 
 ## Next steps
 
-*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Configure the rest of your preferences and remap keys.
-*   **[Status Line Customization](./statusline.md)**: Control what the status line reports alongside the Vim mode badge.
-*   **[CLI Reference](./reference.md)**: Look up every configuration key and default keybinding.
+Explore the following guides to further customize your editing experience:
+
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Configure the rest of your preferences and remap keys.
+*   **[Status line customization](./statusline.md)**: Control what the status line reports alongside the Vim mode badge.
+*   **[CLI reference](./reference.md)**: Look up every configuration key and default keybinding.

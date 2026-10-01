@@ -1,4 +1,4 @@
-# Resume Command (/resume)
+# Resume command (/resume)
 
 Browse, search, and resume past conversation threads, or recover your last session instantly from the command line.
 
@@ -8,9 +8,9 @@ Antigravity CLI allows you to maintain multiple ongoing development threads. The
 
 * * *
 
-## Interactive Session Picker
+## Interactive session picker
 
-To open the Session Picker inside the TUI:
+To open the **Session Picker** inside the TUI, follow these steps:
 
 1.  Type `/resume` (or aliases `/switch`, `/conversation`) in the prompt box.
 2.  Press Enter.
@@ -19,9 +19,9 @@ To open the Session Picker inside the TUI:
 /resume
 ```
 
-### 1\. Navigating and Searching Conversations
+### Navigating and searching conversations
 
-The Session Picker displays a list of past conversations sorted by recency (newest first).
+The **Session Picker** displays a list of past conversations sorted by recency (newest first). Use the following controls to interact with the list:
 
 *   **Search**: Start typing to instantly filter conversations by their title, preview text, or unique ID.
 *   **Navigate**: Use ↑/↓ to scroll through the filtered list.
@@ -31,7 +31,7 @@ The Session Picker displays a list of past conversations sorted by recency (newe
 
 ![Navigating Conversations](../../assets/image/docs/cli/resume-navigate.png)
 
-### 2\. Renaming a Conversation
+### Renaming a conversation
 
 To keep your history organized, you can rename conversations directly within the picker:
 
@@ -41,9 +41,9 @@ To keep your history organized, you can rename conversations directly within the
 
 ![Renaming a Conversation](../../assets/image/docs/cli/resume-rename.png)
 
-### 3\. Deleting a Conversation
+### Deleting a conversation
 
-To clean up obsolete threads:
+To clean up obsolete threads, follow these steps:
 
 1.  Highlight the target conversation in the list.
 2.  Press Ctrl + Delete. A confirmation prompt appears.
@@ -51,12 +51,12 @@ To clean up obsolete threads:
 
 ![Deleting a Conversation](../../assets/image/docs/cli/resume-delete.png)
 
-### 4\. Importing from Antigravity 2.0
+### Importing from Antigravity 2.0
 
 You can import and resume active threads initiated in the Antigravity 2.0 desktop application:
 
-1.  With the Session Picker open, press Tab to switch from the **CLI** tab to the **Antigravity** tab.
-2.  Highlight the desktop conversation you wish to import.
+1.  With the **Session Picker** open, press Tab to switch from the **CLI** tab to the **Antigravity** tab.
+2.  Highlight the desktop conversation you want to import.
 3.  Press Enter. A confirmation prompt `[Import this? (y/n)]` appears.
 4.  Press Enter (or Y) to confirm. The CLI clones the history, context, and tool trajectories into your terminal session.
 
@@ -64,13 +64,13 @@ You can import and resume active threads initiated in the Antigravity 2.0 deskto
 
 * * *
 
-## Command-Line Shortcuts
+## Command-line shortcuts
 
 You can bypass the TUI picker and resume sessions directly when launching `agy` from your host shell.
 
-### Quick Resume Last Session (`-c` / `--continue`)
+### Quick resume last session (`-c` / `--continue`)
 
-To instantly resume the single most recent conversation associated with your active workspace:
+To instantly resume the single most recent conversation associated with your active workspace, run the following command:
 
 ```
 agy -c
@@ -78,9 +78,9 @@ agy -c
 
 _(Alternative: `agy --continue`)_
 
-### Resume Specific Session (`--conversation`)
+### Resume specific session (`--conversation`)
 
-To load a specific conversation directly by its unique ID:
+To load a specific conversation directly by its unique ID, run the following command:
 
 ```
 agy --conversation <conversation-id>
@@ -88,11 +88,13 @@ agy --conversation <conversation-id>
 
 * * *
 
-## Under the Hood: The Session Cache
+## Under the hood: the session cache
 
 When you use the `-c` / `--continue` flag, the CLI resolves the target session using a local workspace-keyed cache.
 
-### The Cache File
+### The cache file
+
+The session cache file has the following properties:
 
 *   **Location**: `~/.gemini/antigravity-cli/cache/last_conversations.json`
 *   **Format**: A JSON map associating absolute workspace directory paths with their most recently active conversation ID:
@@ -105,12 +107,14 @@ When you use the `-c` / `--continue` flag, the CLI resolves the target session u
     ```
     
 
-### Resolution Workflow
+### Resolution workflow
+
+The CLI resolves the session in the following sequence:
 
 1.  **Launch**: You run `agy -c` from `/path/to/workspace`.
 2.  **Lookup**: The CLI reads `last_conversations.json` and looks up the key `/path/to/workspace`.
 3.  **Verification**: If an ID is found, the CLI queries the backend to verify the conversation still exists.
-4.  **Load**:
+4.  **Load**: Loads the appropriate session:
     *   If verified, it loads the session.
     *   If the conversation was deleted or the key is missing, it starts a fresh session for that workspace.
 
@@ -118,6 +122,8 @@ When you use the `-c` / `--continue` flag, the CLI resolves the target session u
 
 ## See also
 
-*   **[Managing Conversations](../conversations.md)**: Learn about workspace scoping and branching with `/fork`.
-*   **[CLI Reference](../reference.md)**: See all available slash commands and default keybindings.
-*   **[Settings & Keybindings](https://antigravity.google/docs/cli/settings)**: Configure rendering modes and customize keyboard shortcuts.
+Explore the following guides to learn more about managing sessions and settings:
+
+*   **[Managing conversations](../conversations.md)**: Learn about workspace scoping and branching with `/fork`.
+*   **[CLI reference](../reference.md)**: View all available slash commands and default keybindings.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Configure rendering modes and customize keyboard shortcuts.

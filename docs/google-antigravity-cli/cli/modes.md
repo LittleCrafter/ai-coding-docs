@@ -4,12 +4,14 @@ Control whether Antigravity CLI pauses to ask before modifying files or executin
 
 ## Before you begin
 
-*   [Install Antigravity CLI](./install.md)
-*   Have an active project repository with source code to edit
+Make sure you meet the following prerequisites:
+
+*   [Install Antigravity CLI](./install.md).
+*   Have an active project repository with source code to edit.
 
 ## Available modes
 
-Each execution mode makes a different tradeoff between conversational autonomy and developer oversight. The table below shows how Antigravity CLI handles file operations and planning in each mode.
+Each execution mode makes a different tradeoff between conversational autonomy and developer oversight. The following table shows how Antigravity CLI handles file operations and planning in each mode:
 
 | Mode | Behavior | Best for |
 | :-- | :-- | :-- |
@@ -17,16 +19,14 @@ Each execution mode makes a different tradeoff between conversational autonomy a
 | `accept-edits` | Automatically approves file edits and creations (`mkdir`, `touch`, file writes). | Rapid prototyping, iterating on trusted code, and reducing prompt interruptions. |
 | `plan` | Prepends the `/plan` instruction prefix to analyze and outline steps before writing code. | Exploring unfamiliar architecture or designing complex multi-step features. |
 
-> **Note:** Tool permission rules configured via `/permissions` or `--dangerously-skip-permissions` continue to govern shell commands (`run_command`) across all execution modes.
+> **Note:** Tool permission rules configured using `/permissions` or `--dangerously-skip-permissions` continue to govern shell commands (`run_command`) across all execution modes.
 
 ## Cycle execution modes during a session
 
-You can switch execution modes mid-session without interrupting active tasks or restarting the terminal.
+You can switch execution modes mid-session without interrupting active tasks or restarting the terminal:
 
-1.  Press `Shift+Tab` inside the prompt box to cycle through the active sequence: `default` → `accept-edits` → `plan` → `default`
-    
+1.  Press `Shift+Tab` inside the prompt box to cycle through the active sequence: `default` > `accept-edits` > `plan` > `default`.
 2.  Observe the status bar indicator below the prompt input to confirm your active mode (`[accept-edits]` or `[plan]`).
-    
 
 > **Tip:** When Antigravity CLI pauses for a pending file edit confirmation in `default` mode, you can press `Shift+Tab` to instantly switch to `accept-edits` mode and approve all pending file modifications.
 
@@ -39,11 +39,11 @@ In `default` mode (`request-review`), Antigravity CLI pauses before applying any
 agy
 ```
 
-When prompted with a pending file modification:
+When prompted with a pending file modification, you can take any of the following actions:
 
 *   Press `y` to accept the changes and save the file to disk.
 *   Press `n` to reject the edits and keep the existing file unchanged.
-*   Press `f` (`KeyViewDiff`) to open a full-screen, scrollable diff review with 3 context lines and hunk separators.
+*   Press `f` (`KeyViewDiff`) to open a full-screen, scrollable diff review with three context lines and hunk separators.
 *   Press `Ctrl+G` to open the file inside your `$EDITOR` for manual adjustments.
 *   Type instructions in the prompt box and press `Enter` to reject the edit and tell the agent what to do differently.
 
@@ -82,7 +82,7 @@ Use `plan` mode when taking on complex refactoring, multi-file architectural cha
 agy --mode=plan
 ```
 
-When `plan` mode is active via `Shift+Tab` cycling or the `--mode` flag, the CLI automatically prepends the `/plan` instruction prefix to your prompts. The agent investigates relevant files using read-only tools (`code_search`, `grep_search`, `view_file`) and presents a structured execution outline for your approval before writing code.
+When `plan` mode is active through `Shift+Tab` cycling or the `--mode` flag, the CLI automatically prepends the `/plan` instruction prefix to your prompts. The agent investigates relevant files using read-only tools (`code_search`, `grep_search`, `view_file`) and presents a structured execution outline for your approval before writing code.
 
 ![The CLI running in plan mode analyzing code and structuring an execution outline](../assets/image/docs/cli/modes-plan-execution.png)
 
@@ -92,7 +92,7 @@ You can set your preferred startup execution mode permanently across sessions or
 
 ### Using the interactive settings panel
 
-Open the interactive settings panel mid-session to inspect or update your default configuration.
+Open the interactive settings panel mid-session to inspect or update your default configuration:
 
 ```
 /settings
@@ -133,6 +133,8 @@ agy --mode=plan
 
 ## Next steps
 
-*   [Permissions](https://antigravity.google/docs/cli/permissions): Configure fine-grained tool approval rules and wildcard matching
-*   [Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings): Customize configuration overrides and interactive preferences
-*   [Background Tasks & Subagents](https://antigravity.google/docs/cli/subagents): Manage parallel subagent execution and asynchronous task queues
+Explore the following guides to further customize your CLI workflow:
+
+*   **[Permissions](https://antigravity.google/docs/cli/permissions)**: Configure fine-grained tool approval rules and wildcard matching.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Customize configuration overrides and interactive preferences.
+*   **[Background tasks and subagents](https://antigravity.google/docs/cli/subagents)**: Manage parallel subagent execution and asynchronous task queues.

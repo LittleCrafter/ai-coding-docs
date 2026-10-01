@@ -16,14 +16,14 @@ agy -p "In one sentence, what is a git rebase?"
 A git rebase rewrites the commit history by transplanting a sequence of commits onto a new base commit, imposing a strictly linear progression of changes that eliminates arbitrary merge artifacts.
 ```
 
-The response goes to `stdout`. Diagnostics — errors, authentication prompts, progress, and permission notices — go to `stderr`. This split keeps the captured response clean:
+The response goes to `stdout`. Diagnostics—errors, authentication prompts, progress, and permission notices—go to `stderr`. This split keeps the captured response clean:
 
 ```
 # Capture only the model response; diagnostics still print to the terminal.
 answer=$(agy -p "Name three popular version control systems, comma-separated.")
 ```
 
-> **Note:** Headless mode uses your cached credentials. Authenticate once with an interactive `agy` session first. In a non-interactive environment with no terminal (for example, CI), a run that is not already authenticated exits with an `authentication required` error instead of hanging.
+> **Note:** Headless mode uses your cached credentials. Authenticate once with an interactive `agy` session first. In a non-interactive environment with no terminal (for example, CI), a run that isn’t already authenticated exits with an `authentication required` error instead of hanging.
 
 ## Output formats
 
@@ -37,7 +37,7 @@ The `--output-format` flag controls the shape of `stdout`. It accepts three valu
 
 ### Text
 
-The default. The response text goes straight to `stdout` with no wrapping:
+This is the default format. The response text goes straight to `stdout` with no wrapping:
 
 ```
 agy -p "In one sentence, what does the command git bisect do?"
@@ -77,7 +77,7 @@ The envelope contains these fields:
 | Field | Type | Description |
 | --- | --- | --- |
 | `conversation_id` | string | ID of the conversation, for resuming later |
-| `status` | string | Terminal status (see [Status values](#status-values)) |
+| `status` | string | Terminal status (refer to [Status values](#status-values)) |
 | `response` | string | The agent’s free-text response |
 | `error` | string | Error message; present only on failure |
 | `duration_seconds` | number | Wall-clock duration of the run |
@@ -134,7 +134,7 @@ Set `--output-format stream-json` to emit one JSON object per line (NDJSON) as t
 agy -p "In one sentence, what is a git rebase?" --output-format stream-json
 ```
 
-The stream begins with one `init` event, followed by any number of `step_update` events, and ends with exactly one `result` event (the `cwd` and `tools` array are abbreviated below):
+The stream begins with one `init` event, followed by any number of `step_update` events, and ends with one `result` event (the `cwd` and `tools` array are abbreviated in the following example):
 
 ```
 {"event":"init","conversation_id":"c3b66b04-872b-4fbe-a3a4-058a026ef20a","init":{"cwd":"/home/user/project","tools":["ask_permission","run_command","write_to_file","..."],"permission_mode":"request-review"}}
@@ -177,7 +177,7 @@ Each `step_update` payload describes one step. Observed `step_type` values inclu
 | `text_delta` | string | Incremental response text |
 | `duration_seconds` | number | Step duration, when known |
 | `usage` | object | Per-step token usage, when known |
-| `tool_info` | object | Tool invocation details (see below) |
+| `tool_info` | object | Tool invocation details |
 | `subagent_info` | object | Subagent invocation details |
 
 #### Tool calls in the stream
@@ -188,7 +188,7 @@ On tool steps, `tool_info` carries the call and its result. This is a real tool 
 {"event":"step_update","step_update":{"conversation_id":"edb1c8c1-50ba-4f3f-87eb-412d0e9d47c3","step_index":4,"state":"DONE","step_type":"tool","tool_name":"run_command","duration_seconds":0.07,"tool_info":{"name":"run_command","parameters":{"CommandLine":"echo hello_headless_demo"},"output":"hello_headless_demo\r\n"}}}
 ```
 
-`tool_info` holds `name`, `parameters`, `output`, and — when the tool fails — an `error` object with `type` and `message`. Steps that spawn subagents carry `subagent_info` instead, listing each subagent under `subagents` (with `type_name`, `role`, `conversation_id`, `log_uri`, and `workspace_uris`).
+`tool_info` holds `name`, `parameters`, `output`, and—when the tool fails—an `error` object with `type` and `message`. Steps that spawn subagents carry `subagent_info` instead, listing each subagent under `subagents` (with `type_name`, `role`, `conversation_id`, `log_uri`, and `workspace_uris`).
 
 #### Structured output in the stream
 
@@ -196,7 +196,7 @@ With `--json-schema`, the schema applies to the terminal `result` event, which c
 
 ## Parse output with jq
 
-`stdout` is machine-readable, so `jq` extracts exactly what you need.
+`stdout` is machine-readable, so `jq` extracts what you need.
 
 Get the response text from a JSON run:
 
@@ -222,7 +222,7 @@ agy -p "In one sentence, what is a git rebase?" --output-format stream-json \
   | jq 'select(.event=="result") | .result.usage'
 ```
 
-> **Tip:** Use `jq -j` (join output) when concatenating `text_delta` fragments so `jq` does not insert newlines between them.
+> **Tip:** Use `jq -j` (join output) when concatenating `text_delta` fragments so `jq` doesn’t insert newlines between them.
 
 ## Continue a conversation
 
@@ -236,7 +236,7 @@ agy -p "Now explain your previous answer in more detail" --continue
 agy -p "Summarize what we discussed" --conversation 055a398f-db14-4c5f-abbb-1bf03f8120a7
 ```
 
-Each of these starts a new process. To run multiple turns inside one process, see [Stream prompts from stdin](#stream-prompts-from-stdin).
+Each of these starts a new process. To run multiple turns inside one process, refer to [Stream prompts from stdin](#stream-prompts-from-stdin).
 
 ## Stream prompts from stdin
 
@@ -244,7 +244,7 @@ Use `--input-format stream-json` to maintain a single, continuous conversation p
 
 This approach is ideal for applications that dynamically determine the next prompt based on the previous answer. Because the process only starts once, subsequent turns skip startup overhead and reuse the warmed-up conversation. This makes it significantly faster than running repeated commands with `--continue`.
 
-> **Note:** `--input-format stream-json` requires `--output-format stream-json`. In a streaming session, the CLI emits exactly one `result` event per turn.
+> **Note:** `--input-format stream-json` requires `--output-format stream-json`. In a streaming session, the CLI emits one `result` event per turn.
 
 ### Send a prompt
 
@@ -277,13 +277,10 @@ The `content` field accepts either a standard string or a list of text blocks. T
 The output stream works as follows:
 
 1.  Opens with a single `init` event.
-    
 2.  Emits a series of `step_update` events for the active turn.
-    
 3.  Concludes the turn with a final `result` event.
-    
 
-This example shows the output from the two-prompt bash command above (with the `init` payload abbreviated):
+This example shows the output from the two-prompt Bash command in the previous section (with the `init` payload abbreviated):
 
 ```
 {"event":"init","conversation_id":"9ec58bfd-4d67-4f5e-83a5-9d907e9c6b1f","init":{"cwd":"/home/user/project","tools":["ask_permission","run_command","write_to_file","..."],"permission_mode":"request-review"}}
@@ -364,7 +361,7 @@ proc.wait()
 
 ### End a session
 
-To close a session gracefully, simply close `stdin`. The process exits after the input pipe is closed and the current turn completes. If an application writes a final prompt and immediately closes the pipe, it still receives the final `result` before the process terminates.
+To close a session gracefully, close `stdin`. The process exits after the input pipe is closed and the current turn completes. If an application writes a final prompt and immediately closes the pipe, it still receives the final `result` before the process terminates.
 
 Clean sessions exit with `0`, which matches the standard headless mode behavior.
 
@@ -381,7 +378,7 @@ To prevent unpredictable behavior, the CLI validates inputs. If it encounters a 
 | Invalid JSON line | `ERROR` result, session ends | `1` |
 | Content block type other than `text` | `ERROR` result, session ends | `1` |
 
-Unrecognized `event` names are safely skipped with a warning. This ensures that applications built against newer versions of the streaming protocol won’t crash when running on older CLI versions:
+Unrecognized `event` names are safely skipped with a warning. This ensures that applications built against newer versions of the streaming protocol don’t crash when running on older CLI versions:
 
 ```
 warning: ignoring unsupported stream input message event "future_thing"
@@ -389,7 +386,7 @@ warning: ignoring unsupported stream input message event "future_thing"
 
 For all other errors, the session terminates immediately. Any turns that previously completed retain their `result` events, but the malformed input line aborts the remainder of the session.
 
-Slash commands that the CLI can respond to directly (such as `/model` and `/usage`) produce a text report rather than a standard event stream. A streaming session cannot leverage these types of slash commands. For example:
+Slash commands that the CLI can respond to directly (such as `/model` and `/usage`) produce a text report rather than a standard event stream. A streaming session can’t use these types of slash commands. For example:
 
 ```
 { "event": "result", "result": { "conversation_id": "4fae3a70-409d-42a4-86ea-9de206a49ff4", "status": "ERROR", "response": "", "error": "/model is answered by the CLI itself and is unavailable with --input-format stream-json; run it as its own --print /model invocation", "duration_seconds": 0, "num_turns": 0, "usage": { "input_tokens": 0, "output_tokens": 0, "thinking_tokens": 0, "cache_read_tokens": 0, "total_tokens": 0 } } }
@@ -403,7 +400,7 @@ Slash commands that the CLI can respond to directly (such as `/model` and `/usag
 | **Passing a prompt with the `-p` flag** | Streaming mode exclusively listens for prompts on `stdin`. Any prompt passed through a command-line flag is dropped. | Send the prompt into `stdin` as a `user` message instead. |
 | **Sending `/model` or `/usage` into the stream** | The CLI handles these commands internally outside of the event stream, breaking the JSON flow. | Run `agy -p /model` as an entirely separate, standalone command. |
 | **Treating `num_turns` as a per-turn count** | Metadata counters (like turns, duration, and usage) track the entire cumulative session, not just the active turn. | Use the `response` field to get the text for the current turn. |
-| **Waiting for the process to exit before reading `stdout`** | The session stays open indefinitely until `stdin` is closed. If your script waits for an exit signal, it will hang. | Read the events line-by-line as they arrive, and manually close `stdin` when finished. |
+| **Waiting for the process to exit before reading `stdout`** | The session stays open indefinitely until `stdin` is closed. If your script waits for an exit signal, it hangs. | Read the events line-by-line as they arrive, and manually close `stdin` when finished. |
 
 ## Select a model, effort, or agent
 
@@ -436,13 +433,13 @@ agy -p "Outline a plan to add caching to this service." --effort high
 agy -p "Review this function for edge cases." --agent <agent-name>
 ```
 
-Unlike the interactive UI, headless mode does not silently fall back when `--model` names an unknown model. It exits non-zero with an `ERROR` status so a pinned pipeline fails loudly instead of running the wrong model.
+Unlike the interactive UI, headless mode doesn’t silently fall back when `--model` names an unknown model. It exits non-zero with an `ERROR` status so a pinned pipeline fails loudly instead of running the wrong model.
 
 ## Permissions in headless mode
 
 There is no interactive prompt in headless mode, so tools that would normally ask for confirmation are handled by policy.
 
-By default, the CLI respects the permission mode in your settings. A tool that requires approval it cannot obtain is soft-denied: the run continues, exits `0`, and prints a notice to `stderr` naming the tool and how to allow it. Reading and writing files inside your active workspace is auto-allowed; actions such as shell commands default to **Ask** and are soft-denied in headless mode unless you grant them.
+By default, the CLI respects the permission mode in your settings. A tool that requires approval it can’t obtain is soft-denied: the run continues, exits `0`, and prints a notice to `stderr` naming the tool and how to allow it. Reading and writing files inside your active workspace is auto-allowed; actions such as shell commands default to **Ask** and are soft-denied in headless mode unless you grant them.
 
 Grant a tool ahead of time by adding an `action(target)` rule under `permissions.allow` in `~/.gemini/antigravity-cli/settings.json`:
 
@@ -464,7 +461,7 @@ To auto-approve every tool for a run, pass `--dangerously-skip-permissions`:
 agy -p "Run the test suite and report failures" --dangerously-skip-permissions
 ```
 
-> **Warning:** `--dangerously-skip-permissions` approves all tool calls, including file writes and command execution. Prefer scoped `permissions.allow` rules unless you fully trust the prompt and environment. See [Permissions](https://antigravity.google/docs/cli/permissions) for the full rule syntax.
+> **Warning:** `--dangerously-skip-permissions` approves all tool calls, including file writes and command execution. Prefer scoped `permissions.allow` rules unless you fully trust the prompt and environment. Refer to [Permissions](https://antigravity.google/docs/cli/permissions) for the full rule syntax.
 
 ## Handle exit codes and errors
 
@@ -510,9 +507,9 @@ agy -p "Summarize the design tradeoffs of optimistic locking." --print-timeout 1
 | `--output-format` | `text` | Output format: `text`, `json`, or `stream-json` |
 | `--input-format` | `text` | Input format: `text` or `stream-json`; reads prompts on stdin |
 | `--json-schema` | — | Schema string or file path to enforce structured output |
-| `--model` | — | Model slug for this run (see `agy models`) |
+| `--model` | — | Model slug for this run (refer to `agy models`) |
 | `--effort` | — | Reasoning effort: `low`, `medium`, or `high` |
-| `--agent` | — | Agent for this run (see `agy agents`) |
+| `--agent` | — | Agent for this run (refer to `agy agents`) |
 | `--continue`, `-c` | `false` | Continue the most recent conversation |
 | `--conversation` | — | Resume a conversation by ID |
 | `--dangerously-skip-permissions` | `false` | Auto-approve all tool permission requests |
@@ -542,7 +539,9 @@ echo "$result" | jq -r '.response' > result.txt
 
 ## Next steps
 
-*   [Prompting & Interaction](./prompting.md): Write effective prompts for the agent.
-*   [Permissions](https://antigravity.google/docs/cli/permissions): Configure allow, deny, and ask rules.
-*   [Background Tasks & Subagents](https://antigravity.google/docs/cli/subagents): Delegate work to specialized agents.
-*   [Reference](./reference.md): Full command and flag reference.
+Explore the following guides to learn more about CLI capabilities:
+
+*   **[Prompting and interaction](./prompting.md)**: Write effective prompts for the agent.
+*   **[Permissions](https://antigravity.google/docs/cli/permissions)**: Configure allow, deny, and ask rules.
+*   **[Background tasks and subagents](https://antigravity.google/docs/cli/subagents)**: Delegate work to specialized agents.
+*   **[Reference](./reference.md)**: Full command and flag reference.

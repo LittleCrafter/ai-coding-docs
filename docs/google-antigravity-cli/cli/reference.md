@@ -1,6 +1,6 @@
 # CLI reference
 
-Scan scannable tables listing all TUI slash commands, default keyboard shortcuts, and JSON configuration parameters.
+Review tables listing all TUI slash commands, default keyboard shortcuts, and JSON configuration parameters.
 
 ## Core slash commands
 
@@ -9,16 +9,16 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | Command | Category | Alias | Execution Purpose |
 | :-- | :-- | :-- | :-- |
 | **`/add-dir <path>`** | Utilities | — | Add a directory path to the active workspace. |
-| **[`/agents`](./commands/agents.md)** | Tools & Tasks | — | Open the [Agent Manager Panel](./commands/agents.md) to switch custom agents and monitor background subagents. |
+| **[`/agents`](./commands/agents.md)** | Tools & Tasks | — | Open the [Agent Manager panel](./commands/agents.md) to switch custom agents and monitor background subagents. |
 | **[`/boost`](https://antigravity.google/docs/boost)** `<task>` | Reasoning | — | Run on-demand multi-agent deep reasoning loops. |
-| **`/artifact`** | Tools & Tasks | — | Open the Artifact Review Panel. |
+| **`/artifact`** | Tools & Tasks | — | Open the Artifact Review panel. |
 | **`/btw <query>`** | Utilities | — | Ask a side question in the background without interrupting the main conversation. |
 | **`/clear`** | Utilities | `/new` | Clear the terminal and reset active conversation contexts. |
-| **`/config`** | Configurations | `/settings` | Open the interactive Settings Editor Overlay. |
+| **`/config`** | Configurations | `/settings` | Open the interactive Settings Editor overlay. |
 | **`/context`** | Utilities | — | Open the context usage visualization panel. |
 | **`/copy`** | Utilities | — | Copy the last agent response to the system clipboard. |
 | **[`/credits`](./commands/credits.md)** | Account | — | View remaining G1 credits and purchase links. |
-| **[`/diff`](./commands/diff.md)** | Utilities | — | Open the [Interactive Diff Viewer](./commands/diff.md) to view changes, turns, and commits. |
+| **[`/diff`](./commands/diff.md)** | Utilities | — | Open the [interactive diff viewer](./commands/diff.md) to view changes, turns, and commits. |
 | **`/exit`** | Core | `/quit` | Close the TUI session and restore your host shell. |
 | **`/fast`** | Configurations | — | Enable fast mode (bypass reasoning plans) for quick actions. |
 | **`/feedback`** | Utilities | — | Open the feedback submission panel. |
@@ -39,7 +39,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **`/rewind`** | Conversations | `/undo` | Roll back your conversation history to a previous message. |
 | **`/skills`** | Tools & Tasks | — | Browse loaded local and global Agent Skills. |
 | **[`/statusline`](./commands/statusline.md)** | Configurations | — | Open the Status Bar customization overlay. |
-| **`/tasks`** | Tools & Tasks | — | Open the Task Manager Panel to monitor background shell execution logs. |
+| **`/tasks`** | Tools & Tasks | — | Open the Task Manager panel to monitor background shell execution logs. |
 | **[`/teamwork-preview`](https://antigravity.google/docs/teamwork)** `<task>` | Reasoning | `/teamwork` | Launch [collaborative multi-agent teams](https://antigravity.google/docs/teamwork) for long-horizon projects (paid plans). |
 | **[`/title`](./commands/title.md) \[on/off\]** | Configurations | — | Toggle or set terminal window title updates. |
 | **[`/usage`](./commands/usage.md)** | Utilities | `/quota` | Display model quota usage. |
@@ -47,7 +47,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 
 ## Default keybindings
 
-Keyboard shortcut commands mapping global, prompt, navigation, and approval operations.
+The following tables list the keyboard shortcut commands mapping global, prompt, navigation, and approval operations.
 
 ### Global controls
 
@@ -70,7 +70,7 @@ These keys are active when writing instructions inside the prompt box.
 | **`Shift+Enter`** / **`Ctrl+J`** | `prompt.newline` | Inserts a clean newline without submitting. |
 | **`Ctrl+V`** | `prompt.paste` | Pastes graphic media files or clipboard blocks into the prompt. |
 | **`Ctrl+O`** | `prompt.toggle_trajectory` | Expands or collapses detailed tool reasoning outputs. |
-| **`Ctrl+R`** | `prompt.open_review` | Opens the Artifact Review Panel. |
+| **`Ctrl+R`** | `prompt.open_review` | Opens the Artifact Review panel. |
 | **`Ctrl+G`** | `prompt.external_editor` | Launches your default `$EDITOR` shell to compose your prompt. |
 | **`Alt+J`** | `prompt.teleport_agent` | Instantly switches focus to the next subagent awaiting confirmation. |
 | **`Ctrl+K`** | `prompt.fast_approve` | Instantly approves the pending subagent action listed in the status alert. |
@@ -81,9 +81,9 @@ These keys are active when writing instructions inside the prompt box.
 | **`Ctrl+D`** | `—` | Forward delete (only when the prompt box is non-empty). |
 | **`F5`** | `voice.start_dictation` | Starts or stops [voice dictation](./commands/voice.md). |
 
-### Navigation & scrolling
+### Navigation and scrolling
 
-Used inside select panels, menus, and scrollable text boxes.
+These keys are active inside select panels, menus, and scrollable text boxes.
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
@@ -95,17 +95,17 @@ Used inside select panels, menus, and scrollable text boxes.
 
 ### Tool confirmations
 
-Active during confirmation prompts.
+These keys are active during confirmation prompts.
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
 | **`y`** | `confirm.yes` | Authorizes the proposed tool, command, or active artifact. |
 | **`n`** | `confirm.no` | Rejects the proposed tool, command, or active artifact. |
-| **`A`** | `—` | (Inside Review Panel) Approves all generated artifacts in one action (built-in shortcut). |
+| **`A`** | `—` | (Inside Review panel) Approves all generated artifacts in one action (built-in shortcut). |
 
 ## Configuration keys (`settings.json`)
 
-Primary settings key names, data types, system defaults, and expected parameters.
+This section lists the primary settings key names, data types, system defaults, and expected parameters.
 
 ### Example `settings.json`
 
@@ -129,7 +129,7 @@ Primary settings key names, data types, system defaults, and expected parameters
 | **`showTips`** | boolean | `true` | Displays helpful agentic tips above the prompt panel during generation turns. |
 | **`showFeedbackSurvey`** | boolean | `true` | Displays periodic quality feedback surveys upon active task completions. |
 | **`editor`** | string | `"auto"` | Target text editor utility: `"auto"` (consults system `$EDITOR`), `"vim"`, `"emacs"`, or custom text labels. |
-| **`editorMode`** | string | `"default"` | Prompt editing model: `"default"` (flat text editing) or `"vim"` (modal editing). Distinct from `editor`, which selects an external program. See [Vim Editor Mode](./vim-editor-mode.md). |
+| **`editorMode`** | string | `"default"` | Prompt editing model: `"default"` (flat text editing) or `"vim"` (modal editing). Distinct from `editor`, which selects an external program. Refer to [Vim editor mode](./vim-editor-mode.md). |
 | **`vimInsertFirst`** | boolean | `false` | Starts Vim editing in Insert mode and makes a bare `Enter` submit. Requires `editorMode` set to `"vim"`. |
 | **`allowNonWorkspaceAccess`** | boolean | `false` | Permits the agent’s file read and write tools to navigate outside recognized Git/workspace roots. |
 | **`enableTerminalSandbox`** | boolean | `false` | Restricts all local execution commands launched by agents to OS containment rings. |
@@ -142,6 +142,6 @@ Primary settings key names, data types, system defaults, and expected parameters
 
 Learn how to safely deploy permission policies, sandboxes, and customize plugins:
 
-*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Enforce command-line containment rules.
-*   **[Plugins & Skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom skills slash commands.
-*   **[Installation & Auth](./install.md)**: Update your CLI install.
+*   **[Permissions and sandbox](https://antigravity.google/docs/cli/sandbox)**: Enforce command-line containment rules.
+*   **[Plugins and skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom skills slash commands.
+*   **[Installation and auth](./install.md)**: Update your CLI installation.

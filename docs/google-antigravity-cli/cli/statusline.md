@@ -4,7 +4,7 @@ Define custom scripting configurations and format dynamic JSON state payloads to
 
 Note
 
-To toggle the status line on/off or configure it from the TUI, see the **[Status Line Command](./commands/statusline.md)**.
+To toggle the status line on or off or configure it from the TUI, refer to the **[Status line command](./commands/statusline.md)**.
 
 ## Overview
 
@@ -46,7 +46,7 @@ The JSON payload piped to your script contains the following top-level fields:
 | `version` | string | CLI version string. |
 | `context_window` | object | Contains token usage details: `total_input_tokens`, `total_output_tokens`, `context_window_size`, `used_percentage`, `remaining_percentage`, and `current_usage` sub-object. |
 | `exceeds_200k_tokens` | bool | True if the conversation context has exceeded 200k tokens (null before first API call). |
-| `product` | string | Application name (e.g., `antigravity`). |
+| `product` | string | Application name (for example, `antigravity`). |
 | `quota` | object | Maps model/bucket IDs to their quota status, containing `remaining_fraction`, `reset_time`, and `reset_in_seconds` (optional). |
 | `agent_state` | string | Current state: `idle`, `thinking`, `working`, `tool_use`, `initializing`. |
 | `vcs` | object | Version control info: `type` (git/jj/hg), `branch`, `client`, `dirty` (optional). |
@@ -58,12 +58,12 @@ The JSON payload piped to your script contains the following top-level fields:
 | `tool_confirmation_pending` | bool | True when a tool confirmation dialog is showing. |
 | `task_count` | int | Number of running background tasks. |
 | `terminal_width` | int | Live width of the interactive terminal. |
-| `execution_mode` | string | Current active prompt execution mode (e.g., `planning`, `fast`). |
+| `execution_mode` | string | Current active prompt execution mode (for example, `planning`, `fast`). |
 | `vim` | object | Vim editing state: `mode` is `NORMAL`, `INSERT`, `VISUAL`, or `VISUAL LINE`. Present only when [Vim editor mode](./vim-editor-mode.md) is enabled. |
 
 ### JSON payload example
 
-Here is a fully sanitized, typical JSON payload piped to your status line script:
+Here is a sanitized, typical JSON payload piped to your status line script:
 
 ```
 {
@@ -132,7 +132,9 @@ chmod +x ~/.gemini/antigravity-cli/statusline.sh
 
 ## See also
 
-*   **[Status Line Command](./commands/statusline.md)**: Toggle status line elements interactively.
-*   **[Terminal Title Customization](./title.md)**: Configure dynamic window titles.
-*   **[Settings, Rendering & Keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
-*   **[Permissions & Sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage secure directory permissions.
+Explore the following guides to customize other CLI elements:
+
+*   **[Status line command](./commands/statusline.md)**: Toggle status line elements interactively.
+*   **[Terminal title customization](./title.md)**: Configure dynamic window titles.
+*   **[Settings, rendering, and keybindings](https://antigravity.google/docs/cli/settings)**: Customize keyboard hotkeys and buffers.
+*   **[Permissions and sandbox](https://antigravity.google/docs/cli/sandbox)**: Manage secure directory permissions.

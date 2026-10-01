@@ -82,7 +82,7 @@ The built-in default depends on how you run Claude Code. The first row that matc
 | How you run Claude Code | Built-in starting permission mode |
 | :- | :- |
 | Any settings file sets `disableAutoMode` to `"disable"` | `default` |
-| `claude -p` or the [Agent SDK](./agent-sdk/permissions.md) | `default` |
+| `claude -p`, or the [Python Agent SDK](./agent-sdk/python.md#claudeagentoptions) without `permission_mode` | `default` in sessions that [fetch feature flags](./env-vars.md#features-that-need-feature-flag-fetching). In sessions that don't, such as on a third-party provider or with telemetry off, `auto` with Claude Code v2.1.285 or later and `default` on earlier versions |
 | In a terminal or through the [VS Code extension](./vs-code.md) | `auto` with Claude Code v2.1.283 or later; on earlier versions, `auto` on Pro, Max, or Team plans in sessions that [fetch feature flags](./env-vars.md#features-that-need-feature-flag-fetching), and `default` otherwise |
 
 In your [first session after an install or upgrade](./env-vars.md#first-session-after-an-install-or-upgrade), Claude Code can choose the starting permission mode before its feature flags arrive. That session can start in a different permission mode than the table gives, and your next session matches the table.
@@ -94,7 +94,7 @@ The first time the built-in default starts one of your sessions in auto mode, Cl
 * In a terminal, once, at the top of the session
 * In the VS Code extension, as a card on the new-conversation screen that stays until you dismiss it
 
-On Pro, Max, and Team plans, if your `~/.claude/settings.json` sets a `defaultMode` other than `auto` and no other settings file sets one, your sessions keep starting in that mode. Claude Code asks once, in the terminal or in the VS Code extension, whether to change the setting to auto mode. If you decline, your setting stays as it is.
+If your `~/.claude/settings.json` sets a `defaultMode` other than `auto` and no other settings file sets one, your sessions keep starting in that mode. On Pro, Max, and Team plans, and in sessions that [don't fetch feature flags](./env-vars.md#features-that-need-feature-flag-fetching), Claude Code asks once, in the terminal or in the VS Code extension, whether to change the setting to auto mode. If you decline, your setting stays as it is.
 
 <h3 id="start-in-a-different-mode">
   Start in a different permission mode
@@ -305,7 +305,7 @@ If you set `defaultMode: "auto"` in [settings](./settings-reference.md#all-setti
   Auto mode on Bedrock, Agent Platform, or Foundry
 </h3>
 
-On [Amazon Bedrock](./amazon-bedrock.md), [Google Cloud's Agent Platform](./google-vertex-ai.md), [Microsoft Foundry](./microsoft-foundry.md), and signed-in [Claude apps gateway](./claude-apps-gateway.md) sessions, auto mode is available by default. With Claude Code v2.1.283 or later, it's also the [built-in starting permission mode](#which-mode-a-session-starts-in) for interactive terminal and [VS Code](./vs-code.md) sessions. To choose the starting permission mode yourself, set `permissions.defaultMode` as [Start in a different permission mode](#start-in-a-different-mode) describes, or pick a permission mode from the VS Code extension's mode indicator.
+On [Amazon Bedrock](./amazon-bedrock.md), [Google Cloud's Agent Platform](./google-vertex-ai.md), [Microsoft Foundry](./microsoft-foundry.md), and signed-in [Claude apps gateway](./claude-apps-gateway.md) sessions, auto mode is available by default. When nothing else sets a permission mode, it's also the [built-in starting permission mode](#which-mode-a-session-starts-in), on the versions that section's table lists. To choose the starting permission mode yourself, set `permissions.defaultMode` as [Start in a different permission mode](#start-in-a-different-mode) describes, or pick a permission mode from the VS Code extension's mode indicator.
 
 Only Claude Sonnet 5 or later, Opus 4.7 or later, and the Fable models are supported on these providers. On any other model, the session starts in Manual instead.
 

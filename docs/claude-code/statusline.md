@@ -19,7 +19,7 @@ The status line renders in its own row above the built-in footer badges and does
 
 Here's an example of a [multi-line status line](#display-multiple-lines) that displays git info on the first line and a color-coded context bar on the second.
 
-<img src="media/images/statusline-multiline.png" alt="A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line" width="776" height="212" />
+<img src="media/images/statusline-multiline.png" alt="A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line" width="1224" height="262" />
 
 This page walks through [setting up a basic status line](#set-up-a-status-line), explains [how the data flows](#how-status-lines-work) from Claude Code to your script, lists [all the fields you can display](#available-data), and provides [ready-to-use examples](#examples) for common patterns like git status, cost tracking, and progress bars.
 
@@ -81,7 +81,7 @@ This walkthrough shows what `/statusline` sets up for you by manually creating a
 
 These examples use Bash scripts, which work on macOS and Linux. On Windows, see [Windows configuration](#windows-configuration) for PowerShell and Git Bash examples.
 
-<img src="media/images/statusline-quickstart.png" alt="A status line showing model name, directory, and context percentage" width="726" height="164" />
+<img src="media/images/statusline-quickstart.png" alt="A status line showing model name, directory, and context percentage" width="1224" height="224" />
 
 1. **Create a script that reads JSON and prints output**
 
@@ -415,7 +415,7 @@ The Bash examples use [`jq`](https://jqlang.org/) to parse JSON. Python and Node
 
 Display the current model and context window usage with a visual progress bar. Each script reads JSON from stdin, extracts the `used_percentage` field, and builds a 10-character bar where filled blocks (▓) represent usage:
 
-<img src="media/images/statusline-context-window-usage.png" alt="A status line showing model name and a progress bar with percentage" width="448" height="152" />
+<img src="media/images/statusline-context-window-usage.png" alt="A status line showing model name and a progress bar with percentage" width="1224" height="224" />
 
 ```bash Bash theme={null}
 #!/bin/bash
@@ -478,7 +478,7 @@ process.stdin.on('end', () => {
 
 Show git branch with color-coded indicators for staged and modified files. This script uses [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) for terminal colors: `\033[32m` is green, `\033[33m` is yellow, and `\033[0m` resets to default.
 
-<img src="media/images/statusline-git-context.png" alt="A status line showing model, directory, git branch, and colored indicators for staged and modified files" width="742" height="178" />
+<img src="media/images/statusline-git-context.png" alt="A status line showing model, directory, git branch, and colored indicators for staged and modified files" width="1224" height="224" />
 
 Each script checks if the current directory is a git repository, counts staged and modified files, and displays color-coded indicators:
 
@@ -570,7 +570,7 @@ Track your session's API costs and elapsed time. The `cost.total_cost_usd` field
 
 Each script formats cost as currency and converts milliseconds to minutes and seconds:
 
-<img src="media/images/statusline-cost-tracking.png" alt="A status line showing model name, session cost, and duration" width="588" height="180" />
+<img src="media/images/statusline-cost-tracking.png" alt="A status line showing model name, session cost, and duration" width="1224" height="224" />
 
 ```bash Bash theme={null}
 #!/bin/bash
@@ -625,7 +625,7 @@ process.stdin.on('end', () => {
 
 Your script can output multiple lines to create a richer display.
 
-<img src="media/images/statusline-multiline.png" alt="A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line" width="776" height="212" />
+<img src="media/images/statusline-multiline.png" alt="A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line" width="1224" height="262" />
 
 This example combines several techniques: threshold-based colors (green under 70%, yellow 70-89%, red 90%+), a progress bar, and git branch info. Each `print` or `echo` statement creates a separate row:
 
@@ -728,7 +728,7 @@ process.stdin.on('end', () => {
 
 This example creates a clickable link to your GitHub repository. Hold Cmd (macOS) or Ctrl (Windows/Linux) and click to open the link in your browser.
 
-<img src="media/images/statusline-links.png" alt="A status line showing a clickable link to a GitHub repository" width="726" height="198" />
+<img src="media/images/statusline-links.png" alt="A status line showing a clickable link to a GitHub repository" width="1224" height="224" />
 
 Each script gets the git remote URL, converts SSH format to HTTPS, and wraps the repo name in OSC 8 escape codes. The Bash version uses `printf '%b'` which interprets backslash escapes more reliably than `echo -e` across different shells:
 
