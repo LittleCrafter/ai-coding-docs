@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.287",
-  "last_updated": "2026-10-02T16:53:08Z",
+  "version": "2.1.288",
+  "last_updated": "2026-10-02T21:29:13Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -460,8 +460,8 @@
       "source_url": "https://code.claude.com/docs/en/changelog",
       "source_md_url": "https://code.claude.com/docs/en/changelog.md",
       "source_id": "changelog",
-      "hash": "db163d7da98b7e2c0c7d24333bde57c0b44e1844c6ce03151250a5a3be8a50c9",
-      "last_updated": "2026-10-01T22:03:28Z"
+      "hash": "cfda5db02abc841b259b8333257621c7057f52bd0e4a019b7fd838265c82fb63",
+      "last_updated": "2026-10-02T21:29:13Z"
     },
     "channels": {
       "slug": "channels",
@@ -830,8 +830,8 @@
       "source_url": "https://code.claude.com/docs/en/env-vars",
       "source_md_url": "https://code.claude.com/docs/en/env-vars.md",
       "source_id": "env-vars",
-      "hash": "ac34edc23ed3fe08a1798c63f4968a9022a4679affb15c782ac83643a68b9ad1",
-      "last_updated": "2026-10-02T16:53:08Z"
+      "hash": "160c3b4469834aec792966a6edf68c1c16a4aa9a09a11d2487d3842046b16c2d",
+      "last_updated": "2026-10-02T21:29:13Z"
     },
     "errors": {
       "slug": "errors",
@@ -1010,8 +1010,8 @@
       "source_url": "https://code.claude.com/docs/en/interactive-mode",
       "source_md_url": "https://code.claude.com/docs/en/interactive-mode.md",
       "source_id": "interactive-mode",
-      "hash": "f0bf5f796e18795464d1564210c49928011ecbb1762733df6a7436199d32c7bb",
-      "last_updated": "2026-10-02T16:53:08Z"
+      "hash": "cf300198834688c70751760899f327d6e7947220fd57f4d61089ac6e9290291c",
+      "last_updated": "2026-10-02T21:29:13Z"
     },
     "jetbrains": {
       "slug": "jetbrains",
@@ -1850,8 +1850,8 @@
       "source_url": "https://code.claude.com/docs/en/tools-reference",
       "source_md_url": "https://code.claude.com/docs/en/tools-reference.md",
       "source_id": "tools-reference",
-      "hash": "225e75d3764f7512674296ba97a46778361f6288de8c04e88bd4afbb0b2606fe",
-      "last_updated": "2026-10-02T16:53:08Z"
+      "hash": "cf05197be7b5d62555aa7e00bdeefda3e6f14a8554ba495d6d6e9259315079b4",
+      "last_updated": "2026-10-02T21:29:13Z"
     },
     "troubleshoot-install": {
       "slug": "troubleshoot-install",
@@ -1900,8 +1900,8 @@
       "source_url": "https://code.claude.com/docs/en/vs-code",
       "source_md_url": "https://code.claude.com/docs/en/vs-code.md",
       "source_id": "vs-code",
-      "hash": "266c56da635c00a31fb1b1d1a80f5215d6de33f2ff06d184b3eb6f3ee71ba991",
-      "last_updated": "2026-10-02T16:53:08Z"
+      "hash": "35d61a5fecb43be0b0324c2d71092070a469ac77f740b5d276ecab9a5c5d763b",
+      "last_updated": "2026-10-02T21:29:13Z"
     },
     "web-quickstart": {
       "slug": "web-quickstart",
@@ -2195,8 +2195,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-02T16:53:08Z",
-    "fetch_duration_seconds": 76.5,
+    "last_fetch_completed": "2026-10-02T21:29:13Z",
+    "fetch_duration_seconds": 76.426,
     "total_pages_discovered": 219,
     "pages_fetched_successfully": 219,
     "pages_failed": 0,

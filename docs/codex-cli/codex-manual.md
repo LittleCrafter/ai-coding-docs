@@ -2281,6 +2281,8 @@ environment](./environments/cloud-environments.md) on the web or in the
 desktop app. In a new task, choose **Work in** > **Cloud**, open **Select
 environment**, then select **Create environment**. Codex inspects your
 repositories and helps prepare and test the setup before you publish it.
+You can then start and continue cloud tasks on the web, on mobile, or in the
+desktop app. On mobile, open **Codex** and select the published environment.
 
 #### Setup
 
@@ -18344,15 +18346,18 @@ environments for these workflows.
 #### Start a task in Codex Cloud
 
 On the web or in the [desktop app](./app.md), choose **Work in** > **Cloud**
-and select a published environment. Describe what you want Codex to do and send
-the request. If you need a new setup, [create an environment](#create-and-publish-an-environment).
+and select a published environment. On mobile, open **Codex** and select a
+published environment. Describe what you want Codex to do and send the request.
+If you need a new setup, [create an environment](#create-and-publish-an-environment)
+on the web or in the desktop app.
 
 Enterprise admins can [review workspace access](./enterprise/admin-setup.md#step-5-configure-codex-cloud)
 before rolling out Codex Cloud.
 
 #### Create and publish an environment
 
-On the web or in the [desktop app](./app.md), sign in with your ChatGPT account:
+Create new environments on the web or in the [desktop app](./app.md).
+Sign in with your ChatGPT account:
 
 1. In a new task, choose **Work in** > **Cloud**, open **Select environment**,
    and select **Create environment**.
@@ -18536,9 +18541,15 @@ auth key, enable both **Reusable** and **Ephemeral**. A reusable key lets new
 cloud task VMs join your network. Tailscale automatically removes ephemeral
 devices after they go offline. Support for additional VPN providers is planned.
 
-Use IPv4 addresses or host names that already resolve to IPv4. Private IPv4
-subnet routes are supported; the connection doesn't add private DNS or support
-for native database protocols or SSH.
+Private IPv4 subnet routes are supported. Tasks can use Tailscale split
+DNS and MagicDNS to reach private services by hostname.
+
+If your service uses your organization's internal DNS, configure split DNS in
+the Tailscale admin console to send queries for your internal domain to your DNS
+server. Use the service's fully qualified hostname, such as
+`api.corp.example.com`, which must resolve to an IPv4 address. The destination
+must also be allowed by the environment's internet-access settings and your
+Tailscale access rules.
 
 Tasks in a shared environment use its configured VPN identity.
 
@@ -18579,8 +18590,8 @@ Review changes and test results before committing or opening a pull request.
 #### Continue on web or mobile
 
 On the web, choose **Work in** > **Cloud** and select an environment. On mobile,
-open **Codex** and choose an available environment. Create and publish the
-environment on the web or in the desktop app first.
+open **Codex** and choose an available environment. Create new environments
+on the web or in the desktop app.
 
 Reopen the same task to continue its work across devices. A new task starts
 separate work from the published setup. Tasks in Codex Cloud can keep working while
@@ -18692,8 +18703,11 @@ for setup instructions.
    When testing with `curl`, omit `--noproxy` so the request uses that proxy.
 2. Check the destination against both the environment's allowed domains and
    the VPN's access rules.
-3. Use an IPv4 address or a hostname that already resolves to IPv4. The VPN
-   connection doesn't configure private DNS.
+3. If the service is reachable by IP address but not by hostname, check your
+   Tailscale DNS settings. For an internal company domain, verify that split DNS
+   points to the correct DNS server and that the server is reachable through
+   your Tailscale network. Use the service's fully qualified hostname and confirm it
+   resolves to an IPv4 address.
 
 See [Private networking](#private-networking-vpn) for connection setup.
 
@@ -19027,7 +19041,7 @@ Source: [Codex Cloud (Legacy)](./environments/cloud-environment.md)
 **Codex Cloud (Legacy)** continues to support environments for Code Review and
 the Linear and GitHub integrations.
 
-For the current experience on desktop and web, see the [Cloud environments
+For the current experience on web, mobile, and desktop, see the [Cloud environments
 guide](./environments/cloud-environments.md).
 
 Use environments to control what Codex installs and runs during cloud chats. For example, you can add dependencies, install tools like linters and formatters, and set environment variables.
@@ -19287,6 +19301,9 @@ create one on the web or in the desktop app, or ask a workspace admin for access
 to a shared environment. Selecting an environment is separate from creating or
 publishing it. Shared access lets you use the environment; it doesn't grant
 permission to edit it.
+
+You can also start and continue cloud tasks on the web or on mobile. On mobile,
+open **Codex** and select a published environment.
 
 To create an environment, start a new task on the web or in the desktop app.
 Choose **Work in** > **Cloud**, open **Select environment**, then select
@@ -46547,6 +46564,8 @@ Deploy apps and configure updates, runtime settings, remote connections, and mod
 - [Workspace model availability](./enterprise/workspace-model-availability.md): Separate model access for ChatGPT, Codex in the ChatGPT desktop app, Codex CLI, the IDE extension, Codex cloud, and the Platform API.
 
 - [Amazon Bedrock](./amazon-bedrock.md): Configure supported local clients to use models available through Bedrock.
+
+- [Bedrock GovCloud configuration](https://learn.chatgpt.com/docs/enterprise/govcloud-configuration): Configure local Codex workflows with Amazon Bedrock in AWS GovCloud.
 
 - [Connect to a gateway](./enterprise/connect-to-a-gateway.md): Configure one Codex client to use your organization's model gateway and verify the connection.
 

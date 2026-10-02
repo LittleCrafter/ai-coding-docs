@@ -5,7 +5,7 @@
 **Codex Cloud (Legacy)** continues to support environments for Code Review and
   the Linear and GitHub integrations.
 
-For the current experience on desktop and web, see the [Cloud environments
+For the current experience on web, mobile, and desktop, see the [Cloud environments
 guide](./cloud-environments.md).
 
 Use environments to control what Codex installs and runs during cloud chats. For example, you can add dependencies, install tools like linters and formatters, and set environment variables.
