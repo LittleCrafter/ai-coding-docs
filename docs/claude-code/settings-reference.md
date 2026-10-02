@@ -510,7 +510,7 @@ Every key below links to its entry. Scope lists the [files](./settings.md#settin
 | [`blockedMarketplaces`](#blockedmarketplaces) | Block [plugin marketplace](./plugins/overview.md) sources for your organization | Plugins and skills | Managed |
 | [`browserExternalPageTools`](#browserexternalpagetools) | Keep Claude's tools off external pages in the [desktop](./desktop.md) Browser pane | Tools | Managed |
 | [`channelsEnabled`](#channelsenabled) | Allow [channels](./channels.md#enable-channels-for-your-organization) for your organization | Plugins and skills | Managed |
-| [`claudeInChromeDefaultEnabled`](#claudeinchromedefaultenabled) | Turn on [Chrome integration](./chrome.md) in every interactive CLI session without passing `--chrome` | Global config settings | Global config |
+| [`claudeInChromeDefaultEnabled`](#claudeinchromedefaultenabled) | Turn on [Chrome integration](./chrome.md) when a session starts, in the interactive CLI and the VS Code extension | Global config settings | Global config |
 | [`claudeMd`](#claudemd) | Inject organization-wide [CLAUDE.md](./memory.md#deploy-organization-wide-claude-md) instructions from managed settings | Memory and context | Managed |
 | [`claudeMdExcludes`](#claudemdexcludes) | Skip specific [CLAUDE.md](./memory.md#exclude-specific-claude-md-files) files when memory loads | Memory and context | Any file |
 | [`cleanupPeriodDays`](#cleanupperioddays) | Choose how many days Claude Code keeps [transcripts](./data-usage.md#data-retention) before deleting them | Privacy and telemetry | Any file |
@@ -2788,6 +2788,7 @@ This example turns off automatic compaction and routes API requests through a pr
 * Project and local settings can't set variables that a checked-out repository shouldn't control; set those in your shell, user settings, or managed settings instead. Claude Code drops each one, apart from a few values that turn telemetry off, and logs a warning you can see with `claude --debug`. They include:
 
   * Variables that choose where Claude Code stores or writes its own files: `CLAUDE_CONFIG_DIR`, `CLAUDE_CODE_TMPDIR`, and the operating-system directory variables such as `HOME`, `TMPDIR`, `TMP`, `TEMP`, and the `XDG_*` family.
+  * Windows variables that pick the programs and machine-wide configuration for the processes Claude Code starts, such as `SystemRoot`, `ComSpec`, `ProgramData`, `LOCALAPPDATA`, `PATHEXT`, `PSModulePath`, and the `ProgramFiles` family.
   * Variables that export session content: [`OTEL_LOG_RAW_API_BODIES`](./env-vars.md#variables) and the detailed beta tracing pair `ENABLE_BETA_TRACING_DETAILED` and `BETA_TRACING_ENDPOINT`.
   * The [OpenTelemetry exporter](./monitoring-usage.md) variables that turn telemetry on, choose where it goes, or choose what content it captures:
 
@@ -5369,7 +5370,7 @@ List the services a machine may reach Claude through, such as the Anthropic API,
   * `"foundry"`: [Microsoft Foundry](./microsoft-foundry.md)
   * `"anthropicAws"`: [Claude Platform on AWS](./claude-platform-on-aws.md)
   * `"mantle"`: the Amazon Bedrock [Mantle endpoint](./amazon-bedrock.md#use-the-mantle-endpoint). A session that [runs Mantle alongside the Invoke API](./amazon-bedrock.md#run-mantle-alongside-the-invoke-api) uses both providers, so list `"bedrock"` and `"mantle"` together for it
-  * `"customEndpoint"`: the Anthropic API or a cloud provider's API sent to another host, such as an [LLM gateway](./llm-gateway.md) named by `ANTHROPIC_BASE_URL`, a provider's `ANTHROPIC_*_BASE_URL` variable, or an `ANTHROPIC_FOUNDRY_RESOURCE` value that isn't a bare resource name. Claude Code admits it only for the exact value a managed [`env`](#env) block pins
+  * `"customEndpoint"`: the Anthropic API or a cloud provider's API sent to another host, such as an [LLM gateway](./llm-gateway.md) named by `ANTHROPIC_BASE_URL` or by a provider's endpoint variable such as `ANTHROPIC_BEDROCK_BASE_URL`. Claude Code admits it only for the exact value a managed [`env`](#env) block pins
   * `"gateway"`: a [Cloud gateway](./claude-apps-gateway.md) sign-in
 * **Default**: unset, so any provider can be used
 
@@ -6086,12 +6087,14 @@ Claude Code ignores this key in `settings.json`.
 
 ### `claudeInChromeDefaultEnabled`
 
-Start every interactive CLI session with [Chrome integration](./chrome.md) on, without passing `--chrome` each time. If you run [`claude remote-control`](./remote-control.md), a session it starts for one of your [project](./claude-projects.md) threads follows this key too, except in `bypassPermissions` mode. Running `/chrome` and selecting **Enabled by default** sets this key for you, as described in [Enable Chrome by default](./chrome.md#enable-chrome-by-default). Appears in `/config` as **Claude in Chrome enabled by default**.
+Start every interactive CLI session with [Chrome integration](./chrome.md) on, without passing `--chrome` each time. If you run [`claude remote-control`](./remote-control.md), a session it starts for one of your [project](./claude-projects.md) threads follows this key too, except in `bypassPermissions` mode. With Claude Code v2.1.287 or later, this key also applies to sessions in the [VS Code extension](./vs-code.md#automate-browser-tasks-with-chrome): see [Enable Chrome by default](./chrome.md#enable-chrome-by-default).
+
+Running `/chrome` and selecting **Enabled by default** sets this key for you. Appears in `/config` as **Claude in Chrome enabled by default**.
 
 * **Scope**: [`Global config`](#scopes)
 * **Type**: Boolean
-  * `true`: Claude Code turns on Chrome integration when an interactive CLI session starts, as it does when you pass `--chrome`
-  * `false`: interactive CLI sessions start with Chrome integration off, and Claude Code stops [offering to set it up](./chrome.md#install-the-extension-when-claude-asks). Pass `--chrome` to turn it on for one interactive session
+  * `true`: Claude Code turns on Chrome integration when an interactive CLI session starts, as it does when you pass `--chrome`. In the VS Code extension, sessions connect to the browser as they start
+  * `false`: interactive CLI sessions start with Chrome integration off, and Claude Code stops [offering to set it up](./chrome.md#install-the-extension-when-claude-asks). Pass `--chrome` to turn it on for one interactive session. In the VS Code extension, a session connects when you type `@browser`, as when the key is unset
 * **Default**: unset, so Chrome integration is off and Claude Code can still offer to set it up
 * **Per-session overrides**: `--chrome` and [`--no-chrome`](./cli-reference.md) take precedence over this key for one interactive session
 
