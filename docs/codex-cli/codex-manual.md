@@ -7036,27 +7036,35 @@ If access is unavailable, check with your workspace administrator.
 #### 2. Connect GitHub
 
 Confirm that [Codex cloud](./cloud.md) is set up for your workspace. In the
-plugin, select **New scan**. If prompted, select **Connect GitHub** and grant
+plugin, select **Scan**. If prompted, select **Connect GitHub** and grant
 access to the repositories you want to scan.
 
 If a repository is missing, check its GitHub connection and permissions.
 
 #### 3. Start a repository scan
 
-1. In **New scan**, choose the repository.
-2. Select a compatible **Cloud environment**. If none exists, select
-   **Create environment** to configure one. See [Codex cloud
+1. In **New Scan**, choose the repository.
+2. Review the environment. **Auto** creates an environment when you start.
+   Use **Customize** to choose an existing environment. See [Codex cloud
    environments](./environments/cloud-environment.md) for setup details.
-3. Under **What to scan**, select **Repository**, the default.
-4. Select **Start scan**.
+3. Under **Scan Method**, select **One-Time Scan**.
+4. Select **Create**.
 
 Open the scan in **Scans** to follow its progress and review its findings and
 artifacts.
 
 #### 4. Review findings and available fixes
 
-Open **Findings** and select an issue to review its affected code, validation
-evidence, and remediation guidance.
+Open **Findings**. Use **Open findings** to review findings with a **New**,
+**Triaged**, or **In Progress** status. Search the list or use **Filters** to
+narrow the results. The **Severity and status** chart summarizes the matching
+findings.
+
+    Filter and review open findings. Repositories, findings, and counts are
+    fictional and match the overview example.
+
+Select an issue to review its affected code, validation evidence, and
+remediation guidance.
 
 When a finding offers **Fix with Codex**, select it to generate a proposed
 patch. Review the patch before selecting **Create draft pull request**.
@@ -7065,9 +7073,15 @@ patch. Review the patch before selecting **Create draft pull request**.
 
 To review changes as new commits arrive:
 
-1. Select **New scan**, then choose the repository and Cloud environment.
-2. Under **What to scan**, select **Commit changes**.
-3. Select **Create**.
+1. Select **Scan**, then choose the repository and review the environment.
+2. Under **Scan Method**, select **Continuous Scanning**. Codex Security scans
+   the repository's default branch.
+3. Choose **Scan commit history from**. Longer windows provide more context,
+   but the initial scan takes longer.
+4. Optionally add threat model scoping guidance.
+5. Select **Create**.
+
+   Configure continuous scanning. The repository shown is fictional.
 
 To adjust monitoring, open **Repositories**, select the repository, and open
 **Monitoring settings**. You can change the Cloud environment, choose how
@@ -12892,9 +12906,12 @@ Open **Plugins** to find and install **Codex Security Cloud**. Follow
 
 [Find Codex Security Cloud](https://chatgpt.com/plugins)
 
+    Track open findings and fixes across repositories. This example uses
+    fictional repositories, findings, and counts.
+
 #### How Codex Security Cloud works
 
-Choose a **Repository** scan to review a repository once, or **Commit changes**
+Choose **One-Time Scan** to review a repository once, or **Continuous Scanning**
 to monitor new commits. Codex uses repository context to identify likely
 vulnerabilities and validates issues in an isolated environment when possible.
 
@@ -31281,6 +31298,7 @@ Declaring support for an extension takes just a few lines of SDK code.
 |     | [Model-App Context](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#uiupdate-model-context-extensions) | Keep ChatGPT and your MCP App in sync with bidirectional context sharing.                                    |
 |     | [Composer mentions](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#composer-at-mentions)              | Let users find and select content from your plugin in the ChatGPT desktop composer.                          |
 |     | [Rich forms](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#openai-form-elicitation)                  | Ask users for structured input or let them choose from images, then return their response to your tool.      |
+|     | [Plugin onboarding](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#plugin-onboarding)                 | Guide users through setup in a new or existing conversation.                                                 |
 
 #### Sidebar apps
 
@@ -31357,8 +31375,6 @@ Pass this schema as `requestedSchema` in your form request. Each option uses
 `const` and `title`, with an optional `x-openai-thumbnail` icon.
 OpenAI-registered MCP servers require
 [multi-round-trip requests (MRTR)](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr).
-The SDK's [extended forms guide](https://github.com/openai/mcp-extensions/blob/main/typescript/README.md#form-elicitation)
-shows the legacy `elicitInput` helper for direct MCP connections.
 
 #### Extensions in the wild
 

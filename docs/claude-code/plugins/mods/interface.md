@@ -383,10 +383,10 @@ Input({
 ```
 
 ```text theme={null}
-Note: Type a note and press Enter ⏎ add
+Note: Type a note and press Enter
 ```
 
-This table lists every element:
+The [interface gallery](./gallery.md) has samples and screenshots of most elements. This table lists every element:
 
 | Element | What it draws | Where |
 | :- | :- | :- |

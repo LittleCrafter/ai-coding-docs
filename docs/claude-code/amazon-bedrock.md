@@ -480,6 +480,8 @@ Example configuration:
 
 If your organization delivers the guardrail headers through a [Claude apps gateway](./claude-apps-gateway.md) policy instead, they count as [settings that need approval](./server-managed-settings.md#environment-variables-and-the-approval-dialog).
 
+When the guardrail blocks a response partway through, the text streamed so far stays and the reply ends with the message configured on the guardrail for blocked responses.
+
 ## Use the Mantle endpoint
 
 Mantle is an Amazon Bedrock endpoint that serves Claude models through the native Anthropic API shape rather than the Amazon Bedrock Invoke API. It uses the same [AWS credentials](#2-configure-aws-credentials) and [`awsAuthRefresh` configuration](#advanced-credential-configuration).

@@ -523,7 +523,7 @@ The classifier checks [subagent](./sub-agents.md) work at three points:
 
 **Cost and latency**
 
-The classifier runs on Claude Sonnet 5 by default rather than on your `/model` selection. A classifier model that Anthropic configures server-side takes precedence over that default. When your session's model is Claude Sonnet 4.6, or when [`availableModels`](./model-config.md#restrict-model-selection) excludes Sonnet 5, the classifier runs on the session's model instead, or on an Opus model when the session runs on a [Fable model](./model-config.md#work-with-fable); on providers other than the Anthropic API, that Opus fallback is the provider's default Opus model.
+The classifier runs on Claude Sonnet 5 by default rather than on your `/model` selection. A classifier model that Anthropic configures server-side takes precedence over that default. When your session's model is Claude Sonnet 4.6, or when [`availableModels`](./model-config.md#restrict-model-selection) excludes Sonnet 5, the classifier runs on the session's model instead, or on an Opus model when the session runs on a [Fable model](./model-config.md#work-with-fable). On providers other than the Anthropic API, that Opus fallback is the model you set in [`ANTHROPIC_DEFAULT_OPUS_MODEL`](./model-config.md#environment-variables), or Opus 5 if you haven't set one.
 
 The session's first auto-mode request validates the Sonnet 5 default: if the request succeeds, Sonnet 5 stays the session's classifier model, and if it fails because the model isn't available, the session uses the fallback instead.
 

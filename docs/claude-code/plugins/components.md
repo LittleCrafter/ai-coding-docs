@@ -11,7 +11,6 @@
 <!--__MDX_SOURCE_BLOCK_0__-->    id: 'manifest',
 <!--__MDX_SOURCE_BLOCK_0__-->    name: 'Manifest',
 <!--__MDX_SOURCE_BLOCK_0__-->    path: '.claude-plugin/plugin.json',
-<!--__MDX_SOURCE_BLOCK_0__-->    required: "Required by Anthropic's directory",
 <!--__MDX_SOURCE_BLOCK_0__-->    lines: [{
 <!--__MDX_SOURCE_BLOCK_0__-->      depth: 0,
 <!--__MDX_SOURCE_BLOCK_0__-->      kind: 'folder',
@@ -429,7 +428,7 @@ Each file is the smallest valid example of its format, there to show the shape r
 
 <PluginExplorer>
   <Piece id="manifest">
-    The [manifest](./manifest-reference.md) is the `plugin.json` file in a plugin's `.claude-plugin/` directory. It contains the plugin's metadata and the `userConfig` values that Claude Code prompts the user for. Claude Code loads a plugin without one, but [Anthropic's directory](./publish.md#submit-to-anthropics-directory) requires it. Inside the file, only `name` is required. In this one, `description` is the text users see for the plugin in `/plugin`, and `version` keeps users on that version until you change it:
+    The [manifest](./manifest-reference.md) is the `plugin.json` file in a plugin's `.claude-plugin/` directory. It contains the plugin's metadata and the `userConfig` values that Claude Code prompts the user for. Claude Code loads a plugin without one. Inside the file, only `name` is required. In this one, `description` is the text users see for the plugin in `/plugin`, and `version` keeps users on that version until you change it:
 
     ```json theme={null}
     {

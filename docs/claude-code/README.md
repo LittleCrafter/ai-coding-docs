@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 218
+- **Pages mirrored:** 219
 - **Version:** 2.1.287
-- **Last updated:** 2026-10-01T22:03:28Z
+- **Last updated:** 2026-10-02T02:39:29Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -205,6 +205,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Use the mods API | [plugins/mods/api.md](./plugins/mods/api.md) | [source](<https://code.claude.com/docs/en/plugins/mods/api>) |
 | Create a mod | [plugins/mods/create.md](./plugins/mods/create.md) | [source](<https://code.claude.com/docs/en/plugins/mods/create>) |
 | React to events with a mod | [plugins/mods/events.md](./plugins/mods/events.md) | [source](<https://code.claude.com/docs/en/plugins/mods/events>) |
+| Interface gallery for mods | [plugins/mods/gallery.md](./plugins/mods/gallery.md) | [source](<https://code.claude.com/docs/en/plugins/mods/gallery>) |
 | Draw in the interface with a mod | [plugins/mods/interface.md](./plugins/mods/interface.md) | [source](<https://code.claude.com/docs/en/plugins/mods/interface>) |
 | Mods overview | [plugins/mods/overview.md](./plugins/mods/overview.md) | [source](<https://code.claude.com/docs/en/plugins/mods/overview>) |
 | Mods reference | [plugins/mods/reference.md](./plugins/mods/reference.md) | [source](<https://code.claude.com/docs/en/plugins/mods/reference>) |

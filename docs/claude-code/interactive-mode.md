@@ -348,7 +348,7 @@ Shell mode:
 * Exit with `Escape`, `Backspace`, or `Ctrl+U` on an empty prompt
 * Pasting text that starts with `!` into an empty prompt enters shell mode automatically, matching typed `!` behavior
 
-Unless your session is one of those listed under [strict sandbox mode](./sandboxing.md#the-unsandboxed-retry-escape-hatch), commands you type in shell mode run outside the [sandbox](./sandboxing.md) even when you've enabled sandboxing, because the sandbox applies to the commands Claude runs.
+Unless your session is one of those listed under [strict sandbox mode](./sandboxing.md#turn-off-the-retry-with-strict-sandbox-mode), commands you type in shell mode run outside the [sandbox](./sandboxing.md) even when you've enabled sandboxing, because the sandbox applies to the commands Claude runs.
 
 Claude responds to the command output automatically once it lands in the transcript, so you can run `! npm test` and get an explanation of the failures without a second prompt. The response costs the same as sending a normal prompt. To restore the earlier behavior where the output is added to context without a response, set [`respondToBashCommands`](./settings-reference.md#respondtobashcommands) to `false` in `settings.json`. Before v2.1.186, shell mode always added output to context without a response.
 
