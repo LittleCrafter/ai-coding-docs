@@ -32,7 +32,7 @@ View the full [Telegram plugin source](https://github.com/anthropics/claude-plug
    Open [BotFather](https://t.me/BotFather) in Telegram and send `/newbot`. Give it a display name and a unique username ending in `bot`. Copy the token BotFather returns.
 2. **Install the plugin**
 
-   In Claude Code, run:
+   Start Claude Code by running `claude` in your terminal, then enter this at its prompt:
 
    ```
    /plugin install telegram@claude-plugins-official
@@ -103,7 +103,7 @@ View the full [Discord plugin source](https://github.com/anthropics/claude-plugi
    Open the generated URL to add the bot to your server.
 4. **Install the plugin**
 
-   In Claude Code, run:
+   Start Claude Code by running `claude` in your terminal, then enter this at its prompt:
 
    ```
    /plugin install discord@claude-plugins-official
@@ -163,7 +163,7 @@ The iMessage channel reads your Messages database directly and sends replies thr
    If the prompt doesn't appear or you clicked Don't Allow, grant access manually under **System Settings > Privacy & Security > Full Disk Access** and add your terminal. Without this, the server exits immediately with `authorization denied`.
 2. **Install the plugin**
 
-   In Claude Code, run:
+   Start Claude Code by running `claude` in your terminal, then enter this at its prompt:
 
    ```
    /plugin install imessage@claude-plugins-official
@@ -214,7 +214,7 @@ To try the fakechat demo, you'll need:
 
 1. **Install the fakechat channel plugin**
 
-   Start a Claude Code session and run the install command:
+   Start Claude Code by running `claude` in your terminal, then enter the install command at its prompt:
 
    ```text theme={null}
    /plugin install fakechat@claude-plugins-official

@@ -951,7 +951,7 @@ Keep these constraints in mind when designing hooks:
 
 The reverse is not true: a hook returning `"allow"` doesn't bypass deny rules from settings, and it can't suppress the prompt for MCP tools marked [`requiresUserInteraction`](./mcp.md#require-approval-for-a-specific-tool) or for connector tools [your organization set to `ask`](./mcp.md#organization-controls-on-connector-tools) in sessions where that setting reaches Claude Code. Hooks in settings files and in a plugin's `hooks/hooks.json` can tighten restrictions but not loosen them past what permission rules allow.
 
-A [mod](./plugins/mods/overview.md) you install that hooks `tool.check` can approve a call that your `PreToolUse` hook blocked, unless the hook is in managed settings. [Extend permissions with hooks](./permissions.md#extend-permissions-with-hooks) lists which rules hold over a mod.
+A [mod](./plugins/mods/overview.md) you install that handles `tool.check` can approve a call that your `PreToolUse` hook blocked, unless the hook is in managed settings. [Extend permissions with hooks](./permissions.md#extend-permissions-with-hooks) lists which rules hold over a mod.
 
 ### Hook not firing
 
