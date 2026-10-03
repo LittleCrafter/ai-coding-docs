@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.288",
-  "last_updated": "2026-10-03T18:23:20Z",
+  "version": "2.1.289",
+  "last_updated": "2026-10-03T23:25:21Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -460,8 +460,8 @@
       "source_url": "https://code.claude.com/docs/en/changelog",
       "source_md_url": "https://code.claude.com/docs/en/changelog.md",
       "source_id": "changelog",
-      "hash": "cfda5db02abc841b259b8333257621c7057f52bd0e4a019b7fd838265c82fb63",
-      "last_updated": "2026-10-02T21:29:13Z"
+      "hash": "3c8c90e9f9c66c6d3629a358600c2de0d95041c8a82430ef2c7112a7b3c721da",
+      "last_updated": "2026-10-03T23:25:21Z"
     },
     "channels": {
       "slug": "channels",
@@ -640,8 +640,8 @@
       "source_url": "https://code.claude.com/docs/en/code-review",
       "source_md_url": "https://code.claude.com/docs/en/code-review.md",
       "source_id": "code-review",
-      "hash": "82eaf9c8df9286dd165a14adc9c21c9be493c3facf67c3010efcd08ed101d45d",
-      "last_updated": "2026-10-03T02:26:29Z"
+      "hash": "9e26a67957301d0d66c37d6d150809d5056750df11498ac1ee5f7c63e0383fbd",
+      "last_updated": "2026-10-03T23:25:21Z"
     },
     "commands": {
       "slug": "commands",
@@ -680,8 +680,8 @@
       "source_url": "https://code.claude.com/docs/en/computer-use",
       "source_md_url": "https://code.claude.com/docs/en/computer-use.md",
       "source_id": "computer-use",
-      "hash": "ef0242d171cb4fb8f8649b3ed3d63a6bb40273517efadcca37269e29abd6f423",
-      "last_updated": "2026-09-28T22:40:47Z"
+      "hash": "21a653de8d7f7a25e0f25c1685c66e25eaf2dae9258f110891dbee92802b346d",
+      "last_updated": "2026-10-03T23:25:21Z"
     },
     "context-window": {
       "slug": "context-window",
@@ -760,8 +760,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop",
       "source_md_url": "https://code.claude.com/docs/en/desktop.md",
       "source_id": "desktop",
-      "hash": "88b2a8986f881c54a56a9604fea0e75e97b8f2e86e3d1790993302771ef03146",
-      "last_updated": "2026-10-02T16:53:08Z"
+      "hash": "43bf8edef996a48bf167cc661640b032c36c163673a88d930c0e7cc529610a1c",
+      "last_updated": "2026-10-03T23:25:21Z"
     },
     "desktop-ios-simulator": {
       "slug": "desktop-ios-simulator",
@@ -800,8 +800,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop-scheduled-tasks",
       "source_md_url": "https://code.claude.com/docs/en/desktop-scheduled-tasks.md",
       "source_id": "desktop-scheduled-tasks",
-      "hash": "65ca64d1df400bda00533f76b0991b0e7a45e3261c77d98c296d07fd48834ae7",
-      "last_updated": "2026-09-28T22:40:47Z"
+      "hash": "5689899bb7455cf601594dfa9402da3ce57269db293e29c43cf866b3cdbee612",
+      "last_updated": "2026-10-03T23:25:21Z"
     },
     "desktop-wsl": {
       "slug": "desktop-wsl",
@@ -1900,8 +1900,8 @@
       "source_url": "https://code.claude.com/docs/en/vs-code",
       "source_md_url": "https://code.claude.com/docs/en/vs-code.md",
       "source_id": "vs-code",
-      "hash": "35d61a5fecb43be0b0324c2d71092070a469ac77f740b5d276ecab9a5c5d763b",
-      "last_updated": "2026-10-02T21:29:13Z"
+      "hash": "226011e9726648bc2398f98b69c131e7187f5f4998d2b2d127856afab77cd339",
+      "last_updated": "2026-10-03T23:25:21Z"
     },
     "web-quickstart": {
       "slug": "web-quickstart",
@@ -2195,8 +2195,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-03T18:23:20Z",
-    "fetch_duration_seconds": 76.45,
+    "last_fetch_completed": "2026-10-03T23:25:21Z",
+    "fetch_duration_seconds": 76.468,
     "total_pages_discovered": 219,
     "pages_fetched_successfully": 219,
     "pages_failed": 0,
