@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 52
-- **Last updated:** 2026-10-03T08:38:25Z
+- **Last updated:** 2026-10-03T14:01:29Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -80,6 +80,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Integrate with Reasonix | [quick_start/agent_integrations/reasonix.md](./quick_start/agent_integrations/reasonix.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/reasonix>) |
 | Integrate with WorkBuddy/CodeBuddy | [quick_start/agent_integrations/workbuddy.md](./quick_start/agent_integrations/workbuddy.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/workbuddy>) |
 | Error Codes | [quick_start/error_codes.md](./quick_start/error_codes.md) | [source](<https://api-docs.deepseek.com/quick_start/error_codes>) |
-| Your First API Call | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
+| Models &amp; Pricing | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
 | Rate Limit &amp; Isolation | [quick_start/rate_limit.md](./quick_start/rate_limit.md) | [source](<https://api-docs.deepseek.com/quick_start/rate_limit>) |
 | Token &amp; Token Usage | [quick_start/token_usage.md](./quick_start/token_usage.md) | [source](<https://api-docs.deepseek.com/quick_start/token_usage>) |

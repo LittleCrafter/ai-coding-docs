@@ -4,9 +4,9 @@ Install Antigravity CLI, configure enterprise requirements, and establish secure
 
 ## Installation
 
-Antigravity CLI runs natively on macOS, Linux, and Windows. Use the following platform-specific scripts to install or upgrade the binary on your system.
+Antigravity CLI runs natively on macOS, Linux, Googlebook, and Windows. Use the following platform-specific scripts to install or upgrade the binary on your system.
 
-### macOS and Linux
+### macOS, Linux, and Googlebook
 
 Execute the native installer script to download and install the executable to `~/.local/bin/agy`:
 
