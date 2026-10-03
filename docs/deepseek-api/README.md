@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 52
-- **Last updated:** 2026-10-02T21:30:39Z
+- **Last updated:** 2026-10-03T08:38:25Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -55,7 +55,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | 🚀 DeepSeek V2.5: The Grand Finale 🎉 | [news/news1210.md](./news/news1210.md) | [source](<https://api-docs.deepseek.com/news/news1210>) |
 | 🚀 Introducing DeepSeek-V3 | [news/news1226.md](./news/news1226.md) | [source](<https://api-docs.deepseek.com/news/news1226>) |
 | Introducing DeepSeek App | [news/news250115.md](./news/news250115.md) | [source](<https://api-docs.deepseek.com/news/news250115>) |
-| DeepSeek-R1 Release | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
+| Your First API Call | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
 | DeepSeek-V3-0324 Release | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
 | DeepSeek-R1-0528 Release | [news/news250528.md](./news/news250528.md) | [source](<https://api-docs.deepseek.com/news/news250528>) |
 | DeepSeek-V3.1 Release | [news/news250821.md](./news/news250821.md) | [source](<https://api-docs.deepseek.com/news/news250821>) |
@@ -80,6 +80,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Integrate with Reasonix | [quick_start/agent_integrations/reasonix.md](./quick_start/agent_integrations/reasonix.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/reasonix>) |
 | Integrate with WorkBuddy/CodeBuddy | [quick_start/agent_integrations/workbuddy.md](./quick_start/agent_integrations/workbuddy.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/workbuddy>) |
 | Error Codes | [quick_start/error_codes.md](./quick_start/error_codes.md) | [source](<https://api-docs.deepseek.com/quick_start/error_codes>) |
-| Models &amp; Pricing | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
+| Your First API Call | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
 | Rate Limit &amp; Isolation | [quick_start/rate_limit.md](./quick_start/rate_limit.md) | [source](<https://api-docs.deepseek.com/quick_start/rate_limit>) |
 | Token &amp; Token Usage | [quick_start/token_usage.md](./quick_start/token_usage.md) | [source](<https://api-docs.deepseek.com/quick_start/token_usage>) |

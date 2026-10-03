@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.288",
-  "last_updated": "2026-10-03T02:26:29Z",
+  "last_updated": "2026-10-03T08:36:59Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -110,8 +110,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/hooks",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/hooks.md",
       "source_id": "agent-sdk/hooks",
-      "hash": "336b2009dd4a144405594fc2ba0af450cb807c8c1e2ec1f80e7a672db9ef4005",
-      "last_updated": "2026-10-02T02:39:29Z"
+      "hash": "68b3e5fb8c6238de6a6a9bded3772151f9c02ea5bae19ead1ff9fdd766caa889",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "agent-sdk/hosting": {
       "slug": "agent-sdk/hosting",
@@ -200,8 +200,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/python",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/python.md",
       "source_id": "agent-sdk/python",
-      "hash": "c955eae3334ce2a2890f57d2c342b32178a870dc6a51fdada12f313ac0c375b0",
-      "last_updated": "2026-10-02T02:39:29Z"
+      "hash": "d9ea1a90326019f28b959408f6090b3ae297546e186a6fa6d96f4fce1e74116d",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "agent-sdk/quickstart": {
       "slug": "agent-sdk/quickstart",
@@ -310,8 +310,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/tool-search",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/tool-search.md",
       "source_id": "agent-sdk/tool-search",
-      "hash": "1f7c4d58eedc1f41f3cec88c8f206ab58b37295993a76e3cf9427382c300fcb5",
-      "last_updated": "2026-09-28T22:40:47Z"
+      "hash": "7953bcf4d062ba7d0aacb820f44c3033c7057c47ef9f3cad0807d85e76a0ac3c",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "agent-sdk/troubleshooting": {
       "slug": "agent-sdk/troubleshooting",
@@ -330,8 +330,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/typescript",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/typescript.md",
       "source_id": "agent-sdk/typescript",
-      "hash": "94ffcbd68d98ab644751c272d23b6f3a646dd99ebc147af203eddb7e3753c70c",
-      "last_updated": "2026-10-03T02:26:29Z"
+      "hash": "398b8f386e4031a2f0da50092097876f949c3bc1dc696dac493103e37514aee1",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "agent-sdk/typescript-v2-preview": {
       "slug": "agent-sdk/typescript-v2-preview",
@@ -470,8 +470,8 @@
       "source_url": "https://code.claude.com/docs/en/channels",
       "source_md_url": "https://code.claude.com/docs/en/channels.md",
       "source_id": "channels",
-      "hash": "7c1a6d98b19e87528d74990b5cc81ab3bed84760c3de217c76420759c309b04f",
-      "last_updated": "2026-10-02T09:04:47Z"
+      "hash": "519b8792081b5874db52ff8646839837590bb69638012ccd50910fdbc46db177",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "channels-reference": {
       "slug": "channels-reference",
@@ -830,8 +830,8 @@
       "source_url": "https://code.claude.com/docs/en/env-vars",
       "source_md_url": "https://code.claude.com/docs/en/env-vars.md",
       "source_id": "env-vars",
-      "hash": "7e13f9955e423f964f407df2df60b33f73529321cd3df91fd855a056450bce00",
-      "last_updated": "2026-10-03T02:26:29Z"
+      "hash": "262f2f69697ee72227a806b484a533bc59c9bb80b3e9c5ab20d435a995102984",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "errors": {
       "slug": "errors",
@@ -980,8 +980,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks",
       "source_md_url": "https://code.claude.com/docs/en/hooks.md",
       "source_id": "hooks",
-      "hash": "759c2909f71199ce395461ce2609c0fb35ca0096a7c7ef74aee1272bf9333b07",
-      "last_updated": "2026-10-03T02:26:29Z"
+      "hash": "86e751d62e866ddd81aca547f2b695874734ca8b94c8e09560c69e2967fcf32f",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "hooks-guide": {
       "slug": "hooks-guide",
@@ -990,8 +990,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks-guide",
       "source_md_url": "https://code.claude.com/docs/en/hooks-guide.md",
       "source_id": "hooks-guide",
-      "hash": "07b604dd7f4def2d89dac5db79c484e89c1bb7a00c667ad197432cc476fb0a89",
-      "last_updated": "2026-10-03T02:26:29Z"
+      "hash": "90f30016b322f5387124ec3ab710f25e609de5baf1e0a293a0e4efe2403d7af3",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "how-claude-code-works": {
       "slug": "how-claude-code-works",
@@ -1080,8 +1080,8 @@
       "source_url": "https://code.claude.com/docs/en/llm-gateway-protocol",
       "source_md_url": "https://code.claude.com/docs/en/llm-gateway-protocol.md",
       "source_id": "llm-gateway-protocol",
-      "hash": "a987753c802818845db3b781c34745aaa26dc63cc6b321e8514a5d05f4200e97",
-      "last_updated": "2026-10-03T02:26:29Z"
+      "hash": "4066c3b91c3b274dcaa8a49c44bdd9cea4a203d97dd166d30bdbe2b2360b2037",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "llm-gateway-rollout": {
       "slug": "llm-gateway-rollout",
@@ -1120,8 +1120,8 @@
       "source_url": "https://code.claude.com/docs/en/mcp",
       "source_md_url": "https://code.claude.com/docs/en/mcp.md",
       "source_id": "mcp",
-      "hash": "9f6321c7484b433097fea22d74214aa89e3d75c68bc29d862a7b43af4199fa9d",
-      "last_updated": "2026-10-03T02:26:29Z"
+      "hash": "8acc8d2d825dbccd2604fdceeca0bb7fdc3d1fd450f0dada9661ab621015f6dc",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "mcp-quickstart": {
       "slug": "mcp-quickstart",
@@ -1180,8 +1180,8 @@
       "source_url": "https://code.claude.com/docs/en/monitoring-usage",
       "source_md_url": "https://code.claude.com/docs/en/monitoring-usage.md",
       "source_id": "monitoring-usage",
-      "hash": "953487004f94c8721d3952fb7c3eefd62c93703f20e093163029c1167c7e1c9a",
-      "last_updated": "2026-10-02T16:53:08Z"
+      "hash": "21812134986bdd52645b791b692d83fa9b67994b915041a61eb937f0ae553be4",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "network-config": {
       "slug": "network-config",
@@ -1380,8 +1380,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins/marketplace-reference",
       "source_md_url": "https://code.claude.com/docs/en/plugins/marketplace-reference.md",
       "source_id": "plugins/marketplace-reference",
-      "hash": "bec481af660111b68c6a1ba042271b5b085826a16f5fa2c52cd0231437449075",
-      "last_updated": "2026-10-02T09:04:47Z"
+      "hash": "893bf9590cae2bfa62ceeed02d60e48533476b99125f994484f227824a644fe4",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "plugins/measure": {
       "slug": "plugins/measure",
@@ -1470,8 +1470,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins/mods/reference",
       "source_md_url": "https://code.claude.com/docs/en/plugins/mods/reference.md",
       "source_id": "plugins/mods/reference",
-      "hash": "1afefd218efbd8e41c251b5300de3e21aba09fa4d760fe971bfbee56c4cc6f72",
-      "last_updated": "2026-10-02T09:04:47Z"
+      "hash": "51daf49c7ecc8be367cd21681af3c19e7b637bbd0e170d6bb2ec4af3819faeb0",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "plugins/mods/test": {
       "slug": "plugins/mods/test",
@@ -1890,8 +1890,8 @@
       "source_url": "https://code.claude.com/docs/en/voice-dictation",
       "source_md_url": "https://code.claude.com/docs/en/voice-dictation.md",
       "source_id": "voice-dictation",
-      "hash": "63ebc986c63803d5c758d88a44f8cfbc84c1f15a9810ff9ee831e74463562ee7",
-      "last_updated": "2026-09-28T22:40:47Z"
+      "hash": "e006d9269daf966438361f26ee8a6816eb1af11a252e929211fed61244504f79",
+      "last_updated": "2026-10-03T08:36:59Z"
     },
     "vs-code": {
       "slug": "vs-code",
@@ -2195,8 +2195,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-03T02:26:29Z",
-    "fetch_duration_seconds": 76.545,
+    "last_fetch_completed": "2026-10-03T08:36:59Z",
+    "fetch_duration_seconds": 76.401,
     "total_pages_discovered": 219,
     "pages_fetched_successfully": 219,
     "pages_failed": 0,
