@@ -418,13 +418,12 @@ gemini-3.7-flash-medium   Gemini 3.7 Flash (Medium)
 gemini-3.6-flash-high     Gemini 3.6 Flash (High)
 gemini-3.6-flash-medium   Gemini 3.6 Flash (Medium)
 gemini-3.1-pro-high       Gemini 3.1 Pro (High)
-claude-sonnet-4-6         Claude Sonnet 4.6 (Thinking)
 ...
 ```
 
 ```
 # Pin a model by slug.
-agy -p "Reverse the string antigravity." --model gemini-3.5-flash-medium
+agy -p "Reverse the string antigravity." --model gemini-3.8-flash-medium
 
 # Set reasoning effort (low, medium, or high).
 agy -p "Outline a plan to add caching to this service." --effort high

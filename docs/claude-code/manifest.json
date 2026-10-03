@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.288",
-  "last_updated": "2026-10-03T08:36:59Z",
+  "last_updated": "2026-10-03T18:23:20Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -360,8 +360,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-teams",
       "source_md_url": "https://code.claude.com/docs/en/agent-teams.md",
       "source_id": "agent-teams",
-      "hash": "d6d9167019b6bf4159c785933212c3ff9c505a442b12de2ebaf3de1a1bc19d1d",
-      "last_updated": "2026-10-03T02:26:29Z"
+      "hash": "14ab166845b513daeaf7f123eaf9cdb3ff95c6afff131202e20174ef88a38ed9",
+      "last_updated": "2026-10-03T18:23:20Z"
     },
     "agent-view": {
       "slug": "agent-view",
@@ -2195,8 +2195,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-03T08:36:59Z",
-    "fetch_duration_seconds": 76.401,
+    "last_fetch_completed": "2026-10-03T18:23:20Z",
+    "fetch_duration_seconds": 76.45,
     "total_pages_discovered": 219,
     "pages_fetched_successfully": 219,
     "pages_failed": 0,
