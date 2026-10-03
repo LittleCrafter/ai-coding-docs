@@ -181,8 +181,8 @@ In `claude -p` and the Agent SDK, Claude Code never shows this prompt. It runs t
 * **Permission rule**: `Workflow` in your allow rules approves every workflow, and `Workflow(<name>)` approves one saved workflow by name.
 * **Auto permission mode**: the [classifier](./permission-modes.md#eliminate-prompts-with-auto-mode) reviews the call and can approve it.
 * **Bypass permissions mode**: Claude Code approves the call.
-* **A `PreToolUse` hook**: a [hook](./hooks.md#pretooluse) that returns `allow` for the call approves it.
-* **Your host**: a [`--permission-prompt-tool`](./cli-reference.md#cli-flags) approves it, or, with the Agent SDK, a [`canUseTool`](./agent-sdk/permissions.md) callback or a [`PermissionRequest` hook](./hooks.md#permissionrequest) approves it.
+* **A hook**: a [`PreToolUse`](./hooks.md#pretooluse) hook that allows the call approves it.
+* **Your host**: a [`--permission-prompt-tool`](./cli-reference.md#cli-flags) or, with the Agent SDK, a [`canUseTool`](./agent-sdk/permissions.md) callback approves it.
 
 In the Desktop app, an approval card shows the workflow name, the phase list, and a token-usage caution, with **Once**, **Always**, and **Deny** actions. The progress view appears in the Background tasks side pane.
 

@@ -194,7 +194,7 @@ This example adds Docker permissions on top of whatever the team settings.json a
 
 *When it loads: Rules without `paths:` load at session start. Rules with `paths:` load when a matching file enters context*
 
-Project instructions split into topic files that can load conditionally based on file paths. A rule without `paths:` frontmatter loads at session start like CLAUDE.md; a rule with `paths:` loads only when Claude reads a matching file.
+Project instructions split into topic files that can load conditionally based on file paths. A rule without `paths:` frontmatter loads at session start like CLAUDE.md; a rule with `paths:` loads only when Claude reads, writes, or edits a matching file.
 
 Like CLAUDE.md, rules are guidance Claude reads, not configuration Claude Code enforces. For guaranteed behavior use [hooks](./hooks.md) or [permissions](./permissions.md).
 
@@ -912,7 +912,7 @@ The scratchpad lives under Claude Code's temp directory rather than `~/.claude`.
 
 `<project>` is your working directory path with every character other than letters and digits replaced by `-`, such as `-Users-you-my-project`. If you set [`CLAUDE_CODE_TMPDIR`](./env-vars.md), the tree moves under that directory instead. Hooks receive the current session's path as [`scratchpad_dir`](./hooks.md#common-input-fields).
 
-Scratchpad files last as long as the session's transcript: the [retention sweep](#cleaned-up-automatically) deletes the directory when it deletes the transcript, and [`claude project purge`](#clear-local-data) doesn't touch the temp directory. Because the directory sits under the system temp location, your operating system can also clear it, such as on restart. To keep something Claude wrote there, ask Claude to move it into your project.
+Scratchpad files last as long as the session's transcript: the [retention sweep](#cleaned-up-automatically) deletes the directory when it deletes the transcript, and [`claude purge`](#clear-local-data) doesn't touch the temp directory. Because the directory sits under the system temp location, your operating system can also clear it, such as on restart. To keep something Claude wrote there, ask Claude to move it into your project.
 
 A session has a scratchpad only when all of these hold:
 
@@ -953,7 +953,7 @@ Transcripts and history are not encrypted at rest. OS file permissions are the o
 
 ### Clear local data
 
-Run `claude project purge` to delete the state Claude Code holds for one project. It deletes:
+Run `claude purge` to delete the state Claude Code holds for one project. It deletes:
 
 * Transcripts and auto memory under `projects/`
 * Per-session `tasks/`, `debug/`, and `file-history/` entries
@@ -964,12 +964,14 @@ Images you pasted or attached in the project's sessions and each session's [scra
 
 The command prints the full deletion plan and asks for confirmation before removing anything.
 
+Before v2.1.288, the command was `claude project purge`.
+
 The examples below use `~/work/my-repo` as a placeholder. Replace it with the path to your project. If no state matches the path, the command prints an error and exits with status 1.
 
 Preview the plan without deleting anything:
 
 ```bash theme={null}
-claude project purge ~/work/my-repo --dry-run
+claude purge ~/work/my-repo --dry-run
 ```
 
 The plan lists each matching item and why it is included:
@@ -992,7 +994,7 @@ Dry run: 3 item(s) would be deleted.
 Delete with a single confirmation prompt:
 
 ```bash theme={null}
-claude project purge ~/work/my-repo
+claude purge ~/work/my-repo
 ```
 
 The command prints the same plan, then asks `Delete 3 item(s) for /home/user/work/my-repo? This cannot be undone. [y/N]` and deletes only if you answer `y`.
@@ -1002,7 +1004,7 @@ Omit the path to pick a project from an interactive list.
 Skip the confirmation prompt for use in scripts:
 
 ```bash theme={null}
-claude project purge ~/work/my-repo --yes
+claude purge ~/work/my-repo --yes
 ```
 
 Pass `--all` instead of a path to purge state for every project at once, which deletes `history.jsonl` outright rather than filtering it. Pass `-i` to step through the deletion plan one item at a time.

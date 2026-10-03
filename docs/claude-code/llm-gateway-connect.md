@@ -246,7 +246,7 @@ options = ClaudeAgentOptions(
 
 ### Slack, cloud sessions, and Remote Control
 
-[Claude Code in Slack](./slack.md) and [cloud sessions](./claude-code-on-the-web.md) always use Anthropic's API; they aren't part of a gateway deployment. Gateway variables set in a cloud session's environment configuration are not applied. If your traffic must stay on the gateway, don't enable these surfaces for those users.
+[Claude Code in Slack](./slack.md) and [cloud sessions](./claude-code-on-the-web.md) aren't part of a gateway deployment. Gateway variables set in a cloud session's environment configuration are not applied. If your traffic must stay on the gateway, don't enable these surfaces for those users.
 
 [Remote Control](./remote-control.md) and [voice dictation](./voice-dictation.md) both rely on a claude.ai identity: Remote Control to pair a live session with your account, and voice dictation to reach the claude.ai transcription endpoint. They are unavailable while `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, or an `apiKeyHelper` is active. Remote Control is also disabled while `ANTHROPIC_BASE_URL` points at a non-Anthropic host, so signing in with claude.ai isn't enough on its own. Before v2.1.196, a non-Anthropic base URL didn't block Remote Control.
 

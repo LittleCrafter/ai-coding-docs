@@ -268,7 +268,7 @@ Learn more: [Remote Control](./remote-control.md)
 
 ### Rules
 
-Modular instruction files in `.claude/rules/` that load alongside CLAUDE.md. A rule can be path-scoped with YAML `paths:` frontmatter so it only loads when Claude reads a matching file, keeping context lean until it's relevant.
+Modular instruction files in `.claude/rules/` that load alongside CLAUDE.md. A rule can be path-scoped with YAML `paths:` frontmatter so it only loads when Claude reads, writes, or edits a matching file, keeping context lean until it's relevant.
 
 Learn more: [Organize rules with `.claude/rules/`](./memory.md#organize-rules-with-claude/rules/)
 

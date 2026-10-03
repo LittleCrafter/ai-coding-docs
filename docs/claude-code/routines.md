@@ -336,7 +336,7 @@ To allow additional domains on one of your own environments, follow these steps.
    Hover over the environment in the list and click the settings icon that appears on the right.
 4. **Change the network access level**
 
-   In the **Edit cloud environment** dialog, change **Network access** to **Custom** and enter your domains in **Allowed domains**. Check **Also include default list of common package managers** to keep the [default allowlist](./cloud-environments.md#default-allowed-domains) alongside your custom domains. Select **Full** instead for unrestricted access.
+   In the **Edit environment** dialog, change **Network access** to **Custom** and enter your domains in **Allowed domains**. Check **Also include default list of common package managers** to keep the [default allowlist](./cloud-environments.md#default-allowed-domains) alongside your custom domains. Select **Full** instead for unrestricted access.
 5. **Save**
 
    Click **Save changes**. The new policy applies from the next run.
