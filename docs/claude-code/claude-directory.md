@@ -474,7 +474,7 @@ Works the same as your [main auto memory](./memory.md#auto-memory): the subagent
 
 *When it loads: Read at session start for your preferences and MCP servers. Claude Code writes back to it when you change settings in `/config` or approve trust prompts*
 
-Holds state that does not belong in settings.json: theme, OAuth session, per-project trust decisions, your personal MCP servers, and UI toggles. Mostly managed through `/config` rather than editing directly.
+Holds state that does not belong in settings.json: OAuth session, per-project trust decisions, your personal MCP servers, and UI toggles. Mostly managed through `/config` rather than editing directly.
 
 **Tips**
 

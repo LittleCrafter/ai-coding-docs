@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.289",
-  "last_updated": "2026-10-04T18:26:58Z",
+  "last_updated": "2026-10-04T23:39:39Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -580,8 +580,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-directory",
       "source_md_url": "https://code.claude.com/docs/en/claude-directory.md",
       "source_id": "claude-directory",
-      "hash": "e6fd50be340c70be77e0f5d87bb163a3aab963f0f1f8363afc68f7af4e1dedef",
-      "last_updated": "2026-10-04T18:26:58Z"
+      "hash": "04f2dd0aad631b8cc663b2b01a77295d89cbcab8f435f062d75e6cd0af8dcdd3",
+      "last_updated": "2026-10-04T23:39:39Z"
     },
     "claude-platform-on-aws": {
       "slug": "claude-platform-on-aws",
@@ -1010,8 +1010,8 @@
       "source_url": "https://code.claude.com/docs/en/interactive-mode",
       "source_md_url": "https://code.claude.com/docs/en/interactive-mode.md",
       "source_id": "interactive-mode",
-      "hash": "68c35a7c72ad8ecaca17954c6e73d33e4fe4547a17020f3bf2d992ca223c0df4",
-      "last_updated": "2026-10-04T08:54:03Z"
+      "hash": "43d77a9a8e3a3f42edd54102438b35a6c6557eac72d144a7e1bae83947c7e6f5",
+      "last_updated": "2026-10-04T23:39:39Z"
     },
     "jetbrains": {
       "slug": "jetbrains",
@@ -1030,8 +1030,8 @@
       "source_url": "https://code.claude.com/docs/en/keybindings",
       "source_md_url": "https://code.claude.com/docs/en/keybindings.md",
       "source_id": "keybindings",
-      "hash": "aca049ffed1509007bd9dd3e35cb7a8b56b4121b6dd240d97c8024f4fc87a2a6",
-      "last_updated": "2026-10-04T08:54:03Z"
+      "hash": "4d46b7570e420ae3760e77bae80b0abfef38c6c97abc731bc83b43fdae421fa6",
+      "last_updated": "2026-10-04T23:39:39Z"
     },
     "large-codebases": {
       "slug": "large-codebases",
@@ -2195,8 +2195,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-04T18:26:58Z",
-    "fetch_duration_seconds": 76.461,
+    "last_fetch_completed": "2026-10-04T23:39:39Z",
+    "fetch_duration_seconds": 76.46,
     "total_pages_discovered": 219,
     "pages_fetched_successfully": 219,
     "pages_failed": 0,
