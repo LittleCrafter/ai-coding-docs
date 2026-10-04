@@ -458,7 +458,7 @@ You can do something similar with tests: have one Claude write tests, then anoth
 ### Fan out across files
 
 > [!TIP]
-> Loop through tasks calling `claude -p` for each. Use `--allowedTools` to scope permissions for batch operations.
+> Loop through tasks calling `claude -p` for each. Use `--allowedTools` to pre-approve tools for batch operations.
 
 For large migrations or analyses, you can distribute work across many parallel Claude invocations. Run [`/batch <instruction>`](./commands.md#all-commands) to have Claude split the change across 5 to 30 subagents. Each subagent works in its own worktree. To drive the fan-out from your own script instead, loop over `claude -p`:
 
@@ -470,12 +470,13 @@ For large migrations or analyses, you can distribute work across many parallel C
    ```bash theme={null}
    for file in $(cat files.txt); do
      claude -p "Migrate $file from Python 2 to Python 3. Return OK or FAIL." \
-       --allowedTools "Edit,Bash(git commit *)"
+       --allowedTools "Edit,Bash(git commit *)" \
+       --permission-mode dontAsk
    done
    ```
 3. **Test on a few files, then run on all of them**
 
-   Refine your prompt based on what goes wrong with the first 2-3 files, then run on the full set. The `--allowedTools` flag restricts what Claude can do, which matters when you're running unattended.
+   Refine your prompt based on what goes wrong with the first 2-3 files, then run on the full set. The `--allowedTools` flag pre-approves the tools the migration needs, and [`--permission-mode dontAsk`](./permission-modes.md#allow-only-pre-approved-tools-with-dontask-mode) denies anything else that would need approval, which matters when you're running unattended.
 
 You can also integrate Claude into existing data/processing pipelines:
 
