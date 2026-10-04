@@ -6,7 +6,7 @@
 
 > Centrally configure Claude Code for your organization through server-delivered settings, without requiring device management infrastructure.
 
-Server-managed settings let organization Owners centrally configure Claude Code from [**Admin Settings > Claude Code > Managed settings**](https://claude.ai/admin-settings/claude-code) in the claude.ai console. Claude Code clients fetch these settings automatically when users authenticate with an eligible credential on a platform where server-managed delivery is supported. See [Platform availability](#platform-availability) for the credentials and platforms that qualify.
+Server-managed settings let organization Owners centrally configure Claude Code from [**Organization settings > Claude Code > Managed settings**](https://claude.ai/admin-settings/claude-code) in the claude.ai console. Claude Code clients fetch these settings automatically when users authenticate with an eligible credential on a platform where server-managed delivery is supported. See [Platform availability](#platform-availability) for the credentials and platforms that qualify.
 
 > [!NOTE]
 > Server-managed settings are available for [Claude for Teams](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=server_settings_teams#team-&-enterprise) and [Claude for Enterprise](https://anthropic.com/contact-sales?utm_source=claude_code\&utm_medium=docs\&utm_content=server_settings_enterprise) customers.
@@ -34,9 +34,9 @@ If your devices are enrolled in an MDM or endpoint management solution, endpoint
 
 1. **Open the admin console**
 
-   In the claude.ai console, go to [**Admin Settings > Claude Code > Managed settings**](https://claude.ai/admin-settings/claude-code).
+   In the claude.ai console, go to [**Organization settings > Claude Code > Managed settings**](https://claude.ai/admin-settings/claude-code).
 
-   If the link redirects you to a different Admin Settings page instead of the Claude Code page, your account doesn't have the required role. Admin and other non-Owner roles can't view or edit managed settings, so ask an Owner or Primary Owner in your organization to make the change. See [Access control](#access-control).
+   If the link redirects you to a different Organization settings page instead of the Claude Code page, your account doesn't have the required role. Admin and other non-Owner roles can't view or edit managed settings, so ask an Owner or Primary Owner in your organization to make the change. See [Access control](#access-control).
 2. **Define your settings**
 
    Add your configuration as JSON. All [settings available in `settings.json`](./settings-reference.md#all-settings) are supported except those restricted to OS-level policy delivery; see [Current limitations](#current-limitations) for that short list. This includes [hooks](./hooks.md), [environment variables](./env-vars.md), and [managed-only settings](./managed-settings.md#managed-only-settings) like `allowManagedPermissionRulesOnly`.

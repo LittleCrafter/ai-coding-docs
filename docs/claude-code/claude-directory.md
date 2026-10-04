@@ -558,7 +558,7 @@ Settings follow a precedence order: project `settings.json` overrides any matchi
 
 Rebind keyboard shortcuts in the interactive CLI. Run `/keybindings` to create or open this file with a schema reference. Ctrl+C, Ctrl+D, Ctrl+M, and Caps Lock are reserved and cannot be rebound.
 
-This example binds `Ctrl+E` to open your external editor and unbinds `Ctrl+U` by setting it to `null`. The `context` field scopes bindings to a specific part of the CLI, here the main chat input.
+This example binds `Ctrl+E` to open your external editor and unbinds `Ctrl+S` by setting it to `null`. The `context` field scopes bindings to a specific part of the CLI, here the main chat input.
 
 ```json
 {
@@ -569,7 +569,7 @@ This example binds `Ctrl+E` to open your external editor and unbinds `Ctrl+U` by
       "context": "Chat",
       "bindings": {
         "ctrl+e": "chat:externalEditor",
-        "ctrl+u": null
+        "ctrl+s": null
       }
     }
   ]
