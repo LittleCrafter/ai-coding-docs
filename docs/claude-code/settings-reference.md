@@ -1332,7 +1332,7 @@ Send every Bash and PowerShell command through the auto mode classifier while au
 }
 ```
 
-See [Route all shell commands through the classifier](./auto-mode-config.md#route-all-shell-commands-through-the-classifier). Requires Claude Code v2.1.193 or later.
+See [Route all shell commands through the classifier](./auto-mode-config.md#route-all-shell-commands-through-the-classifier).
 
 ### `disableAutoMode`
 
