@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 52
-- **Last updated:** 2026-10-04T23:41:06Z
+- **Last updated:** 2026-10-05T09:42:14Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -62,7 +62,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DeepSeek-V3.1-Terminus | [news/news250922.md](./news/news250922.md) | [source](<https://api-docs.deepseek.com/news/news250922>) |
 | Introducing DeepSeek-V3.2-Exp | [news/news250929.md](./news/news250929.md) | [source](<https://api-docs.deepseek.com/news/news250929>) |
 | Your First API Call | [news/news251201.md](./news/news251201.md) | [source](<https://api-docs.deepseek.com/news/news251201>) |
-| Your First API Call | [news/news260424.md](./news/news260424.md) | [source](<https://api-docs.deepseek.com/news/news260424>) |
+| DeepSeek V4 Preview Release | [news/news260424.md](./news/news260424.md) | [source](<https://api-docs.deepseek.com/news/news260424>) |
 | DeepSeek-V4-Pro GA Release | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
 | DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live | [news/news260821.md](./news/news260821.md) | [source](<https://api-docs.deepseek.com/news/news260821>) |
 | DeepSeek-V4.1-Flash: Smarter, Faster, More Efficient | [news/news260910.md](./news/news260910.md) | [source](<https://api-docs.deepseek.com/news/news260910>) |
