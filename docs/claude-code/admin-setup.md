@@ -118,7 +118,7 @@ None of these controls reach sessions on Amazon Bedrock, Google Cloud's Agent Pl
 
 * **Cloud environments page**: Owners create [organization-shared environments](./cloud-environments.md#organization-shared-environments) that set the [network access level](./cloud-environments.md#network-access), environment variables, and setup script for members' cloud sessions.
 * **Default environment**: Owners choose the organization's default environment separately, at [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code).
-* **GitHub page**: see [Connected GitHub accounts](#connected-github-accounts) for the GitHub accounts linked to your organization.
+* **Git providers page**: see [Connected GitHub accounts](#connected-github-accounts) for the GitHub accounts linked to your organization.
 
 Permission rules and sandboxing cover different layers. Denying WebFetch blocks Claude's fetch tool, but if Bash is allowed, `curl` and `wget` can still reach any URL. Sandboxing closes that gap with a network domain allowlist enforced at the OS level.
 
@@ -126,11 +126,11 @@ For the threat model these controls defend against, see [Security](./security.md
 
 ### Connected GitHub accounts
 
-On Team and Enterprise plans, [**Organization settings > GitHub**](https://claude.ai/admin-settings/github) lists the GitHub organizations and personal accounts linked to your Claude organization through the [Claude GitHub App](https://github.com/apps/claude). Claude Code, [Claude Tag](https://claude.com/docs/claude-tag/admins/configure-github), and Claude Security share the list. Opening it requires an admin role in your Claude organization.
+On Team and Enterprise plans, the GitHub section of [**Organization settings > Git providers**](https://claude.ai/admin-settings/source-control) lists the GitHub organizations and personal accounts linked to your Claude organization through the [Claude GitHub App](https://github.com/apps/claude). Claude Code, [Claude Tag](https://claude.com/docs/claude-tag/admins/configure-github), and Claude Security share the list. Opening the page requires an admin role in your Claude organization.
 
 An admin or a member can link an account:
 
-* **Admin connection**: an admin clicks **Connect** on that page and installs the Claude GitHub App on a GitHub organization. Linking an organization this way requires someone who is both an owner of the GitHub organization and an admin of your Claude organization.
+* **Admin connection**: an admin clicks **Connect** in that section, or **Add organization** once an account is connected, and installs the Claude GitHub App on a GitHub organization. Linking an organization this way requires someone who is both an owner of the GitHub organization and an admin of your Claude organization.
 * **Member connection**: when a member connects their GitHub account to Claude, for example while [setting up cloud sessions](./web-quickstart.md#connect-github), Claude links the GitHub accounts that member owns where the Claude GitHub App is already installed. That can include their personal account and GitHub organizations they own.
 
 A row marked **Not linked** comes from your own GitHub sign-in. It's an account you can see on GitHub where the Claude GitHub App is installed.
@@ -160,9 +160,10 @@ On Team, Enterprise, Claude API, and cloud provider plans, Anthropic doesn't tra
 | :- | :- | :- |
 | Data usage policy | What Anthropic collects, how long it's retained, what's never used for training | [Data usage](./data-usage.md) |
 | Zero Data Retention (ZDR) | Nothing stored after the request completes. Available to qualified accounts on Claude for Enterprise | [Zero data retention](./zero-data-retention.md) |
+| HIPAA configuration | For Claude for Enterprise organizations that have HIPAA enabled. Some Claude Code (local mode) features are turned off and others are off by default | [Set up Claude Code (local mode) for a HIPAA-ready organization](./hipaa-setup.md) |
 | Security architecture | Network model, encryption, authentication, audit trail | [Security](./security.md) |
 
-If you need request-level audit logging or to route traffic by data sensitivity, place a gateway between developers and your provider: a self-hosted [Claude apps gateway](./claude-apps-gateway.md) records a per-request audit log with IdP identity, or use another [LLM gateway](./llm-gateway.md). For regulatory requirements and certifications, see [Legal and compliance](./legal-and-compliance.md).
+If you need request-level audit logging or to route traffic by data sensitivity, we recommend you place a gateway between developers and your provider: a self-hosted [Claude apps gateway](./claude-apps-gateway.md) records a per-request audit log with IdP identity, or you can use another [LLM gateway](./llm-gateway.md). Sessions that go through a gateway aren't eligible for the HIPAA configuration. [Check how developers sign in and connect](./hipaa-setup.md#check-how-developers-sign-in-and-connect) lists the connections that are. For regulatory requirements and certifications, see [Legal and compliance](./legal-and-compliance.md).
 
 ## Verify and onboard
 

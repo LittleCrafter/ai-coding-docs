@@ -5330,10 +5330,10 @@ vulnerabilities. Use its command-line interface (CLI) to scan
 repositories you own or have permission to assess, review findings over time,
 and check changes before they land.
 
-The `@openai/codex-security` package is public. Running scans requires Codex
-Security access. For an interactive scan in Codex, start with the [Codex
-Security plugin quickstart](./security/plugin.md). For connected GitHub
-repositories, see [Codex Security cloud setup](./security/setup.md).
+The `@openai/codex-security` package is public. Scans using OpenAI inference
+require Codex Security access. For an interactive scan in Codex, start with
+the [Codex Security plugin quickstart](./security/plugin.md). For connected
+GitHub repositories, see [Codex Security cloud setup](./security/setup.md).
 
 #### Check the prerequisites
 
@@ -5369,7 +5369,7 @@ See also [CLI reference](./security/cli/reference.md).
 
 #### Sign in
 
-For local use, sign in with your ChatGPT account:
+Sign in with your ChatGPT account:
 
 ```bash
 npx @openai/codex-security login
@@ -5387,8 +5387,13 @@ For CI and other automated workflows, set an OpenAI API key:
 export OPENAI_API_KEY="<your-api-key>"
 ```
 
-For AWS credentials, see [Amazon Bedrock
-setup](./security/cli/reference.md#use-amazon-bedrock). For [OpenRouter or
+For Amazon Bedrock, follow the [Amazon Bedrock
+setup](./security/cli/reference.md#use-amazon-bedrock) instead of signing in
+with ChatGPT or setting an OpenAI API key. Check [Bedrock release
+status](./security/cli/reference.md#bedrock-release-status) to see what your
+installed version supports.
+
+For [OpenRouter or
 Fireworks](./security/cli/reference.md#use-openrouter-or-fireworks), set the
 provider's API key and select a model with `--provider` and `--model`.
 
@@ -5784,9 +5789,9 @@ Use this reference to check the supported `codex-security` commands, flags,
 output formats, and exit behavior. For a guided first scan, start with the
 [CLI quickstart](./security/cli.md).
 
-The `@openai/codex-security` package is public. Running scans requires Codex
-Security access. Scans use your local permissions and don't pause for
-approval. Before you start, review [Local scan
+The `@openai/codex-security` package is public. Scans using OpenAI inference
+require Codex Security access. Scans use your local permissions and don't
+pause for approval. Before you start, review [Local scan
 permissions](#local-scan-permissions).
 
 Run the CLI with `npx @openai/codex-security`.
@@ -5957,20 +5962,80 @@ Both providers also support `bulk-scan`.
 
 #### Use Amazon Bedrock
 
-Select Amazon Bedrock with `--provider amazon-bedrock` and specify an explicit
-Bedrock model with `--model`:
+Use `--provider amazon-bedrock` and a Bedrock model ID with `scan` or
+`bulk-scan`. After AWS provisions model access, scans use AWS credentials
+without `--auth`, an OpenAI login, or an OpenAI API key.
+
+#### Daybreak Blue and Daybreak Red
+
+Daybreak Blue and Daybreak Red require Trusted Access for Cyber approval.
+To request access, submit the [enterprise access application](https://openai.com/form/enterprise-trusted-access-for-cyber/) or contact your OpenAI account team.
+After approval, work with your AWS account team to provision model access
+on Amazon Bedrock.
+
+Daybreak Red approval does not include GPT-5.6-Cyber access. GPT-5.6-Cyber
+requires separate U.S. government (USG) approval. Ask your OpenAI account
+team to request this additional approval before provisioning GPT-5.6-Cyber
+on Amazon Bedrock. See the [Daybreak access requirements](https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview).
+
+| Access        | Bedrock model ID                   | AWS region  |
+| ------------- | ---------------------------------- | ----------- |
+| Daybreak Blue | `openai.gpt-daybreak-blue-5.6-sol` | `us-east-2` |
+| Daybreak Red  | `openai.gpt-5.6-cyber`             | `us-east-2` |
+
+For availability, check the AWS model cards for [Daybreak Blue](https://docs.aws.amazon.com/en_en/bedrock/latest/userguide/model-card-openai-gpt-daybreak-blue-56-sol.html) and [Daybreak Red](https://docs.aws.amazon.com/en_en/bedrock/latest/userguide/model-card-openai-gpt-56-cyber.html).
+
+To scan with Daybreak Blue, replace `` with an AWS profile
+that has access to the Daybreak Blue model:
 
 ```bash
+export AWS_PROFILE="<aws-profile-name>"
+export AWS_REGION="us-east-2"
 npx @openai/codex-security scan . \
   --provider amazon-bedrock \
-  --model openai.gpt-5.6-terra
+  --model openai.gpt-daybreak-blue-5.6-sol --effort high
 ```
 
-Set `AWS_REGION` and authenticate with `AWS_BEARER_TOKEN_BEDROCK`, standard AWS
-access keys, an AWS profile, web identity, container credentials, or the
-default AWS credential chain. Bedrock scans use AWS credentials instead of
-`--auth`, ChatGPT sign-in, or an OpenAI API key. Both `scan` and `bulk-scan`
-support `--provider`.
+To scan with Daybreak Red, choose an AWS profile with GPT-5.6-Cyber access.
+This may differ from the profile you use for Daybreak Blue:
+
+```bash
+export AWS_PROFILE="<aws-profile-name>"
+export AWS_REGION="us-east-2"
+npx @openai/codex-security scan . \
+  --provider amazon-bedrock \
+  --model openai.gpt-5.6-cyber --effort high
+```
+
+You can also authenticate with `AWS_BEARER_TOKEN_BEDROCK` or the standard
+AWS credential chain. Temporary access keys require `AWS_SESSION_TOKEN`.
+Set credentials and `AWS_REGION` in the same shell or CI job as the scan.
+
+#### Local results and access checks
+
+Saved local reports, `scans show`, and `export` work without cloud credentials.
+Uploading findings to Codex Security Cloud requires a separate ChatGPT
+sign-in and access to the destination.
+
+`info` and `scan --dry-run` don't test AWS credentials or model access. Run a
+scan to check access. For AWS authentication or access-denied errors, check
+your credentials, region, and model permissions.
+
+#### Bedrock release status
+
+`@openai/codex-security@0.1.31` supports Amazon Bedrock scans. This version
+doesn't provide cost estimates or support `--max-cost` for the Daybreak Blue
+and Daybreak Red model IDs above.
+
+Check your installed package and bundled Codex versions:
+
+```bash
+npx @openai/codex-security --version
+npx @openai/codex-security info --json
+```
+
+Use `npx @openai/codex-security scan --help` to check the options available
+in your installed version.
 
 #### Select the scan target
 
@@ -12773,7 +12838,7 @@ every MCP server and UI component as production software:
 
 #### Prompt injection and write actions
 
-Developer mode enables full MCP access, including write tools. Mitigate risk by:
+Custom MCP servers enable full MCP access, including write tools. Mitigate risk by:
 
 - Reviewing tool descriptions regularly to discourage misuse (“Do not use to delete records”).
 - Validating all inputs server-side even if the model provided them.
@@ -25775,15 +25840,14 @@ Use the inspector to:
 4. Verify schemas, results, errors, and annotations.
 5. Confirm that authorization is enforced for private data and write actions.
 
-Then connect the server to ChatGPT in
-[developer mode](https://developers.openai.com/plugins/deploy/connect-chatgpt) and run the direct,
+Then [connect the custom MCP server to ChatGPT](https://developers.openai.com/plugins/deploy/connect-chatgpt) and run the direct,
 indirect, edge-case, and out-of-scope requests from your use-case inventory.
 
 #### Deploy the endpoint
 
 For public plugin submission, deploy the MCP server at a stable, publicly
 reachable HTTPS endpoint. [Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels)
-can connect a private MCP server in developer mode, but it does not satisfy
+can connect a private MCP server in ChatGPT, but it does not satisfy
 public submission requirements.
 
 The production endpoint must:
@@ -25846,7 +25910,7 @@ authentication, results, and errors.
 
 Keep published tool names and schemas backward compatible. Add fields or tools
 without breaking existing contracts. If metadata changes, refresh the
-developer-mode connection and rerun the evaluation set before submission.
+custom MCP server connection and rerun the evaluation set before submission.
 
 For optional UI, version resource identifiers when HTML, JavaScript, or CSS
 changes in a way that could break a cached component.
@@ -26453,7 +26517,7 @@ Source: [Connect and test your plugin](https://developers.openai.com/plugins/dep
 
 Test each capability before testing the complete installed plugin. If the
 plugin includes an MCP server, start by connecting and evaluating the server in
-developer mode. Then package the plugin with its skills and test the complete
+ChatGPT. Then package the plugin with its skills and test the complete
 experience. Skills-only plugins can skip the first section.
 
 Keep your evaluation prompts and results throughout development so you can
@@ -26472,7 +26536,7 @@ Confirm that:
 - Tool names, descriptions, schemas, and annotations are present.
 - Authentication discovery works for tools that require an account.
 
-Use Secure MCP Tunnel to connect a private MCP server in developer mode without
+Use Secure MCP Tunnel to connect a private MCP server in ChatGPT without
 exposing the server to the public internet. A development tunnel or another
 HTTPS forwarding service can also provide an endpoint for local testing. These
 testing options do not replace the public HTTPS endpoint required for
@@ -26491,27 +26555,20 @@ Exercise each tool with representative inputs, edge cases, missing identifiers,
 and empty results. Verify schema validation, authentication errors, annotations,
 confirmation behavior, and the model-readable result.
 
-#### Enable developer mode
-
-In ChatGPT:
-
-1. Open **Settings**.
-2. Select **Security and login**.
-3. Turn on **Developer mode**.
-
-Developer mode availability can depend on account and workspace policy.
-
 #### Add the MCP server
 
+Account and workspace policies apply to creating and using custom MCP servers.
+
 1. Go to [ChatGPT Plugins](https://chatgpt.com/plugins).
-2. Select the plus button.
+2. Select the plus button, then **Create custom MCP server**.
 3. Enter a user-facing name and description.
 4. Under **Connection**, choose the connection method:
    - For a public endpoint, enter the MCP server URL, including the `/mcp` path.
    - For Secure MCP Tunnel, select **Tunnel**, then choose an available tunnel
      or enter its `tunnel_id`.
-5. Create the connection.
-6. Review the tools and metadata discovered from the server.
+5. Configure authentication, review the risk warning, and select **I understand and want to continue**.
+6. Select **Create as a plugin**.
+7. Review the tools and metadata discovered from the server.
 
 If ChatGPT cannot connect, verify the public HTTPS endpoint with MCP Inspector,
 or check the tunnel's workspace association and `tunnel-client` status. Resolve
@@ -26519,7 +26576,8 @@ transport, initialization, schema, or authentication errors before continuing.
 
 #### Check tool selection
 
-Start a new conversation and add the MCP connection from the tools menu. Create
+Install the resulting plugin, then start a new conversation. Type `@` in the
+prompt box and select the plugin. Create
 an evaluation set that includes:
 
 - Direct requests that should call a specific tool.
@@ -26555,7 +26613,7 @@ or UI resources:
 4. Confirm that the advertised metadata changed.
 5. Start a new conversation and rerun the affected tests.
 
-This refresh flow applies to MCP servers connected in developer mode.
+This refresh flow applies to custom MCP servers connected directly in ChatGPT.
 Published plugins use
 [continuous review](https://developers.openai.com/plugins/deploy/app-review#continuous-review-and-tool-updates)
 for tool updates. Changes to submitted plugin information or imported skills
@@ -29426,7 +29484,7 @@ ngrok http <port>
 
 This will give you a public URL like `https://.ngrok.app` that you can use to access your server from ChatGPT.
 
-When you connect your MCP server in developer mode, provide the public URL with
+When you connect your MCP server in ChatGPT, provide the public URL with
 the `/mcp` path (for example, `https://.ngrok.app/mcp`).
 
 #### Connect your MCP server in ChatGPT
@@ -29434,11 +29492,10 @@ the `/mcp` path (for example, `https://.ngrok.app/mcp`).
 Once your MCP server and web component work locally, connect the server in
 ChatGPT:
 
-1. In [ChatGPT](https://chatgpt.com), open **Settings → Security and login** and turn on **Developer mode**.
-2. Go to [ChatGPT Plugins](https://chatgpt.com/plugins) and select the plus button.
-3. Paste the HTTPS + `/mcp` URL from your tunnel or deployment (for example, `https://.ngrok.app/mcp`), name the connection, provide a short description, and click **Create**.
-
-4. Open a new chat, select the plugin from the **More** menu (accessible after clicking the **+** button), and prompt the model (for example, “Add a new task to read my book”). ChatGPT will stream tool payloads so you can confirm inputs and outputs.
+1. Go to [ChatGPT Plugins](https://chatgpt.com/plugins), select the plus button, then **Create custom MCP server**.
+2. Paste the HTTPS + `/mcp` URL from your tunnel or deployment (for example, `https://.ngrok.app/mcp`), name the connection, and configure authentication.
+3. Review the risk warning, select **I understand and want to continue**, then **Create as a plugin**.
+4. Install the resulting plugin, open a new chat, type `@` in the prompt box, and select the plugin. Prompt the model (for example, “Add a new task to read my book”). ChatGPT will stream tool payloads so you can confirm inputs and outputs.
 
 #### Next steps
 
@@ -30381,13 +30438,11 @@ For each tool:
 
 {/_ vale Vale.Terms = NO _/}
 
-#### Evaluate in developer mode
+#### Evaluate your custom MCP server
 
 {/_ vale Vale.Terms = YES _/}
 
-1. In ChatGPT, turn on Developer mode from **Settings → Security and login**,
-   then register your MCP server at
-   [ChatGPT Plugins](https://chatgpt.com/plugins).
+1. [Connect your custom MCP server](https://developers.openai.com/api/docs/guides/custom-mcp-server) in ChatGPT and install the resulting plugin.
 2. Run through the golden prompt set and record the outcome: which tool was selected, what arguments were passed, and whether the component rendered.
 3. For each prompt, track precision (did the right tool run?) and recall (did the tool run when it should?).
 
@@ -30497,21 +30552,14 @@ the portable MCP format also declares a transport `type` for each server.
 
 You can also use the plugin-creator skill to test a plugin that includes an MCP
 server. The plugin still needs a local folder and manifest, and you first
-register the MCP server connection in ChatGPT developer mode.
-
-First, enable developer mode in ChatGPT:
-
-1. Open [ChatGPT](https://chatgpt.com).
-2. Open **Settings**.
-3. Select **Security and login**.
-4. Turn on **Developer mode**.
-
-Then register the MCP server in developer mode:
+register the MCP server connection in ChatGPT:
 
 1. Go to [ChatGPT Plugins](https://chatgpt.com/plugins).
-2. Select the plus button.
-3. Complete the modal with your MCP server URL and connection details.
-4. After ChatGPT creates the connection, copy its technical ID from the browser
+2. Select the plus button, then **Create custom MCP server**.
+3. Complete the form with your MCP server URL and connection details.
+4. Review the risk warning and select **I understand and want to continue**.
+5. Select **Create as a plugin**.
+6. After ChatGPT creates the connection, copy its technical ID from the browser
    URL. It starts with `plugin_asdk_app`.
 
 Give that `plugin_asdk_app...` ID to `@plugin-creator` in Work mode in ChatGPT
@@ -32210,14 +32258,13 @@ This quickstart uses a public example MCP server at
 
 #### Connect your MCP server
 
-First, add your deployed MCP server in ChatGPT developer mode:
+First, connect your MCP server with [Create custom MCP server](https://developers.openai.com/api/docs/guides/custom-mcp-server):
 
-1. Open [ChatGPT](https://chatgpt.com).
-2. Open **Settings → Security and login** and turn on **Developer mode**.
-3. Go to [ChatGPT Plugins](https://chatgpt.com/plugins), select the plus
-   button, and enter
-   `https://tinymcp.dev/api/moldy-aloof-zettabyte/mcp` as the MCP server URL.
-4. Complete the connection details and create the plugin.
+1. Go to [ChatGPT Plugins](https://chatgpt.com/plugins).
+2. Select the plus button, then **Create custom MCP server**.
+3. Enter a name and use `https://tinymcp.dev/api/moldy-aloof-zettabyte/mcp` as the **Server URL**. Select **No authentication** for **Authentication**.
+4. Review the risk warning and select **I understand and want to continue**.
+5. Select **Create as a plugin**.
 
 #### Test the plugin
 
@@ -32907,7 +32954,7 @@ server: organization verification, management permissions, server requirements,
 review snapshots, and version maintenance.
 
 When the remote MCP server works in
-[developer mode](https://developers.openai.com/plugins/deploy/connect-chatgpt#test-an-mcp-server-optional),
+[ChatGPT](https://developers.openai.com/plugins/deploy/connect-chatgpt#test-an-mcp-server-optional),
 submit it
 for review in the
 [plugin submission portal](https://platform.openai.com/plugins). This page
@@ -32915,7 +32962,7 @@ covers the remote MCP server and optional UI requirements for that submission.
 
 Only submit the plugin if you intend for it to be publicly available in the
 countries you define during submission. For private or workspace-only use, use
-[developer mode](https://platform.openai.com/docs/guides/developer-mode)
+[a custom MCP server connection](https://developers.openai.com/api/docs/guides/custom-mcp-server)
 instead.
 
 Before submitting the plugin, review the
@@ -33056,7 +33103,7 @@ Review timelines may vary as we continue to build and scale our processes. Pleas
   - Compare actual outputs to precise expected behavior for each tool and fix any mismatch so results are relevant to the user's input and the plugin reliably does what it promises.
   - If required, in your resubmission, modify your test cases and expected responses to be clear and unambiguous.
 - **Your plugin returns user-related data types that are not disclosed in your privacy policy.**
-  - Audit your MCP tool responses in developer mode by running a few realistic example requests and listing every user-related field the server returns (including nested fields and “debug” payloads). Ensure tools return only what's strictly necessary for the user's request and remove any unnecessary PII, telemetry/internal identifiers (for example, session, trace, or request IDs; timestamps; internal account IDs; or logs) and any auth secrets (tokens, keys, or passwords).
+  - Audit your MCP tool responses in ChatGPT by running a few realistic example requests and listing every user-related field the server returns (including nested fields and “debug” payloads). Ensure tools return only what's strictly necessary for the user's request and remove any unnecessary PII, telemetry/internal identifiers (for example, session, trace, or request IDs; timestamps; internal account IDs; or logs) and any auth secrets (tokens, keys, or passwords).
   - You may also consider updating your published privacy policy so it explicitly discloses all categories of personal data you collect, process, or return and why—if a field isn't truly needed, remove it rather than disclose it.
   - If a user identifier is truly necessary, make it explicitly requested and directly tied to the user's intent (not “looked up and echoed” by default).
 - **Tool hint annotations do not appear to match the tool's behavior:**

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.18.34",
-  "last_updated": "2026-10-03T08:38:49Z",
+  "last_updated": "2026-10-05T19:50:43Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -70,8 +70,8 @@
       "source_url": "https://opencode.ai/docs/ecosystem",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/ecosystem.mdx",
       "source_id": "packages/web/src/content/docs/ecosystem.mdx",
-      "hash": "8beab87c64314edf8b180eb58535eef23d965bf86467a23053ad77c8e6d2d0a2",
-      "last_updated": "2026-09-26T18:08:57Z"
+      "hash": "257fcd37bcb463086a7e10d05dd02fced5635d4cc10a1e06c5c318a34e406c8c",
+      "last_updated": "2026-10-05T19:50:43Z"
     },
     "enterprise": {
       "slug": "enterprise",
@@ -365,8 +365,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-03T08:38:49Z",
-    "fetch_duration_seconds": 12.266,
+    "last_fetch_completed": "2026-10-05T19:50:43Z",
+    "fetch_duration_seconds": 12.52,
     "total_pages_discovered": 36,
     "pages_fetched_successfully": 36,
     "pages_failed": 0,

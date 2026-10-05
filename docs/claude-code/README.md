@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 219
+- **Pages mirrored:** 220
 - **Version:** 2.1.289
-- **Last updated:** 2026-10-05T02:29:03Z
+- **Last updated:** 2026-10-05T19:48:50Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -77,6 +77,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Keep Claude working toward a goal | [goal.md](./goal.md) | [source](<https://code.claude.com/docs/en/goal>) |
 | Claude Code on Google Cloud's Agent Platform | [google-vertex-ai.md](./google-vertex-ai.md) | [source](<https://code.claude.com/docs/en/google-vertex-ai>) |
 | Run Claude Code programmatically | [headless.md](./headless.md) | [source](<https://code.claude.com/docs/en/headless>) |
+| Set up Claude Code (local mode) for a HIPAA-ready organization | [hipaa-setup.md](./hipaa-setup.md) | [source](<https://code.claude.com/docs/en/hipaa-setup>) |
 | Hooks reference | [hooks.md](./hooks.md) | [source](<https://code.claude.com/docs/en/hooks>) |
 | Automate actions with hooks | [hooks-guide.md](./hooks-guide.md) | [source](<https://code.claude.com/docs/en/hooks-guide>) |
 | How Claude Code works | [how-claude-code-works.md](./how-claude-code-works.md) | [source](<https://code.claude.com/docs/en/how-claude-code-works>) |

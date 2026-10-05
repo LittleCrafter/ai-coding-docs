@@ -536,7 +536,7 @@ The report carries:
 
 Claude Code keeps your working directory in the local draft so it can find the transcript, and doesn't send the directory.
 
-In [organizations with zero data retention](./zero-data-retention.md#features-disabled-under-zdr), Claude Code leaves the tool out, as it does for `/feedback`. If a session in such an organization still offers the tool, drafts stay on your machine, and sending fails with `Feedback collection is not available for organizations with custom data retention policies.`
+In [organizations with Zero Data Retention](./zero-data-retention.md#features-disabled-under-zdr), and in organizations with the [HIPAA configuration](./hipaa-setup.md) applied, Claude Code leaves the tool out, as it does for `/feedback`. If a session in an organization with Zero Data Retention still offers the tool, drafts stay on your machine, and sending fails with `Feedback collection is not available for organizations with custom data retention policies.`
 
 ### Discard or keep a draft
 
@@ -554,7 +554,7 @@ Claude Code includes the tool in interactive terminal sessions on your own machi
 * [Cloud sessions](./claude-code-on-the-web.md), which can't write to the queue on your machine
 * Sessions on [Amazon Bedrock](./amazon-bedrock.md), [Claude Platform on AWS](./claude-platform-on-aws.md), [Google Cloud's Agent Platform](./google-vertex-ai.md), or [Microsoft Foundry](./microsoft-foundry.md)
 * Sessions where you set [`CLAUDE_CODE_SEND_FEEDBACK=0`](./env-vars.md) or [`DISABLE_FEEDBACK_COMMAND=1`](./env-vars.md), set `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` to any non-empty value, or turned off [feature-flag fetching](./env-vars.md#features-that-need-feature-flag-fetching)
-* Organizations that have turned off product feedback, and [organizations with zero data retention](./zero-data-retention.md#features-disabled-under-zdr)
+* Organizations that have turned off product feedback, [organizations with Zero Data Retention](./zero-data-retention.md#features-disabled-under-zdr), and organizations with the [HIPAA configuration](./hipaa-setup.md) applied
 
 ## Task tool availability
 
