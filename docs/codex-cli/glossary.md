@@ -38,7 +38,7 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 | [Compliance API](./enterprise/compliance-api.md) | Enterprise | API for exporting supported ChatGPT workspace records and audit metadata. |
 | [Computer Use](./computer-use.md) | Desktop app | Desktop capability that lets ChatGPT interact with other applications through the UI. |
 | [config.toml](./config-file/config-reference.md#configtoml) | Desktop app, CLI, IDE extension | Local Codex configuration files. |
-| [Connected host](./remote-connections.md#what-comes-from-the-connected-host) | Desktop app, Mobile | Computer or development environment that provides files, tools, and shell access for ChatGPT or Codex chats opened through Remote. |
+| [Connected host](./remote-connections.md#what-comes-from-the-connected-host) | Desktop app, Mobile | Computer or development environment that provides files, tools, and shell access for ChatGPT or Codex chats opened through remote connections. |
 | [Connector](./plugins.md) | Desktop app (ChatGPT Work, Codex), Web (ChatGPT Work) | A component of a plugin that connects ChatGPT or Codex to data and actions in an external service. |
 | [Conversation](./projects.md#start-a-chat) | Desktop app, Web, Mobile, CLI, IDE extension, Cloud | The ongoing exchange of messages and shared context between a person and ChatGPT or Codex within a chat. |
 | [Context](./prompting.md#context) | Desktop app, CLI, IDE extension, Cloud, SDK | Information Codex can use while working, such as files, prior messages, tool output, and instructions. |

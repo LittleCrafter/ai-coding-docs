@@ -13,7 +13,7 @@ ChatGPT brings projects and long-running chats together with web browsing, files
 Ways to organize, delegate, and review work.
 
 - [Projects and chats](./projects.md) — Keep related chats, context, and work together.
-- [Codex Remote](./remote.md) — Start tasks, approve actions, and review work from your phone.
+- [Codex on mobile](./mobile.md) — Start tasks, approve actions, and review work from your phone.
 - [Sites](./sites.md) — Create, save, and publish interactive websites and apps in ChatGPT.
 - [Build plugins](./build-plugins.md) — Create and refine reusable workflows in a conversation with ChatGPT.
 - [Visualizations](./visualizations.md) — Turn ideas and information into interactive visual explanations.

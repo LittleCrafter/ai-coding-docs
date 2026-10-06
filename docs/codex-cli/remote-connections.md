@@ -21,11 +21,11 @@ permissions, plugins, Computer Use, browser setup, and local tools.
 
 When your workspace enables Local computer access with Work Cloud, eligible ChatGPT Work conversations can continue across desktop, mobile, and web. OpenAI's cloud coordinates the task, and an online, connected computer can execute steps that need its local resources.
 
-Use the Local computer access with Work Cloud guidance for conversations using this feature. The Remote and SSH instructions below apply to the existing supported host-connection workflows. The setup required to view a conversation using this feature may differ from the setup for a Codex host connection.
+Use the Local computer access with Work Cloud guidance for conversations using this feature. The remote access and SSH instructions below apply to the existing supported host-connection workflows. The setup required to view a conversation using this feature may differ from the setup for a Codex host connection.
 
 Local computer access with Work Cloud applies only to tasks created after you enable sync. Existing tasks, including tasks in projects, keep their original mode: locally only, or in the cloud without access to local files. Start a new task to use this feature.
 
-If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn. This feature does not change Codex Remote behavior.
+If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn. This feature does not change how Codex on mobile connects to a host.
 
 ## What you can do remotely
 
@@ -40,16 +40,16 @@ The next sections cover using the ChatGPT mobile app to access a desktop host.
 To connect Codex to a project on an SSH host, see
 [connect to an SSH host](#connect-to-an-ssh-host).
 
-> Illustration: Remote setup screen in the ChatGPT mobile app
+> Illustration: Mobile connection setup screen in the ChatGPT mobile app
 
-<a id="before-you-set-up-mobile-access"></a>
+<a id="before-you-set-up-remote"></a>
 
-## Before you set up Remote
+## Before you set up mobile access
 
-Remote supports hosts running the ChatGPT desktop app on macOS and Windows.
-  You can control a host from ChatGPT on iOS or Android, or from another Mac or
-  Windows device when **Control other devices** is available. Availability can
-  vary by rollout.
+Remote access supports hosts running the ChatGPT desktop app on macOS and
+  Windows. You can control a host from ChatGPT on iOS or Android, or from
+  another Mac or Windows device when **Control other devices** is available.
+  Availability can vary by rollout.
 
 Make sure you have:
 
@@ -66,9 +66,9 @@ Make sure you have:
 If you use Codex through a ChatGPT workspace, your admin may need to enable
 Remote Control access before you can connect from your phone.
 
-<a id="set-up-mobile-access"></a>
+<a id="set-up-remote"></a>
 
-## Set up Remote
+## Set up mobile access
 
 Start in the ChatGPT desktop app on the host you want to connect. The setup flow
 enables remote access for that host, then shows a QR code you can scan from your
@@ -80,7 +80,7 @@ Existing connections used since June 8, 2026, remain paired. If you haven't
   used an existing connection since June 8, 2026, update both apps and pair the
   devices again.
 
-1. Start Remote setup.
+1. Start setup on your computer.
 
    Open the ChatGPT desktop app on the host. Go to **Settings** >
    **Connections** > **Control this Mac or PC**, then select **Set up** or

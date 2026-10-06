@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 188
 - **Version:** 0.160.1
-- **Last updated:** 2026-10-06T01:36:47Z
+- **Last updated:** 2026-10-06T17:29:30Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -61,6 +61,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Long-running work | [long-running-work.md](./long-running-work.md) | [source](<https://learn.chatgpt.com/docs/long-running-work>) |
 | Codex MCP server removal | [mcp-server.md](./mcp-server.md) | [source](<https://learn.chatgpt.com/docs/mcp-server>) |
 | Moving your custom GPT workflows to plugins | [migrate-custom-gpts.md](./migrate-custom-gpts.md) | [source](<https://learn.chatgpt.com/docs/migrate-custom-gpts>) |
+| Codex on mobile | [mobile.md](./mobile.md) | [source](<https://learn.chatgpt.com/docs/mobile>) |
 | Model selection | [model-selection.md](./model-selection.md) | [source](<https://learn.chatgpt.com/docs/model-selection>) |
 | Models | [models.md](./models.md) | [source](<https://learn.chatgpt.com/docs/models>) |
 | Non-interactive mode | [non-interactive-mode.md](./non-interactive-mode.md) | [source](<https://learn.chatgpt.com/docs/non-interactive-mode>) |
@@ -76,7 +77,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Projects and chats | [projects.md](./projects.md) | [source](<https://learn.chatgpt.com/docs/projects>) |
 | Prompting | [prompting.md](./prompting.md) | [source](<https://learn.chatgpt.com/docs/prompting>) |
 | Quickstart | [quickstart.md](./quickstart.md) | [source](<https://learn.chatgpt.com/docs/quickstart>) |
-| Codex Remote | [remote.md](./remote.md) | [source](<https://learn.chatgpt.com/docs/remote>) |
 | Remote connections | [remote-connections.md](./remote-connections.md) | [source](<https://learn.chatgpt.com/docs/remote-connections>) |
 | Sandbox | [sandboxing.md](./sandboxing.md) | [source](<https://learn.chatgpt.com/docs/sandboxing>) |
 | Codex Security | [security.md](./security.md) | [source](<https://learn.chatgpt.com/docs/security>) |

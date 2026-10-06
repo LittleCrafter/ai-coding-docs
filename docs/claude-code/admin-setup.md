@@ -163,7 +163,7 @@ On Team, Enterprise, Claude API, and cloud provider plans, Anthropic doesn't tra
 | HIPAA configuration | For Claude for Enterprise organizations that have HIPAA enabled. Some Claude Code (local mode) features are turned off and others are off by default | [Set up Claude Code (local mode) for a HIPAA-ready organization](./hipaa-setup.md) |
 | Security architecture | Network model, encryption, authentication, audit trail | [Security](./security.md) |
 
-If you need request-level audit logging or to route traffic by data sensitivity, we recommend you place a gateway between developers and your provider: a self-hosted [Claude apps gateway](./claude-apps-gateway.md) records a per-request audit log with IdP identity, or you can use another [LLM gateway](./llm-gateway.md). Sessions that go through a gateway aren't eligible for the HIPAA configuration. [Check how developers sign in and connect](./hipaa-setup.md#check-how-developers-sign-in-and-connect) lists the connections that are. For regulatory requirements and certifications, see [Legal and compliance](./legal-and-compliance.md).
+If you need request-level audit logging or to route traffic by data sensitivity, we recommend you place a gateway between developers and your provider: a self-hosted [Claude apps gateway](./claude-apps-gateway.md) records a per-request audit log with IdP identity, or you can use another [LLM gateway](./llm-gateway.md). Sessions that go through a gateway aren't eligible for the HIPAA configuration. [Check how developers sign in and connect](./hipaa-setup.md#check-how-developers-sign-in-and-connect) lists which sign-in and connection methods are. For regulatory requirements and certifications, see [Legal and compliance](./legal-and-compliance.md).
 
 ## Verify and onboard
 

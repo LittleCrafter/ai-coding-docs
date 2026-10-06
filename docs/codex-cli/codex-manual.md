@@ -174,7 +174,7 @@ Ways to organize, delegate, and review work.
 
 - [Projects and chats](./projects.md): Keep related chats, context, and work together.
 
-- [Codex Remote](./remote.md): Start tasks, approve actions, and review work from your phone.
+- [Codex on mobile](./mobile.md): Start tasks, approve actions, and review work from your phone.
 
 - [Sites](./sites.md): Create, save, and publish interactive websites and apps in ChatGPT.
 
@@ -18323,7 +18323,7 @@ ChatGPT Voice is available in the ChatGPT desktop app with ChatGPT Plus,
 Pro, Business, Edu, and Enterprise plans. Enterprise and Edu availability
 begins with a two-week early-access period before the feature becomes available
 by default. You can also use ChatGPT Voice through
-[Remote on iOS](./remote-connections.md#set-up-mobile-access) after pairing
+[Codex on iOS](./remote-connections.md#set-up-mobile-access) after pairing
 your phone with a desktop host. Availability also depends on rollout status and
 workspace settings. See [feature availability](./pricing.md#feature-availability).
 
@@ -20124,11 +20124,11 @@ permissions, plugins, Computer Use, browser setup, and local tools.
 
 When your workspace enables Local computer access with Work Cloud, eligible ChatGPT Work conversations can continue across desktop, mobile, and web. OpenAI's cloud coordinates the task, and an online, connected computer can execute steps that need its local resources.
 
-Use the Local computer access with Work Cloud guidance for conversations using this feature. The Remote and SSH instructions below apply to the existing supported host-connection workflows. The setup required to view a conversation using this feature may differ from the setup for a Codex host connection.
+Use the Local computer access with Work Cloud guidance for conversations using this feature. The remote access and SSH instructions below apply to the existing supported host-connection workflows. The setup required to view a conversation using this feature may differ from the setup for a Codex host connection.
 
 Local computer access with Work Cloud applies only to tasks created after you enable sync. Existing tasks, including tasks in projects, keep their original mode: locally only, or in the cloud without access to local files. Start a new task to use this feature.
 
-If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn. This feature does not change Codex Remote behavior.
+If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn. This feature does not change how Codex on mobile connects to a host.
 
 #### What you can do remotely
 
@@ -20143,12 +20143,12 @@ The next sections cover using the ChatGPT mobile app to access a desktop host.
 To connect Codex to a project on an SSH host, see
 [connect to an SSH host](#connect-to-an-ssh-host).
 
-#### Before you set up Remote
+#### Before you set up mobile access
 
-Remote supports hosts running the ChatGPT desktop app on macOS and Windows.
-You can control a host from ChatGPT on iOS or Android, or from another Mac or
-Windows device when **Control other devices** is available. Availability can
-vary by rollout.
+Remote access supports hosts running the ChatGPT desktop app on macOS and
+Windows. You can control a host from ChatGPT on iOS or Android, or from
+another Mac or Windows device when **Control other devices** is available.
+Availability can vary by rollout.
 
 Make sure you have:
 
@@ -20165,7 +20165,7 @@ Make sure you have:
 If you use Codex through a ChatGPT workspace, your admin may need to enable
 Remote Control access before you can connect from your phone.
 
-#### Set up Remote
+#### Set up mobile access
 
 Start in the ChatGPT desktop app on the host you want to connect. The setup flow
 enables remote access for that host, then shows a QR code you can scan from your
@@ -20177,7 +20177,7 @@ Existing connections used since June 8, 2026, remain paired. If you haven't
 used an existing connection since June 8, 2026, update both apps and pair the
 devices again.
 
-1. Start Remote setup.
+1. Start setup on your computer.
 
    Open the ChatGPT desktop app on the host. Go to **Settings** >
    **Connections** > **Control this Mac or PC**, then select **Set up** or
@@ -21351,14 +21351,14 @@ restart Codex or reboot.
 
 Source: [Worktrees](./environments/git-worktrees.md)
 
-Worktrees let Codex run multiple independent chats in the same project without interfering with each other. The repository, worktree, and commands remain on the computer or remote development environment that contains the project. You can work directly in the ChatGPT desktop app, or use [Remote](./remote.md) in the ChatGPT mobile app to start, guide, approve, and review worktree chats on a connected computer.
+Worktrees let Codex run multiple independent chats in the same project without interfering with each other. The repository, worktree, and commands remain on the computer or remote development environment that contains the project. You can work directly in the ChatGPT desktop app, or use [Codex](./mobile.md) in the ChatGPT mobile app to start, guide, approve, and review worktree chats on a connected computer.
 
 For Git repositories, [scheduled tasks](./automations.md) can run on dedicated background worktrees so they don't conflict with your ongoing work. In non-version-controlled projects, scheduled tasks run directly in the project directory. You can also start chats in a worktree manually and use Handoff to move a chat between Local and Worktree.
 
-Worktrees don't run locally on your phone. With Remote, the mobile app
-controls Codex on your connected computer, where the repository and worktree
-remain, or in the remote development environment that computer uses. The
-desktop-specific instructions below apply on the connected computer.
+Worktrees don't run locally on your phone. The ChatGPT mobile app controls
+Codex on your connected computer, where the repository and worktree remain, or
+in the remote development environment that computer uses. The desktop-specific
+instructions below apply on the connected computer.
 
 #### What's a worktree
 
@@ -21663,9 +21663,9 @@ doesn't share your private chats or saved memory.
 To create your first page, see [Getting started](./space/getting-started.md).
 For workspace controls, see [Manage ChatGPT Space](./enterprise/chatgpt-space.md).
 
-### Codex Remote
+### Codex on mobile
 
-Source: [Codex Remote](./remote.md)
+Source: [Codex on mobile](./mobile.md)
 
 Start, guide, approve, and review Codex tasks on a connected computer from your phone.
 

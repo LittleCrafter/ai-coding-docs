@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.291",
-  "last_updated": "2026-10-06T09:29:34Z",
+  "last_updated": "2026-10-06T17:28:23Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -20,8 +20,8 @@
       "source_url": "https://code.claude.com/docs/en/admin-setup",
       "source_md_url": "https://code.claude.com/docs/en/admin-setup.md",
       "source_id": "admin-setup",
-      "hash": "584a4f917a1999b78ecd7ffa8fb956844f7e15bed70a3dfe152a1197d63ae6d6",
-      "last_updated": "2026-10-05T19:48:50Z"
+      "hash": "333d3daff8f18434a29163dcfbd1a9a53a103b09e2bf753c0c7697d458aeddfd",
+      "last_updated": "2026-10-06T17:28:23Z"
     },
     "advisor": {
       "slug": "advisor",
@@ -980,8 +980,8 @@
       "source_url": "https://code.claude.com/docs/en/hipaa-setup",
       "source_md_url": "https://code.claude.com/docs/en/hipaa-setup.md",
       "source_id": "hipaa-setup",
-      "hash": "f2be9307e053c201729adcc0f0d990fc75868f13f46b178901f2d667478c15b0",
-      "last_updated": "2026-10-06T01:35:35Z"
+      "hash": "3e6c5e0486e7b2e0fa95e8991ce2eadf422b96b969eac50eac077820c0877f91",
+      "last_updated": "2026-10-06T17:28:23Z"
     },
     "hooks": {
       "slug": "hooks",
@@ -2205,8 +2205,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-06T09:29:34Z",
-    "fetch_duration_seconds": 76.839,
+    "last_fetch_completed": "2026-10-06T17:28:23Z",
+    "fetch_duration_seconds": 76.907,
     "total_pages_discovered": 220,
     "pages_fetched_successfully": 220,
     "pages_failed": 0,
