@@ -116,7 +116,7 @@ I want to build per-workspace rate limits. interview me about implementation, UX
 *Tags: Product*
 
 ```text
-read @meeting-notes.md and write up the action items, then create a Linear ticket for each with acceptance criteria
+read @meeting-notes.md and write up the action items, then create a ticket in our issue tracker for each one, with acceptance criteria
 ```
 
 * **Why this works**: Skip the transcription step. Claude pulls action items from the unstructured input and writes them straight into your tracker via [MCP](./mcp.md), so you review the tickets, not the transcript.
@@ -170,7 +170,7 @@ implement this design, then take a screenshot of the result, compare it to the o
 #### Follow an existing pattern
 
 ```text
-look at how the GitHub webhook handler is implemented to understand the pattern, then build a Stripe webhook handler the same way
+look at how the existing webhook handler is implemented to understand the pattern, then build a payments webhook handler the same way
 ```
 
 * **Why this works**: Point at code you already like. Without a reference, Claude defaults to general best practices. With one, it matches the conventions your codebase actually uses.
@@ -434,7 +434,7 @@ commit these changes with a message that summarizes what I did
 #### Open a pull request from a ticket
 
 ```text
-find the Linear ticket about the login timeout and open a PR that implements it
+find the ticket about the login timeout in our issue tracker and open a PR that implements it
 ```
 
 * **Why this works**: Skip the context switch between tracker, editor, and GitHub. One prompt reads the spec, makes the change, and opens the PR.
@@ -515,7 +515,7 @@ the checkout endpoint started returning 500s an hour ago. check the logs, recent
 ```
 
 * **Why this works**: List the evidence sources to correlate, not the steps to take. Claude reads logs, git history, and config together to narrow the cause.
-* **Make it stick**: Connect Sentry or your log store via MCP
+* **Make it stick**: Connect your error tracker or log store via MCP
 * **From**: [Common workflows](./common-workflows.md)
 
 #### Diagnose from a console screenshot
@@ -525,7 +525,7 @@ the checkout endpoint started returning 500s an hour ago. check the logs, recent
 *Paste, drag, or @-mention your screenshot, then send this:*
 
 ```text
-here is a screenshot of the GCP Kubernetes dashboard. walk me through why this pod is failing and give me the exact commands to fix it
+here is a screenshot of our Kubernetes dashboard. walk me through why this pod is failing and give me the exact commands to fix it
 ```
 
 * **Why this works**: Cloud consoles show you the problem but not the commands to fix it. Claude reads the screenshot and translates the dashboard into the kubectl, gcloud, or aws commands to run.
@@ -596,7 +596,7 @@ write a hook that runs prettier after every edit to a .ts or .tsx file
 #### Connect a tool with MCP
 
 ```text
-set up the Sentry MCP server so you can read my error reports directly
+connect our error tracker via MCP so you can read its stack traces directly
 ```
 
 * **Why this works**: Connect the source once instead of pasting data every session. After [MCP](./mcp.md) setup, Claude reads from the tool directly when you ask about it.

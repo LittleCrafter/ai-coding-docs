@@ -34,11 +34,9 @@ An organization can also set `allowManagedModsOnly` to allow only its own mods, 
 
 Nothing the mod adds appears: no command, no drawing, and no change in behavior.
 
-### Your version is older than 2.1.287
+### Your version is too old
 
-`claude --version` prints a version older than 2.1.287. Your version predates mods being on by default.
-
-[Update Claude Code](../../setup.md#update-claude-code).
+See [which version to use and how to check yours](./overview.md#turn-mods-on-or-off).
 
 ### The `mods active` line doesn't name the mod
 

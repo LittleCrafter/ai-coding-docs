@@ -43,7 +43,7 @@ View the full [Telegram plugin source](https://github.com/anthropics/claude-plug
    * `Marketplace "claude-plugins-official" not found`: add the marketplace with `/plugin marketplace add anthropics/claude-plugins-official`, then retry the install.
    * The plugin is [not found in the marketplace](./plugins/install.md#install-a-plugin): check the plugin name.
 
-   When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects. Check the install summary: if it reports `Run /reload-plugins to activate.`, see [Apply plugin changes without restarting](./plugins/cli-reference.md#reload-plugins) to make the plugin's configure command available.
+   When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects. Check the install summary: if it reports `Run /reload-plugins to apply.`, see [Apply plugin changes without restarting](./plugins/cli-reference.md#reload-plugins) to make the plugin's configure command available.
 3. **Configure your token**
 
    Run the configure command with the token from BotFather:
@@ -114,7 +114,7 @@ View the full [Discord plugin source](https://github.com/anthropics/claude-plugi
    * `Marketplace "claude-plugins-official" not found`: add the marketplace with `/plugin marketplace add anthropics/claude-plugins-official`, then retry the install.
    * The plugin is [not found in the marketplace](./plugins/install.md#install-a-plugin): check the plugin name.
 
-   When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects. Check the install summary: if it reports `Run /reload-plugins to activate.`, see [Apply plugin changes without restarting](./plugins/cli-reference.md#reload-plugins) to make the plugin's configure command available.
+   When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects. Check the install summary: if it reports `Run /reload-plugins to apply.`, see [Apply plugin changes without restarting](./plugins/cli-reference.md#reload-plugins) to make the plugin's configure command available.
 5. **Configure your token**
 
    Run the configure command with the bot token you copied:
@@ -176,7 +176,7 @@ The iMessage channel reads your Messages database directly and sends replies thr
 
    When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects.
 
-   If the install summary reports `Run /reload-plugins to activate.`, you don't need to act on it here, because restarting in the next step picks up the plugin.
+   If the install summary reports `Run /reload-plugins to apply.`, you don't need to act on it here, because restarting in the next step picks up the plugin.
 3. **Restart with channels enabled**
 
    Exit Claude Code and restart with the channel flag:
@@ -227,7 +227,7 @@ To try the fakechat demo, you'll need:
 
    When the install asks for an installation scope, choose the user scope option so the plugin is available across all your projects.
 
-   If the install summary reports `Run /reload-plugins to activate.`, you don't need to act on it here, because restarting in the next step picks up the plugin.
+   If the install summary reports `Run /reload-plugins to apply.`, you don't need to act on it here, because restarting in the next step picks up the plugin.
 2. **Restart with the channel enabled**
 
    Exit Claude Code, then restart with `--channels` and pass the fakechat plugin you installed:

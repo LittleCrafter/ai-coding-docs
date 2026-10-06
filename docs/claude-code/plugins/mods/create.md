@@ -14,7 +14,7 @@ A mod is a Claude Code [plugin](../overview.md) with an entry file, called the h
 If you haven't decided whether a mod is the right tool, read the [comparison on the overview](./overview.md#compare-mods-settings-hooks-skills-and-mcp-servers) first.
 
 > [!NOTE]
-> Mods require Claude Code v2.1.287 or later. In your shell, run `claude --version` to check. To see whether mods can load for you, see [Check whether mods can load](./troubleshoot.md#check-whether-mods-can-load).
+> Use Claude Code v2.1.287 or later. In your shell, run `claude --version` to check. To see whether mods can load for you, see [Check whether mods can load](./troubleshoot.md#check-whether-mods-can-load).
 
 ## Ask Claude for a mod
 
