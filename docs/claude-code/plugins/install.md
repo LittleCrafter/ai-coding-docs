@@ -175,7 +175,7 @@ The command prints `Successfully installed plugin: formatter@your-org (scope: pr
 
 Some plugins install by running a command that their marketplace names, called a [`command` source](./marketplace-reference.md#command-plugin-source). Claude Code shows you that command and asks you to accept it before it runs. A script has no one to answer that prompt, so pass `--yes` there to accept it.
 
-For every `claude plugin install` flag, see [plugin install](./cli-reference.md#plugin-install).
+For the other `claude plugin install` flags, see [plugin install](./cli-reference.md#plugin-install).
 
 ## Add a marketplace
 

@@ -90,7 +90,7 @@ The cause isn't the plugin command. Follow [Verify your PATH](../troubleshoot-in
 
 You typed a plugin command you saw somewhere and got `Unknown command: /<name>` in a session, or `error: unknown command '<name>'` or `error: unknown option '<flag>'` from the `claude` binary in your shell.
 
-Several command spellings are in use that Claude Code doesn't have. The table below maps each one to the real command. The [plugin commands reference](./cli-reference.md) lists every subcommand and flag.
+Several command spellings are in use that Claude Code doesn't have. The table below maps each one to the real command. The [plugin commands reference](./cli-reference.md) lists the subcommands and their flags.
 
 | You typed | What Claude Code says | Use instead |
 | :- | :- | :- |

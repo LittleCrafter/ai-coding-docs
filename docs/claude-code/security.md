@@ -114,7 +114,7 @@ For more details on cloud execution, see [Use Claude Code in the cloud](./claude
 
 * Review all suggested changes before approval
 * Use project-specific permission settings for sensitive repositories
-* Consider using [dev containers](./devcontainer.md) for additional isolation
+* For additional isolation, run the whole Claude Code (local mode) process inside the [sandbox runtime](./sandbox-environments.md#sandbox-runtime) or a [dev container](./devcontainer.md)
 * Regularly audit your permission settings with `/permissions`
 
 ### Team security

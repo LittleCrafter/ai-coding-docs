@@ -967,6 +967,8 @@ The sandbox isolates shell commands and their child processes. [What runs outsid
 
 * **Computer use**: when Claude opens apps and controls your screen, it runs on your actual desktop rather than in an isolated environment. Per-app permission prompts gate each application. See [computer use in the CLI](./computer-use.md) or [computer use in Desktop](./desktop.md#let-claude-use-your-computer).
 * **Subagents**: [subagents](./sub-agents.md) run in the same process as the parent session and use the same sandbox configuration. Bash commands inside a subagent are sandboxed when sandboxing is enabled in the parent session.
+* **Background sessions**: a [background session](./agent-view.md) runs in its own process, and its Bash commands are sandboxed when [its settings](./agent-view.md#settings-and-provider) enable sandboxing.
+* **A boundary around the whole process**: to put the processes in [What runs outside the sandbox](#what-runs-outside-the-sandbox) behind a boundary too, run Claude Code (local mode) inside the [sandbox runtime](./sandbox-environments.md#sandbox-runtime) with a network allowlist limited to the hosts you approve, or in the [dev container](./devcontainer.md) with its firewall script. For the background service and the sessions it hosts, see [Run Claude Code behind a corporate launcher](./corporate-launcher.md).
 * **Mods**: a [mod](./plugins/mods/overview.md) is a plugin that runs its own code inside Claude Code, and a process that a mod starts runs outside the sandbox. See [What a mod can reach](./plugins/mods/overview.md#what-a-mod-can-reach).
 
 > [!WARNING]
