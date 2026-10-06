@@ -28,19 +28,19 @@ To install Claude Code, open a terminal and run the command for your system. If 
 
 **macOS, Linux, WSL:**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
 **Windows PowerShell:**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null}
 irm https://claude.ai/install.ps1 | iex
 ```
 
 **Windows CMD:**
 
-```batch theme={null}
+```batch theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
@@ -57,7 +57,7 @@ If the install command fails with `syntax error near unexpected token '<'`, a `4
 
 **Homebrew**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null}
 brew install --cask claude-code
 ```
 
@@ -68,7 +68,7 @@ Homebrew offers two casks. `claude-code` tracks the stable release channel, whic
 
 **WinGet**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null}
 winget install Anthropic.ClaudeCode
 ```
 
@@ -123,7 +123,7 @@ You'll see the Claude Code prompt with the version, current model, and working d
 
 ## Step 4: Ask your first question
 
-Let's start with understanding your codebase. Try one of these commands:
+Start by understanding your codebase. Try one of these commands:
 
 ```text wrap theme={null}
 what does this project do?
@@ -162,7 +162,7 @@ can Claude Code work with Docker?
 
 ## Step 5: Make your first code change
 
-Now let's make Claude Code do some actual coding. Try a simple task:
+Now have Claude Code do some actual coding. Try a simple task:
 
 ```text wrap theme={null}
 add a hello world function to the main file
@@ -343,4 +343,4 @@ Customize with CLAUDE.md, skills, hooks, MCP, and more
 * **In Claude Code**: Type `/help` or ask a "how do I" question
 * **Documentation**: You're here! Browse other guides
 * **Courses**: Take [Claude Code 101](https://academy.claude.com/courses/claude-code-101) and other free self-paced courses on [Claude Academy](https://academy.claude.com/)
-* **Community**: Join our [Discord](https://www.anthropic.com/discord) for tips and support
+* **Community**: Join the [Discord server](https://www.anthropic.com/discord) for tips and support

@@ -87,7 +87,7 @@ The current list of models includes:
 - **DeepSeek V4 Flash Vision Exp**
 - **Hy4 preview**
 - **Hy3**
-- **Space Bunny Free** (limited time)
+- **Space Bunny**
 
 The list of models may change as we test and add new ones.
 
@@ -181,7 +181,7 @@ Token prices are per 1M tokens.
 | DeepSeek V4 Flash Vision Exp (Peak)     | $0.30  | $1.20  | $0.006      | -            | **$15**                                        |
 | Hy4 preview                             | $0.834 | $2.501 | $0.042      | -            | **$30**                                        |
 | Hy3                                     | $0.14  | $0.58  | $0.035      | -            | **$60**                                        |
-| Space Bunny Free                        | Free   | Free   | Free        | -            | **Unlimited**<br /><small>limited time</small> |
+| Space Bunny                             | $0.15  | $0.60  | $0.03       | -            | **$30**                                        |
 | Grok 4.7 (≤ 200K tokens)                | $2.00  | $6.00  | $0.50       | -            | **$15**                                        |
 | Grok 4.7 (> 200K tokens)                | $4.00  | $12.00 | $1.00       | -            | **$15**                                        |
 | Grok 4.6 (≤ 200K tokens)                | $2.00  | $6.00  | $0.50       | -            | **$15**                                        |
@@ -225,7 +225,7 @@ Token prices are per 1M tokens.
 | DeepSeek V4 Flash Vision Exp (Peak)     | $0.30  | $1.20  | $0.006      | -            | **$60**                                        |
 | Hy4 preview                             | $0.834 | $2.501 | $0.042      | -            | **$120**                                       |
 | Hy3                                     | $0.14  | $0.58  | $0.035      | -            | **$240**                                       |
-| Space Bunny Free                        | Free   | Free   | Free        | -            | **Unlimited**<br /><small>limited time</small> |
+| Space Bunny                             | $0.15  | $0.60  | $0.03       | -            | **$120**                                       |
 | Grok 4.7 (≤ 200K tokens)                | $2.00  | $6.00  | $0.50       | -            | **$60**                                        |
 | Grok 4.7 (> 200K tokens)                | $4.00  | $12.00 | $1.00       | -            | **$60**                                        |
 | Grok 4.6 (≤ 200K tokens)                | $2.00  | $6.00  | $0.50       | -            | **$60**                                        |
@@ -234,8 +234,6 @@ Token prices are per 1M tokens.
 | GPT 6 Luna (> 272K tokens)              | $0.20  | $0.75  | $0.02       | $0.25        | **$60**                                        |
 | GPT 5.6 Luna (≤ 272K tokens)            | $0.20  | $1.20  | $0.02       | $0.25        | **$60**                                        |
 | GPT 5.6 Luna (> 272K tokens)            | $0.40  | $1.80  | $0.04       | $0.50        | **$60**                                        |
-
-**Space Bunny Free:** Free for a limited time.
 
 **LongCat 2.5 Preview Free:** Free for a limited time.
 
@@ -277,7 +275,7 @@ Plus estimates scale with each model's higher usage limit.
 | DeepSeek V4 Flash Vision Exp | 6,500                | 16,250            | 32,500             |
 | Hy4 preview                  | 1,350                | 3,380             | 6,770              |
 | Hy3                          | 4,300                | 10,750            | 21,500             |
-| Space Bunny Free             | Unlimited            | Unlimited         | Unlimited          |
+| Space Bunny                  | 3,130                | 7,810             | 15,630             |
 | Grok 4.7                     | 169                  | 423               | 845                |
 | Grok 4.6                     | 169                  | 423               | 845                |
 | GPT 6 Luna                   | 4,230                | 10,560            | 21,130             |
@@ -312,7 +310,7 @@ Plus estimates scale with each model's higher usage limit.
 | DeepSeek V4 Flash Vision Exp | 26,000               | 65,000            | 130,000            |
 | Hy4 preview                  | 5,400                | 13,520            | 27,080             |
 | Hy3                          | 17,200               | 43,000            | 86,000             |
-| Space Bunny Free             | Unlimited            | Unlimited         | Unlimited          |
+| Space Bunny                  | 12,500               | 31,250            | 62,500             |
 | Grok 4.7                     | 676                  | 1,692             | 3,380              |
 | Grok 4.6                     | 676                  | 1,692             | 3,380              |
 | GPT 6 Luna                   | 16,920               | 42,240            | 84,520             |
@@ -345,6 +343,7 @@ The estimates use the following token counts per request; actual usage varies.
 - Qwen3.7 Plus — 500 input, 57,000 cached, 190 output tokens per request
 - Hy4 preview — 830 input, 71,500 cached, 295 output tokens per request
 - Hy3 — 830 input, 71,500 cached, 295 output tokens per request
+- Space Bunny — 1,000 input, 55,000 cached, 200 output tokens per request
 
 You can track your current usage in the **<a href={console}>console</a>**.
 
@@ -410,7 +409,7 @@ You can also access Go models through the following API endpoints.
 | Qwen3.7 Plus                 | qwen3.7-plus                 | `https://opencode.ai/zen/go/v1/messages`         | `@ai-sdk/anthropic`         |
 | Hy4 preview                  | hy4-preview                  | `https://opencode.ai/zen/go/v1/chat/completions` | `@ai-sdk/openai-compatible` |
 | Hy3                          | hy3                          | `https://opencode.ai/zen/go/v1/chat/completions` | `@ai-sdk/openai-compatible` |
-| Space Bunny Free             | space-bunny-free             | `https://opencode.ai/zen/go/v1/chat/completions` | `@ai-sdk/openai-compatible` |
+| Space Bunny                  | space-bunny                  | `https://opencode.ai/zen/go/v1/chat/completions` | `@ai-sdk/openai-compatible` |
 
 The [model id](./config.md#models) in your OpenCode config
 uses the format `opencode-go/<model-id>`. For example, for Kimi K3, you would
@@ -460,7 +459,7 @@ https://opencode.ai/zen/go/v1/models
 | DeepSeek V4 Flash Vision Exp | Not used       | 0 days\*       |
 | Hy4 preview                  | Not used       | 0 days         |
 | Hy3                          | Not used       | 0 days         |
-| Space Bunny Free             | Not used       | 0 days         |
+| Space Bunny                  | Not used       | 0 days         |
 | LongCat 2.5 Preview Free     | Not used       | 0 days         |
 
 - **Grok 4.7/4.6:** ZDR disables important API features that depend on stored data, including the stateful Responses API, Files and Collections, and the Batch API. [Learn more](https://docs.x.ai/developers/faq/security#what-is-zero-data-retention-zdr).

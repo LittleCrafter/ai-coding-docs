@@ -119,7 +119,7 @@ Use the Agent SDK to build an AI agent that reads your code, finds bugs, and fix
    See the setup guides for [Amazon Bedrock](../amazon-bedrock.md), [Claude Platform on AWS](../claude-platform-on-aws.md), [Google Cloud's Agent Platform](../google-vertex-ai.md), or [Microsoft Foundry](../microsoft-foundry.md) for details.
 
    > [!NOTE]
-   > Unless previously approved, Anthropic does not allow third party developers to offer claude.ai login or rate limits for their products, including agents built on the Claude Agent SDK. Please use the API key authentication methods described in this document instead.
+   > Unless previously approved, Anthropic does not allow third party developers to offer claude.ai login or rate limits for their products, including agents built on the Claude Agent SDK. Use the API key authentication methods described in this document instead.
 
 ## Create a buggy file
 

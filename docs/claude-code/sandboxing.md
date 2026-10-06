@@ -975,7 +975,7 @@ The sandbox isolates shell commands and their child processes. [What runs outsid
 ## See also
 
 * [Sandbox environments](./sandbox-environments.md): compare the built-in sandbox with dev containers, containers, and VMs
-* [Security](./security.md): comprehensive security features and best practices
+* [Security](./security.md): security features and best practices
 * [Permissions](./permissions.md): permission configuration and access control
 * [All settings](./settings-reference.md): every settings key
 * [CLI reference](./cli-reference.md): command-line options
