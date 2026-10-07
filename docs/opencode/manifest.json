@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.18.35",
-  "last_updated": "2026-10-06T21:58:45Z",
+  "last_updated": "2026-10-07T02:50:26Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -360,13 +360,13 @@
       "source_url": "https://opencode.ai/docs/zen",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/zen.mdx",
       "source_id": "packages/web/src/content/docs/zen.mdx",
-      "hash": "fa85bbc453e327f1cf4edd39ea8d3490c94dd0d3a7d3bdf9a4ba82060a576c19",
-      "last_updated": "2026-10-06T21:58:45Z"
+      "hash": "3c1dbfc273fa5210a9a5aa13ad250e67117e1525d9f4e3ed4ccf3f1b929abf28",
+      "last_updated": "2026-10-07T02:50:26Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-06T21:58:45Z",
-    "fetch_duration_seconds": 12.27,
+    "last_fetch_completed": "2026-10-07T02:50:26Z",
+    "fetch_duration_seconds": 12.272,
     "total_pages_discovered": 36,
     "pages_fetched_successfully": 36,
     "pages_failed": 0,

@@ -155,7 +155,7 @@ The steps below provision the full deployment with `aws` commands.
    The EKS track reuses both policy documents on an IRSA role instead of the two ECS roles; see the deploy step.
 3. **Provision Amazon RDS for PostgreSQL**
 
-   The instance runs in the private subnets with no public address and storage encryption on. The engine version is pinned to Postgres 16, which satisfies the gateway's supported floor of PostgreSQL 14 and guarantees the parameter-group family below matches the instance.
+   The instance runs Postgres 16 in the private subnets, with no public address and storage encryption on.
 
    First, create the subnet group that places the database in the private subnets, and a parameter group with `rds.force_ssl=1` so the server rejects plaintext connections. The engine version is pinned once because the parameter group's family must match the engine major version the instance runs:
 

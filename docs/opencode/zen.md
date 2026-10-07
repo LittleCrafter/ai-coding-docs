@@ -131,6 +131,7 @@ You can also access our models through the following API endpoints.
 | Big Pickle                      | big-pickle                      | `https://opencode.ai/zen/v1/chat/completions`             | `@ai-sdk/openai-compatible` |
 | Space Bunny Free                | space-bunny-free                | `https://opencode.ai/zen/v1/chat/completions`             | `@ai-sdk/openai-compatible` |
 | LongCat 2.5 Preview Free        | longcat-2.5-preview-free        | `https://opencode.ai/zen/v1/chat/completions`             | `@ai-sdk/openai-compatible` |
+| Exo Free                        | exo-free                        | `https://opencode.ai/zen/v1/chat/completions`             | `@ai-sdk/openai-compatible` |
 | Fledge Alpha Free               | fledge-alpha-free               | `https://opencode.ai/zen/v1/chat/completions`             | `@ai-sdk/openai-compatible` |
 | MiMo-V2.6-Flash Free            | mimo-v2.6-flash-free            | `https://opencode.ai/zen/v1/chat/completions`             | `@ai-sdk/openai-compatible` |
 | MiMo-V2.5 Free                  | mimo-v2.5-free                  | `https://opencode.ai/zen/v1/chat/completions`             | `@ai-sdk/openai-compatible` |
@@ -219,6 +220,7 @@ We support a pay-as-you-go model. Below are the prices **per 1M tokens**.
 | Big Pickle                        | Free            | Free            | Free            | -            |
 | Space Bunny Free                  | Free            | Free            | Free            | -            |
 | LongCat 2.5 Preview Free          | Free            | Free            | Free            | -            |
+| Exo Free                          | Free            | Free            | Free            | -            |
 | Fledge Alpha Free                 | Free            | Free            | Free            | -            |
 | MiMo-V2.6-Flash Free              | Free            | Free            | Free            | -            |
 | MiMo-V2.5 Free                    | Free            | Free            | Free            | -            |
@@ -325,6 +327,7 @@ You may notice [low-cost models](./config.md#models), such as Haiku, Nano, or Fl
 
 The free models:
 
+- Exo Free is available on OpenCode for a limited time. The team is using this time to collect feedback and improve the model.
 - Fledge Alpha Free is available on OpenCode for a limited time. The team is using this time to collect feedback and improve the model.
 - MiMo-V2.6-Flash Free is available on OpenCode for a limited time. The team is using this time to collect feedback and improve the model.
 - MiMo-V2.5 Free is available on OpenCode for a limited time. The team is using this time to collect feedback and improve the model.
@@ -391,6 +394,7 @@ charging you more than $20 if your balance goes below $5.
 All our models are hosted in the US and EU. Our providers follow a zero-retention policy and do not use your data for model training, with the following exceptions:
 
 - Big Pickle: During its free period, collected data may be used to improve the model.
+- Exo Free: During its free period, collected data may be used to improve the model.
 - Fledge Alpha Free: During its free period, collected data may be used to improve the model.
 - MiMo-V2.6-Flash Free: During its free period, collected data may be used to improve the model.
 - MiMo-V2.5 Free: During its free period, collected data may be used to improve the model.
