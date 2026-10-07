@@ -25,6 +25,18 @@ warning recommends **Approve for me** instead and links to
 [reviewer-policy configuration](#configuration). The warning doesn't restore
 the sandbox boundary or override organization policy.
 
+## Select automatic review
+
+In the desktop app, choose **Approve for me** from the permissions control
+below the composer. Check that it's selected for the current chat. See
+[Permissions](../permission-modes.md) for mode selection and troubleshooting.
+
+For the CLI or a local Codex configuration, set
+`approvals_reviewer = "auto_review"` with an eligible interactive approval
+policy, such as `approval_policy = "on-request"`. Changing the approval policy
+alone doesn't select the reviewer. Managed requirements take precedence over
+local settings; see [Managed configuration](../enterprise/managed-configuration.md#configure-automatic-review-policy).
+
 ## How auto-review works
 
 At a high level, the flow is:
@@ -52,7 +64,6 @@ These include:
 - File edits outside the allowed writable roots.
 - MCP or app tool calls that require approval based on their tool annotations
   or configured approval mode.
-- Computer Use access to a new website or domain.
 
 Auto-review does not run for routine actions already allowed inside the
 sandbox. If a command can run under the active `sandbox_mode`, or a tool call
@@ -112,7 +123,7 @@ letting the agent loop on more escalation attempts.
 Timeouts are surfaced separately from explicit denials, and the main agent is
 informed that a timeout alone is not proof that the action is unsafe.
 
-There is also an explicit override path for denied actions. In the current
+Codex also provides an explicit override path for denied actions. In the current
 open-source TUI, run `/approve` to open the **Auto-review Denials** picker, then
 select one recent denied action to approve for one retry. Codex records up to 10
 recent denials per task. That approval is narrow: it applies to the exact
@@ -255,7 +266,7 @@ In practice, the highest-leverage changes are:
   for scratch directories or neighboring repos you intentionally use.
 - Add narrowly scoped [prefix rules](../agent-configuration/rules.md). Prefer precise command
   prefixes such as `["cargo", "test"]` or `["pnpm", "run", "lint"]` over broad
-  patterns such as `["python"]` or `["curl"]`. Broad rules often erase the very
+  patterns such as `["python"]` or `["curl"]`. Broad rules often erase the
   boundary Auto-review is meant to guard.
 
 Auto-review session transcripts are retained under `~/.codex/sessions` by
@@ -267,7 +278,8 @@ policy or permissions.
 Auto-review improves the default operating point for long-running agentic work,
 but it is not a deterministic security guarantee.
 
-- It only evaluates actions that ask to cross a boundary.
+- It only evaluates eligible approval requests, including requests triggered by
+  explicit command rules or tool approval settings.
 - It can still make mistakes, especially in adversarial or unusual contexts.
 - It should complement, not replace, good sandbox design, monitoring, and
   organization-specific policy.

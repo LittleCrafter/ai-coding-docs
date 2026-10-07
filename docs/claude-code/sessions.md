@@ -92,9 +92,9 @@ Restoring plan mode on the non-interactive and VS Code paths requires Claude Cod
 | Any mode | Non-interactive, in any other case | The permission mode a new `claude -p` run would start in |
 | `plan` | VS Code | Plan mode, with [the exceptions on the VS Code page](./vs-code.md#resume-past-conversations) |
 
-<h5 id="resume-in-plan-mode-with-p">
-  Resume in plan mode with `-p`
-</h5>
+<a id="resume-in-plan-mode-with-p" />
+
+##### Resume in plan mode with `-p`
 
 A `claude -p --resume` or `claude -p --continue` run resumes in plan mode only when all of these conditions hold:
 

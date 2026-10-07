@@ -192,7 +192,7 @@ This example adds Docker permissions on top of whatever the team settings.json a
 
 *Topic-scoped instructions, optionally gated by file paths*
 
-*When it loads: Rules without `paths:` load at session start. Rules with `paths:` load when a matching file enters context*
+*When it loads: Rules without `paths:` load at session start. Rules with `paths:` load when Claude reads, writes, or edits a matching file*
 
 Project instructions split into topic files that can load conditionally based on file paths. A rule without `paths:` frontmatter loads at session start like CLAUDE.md; a rule with `paths:` loads only when Claude reads, writes, or edits a matching file.
 
@@ -210,7 +210,7 @@ Like CLAUDE.md, rules are guidance Claude reads, not configuration Claude Code e
 
 *Test conventions scoped to test files* (committed)
 
-*When it loads: Loaded when Claude reads a file matching the `paths:` globs below*
+*When it loads: Loaded when Claude reads, writes, or edits a file matching the `paths:` globs below*
 
 An example rule that only loads when Claude is working on test files. The `paths:` globs in the frontmatter define which files trigger it; here, anything ending in .test.ts or .test.tsx. For other files, this rule is not loaded into context.
 
@@ -232,9 +232,9 @@ paths:
 
 *API conventions scoped to backend code* (committed)
 
-*When it loads: Loaded when Claude reads a file matching the `paths:` glob below*
+*When it loads: Loaded when Claude reads, writes, or edits a file matching the `paths:` glob below*
 
-A second example showing a rule scoped to backend code. The `paths:` glob matches files under src/api/, so these conventions load only when Claude is editing API routes.
+A second example showing a rule scoped to backend code. The `paths:` glob matches files under src/api/, so these conventions load only when Claude is working on API routes.
 
 ```markdown
 ---
@@ -670,7 +670,7 @@ type: reference
 
 *User-level rules that apply to every project*
 
-*When it loads: Rules without `paths:` load at session start. Rules with `paths:` load when a matching file enters context*
+*When it loads: Rules without `paths:` load at session start. Rules with `paths:` load when Claude reads, writes, or edits a matching file*
 
 Same as project .claude/rules/ but applies everywhere. Use this for conventions you want across all your work, like personal code style or commit message format.
 
@@ -1015,8 +1015,6 @@ claude purge ~/work/my-repo --yes
 ```
 
 Pass `--all` instead of a path to purge state for every project at once, which deletes `history.jsonl` outright rather than filtering it. Pass `-i` to step through the deletion plan one item at a time.
-
-In a script, check the output rather than the exit status alone. A run that deletes everything in its plan ends with `Purged N item(s)`. Treat that line as the sign of success.
 
 The command leaves `shell-snapshots/` and `backups/` alone because those are not project-scoped, and warns about them in the plan output. If anyone ran [`/heapdump`](./troubleshooting.md#high-cpu-or-memory-usage) on the machine, delete the `.heapsnapshot` files it wrote too. A heap snapshot contains the full conversation and any credentials the process held, and neither the retention sweep nor the purge touches it.
 

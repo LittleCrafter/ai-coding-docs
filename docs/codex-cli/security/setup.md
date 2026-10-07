@@ -16,7 +16,7 @@ Codex Security Cloud runs scans in [Codex cloud](../cloud.md). For scans of a
 3. Install and enable the plugin, then open **Security Cloud** from your
    installed plugins or sidebar.
 
-[Open plugin marketplace](https://chatgpt.com/plugins)
+[Open plugin marketplace](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
 
 If access is unavailable, check with your workspace administrator.
 

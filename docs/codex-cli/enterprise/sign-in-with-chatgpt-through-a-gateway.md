@@ -4,7 +4,7 @@
 
 ## Why you would want this
 
-If you already use a command to obtain a gateway key for API requests, you can keep your gateway while moving to **Sign in with ChatGPT**. Your eligible ChatGPT workspace features and controls then apply; the gateway still handles selected Codex model requests. Compare the sign-in methods in [Feature availability](../pricing.md#feature-availability).
+If you already have a model gateway and use Codex with the API Platform, you can keep your gateway while moving to **Sign in with ChatGPT**. This gives you access to eligible ChatGPT workspace features and controls, including [voice mode](#voice-through-a-gateway), while keeping your model gateway. Compare the sign-in methods in [Feature availability](../pricing.md#feature-availability).
 
 ## How to set it up
 
@@ -75,11 +75,7 @@ The diagrams abbreviate the request headers and launch helper. Use `Authorizatio
 
 ![Option A: Reuse the credential command through a launch helper. The same gateway key moves from Authorization to X-Gateway-Key while ChatGPT sign-in supplies Authorization.](<https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-header-light.webp>)
 
-View the Option A before-and-after diagram at full size: [light](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-header-light.webp) or [dark](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-header-dark.webp).
-
 ![Option A runtime: The gateway validates and removes X-Gateway-Key, then forwards ChatGPT Authorization and any account ID unchanged to the Codex backend.](<https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-header-light.webp>)
-
-View the Option A credential-boundary diagram at full size: [light](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-header-light.webp) or [dark](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-header-dark.webp).
 
 ### Option B: Use native gateway OAuth
 
@@ -106,11 +102,7 @@ Codex uses a free loopback port by default. If your identity provider requires a
 
 ![Option B: Replace API-key gateway auth with native gateway OAuth alongside ChatGPT sign-in.](<https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-light.webp>)
 
-View the Option B before-and-after diagram at full size: [light](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-light.webp) or [dark](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-dark.webp).
-
 ![Option B runtime: The gateway consumes its OAuth cookie and forwards the ChatGPT credential to the Codex backend.](<https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-light.webp>)
-
-View the Option B credential-boundary diagram at full size: [light](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-light.webp) or [dark](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-dark.webp).
 
 ### Add routing headers (optional)
 

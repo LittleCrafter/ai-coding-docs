@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.161.0",
-  "last_updated": "2026-10-07T18:01:59Z",
+  "last_updated": "2026-10-07T22:42:28Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "90b9ee846cc82e97ac3d5bc3de0407b0a6a382de0868ecb3930cef33c77b9dbb",
-      "last_updated": "2026-10-07T18:01:59Z"
+      "hash": "795b2bcc2f7870e5a048e468a14b4b1b570f451bfc5a897bbf32cff6192d0350",
+      "last_updated": "2026-10-07T22:42:28Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -810,8 +810,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/sign-in-with-chatgpt-through-a-gateway",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/sign-in-with-chatgpt-through-a-gateway.md",
       "source_id": "llms:enterprise/sign-in-with-chatgpt-through-a-gateway",
-      "hash": "7c52263b28a20bd16e649d744abe5512d5fb7141b4bfe8c61685af2f2816da9d",
-      "last_updated": "2026-10-07T18:01:59Z"
+      "hash": "4507d10aa7a6e0086416ea3531fcd89bcc7e837e9f5861ed650f0584566c5176",
+      "last_updated": "2026-10-07T22:42:28Z"
     },
     "enterprise/sites": {
       "slug": "enterprise/sites",
@@ -1270,8 +1270,8 @@
       "source_url": "https://learn.chatgpt.com/docs/permission-modes",
       "source_md_url": "https://learn.chatgpt.com/docs/permission-modes.md",
       "source_id": "llms:permission-modes",
-      "hash": "95e069cb4b4f1a31c97e12d76de52dad46382dfa2a00892620f1ba7048f7e652",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "0f5165b5beb6c2c1f9fd883f5b2a6ac8e28f0ea772a68403affd872aab612ede",
+      "last_updated": "2026-10-07T22:42:28Z"
     },
     "permissions": {
       "slug": "permissions",
@@ -1380,8 +1380,8 @@
       "source_url": "https://learn.chatgpt.com/docs/reference/troubleshooting",
       "source_md_url": "https://learn.chatgpt.com/docs/reference/troubleshooting.md",
       "source_id": "llms:reference/troubleshooting",
-      "hash": "550a8ac69edbf3c4655d13c225ed9fd5f252eeceaa806b1d0327cc5dbdb4a46b",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "7cd46c31fa0e9242d3a28b87ffb2ee757606a33f6eae6c98ccb00220dad49188",
+      "last_updated": "2026-10-07T22:42:28Z"
     },
     "remote-connections": {
       "slug": "remote-connections",
@@ -1410,8 +1410,8 @@
       "source_url": "https://learn.chatgpt.com/docs/sandboxing/auto-review",
       "source_md_url": "https://learn.chatgpt.com/docs/sandboxing/auto-review.md",
       "source_id": "llms:sandboxing/auto-review",
-      "hash": "566760c44669f23e1833587b8bb661c87e924059c03cc097aa4edda0d3799e23",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "b4e28a2ae60670926f0e11bb8ed5570e8ddd1166302123bc1aaa5df72113644b",
+      "last_updated": "2026-10-07T22:42:28Z"
     },
     "security": {
       "slug": "security",
@@ -1420,8 +1420,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security",
       "source_md_url": "https://learn.chatgpt.com/docs/security.md",
       "source_id": "llms:security",
-      "hash": "3495d8228ec4a10952547f54dbd1e91cc9e1e8678f37c20a48d4ce515697258d",
-      "last_updated": "2026-10-02T02:40:36Z"
+      "hash": "0ee0ac5d06b895861fb7c88028fa8e4da98a0e35db18a1c7beccf0580a154535",
+      "last_updated": "2026-10-07T22:42:28Z"
     },
     "security-administration": {
       "slug": "security-administration",
@@ -1640,8 +1640,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/setup",
       "source_md_url": "https://learn.chatgpt.com/docs/security/setup.md",
       "source_id": "llms:security/setup",
-      "hash": "b8f463cbf7849e2004da13a346519bc50ac4c7811175f17bb6c405c158621980",
-      "last_updated": "2026-10-02T02:40:36Z"
+      "hash": "d76d729dd3dea62ced08cdb768897cbdc9f1e011f5482581bdb3bfb6f0d8433e",
+      "last_updated": "2026-10-07T22:42:28Z"
     },
     "security/threat-model": {
       "slug": "security/threat-model",
@@ -1895,8 +1895,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-07T18:01:59Z",
-    "fetch_duration_seconds": 65.897,
+    "last_fetch_completed": "2026-10-07T22:42:28Z",
+    "fetch_duration_seconds": 65.877,
     "total_pages_discovered": 189,
     "pages_fetched_successfully": 189,
     "pages_failed": 0,

@@ -7155,7 +7155,7 @@ plugin](./security/plugin.md).
 3. Install and enable the plugin, then open **Security Cloud** from your
    installed plugins or sidebar.
 
-[Open plugin marketplace](https://chatgpt.com/plugins)
+[Open plugin marketplace](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
 
 If access is unavailable, check with your workspace administrator.
 
@@ -11527,6 +11527,18 @@ warning recommends **Approve for me** instead and links to
 [reviewer-policy configuration](#configuration). The warning doesn't restore
 the sandbox boundary or override organization policy.
 
+#### Select automatic review
+
+In the desktop app, choose **Approve for me** from the permissions control
+below the composer. Check that it's selected for the current chat. See
+[Permissions](./permission-modes.md) for mode selection and troubleshooting.
+
+For the CLI or a local Codex configuration, set
+`approvals_reviewer = "auto_review"` with an eligible interactive approval
+policy, such as `approval_policy = "on-request"`. Changing the approval policy
+alone doesn't select the reviewer. Managed requirements take precedence over
+local settings; see [Managed configuration](./enterprise/managed-configuration.md#configure-automatic-review-policy).
+
 #### How auto-review works
 
 At a high level, the flow is:
@@ -11554,7 +11566,6 @@ These include:
 - File edits outside the allowed writable roots.
 - MCP or app tool calls that require approval based on their tool annotations
   or configured approval mode.
-- Computer Use access to a new website or domain.
 
 Auto-review does not run for routine actions already allowed inside the
 sandbox. If a command can run under the active `sandbox_mode`, or a tool call
@@ -11614,7 +11625,7 @@ letting the agent loop on more escalation attempts.
 Timeouts are surfaced separately from explicit denials, and the main agent is
 informed that a timeout alone is not proof that the action is unsafe.
 
-There is also an explicit override path for denied actions. In the current
+Codex also provides an explicit override path for denied actions. In the current
 open-source TUI, run `/approve` to open the **Auto-review Denials** picker, then
 select one recent denied action to approve for one retry. Codex records up to 10
 recent denials per task. That approval is narrow: it applies to the exact
@@ -11757,7 +11768,7 @@ In practice, the highest-leverage changes are:
   for scratch directories or neighboring repos you intentionally use.
 - Add narrowly scoped [prefix rules](./agent-configuration/rules.md). Prefer precise command
   prefixes such as `["cargo", "test"]` or `["pnpm", "run", "lint"]` over broad
-  patterns such as `["python"]` or `["curl"]`. Broad rules often erase the very
+  patterns such as `["python"]` or `["curl"]`. Broad rules often erase the
   boundary Auto-review is meant to guard.
 
 Auto-review session transcripts are retained under `~/.codex/sessions` by
@@ -11769,7 +11780,8 @@ policy or permissions.
 Auto-review improves the default operating point for long-running agentic work,
 but it is not a deterministic security guarantee.
 
-- It only evaluates actions that ask to cross a boundary.
+- It only evaluates eligible approval requests, including requests triggered by
+  explicit command rules or tool approval settings.
 - It can still make mistakes, especially in adversarial or unusual contexts.
 - It should complement, not replace, good sandbox design, monitoring, and
   organization-specific policy.
@@ -11847,20 +11859,19 @@ for what ChatGPT can do on its own and what needs review.
 For most work, start with **Ask for approval**. It lets ChatGPT work within the
 current workspace and pauses before reaching beyond that boundary.
 
-Select different modes below to understand how each one works.
+#### Choose a mode
 
-#### Enable modes
+Open the permissions control below the composer and select **Approve for me**
+to send eligible approval requests to automatic review. Check the selected
+mode for the current chat; having a mode available doesn't mean it's selected.
 
-When you're using the ChatGPT desktop app for the first time, you need to enable modes in application settings.
+Available modes depend on your app version, execution environment, local
+configuration, and your organization's requirements. A mode can be disabled or
+omitted when it isn't available. Managed requirements can also restrict **Ask
+for approval**.
 
-**Ask for approval** is always available. To add **Approve for me** (called
-**Auto&#45;review** in settings) or **Full access** to the permissions menu, open
-**Settings > General** in the ChatGPT desktop app, then turn on the mode under
-**Permissions**. Enabling a mode makes it available in the menu; it doesn't
-select the mode or change an existing chat.
-
-The available modes can depend on your local configuration and your
-organization's requirements. A mode that isn't allowed appears disabled.
+If **Approve for me** is missing or disabled, see
+[permission troubleshooting](./reference/troubleshooting.md#approve-for-me-is-missing-or-disabled).
 
 #### How permissions work
 
@@ -13030,7 +13041,7 @@ desktop app.
 Open **Plugins** to find and install **Codex Security Cloud**. Follow
 [Cloud setup](./security/setup.md) to connect GitHub and start your first scan.
 
-[Find Codex Security Cloud](https://chatgpt.com/plugins)
+[Find Codex Security Cloud](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
 
     Track open findings and fixes across repositories. This example uses
     fictional repositories, findings, and counts.
@@ -21072,11 +21083,32 @@ worktrees.
 
 If you started a chat with the wrong target (**Local**, **Worktree**, or **Cloud**) by accident, you can cancel the current run and recover your previous prompt by pressing the up arrow key in the composer.
 
+#### Approve for me is missing or disabled
+
+To use automatic review, select **Approve for me** from the permissions control
+below the composer. If the mode is missing or disabled:
+
+1. Update the desktop app and check the permissions menu in the chat where
+   you want to use automatic review. The available choices can differ between
+   local and cloud environments.
+2. For local Codex execution, check your effective configuration for an
+   explicit `features.guardian_approval = false` setting and review the
+   configured permission profile, approval policy, and approval reviewer.
+   See [Config basics](./config-file/config-basic.md) for configuration
+   precedence. Local configuration doesn't control a managed cloud runtime.
+3. If a mode is disabled or missing in a managed workspace, ask your
+   administrator to check the allowed permission profiles, sandbox modes,
+   approval policies, and approval reviewers. Organization or device policy
+   can restrict these choices; local settings can't override it.
+
+If the mode is still unexpectedly unavailable, include your app version,
+operating system, execution environment, and whether the option is missing or
+disabled in your [feedback](#feedback-and-logs).
+
 #### Feature is working in the Codex CLI but not in the ChatGPT desktop app
 
 The ChatGPT desktop app and Codex CLI can include different Codex versions, so
-features may reach one surface before the other. Experimental features might
-also land in Codex CLI first.
+features may reach one surface before the other.
 
 To get the version of the Codex CLI on your system run:
 
@@ -31255,6 +31287,43 @@ the two aren't merged. If the inline object is absent, the compatibility
 overlay supplies those settings. Root identity and portable components remain
 canonical in either case.
 
+#### Add an onboarding skill
+
+Give users a setup workflow to run after installing your plugin by declaring an
+onboarding skill. When users run setup, it invokes the skill in a new
+conversation, or in the existing conversation if they installed the plugin
+during that conversation.
+
+Add the setup skill to your package at `skills/setup/SKILL.md`. Write its
+instructions using the [skills guide](https://developers.openai.com/plugins/build/skills), then set
+`extensions.com.openai.onboardingSkill` in your manifest:
+
+```json
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "my-plugin",
+  "version": "0.1.0",
+  "description": "Reusable skills with a guided setup workflow",
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md"
+    }
+  }
+}
+```
+
+The field is optional. Its path is relative to the plugin root and must point
+to a skill included in the package. For the Codex compatibility format, put
+the same `extensions.com.openai.onboardingSkill` field in
+`.codex-plugin/plugin.json`; the path still resolves from the plugin root.
+
+Keep the skill focused on the setup your plugin needs, such as helping users
+choose a workspace or configure preferences. After installing a test package,
+run setup and verify that it invokes the packaged skill. Test both a fresh
+conversation and installation during an existing conversation.
+
+For the protocol definition, see the [plugin onboarding specification](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#plugin-onboarding).
+
 #### Manifest fields
 
 See [Automatically provide submission and review information](https://developers.openai.com/plugins/deploy/submission#automatically-provide-submission-and-review-information)
@@ -31561,7 +31630,7 @@ Declaring support for an extension takes just a few lines of SDK code.
 |     | [Model-App Context](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#uiupdate-model-context-extensions) | Keep ChatGPT and your MCP App in sync with bidirectional context sharing.                                    |
 |     | [Composer mentions](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#composer-at-mentions)              | Let users find and select content from your plugin in the ChatGPT desktop composer.                          |
 |     | [Rich forms](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#openai-form-elicitation)                  | Ask users for structured input or let them choose from images, then return their response to your tool.      |
-|     | [Plugin onboarding](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#plugin-onboarding)                 | Guide users through setup in a new or existing conversation.                                                 |
+|     | [Plugin onboarding](https://developers.openai.com/plugins/build/plugins#add-an-onboarding-skill)                                                    | Guide users through setup in a new or existing conversation.                                                 |
 
 #### Sidebar apps
 
@@ -35006,6 +35075,8 @@ Use ./-prefixed paths relative to the plugin root and include every referenced f
 #### Configure onboarding, review, and publication
 
 In both formats, put these objects directly under `extensions.com.openai`, alongside the portable format’s interface. Don’t nest them inside interface.
+
+The optional `onboardingSkill` gives users a setup workflow to run after installation. See [Add an onboarding skill](https://developers.openai.com/plugins/build/plugins#add-an-onboarding-skill) for a manifest example, path rules, and how setup uses a new or existing conversation.
 
 | **Field**                               | **Requirement**                                              | **Type**         | **Value and use**                                                                                                                                                                                                              |
 | --------------------------------------- | ------------------------------------------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -45057,7 +45128,7 @@ Source: [Sign in with ChatGPT through a gateway](./enterprise/sign-in-with-chatg
 
 #### Why you would want this
 
-If you already use a command to obtain a gateway key for API requests, you can keep your gateway while moving to **Sign in with ChatGPT**. Your eligible ChatGPT workspace features and controls then apply; the gateway still handles selected Codex model requests. Compare the sign-in methods in [Feature availability](./pricing.md#feature-availability).
+If you already have a model gateway and use Codex with the API Platform, you can keep your gateway while moving to **Sign in with ChatGPT**. This gives you access to eligible ChatGPT workspace features and controls, including [voice mode](#voice-through-a-gateway), while keeping your model gateway. Compare the sign-in methods in [Feature availability](./pricing.md#feature-availability).
 
 #### How to set it up
 
@@ -45126,10 +45197,6 @@ The helper runs once per launch. Codex does not rerun it or refresh this header;
 
 The diagrams abbreviate the request headers and launch helper. Use `Authorization: Bearer ` and keep the helper's empty-key check from the examples above. If `GATEWAY_KEY` is empty, Codex omits `X-Gateway-Key`.
 
-View the Option A before-and-after diagram at full size: [light](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-header-light.webp) or [dark](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-header-dark.webp).
-
-View the Option A credential-boundary diagram at full size: [light](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-header-light.webp) or [dark](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-header-dark.webp).
-
 #### Option B: Use native gateway OAuth
 
 Use this option to replace the command and launch helper with Codex-managed gateway sign-in. Your gateway must have an OAuth authorization server. Register a public client that supports authorization code with PKCE, then replace the example URLs and client ID. Remove the existing provider's `auth` block and use the following managed configuration.
@@ -45152,10 +45219,6 @@ delivery = { kind = "cookie", name = "auth-openid" } # Add gateway auth as a coo
 ```
 
 Codex uses a free loopback port by default. If your identity provider requires a fixed redirect URI, set `redirect_port` and register `http://127.0.0.1:43127/callback` for this example.
-
-View the Option B before-and-after diagram at full size: [light](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-light.webp) or [dark](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-before-after-dark.webp).
-
-View the Option B credential-boundary diagram at full size: [light](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-light.webp) or [dark](https://developers.openai.com/images/codex/gateways/chatgpt-gateway-runtime-dark.webp).
 
 #### Add routing headers (optional)
 

@@ -85,7 +85,7 @@ desktop app.
 Open **Plugins** to find and install **Codex Security Cloud**. Follow
 [Cloud setup](./security/setup.md) to connect GitHub and start your first scan.
 
-[Find Codex Security Cloud](https://chatgpt.com/plugins)
+[Find Codex Security Cloud](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
 
 <figure className="not-prose my-8">
 
