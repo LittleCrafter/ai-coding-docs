@@ -130,7 +130,7 @@ for await (const message of query({
 }
 ```
 
-When you run either script, Claude attempts to create the `.env` file, the hook denies the tool call, and Claude's final response explains that it can't create `.env` files.
+When you run either script, Claude attempts to create the `.env` file and the hook denies the tool call.
 
 ## Available hooks
 
@@ -167,7 +167,7 @@ The SDK provides hooks for different stages of agent execution. Some hooks are a
 | `ConfigChange` | No | Yes | Configuration file changes | Reload settings dynamically |
 | `InstructionsLoaded` | No | Yes | A `CLAUDE.md` or rules file is loaded into context | Audit which instruction files load |
 | `WorktreeCreate` | No | Yes | Git worktree created | Track isolated workspaces |
-| `WorktreeRemove` | No | Yes | Git worktree removed | Clean up workspace resources |
+| `WorktreeRemove` | No | Yes | A worktree created by a `WorktreeCreate` hook is being removed | Clean up workspace resources |
 | `CwdChanged` | No | Yes | The working directory changes during a session | Reload environment variables per directory |
 | `FileChanged` | No | Yes | A watched file is modified, created, or deleted | Reload configuration when project files change |
 | `DirectoryAdded` | No | Yes | A working directory is added during a session | Install dependencies for a repository added mid-session |
@@ -238,7 +238,7 @@ Your callback returns an object with two categories of fields:
 * **Top-level fields** are accepted on every event: `systemMessage` shows a message to the user, and `continue` (`continue_` in Python) determines whether the agent keeps running after this hook. Some events discard them or deliver them elsewhere. Each [event's section](../hooks.md#hook-events) on the hooks page says where they land.
 * **`hookSpecificOutput`** controls the current operation. The fields you set inside depend on the hook event type:
   * For `PreToolUse` hooks, this is where you set `permissionDecision` (`"allow"`, `"deny"`, `"ask"`, or `"defer"`), `permissionDecisionReason`, and `updatedInput`. If you return `"defer"`, the turn ends with a result message whose `stop_reason` is `"tool_deferred"`, so you can [resume the call later](../hooks.md#defer-a-tool-call-for-later).
-  * For `PostToolUse` hooks, you can set `additionalContext` to append information to the tool result. To replace the tool's output before Claude sees it, set `updatedToolOutput`, which works for any tool in both SDKs. The older `updatedMCPToolOutput` field replaces MCP tool output only and is deprecated.
+  * For `PostToolUse` hooks, you can set `additionalContext` to append information to the tool result. To replace the tool's output before Claude sees it, set `updatedToolOutput`, which works for any tool in both SDKs. The older `updatedMCPToolOutput` field replaces MCP tool output only.
   * In the TypeScript SDK, a `PostToolUse` callback can also return `classifierContext`, a short note about the tool call's result for the [auto mode](../permission-modes.md#eliminate-prompts-with-auto-mode) permission classifier. Because your callback runs in your application's own process, the classifier may weigh a user statement you relay in the note as user intent. The field requires TypeScript Agent SDK v0.3.236 or later. [Annotate a result for the auto mode classifier](../hooks.md#annotate-a-result-for-the-auto-mode-classifier) covers the length cap, the synchronous-only rule, and what not to put in the note.
 
 Return `{}` to allow the operation without changes. SDK callback hooks use the same JSON output format as [Claude Code shell command hooks](../hooks.md#json-output), which documents every field and event-specific option. For the SDK type definitions, see the [TypeScript](./typescript.md#synchookjsonoutput) and [Python](./python.md#synchookjsonoutput) SDK references.
@@ -799,7 +799,7 @@ If your callback needs more time, set a higher `timeout` on its `HookMatcher`. I
 
 ### Session hooks not available in Python
 
-`SessionStart` and `SessionEnd` can be registered as SDK callback hooks in TypeScript, but aren't available in the Python SDK because its `HookEvent` type omits them. In Python, they are only available as [shell command hooks](../hooks.md#hook-events) defined in settings files such as `.claude/settings.json`. To load shell command hooks from your SDK application, include the appropriate setting source with [`setting_sources`](./python.md#settingsource) or [`settingSources`](./typescript.md#settingsource):
+`SessionStart` and `SessionEnd` can be registered as SDK callback hooks in TypeScript, but aren't available in the Python SDK because its `HookEvent` type omits them. In Python, they are only available as [shell command hooks](../hooks.md#hook-events) defined in settings files such as `.claude/settings.json`. Which settings files your SDK application loads depends on [`setting_sources`](./python.md#settingsource) or [`settingSources`](./typescript.md#settingsource). If you set that option, include the source that holds the hooks:
 
 ```python Python theme={null}
 options = ClaudeAgentOptions(

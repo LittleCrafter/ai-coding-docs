@@ -36,7 +36,7 @@ If your devices are enrolled in an MDM or endpoint management solution, endpoint
 
    In the claude.ai console, go to [**Organization settings > Claude Code > Managed settings**](https://claude.ai/admin-settings/claude-code).
 
-   If the link redirects you to a different Organization settings page instead of the Claude Code page, your account doesn't have the required role. Admin and other non-Owner roles can't view or edit managed settings, so ask an Owner or Primary Owner in your organization to make the change. See [Access control](#access-control).
+   In a Team or Enterprise organization, if the page says you don't have access, ask an [Owner or Primary Owner](#access-control) to make the change.
 2. **Define your settings**
 
    Add your configuration as JSON. All [settings available in `settings.json`](./settings-reference.md#all-settings) are supported except those restricted to OS-level policy delivery; see [Current limitations](#current-limitations) for that short list. This includes [hooks](./hooks.md), [environment variables](./env-vars.md), and [managed-only settings](./managed-settings.md#managed-only-settings) like `allowManagedPermissionRulesOnly`.

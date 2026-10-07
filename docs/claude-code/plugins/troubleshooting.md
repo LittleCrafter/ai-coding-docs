@@ -17,6 +17,7 @@ Use this page whether you install plugins, build them, host a marketplace, or ad
 >
 > * **Why scopes, the cache, and precedence behave the way they do**: read [Plugin loading reference](./loading.md)
 > * **Looking up a flag, field, or command**: use the [plugin commands reference](./cli-reference.md), the [manifest reference](./manifest-reference.md), or the [marketplace reference](./marketplace-reference.md)
+> * **A `hooks module not loaded` or `hooks module did not load` message**: the plugin is a [mod](./mods/overview.md), so read [The mod doesn't load](./mods/troubleshoot.md#the-mod-doesn’t-load)
 
 Search for the exact message you saw. Each message is listed under the stage that produces it, which isn't always the command you ran. For example, an install can fail because a marketplace is missing, so that message is under [Add a marketplace](#add-a-marketplace).
 
