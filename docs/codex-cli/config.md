@@ -375,9 +375,10 @@ Set `project_root_markers = []` to skip searching parent directories and treat t
 
 ### Custom model providers
 If your organization provides a model gateway, follow
-[Connect to a gateway](./enterprise/connect-to-a-gateway.md) for client setup
-and verification. For organization-wide deployment, see
-[Deploy Codex through a gateway](./enterprise/roll-out-a-gateway.md).
+[Sign in with ChatGPT through a gateway](./enterprise/sign-in-with-chatgpt-through-a-gateway.md)
+or [Use API/provider credentials](./enterprise/connect-to-a-gateway.md)
+for client setup and verification. For organization-wide deployment, see
+[Roll out a gateway](./enterprise/roll-out-a-gateway.md).
 
 A model provider defines how Codex connects to a model (base URL, wire API, authentication, and optional HTTP headers). Custom providers can't reuse the reserved built-in provider IDs: `openai`, `ollama`, and `lmstudio`.
 
@@ -1589,6 +1590,11 @@ from either one wins.
 | `computer_use.windows.exes[].product_name` | `string` | Required exact `ProductName` from the executable's signed version information. |
 | `computer_use.windows.exes[].binary_name` | `string` | Optional `OriginalFilename` from the executable's signed version information. Matching is case-insensitive. If a matching publisher and product rule requires this value but the executable does not provide it, Computer Use blocks the executable. |
 | `computer_use.windows.exes[].access` | `allow \| deny` | Required access decision for matching executables. `deny` blocks access. `allow` overrides only this policy source's default and still requires any other policy source and the normal approval flow to allow the app. |
+| `application` | `table` | Managed desktop application requirements. |
+| `application.network` | `table` | Destination restrictions for desktop app network requests, separate from command networking and browser origin rules. This doesn't impose destination restrictions on native modules or spawned processes. |
+| `application.network.enabled` | `boolean` | Defaults to true when the table is present. When true, external desktop app requests require an explicitly allowed domain. An empty domain map allows no external destinations. An absent application network policy or false value doesn't restrict destinations through this policy. |
+| `application.network.domains` | `table<allow \| deny>` | Exact domain rules for desktop app requests. Enabled policies allow HTTPS and WSS requests only to explicitly allowed domains; subdomains aren't implicitly allowed. |
+| `application.network.domains.<domain>` | `allow \| deny` | Allow or deny an exact domain. Use domain names without URL schemes, ports, or wildcards. |
 | `experimental_network` | `table` | Administrator-managed network requirements for sandboxed local commands, enforced from `requirements.toml`. When enabled, these requirements can start the command network proxy without `features.network_proxy`. Browser tools separately check managed network denies and exclusive allowlists. These requirements do not route browser traffic through the proxy or control web search, apps, MCP servers, native-app traffic, or other capability-specific traffic. On supported managed Codex Cloud paths, these requirements constrain command networking alongside separate Cloud environment internet settings. Approved full sandbox escalation can bypass the command proxy where policy permits it. Work Cloud does not inherit these requirements. |
 | `experimental_network.enabled` | `boolean` | Enable sandboxed networking requirements. This does not grant network access when the active sandbox keeps command networking off. |
 | `experimental_network.http_port` | `integer` | Loopback HTTP listener port to use for `[experimental_network]` requirements. |

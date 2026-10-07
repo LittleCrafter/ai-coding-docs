@@ -17,7 +17,7 @@ Complete the steps in order for a new rollout, or use the linked pages to change
 one boundary.
 
 If you manage a model gateway for local Codex clients, use
-[Deploy Codex through a gateway](./roll-out-a-gateway.md) for gateway
+[Roll out a gateway](./roll-out-a-gateway.md) for gateway
 qualification, credential distribution, and the client handoff. Configure
 workspace access separately where your deployment uses workspace features.
 

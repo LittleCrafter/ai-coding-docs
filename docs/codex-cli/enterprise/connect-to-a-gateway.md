@@ -1,11 +1,14 @@
-# Connect to a gateway
+# Use API/provider credentials through a gateway
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
 Connect Codex to an LLM gateway using the gateway URL, model alias, and credential
 or token resolver your organization provides.
 
-To roll out a gateway for your organization, see [Deploy Codex through a
+To keep the gateway while signing in with a ChatGPT workspace, use
+[Sign in with ChatGPT through a gateway](./sign-in-with-chatgpt-through-a-gateway.md).
+
+For an organization-wide rollout, see [Roll out a
   gateway](./roll-out-a-gateway.md). For the required API behavior,
   see [Gateway compatibility](./gateway-compatibility.md). To
   connect directly to Bedrock without a gateway, see [Amazon
@@ -207,7 +210,7 @@ gateway team to configure and test a Codex connection:
    plan to use. Have your gateway team complete the
    [streaming, tool, and follow-up checks](./roll-out-a-gateway.md#test-the-client-and-gateway).
 6. After the pilot passes, follow
-   [Deploy Codex through a gateway](./roll-out-a-gateway.md) to distribute the
+   [Roll out a gateway](./roll-out-a-gateway.md) to distribute the
    configuration to other developers.
 
 For the administrator migration checklist and configuration mapping, see

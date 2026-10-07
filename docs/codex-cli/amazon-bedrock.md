@@ -7,8 +7,8 @@ through Amazon Bedrock. In this setup, the local client sends model requests to
 Bedrock using AWS-managed authentication and access controls.
 
 This page covers direct access to Bedrock. If your organization already
-  provides a model gateway, follow [Connect to a
-  gateway](./enterprise/connect-to-a-gateway.md). To configure a gateway
+  provides a model gateway, follow [Use API/provider
+  credentials](./enterprise/connect-to-a-gateway.md). To configure a gateway
   backed by Bedrock, see [Bedrock through
   LiteLLM](./enterprise/bedrock-through-litellm.md).
 

@@ -328,7 +328,7 @@ the login button extends 20px beyond the card border on mobile. fix it.
 review my uncommitted changes and flag anything that looks risky before I commit
 ```
 
-* **Why this works**: Catch problems while they're still cheap to fix. Claude reads the changed files in full, not just the diff lines, so it spots issues a quick self-review misses.
+* **Why this works**: Catch problems while they take less work to fix. Claude reads the changed files in full, not just the diff lines, so it spots issues a quick self-review misses.
 * **Make it stick**: Run `/code-review` for the same check in one command
 * **From**: [Common workflows](./common-workflows.md)
 

@@ -126,7 +126,7 @@ Server-managed settings have the following limitations:
 
 ### Settings precedence
 
-Server-managed settings and [endpoint-managed settings](./managed-settings.md#delivery-mechanisms) both occupy the highest tier in the Claude Code [settings hierarchy](./settings.md#settings-precedence). No other settings level can override them, including command line arguments, apart from the [exceptions to managed settings precedence](./settings.md#exceptions-to-managed-settings-precedence).
+Server-managed settings and [endpoint-managed settings](./managed-settings.md#delivery-mechanisms) both occupy the highest tier in the Claude Code [settings hierarchy](./settings.md#settings-precedence). A key you set here takes precedence over the same key in a user's own settings files or in a `--settings` value, apart from the [exceptions to managed settings precedence](./settings.md#exceptions-to-managed-settings-precedence).
 
 Within the managed tier, Claude Code by default uses the first source that delivers at least one policy key, checking server-managed settings first and then endpoint-managed settings, apart from the [exception keys covered next](#per-key-exceptions-across-managed-sources). [How Claude Code combines managed sources](./managed-settings.md#precedence-within-the-managed-tier) has the full ranking, the carve-out for the control keys, and the opt-in that applies every source.
 
