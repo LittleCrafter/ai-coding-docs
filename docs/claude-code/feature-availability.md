@@ -84,7 +84,7 @@ These features work in the local CLI but depend on a server-side capability that
       <td>✗</td>
       <td>✓</td>
       <td>See note <sup><a href="#fn1">1</a></sup></td>
-      <td>✓ ([deployments hosted on Anthropic](https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry#hosting-options))</td>
+      <td>✓</td>
     </tr>
 
     <tr>
@@ -270,7 +270,6 @@ Each tab lists what is unavailable or partially supported on that provider, with
 **Partial support:**
 
 * [Desktop](./desktop.md): only via [Claude Desktop on 3P](https://claude.com/docs/third-party/claude-desktop/overview)
-* [Web search](./tools-reference.md#websearch-tool-behavior): [deployments hosted on Anthropic](https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry#hosting-options) only
 * [Auto mode](./auto-mode-config.md): Sonnet 5 or later, Opus 4.7 or later, Haiku 5.5, and Fable models only
 * [Cross-session messaging](./cross-session-messaging.md): between your sessions on this machine only <sup><a href="#fn5">5</a></sup>
 * [Zero Data Retention](./zero-data-retention.md): subject to your Azure agreement

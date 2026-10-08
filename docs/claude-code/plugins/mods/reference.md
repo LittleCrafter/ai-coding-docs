@@ -226,14 +226,14 @@ Elements are the building blocks of a tree a `ui.render` hook returns, and you g
 | [`Text`](./interface.md#build-a-tree-from-elements) | `color`, `backgroundColor`, `bold`, `italic`, `underline`, `dimColor`, `inverse`, `wrap` | ✓ | ✓ |
 | [`Button`](./interface.md#respond-to-presses-and-typing) | `key`, `label`, `onPress`, `hotkey`, `plain`, `dimColor`, `autoFocus`, `action` | ✓ | ✓ |
 | `Link` | `href`, `label` | ✓ | ✓ |
-| `Code` | The code | ✓ | ✓ |
+| [`Code`](./gallery.md#show-code-and-changes) | `source`, `language`, `path`, `startLine`, `format`, `wrap` | ✓ | ✓ |
 | `Markdown` | `text`, `key`, `dimColor`, `onLinkPress`, `pressableLinks` | ✓ | ✓ |
 | [`Input`](./interface.md#take-typed-input-and-draw-a-row-for-each-item) | `key`, `label`, `placeholder`, `value`, `submitLabel`, `onSubmit`, `onInput`, `autoFocus` | ✓ | ✓ |
 | `Select` | `key`, `label`, `options`, `value`, `onSelect`, `autoFocus` | ✓ | ✓ |
 | `Svg` | An SVG document, up to 131,072 characters | | ✓ |
 | [`Client`](./interface.md#build-a-tree-from-elements) | `module`, `key` | ✓ | ✓ |
 | [`Raster`](./interface.md#draw-a-grid-of-colored-cells) | `key`, `columns` up to 512, `rows` up to 256, `cells`. See [Draw a grid of colored cells](./interface.md#draw-a-grid-of-colored-cells). | ✓ | |
-| `Image` | PNG or RGBA bytes up to 2 MiB, or a file path | ✓ | |
+| `Image` | PNG or RGBA bytes up to 2 MiB, or a file path, `columns` and `rows` up to 255, and `alt` text. | ✓ | |
 
 More `Button` rules: `action` names one of Claude Code's own [keybinding actions](../../keybindings.md), and the user's binding for it presses the button when that binding is a chord or a modified key. A digit `hotkey` on a button in the band also fires when the user types that digit alone into an empty prompt and pauses. When two buttons in one drawing name the same `hotkey`, the later one gets it. `autoFocus` accepts only `true` on any control, so omit the prop to leave it off.
 
@@ -288,7 +288,7 @@ These are the settings and environment variables that affect mods. The Where col
 | `CLAUDE_CODE_PLUGIN_DIRS` | Environment, or `env` in `~/.claude/settings.json` | Plugin directories to load as `--plugin-dir` does, for apps you can't pass a flag to. Absolute paths separated by `:`, or `;` on Windows. |
 | `CLAUDE_CODE_PLUGIN_DIR_WATCH` | Environment | `1` makes a long-running non-interactive session reload `--plugin-dir` mods on save |
 | `prependPlugins`, `appendPlugins` | Managed settings. User settings only on a machine with no managed settings, for a user who isn't signed in with a Team or Enterprise plan. | Lists of plugin ids, such as `acme-guard@acme-tools`. Mods in `prependPlugins` run before every mod a user installs, and mods in `appendPlugins` run after, in the listed order. See [The order mods run in](./events.md#the-order-mods-run-in). |
-| `allowManagedModsOnly` | Managed settings, as an [option on the built-in guard](./admin.md#set-options-on-the-built-in-guard) | Only mods that [count as your organization's](./admin.md#install-your-organizations-mods), and mods built into Claude Code, load. Users' settings hooks keep running. |
+| `allowManagedModsOnly` | Managed settings, as an [option on the built-in guard](./admin.md#set-options-on-the-built-in-guard) | Only mods that [count as your organization's](./admin.md#install-your-organizations-mods), and mods built into Claude Code, run their hooks. Users' settings hooks keep running. |
 | `allowModsToOverrideDenyRules` | Managed settings, as an [option on the built-in guard](./admin.md#set-options-on-the-built-in-guard) | Lets a mod a user installed approve a tool call that a `deny` rule refuses |
 | `allowManagedHooksOnly` | Managed settings | Blocks hooks and installed mods that aren't your organization's. See [what keeps running](../../settings-reference.md#what-runs-under-allowmanagedhooksonly). |
 | `disableAllHooks` | Any settings file | In managed settings, no mod or hook from an installed plugin runs. In your own settings, what your organization manages keeps running. See [`disableAllHooks`](../../settings-reference.md#disableallhooks). |

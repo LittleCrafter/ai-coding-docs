@@ -141,6 +141,8 @@ Claude Code picks each teammate's model from the first of these that applies:
 3. [`CLAUDE_CODE_SUBAGENT_MODEL`](./model-config.md#environment-variables), when it's set to anything other than `inherit`.
 4. The lead's current model.
 
+If an installed [mod](./plugins/mods/overview.md) sets a model in its [`agent.spawn`](./plugins/mods/reference.md#subagents) hook, Claude Code uses that model in place of the first source.
+
 If you set [`CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`](./sub-agents.md#run-every-subagent-on-one-model), the first two sources don't apply. Claude Code picks every teammate's model from `CLAUDE_CODE_SUBAGENT_MODEL` when it's set to anything other than `inherit`, and from the lead's current model otherwise. Requires Claude Code v2.1.257 or later.
 
 Before v2.1.251, `CLAUDE_CODE_SUBAGENT_MODEL` came first in this order.

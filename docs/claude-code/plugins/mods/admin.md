@@ -22,7 +22,7 @@ This page is for the person who deploys managed settings for Claude Code, whethe
 
 ## Stop user-installed mods from loading
 
-To keep every mod your users bring from loading, set the `allowManagedModsOnly` option on the [built-in guard](#know-what-happens-by-default), a policy mod that Claude Code loads ahead of every mod a user installs. The option goes in managed settings under `pluginConfigs`, keyed by `cc-plugin-sec-default@builtin`:
+To keep every mod your users bring from running its hooks, set the `allowManagedModsOnly` option on the [built-in guard](#know-what-happens-by-default), a policy mod that Claude Code loads ahead of every mod a user installs. The option goes in managed settings under `pluginConfigs`, keyed by `cc-plugin-sec-default@builtin`:
 
 ```json managed-settings.json theme={null}
 {
@@ -38,14 +38,14 @@ To keep every mod your users bring from loading, set the `allowManagedModsOnly` 
 
 With the option set in managed settings:
 
-* **No mod a user brings loads**: that covers a mod in a plugin the user installed, a mod loaded with `--plugin-dir`, and a mod [Claude wrote during a session](./create.md#ask-claude-for-a-mod)
-* **Your organization's mods still load**: a mod that [counts as your organization's](#install-your-organizations-mods) isn't checked. Every other mod counts as a user's and doesn't load. That includes a mod in a plugin you enable from a GitHub or other remote marketplace, and one your organization turns on for its members on claude.ai. If none counts as yours, no installed mod loads.
+* **No mod a user brings runs its hooks**: that covers a mod in a plugin the user installed, a mod loaded with `--plugin-dir`, and a mod [Claude wrote during a session](./create.md#ask-claude-for-a-mod)
+* **Your organization's mods still run**: a mod that [counts as your organization's](#install-your-organizations-mods) isn't checked. Every other mod counts as a user's and is refused. That includes a mod in a plugin you enable from a GitHub or other remote marketplace, and one your organization turns on for its members on claude.ai. If none counts as yours, no installed mod runs its hooks.
 * **Users can't undo it**: the guard reads the option from managed settings only, so the same entry in a user, project, or local settings file, or in a file passed with `--settings`, changes nothing
 * **A file or MDM policy covers every provider**: when you deliver the option as a file or through MDM, it works the same way on Amazon Bedrock, Google Cloud's Agent Platform, and Microsoft Foundry. For delivery from the claude.ai admin console, see [Platform availability](../../server-managed-settings.md#platform-availability)
-* **Users' other customizations keep working**: their [hooks in settings files](../../hooks.md), status lines, and `/goal` aren't affected
+* **Users' other customizations keep working**: their [hooks in settings files](../../hooks.md) and in plugins' `hooks/hooks.json`, status lines, and `/goal` aren't affected
 * **Built-in mods keep running**: mods built into Claude Code, such as `AGENTS.md` support, each have [their own switch](./overview.md#mods-built-into-claude-code)
 
-To confirm the option on a user's machine, start Claude Code there with `--plugin-dir` and the path of a directory that holds a mod, such as `claude --plugin-dir ./first-mod`. The mod's hooks don't run, and the transcript and the debug log have the [guard's message](./troubleshoot.md#messages-from-the-built-in-guard), which names the mod and `allowManagedModsOnly`. If the mod loads, see [Check that a policy is in force](../../managed-settings.md#check-that-a-policy-is-in-force) and the [rules that decide whether an option takes effect](#set-options-on-the-built-in-guard).
+To confirm the option on a user's machine, start Claude Code there with `--plugin-dir` and the path of a directory that holds a mod, such as `claude --plugin-dir ./first-mod`. The mod's hooks don't run, and the transcript and the debug log have the [guard's message](./troubleshoot.md#messages-from-the-built-in-guard), which names the mod and `allowManagedModsOnly`. If the message isn't there, see [Check that a policy is in force](../../managed-settings.md#check-that-a-policy-is-in-force) and the [rules that decide whether an option takes effect](#set-options-on-the-built-in-guard).
 
 If you set `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS` to `0` during early access, replace it with this option. Claude Code v2.1.287 and later ignores the variable at any value, so a `0` there leaves mods on.
 
@@ -106,7 +106,7 @@ You can see what a mod is able to do without running it. In your shell, run `cla
 claude plugin validate ./some-mod
 ```
 
-Two lines in the output describe the mod's code:
+The `hooks:` and `calls:` lines in the output describe the mod's code:
 
 ```text theme={null}
   ❯ ./register.js hooks: session.start, tool.call, ui.render{component=Pane}
@@ -137,7 +137,7 @@ Mod policies range from no installed mods at all to any mod a user chooses, with
 
 | What you want | Settings |
 | :- | :- |
-| No installed mods, with hooks untouched | Set [`allowManagedModsOnly`](#set-options-on-the-built-in-guard) and deploy no mods of your own |
+| No installed mod runs, with settings hooks untouched | Set [`allowManagedModsOnly`](#set-options-on-the-built-in-guard) and deploy no mods of your own |
 | No installed mods and no hooks at all, your managed hooks included | Set `disableAllHooks` to `true` |
 | Only your organization's mods | Set the guard's [`allowManagedModsOnly` option](#stop-user-installed-mods-from-loading), and [install your mods](#install-your-organizations-mods) so that they count as yours |
 | Any mod from marketplaces you approve | Keep your [marketplace restrictions](../org.md#restrict-what-users-can-install), and set `disableSideloadFlags` to `true` |
@@ -145,14 +145,14 @@ Mod policies range from no installed mods at all to any mod a user chooses, with
 
 What each setting does:
 
-* **`allowManagedModsOnly`**: an option on the built-in guard. Users' own mods don't load, and their settings hooks, status lines, and `/goal` keep working. [Stop user-installed mods from loading](#stop-user-installed-mods-from-loading) lists what it covers.
+* **`allowManagedModsOnly`**: an option on the built-in guard. Claude Code refuses users' own mods, so none of their hooks run. Users' settings hooks, status lines, and `/goal` keep working. [Stop user-installed mods from loading](#stop-user-installed-mods-from-loading) lists what it covers.
 * **`allowManagedHooksOnly`**: a wider setting. Only [your organization's mods](#install-your-organizations-mods) and the mods built into Claude Code load. A mod a user installed themselves doesn't. The setting also blocks hooks in users' own settings files. Read [What runs under `allowManagedHooksOnly`](../../settings-reference.md#what-runs-under-allowmanagedhooksonly) before you set it.
 * **`disableAllHooks`**: the widest setting. In managed settings, it stops the mods in every installed plugin, yours included, and turns off every hook in settings files, so a `PreToolUse` hook in your managed settings no longer blocks anything. Custom status lines and `/goal` stop working too. Read [`disableAllHooks`](../../settings-reference.md#disableallhooks) before you set it.
 * **`disableSideloadFlags`**: rejects `--plugin-dir` and `--plugin-url` at startup, and keeps mods Claude writes during a session from loading. The setting also rejects `--agents` and `--mcp-config`. Read [`disableSideloadFlags`](../../settings-reference.md#disablesideloadflags) before you set it.
 
 Mods built into Claude Code, such as `AGENTS.md` support, aren't affected by these settings. Each has [its own switch](./overview.md#mods-built-into-claude-code).
 
-A user whose mod didn't load finds the reason in their debug log. [Refusal messages](./troubleshoot.md#refusal-messages) lists the lines for `allowManagedHooksOnly` and `disableAllHooks`, and [Messages from the built-in guard](./troubleshoot.md#messages-from-the-built-in-guard) has the line for `allowManagedModsOnly`.
+A user whose mod was refused or didn't load finds the reason in their debug log. [Refusal messages](./troubleshoot.md#refusal-messages) lists the lines for `allowManagedHooksOnly` and `disableAllHooks`, and [Messages from the built-in guard](./troubleshoot.md#messages-from-the-built-in-guard) has the line for `allowManagedModsOnly`.
 
 ### Allow only your organization's mods
 
@@ -209,7 +209,7 @@ The table gives what your users get with each option unset and with it set to `t
 
 | Option | Unset | `true` |
 | :- | :- | :- |
-| `allowManagedModsOnly` | Users' own mods load | Only [your organization's mods](#install-your-organizations-mods), and mods built into Claude Code, load. Claude Code refuses every other mod, including one a user installed or named with `--plugin-dir`. |
+| `allowManagedModsOnly` | Users' own mods run | Only [your organization's mods](#install-your-organizations-mods), and mods built into Claude Code, run their hooks. Claude Code refuses every other mod, including one a user installed or named with `--plugin-dir`. |
 | `allowModsToOverrideDenyRules` | Deny rules take precedence over users' mods | A user's mod that approves tool calls can approve a call that a `deny` rule refuses |
 
 These rules decide whether an option takes effect:
@@ -264,7 +264,7 @@ The manifest lists the plugin by its path relative to that directory:
 }
 ```
 
-A plugin that Claude Code copies into its cache counts as a user's, even when managed `enabledPlugins` enables it. That covers every plugin from a GitHub, git, URL, or npm source. Its mod runs among users' mods, `prependPlugins` and `appendPlugins` skip it, and it doesn't load under `allowManagedModsOnly` or `allowManagedHooksOnly`. The user's debug log has a line that starts with the plugin's id and `is enabled by managed settings, but`.
+A plugin that Claude Code copies into its cache counts as a user's, even when managed `enabledPlugins` enables it. That covers every plugin from a GitHub, git, URL, or npm source. Its mod runs among users' mods, `prependPlugins` and `appendPlugins` skip it, `allowManagedModsOnly` refuses it, and `allowManagedHooksOnly` keeps it from loading. The user's debug log has a line that starts with the plugin's id and `is enabled by managed settings, but`.
 
 Claude Code fires an event each time it's about to act, such as run a tool, and passes it to each mod in turn. A mod that counts as yours [runs before users' mods](./events.md#the-order-mods-run-in) even when you list it nowhere. To set its place, list its id in one of two settings. The id is the plugin's name, `@`, and the marketplace's name, such as `acme-guard@acme-tools`.
 

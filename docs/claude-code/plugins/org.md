@@ -186,7 +186,7 @@ The table lists each plugin policy key, what it enforces, and what it can't do.
 | `pluginTrustMessage` | Appends your text to the trust warning that `/plugin` shows before a plugin installs | Doesn't change the warning's own text |
 | `allowedChannelPlugins` | Replaces the default list of plugins allowed to push channel messages. Requires `channelsEnabled: true` | See [Restrict which channel plugins can run](../channels.md#restrict-which-channel-plugins-can-run) |
 | [`CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL=1`](../env-vars.md) | Stops interactive terminal sessions from auto-registering the official marketplace | Doesn't remove a marketplace already registered. The allowlist and blocklist gate the same auto-registration without it. A machine that started once with it set doesn't resume auto-registration after you unset it |
-| [`allowManagedModsOnly`](./mods/admin.md#stop-user-installed-mods-from-loading) | Stops every installed [mod](./mods/overview.md) that doesn't [count as your organization's](./mods/admin.md#install-your-organizations-mods) from loading | Doesn't stop a plugin that contains a mod from installing. For that, use the marketplace keys in this table |
+| [`allowManagedModsOnly`](./mods/admin.md#stop-user-installed-mods-from-loading) | Stops every installed [mod](./mods/overview.md) that doesn't [count as your organization's](./mods/admin.md#install-your-organizations-mods) from running its hooks | Doesn't stop a plugin that contains a mod from installing. For that, use the marketplace keys in this table |
 
 Every key in the table is a managed setting, apart from `enabledPlugins`, `syncClaudeAiPlugins`, `CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL`, and `allowManagedModsOnly`:
 

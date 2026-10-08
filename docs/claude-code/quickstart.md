@@ -30,7 +30,7 @@ To install Claude Code, open a terminal and run the command for your system. If 
 
 **macOS, Linux, WSL:**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
@@ -38,17 +38,17 @@ On Windows, your prompt shows `PS C:\` when you're in PowerShell and `C:\` witho
 
 **Windows PowerShell:**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 irm https://claude.ai/install.ps1 | iex
 ```
 
 **Windows CMD:**
 
-```batch theme={null}
+```batch theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
-When the installer finishes, open a new terminal window and run `claude --version`. A working installation prints a version number. If your shell says `claude` isn't found or isn't recognized, the install directory isn't on your PATH yet: see [Fix your PATH](./troubleshoot-install.md#command-not-found-claude-after-installation).
+The install command shows no progress while it downloads Claude Code. When the installer finishes, open a new terminal window and run `claude --version`. A working installation prints a version number. If your shell says `claude` isn't found or isn't recognized, the install directory isn't on your PATH yet: see [Fix your PATH](./troubleshoot-install.md#command-not-found-claude-after-installation).
 
 If you see `The token '&&' is not a valid statement separator`, you're in PowerShell, not CMD. If you see `'irm' is not recognized as an internal or external command`, you're in CMD, not PowerShell.
 
@@ -61,7 +61,7 @@ If the install command fails with `syntax error near unexpected token '<'`, a `4
 
 **Homebrew**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 brew install --cask claude-code
 ```
 
@@ -72,7 +72,7 @@ Homebrew offers two casks. `claude-code` tracks the stable release channel, whic
 
 **WinGet**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 winget install Anthropic.ClaudeCode
 ```
 
@@ -206,27 +206,19 @@ there's a bug where users can submit empty forms - fix it
 
 ## Step 7: Test out other common workflows
 
-There are a number of ways to work with Claude:
-
-**Refactor code**
+Try a few more prompts. You can ask Claude to refactor code, write tests, update documentation, or review your changes:
 
 ```text wrap theme={null}
 refactor the authentication module to use async/await instead of callbacks
 ```
 
-**Write tests**
-
 ```text wrap theme={null}
 write unit tests for the calculator functions
 ```
 
-**Update documentation**
-
 ```text wrap theme={null}
 update the README with installation instructions
 ```
-
-**Code review**
 
 ```text wrap theme={null}
 review my changes and suggest improvements
@@ -237,9 +229,11 @@ review my changes and suggest improvements
 
 ## Essential commands
 
-Here are the most important commands for daily use. Shell commands run from your terminal to start or resume Claude Code. Session commands run inside Claude Code after it starts.
+Here are the most important commands for daily use, grouped by where you run them.
 
-**Shell commands**
+### Shell commands
+
+Run these from your terminal to start or resume Claude Code.
 
 | Command | What it does | Example |
 | - | - | - |
@@ -249,7 +243,11 @@ Here are the most important commands for daily use. Shell commands run from your
 | `claude -c` | Continue most recent conversation in current directory | `claude -c` |
 | `claude -r` | Resume a previous conversation | `claude -r` |
 
-**Session commands**
+See the [CLI reference](./cli-reference.md) for the complete list of shell commands.
+
+### Session commands
+
+Run these inside Claude Code after it starts.
 
 | Command | What it does | Example |
 | - | - | - |
@@ -257,7 +255,7 @@ Here are the most important commands for daily use. Shell commands run from your
 | `/help` | Show available commands | `/help` |
 | `/exit` or Ctrl+D twice | Exit Claude Code | `/exit` |
 
-See the [CLI reference](./cli-reference.md) for the complete list of shell commands and the [commands reference](./commands.md) for the complete list of session commands.
+See the [commands reference](./commands.md) for the complete list of session commands.
 
 ## Pro tips for beginners
 
