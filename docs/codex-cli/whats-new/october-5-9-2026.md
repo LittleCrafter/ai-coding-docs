@@ -1,0 +1,19 @@
+# October 5–9, 2026
+
+> For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
+
+[Back to What's new](../whats-new.md#october-59-2026)
+
+## Use GPT-6.1 Sol with Ultrafast mode
+
+Ultrafast mode speeds up token generation with [GPT-6.1 Sol](../models.md#gpt-61-sol)
+in Codex and ChatGPT Work. Ultrafast is available on Pro $500 and eligible
+Enterprise and Edu plans.
+
+Enterprise access is off by default; workspace owners must enable it.
+GPT-6.1 Sol Ultrafast supports inference residency in the United States and
+Europe (EEA + Switzerland).
+
+See [Ultrafast mode](../agent-configuration/speed.md#ultrafast-mode) for plan
+and workspace requirements and [Pricing](../pricing.md) for usage and credit
+rates. Read the [launch announcement](https://learn.chatgpt.com/docs/changelog#codex-2026-10-08-gpt-61-sol-ultrafast).

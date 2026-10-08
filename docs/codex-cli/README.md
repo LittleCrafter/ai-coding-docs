@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 189
-- **Version:** 0.161.0
-- **Last updated:** 2026-10-08T12:19:54Z
+- **Pages mirrored:** 190
+- **Version:** 0.162.0
+- **Last updated:** 2026-10-08T20:18:46Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -287,6 +287,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | DevDay 2026 | [whats-new/devday-2026.md](./whats-new/devday-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/devday-2026>) |
+| October 5–9, 2026 | [whats-new/october-5-9-2026.md](./whats-new/october-5-9-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/october-5-9-2026>) |
 | September 28–October 2, 2026 | [whats-new/september-28-october-2-2026.md](./whats-new/september-28-october-2-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/september-28-october-2-2026>) |
 
 ## windows

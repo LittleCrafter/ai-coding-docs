@@ -190,7 +190,7 @@ Organization-level controls and usage visibility.
     <tr>
       <td>[Server-managed settings](./server-managed-settings.md)</td>
       <td>✓ (Team and Enterprise)</td>
-      <td>✓ (Team and Enterprise)</td>
+      <td>See [Platform availability](./server-managed-settings.md#platform-availability)</td>
       <td>✗</td>
       <td>✗</td>
       <td>✗</td>
@@ -280,7 +280,7 @@ Each tab lists what is unavailable or partially supported on that provider, with
 
 **Not available:** all [features that require a Claude subscription](#features-that-require-a-claude-subscription).
 
-Everything in [CLI capabilities that vary by provider](#cli-capabilities-that-vary-by-provider) is available, except that [fast mode](./fast-mode.md) requires [provisioned access](./fast-mode.md#enable-fast-mode-for-your-organization). [Server-managed settings](./server-managed-settings.md) are also available when your API key belongs to a Team or Enterprise organization.
+Everything in [CLI capabilities that vary by provider](#cli-capabilities-that-vary-by-provider) is available, except that [fast mode](./fast-mode.md) requires [provisioned access](./fast-mode.md#enable-fast-mode-for-your-organization). [Server-managed settings](./server-managed-settings.md) that you configure in a claude.ai Team or Enterprise organization don't reach a session that authenticates with a Console API key. See [Platform availability](./server-managed-settings.md#platform-availability) for how to cover those sessions.
 
 ## Availability by subscription plan
 

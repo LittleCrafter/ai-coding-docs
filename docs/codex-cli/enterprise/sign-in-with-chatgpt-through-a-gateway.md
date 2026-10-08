@@ -4,7 +4,7 @@
 
 ## Why you would want this
 
-If you already have a model gateway and use Codex with the API Platform, you can keep your gateway while moving to **Sign in with ChatGPT**. This gives you access to eligible ChatGPT workspace features and controls, including [voice mode](#voice-through-a-gateway), while keeping your model gateway. Compare the sign-in methods in [Feature availability](../pricing.md#feature-availability).
+If you already have a model gateway and use Codex with the API Platform, you can keep your gateway while moving to **Sign in with ChatGPT**. This gives you access to eligible ChatGPT workspace features and controls (e.g. [**voice mode**](#voice-through-a-gateway)) while keeping your model gateway. Compare the sign-in methods in [Feature availability](../pricing.md#feature-availability).
 
 ## How to set it up
 
@@ -61,7 +61,7 @@ codex_with_gateway() (
 codex_with_gateway
 ```
 
-Configure your gateway to accept `X-Gateway-Key`, validate the key, and remove that header before forwarding the request. The request now carries:
+Configure your gateway to accept `X-Gateway-Key`, validate the key, and remove that header before forwarding the request to the backend. The request from the client now carries:
 
 ```http
 Authorization: Bearer <ChatGPT token>

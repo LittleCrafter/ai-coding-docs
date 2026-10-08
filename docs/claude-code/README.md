@@ -3,8 +3,8 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 220
-- **Version:** 2.1.293
-- **Last updated:** 2026-10-08T12:18:47Z
+- **Version:** 2.1.295
+- **Last updated:** 2026-10-08T20:17:38Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 

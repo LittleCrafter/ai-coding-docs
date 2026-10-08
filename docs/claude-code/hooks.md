@@ -3533,6 +3533,8 @@ Instead of executing a Bash command, prompt-based hooks:
 
 Set `type` to `"prompt"` and provide a `prompt` string instead of a `command`. Use the `$ARGUMENTS` placeholder to inject the hook's JSON input data into your prompt text.
 
+In a prompt or [agent hook](#agent-based-hooks), you can write the `prompt` as a rule about what to block or allow, such as "Block any Bash command that reads `.env` files", or as a condition that must hold, such as "All unit tests pass".
+
 This `Stop` hook asks the LLM to evaluate whether all tasks are complete before allowing Claude to finish:
 
 ```json theme={null}

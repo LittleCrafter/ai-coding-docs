@@ -50,7 +50,7 @@ Choose the Pro plan that fits your usage.
 [Get Pro](https://chatgpt.com/explore/pro?utm_internal_source=openai_developers_codex)
 
 - Plans at $100, $200, or $500 USD per month
-- [Astra Ultrafast](./agent-configuration/speed.md#ultrafast-mode)
+- [Ultrafast mode](./agent-configuration/speed.md#ultrafast-mode)
   access on Pro $500
 - Other [ChatGPT features](https://chatgpt.com/pricing) as part of the
   Pro plan
@@ -167,17 +167,16 @@ at different rates, relative to Standard mode for the same model:
 | --------------------- | --------------------------- | ---------------------------------------------------- |
 | Fast                  | 2.5x                        | 2x                                                   |
 | GPT-6 Astra Ultrafast | 8x                          | 6x                                                   |
+| GPT-6.1 Sol Ultrafast | 8x                          | 6x                                                   |
 
-These billing multipliers don't describe speed increases. Credit rates
-alone don't determine how quickly you use included subscription limits;
-check your [usage dashboard](#where-can-i-see-my-current-usage-limits) for
+Check your [usage dashboard](#where-can-i-see-my-current-usage-limits) for
 current limits and reset times. See [Speed](./agent-configuration/speed.md)
 for supported models and how speed modes affect usage.
 
 Image generations use included limits ~3-5x faster on average, depending on
 image quality and size.
 
-For GPT-6 Astra Ultrafast eligibility, billing, and administrator controls,
+For Ultrafast mode eligibility and administrator controls,
 see [Ultrafast mode](./agent-configuration/speed.md#ultrafast-mode).
 
 ### How much does Sites cost?
@@ -373,8 +372,8 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         <td colspan="4" style="text-align:center">
           These are Standard credit rates. For purchased credits and Enterprise
           pay-as-you-go usage, Fast mode uses 2x the Standard rate where
-          available, and GPT-6 Astra Ultrafast uses 6x. Included subscription
-          usage has different multipliers. See
+          available, and Ultrafast mode uses 6x. Included subscription usage has
+          different multipliers. See
           [Speed](./agent-configuration/speed.md) for availability
           and billing details.
         </td>
@@ -455,7 +454,7 @@ API-key access follows API model availability.
 | [GPT-6.1 Sol](./models.md#gpt-61-sol) | Yes | Yes | Yes | Yes | Yes |
 | [GPT-6 Sol and Luna](./models.md) | Yes | Yes | Yes | Yes | Yes |
 | [Fast mode](./agent-configuration/speed.md) | Yes | Yes | Yes | Yes | Yes |
-| [Astra Ultrafast (Pro $500 and eligible Enterprise/Edu plans)](./agent-configuration/speed.md#ultrafast-mode) | No | Yes | No | Yes | Yes |
+| [Ultrafast (Pro $500 and eligible Enterprise/Edu plans)](./agent-configuration/speed.md#ultrafast-mode) | No | Yes | No | Yes | Yes |
 | [Image generation and editing](./image-generation.md) | Yes | Yes | Yes | Yes | Yes |
 | [Voice dictation](./prompting.md#use-voice-dictation) | Yes | Yes | Yes | Yes | No |
 | [ChatGPT Voice](./features/voice.md) | Yes | Yes | Yes | Yes | No |

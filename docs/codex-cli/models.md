@@ -133,7 +133,7 @@ Codex. They aren't available in Chat.
 GPT-5.6 Sol, GPT-5.6 Terra, and GPT-5.6 Luna remain available during the rollout. Selecting a
 new model doesn't change workspace permissions or grant access to it.
 
-For Astra Ultrafast availability and credit usage on Pro $500 and eligible
+For Ultrafast mode availability and credit usage on Pro $500 and eligible
 Enterprise and Edu plans, see [Speed](./agent-configuration/speed.md#ultrafast-mode).
 
 <a id="app-compare-models"></a>
@@ -186,8 +186,10 @@ For Enterprise and Edu, the plan keeps GPT-6.1 Sol off by default until an
 administrator enables it.
 Free and Go are not included at launch.
 
-Standard and Fast modes are available at launch. Ultrafast support for
-GPT-6.1 Sol is coming later.
+Standard and Fast modes are available where supported. Ultrafast is available
+on Pro $500 and eligible Enterprise and Edu plans. See
+[Ultrafast mode](./agent-configuration/speed.md#ultrafast-mode) for plan and
+workspace requirements.
 
 Use `gpt-6.1-sol`. Available controls depend on your plan, client, and workspace
 settings.

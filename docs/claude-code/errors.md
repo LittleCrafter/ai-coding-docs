@@ -794,18 +794,16 @@ When a proxy, load balancer, or gateway between Claude Code and the API answers 
 Your plan's included usage can't cover this request, and the [usage credits](https://support.claude.com/en/articles/12429409-extra-usage-for-paid-claude-plans) that would otherwise pay for it have reached a spend limit. That happens when one of your plan's usage windows has run out, or when the request is one that only usage credits pay for, such as a request to a model that [bills to usage credits](./model-config.md#fable-and-usage-credits). The message names whose limit blocked you. The text after the `·` says how to get that limit increased, and varies with your plan and whether you manage billing:
 
 ```text theme={null}
-You've hit your monthly spend limit · raise it at claude.ai/settings/usage
+You've hit your monthly spend limit · raise it at https://claude.ai/settings/usage?from=cc_cli_limit_message
 You've hit your individual spend limit · ask your admin for a higher limit
-You've hit your org's monthly spend limit · visit claude.ai/admin-settings/usage to raise it
-You've hit your team's shared budget · ask your admin to raise it at claude.ai/admin-settings/usage
+You've hit your org's monthly spend limit · visit https://claude.ai/admin-settings/usage to raise it
+You've hit your team's shared budget · ask your admin to raise it at https://claude.ai/admin-settings/usage
 You've hit your channel's monthly spend limit · an org owner or channel manager can raise it in the channel's Claude settings
 ```
 
 `team's shared budget` is a pooled budget an admin assigned to a group you belong to; the message doesn't name the group. `channel's monthly spend limit` is the budget of the one Slack channel the session runs in, so your organization may still have budget outside it.
 
 When one of your plan's windows is what ran out, the message also says when that window resets, for example `· your session limit resets 3:45pm`, and access returns then without anyone raising the limit. On organizations with usage-based billing, the message says `usage limit` in place of `spend limit`, as in `You've hit your individual usage limit`.
-
-Before v2.1.239, the message didn't name the plan window's reset time. Before v2.1.268, a group's pooled budget produced the `individual spend limit` message instead of `team's shared budget`.
 
 If you connect through a Claude apps gateway and see lowercase `spend limit reached`, that is your gateway operator's cap instead; see [Spend limit reached](#spend-limit-reached).
 
@@ -2692,7 +2690,7 @@ API Error: Opus 4.8's safeguards flagged this message. Our intentionally broad s
 
 If the message includes the line `` Details: `[reasoning_extraction]` ``, see [Safeguards flagged a request for Claude's reasoning](#safeguards-flagged-a-request-for-claudes-reasoning).
 
-The message links to the [Cyber Verification Program](https://support.claude.com/en/articles/14604842-real-time-cyber-safeguards-on-claude), which grants access for legitimate cybersecurity work. On Opus 5.5 and Sonnet 5.5, the message opens with `<model>'s safeguards flagged this session` instead. When the flagged category has a fallback model available, Claude Code [switches models](./model-config.md#automatic-model-fallback) rather than showing this error.
+This message links to the [Cyber Verification Program](https://support.claude.com/en/articles/14604842-real-time-cyber-safeguards-on-claude), which grants access for legitimate cybersecurity work. Models with [automatic model fallback](./model-config.md#automatic-model-fallback) print a different message, without this link; on Opus 5.5 and Sonnet 5.5 it opens with `<model>'s safeguards flagged this session`. That section also covers when Claude Code switches models instead.
 
 On [Amazon Bedrock](./amazon-bedrock.md), [Google Cloud's Agent Platform](./google-vertex-ai.md), and [Microsoft Foundry](./microsoft-foundry.md), a cybersecurity flag produces the [Usage Policy refusal](#usage-policy-refusal) message instead.
 
@@ -4563,7 +4561,7 @@ You attached to a stopped [background session](./agent-view.md) that was backgro
 This session has no saved transcript — it was stopped before its first response finished. If it was backgrounded from another conversation, that one is still intact; `claude respawn <id>` starts this one fresh.
 ```
 
-Opening the same session's row in [agent view](./agent-view.md) shows `Press enter again to restart this session fresh` below the list instead, and a second `Enter` on the row restarts the session with an empty conversation. Before v2.1.212, opening the row showed the refusal message with no way to restart from agent view. Before v2.1.211, opening the stopped session silently started that blank conversation and could re-run the session's original prompt.
+Opening the same session's row in [agent view](./agent-view.md) shows `Press enter again to restart this session fresh` below the list instead, and a second `Enter` on the row restarts the session with an empty conversation.
 
 **What to do:**
 
@@ -4584,8 +4582,6 @@ This conversation is already open in another running Claude session — use that
 
 * **`running in another terminal`**: a terminal holds the conversation, for example one where you resumed it with `claude --resume` or `/resume`. The row also shows `Open in a terminal`.
 * **`already open in another running Claude session`**: another non-interactive Claude Code process holds it, for example a [background session](./agent-view.md#the-supervisor-process) process for the same conversation that hasn't exited yet.
-
-Claude Code saves a reply you typed when opening the row and sends it as the session's next prompt when the session next starts.
 
 **What to do:**
 
