@@ -10,6 +10,13 @@ This page is generated from the [CHANGELOG.md on GitHub](https://github.com/anth
 
 Run `claude --version` to check your installed version.
 
+## 2.1.294
+
+*October 8, 2026*
+
+* Fixed `prompt` and `agent` hooks written as instructions (such as "Block commands that...") allowing what they should block
+* Improved how `prompt` hooks on Stop and SubagentStop written as instructions (such as "Carry on if the build is broken") are judged, so Claude is less likely to stop early
+
 ## 2.1.293
 
 *October 7, 2026*

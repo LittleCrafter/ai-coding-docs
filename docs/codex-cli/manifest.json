@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.161.0",
-  "last_updated": "2026-10-07T22:42:28Z",
+  "last_updated": "2026-10-08T12:19:54Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -100,8 +100,8 @@
       "source_url": "https://learn.chatgpt.com/docs/annotations-extensibility",
       "source_md_url": "https://learn.chatgpt.com/docs/annotations-extensibility.md",
       "source_id": "llms:annotations-extensibility",
-      "hash": "6b59afddef2e57bda488a68f0676006c8e600a84e693a088a7987fbf4fffc7c2",
-      "last_updated": "2026-10-07T18:01:59Z"
+      "hash": "af42436f0101f43bfc41a612676f4d7a7fd012e83674eb1b27dd1a85fdea6cd9",
+      "last_updated": "2026-10-08T12:19:54Z"
     },
     "app": {
       "slug": "app",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "795b2bcc2f7870e5a048e468a14b4b1b570f451bfc5a897bbf32cff6192d0350",
-      "last_updated": "2026-10-07T22:42:28Z"
+      "hash": "c0b1fabe5a8dc583648728ac0ab40dff1d6bde11ff7822f001a087dd3a5caca7",
+      "last_updated": "2026-10-08T12:19:54Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -1895,8 +1895,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-07T22:42:28Z",
-    "fetch_duration_seconds": 65.877,
+    "last_fetch_completed": "2026-10-08T12:19:54Z",
+    "fetch_duration_seconds": 65.939,
     "total_pages_discovered": 189,
     "pages_fetched_successfully": 189,
     "pages_failed": 0,
