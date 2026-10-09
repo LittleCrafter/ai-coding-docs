@@ -25,6 +25,47 @@ Source: [ChatGPT on the web](./web.md)
 
 Use ChatGPT on the web to research, analyze, and create files.
 
+### Create your dot in the ChatGPT mobile app
+
+Source: [Create your dot in the ChatGPT mobile app](./whats-new/dots-october-9-2026.md)
+
+You can now create your dot in the ChatGPT mobile app. Give it a name,
+customize its appearance, and connect plugins, all from your phone. You can
+also choose to open ChatGPT directly to your dot’s conversation, so it’s
+ready when you want to pick up where you left off.
+
+#### Bring your dot into your Codex work
+
+Your dot can start work in Codex and follow up on existing threads. It can
+search across your ChatGPT conversations and use context from
+your existing Codex threads and automations. It’s also better at deciding
+when to continue an existing Codex thread and when to start a new one,
+helping keep related work together.
+
+Your dot can read and edit ChatGPT Work automations, too. Ask it to review
+what’s scheduled or update a recurring task as your needs change.
+
+#### Other improvements
+
+- **Faster, smoother work:** Cloud browsing and sidebar loading are faster.
+  We’ve reduced pauses while waiting for replies, smoothed transcript
+  scrolling and animations, and fixed an issue that could cause excessive
+  network usage.
+- **Fewer unnecessary notifications:** Fixed extra phone notifications
+  while you’re already using ChatGPT.
+- **Clearer conversations on the web:** Improved code blocks and attachments,
+  and fixed character rendering in Safari and Firefox. Threads your dot
+  manages can rename themselves as the work changes, with fewer redundant
+  “created task” messages.
+- **More reliable setup:** Fixed Outlook setup getting stuck and added
+  autofill for email verification codes.
+- **Easier review and recovery:** Plan guidance is clearer, and you can retry
+  activity that fails to load. Safety banners are more stable on the web,
+  and approval buttons no longer get clipped or hidden by oversized Gmail
+  previews.
+- **More reliable Enterprise access:** Fixed access issues on the web and
+  when starting a voice call.
+
 ### DevDay 2026
 
 Source: [DevDay 2026](./whats-new/devday-2026.md)
@@ -269,6 +310,10 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 ### October 5–9, 2026
 
 Source: [October 5–9, 2026](./whats-new/october-5-9-2026.md)
+
+#### [Create your dot in the ChatGPT mobile app](./whats-new/dots-october-9-2026.md)
+
+Create your dot, give it a name, customize its appearance, and connect plugins from your phone. This week's Dots update also brings more context from ChatGPT and Codex, faster cloud browsing, and fixes to notifications, setup, and everyday use.
 
 #### Use GPT-6.1 Sol with Ultrafast mode
 
@@ -688,7 +733,7 @@ a]:min-w-0 [&>a]:no-underline">
 
 Source: [What's new](./whats-new.md)
 
-For every versioned update, bug fix, and minor improvement, see the [Codex changelog](https://learn.chatgpt.com/docs/changelog) and [API changelog](https://developers.openai.com/api/docs/changelog).
+For every versioned update, bug fix, and minor improvement, see the [ChatGPT and Codex changelog](https://learn.chatgpt.com/docs/changelog) and [API changelog](https://developers.openai.com/api/docs/changelog).
 
 #### [October 5–9, 2026](./whats-new/october-5-9-2026.md)
 
@@ -3834,18 +3879,25 @@ Explore practical ChatGPT Work workflows for common teams and tasks.
 
 Source: [Get started with your dot](./dots/getting-started.md)
 
-Create your dot in the desktop app or in ChatGPT on a desktop browser. You can give it more than one ongoing responsibility.
+Create your dot in the ChatGPT mobile app, desktop app, or a desktop browser. You can give it more than one ongoing responsibility.
 
 #### Create your dot
 
-1. Open dots in ChatGPT and follow the introduction.
-2. Connect apps such as email, calendar, and files, or skip this step and add them later.
-3. In the desktop app, choose whether to connect your computer.
+1. Open dots in the ChatGPT mobile app, desktop app, or a desktop browser, and follow the introduction.
+2. Give your dot a name and customize its appearance. You can keep the defaults and change them later.
+3. Connect plugins for the apps you want your dot to use, such as email, calendar, and files. You can skip this step and add them later.
 
-Your dot starts with a default appearance and name. You can personalize its
-name, shape, color, eyes, glasses, and accessories after setup.
+#### Set up on mobile or desktop
 
-After setup, you can open the same dot in the ChatGPT mobile app when the supporting update is available. Mobile web is not supported. See [access and preview limits](./dots.md#access).
+Choose whichever device works best for you: the ChatGPT mobile app, desktop app, or a desktop browser. After setup, you can continue with the same dot across devices.
+
+If you prefer to set up on your phone, use the latest version of the ChatGPT mobile app. You can name your dot, customize its appearance, and connect plugins there. You can also choose to have ChatGPT open directly to your dot’s conversation. Mobile web is not supported. See [access and preview limits](./dots.md#access) if dots is not available to your account.
+
+#### Connect your computer
+
+Connecting your own computer lets your dot work there when it’s helpful: using files on your computer, working with the context of your signed-in browser, or starting and managing your local Codex tasks. Keep your computer online with the ChatGPT app open while your dot uses it.
+
+This connection is optional. Your dot has its own cloud computer and can work without access to your device. You can [connect your computer](./dots/computers-and-apps.md#connect-your-computer) from the desktop app during setup or later, whether you created your dot on mobile or desktop.
 
 #### Connect tools and contact methods
 
@@ -3871,8 +3923,6 @@ See [Tasks and memory](./dots/tasks-and-memory.md#context-and-memory).
 
 Start with work you want your dot to keep track of, rather than treating each conversation as a fresh request. Describe what matters, share the relevant sources, and explain which decisions need your input. Built-in safeguards and approval checks apply alongside your existing app permissions. For example:
 
-> Help me keep our offsite on track. Use the plan and venue emails I shared to keep track of decisions, deadlines, and unanswered questions. Let me know when something needs my attention, and draft suggested replies for my review.
-
 Review the result and correct missing details. Your dot can delegate parts of a request to ChatGPT Work or Codex. In the desktop app, open your dot’s profile and select [Activity](./dots/controls.md#review-work) to inspect delegated work and requests for input.
 
 #### Keep the work moving
@@ -3880,8 +3930,6 @@ Review the result and correct missing details. Your dot can delegate parts of a 
 Your dot can decide when to follow up and use background agents to work on several things at once. Keep talking to it to add context, change priorities, or make a decision. You don’t need to restart the work in a new conversation.
 
 Tell it where to send updates and when to interrupt you. You can also request a fixed schedule when the timing matters. Include the time zone and duration:
-
-> Check the connected planning channel each weekday at 9 AM Central for the next four weeks. Update my checklist when a deadline changes. If a deadline is at risk, message me in ChatGPT and draft a reminder for my review. Confirm the schedule.
 
 Where a connected source supports it, you can also ask your dot to act when a specified event occurs, such as when a new bug report appears in a Slack channel. Ask it to confirm what it set up. You can revise a responsibility or cancel a recurring task later. Ending a conversation or voice call doesn't necessarily stop assigned work.
 
@@ -4009,7 +4057,9 @@ Powered by GPT-6 Astra, your dot lives in the cloud and has its own computer and
 
 #### Make it your own
 
-Create your dot in the ChatGPT desktop app or a desktop browser. Setup offers app connections and, in the desktop app, access to your computer. Your dot introduces itself and uses the context available to it to suggest ways it can help. You can start talking to it while it gets to know your work.
+Create your dot in the ChatGPT mobile app, desktop app, or a desktop browser. On your phone, you can give it a name, customize its appearance, and connect plugins. In the desktop app, you can also connect your computer. See [Getting started](./dots/getting-started.md#create-your-dot) for setup steps.
+
+Your dot introduces itself and uses the context available to it to suggest ways it can help. You can start talking to it while it gets to know your work.
 
 Give your dot a name and choose its shape, color, eyes, glasses, and accessories. You can change these anytime.
 
@@ -4017,7 +4067,7 @@ Your dot starts with a handle such as @yourname-dot. Naming it updates the handl
 
 #### Message or call your dot
 
-Continue talking to your dot in ChatGPT on desktop or in the mobile app when the supporting update is available. Create your dot on desktop first; mobile web is not supported.
+Create and talk to your dot in the ChatGPT mobile app, desktop app, or a desktop browser. You can start on any of these and continue with the same dot on another device. Mobile web is not supported.
 
 You can message your dot or call it to discuss work, change priorities, or make a decision. In ChatGPT, select the phone button in your dot’s conversation to start a call. You can also type messages while you’re talking. Work you’ve assigned can continue after the call ends.
 
@@ -4106,23 +4156,11 @@ Start with work you regularly need to check or update. Describe the responsibili
 
 For an offsite, share the plan and venue emails, then ask your dot to identify upcoming decisions and deadlines.
 
-**An offsite to organize:**
-
-```text
-Help me keep our offsite on track. Read the plan and venue emails I shared, and make a list of decisions, deadlines, and things we're waiting on. Focus on anything that affects the budget or needs an answer this week. Draft suggested replies for my review, but don't send them.
-```
-
 Review the first result and correct any missing details before expanding the responsibility.
 
 #### Choose when and where to hear from it
 
 Tell your dot what to keep current and which changes deserve your attention. It can decide when to follow up. If you want an update at a specific time, include a time zone and a duration or end date, and ask it to confirm the schedule.
-
-**A scheduled check-in:**
-
-```text
-Check the connected planning channel each weekday at 9 AM Central for the next four weeks. Update our offsite list when something changes. Message me in ChatGPT if a deadline is at risk or you need a decision from me. Keep routine updates in the checklist. Confirm the schedule.
-```
 
 #### Review and redirect
 
@@ -4156,7 +4194,7 @@ Dots are rolling out gradually. You may not see dots immediately, even if your p
 
 Conversations with your dot don’t count toward your ChatGPT usage limits. Tasks your dot starts or manages in Work or Codex count toward those products’ usage limits as usual. Your plan includes an allowance for deeper work, with extended limits for the first month after launch.
 
-Create your dot in the desktop app or in ChatGPT on a desktop browser. After setup, use the same dot in the mobile app when the supporting update is available. Mobile web is not supported.
+You can create your dot in the ChatGPT mobile app, desktop app, or a desktop browser. Use the latest version of the mobile app for mobile setup. Mobile web is not supported.
 
 #### Reference
 
@@ -4178,7 +4216,7 @@ Open your dot's profile and select **Add** to see and connect the contact method
 
 #### ChatGPT and voice
 
-Message or call your dot in ChatGPT on desktop web or in the desktop app. Create your dot there first, then use it in the mobile app when the supporting update is available. Mobile web is not supported.
+Create, message, or call your dot in the ChatGPT mobile app, desktop app, or a desktop browser. Mobile web is not supported.
 
 To call your dot, open its conversation and select the phone button. In the desktop app, you can also select **Call** in its profile. Talk through a request, clarify a decision, or ask for a progress update. You can type messages while you’re talking, and your dot can also message you with progress or a question. Ending a call ends the voice conversation; work you've assigned can continue. Calls initiated by your dot are planned for after launch.
 
@@ -31416,6 +31454,165 @@ For public submission, submit the remote HTTPS endpoint through **With MCP**.
 If your MCP server runs locally, deploy it to a public HTTPS URL. If you can't,
 reach out to your OpenAI contact for local MCP support.
 
+#### Configure MCP authentication
+
+Declare authentication under each server's
+`extensions["com.openai"].auth` object in `mcp.json`. These settings belong to
+the MCP server, not the OpenAI extension in `plugin.json`.
+
+Choose an authentication method for your server:
+
+| Method                            | Configuration                                                    |
+| --------------------------------- | ---------------------------------------------------------------- |
+| No authentication                 | `auth.type: "none"`                                              |
+| OAuth                             | `auth.type: "oauth"`, with optional client registration settings |
+| Public and OAuth-protected access | `auth.type: "mixed"`                                             |
+| API key                           | `auth.type: "api_key"`, with a header scheme                     |
+
+The manifest declares connection settings, not secret credentials. For portal
+setup, client secret entry, and supported submission methods, see
+[Configure authentication for submission](https://developers.openai.com/plugins/deploy/submission#configure-authentication-for-submission).
+
+#### Use a registered OAuth client
+
+Use `client.mode: "provided"` when you have registered an OAuth application
+with your provider. Set `clientId` to that application's client ID. This
+configures the plugin's OAuth client.
+
+For example, configure a remote server with a registered client and explicit
+OAuth endpoints:
+
+```json
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "docs": {
+      "type": "streamable-http",
+      "url": "https://example.com/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": {
+              "mode": "provided",
+              "clientId": "docs-client",
+              "tokenEndpointAuthMethod": "client_secret_basic"
+            },
+            "authorizationUrl": "https://example.com/oauth/authorize",
+            "tokenUrl": "https://example.com/oauth/token",
+            "baseScopes": ["docs:read"]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Replace the URL, client ID, endpoints, and scopes with your provider's values.
+Omit endpoint overrides when OAuth discovery supplies them. Register the
+callback URL used by the connection flow with your OAuth provider.
+
+Keep the client secret out of the package. The manifest doesn't accept a
+`clientSecret` field; supply it through the connection setup flow.
+
+Choose the token endpoint authentication method your provider supports:
+
+- `client_secret_basic`: Send client credentials using HTTP Basic authentication.
+- `client_secret_post`: Send client credentials in the token request body.
+- `none`: Use a public client without a client secret.
+
+The schema also accepts `private_key_jwt`. Declaring that method doesn't
+configure signing keys. Check the [submission requirements](https://developers.openai.com/plugins/deploy/submission#configure-authentication-for-submission)
+before choosing it for a public plugin.
+
+#### Use automatic OAuth client registration
+
+For Dynamic Client Registration (DCR), use this `auth` object at the same
+location as the previous example.
+Omit `registrationUrl` if discovery supplies it.
+
+```json
+{
+  "type": "oauth",
+  "client": {
+    "mode": "dcr"
+  },
+  "registrationUrl": "https://example.com/oauth/register"
+}
+```
+
+To prefer Client Identifier Metadata Document (CIMD), use:
+
+```json
+{
+  "type": "oauth",
+  "client": {
+    "mode": "cimd"
+  }
+}
+```
+
+Don't include `clientId` or client credentials in a `dcr` or `cimd` client
+object. CIMD preference doesn't disable the DCR fallback.
+
+#### OAuth configuration reference
+
+These fields belong inside `extensions["com.openai"].auth`. Use
+`type: "oauth"`, or `type: "mixed"` for both unauthenticated and OAuth access.
+Mixed authentication doesn't combine OAuth with a fixed API key. Omitted
+optional values remain available for discovery.
+
+| Field                            | Type             | Description                                                                                                         |
+| -------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `client`                         | Object           | Optional client registration configuration.                                                                         |
+| `client.mode`                    | String           | `provided`, `dcr`, or `cimd`. Required when `client` is present.                                                    |
+| `client.clientId`                | String           | Required for a `provided` client.                                                                                   |
+| `client.tokenEndpointAuthMethod` | String           | Optional method for a provided client: `none`, `client_secret_basic`, `client_secret_post`, or `private_key_jwt`.   |
+| `authorizationUrl`               | String           | Authorization endpoint override.                                                                                    |
+| `tokenUrl`                       | String           | Token endpoint override.                                                                                            |
+| `registrationUrl`                | String           | Dynamic registration endpoint override.                                                                             |
+| `authorizationServerBase`        | String           | Authorization server base override.                                                                                 |
+| `resource`                       | String           | OAuth resource identifier override.                                                                                 |
+| `baseScopes`                     | Array of strings | Scopes included on every OAuth request.                                                                             |
+| `defaultScopes`                  | Array of strings | Default scope override. An empty array requests no default scopes; omit the field to use client or server defaults. |
+| `oidcEnabled`                    | boolean          | OpenID Connect (OIDC) override.                                                                                     |
+| `oidcConfigurationUrl`           | String           | OIDC discovery endpoint override.                                                                                   |
+| `oidcUserinfoEndpoint`           | String           | OIDC user information endpoint override.                                                                            |
+| `oidcScopesSupported`            | Array of strings | Supported OIDC scope override.                                                                                      |
+
+Use scope strings containing at least one non-whitespace character and absolute
+HTTP or HTTPS URLs without embedded
+credentials or fragments for endpoint overrides. Public submission still
+requires a remote HTTPS MCP endpoint. Field names are case-sensitive: use
+`clientId` inside `client`, not a top-level `oauth.client_id`.
+
+#### Fixed bearer tokens and API keys
+
+A server that accepts a fixed bearer token without an OAuth authorization
+flow uses API-key authentication. Its manifest `auth` declaration is:
+
+```json
+{
+  "type": "api_key",
+  "headerScheme": "bearer"
+}
+```
+
+This object describes how to send a credential supplied during connection setup;
+it doesn't contain the token. The schema also accepts `headerScheme: "basic"`
+and `headerScheme: "custom_header"`. A custom header requires `headerName`,
+which is only allowed with `custom_header`; `Host` isn't allowed.
+
+API-key declarations aren't supported by the submission portal's connection
+form. See [Authentication limitations](https://developers.openai.com/plugins/deploy/submission#authentication-limitations)
+before submitting a plugin that requires an API key.
+
+An OAuth access token may also use the bearer scheme. A fixed token doesn't
+replace OAuth client registration or user authorization.
+
+#### Configure installed server policy
+
 After installation, users can enable or disable a bundled MCP server and tune
 tool approval policy from their Codex config without editing the plugin. Use
 `plugins..mcp_servers.` for plugin-scoped MCP server policy:
@@ -34654,6 +34851,62 @@ Your package can declare multiple MCP servers, but **only one MCP server can be 
 **_MCP connection and domain verification._** _Connect the server and complete domain verification before checking the discovered tools._
 
 If connecting or scanning fails, check endpoint availability and authentication, then reconnect or rescan. Resolve **Complete MCP setup** findings and connection failures before submitting. See the [plugin guidelines](https://developers.openai.com/plugins/plugin-guidelines) for MCP server URL, authentication, tool metadata, and UI requirements.
+
+#### Configure authentication for submission
+
+The portal reads advanced authentication settings from your package's
+`mcp.json`. Configure the authentication method, OAuth client registration,
+endpoints, and scopes using the [MCP authentication reference](https://developers.openai.com/plugins/build/plugins#configure-mcp-authentication).
+The connection panel displays those settings; it doesn't provide an advanced
+OAuth settings editor.
+
+To change the configuration, update `mcp.json`, select **Upload new version**,
+and inspect the saved settings under **MCPs** before connecting. Existing client
+registration can lock credential changes; check the saved connection rather
+than assuming an upload replaces an existing client.
+
+For OAuth, choose a registration method supported by your provider:
+
+| Registration method                          | What to provide                                                                                                                     |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Registered client (`provided`)               | Declare the client ID and token endpoint authentication method in `mcp.json`. Enter the client secret in the portal when required.  |
+| Dynamic Client Registration (`dcr`)          | Provide a registration endpoint through discovery or a `registrationUrl` override. Don't include client credentials in the package. |
+| Client Identifier Metadata Document (`cimd`) | Configure CIMD preference. The runtime can fall back to DCR according to its registration policy.                                   |
+
+For a registered client:
+
+1. Register the callback URL used by the connection flow with your OAuth provider.
+2. Open **MCPs**, select your server, and select **Connect**.
+3. Enter **OAuth Client Secret** if your client requires a secret. The field appears for a provided OAuth client unless `tokenEndpointAuthMethod` is `"none"`.
+4. Complete domain verification if needed, select **Connect**, and authorize the account used to connect and scan the server.
+5. Wait for the scan to finish and resolve any connection or tool findings.
+
+Don't put the client secret in `mcp.json`; the manifest rejects
+`clientSecret`. The client secret authenticates your OAuth application. It
+isn't the account password, an access token, or reviewer sign-in credentials.
+
+If OAuth discovery doesn't provide the required endpoints, add
+`authorizationUrl` and `tokenUrl` overrides to `mcp.json`. Ensure the client
+ID, token endpoint authentication method, scopes, and callback URL match the
+provider's configuration.
+
+#### Authentication limitations
+
+The portal connection form supports no authentication, OAuth, and mixed
+unauthenticated/OAuth access. Although the manifest schema accepts API-key
+authentication, the portal doesn't provide an API-key connection flow or a
+bearer-token input. This limitation also applies to Basic and custom-header
+API-key declarations. Uploading an API-key declaration alone won't complete
+MCP setup. Contact OpenAI if your submission requires this authentication method.
+
+Don't embed a token in server `headers` to work around this limitation:
+public submission rejects nonempty server headers. Don't configure a protected
+server as `type: "none"`.
+
+The schema accepts `private_key_jwt` for a provided OAuth client, but that
+value alone doesn't configure signing keys. This portal guide doesn't provide
+a signing-key setup procedure; confirm the required setup with OpenAI before
+using that method for submission.
 
 #### Domain verification details
 

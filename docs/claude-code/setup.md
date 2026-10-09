@@ -566,7 +566,9 @@ In addition to the signed manifest, individual binaries carry platform-native co
 
 To remove Claude Code, follow the instructions for your installation method. If `claude` still runs afterward, you likely have a second installation or a leftover shell alias from an older installer. See [Check for conflicting installations](./troubleshoot-install.md#check-for-conflicting-installations) to find and remove it.
 
-### Native installation
+<a id="native-installation"></a>
+
+### Uninstall a native installation
 
 Remove the Claude Code binary and version files:
 
@@ -584,7 +586,9 @@ Remove-Item -Path "$env:USERPROFILE\.local\bin\claude.exe" -Force
 Remove-Item -Path "$env:USERPROFILE\.local\share\claude" -Recurse -Force
 ```
 
-### Homebrew installation
+<a id="homebrew-installation"></a>
+
+### Uninstall with Homebrew
 
 Remove the Homebrew cask you installed. If you installed the stable cask:
 
@@ -598,7 +602,9 @@ If you installed the latest cask:
 brew uninstall --cask claude-code@latest
 ```
 
-### WinGet installation
+<a id="winget-installation"></a>
+
+### Uninstall with WinGet
 
 Remove the WinGet package:
 
@@ -606,7 +612,9 @@ Remove the WinGet package:
 winget uninstall Anthropic.ClaudeCode
 ```
 
-### apt / dnf / apk
+<a id="apt-/-dnf-/-apk"></a>
+
+### Uninstall with apt, dnf, or apk
 
 Remove the package and the repository configuration:
 
@@ -632,7 +640,9 @@ sed -i '\|downloads.claude.ai/claude-code/apk|d' /etc/apk/repositories
 rm /etc/apk/keys/claude-code.rsa.pub
 ```
 
-### npm
+<a id="npm"></a>
+
+### Uninstall with npm
 
 Remove the global npm package:
 

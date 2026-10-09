@@ -124,6 +124,8 @@ The following sample sets four keys that you could add to the [managed settings]
 }
 ```
 
+For a fuller `managed-settings.json` with sandboxing, a network allowlist, credential protections, and local data retention, see `settings-hipaa.json` and `README-hipaa.md` in the [settings examples repository](https://github.com/anthropics/claude-code/tree/main/examples/settings).
+
 #### What each key does
 
 The table shows what to set each key to and what Claude Code enforces for it.
@@ -258,6 +260,7 @@ Removing a developer's seat or account deletes nothing on their computer, and `/
 
 * [Set up Cowork (local mode) for a HIPAA-ready organization](https://claude.com/docs/cowork/hipaa-setup)
 * [Deploy managed settings](./managed-settings.md)
+* [HIPAA settings example](https://github.com/anthropics/claude-code/tree/main/examples/settings)
 * [Enterprise network configuration](./network-config.md)
 * [Zero data retention](./zero-data-retention.md)
 * [Legal and compliance](./legal-and-compliance.md)

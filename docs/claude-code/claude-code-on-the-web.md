@@ -79,7 +79,9 @@ These workflows require the [Claude Code CLI](./quickstart.md) signed in to the 
 > [!NOTE]
 > From the CLI, session handoff is one-way: you can pull cloud sessions into your terminal with `--teleport`, but you can't push an existing terminal session to the cloud. The `--cloud` flag with a task description creates a new cloud session for your current repository; with `-p` and a session ID or claude.ai/code URL it instead [queues a message into that existing session](./claude-code-on-the-web.md#send-follow-ups-from-the-cli). The [Desktop app](./desktop.md#continue-in-another-surface) can send a local session in its Code tab to the cloud from its **Open in** menu.
 
-### From terminal to cloud
+<a id="from-terminal-to-cloud"></a>
+
+### Start a cloud session from your terminal
 
 Start a cloud session from the command line with the `--cloud` flag:
 
@@ -191,7 +193,9 @@ Pass `--output-format json` for a machine-readable result: `{ok, session_id, url
 
 If the send fails, see [Errors when sending to a cloud session](#errors-when-sending-to-a-cloud-session).
 
-### From cloud to terminal
+<a id="from-cloud-to-terminal"></a>
+
+### Continue a cloud session in your terminal
 
 Pull a cloud session into your terminal using any of these:
 
@@ -413,7 +417,7 @@ Cloud sessions stop after a period of inactivity and the session's VM is reclaim
 Reopen the session from [claude.ai/code](https://claude.ai/code) to provision a fresh VM:
 
 * **Restored**: your conversation history
-* **Not restored**: background work that was still running when the VM was reclaimed, such as subagents and shell commands
+* **Not restored**: background work that was still running when the VM was reclaimed, such as subagents and shell commands, and the pending wakeup of a [self-paced `/loop`](./scheduled-tasks.md#let-claude-choose-the-interval). To restart the loop, run `/loop` again.
 
 ## Limitations
 

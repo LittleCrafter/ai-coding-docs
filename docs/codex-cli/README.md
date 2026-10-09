@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 191
-- **Version:** 0.162.0
-- **Last updated:** 2026-10-09T17:37:12Z
+- **Pages mirrored:** 192
+- **Version:** 0.162.1
+- **Last updated:** 2026-10-09T21:56:38Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -288,6 +288,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | DevDay 2026 | [whats-new/devday-2026.md](./whats-new/devday-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/devday-2026>) |
+| Create your dot in the ChatGPT mobile app | [whats-new/dots-october-9-2026.md](./whats-new/dots-october-9-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/dots-october-9-2026>) |
 | October 5–9, 2026 | [whats-new/october-5-9-2026.md](./whats-new/october-5-9-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/october-5-9-2026>) |
 | September 28–October 2, 2026 | [whats-new/september-28-october-2-2026.md](./whats-new/september-28-october-2-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/september-28-october-2-2026>) |
 

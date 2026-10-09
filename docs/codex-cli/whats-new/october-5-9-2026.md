@@ -4,6 +4,10 @@
 
 [Back to What's new](../whats-new.md#october-59-2026)
 
+## [Create your dot in the ChatGPT mobile app](./dots-october-9-2026.md)
+
+Create your dot, give it a name, customize its appearance, and connect plugins from your phone. This week's Dots update also brings more context from ChatGPT and Codex, faster cloud browsing, and fixes to notifications, setup, and everyday use.
+
 ## Use GPT-6.1 Sol with Ultrafast mode
 
 Ultrafast mode speeds up token generation with [GPT-6.1 Sol](../models.md#gpt-61-sol)

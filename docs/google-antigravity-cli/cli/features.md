@@ -42,45 +42,12 @@ Trigger the interactive Plugins Manager in the CLI using the `/plugin` slash com
 *   **Inline commands**: Manage plugins directly from the prompt without opening the interactive panel:
     
     *   `/plugin` provides inline `install`, `uninstall`, `enable`, `disable`, and `list` subcommands without needing to open the interactive Plugins Manager panel.
-    *   To install inline, run `/plugin install <plugin-name>@<marketplace-name>` (`<marketplace-name>` supports the official marketplace, `antigravity-plugins-official`) or `/plugin install <local-path>`. For example, running `/plugin install firebase@antigravity-plugins-official` outputs:
+    *   To install inline, run `/plugin install <plugin-name>@<marketplace-name>` or `/plugin install <local-path>`. For example, running `/plugin install firebase@agent-marketplace` outputs:
         
         ```
-        Successfully installed plugin "firebase" from "antigravity-plugins-official".
+        Successfully installed plugin "firebase" from "agent-marketplace"
         ```
         
-
-### Manage plugins from your shell (`agy plugin`)
-
-Outside an interactive TUI session, you can install and manage plugins from your terminal using `agy plugin`:
-
-*   **Install from the official marketplace**: Specify `<plugin-name>@antigravity-plugins-official` (`<marketplace-name>` only supports the official marketplace, `antigravity-plugins-official`), or pass a bare `<plugin-name>`, which defaults to `<plugin-name>@antigravity-plugins-official`:
-    
-    ```
-    agy plugin install <plugin-name>@antigravity-plugins-official
-    agy plugin install <plugin-name>
-    ```
-    
-*   **Install from a GitHub link**: Clone and stage a plugin directly from a GitHub repository URL:
-    
-    ```
-    agy plugin install https://github.com/<owner>/<repo>
-    ```
-    
-*   **Install from a local directory**: Stage a local plugin package into your profile:
-    
-    ```
-    agy plugin install </path/to/local/plugin>
-    ```
-    
-*   **List, enable, disable, or uninstall plugins**:
-    
-    ```
-    agy plugin list
-    agy plugin enable <plugin-name>
-    agy plugin disable <plugin-name>
-    agy plugin uninstall <plugin-name>
-    ```
-    
 
 Cross-surface synchronization
 
