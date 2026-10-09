@@ -32,7 +32,8 @@ Choose a setup task, then review its access and security requirements.
 Manage sign-in, provisioning, roles, and credentials.
 
 - [Authentication overview](./auth.md) — Compare sign-in methods, credential storage, and enforcement controls.
-- [Groups and provisioning](./enterprise/groups-and-provisioning.md) — Manage manual and SCIM groups, provisioning, and rollout cohorts.
+- [Groups and provisioning](./enterprise/groups-and-provisioning.md) — Compare membership sources and understand group permissions.
+- [Dynamic groups](./enterprise/dynamic-groups.md) — Manage group membership with rules based on SCIM user attributes.
 - [User lifecycle management](./enterprise/user-lifecycle.md) — Provision employees, update group access, and revoke departing users' credentials.
 - [Roles and workspace permissions](./enterprise/roles-and-workspace-permissions.md) — Find workspace, runtime, API, plugin, and source-system controls.
 - [Personal access tokens](./enterprise/access-tokens.md) — Create and manage tokens for programmatic access.

@@ -95,7 +95,7 @@ sandbox = "elevated" # Legacy fallback
 prefer_mxc = true
 ```
 
-Use `unelevated` only when elevated setup is unavailable and your organization's policy permits it. See the [Windows sandbox guide](./windows/windows-sandbox.md#prefer-mxc-with-legacy-fallback) for compatibility limits and rollout controls.
+Use `unelevated` only when elevated setup is unavailable and your organization's policy permits it. See the [Windows sandbox guide](./windows/windows-sandbox.md#enable-mxc) for compatibility limits and rollout controls.
 
 ##### Web search mode
 Codex enables web search by default for local chats and serves results from a web search cache. The cache is an OpenAI-maintained index of web results, so cached mode returns pre-indexed results instead of fetching live pages. This reduces exposure to prompt injection from arbitrary live content. Treat web results as untrusted. If you are using `--yolo` or another [full access sandbox setting](./agent-approvals-security.md#common-sandbox-and-approval-combinations), web search defaults to live results. Choose a mode with `web_search`:

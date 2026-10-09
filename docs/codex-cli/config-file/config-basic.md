@@ -104,7 +104,7 @@ sandbox = "elevated" # Legacy fallback
 prefer_mxc = true
 ```
 
-Use `unelevated` only when elevated setup is unavailable and your organization's policy permits it. See the [Windows sandbox guide](../windows/windows-sandbox.md#prefer-mxc-with-legacy-fallback) for compatibility limits and rollout controls.
+Use `unelevated` only when elevated setup is unavailable and your organization's policy permits it. See the [Windows sandbox guide](../windows/windows-sandbox.md#enable-mxc) for compatibility limits and rollout controls.
 
 #### Web search mode
 

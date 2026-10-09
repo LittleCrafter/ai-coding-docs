@@ -445,7 +445,7 @@ When running on Windows, prefer MXC when the device and policy support it by set
 prefer_mxc = true
 ```
 
-Keep a permitted legacy implementation in `windows.sandbox` for fallback. See the [Windows setup guide](./windows/windows-sandbox.md#prefer-mxc-with-legacy-fallback) for configuration and compatibility limits.
+Keep a permitted legacy implementation in `windows.sandbox` for fallback. See the [Windows setup guide](./windows/windows-sandbox.md#enable-mxc) for configuration and compatibility limits.
 
 When you run Linux in a containerized environment such as Docker, the sandbox may not work if the host or container configuration blocks the namespace, setuid `bwrap`, or `seccomp` operations that Codex needs.
 

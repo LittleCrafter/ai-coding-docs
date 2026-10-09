@@ -159,6 +159,17 @@ Built-in safeguards, your existing ChatGPT app permissions, and automatic approv
 
 You can add instructions for how you want your dot to work, such as asking it to show you drafts before sending them. Custom rules are optional controls for more specific ongoing boundaries. Neither instructions nor custom rules override built-in safety requirements. See [Control your dot](./dots/controls.md).
 
+## How dots compare with ChatGPT Work and Codex
+
+Here's how dots compare with ChatGPT Work and Codex, and how they can work together.
+
+| Experience   | When to use it                                                                                                                                                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Chat         | When you want an answer, an explanation, ideas, or help drafting something in conversation.                                                                                                                                                      |
+| ChatGPT Work | When you have a task to delegate, such as research, analysis, or creating a file, either now or on a schedule.                                                                                                                                   |
+| Codex        | When you want to build, debug, test, or review software and work directly with code and developer tools.                                                                                                                                         |
+| Your dot     | When you want an agent to keep track of an ongoing responsibility, figure out next steps as things change, and follow up between conversations. It can keep you updated in ChatGPT, Slack, or Teams and delegate tasks to ChatGPT Work or Codex. |
+
 <a id="what-o-can-do"></a>
 <a id="things-to-try-with-o"></a>
 <a id="try-more-with-o"></a>

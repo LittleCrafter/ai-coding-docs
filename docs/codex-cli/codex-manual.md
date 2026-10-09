@@ -4087,6 +4087,17 @@ Built-in safeguards, your existing ChatGPT app permissions, and automatic approv
 
 You can add instructions for how you want your dot to work, such as asking it to show you drafts before sending them. Custom rules are optional controls for more specific ongoing boundaries. Neither instructions nor custom rules override built-in safety requirements. See [Control your dot](./dots/controls.md).
 
+#### How dots compare with ChatGPT Work and Codex
+
+Here's how dots compare with ChatGPT Work and Codex, and how they can work together.
+
+| Experience   | When to use it                                                                                                                                                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Chat         | When you want an answer, an explanation, ideas, or help drafting something in conversation.                                                                                                                                                      |
+| ChatGPT Work | When you have a task to delegate, such as research, analysis, or creating a file, either now or on a schedule.                                                                                                                                   |
+| Codex        | When you want to build, debug, test, or review software and work directly with code and developer tools.                                                                                                                                         |
+| Your dot     | When you want an agent to keep track of an ongoing responsibility, figure out next steps as things change, and follow up between conversations. It can keep you updated in ChatGPT, Slack, or Teams and delegate tasks to ChatGPT Work or Codex. |
+
 #### Work with your dot
 
 Start with work you regularly need to check or update. Describe the responsibility and share the source material it needs, then review its work and explain what needs to change.
@@ -11386,7 +11397,7 @@ When running on Windows, prefer MXC when the device and policy support it by set
 prefer_mxc = true
 ```
 
-Keep a permitted legacy implementation in `windows.sandbox` for fallback. See the [Windows setup guide](./windows/windows-sandbox.md#prefer-mxc-with-legacy-fallback) for configuration and compatibility limits.
+Keep a permitted legacy implementation in `windows.sandbox` for fallback. See the [Windows setup guide](./windows/windows-sandbox.md#enable-mxc) for configuration and compatibility limits.
 
 When you run Linux in a containerized environment such as Docker, the sandbox may not work if the host or container configuration blocks the namespace, setuid `bwrap`, or `seccomp` operations that Codex needs.
 
@@ -15163,7 +15174,7 @@ sandbox = "elevated" # Legacy fallback
 prefer_mxc = true
 ```
 
-Use `unelevated` only when elevated setup is unavailable and your organization's policy permits it. See the [Windows sandbox guide](./windows/windows-sandbox.md#prefer-mxc-with-legacy-fallback) for compatibility limits and rollout controls.
+Use `unelevated` only when elevated setup is unavailable and your organization's policy permits it. See the [Windows sandbox guide](./windows/windows-sandbox.md#enable-mxc) for compatibility limits and rollout controls.
 
 #### Web search mode
 
@@ -42028,6 +42039,110 @@ For more information about the provisioning setting, see Microsoft's [applicatio
 - [Managed configuration](./enterprise/managed-configuration.md)
 - [ChatGPT desktop app for Windows](./windows/windows-app.md)
 
+### Dynamic groups
+
+Source: [Dynamic groups](./enterprise/dynamic-groups.md)
+
+Dynamic groups organize workspace members using user attributes sent by your identity provider through SCIM. You define membership rules using supported attributes, such as department or location. As those attributes change, group membership updates to include people who match the rules and remove people who no longer match.
+
+For example, a dynamic group can include members whose department is Engineering and whose location is London. You manage the rules in ChatGPT Admin, while your identity provider supplies the user attributes.
+
+#### Before you begin
+
+- Sign in as a workspace owner or admin in a workspace where dynamic groups are available.
+- Configure SCIM provisioning for your workspace and make sure your identity provider sends the attributes you want to use.
+- Choose attribute values that match the values your identity provider sends. See the supported attributes and payload paths in this guide.
+
+Group membership and feature permissions are separate. A member’s applicable roles, seat type, and product eligibility still determine access. See [Groups and provisioning](./enterprise/groups-and-provisioning.md) for the access model.
+
+#### Create a dynamic group
+
+1. Open [ChatGPT Admin](https://admin.openai.com/) and select your workspace.
+2. Under **Identity & access**, select **Groups & roles**.
+3. Select **Create group** using the **+** button.
+4. Enter a group name, such as **Demo**, turn on **Dynamic group**, and select **Next**.
+
+5. Under **Add membership rules**, choose an **Attribute**, an **Operator**, and a **Value**. In this example, select **department**, **Equals**, and enter **Engineering**.
+6. Select **Add condition** to add another rule. For this example, select **location**, **Equals**, and enter **London**.
+
+Members must match **all conditions**. The example below matches members whose department is Engineering **and** whose location is London.
+
+7. Select **Create**. Open the group’s **Settings** tab to review its name and membership rules.
+
+Creating the group saves its membership rules. Select **Re-sync** to apply those rules to existing workspace members.
+
+#### Edit membership rules
+
+To change which members qualify for a dynamic group:
+
+1. Open the group and select **Settings**.
+2. Edit its membership rules and select **Save changes**.
+3. Select **Re-sync** to apply the saved rules to existing workspace members.
+
+**Save changes** stores the rules without starting a re-sync. **Re-sync** uses the saved rules and is unavailable while you have unsaved changes.
+
+#### Re-sync membership
+
+Use **Re-sync** to re-evaluate the group’s membership against its current rules and the SCIM attributes already available in the workspace.
+
+1. Open the dynamic group and select **Settings**.
+2. In **Membership rules**, select **Re-sync**.
+3. Follow the **Syncing group membership** status panel. A queued sync can show **Starts in** with a countdown before processing begins. You can collapse the panel or use **Cancel sync** while that option is available.
+4. After processing finishes, open **Group members** to review the result.
+
+Membership rule controls are unavailable while the sync is active. Canceling a sync can leave membership partially updated. After making any rule changes, save them and run **Re-sync** again to apply the saved rules. If an expected member is missing, check that their SCIM attributes have reached the workspace and that their values match every condition.
+
+#### View a member’s SCIM attributes
+
+Use a member’s profile card to check the SCIM attribute values available in your workspace and compare them with your dynamic group’s membership rules.
+
+1. Under **Identity & access**, select **Members**.
+2. Search for the member by name or email, then select their name to open their profile card.
+3. Review the **SCIM attributes** table, which lists each available attribute and its value.
+
+The example below shows a test member’s SCIM values, including `department`, `title`, and `costCenter`.
+
+#### Supported SCIM attributes
+
+The following table lists the supported attribute names and the user-payload fields recognized for each one. All attributes in this catalog use the string type, including `isAdmin`.
+
+A plain field name refers to a top-level field. A path beginning with `/` identifies a field inside the named SCIM extension object. For example, `/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User/department` refers to `department` inside the `urn:ietf:params:scim:schemas:extension:enterprise:2.0:User` object.
+
+| Attribute name | Recognized fields in the SCIM payload |
+| -------------- | ------------------------------------- |
+| `department`   | `department`                          |
+
+`/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User/department`
+`/urn:scim:schemas:extension:enterprise:1.0/department`
+`/urn:scim:schemas:extension:enterprise:2.0/department` |
+| `title` | `title` |
+| `manager` | `manager`
+`/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User/manager/value`
+`/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User/manager/displayName`
+`/urn:scim:schemas:extension:enterprise:1.0/manager/value`
+`/urn:scim:schemas:extension:enterprise:1.0/manager/displayName`
+`/urn:scim:schemas:extension:enterprise:2.0/manager/value`
+`/urn:scim:schemas:extension:enterprise:2.0/manager/displayName` |
+| `costCenter` | `costCenter`
+`/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User/costCenter`
+`/urn:scim:schemas:extension:enterprise:1.0/costCenter` |
+| `division` | `division`
+`/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User/division`
+`/urn:scim:schemas:extension:enterprise:1.0/division` |
+| `organization` | `organization`
+`/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User/organization`
+`/urn:scim:schemas:extension:enterprise:1.0/organization` |
+| `userType` | `userType` |
+| `country` | `country` |
+| `isAdmin` | `isAdmin` |
+| `location` | `location` |
+
+For `manager`, the catalog recognizes the top-level field and the nested extension `value` or `displayName` fields. For `country`, send the top-level field shown in the table.
+
+#### Related documentation
+
+- [Groups and provisioning](./enterprise/groups-and-provisioning.md)
+
 ### Gateway compatibility requirements
 
 Source: [Gateway compatibility requirements](./enterprise/gateway-compatibility.md)
@@ -42327,19 +42442,25 @@ workspace operators, or members who need the same supported feature.
 
 Workspace owners and admins can create and manage groups. Create a manually
 managed group for a small or temporary audience, or sync an established group
-from your identity provider when membership should follow your directory.
+from your identity provider when membership should follow your directory. Use a
+dynamic group when membership should follow rules based on SCIM user attributes.
 
 Each group has one authoritative membership source:
 
-| Group type                | Membership source                   | When it applies                                                                  |
-| ------------------------- | ----------------------------------- | -------------------------------------------------------------------------------- |
-| Manually managed          | ChatGPT workspace administration    | The group is small, temporary, or not managed through directory sync             |
-| Identity-provider managed | Your identity provider through SCIM | Membership should follow the organization's directory and member-removal process |
+| Group type                | Membership source                            | When it applies                                                                  |
+| ------------------------- | -------------------------------------------- | -------------------------------------------------------------------------------- |
+| Manually managed          | ChatGPT workspace administration             | The group is small, temporary, or not managed through directory sync             |
+| Identity-provider managed | Your identity provider through SCIM          | Membership should follow the organization's directory and member-removal process |
+| Dynamic                   | Rules evaluated against SCIM user attributes | Membership should follow attributes such as department or location               |
 
-Manual and identity-provider-managed groups can coexist. For synchronized
-groups, the identity provider is the membership source; later provisioning
-updates can overwrite workspace-side changes. The Help Center owns current SCIM
-behavior, supported attributes, and setup steps.
+Dynamic groups evaluate SCIM user attributes against rules you define in
+ChatGPT Admin. See [Dynamic groups](./enterprise/dynamic-groups.md) for setup
+steps and supported attributes.
+
+Manual and identity-provider-managed groups can coexist. For
+identity-provider-managed groups, the identity provider is the membership source;
+later provisioning updates can overwrite workspace-side changes. The Help Center
+owns current SCIM provisioning behavior and setup steps.
 
 #### Understand the access boundary
 
@@ -47052,7 +47173,9 @@ Manage sign-in, provisioning, roles, and credentials.
 
 - [Authentication overview](./auth.md): Compare sign-in methods, credential storage, and enforcement controls.
 
-- [Groups and provisioning](./enterprise/groups-and-provisioning.md): Manage manual and SCIM groups, provisioning, and rollout cohorts.
+- [Groups and provisioning](./enterprise/groups-and-provisioning.md): Compare membership sources and understand group permissions.
+
+- [Dynamic groups](./enterprise/dynamic-groups.md): Manage group membership with rules based on SCIM user attributes.
 
 - [User lifecycle management](./enterprise/user-lifecycle.md): Provision employees, update group access, and revoke departing users' credentials.
 
@@ -48036,52 +48159,35 @@ The app can run natively in PowerShell with a Windows sandbox instead of
 requiring WSL or a virtual machine. This keeps Codex in Windows-native
 workflows while enforcing bounded filesystem and network permissions.
 
+For enterprise installation, see the [Windows Deployment Guide](./enterprise/windows-deployment.md).
+
 Codex supports three Windows sandbox implementations:
 
-- `mxc`: The recommended sandbox on compatible Windows devices where policy permits it. Uses process isolation without administrator-approved setup, additional Windows accounts, changes to host file permissions, or local firewall rules.
+- `mxc`: The recommended sandbox on compatible Windows devices. Uses native process isolation without administrator-approved setup, additional Windows accounts, or local firewall rules.
 - `elevated`: The preferred legacy fallback when MXC is unavailable or disabled. Requires administrator-approved setup. Commands in the sandbox run without administrator privileges.
 - `unelevated`: A legacy fallback when elevated setup is unavailable and organizational policy permits it. Has weaker network isolation than `elevated` and doesn't support denied read paths.
 
 #### Configure the Windows sandbox
 
-The Windows sandbox enforces the active filesystem and network permissions for
-commands and their child processes. The permission profile determines which
-paths are readable or writable and whether network access is allowed. Approval
-policy separately controls when Codex asks to run commands with more access.
-See [sandbox and approvals](./agent-approvals-security.md).
+The Windows sandbox enforces the active filesystem and network permissions for commands and their child processes. The permission profile determines which paths are readable or writable and whether network access is allowed. Approval policy separately controls when Codex asks to run commands with more access. See [sandbox and approvals](./agent-approvals-security.md).
 
-#### Control MXC rollout
+#### Enable MXC
 
-These settings are available in Codex CLI 0.162.0. In the standalone CLI,
-`features.prefer_mxc` is off by default. The desktop app can enable this
-preference through its rollout configuration.
+The desktop app automatically prefers MXC for consumer accounts when the device supports it. For enterprise deployments or standalone CLI use, you can enable the same behavior with the configuration below.
 
-#### Prefer MXC with legacy fallback
-
-To use MXC when the device and policy support it, add this to `config.toml`:
+In `config.toml`:
 
 ```toml
 [features]
 prefer_mxc = true
 ```
 
-Keep `windows.sandbox` set to your organization's permitted legacy implementation,
-`elevated` or `unelevated`, for fallback.
+With `prefer_mxc = true`, Codex uses MXC for Windows commands when the device and policy support it.
+Otherwise, it uses the existing legacy selection and setup flow.
 
-Codex uses MXC for local Windows commands when the device and policy support it,
-even when `windows.sandbox` selects a legacy implementation. Otherwise, it uses
-the existing legacy selection and setup flow. This includes devices without
-MXC support and policies that set `windows.allow_mxc = false` or forbid local
-binding. `windows.allowed_sandbox_implementations` still constrains fallback;
-permission profiles and other managed requirements continue to apply.
+For enterprises where device support or policy varies, keep `windows.sandbox` set to your organization's permitted legacy implementation, `elevated` or `unelevated`, [as a fallback](#configure-a-legacy-fallback).
 
-Fallback happens during sandbox selection. Commands that fail after MXC is
-selected aren't retried in a legacy sandbox.
-
-Administrators can distribute this configuration as a default or enforce
-`features.prefer_mxc = true` through `requirements.toml`. Both permit legacy
-fallback. See [managed configuration](./enterprise/managed-configuration.md)
-for how defaults and requirements differ.
+Administrators can distribute this configuration as a default or enforce `features.prefer_mxc = true` through `requirements.toml`. Both permit legacy fallback. See [managed configuration](./enterprise/managed-configuration.md) for how defaults and requirements differ.
 
 #### Keep MXC disabled
 
@@ -48093,50 +48199,27 @@ To prevent MXC use in your organization, add this to your managed
 allow_mxc = false
 ```
 
-This blocks both automatic MXC selection and explicit `windows.sandbox = "mxc"`.
-Existing legacy sandbox settings and requirements still apply. Configure
-`windows.allow_mxc` in `requirements.toml`, not `config.toml`.
+This blocks both automatic MXC selection and explicit `windows.sandbox = "mxc"`. Existing legacy sandbox settings and requirements still apply.
 
 #### MXC compatibility
 
-Microsoft Execution Containers (MXC) uses native Windows process isolation
-without creating sandbox accounts, changing host file permissions, or running
-the classic elevated setup. Commands run under the user's Windows identity
-with a policy applied to each command. MXC doesn't require administrator
-elevation for sandbox setup or local Windows Firewall rules.
-MXC accepts readable, writable, and denied paths from the active permission
-profile. Its native network policy controls command network access without
-depending on the legacy sandbox's firewall provisioning.
+The host must already have the required Microsoft Execution Containers (MXC) capabilities, which Microsoft is rolling out to Windows 11 devices. Microsoft introduced MXC process isolation in **Windows 11 24H2 (build 26100.9278)** and **25H2 (build 26200.9278)**. Use the command below to verify MXC support on your device.
 
-Before selecting MXC, validate the required capabilities and your workloads on
-the Windows 11 device. A Windows version number alone doesn't establish
-compatibility.
-
-In Codex CLI 0.162.0, you can test MXC for one command without changing the saved
-sandbox selection. From your project directory, run:
+In Codex CLI 0.162.0 and later, you can test MXC for one command without changing the saved sandbox selection. From your project directory, run:
 
 ```powershell
 codex -c windows.sandbox=mxc sandbox --include-managed-config --permission-profile :workspace -- cmd.exe /d /c echo MXC_OK
 $LASTEXITCODE
 ```
 
-Expected output is `MXC_OK` and exit code `0`. This checks command startup with
-the workspace permission profile and managed requirements. Also test permitted
-file access, expected denials, PowerShell, and your network policy before using
-MXC for normal work.
+Expected output is `MXC_OK` and exit code `0`. This checks command startup with the workspace permission profile and managed requirements.
 
-Explicit `windows.sandbox = "mxc"` selection fails if the required native
-capabilities are unavailable; it doesn't fall back to a classic implementation.
-Policies with denied paths also require native deny-path support.
+Explicit `windows.sandbox = "mxc"` selection fails if the required native capabilities are unavailable or policy blocks MXC.
 
-Check these compatibility limits:
+Note these compatibility limits:
 
-- Managed networking requires effective `allow_local_binding = true`. MXC
-  permits connections to and from services on host loopback. Proxy domain rules
-  still apply to proxied traffic, but the proxy's additional private-network
-  destination checks are removed. This doesn't enable networking when it's disabled.
-- Remaining child processes stop when the foreground command exits. Test
-  workflows that rely on detached development servers.
+- Managed networking requires effective `allow_local_binding = true`. MXC permits connections to and from services on host loopback. Proxy domain rules still apply to proxied traffic, but the proxy's additional private-network destination checks are removed.
+- Remaining child processes stop when the foreground command exits. Test workflows that rely on detached development servers.
 
 #### Configure a legacy fallback
 
@@ -48147,21 +48230,13 @@ Select the fallback implementation in `config.toml`:
 sandbox = "elevated" # or "unelevated"
 ```
 
-`elevated` is the preferred legacy fallback. It uses dedicated
-lower-privilege sandbox users, filesystem permission boundaries, firewall
-rules, and local policy changes needed for commands that run in the sandbox.
+`elevated` is the preferred legacy fallback. It uses dedicated lower-privilege sandbox users, filesystem permission boundaries, firewall rules, and local policy changes needed for commands that run in the sandbox.
 
-`unelevated` is a legacy fallback. It runs commands with a
-restricted Windows token derived from your current user, applies ACL-based
-filesystem boundaries, and uses environment-level offline controls instead of
-the dedicated offline-user firewall rule. It provides weaker network isolation
-than `elevated` and doesn't support denied read paths, but is still useful when
-administrator-approved setup is blocked by local or enterprise policy.
+`unelevated` is a legacy fallback. It runs commands with a restricted Windows token derived from your current user, applies ACL-based filesystem boundaries, and uses environment-level offline controls instead of the dedicated offline-user firewall rule. It provides weaker network isolation than `elevated` and doesn't support denied read paths, but is still useful when administrator-approved setup is blocked by local or enterprise policy.
 
-Use MXC when the device and policy support it. Otherwise, prefer `elevated`.
-Use `unelevated` as a fallback only when your organization's policy permits it.
+Use MXC when the device and policy support it. Otherwise, prefer `elevated`, with `unelevated` as a secondary fallback.
 
-Enterprise administrators can constrain which classic sandbox implementations
+Enterprise administrators can constrain which legacy sandbox implementations
 Codex can use through [`requirements.toml`](./enterprise/managed-configuration.md#admin-enforced-requirements-requirementstoml):
 
 ```toml
@@ -48169,32 +48244,22 @@ Codex can use through [`requirements.toml`](./enterprise/managed-configuration.m
 allowed_sandbox_implementations = ["elevated"]
 ```
 
-This example permits `elevated` and prevents fallback to `unelevated`. It does
-not restrict `mxc` when MXC is available. Other managed permission and network
-requirements still apply. To permit either classic implementation, include
-both values; Codex prefers `elevated` when no mode is selected. See the
-[`requirements.toml` reference](./config-file/config-reference.md#requirementstoml) for
-the supported values. To block MXC as well, use the separate
-[`windows.allow_mxc` requirement](#keep-mxc-disabled).
+This example permits `elevated` and prevents fallback to `unelevated`. It does not restrict `mxc` when MXC is available. Other managed permission and network requirements still apply. To permit either legacy implementation, include both values; Codex prefers `elevated` when no mode is selected.
 
-By default, both legacy sandbox modes also use a private desktop for stronger UI
-isolation.
+See the [`requirements.toml` reference](./config-file/config-reference.md#requirementstoml) for the supported values. To block MXC as well, use the separate [`windows.allow_mxc` requirement](#keep-mxc-disabled).
 
-#### Provision the classic elevated sandbox
+By default, both legacy sandbox modes also use a private desktop for stronger UI isolation.
 
-For employees without local administrator rights, IT can install the CLI and
-provision the sandbox before the employee starts Codex. From an elevated
+#### IT-led provisioning for the legacy elevated sandbox
+
+For employees without local administrator rights, IT can install the CLI and provision the elevated sandbox before the employee starts Codex. From an elevated
 deployment process, run:
 
 ```powershell
 codex sandbox setup --elevated --user 'DOMAIN\alice' --codex-home 'C:\Users\alice\.codex'
 ```
 
-Replace the identity and path with the employee's Windows identity and
-`CODEX_HOME`. The command reads that user's configuration, provisions the
-sandbox, and saves `windows.sandbox = "elevated"`. The employee then runs Codex
-from a normal terminal. Using a non-admin terminal doesn't select the
-`unelevated` implementation.
+Replace the identity and path with the employee's Windows identity and `CODEX_HOME`. The command reads that user's configuration, provisions the sandbox, and saves `windows.sandbox = "elevated"`. The employee then runs Codex from a normal terminal.
 
 #### Sandbox permissions
 
@@ -48219,7 +48284,7 @@ Additional environment assumptions:
 
 - `winget` should be available. If it's missing, update Windows or install
   the Windows Package Manager before setting up Codex.
-- The classic `elevated` sandbox depends on administrator-approved setup.
+- The legacy `elevated` sandbox depends on administrator-approved setup.
 - Some enterprise-managed devices block the required setup steps even when the
   OS version itself is acceptable.
 - MXC additionally requires the native capabilities described in
@@ -48343,9 +48408,9 @@ What to try:
 
 1. Restart Codex.
 2. For MXC, repeat the [compatibility probe](#mxc-compatibility) and check the
-   effective network policy. For the classic `elevated` implementation, try
+   effective network policy. For the legacy `elevated` implementation, try
    sandbox setup again.
-3. If a classic sandbox is needed and managed policy permits it, use
+3. If a legacy sandbox is needed and managed policy permits it, use
    `unelevated` as a temporary fallback.
 4. Collect the sandbox log for review.
 
