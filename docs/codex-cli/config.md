@@ -85,13 +85,17 @@ network policies. Built-in profiles are `:read-only`, `:workspace`, and
 matching `default_permissions` value. See [Permissions](./permissions.md).
 
 ##### Windows sandbox mode
-When running Codex natively on Windows, set the native sandbox mode to `elevated` in the `windows` table. Use `unelevated` only if you don't have administrator permissions or if elevated setup fails.
+On Windows, prefer MXC when the device and policy support it. Set a legacy implementation for fallback:
 
 ```toml
 [windows]
-sandbox = "elevated"   # Recommended
-# sandbox = "unelevated" # Fallback if admin permissions/setup are unavailable
+sandbox = "elevated" # Legacy fallback
+
+[features]
+prefer_mxc = true
 ```
+
+Use `unelevated` only when elevated setup is unavailable and your organization's policy permits it. See the [Windows sandbox guide](./windows/windows-sandbox.md#prefer-mxc-with-legacy-fallback) for compatibility limits and rollout controls.
 
 ##### Web search mode
 Codex enables web search by default for local chats and serves results from a web search cache. The cache is an OpenAI-maintained index of web results, so cached mode returns pre-indexed results instead of fetching live pages. This reduces exposure to prompt injection from arbitrary live content. Treat web results as untrusted. If you are using `--yolo` or another [full access sandbox setting](./agent-approvals-security.md#common-sandbox-and-approval-combinations), web search defaults to live results. Choose a mode with `web_search`:
@@ -1157,7 +1161,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `sandbox_workspace_write.network_access` | `boolean` | Allow outbound network access inside the workspace-write sandbox. |
 | `sandbox_workspace_write.exclude_tmpdir_env_var` | `boolean` | Exclude `$TMPDIR` from writable roots in workspace-write mode. |
 | `sandbox_workspace_write.exclude_slash_tmp` | `boolean` | Exclude `/tmp` from writable roots in workspace-write mode. |
-| `windows.sandbox` | `unelevated \| elevated \| mxc` | Windows-only native sandbox mode when running Codex natively on Windows. |
+| `windows.sandbox` | `mxc \| elevated \| unelevated` | Native Windows sandbox implementation. Explicit `mxc` selection fails when MXC is unavailable or prohibited by managed requirements. Use `features.prefer_mxc` with a legacy selection for automatic MXC selection with fallback. |
 | `browser_use.allow_history_access` | `boolean` | Set to `false` to restrict browser-history access. Managed requirements can enforce this restriction. |
 | `browser_use.default_origin_policy` | `table` | Fallback browser-origin restrictions. Supports `access`, `uploads`, `downloads`, and `full_cdp_access`, each set to `allow` or `deny`. |
 | `browser_use.origins.<origin>` | `table` | Per-origin browser restrictions with the same fields as `browser_use.default_origin_policy`. Include an HTTP or HTTPS scheme and optional port; omit paths, queries, and fragments. Local values cannot relax managed denies. |
@@ -1264,6 +1268,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `memories.min_rate_limit_remaining_percent` | `number` | Minimum remaining percentage required in Codex rate-limit windows before memory generation starts. Defaults to `25` and is clamped to `0`-`100`. |
 | `memories.extract_model` | `string` | Optional model override for per-thread memory extraction. |
 | `memories.consolidation_model` | `string` | Optional model override for global memory consolidation. |
+| `features.prefer_mxc` | `boolean` | Prefer MXC for local Windows execution when native capabilities and policy allow it; otherwise retain the configured legacy sandbox and setup. Disabled by default in the standalone CLI; the desktop app can enable it through rollout configuration. Command failures don't trigger fallback. |
 | `features.unified_exec` | `boolean` | Use the unified PTY-backed exec tool (stable; enabled by default except on Windows). |
 | `features.shell_snapshot` | `boolean` | Snapshot shell environment to speed up repeated commands (stable; on by default). |
 | `features.multi_agent` | `boolean` | Enable multi-agent collaboration tools (`spawn_agent`, `send_input`, `resume_agent`, `wait_agent`, and `close_agent`) (stable; on by default). |
@@ -1454,7 +1459,7 @@ unconstrained.
 
 Some managed requirements enforce an exact configuration value instead of an
 allowlist. Users can't override an enforced path, update preference, login-shell
-policy, feedback setting, or Windows private-desktop setting.
+policy, or feedback setting.
 
 Managed permission-profile allowlists require Codex 0.138.0 or later. Codex
 0.137.0 and earlier ignore `allowed_permission_profiles` and managed
@@ -1523,6 +1528,7 @@ from either one wins.
 | `allowed_sandbox_modes` | `array<string>` | Allowed values for `sandbox_mode`. |
 | `windows` | `table` | Native Windows sandbox requirements. |
 | `windows.allowed_sandbox_implementations` | `array<string>` | Allowed legacy native Windows sandbox implementations (`elevated` and `unelevated`). The list must not be empty. When both are allowed and no mode is selected, Codex prefers `elevated`. This list does not restrict the `mxc` sandbox when it is available. |
+| `windows.allow_mxc` | `boolean` | Set to `false` to prohibit both explicit MXC selection and automatic selection through `features.prefer_mxc`. Omitting this requirement or setting it to `true` permits MXC but doesn't enable it or require it. Legacy implementation restrictions still apply to fallback. |
 | `remote_sandbox_config` | `array<table>` | Host-specific sandbox requirements. The first entry whose `hostname_patterns` match the resolved host name overrides top-level `allowed_sandbox_modes` for that requirements source. Host-specific entries currently override sandbox modes only. |
 | `remote_sandbox_config[].hostname_patterns` | `array<string>` | Case-insensitive host name patterns. Supports `*` for any sequence of characters and `?` for one character. |
 | `remote_sandbox_config[].allowed_sandbox_modes` | `array<string>` | Allowed sandbox modes to apply when this host-specific entry matches. |

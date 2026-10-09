@@ -417,6 +417,18 @@ If a tree uses an element the app doesn't have, a prop an element doesn't take, 
 
 In a session started with `--plugin-dir`, a transcript line says so, such as `ui.render (Pane) refused: Text prop "bogusProp" is not allowed; the engine drew its own`. The [debug log](./troubleshoot.md#read-the-debug-log) records it as `ui.render (Pane): a hook returned a tree that does not validate` with the same reason. Nothing else appears in the session, so when a drawing doesn't show up, check that line or the log.
 
+<h3 id="link-in-the-desktop-app">
+  `Link` in the Desktop app
+</h3>
+
+In the Desktop app, a `Link` draws as plain text unless its `href` meets these requirements:
+
+* **Scheme and host**: an `https:` URL, or an `http://localhost` URL such as `http://localhost:3000`
+* **No `@`**: write an `@` in the path or query as `%40`
+* **Spelling**: what `new URL(href).href` returns, apart from a missing `/` after the host. That excludes an uppercase host, a space, and `:443` on an `https:` URL.
+
+In the terminal, these requirements don't apply.
+
 <h3 id="when-a-client-fails">
   When a `Client` fails
 </h3>

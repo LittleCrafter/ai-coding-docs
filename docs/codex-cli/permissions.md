@@ -517,10 +517,11 @@ allowlist is not a global network policy for every action Codex can perform.
   enforcement path depends on user namespaces and kernel support; restricted
   container hosts can force compatibility paths, and unsupported split policies
   are refused.
-- On native Windows, [`elevated` sandboxing](./windows/windows-sandbox.md#windows-sandbox)
-  is strongest because it can use dedicated lower-privilege sandbox users,
-  filesystem permission boundaries, and firewall rules. `unelevated`
-  sandboxing is a fallback with weaker network isolation and cannot enforce
+- On Windows, MXC uses process isolation for filesystem and network permissions.
+  Review [MXC compatibility](./windows/windows-sandbox.md#mxc-compatibility)
+  before enabling it. The legacy `elevated` fallback uses dedicated lower-privilege
+  sandbox users, filesystem permission boundaries, and firewall rules.
+  `unelevated` is a legacy fallback with weaker network isolation and cannot enforce
   every split read/write carveout, so unsupported policies are refused. Use WSL
   when you need the Linux sandbox model.
 

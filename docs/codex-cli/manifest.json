@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.162.0",
-  "last_updated": "2026-10-08T20:18:46Z",
+  "last_updated": "2026-10-09T00:45:22Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -30,8 +30,8 @@
       "source_url": "https://learn.chatgpt.com/docs/agent-approvals-security",
       "source_md_url": "https://learn.chatgpt.com/docs/agent-approvals-security.md",
       "source_id": "llms:agent-approvals-security",
-      "hash": "1b631074ea51e86b150c4b8fb1970a8c68e53066e3d303ed4fe6d484bf1a3c51",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "389161fa293d69b41b6d1692f69952e06b2e4562cdc57ef97b38e59dd3e530ef",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "agent-configuration/agents-md": {
       "slug": "agent-configuration/agents-md",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "85453990661e42258e5acd2cc88fdfade18c2e5bd168e298d31aa642663ad170",
-      "last_updated": "2026-10-08T20:18:46Z"
+      "hash": "0271ed679c9114e175a4c90859aa1c8d448388fc3e3523d47e3e9fba211567c7",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -300,8 +300,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/config.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
       "source_id": "docs/config.md",
-      "hash": "ea1529ac5db9ba3c3227c825d2f6eceb8356a567dbfff12f53c76b1115e681ad",
-      "last_updated": "2026-10-07T18:01:59Z"
+      "hash": "9ec5da134d92960b78714df558c5cff8bfc5bd03dea110758e8dc716272dac10",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "config-file/config-advanced": {
       "slug": "config-file/config-advanced",
@@ -320,8 +320,8 @@
       "source_url": "https://learn.chatgpt.com/docs/config-file/config-basic",
       "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-basic.md",
       "source_id": "llms:config-file/config-basic",
-      "hash": "3ad72d99e080270667de2b942179b096d635d89fa60f01c384b26628ee4aa3d3",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "362fa3ac018402d357e446f20940441e42cac04eea04dac6ca1520c58157bae3",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "config-file/config-reference": {
       "slug": "config-file/config-reference",
@@ -330,8 +330,8 @@
       "source_url": "https://learn.chatgpt.com/docs/config-file/config-reference",
       "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-reference.md",
       "source_id": "llms:config-file/config-reference",
-      "hash": "63313a89466bb5d8e2dc17896fcc35a7acc7e80a11dadd46871acc75fb503abd",
-      "last_updated": "2026-10-07T18:01:59Z"
+      "hash": "86af9f48261ba95effce95efb8dd7efd41cb6b72a69dcc79fb657b806b1a6075",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "config-file/config-sample": {
       "slug": "config-file/config-sample",
@@ -340,8 +340,8 @@
       "source_url": "https://learn.chatgpt.com/docs/config-file/config-sample",
       "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-sample.md",
       "source_id": "llms:config-file/config-sample",
-      "hash": "c109f6cdcdc9effe4a2290ddf856d88de7bd8e5c6bf9932ebceb3e88db3bfae0",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "1054474bb1e1dc608300731d5716d07094be9a748a202256bd7383a39820b10a",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "config-file/environment-variables": {
       "slug": "config-file/environment-variables",
@@ -970,8 +970,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/example-config.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/example-config.md",
       "source_id": "docs/example-config.md",
-      "hash": "99734c049dc0553c1593bb0d55c27e9c41f712ff11cda7eebe48ae9adbec5a93",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "3762004250d5994251ff64691eb91e8e277abf2a2e1f31ee704f857ae87be6a0",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "execpolicy": {
       "slug": "execpolicy",
@@ -1280,8 +1280,8 @@
       "source_url": "https://learn.chatgpt.com/docs/permissions",
       "source_md_url": "https://learn.chatgpt.com/docs/permissions.md",
       "source_id": "llms:permissions",
-      "hash": "d7b8f789c946a1497aa1c0d7c4873c9bf0fca336388033aa7fc451f5c44fac83",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "07b963dc6a608823d65f06738131f8640364fa74cadb986d1d31081c2460777d",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "personalize": {
       "slug": "personalize",
@@ -1890,8 +1890,8 @@
       "source_url": "https://learn.chatgpt.com/docs/windows/windows-sandbox",
       "source_md_url": "https://learn.chatgpt.com/docs/windows/windows-sandbox.md",
       "source_id": "llms:windows/windows-sandbox",
-      "hash": "7bf8c57be1deb07e99426abe333a26b733e9e018046544f318e747193f830162",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "d1c2fdeb0dacb66efaed42f605ed45736048ee9af4365c18d2e68718fdb3fc4d",
+      "last_updated": "2026-10-09T00:45:22Z"
     },
     "windows/wsl": {
       "slug": "windows/wsl",
@@ -1900,13 +1900,13 @@
       "source_url": "https://learn.chatgpt.com/docs/windows/wsl",
       "source_md_url": "https://learn.chatgpt.com/docs/windows/wsl.md",
       "source_id": "llms:windows/wsl",
-      "hash": "716ff186eb3a81a13282c796c9a495a54824d8c3f4784bfcefc745937c280060",
-      "last_updated": "2026-09-11T01:15:25Z"
+      "hash": "aa9c4ebfddf3691149fcce8e8789d4250f65d585895cd6ed015036863cf2b476",
+      "last_updated": "2026-10-09T00:45:22Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-08T20:18:46Z",
-    "fetch_duration_seconds": 66.282,
+    "last_fetch_completed": "2026-10-09T00:45:22Z",
+    "fetch_duration_seconds": 66.296,
     "total_pages_discovered": 190,
     "pages_fetched_successfully": 190,
     "pages_failed": 0,

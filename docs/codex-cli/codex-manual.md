@@ -11367,7 +11367,7 @@ Codex enforces the sandbox differently depending on your OS:
 
 - **macOS** uses Seatbelt policies and runs commands using `sandbox-exec` with a profile (`-p`) that corresponds to the `--sandbox` mode you selected. When restricted read access enables platform defaults, Codex appends a curated macOS platform policy (instead of broadly allowing `/System`) to preserve common tool compatibility.
 - **Linux** uses `bwrap` plus `seccomp` by default.
-- **Windows** uses the Linux sandbox implementation when running in [Windows Subsystem for Linux 2 (WSL2)](./windows/wsl.md). WSL1 was supported through Codex `0.114`; starting in `0.115`, the Linux sandbox moved to `bwrap`, so WSL1 is no longer supported. When running natively on Windows, Codex uses a [Windows sandbox](./windows/windows-sandbox.md#windows-sandbox) implementation.
+- **Windows** supports [MXC](./windows/windows-sandbox.md#windows-sandbox), with `elevated` and `unelevated` as legacy fallbacks. In [Windows Subsystem for Linux 2 (WSL2)](./windows/wsl.md), Codex uses the Linux sandbox implementation. WSL1 was supported through Codex `0.114`; starting in `0.115`, the Linux sandbox moved to `bwrap`, so WSL1 is no longer supported.
 
 If you use the Codex IDE extension on Windows, it supports WSL2 directly. Set the following in your VS Code settings to keep the agent inside WSL2 whenever it's available:
 
@@ -11379,15 +11379,14 @@ If you use the Codex IDE extension on Windows, it supports WSL2 directly. Set th
 
 This ensures the IDE extension inherits Linux sandbox semantics for commands, approvals, and filesystem access even when the host OS is Windows. Learn more in the [WSL guide](./windows/wsl.md).
 
-When running natively on Windows, configure the native sandbox mode in `config.toml`:
+When running on Windows, prefer MXC when the device and policy support it by setting this in `config.toml`:
 
 ```toml
-[windows]
-sandbox = "unelevated" # or "elevated"
-# sandbox_private_desktop = true  # default; set false only for compatibility
+[features]
+prefer_mxc = true
 ```
 
-See the [Windows setup guide](./windows/windows-sandbox.md#windows-sandbox) for details.
+Keep a permitted legacy implementation in `windows.sandbox` for fallback. See the [Windows setup guide](./windows/windows-sandbox.md#prefer-mxc-with-legacy-fallback) for configuration and compatibility limits.
 
 When you run Linux in a containerized environment such as Docker, the sandbox may not work if the host or container configuration blocks the namespace, setuid `bwrap`, or `seccomp` operations that Codex needs.
 
@@ -12431,10 +12430,11 @@ allowlist is not a global network policy for every action Codex can perform.
   enforcement path depends on user namespaces and kernel support; restricted
   container hosts can force compatibility paths, and unsupported split policies
   are refused.
-- On native Windows, [`elevated` sandboxing](./windows/windows-sandbox.md#windows-sandbox)
-  is strongest because it can use dedicated lower-privilege sandbox users,
-  filesystem permission boundaries, and firewall rules. `unelevated`
-  sandboxing is a fallback with weaker network isolation and cannot enforce
+- On Windows, MXC uses process isolation for filesystem and network permissions.
+  Review [MXC compatibility](./windows/windows-sandbox.md#mxc-compatibility)
+  before enabling it. The legacy `elevated` fallback uses dedicated lower-privilege
+  sandbox users, filesystem permission boundaries, and firewall rules.
+  `unelevated` is a legacy fallback with weaker network isolation and cannot enforce
   every split read/write carveout, so unsupported policies are refused. Use WSL
   when you need the Linux sandbox model.
 
@@ -13331,6 +13331,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `features.network_proxy.socks_url`                            | `string`                                                                                                                                                      |         | SOCKS5 listener URL. Defaults to `"http://127.0.0.1:8081"`.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `features.network_proxy.unix_sockets`                         | `map`                                                                                                                                                         |         | Unix socket policy for sandboxed networking. Unset by default; add `allow` entries for permitted sockets.                                                                                                                                                                                                                                                                                                                                                                                   |
 | `features.personality`                                        | `boolean`                                                                                                                                                     |         | Enable personality selection controls (stable; on by default).                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `features.prefer_mxc`                                         | `boolean`                                                                                                                                                     |         | Prefer MXC for local Windows execution when native capabilities and policy allow it; otherwise retain the configured legacy sandbox and setup. Disabled by default in the standalone CLI; the desktop app can enable it through rollout configuration. Command failures don't trigger fallback.                                                                                                                                                                                             |
 | `features.prevent_idle_sleep`                                 | `boolean`                                                                                                                                                     |         | Prevent the machine from sleeping while a turn is actively running (experimental; off by default).                                                                                                                                                                                                                                                                                                                                                                                          |
 | `features.remote_plugin`                                      | `boolean`                                                                                                                                                     |         | Enable the remote plugin catalog (stable; on by default).                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `features.rollout_budget.enabled`                             | `boolean`                                                                                                                                                     |         | Enable rollout budget tracking. This feature is under development and off by default. When enabled, `features.rollout_budget.limit_tokens` is required.                                                                                                                                                                                                                                                                                                                                     |
@@ -13545,7 +13546,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `tui.vim_mode_default`                                        | `boolean`                                                                                                                                                     |         | Start the composer in Vim normal mode instead of insert mode (default: false). You can still toggle it per session with `/vim`.                                                                                                                                                                                                                                                                                                                                                             |
 | `web_search`                                                  | `disabled \| cached \| indexed \| live`                                                                                                                       |         | Web search mode (default: `"cached"`; cached uses an OpenAI-maintained index without external web access; indexed permits external access only when gated by the search index; if you use `--yolo` or another full access sandbox setting, it defaults to `"live"`). Use `"live"` for unrestricted live retrieval, or `"disabled"` to remove the tool.                                                                                                                                      |
 | `windows_wsl_setup_acknowledged`                              | `boolean`                                                                                                                                                     |         | Track Windows onboarding acknowledgement (Windows only).                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| `windows.sandbox`                                             | `unelevated \| elevated \| mxc`                                                                                                                               |         | Windows-only native sandbox mode when running Codex natively on Windows.                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `windows.sandbox`                                             | `mxc \| elevated \| unelevated`                                                                                                                               |         | Native Windows sandbox implementation. Explicit `mxc` selection fails when MXC is unavailable or prohibited by managed requirements. Use `features.prefer_mxc` with a legacy selection for automatic MXC selection with fallback.                                                                                                                                                                                                                                                           |
 
 You can find the latest JSON schema for `config.toml` [here](https://learn.chatgpt.com/docs/config-schema.json).
 
@@ -13571,7 +13572,7 @@ unconstrained.
 
 Some managed requirements enforce an exact configuration value instead of an
 allowlist. Users can't override an enforced path, update preference, login-shell
-policy, feedback setting, or Windows private-desktop setting.
+policy, or feedback setting.
 
 Managed permission-profile allowlists require Codex 0.138.0 or later. Codex
 0.137.0 and earlier ignore `allowed_permission_profiles` and managed
@@ -13779,6 +13780,7 @@ from either one wins.
 | `rules.prefix_rules[].pattern[].token`                       | `string`                               |         | A single literal token at this position.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `sqlite_home`                                                | `string (path)`                        |         | Enforce the directory where Codex stores SQLite-backed runtime state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `windows`                                                    | `table`                                |         | Native Windows sandbox requirements.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `windows.allow_mxc`                                          | `boolean`                              |         | Set to `false` to prohibit both explicit MXC selection and automatic selection through `features.prefer_mxc`. Omitting this requirement or setting it to `true` permits MXC but doesn't enable it or require it. Legacy implementation restrictions still apply to fallback.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `windows.allowed_sandbox_implementations`                    | `array`                                |         | Allowed legacy native Windows sandbox implementations (`elevated` and `unelevated`). The list must not be empty. When both are allowed and no mode is selected, Codex prefers `elevated`. This list does not restrict the `mxc` sandbox when it is available.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
 ### Environment variables
@@ -15151,13 +15153,17 @@ matching `default_permissions` value. See [Permissions](./permissions.md).
 
 #### Windows sandbox mode
 
-When running Codex natively on Windows, set the native sandbox mode to `elevated` in the `windows` table. Use `unelevated` only if you don't have administrator permissions or if elevated setup fails.
+On Windows, prefer MXC when the device and policy support it. Set a legacy implementation for fallback:
 
 ```toml
 [windows]
-sandbox = "elevated"   # Recommended
-# sandbox = "unelevated" # Fallback if admin permissions/setup are unavailable
+sandbox = "elevated" # Legacy fallback
+
+[features]
+prefer_mxc = true
 ```
+
+Use `unelevated` only when elevated setup is unavailable and your organization's policy permits it. See the [Windows sandbox guide](./windows/windows-sandbox.md#prefer-mxc-with-legacy-fallback) for compatibility limits and rollout controls.
 
 #### Web search mode
 
@@ -16259,6 +16265,12 @@ enabled = true
 
 # Leave this table empty to accept defaults. Set explicit booleans to opt in/out.
 
+# Prefer MXC on Windows when the device and policy support it; otherwise use the legacy sandbox below.
+
+# Disabled by default in the standalone CLI.
+
+prefer_mxc = true
+
 # shell_tool = true
 
 # apps = true
@@ -16749,9 +16761,11 @@ metrics_exporter = "statsig"
 
 [windows]
 
-# Native Windows sandbox mode (Windows only): unelevated | elevated
+# Windows sandbox implementation: mxc | elevated | unelevated
 
-sandbox = "unelevated"
+# Legacy fallback when features.prefer_mxc is enabled. Explicit mxc selection does not fall back.
+
+sandbox = "elevated"
 ```
 
 ### Configuration
@@ -48022,41 +48036,132 @@ The app can run natively in PowerShell with a Windows sandbox instead of
 requiring WSL or a virtual machine. This keeps Codex in Windows-native
 workflows while enforcing bounded filesystem and network permissions.
 
-The native Windows sandbox has two modes:
+Codex supports three Windows sandbox implementations:
 
-- natively on Windows with the stronger `elevated` sandbox,
-- natively on Windows with the fallback `unelevated` sandbox.
+- `mxc`: The recommended sandbox on compatible Windows devices where policy permits it. Uses process isolation without administrator-approved setup, additional Windows accounts, changes to host file permissions, or local firewall rules.
+- `elevated`: The preferred legacy fallback when MXC is unavailable or disabled. Requires administrator-approved setup. Commands in the sandbox run without administrator privileges.
+- `unelevated`: A legacy fallback when elevated setup is unavailable and organizational policy permits it. Has weaker network isolation than `elevated` and doesn't support denied read paths.
 
 #### Configure the Windows sandbox
 
-When you run Codex natively on Windows, agent mode uses a Windows sandbox to
-block filesystem writes outside the working folder and prevent network access
-without your explicit approval.
+The Windows sandbox enforces the active filesystem and network permissions for
+commands and their child processes. The permission profile determines which
+paths are readable or writable and whether network access is allowed. Approval
+policy separately controls when Codex asks to run commands with more access.
+See [sandbox and approvals](./agent-approvals-security.md).
 
-Native Windows sandbox support includes two modes that you can configure in
-`config.toml`:
+#### Control MXC rollout
+
+These settings are available in Codex CLI 0.162.0. In the standalone CLI,
+`features.prefer_mxc` is off by default. The desktop app can enable this
+preference through its rollout configuration.
+
+#### Prefer MXC with legacy fallback
+
+To use MXC when the device and policy support it, add this to `config.toml`:
+
+```toml
+[features]
+prefer_mxc = true
+```
+
+Keep `windows.sandbox` set to your organization's permitted legacy implementation,
+`elevated` or `unelevated`, for fallback.
+
+Codex uses MXC for local Windows commands when the device and policy support it,
+even when `windows.sandbox` selects a legacy implementation. Otherwise, it uses
+the existing legacy selection and setup flow. This includes devices without
+MXC support and policies that set `windows.allow_mxc = false` or forbid local
+binding. `windows.allowed_sandbox_implementations` still constrains fallback;
+permission profiles and other managed requirements continue to apply.
+
+Fallback happens during sandbox selection. Commands that fail after MXC is
+selected aren't retried in a legacy sandbox.
+
+Administrators can distribute this configuration as a default or enforce
+`features.prefer_mxc = true` through `requirements.toml`. Both permit legacy
+fallback. See [managed configuration](./enterprise/managed-configuration.md)
+for how defaults and requirements differ.
+
+#### Keep MXC disabled
+
+To prevent MXC use in your organization, add this to your managed
+`requirements.toml`:
+
+```toml
+[windows]
+allow_mxc = false
+```
+
+This blocks both automatic MXC selection and explicit `windows.sandbox = "mxc"`.
+Existing legacy sandbox settings and requirements still apply. Configure
+`windows.allow_mxc` in `requirements.toml`, not `config.toml`.
+
+#### MXC compatibility
+
+Microsoft Execution Containers (MXC) uses native Windows process isolation
+without creating sandbox accounts, changing host file permissions, or running
+the classic elevated setup. Commands run under the user's Windows identity
+with a policy applied to each command. MXC doesn't require administrator
+elevation for sandbox setup or local Windows Firewall rules.
+MXC accepts readable, writable, and denied paths from the active permission
+profile. Its native network policy controls command network access without
+depending on the legacy sandbox's firewall provisioning.
+
+Before selecting MXC, validate the required capabilities and your workloads on
+the Windows 11 device. A Windows version number alone doesn't establish
+compatibility.
+
+In Codex CLI 0.162.0, you can test MXC for one command without changing the saved
+sandbox selection. From your project directory, run:
+
+```powershell
+codex -c windows.sandbox=mxc sandbox --include-managed-config --permission-profile :workspace -- cmd.exe /d /c echo MXC_OK
+$LASTEXITCODE
+```
+
+Expected output is `MXC_OK` and exit code `0`. This checks command startup with
+the workspace permission profile and managed requirements. Also test permitted
+file access, expected denials, PowerShell, and your network policy before using
+MXC for normal work.
+
+Explicit `windows.sandbox = "mxc"` selection fails if the required native
+capabilities are unavailable; it doesn't fall back to a classic implementation.
+Policies with denied paths also require native deny-path support.
+
+Check these compatibility limits:
+
+- Managed networking requires effective `allow_local_binding = true`. MXC
+  permits connections to and from services on host loopback. Proxy domain rules
+  still apply to proxied traffic, but the proxy's additional private-network
+  destination checks are removed. This doesn't enable networking when it's disabled.
+- Remaining child processes stop when the foreground command exits. Test
+  workflows that rely on detached development servers.
+
+#### Configure a legacy fallback
+
+Select the fallback implementation in `config.toml`:
 
 ```toml
 [windows]
 sandbox = "elevated" # or "unelevated"
 ```
 
-`elevated` is the preferred native Windows sandbox. It uses dedicated
+`elevated` is the preferred legacy fallback. It uses dedicated
 lower-privilege sandbox users, filesystem permission boundaries, firewall
 rules, and local policy changes needed for commands that run in the sandbox.
 
-`unelevated` is the fallback native Windows sandbox. It runs commands with a
+`unelevated` is a legacy fallback. It runs commands with a
 restricted Windows token derived from your current user, applies ACL-based
 filesystem boundaries, and uses environment-level offline controls instead of
-the dedicated offline-user firewall rule. It's weaker than `elevated`, but it
-is still useful when administrator-approved setup is blocked by local or
-enterprise policy.
+the dedicated offline-user firewall rule. It provides weaker network isolation
+than `elevated` and doesn't support denied read paths, but is still useful when
+administrator-approved setup is blocked by local or enterprise policy.
 
-If both modes are available, use `elevated`. If the default native sandbox
-doesn't work in your environment, use `unelevated` as a fallback while you
-troubleshoot the setup.
+Use MXC when the device and policy support it. Otherwise, prefer `elevated`.
+Use `unelevated` as a fallback only when your organization's policy permits it.
 
-Enterprise administrators can constrain which native sandbox implementations
+Enterprise administrators can constrain which classic sandbox implementations
 Codex can use through [`requirements.toml`](./enterprise/managed-configuration.md#admin-enforced-requirements-requirementstoml):
 
 ```toml
@@ -48064,15 +48169,32 @@ Codex can use through [`requirements.toml`](./enterprise/managed-configuration.m
 allowed_sandbox_implementations = ["elevated"]
 ```
 
-This example requires the `elevated` sandbox and prevents users from falling
-back to `unelevated`. To permit either implementation, include both values;
-Codex prefers `elevated` when no mode is selected. See the
+This example permits `elevated` and prevents fallback to `unelevated`. It does
+not restrict `mxc` when MXC is available. Other managed permission and network
+requirements still apply. To permit either classic implementation, include
+both values; Codex prefers `elevated` when no mode is selected. See the
 [`requirements.toml` reference](./config-file/config-reference.md#requirementstoml) for
-the supported values.
+the supported values. To block MXC as well, use the separate
+[`windows.allow_mxc` requirement](#keep-mxc-disabled).
 
-By default, both sandbox modes also use a private desktop for stronger UI
-isolation. Set `windows.sandbox_private_desktop = false` only if you need the
-older `Winsta0\\Default` behavior for compatibility.
+By default, both legacy sandbox modes also use a private desktop for stronger UI
+isolation.
+
+#### Provision the classic elevated sandbox
+
+For employees without local administrator rights, IT can install the CLI and
+provision the sandbox before the employee starts Codex. From an elevated
+deployment process, run:
+
+```powershell
+codex sandbox setup --elevated --user 'DOMAIN\alice' --codex-home 'C:\Users\alice\.codex'
+```
+
+Replace the identity and path with the employee's Windows identity and
+`CODEX_HOME`. The command reads that user's configuration, provisions the
+sandbox, and saves `windows.sandbox = "elevated"`. The employee then runs Codex
+from a normal terminal. Using a non-admin terminal doesn't select the
+`unelevated` implementation.
 
 #### Sandbox permissions
 
@@ -48097,32 +48219,32 @@ Additional environment assumptions:
 
 - `winget` should be available. If it's missing, update Windows or install
   the Windows Package Manager before setting up Codex.
-- The recommended native sandbox depends on administrator-approved setup.
+- The classic `elevated` sandbox depends on administrator-approved setup.
 - Some enterprise-managed devices block the required setup steps even when the
   OS version itself is acceptable.
+- MXC additionally requires the native capabilities described in
+  [MXC compatibility](#mxc-compatibility); this matrix doesn't establish MXC
+  availability on a particular device.
 
-#### Grant sandbox read access
+#### Check sandbox read access
 
-When a command fails because the Windows sandbox can't read a directory, use:
-
-```text
-/sandbox-add-read-dir C:\absolute\directory\path
-```
-
-The path must be an existing absolute directory. After the command succeeds, later commands that run in the sandbox can read that directory during the current session.
+When a command can't read a directory, check the active permission profile,
+managed requirements, and Windows file permissions. In the CLI, use `/status`
+and `/debug-config` to inspect the active session and configuration. Ask your
+administrator to review a managed restriction rather than disabling the sandbox.
 
 Use the native Windows sandbox by default. Choose [WSL](./windows/wsl.md)
 when you need Linux-native tooling, your workflow already lives in WSL2, or
-neither native Windows sandbox mode meets your needs.
+the available native Windows implementations don't meet your needs.
 
 #### Troubleshooting and FAQ
 
 If you are troubleshooting a managed Windows machine, start with the native
-sandbox mode, Windows version, and any policy error shown by Codex. Most native
-Windows support issues come from sandbox setup, logon rights, or filesystem
-permissions rather than from the editor itself.
+sandbox mode, Windows version, and any policy error shown by Codex. For MXC,
+check [compatibility](#mxc-compatibility) and the effective network policy.
+Legacy sandbox issues can come from setup, logon rights, or filesystem permissions.
 
-My native sandbox setup failed
+My legacy sandbox setup failed
 
 If Codex cannot complete the `elevated` sandbox setup, the most common causes
 are:
@@ -48140,13 +48262,13 @@ What to try:
 2. If your company laptop blocks this, ask your IT team whether the machine
    allows administrator-approved setup for local user/group creation, firewall
    configuration, and the required sandbox-user logon rights.
-3. If the default setup still fails, use the `unelevated` sandbox so you can
-   continue working while the issue is investigated.
+3. If setup still fails and managed policy permits it, use `unelevated` while
+   the issue is investigated.
 
 Codex switched me to the unelevated sandbox
 
-This means Codex could not finish the stronger `elevated` sandbox setup on your
-machine.
+The `unelevated` implementation may be selected in configuration or used as a
+fallback when `elevated` setup isn't available.
 
 - Codex can still run in a sandboxed mode.
 - It still applies ACL-based filesystem boundaries, but it does not use the
@@ -48155,8 +48277,9 @@ machine.
 - This is a useful fallback, but not the preferred long-term enterprise
   configuration.
 
-If you are on a managed enterprise laptop, the best long-term fix is usually to
-get the `elevated` sandbox working with help from your IT team.
+For a managed enterprise laptop, check [MXC compatibility](#mxc-compatibility)
+first. If MXC is unavailable or disabled, ask your IT team to provision
+`elevated`.
 
 I see Windows error 1385
 
@@ -48219,9 +48342,11 @@ This can happen after:
 What to try:
 
 1. Restart Codex.
-2. Try the `elevated` sandbox setup again.
-3. If that does not fix it, use the `unelevated` sandbox as a temporary
-   fallback.
+2. For MXC, repeat the [compatibility probe](#mxc-compatibility) and check the
+   effective network policy. For the classic `elevated` implementation, try
+   sandbox setup again.
+3. If a classic sandbox is needed and managed policy permits it, use
+   `unelevated` as a temporary fallback.
 4. Collect the sandbox log for review.
 
 I need to send diagnostics to OpenAI
@@ -48233,9 +48358,10 @@ If you still have problems, send:
 It is also helpful to include:
 
 - a short description of what you were trying to do,
-- whether the `elevated` sandbox failed or the `unelevated` sandbox was used,
+- the selected implementation: `mxc`, `elevated`, or `unelevated`,
 - any error message shown in the app,
 - whether you saw `1385` or another Windows or PowerShell error,
+- your Windows build number,
 - and whether you are on Windows 11 or Windows 10.
 
 Do not send:
@@ -48259,7 +48385,7 @@ Source: [WSL](./windows/wsl.md)
 When you use WSL2, Codex runs inside the Linux environment instead of using the
 native [Windows sandbox](./windows/windows-sandbox.md). Choose WSL2 when you need Linux-native
 tooling, your repositories and developer workflow already live in WSL2, or
-neither native Windows sandbox mode works for your environment.
+the available Windows sandbox implementations don't meet your needs.
 
 WSL1 was supported through Codex `0.114`. Starting in Codex `0.115`, the Linux
 sandbox moved to `bubblewrap`, so WSL1 is no longer supported.
@@ -48295,13 +48421,13 @@ This opens a WSL remote window, installs the VS Code Server if needed, and ensur
 
   This prints your distribution name.
 
-If you don't see "WSL: ..." in the status bar, press `Ctrl+Shift+P`, pick
-`WSL: Reopen Folder in WSL`, and keep your repository under `/home/...` (not
-`C:\`) for best performance.
+If you don't see "WSL: …" in the status bar, press `Ctrl+Shift+P`, pick `WSL:
+  Reopen Folder in WSL`, and keep your repository under `/home/...` (not `C:\`)
+for best performance.
 
 If the Windows app or project picker does not show your WSL repository, type
 \\wsl$ into the file picker or Explorer, then navigate to your
-distro's home directory.
+distribution's home directory.
 
 #### Use Codex CLI with WSL
 

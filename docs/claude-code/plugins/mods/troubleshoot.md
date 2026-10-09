@@ -171,6 +171,14 @@ The [tree](./interface.md#build-a-tree-from-elements) your hook returned didn't 
 
 Read the reason on that line. Common causes are a prop the element doesn't take and an element the app doesn't have.
 
+### A `ui.render` line says `threw while drawn`
+
+The line names the [render site](./reference.md#render-sites), then says `threw while drawn:` and the error, as in `first-mod: ui.render (ToolUse) threw while drawn: <error>; the engine drew its own`. Claude Code hit that error while drawing the tree your [`ui.render`](./reference.md#interface) hook returned, or while drawing the site from the [`props` your hook passed to `next`](./interface.md#change-what-claude-code-already-draws). The ending `the engine drew its own` means the site shows Claude Code's usual content.
+
+Read the error and fix the value in your hook that caused it.
+
+Before v2.1.289, this error in a transcript row ended the session with [`Claude Code exited after an unrecoverable interface error`](../../errors.md#exited-after-an-unrecoverable-interface-error).
+
 ### `the module failed without a message`
 
 A [`Client`](./interface.md#when-a-client-fails) failed with an error that has no message, such as `throw new Error()`. The line in its place reads like `my-mod: Client client/spinner.js: the module failed without a message`.

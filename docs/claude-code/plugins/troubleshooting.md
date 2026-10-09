@@ -158,7 +158,7 @@ If you already added the marketplace, check the spelling against `/plugin market
   `Invalid marketplace source format`
 </h3>
 
-You ran `/plugin marketplace add <source>` or `claude plugin marketplace add <source>`, and Claude Code replied `Invalid marketplace source format. Try: owner/repo, https://..., or ./path`.
+You ran `/plugin marketplace add <source>`, `claude plugin marketplace add <source>`, or `claude plugin install <plugin> --marketplace <source>`, and Claude Code replied `Invalid marketplace source format. Try: owner/repo, https://..., or ./path`.
 
 Claude Code accepts a source in one of these forms:
 
@@ -552,7 +552,7 @@ Claude Code prints `Successfully added marketplace: claude-plugins-official`, an
   `Marketplace "<name>" is already added from a different source`
 </h3>
 
-You confirmed adding a marketplace through [`/plugin install <plugin> --marketplace <source>`](./install.md#add-a-marketplace-and-install-in-one-command), and the catalog Claude Code fetched from that source has the same name as a marketplace you already added from a different source. Claude Code keeps the existing marketplace instead of replacing it, and the plugin isn't installed.
+You named a new marketplace source with [`--marketplace <source>` on the install command](./install.md#add-a-marketplace-and-install-in-one-command), in a session or from your shell. The catalog Claude Code fetched from that source has the same name as a marketplace you already added from a different source. Claude Code keeps the existing marketplace instead of replacing it, and the plugin isn't installed.
 
 The full message looks like this:
 

@@ -719,6 +719,12 @@ enabled = true
 
 # Leave this table empty to accept defaults. Set explicit booleans to opt in/out.
 
+# Prefer MXC on Windows when the device and policy support it; otherwise use the legacy sandbox below.
+
+# Disabled by default in the standalone CLI.
+
+prefer_mxc = true
+
 # shell_tool = true
 
 # apps = true
@@ -1209,7 +1215,9 @@ metrics_exporter = "statsig"
 
 [windows]
 
-# Native Windows sandbox mode (Windows only): unelevated | elevated
+# Windows sandbox implementation: mxc | elevated | unelevated
 
-sandbox = "unelevated"
+# Legacy fallback when features.prefer_mxc is enabled. Explicit mxc selection does not fall back.
+
+sandbox = "elevated"
 ```
