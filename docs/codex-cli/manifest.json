@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.162.1",
-  "last_updated": "2026-10-09T21:56:38Z",
+  "last_updated": "2026-10-10T02:52:20Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -60,8 +60,8 @@
       "source_url": "https://learn.chatgpt.com/docs/agent-configuration/speed",
       "source_md_url": "https://learn.chatgpt.com/docs/agent-configuration/speed.md",
       "source_id": "llms:agent-configuration/speed",
-      "hash": "be3b5fdbd294b32e049ea8b3140610839d05bde5b98dc904722718ff0a34d52c",
-      "last_updated": "2026-10-08T20:18:46Z"
+      "hash": "04f97a3832d145e526586e373351a4d51bb7e1f1d36249cc6514580b0ea0f827",
+      "last_updated": "2026-10-10T02:52:20Z"
     },
     "agent-configuration/subagents": {
       "slug": "agent-configuration/subagents",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "70c634a375811067ff46c9c86f19358b0c6705d0de6be9dc470ddd99b0ccc34d",
-      "last_updated": "2026-10-09T21:56:38Z"
+      "hash": "4008e0bc63396ecb093f5d07b2fe7de9b2485d1b68bc4805dbdb0700f3edfa0c",
+      "last_updated": "2026-10-10T02:52:20Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -1870,8 +1870,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new/dots-october-9-2026",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new/dots-october-9-2026.md",
       "source_id": "llms:whats-new/dots-october-9-2026",
-      "hash": "a67c426856478c270fb881a0a8c9484831fe8eac4d463ed21279ac1d54d4e279",
-      "last_updated": "2026-10-09T21:56:38Z"
+      "hash": "7d03fd67715ec106e36adc2948a2f93c5a481b0b7a45abf40b6729ab3afe4aa3",
+      "last_updated": "2026-10-10T02:52:20Z"
     },
     "whats-new/october-5-9-2026": {
       "slug": "whats-new/october-5-9-2026",
@@ -1925,8 +1925,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-09T21:56:38Z",
-    "fetch_duration_seconds": 66.996,
+    "last_fetch_completed": "2026-10-10T02:52:20Z",
+    "fetch_duration_seconds": 66.942,
     "total_pages_discovered": 192,
     "pages_fetched_successfully": 192,
     "pages_failed": 0,

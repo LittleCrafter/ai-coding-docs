@@ -31865,18 +31865,19 @@ distribution](https://developers.openai.com/plugins/build/plugins).
 Extensions give users new ways to interact with your plugin across ChatGPT.
 Declaring support for an extension takes just a few lines of SDK code.
 
-|     | Extension                                                                                                              | What users can do                                                                                            |
-| --- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-|     | [Sidebar apps](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#global-entrypoint)                      | Give users a place to open your app from the sidebar and work in it fullscreen.                              |
-|     | [Conversation panels](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#thread-entrypoint)               | Let users open your app beside a conversation, keeping their work and chat together.                         |
-|     | [Plugin settings](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#structured-settings)                 | Let users configure your plugin's product-specific settings from within ChatGPT.                             |
-|     | [File viewers and editors](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#file-extension-entrypoint)  | Open supported files in your own interface, with reading, live updates, and saving changes handled together. |
-|     | [Display modes](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#display-modes)                         | Choose where and how your app appears in ChatGPT conversations.                                              |
-|     | [Deep links](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#deep-links)                               | Take users directly to a specific page or item within your sidebar app.                                      |
-|     | [Model-App Context](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#uiupdate-model-context-extensions) | Keep ChatGPT and your MCP App in sync with bidirectional context sharing.                                    |
-|     | [Composer mentions](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#composer-at-mentions)              | Let users find and select content from your plugin in the ChatGPT desktop composer.                          |
-|     | [Rich forms](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#openai-form-elicitation)                  | Ask users for structured input or let them choose from images, then return their response to your tool.      |
-|     | [Plugin onboarding](https://developers.openai.com/plugins/build/plugins#add-an-onboarding-skill)                                                    | Guide users through setup in a new or existing conversation.                                                 |
+|     | Extension                                                                                                                   | What users can do                                                                                            |
+| --- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+|     | [Sidebar apps](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#global-entrypoint)                           | Give users a place to open your app from the sidebar and work in it fullscreen.                              |
+|     | [Conversation panels](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#thread-entrypoint)                    | Let users open your app beside a conversation, keeping their work and chat together.                         |
+|     | [Plugin settings](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#structured-settings)                      | Let users configure your plugin's product-specific settings from within ChatGPT.                             |
+|     | [File viewers and editors](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#file-extension-entrypoint)       | Open supported files in your own interface, with reading, live updates, and saving changes handled together. |
+|     | [Display modes](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#display-modes)                              | Choose where and how your app appears in ChatGPT conversations.                                              |
+|     | [Deep links](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#deep-links)                                    | Take users directly to a specific page or item within your sidebar app.                                      |
+|     | [Extended model context](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#uiupdate-model-context-extensions) | Control annotations and how attached context appears in the composer.                                        |
+|     | [Extended message sending](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#prompt-target-and-send-behavior) | Send messages to the current conversation, or a new one on desktop and Work on the web.                      |
+|     | [Composer mentions](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#composer-at-mentions)                   | Let users find and select content from your plugin in the ChatGPT desktop composer.                          |
+|     | [Extended forms](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#openai-form-elicitation)                   | Ask users for structured input or let them choose from images, then return their response to your tool.      |
+|     | [Plugin onboarding](https://developers.openai.com/plugins/build/plugins#add-an-onboarding-skill)                                                         | Guide users through setup in a new or existing conversation.                                                 |
 
 #### Sidebar apps
 
@@ -31924,7 +31925,7 @@ resource URI for the opened file. Follow the [file handler
 guide](https://github.com/openai/mcp-extensions/blob/main/typescript/README.md#file-extension-handlers)
 to receive that input and read the resource with the app SDK.
 
-#### Rich forms
+#### Extended forms
 
 Extend standard MCP forms with richer components native to ChatGPT.
 
