@@ -2,6 +2,10 @@
 
 Get started with OpenCode.
 
+> [!NOTE]
+> OpenCode 1 and OpenCode 2 both use the `opencode` command and cannot be installed side by side under their default command.
+> See the [OpenCode 2 docs](https://opencode.ai/v2/docs/) to migrate to V2.
+
 [**OpenCode**](https://opencode.ai/) is an open source AI coding agent. It's available as a terminal-based interface, desktop app, or IDE extension.
 
 ![OpenCode TUI with the opencode theme](assets/lander/screenshot.png)
@@ -26,7 +30,8 @@ To use OpenCode in your terminal, you'll need:
 
 ## Install
 
-The easiest way to install OpenCode is through the install script.
+The easiest way to install OpenCode 1 is through the install script. These installation methods provide the `opencode`
+binary and can conflict with or replace an OpenCode 2 installation.
 
 ```bash
 curl -fsSL https://opencode.ai/install | bash

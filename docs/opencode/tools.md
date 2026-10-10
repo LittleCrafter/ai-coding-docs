@@ -210,26 +210,6 @@ Load a [skill](./skills.md) (a `SKILL.md` file) and return its content in the co
 
 ---
 
-### todowrite
-
-Manage todo lists during coding sessions.
-
-```json title="opencode.json" {4}
-{
-  "$schema": "https://opencode.ai/config.json",
-  "permission": {
-    "todowrite": "allow"
-  }
-}
-```
-
-Creates and updates task lists to track progress during complex operations. The LLM uses this to organize multi-step tasks.
-
-> [!NOTE]
-> This tool is disabled for subagents by default, but you can enable it manually. [Learn more](./agents.md#permissions)
-
----
-
 ### webfetch
 
 Fetch web content.

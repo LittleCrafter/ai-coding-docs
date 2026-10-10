@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.296",
-  "last_updated": "2026-10-10T02:51:12Z",
+  "last_updated": "2026-10-10T16:25:58Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -510,8 +510,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-apps-gateway",
       "source_md_url": "https://code.claude.com/docs/en/claude-apps-gateway.md",
       "source_id": "claude-apps-gateway",
-      "hash": "9e34603e7835fd40c671983ec6ac1280b03fb66ed7b3bc181e285d4997e82896",
-      "last_updated": "2026-10-10T02:51:12Z"
+      "hash": "85ab09ecd8376c826bd1f0c13167e0f453b3c3ea340c26e8f065690827d003d8",
+      "last_updated": "2026-10-10T16:25:58Z"
     },
     "claude-apps-gateway-config": {
       "slug": "claude-apps-gateway-config",
@@ -520,8 +520,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-apps-gateway-config",
       "source_md_url": "https://code.claude.com/docs/en/claude-apps-gateway-config.md",
       "source_id": "claude-apps-gateway-config",
-      "hash": "97fedc542e9ce869a7c5b2cd1bdc6e4150395591689ded59a721eb87f8db1b49",
-      "last_updated": "2026-10-10T02:51:12Z"
+      "hash": "072ecd6da4caaf574a6fe991242038742ee6d20700c4062774473a0938239a58",
+      "last_updated": "2026-10-10T16:25:58Z"
     },
     "claude-apps-gateway-deploy": {
       "slug": "claude-apps-gateway-deploy",
@@ -530,8 +530,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-apps-gateway-deploy",
       "source_md_url": "https://code.claude.com/docs/en/claude-apps-gateway-deploy.md",
       "source_id": "claude-apps-gateway-deploy",
-      "hash": "a007c9dfb607be777adf34a85021a88c0e804a39b5f8bcc623c22a7becdbdec2",
-      "last_updated": "2026-10-10T02:51:12Z"
+      "hash": "bce93a6d6ef9a62b949b2399550b08859525fbfb2ca8bd4fa5fd1a0a55d54745",
+      "last_updated": "2026-10-10T16:25:58Z"
     },
     "claude-apps-gateway-on-aws": {
       "slug": "claude-apps-gateway-on-aws",
@@ -840,8 +840,8 @@
       "source_url": "https://code.claude.com/docs/en/errors",
       "source_md_url": "https://code.claude.com/docs/en/errors.md",
       "source_id": "errors",
-      "hash": "2e7488a40423b23e52c7823a078932f5b87ba5dadaa599d8ab8765407ab51788",
-      "last_updated": "2026-10-10T02:51:12Z"
+      "hash": "2d00aa0c572ab278276c3716d18ad7c30878cd5e1d8d1721e60e32ef146d1859",
+      "last_updated": "2026-10-10T16:25:58Z"
     },
     "fast-mode": {
       "slug": "fast-mode",
@@ -1680,8 +1680,8 @@
       "source_url": "https://code.claude.com/docs/en/self-hosted-environments-configuration",
       "source_md_url": "https://code.claude.com/docs/en/self-hosted-environments-configuration.md",
       "source_id": "self-hosted-environments-configuration",
-      "hash": "a3bbe00c01f4f926a7b70c292c766f429f340edd2164b0cd0832430e7e7cf1ab",
-      "last_updated": "2026-10-10T02:51:12Z"
+      "hash": "2034b3f4ac4a3910dc6697e0a3906b8ed6c7ea4b337be3cf04cface116c9f68b",
+      "last_updated": "2026-10-10T16:25:58Z"
     },
     "self-hosted-environments-deploy": {
       "slug": "self-hosted-environments-deploy",
@@ -1690,8 +1690,8 @@
       "source_url": "https://code.claude.com/docs/en/self-hosted-environments-deploy",
       "source_md_url": "https://code.claude.com/docs/en/self-hosted-environments-deploy.md",
       "source_id": "self-hosted-environments-deploy",
-      "hash": "06f0ce505c7f797b416ede6434d3e6ffc9264b56c1dba10b489bf193bc84d969",
-      "last_updated": "2026-10-10T02:51:12Z"
+      "hash": "e7b9854b3a834a283fcd2112d4801a4715f24533155db77cd385739fd71af387",
+      "last_updated": "2026-10-10T16:25:58Z"
     },
     "self-hosted-environments-identity": {
       "slug": "self-hosted-environments-identity",
@@ -1780,8 +1780,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "8e49550c05a746eae3adac562758e0c6fb599d7e313ad8156fb4c8078632e9e6",
-      "last_updated": "2026-10-09T00:44:15Z"
+      "hash": "d34027f278ab5e361b3534c6b794ffe6480b1ce4fe70eeb725f1db3f87c04e32",
+      "last_updated": "2026-10-10T16:25:58Z"
     },
     "setup": {
       "slug": "setup",
@@ -2205,8 +2205,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-10T02:51:12Z",
-    "fetch_duration_seconds": 76.802,
+    "last_fetch_completed": "2026-10-10T16:25:58Z",
+    "fetch_duration_seconds": 76.937,
     "total_pages_discovered": 220,
     "pages_fetched_successfully": 220,
     "pages_failed": 0,
