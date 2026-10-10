@@ -160,7 +160,7 @@ You can also run `/status` in an interactive session and check these rows:
 
 ### Set network variables in settings, not the shell
 
-The supervisor is one process shared by every terminal. It inherits the environment of whichever shell starts it first, and an OS-installed supervisor receives no shell environment at all. If you export a proxy, CA path, or mTLS variable only in your shell, it reaches background agents when that shell happened to cold-start the supervisor, and silently doesn't when a different shell did.
+The supervisor is one process shared by every terminal. It inherits the environment of whichever shell starts it first. If you export a proxy, CA path, or mTLS variable only in your shell, it reaches background agents when that shell happened to cold-start the supervisor, and silently doesn't when a different shell did.
 
 Put the same variables in the `env` block of `~/.claude/settings.json` or [managed settings](./settings.md) instead. Every variable on this page can be set there, and settings are the only configuration that reaches every background session on every machine.
 
@@ -171,7 +171,7 @@ Some organizations require every Claude Code process to start through a corporat
 Set the [`processWrapper`](./settings-reference.md#processwrapper) setting to prefix the supervisor, its workers, and the other background processes listed under [What the launcher covers](./corporate-launcher.md#what-the-launcher-covers) with your launcher. The equivalent [`CLAUDE_CODE_PROCESS_WRAPPER`](./env-vars.md) environment variable takes precedence when both are set, and it is subject to the same rule: deliver it through managed settings or `~/.claude/settings.json`, not a shell export. [Run Claude Code behind a corporate launcher](./corporate-launcher.md) covers the contract the launcher must satisfy, what it does and doesn't reach, and how to roll it out.
 
 > [!NOTE]
-> An already-running supervisor keeps the launch configuration it started with. After deploying the launcher setting, run [`claude daemon stop --any`](./agent-view.md#the-supervisor-process) so the next `claude agents` or `--bg` starts a supervisor that honors it. An installed service takes `claude daemon stop` without `--any`.
+> An already-running supervisor keeps the launch configuration it started with. After deploying the launcher setting, run [`claude daemon stop --any`](./agent-view.md#the-supervisor-process) so the next `claude agents` or `--bg` starts a supervisor that honors it.
 
 ## Streaming idle watchdogs
 

@@ -1,14 +1,14 @@
 # AI Coding Docs — Index
 
 Auto-generated mirror of documentation for several AI coding tools/CLIs.
-**Total pages mirrored:** 556
+**Total pages mirrored:** 557
 
 | Source | Version | Pages | Last updated | Whats-new |
 | --- | :---: | ---: | --- | :---: |
 | [Google Antigravity CLI](./google-antigravity-cli/) | 1.2.0 | 28 | 2026-10-10T09:07:19Z | yes |
-| [Claude Code](./claude-code/) | 2.1.296 | 220 | 2026-10-10T16:25:58Z | no |
-| [Codex CLI](./codex-cli/) | 0.162.1 | 192 | 2026-10-10T02:52:20Z | no |
-| [DeepSeek API](./deepseek-api/) | — | 52 | 2026-10-10T16:27:26Z | no |
+| [Claude Code](./claude-code/) | 2.1.296 | 221 | 2026-10-10T20:46:44Z | no |
+| [Codex CLI](./codex-cli/) | 0.162.1 | 192 | 2026-10-10T20:47:52Z | no |
+| [DeepSeek API](./deepseek-api/) | — | 52 | 2026-10-10T20:48:12Z | no |
 | [Kimi Code](./kimi-code/) | 2.1.1 | 28 | 2026-10-09T09:44:24Z | no |
 | [OpenCode](./opencode/) | 1.18.35 | 36 | 2026-10-10T16:27:51Z | no |
 

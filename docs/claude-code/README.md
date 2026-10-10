@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 220
+- **Pages mirrored:** 221
 - **Version:** 2.1.296
-- **Last updated:** 2026-10-10T16:25:58Z
+- **Last updated:** 2026-10-10T20:46:44Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -22,6 +22,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Track team usage with analytics | [analytics.md](./analytics.md) | [source](<https://code.claude.com/docs/en/analytics>) |
 | Share session output as artifacts | [artifacts.md](./artifacts.md) | [source](<https://code.claude.com/docs/en/artifacts>) |
 | Authentication | [authentication.md](./authentication.md) | [source](<https://code.claude.com/docs/en/authentication>) |
+| Auto mode classifier request charges | [auto-mode-classifier-billing.md](./auto-mode-classifier-billing.md) | [source](<https://code.claude.com/docs/en/auto-mode-classifier-billing>) |
 | Configure auto mode | [auto-mode-config.md](./auto-mode-config.md) | [source](<https://code.claude.com/docs/en/auto-mode-config>) |
 | Best practices for Claude Code | [best-practices.md](./best-practices.md) | [source](<https://code.claude.com/docs/en/best-practices>) |
 | Champion kit | [champion-kit.md](./champion-kit.md) | [source](<https://code.claude.com/docs/en/champion-kit>) |

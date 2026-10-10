@@ -25333,7 +25333,7 @@ Auth0 enables MCP clients to securely connect to MCP servers by providing metada
 - [Auth0 securing MCP servers overview](https://auth0.com/ai/docs/mcp/intro/overview)
 - [Auth0 securing MCP servers quickstart guides](https://auth0.com/ai/docs/mcp/get-started/overview)
 
-#### Hosted provider example
+#### Hosted provider example (Stytch)
 
 - [Provider guide to MCP authorization](https://stytch.com/docs/guides/connected-apps/mcp-server-overview)
 - [MCP authorization overview](https://stytch.com/blog/MCP-authentication-and-authorization-guide/)
