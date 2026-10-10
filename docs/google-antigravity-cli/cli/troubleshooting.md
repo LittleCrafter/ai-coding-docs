@@ -88,10 +88,17 @@ To authorize keychain access on macOS, follow these steps:
 1.  Open the **Keychain Access** app.
 2.  Search for the `Antigravity CLI` security item.
 3.  Right-click, select **Get Info**, choose the **Access Control** tab, and verify that `agy` is on the allowed applications list.
-4.  If you’re running inside a headless SSH session on macOS, run the following unlock sequence:
+4.  If you’re running inside a headless SSH session on macOS, enforce an auto-lock inactivity timeout (for example, 5 minutes) and unlock the keychain interactively:
     
     ```
-    security unlock-keychain -p "your_keychain_password" login.keychain
+    security set-keychain-settings -l -u -t 300 ~/Library/Keychains/login.keychain-db
+    security unlock-keychain ~/Library/Keychains/login.keychain-db
+    ```
+    
+    When your session is finished, optionally re-lock the keychain immediately:
+    
+    ```
+    security lock-keychain ~/Library/Keychains/login.keychain-db
     ```
     
 

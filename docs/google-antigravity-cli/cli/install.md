@@ -1,6 +1,6 @@
 # Installation and auth
 
-Install Antigravity CLI, configure enterprise requirements, and establish secure authenticated sessions.
+Install Antigravity CLI (`agy`), configure your environment, and establish secure authenticated sessions.
 
 ## Installation
 
@@ -30,6 +30,14 @@ irm https://antigravity.google/cli/install.ps1 | iex
 curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
+### Verify installation and version
+
+Verify the installed version (or run `agy update` to update an existing installation):
+
+```
+agy --version
+```
+
 ### Installation flags
 
 When executing the installation scripts, you can append the following customization flags:
@@ -48,7 +56,7 @@ When launching `agy` on your local machine, the CLI attempts to access your oper
 If no saved session is found, complete the sign-in flow:
 
 1.  The CLI automatically launches your local default web browser.
-2.  Sign in using your approved account credentials.
+2.  Sign in using your personal Google Account, or select **Business account** to authenticate with [Gemini Enterprise](https://antigravity.google/docs/enterprise#sign-in-and-license-selection).
 
 ### Remote SSH OAuth flow
 
@@ -60,6 +68,8 @@ When running over SSH, the CLI detects the remote connection environment. Becaus
 4.  Sign in with your approved credentials and complete the authentication.
 5.  The browser displays a unique alphanumeric authorization code.
 6.  Copy this code, return to your remote SSH terminal, and paste it into the prompt.
+
+[Gemini Enterprise authentication](https://antigravity.google/docs/enterprise#sign-in-and-license-selection)Sign in with Google Cloud SSO, Workforce Identity Federation (BYOID/WIF), or Application Default Credentials (ADC).
 
 ## Using a Gemini API key
 

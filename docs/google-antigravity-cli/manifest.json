@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-09T21:53:50Z",
+  "last_updated": "2026-10-10T09:07:19Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -150,8 +150,8 @@
       "source_url": "https://antigravity.google/docs/cli/features",
       "source_md_url": "https://antigravity.google/docs/cli/features.md",
       "source_id": "cli/features",
-      "hash": "87dcadfc7b42bae7487a14413f354e3f7d91bfce118aad9ca6cab7bc7fe1d3ac",
-      "last_updated": "2026-10-09T21:53:50Z"
+      "hash": "a0d8644e8a807c83c43bbcc048ceb5a1971f945f65fbef01ff525025fcbe31a0",
+      "last_updated": "2026-10-10T09:07:19Z"
     },
     "cli/gcli-migration": {
       "slug": "cli/gcli-migration",
@@ -180,8 +180,8 @@
       "source_url": "https://antigravity.google/docs/cli/install",
       "source_md_url": "https://antigravity.google/docs/cli/install.md",
       "source_id": "cli/install",
-      "hash": "d73b4fbe619af8f1d6ba23ab6bcd4166365cfc8fe4a6419e10a30ad5f3650d2e",
-      "last_updated": "2026-10-03T13:58:30Z"
+      "hash": "c3758888ad4f3521385a405363efabf0e2a8415715d9d90b611e861853768246",
+      "last_updated": "2026-10-10T09:07:19Z"
     },
     "cli/modes": {
       "slug": "cli/modes",
@@ -250,8 +250,8 @@
       "source_url": "https://antigravity.google/docs/cli/troubleshooting",
       "source_md_url": "https://antigravity.google/docs/cli/troubleshooting.md",
       "source_id": "cli/troubleshooting",
-      "hash": "d388350701da0ab6fb36a37f4bfd672696ecca6d3f9842d5930e24af4cad6149",
-      "last_updated": "2026-10-01T02:32:05Z"
+      "hash": "bc4dcce8a044b37b571b241ed2f58c3bdbc62f0792fcaf9231fd7d4e30d710e9",
+      "last_updated": "2026-10-10T09:07:19Z"
     },
     "cli/tutorial": {
       "slug": "cli/tutorial",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-09T21:53:50Z",
-    "fetch_duration_seconds": 9.555,
+    "last_fetch_completed": "2026-10-10T09:07:19Z",
+    "fetch_duration_seconds": 9.527,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,
