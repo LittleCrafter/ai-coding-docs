@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.296",
-  "last_updated": "2026-10-10T20:46:44Z",
+  "last_updated": "2026-10-11T09:22:28Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -370,8 +370,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-view",
       "source_md_url": "https://code.claude.com/docs/en/agent-view.md",
       "source_id": "agent-view",
-      "hash": "9be5802e13c0a71cd68f1622f3ec9222f97bdc46034565d330c7c82e03eaaee8",
-      "last_updated": "2026-10-10T20:46:44Z"
+      "hash": "ce23851a63b1be7266afbe33bddc84d442e6aac2e8e8d112b9370d1d4a10bfae",
+      "last_updated": "2026-10-11T09:22:28Z"
     },
     "agents": {
       "slug": "agents",
@@ -720,8 +720,8 @@
       "source_url": "https://code.claude.com/docs/en/costs",
       "source_md_url": "https://code.claude.com/docs/en/costs.md",
       "source_id": "costs",
-      "hash": "eee49b37a3dd6ce54ce120bf934e3abb779c1fc3a17405dca0fded5943b6710e",
-      "last_updated": "2026-10-07T18:00:50Z"
+      "hash": "3ab6317a7dddeffded6e2b6e4988b980c8e36c4e60e7435b0c475134b6438d6b",
+      "last_updated": "2026-10-11T09:22:28Z"
     },
     "cross-session-messaging": {
       "slug": "cross-session-messaging",
@@ -750,8 +750,8 @@
       "source_url": "https://code.claude.com/docs/en/debug-your-config",
       "source_md_url": "https://code.claude.com/docs/en/debug-your-config.md",
       "source_id": "debug-your-config",
-      "hash": "48bf5fcf75c559f59ebfdda607659e56e95750309d855eb43cc52b3f854fd792",
-      "last_updated": "2026-10-08T20:17:38Z"
+      "hash": "7c4a3b15ebc93f6f28c7fa0e0706f9cf5adfe95181b6bf2456ac40bd4c7eecb5",
+      "last_updated": "2026-10-11T09:22:28Z"
     },
     "deep-links": {
       "slug": "deep-links",
@@ -840,8 +840,8 @@
       "source_url": "https://code.claude.com/docs/en/env-vars",
       "source_md_url": "https://code.claude.com/docs/en/env-vars.md",
       "source_id": "env-vars",
-      "hash": "5c9c6590c568f87c1040371c4d366b4fec18885656c303a90e0fe4bae365765d",
-      "last_updated": "2026-10-10T20:46:44Z"
+      "hash": "3e466517fac2c6e873ad8e4b7a90d8838967d5d69db2e869ffbbcc09721927e6",
+      "last_updated": "2026-10-11T09:22:28Z"
     },
     "errors": {
       "slug": "errors",
@@ -1830,8 +1830,8 @@
       "source_url": "https://code.claude.com/docs/en/statusline",
       "source_md_url": "https://code.claude.com/docs/en/statusline.md",
       "source_id": "statusline",
-      "hash": "3d84996b2025d65a38f18e5652c01901fb77da99a150280b3cabc0320edf378a",
-      "last_updated": "2026-10-08T03:05:33Z"
+      "hash": "90ea99c44c831487231d2cc7b9daadc00ed12a3aa16ca108e20b3478fd8175ea",
+      "last_updated": "2026-10-11T09:22:28Z"
     },
     "sub-agents": {
       "slug": "sub-agents",
@@ -2215,8 +2215,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-10T20:46:44Z",
-    "fetch_duration_seconds": 77.266,
+    "last_fetch_completed": "2026-10-11T09:22:28Z",
+    "fetch_duration_seconds": 77.223,
     "total_pages_discovered": 221,
     "pages_fetched_successfully": 221,
     "pages_failed": 0,
