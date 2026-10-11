@@ -33735,11 +33735,15 @@ submission portal and resubmit.
 
 #### Changing published metadata versions and removing the plugin
 
-Once a plugin is published, you can change its published version from the
-[plugin submission portal](https://platform.openai.com/plugins) by removing the
-current version from publication and publishing an approved replacement. You
-can remove the plugin from public visibility by removing the current version
-from publication and not publishing an alternative version.
+To replace a published plugin version, publish an approved replacement directly
+from the [plugin submission portal](https://platform.openai.com/plugins). Keep
+the current version published while the replacement is under review. Publishing
+the approved version replaces the current version, so you don't need to remove
+the current version from publication first.
+
+Remove the current version from publication only when you intend to remove the
+plugin from public visibility. Without a published replacement, removing the
+current version makes the plugin unavailable.
 
 To remove the plugin from your organization and from ChatGPT and Codex, delete
 it from the plugin submission portal.
