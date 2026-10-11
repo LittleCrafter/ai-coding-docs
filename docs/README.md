@@ -10,6 +10,6 @@ Auto-generated mirror of documentation for several AI coding tools/CLIs.
 | [Codex CLI](./codex-cli/) | 0.162.1 | 192 | 2026-10-10T20:47:52Z | no |
 | [DeepSeek API](./deepseek-api/) | — | 52 | 2026-10-10T20:48:12Z | no |
 | [Kimi Code](./kimi-code/) | 2.1.1 | 28 | 2026-10-09T09:44:24Z | no |
-| [OpenCode](./opencode/) | 1.18.35 | 36 | 2026-10-10T16:27:51Z | no |
+| [OpenCode](./opencode/) | 1.19.0 | 36 | 2026-10-11T02:28:29Z | no |
 
 Each subfolder has its own `README.md` index and `manifest.json`.
