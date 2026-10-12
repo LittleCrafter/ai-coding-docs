@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.296",
-  "last_updated": "2026-10-11T21:07:42Z",
+  "last_updated": "2026-10-12T02:44:00Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -330,8 +330,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/typescript",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/typescript.md",
       "source_id": "agent-sdk/typescript",
-      "hash": "fe0f771c7ffea548448b2f43fcd9510e29b07a4b75a5abee663b44dff54ebdcd",
-      "last_updated": "2026-10-11T21:07:42Z"
+      "hash": "9c74e9f49463bf667251ebf7e8ff0bc6c7d781bcc3eaa48847da6ed8376dae6c",
+      "last_updated": "2026-10-12T02:44:00Z"
     },
     "agent-sdk/typescript-v2-preview": {
       "slug": "agent-sdk/typescript-v2-preview",
@@ -420,8 +420,8 @@
       "source_url": "https://code.claude.com/docs/en/authentication",
       "source_md_url": "https://code.claude.com/docs/en/authentication.md",
       "source_id": "authentication",
-      "hash": "b9148bdd38db24b742da63d5564f287b88194fa048856ad9bd5d31d01e679cb4",
-      "last_updated": "2026-10-10T20:46:44Z"
+      "hash": "58e4ea9571703bf68a51c4bca7c69df9be865f2687fdfd5987a62b6f3806ee21",
+      "last_updated": "2026-10-12T02:44:00Z"
     },
     "auto-mode-classifier-billing": {
       "slug": "auto-mode-classifier-billing",
@@ -850,8 +850,8 @@
       "source_url": "https://code.claude.com/docs/en/errors",
       "source_md_url": "https://code.claude.com/docs/en/errors.md",
       "source_id": "errors",
-      "hash": "023cdba7954054bf959323df8e586a2a6381abf635540749a11c9e551b6b0b6a",
-      "last_updated": "2026-10-11T21:07:42Z"
+      "hash": "d1a195f9822c72f07bb5bac2ff5fec87d1f25e83e37feb0108d80cdd8c34e3af",
+      "last_updated": "2026-10-12T02:44:00Z"
     },
     "fast-mode": {
       "slug": "fast-mode",
@@ -2215,8 +2215,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-11T21:07:42Z",
-    "fetch_duration_seconds": 77.212,
+    "last_fetch_completed": "2026-10-12T02:44:00Z",
+    "fetch_duration_seconds": 77.249,
     "total_pages_discovered": 221,
     "pages_fetched_successfully": 221,
     "pages_failed": 0,
