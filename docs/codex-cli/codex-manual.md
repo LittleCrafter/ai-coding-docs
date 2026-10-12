@@ -10616,7 +10616,7 @@ An existing Codex Security scan is optional.
 
 #### Configure Codex Security Review
 
-1. Go to [Codex settings](https://app.chatgpt.com/settings/code-review) and choose a repository.
+1. Go to [Codex settings](https://chatgpt.com/settings/code-review) and choose a repository.
 2. Under **Review security vulnerabilities**, turn on **Auto security review**.
 3. Use **Review** to choose which pull requests get Codex Security Review:
    - **Follow personal preferences** lets each contributor opt in with their personal
@@ -21754,6 +21754,8 @@ Source: [ChatGPT Space](./space.md)
 
 ChatGPT Space brings your pages, files, and shared work into one place. Write and
 edit alongside ChatGPT, then invite other people to work with you.
+
+[Open Space in ChatGPT](https://chatgpt.com/space).
 
 #### Workspaces and spaces
 
@@ -33784,7 +33786,7 @@ potential security issues in a pull request.
 Make sure you have:
 
 - A GitHub repository connected to Codex. For legacy integration setup, see [Codex Cloud (Legacy)](./environments/cloud-environment.md).
-- Access to [Codex code review settings](https://app.chatgpt.com/settings/code-review).
+- Access to [Codex code review settings](https://chatgpt.com/settings/code-review).
 - An `AGENTS.md` file if you want Codex to follow repository-specific review guidance.
 
 #### Set up Codex code review
@@ -33793,7 +33795,7 @@ To configure automatic reviews, you need a connected GitHub repository and
 GitHub push or admin permission for its settings.
 
 1. Connect your GitHub repository to Codex.
-2. Go to [Codex settings](https://app.chatgpt.com/settings/code-review).
+2. Go to [Codex settings](https://chatgpt.com/settings/code-review).
 3. Choose your repository, then turn on **Automatic review** under **Review code**.
 
 #### Request a Codex review
@@ -33808,7 +33810,7 @@ high-priority risks.
 #### Enable automatic reviews
 
 To enable automatic reviews for your pull requests, turn on **Automatic review**
-under **Personal preferences** in [Codex settings](https://app.chatgpt.com/settings/code-review).
+under **Personal preferences** in [Codex settings](https://chatgpt.com/settings/code-review).
 Choose when reviews run with **Review trigger**. This applies to repositories
 with code review enabled and doesn't require an `@codex review` comment.
 
@@ -33877,7 +33879,7 @@ For more detailed setup instructions and configuration options, see [Security
 Review](./security/security-review.md).
 
 1. Connect your GitHub repository to Codex.
-2. Go to [Codex settings](https://app.chatgpt.com/settings/code-review).
+2. Go to [Codex settings](https://chatgpt.com/settings/code-review).
 3. Choose your repository. Under **Review security vulnerabilities**, turn on
    **Auto security review** and choose whose pull requests receive reviews with
    **Review**. Set **Trigger** to **Whenever code review runs** to run it
@@ -33917,11 +33919,11 @@ If you mention `@codex` in a comment with anything other than `review`, Codex st
 
 If Codex doesn't react or post a review:
 
-- Confirm you turned on code review for the repository in [Codex settings](https://app.chatgpt.com/settings/code-review).
+- Confirm you turned on code review for the repository in [Codex settings](https://chatgpt.com/settings/code-review).
 - Confirm the pull request belongs to a GitHub repository connected to Codex.
 - Use the exact trigger `@codex review` in a pull request comment.
 - For automatic reviews, check **Automatic review** under the repository
-  settings and **Personal preferences** in [Codex settings](https://app.chatgpt.com/settings/code-review). Confirm the pull request event matches your review trigger settings.
+  settings and **Personal preferences** in [Codex settings](https://chatgpt.com/settings/code-review). Confirm the pull request event matches your review trigger settings.
 
 ### Review GitLab merge requests with Codex
 
@@ -34029,7 +34031,7 @@ environment.
 
 #### Configure code review policies
 
-Configure code review policies in [Codex review settings](https://app.chatgpt.com/settings/code-review?provider=gitlab).
+Configure code review policies in [Codex review settings](https://chatgpt.com/settings/code-review?provider=gitlab).
 Choose your repository, then turn on **Automatic review** under **Review code**.
 Use **Review** to choose whose merge requests receive reviews and **Trigger** to
 choose when reviews run. Repository settings can override personal defaults.
