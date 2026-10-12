@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 36
+- **Pages mirrored:** 34
 - **Version:** 1.19.0
-- **Last updated:** 2026-10-11T02:28:29Z
+- **Last updated:** 2026-10-12T09:53:15Z
 - **Official docs:** https://opencode.ai/docs
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -23,7 +23,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Formatters | [formatters.md](./formatters.md) | [source](<https://opencode.ai/docs/formatters>) |
 | GitHub | [github.md](./github.md) | [source](<https://opencode.ai/docs/github>) |
 | GitLab | [gitlab.md](./gitlab.md) | [source](<https://opencode.ai/docs/gitlab>) |
-| Go | [go.md](./go.md) | [source](<https://opencode.ai/docs/go>) |
 | IDE | [ide.md](./ide.md) | [source](<https://opencode.ai/docs/ide>) |
 | Intro | [intro.md](./intro.md) | [source](<https://opencode.ai/docs>) |
 | Keybinds | [keybinds.md](./keybinds.md) | [source](<https://opencode.ai/docs/keybinds>) |
@@ -47,4 +46,3 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | TUI | [tui.md](./tui.md) | [source](<https://opencode.ai/docs/tui>) |
 | Web | [web.md](./web.md) | [source](<https://opencode.ai/docs/web>) |
 | Windows (WSL) | [windows-wsl.md](./windows-wsl.md) | [source](<https://opencode.ai/docs/windows-wsl>) |
-| Zen | [zen.md](./zen.md) | [source](<https://opencode.ai/docs/zen>) |

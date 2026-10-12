@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.19.0",
-  "last_updated": "2026-10-11T02:28:29Z",
+  "last_updated": "2026-10-12T09:53:15Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -20,8 +20,8 @@
       "source_url": "https://opencode.ai/docs/agents",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/agents.mdx",
       "source_id": "packages/web/src/content/docs/agents.mdx",
-      "hash": "be0bc0362414b6e24099ff8460049c3d1aa187d9c3abb48271e9827ff5e45586",
-      "last_updated": "2026-10-10T16:27:51Z"
+      "hash": "eb0203c89425bed03e193c4882d2349ae7b184388a2a721860dda6cd9e609700",
+      "last_updated": "2026-10-12T09:53:15Z"
     },
     "cli": {
       "slug": "cli",
@@ -113,16 +113,6 @@
       "hash": "a431d95a09fea0d2165875e7d7465365b7dc31e806900d14219a6f424d6afd9b",
       "last_updated": "2026-09-11T03:07:15Z"
     },
-    "go": {
-      "slug": "go",
-      "title": "Go",
-      "group": "root",
-      "source_url": "https://opencode.ai/docs/go",
-      "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/go.mdx",
-      "source_id": "packages/web/src/content/docs/go.mdx",
-      "hash": "41623c3109749c6c14aee02d253ff1108d1bb19e08fdb4e04d0b3d1a360a86ab",
-      "last_updated": "2026-10-08T20:19:31Z"
-    },
     "ide": {
       "slug": "ide",
       "title": "IDE",
@@ -140,8 +130,8 @@
       "source_url": "https://opencode.ai/docs",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/index.mdx",
       "source_id": "packages/web/src/content/docs/index.mdx",
-      "hash": "6730448507e84275a8abb2c6da1a4d7d4b95e91ff93c93b46417b03aa3a6395b",
-      "last_updated": "2026-10-10T16:27:51Z"
+      "hash": "2a19477d041d8505990be68b711432e72b844cc25062c4cbe5d92b1951062886",
+      "last_updated": "2026-10-12T09:53:15Z"
     },
     "keybinds": {
       "slug": "keybinds",
@@ -180,8 +170,8 @@
       "source_url": "https://opencode.ai/docs/models",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/models.mdx",
       "source_id": "packages/web/src/content/docs/models.mdx",
-      "hash": "7bf4ea03c9e6d0d53bdaf9ae9e8cee1b9a4097eed438337f96eeb1d156986812",
-      "last_updated": "2026-09-11T03:07:15Z"
+      "hash": "c5d6fec744ed18125ad7e25ddd193861914ccfeb9663e8cc8200e9cf43d4f3a7",
+      "last_updated": "2026-10-12T09:53:15Z"
     },
     "network": {
       "slug": "network",
@@ -230,8 +220,8 @@
       "source_url": "https://opencode.ai/docs/providers",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/providers.mdx",
       "source_id": "packages/web/src/content/docs/providers.mdx",
-      "hash": "f6f2bbedf9fa21ff949e8d786e21960496f0824c1d4499a624ef561ff7967c48",
-      "last_updated": "2026-10-10T16:27:51Z"
+      "hash": "a198046902a67dcf2b10f0982d5f9619d3e4f4cc471622c991901cef0b1de32a",
+      "last_updated": "2026-10-12T09:53:15Z"
     },
     "references": {
       "slug": "references",
@@ -352,23 +342,13 @@
       "source_id": "packages/web/src/content/docs/windows-wsl.mdx",
       "hash": "ebfd57b4348c55e18b3502fec031bab92bf2a595f335514440a5d8b7ed0dc5a6",
       "last_updated": "2026-09-11T03:07:15Z"
-    },
-    "zen": {
-      "slug": "zen",
-      "title": "Zen",
-      "group": "root",
-      "source_url": "https://opencode.ai/docs/zen",
-      "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/zen.mdx",
-      "source_id": "packages/web/src/content/docs/zen.mdx",
-      "hash": "30912eda8cfaba6ee45640eb38429e588f1f7f761581f0e29561809227d90b1b",
-      "last_updated": "2026-10-08T20:19:31Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-11T02:28:29Z",
-    "fetch_duration_seconds": 12.269,
-    "total_pages_discovered": 36,
-    "pages_fetched_successfully": 36,
+    "last_fetch_completed": "2026-10-12T09:53:15Z",
+    "fetch_duration_seconds": 11.632,
+    "total_pages_discovered": 34,
+    "pages_fetched_successfully": 34,
     "pages_failed": 0,
     "failed_pages": []
   }
