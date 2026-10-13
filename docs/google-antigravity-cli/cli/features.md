@@ -72,10 +72,16 @@ Outside an interactive TUI session, you can install and manage plugins from your
     agy plugin install </path/to/local/plugin>
     ```
     
-*   **List, enable, disable, or uninstall plugins**:
+*   **List installed plugins**: Run `agy plugin list` for a human-readable summary of installed plugins and their component counts, or pass `--json` to output a JSON array with installation paths and component names:
     
     ```
     agy plugin list
+    agy plugin list --json
+    ```
+    
+*   **Enable, disable, or uninstall plugins**:
+    
+    ```
     agy plugin enable <plugin-name>
     agy plugin disable <plugin-name>
     agy plugin uninstall <plugin-name>
