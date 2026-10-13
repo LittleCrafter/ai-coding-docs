@@ -31453,8 +31453,8 @@ Remote HTTP server:
 ```
 
 For public submission, submit the remote HTTPS endpoint through **With MCP**.
-If your MCP server runs locally, deploy it to a public HTTPS URL. If you can't,
-reach out to your OpenAI contact for local MCP support.
+For local MCP servers, follow
+[Submit desktop-only plugins](https://developers.openai.com/plugins/deploy/desktop-only).
 
 #### Configure MCP authentication
 
@@ -32371,19 +32371,21 @@ These errors apply to remote MCP submissions.
 
 #### ZIP upload errors and warnings
 
-The portal's **Skills only** path accepts skill ZIP packages. Errors block the
-upload; warnings require confirmation.
+The portal's **Skills only** path accepts skill ZIP packages and
+[approved local MCP plugins](https://developers.openai.com/plugins/deploy/desktop-only). Approved local MCP
+plugins don't need to include skills. Errors block the upload; warnings require
+confirmation.
 
-| Name                                | Requirement                                                                                                                                               |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugin_name_mismatch`              | The package name in an update must match the existing plugin name.                                                                                        |
-| `plugin_version_unchanged`          | A new release must use a different manifest `version`; reusing the published version requires confirmation.                                               |
-| `mcp_configuration_excluded`        | Skills-only uploads exclude `mcpServers`, `mcp.json`, and `.mcp.json`. Submit a remote MCP server through **With MCP**.                                   |
-| `app_configuration_excluded`        | Skills-only ZIP uploads must not include `apps` or `.app.json`; plugins with MCP servers must use **With MCP**.                                           |
-| `screenshot_configuration_excluded` | Skills-only ZIP uploads must not include `interface.screenshots`; screenshots require **With MCP** and custom UI.                                         |
-| `claude_format_normalized`          | `.claude-plugin/plugin.json` is converted to `.codex-plugin/plugin.json`, with missing interface defaults and normalized text fields added by the portal. |
-| `manifest_normalized`               | The portal saves the normalized manifest as `.codex-plugin/plugin.json`; changed fields require confirmation.                                             |
-| `developer_name_defaulted`          | The listing’s developer name is set automatically from your selected verified developer identity, regardless of the name in your ZIP.                     |
+| Name                                | Requirement                                                                                                                                                                                                                                                                                 |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugin_name_mismatch`              | The package name in an update must match the existing plugin name.                                                                                                                                                                                                                          |
+| `plugin_version_unchanged`          | A new release must use a different manifest `version`; reusing the published version requires confirmation.                                                                                                                                                                                 |
+| `mcp_configuration_excluded`        | MCP configuration is excluded unless your organization is approved for [local MCP submissions](https://developers.openai.com/plugins/deploy/desktop-only). For a local MCP plugin, ask your OpenAI representative to confirm the submitting organization is allowlisted. Submit remote MCP servers through **With MCP**. |
+| `app_configuration_excluded`        | ZIP uploads must not include `apps` or `.app.json`. Submit remote MCP servers through **With MCP**; for local MCP servers, follow the [desktop-only submission instructions](https://developers.openai.com/plugins/deploy/desktop-only).                                                                                 |
+| `screenshot_configuration_excluded` | Skills-only ZIP uploads must not include `interface.screenshots`; screenshots require **With MCP** and custom UI.                                                                                                                                                                           |
+| `claude_format_normalized`          | `.claude-plugin/plugin.json` is converted to `.codex-plugin/plugin.json`, with missing interface defaults and normalized text fields added by the portal.                                                                                                                                   |
+| `manifest_normalized`               | The portal saves the normalized manifest as `.codex-plugin/plugin.json`; changed fields require confirmation.                                                                                                                                                                               |
+| `developer_name_defaulted`          | The listing’s developer name is set automatically from your selected verified developer identity, regardless of the name in your ZIP.                                                                                                                                                       |
 
 #### ZIP structure and limit errors
 
@@ -32411,12 +32413,12 @@ upload; warnings require confirmation.
 
 #### Plugin root errors
 
-| Name                           | Requirement                                                                                         |
-| ------------------------------ | --------------------------------------------------------------------------------------------------- |
-| `plugin_root_missing`          | The selected path must exist and be a directory containing a plugin.                                |
-| `archive_plugin_files_missing` | A skills-only ZIP must contain a supported plugin manifest and at least one valid skill.            |
-| `plugin_root_ambiguous`        | ZIP must contain exactly one plugin root, either at the archive root or in one top-level directory. |
-| `plugin_root_has_siblings`     | A ZIP with a top-level plugin directory must not contain sibling files.                             |
+| Name                           | Requirement                                                                                                    |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `plugin_root_missing`          | The selected path must exist and be a directory containing a plugin.                                           |
+| `archive_plugin_files_missing` | A ZIP must contain a supported plugin manifest and at least one valid skill (or an approved local MCP server). |
+| `plugin_root_ambiguous`        | ZIP must contain exactly one plugin root, either at the archive root or in one top-level directory.            |
+| `plugin_root_has_siblings`     | A ZIP with a top-level plugin directory must not contain sibling files.                                        |
 
 #### Plugin manifest errors
 
@@ -32555,24 +32557,24 @@ directory submission.
 
 #### Plugin content errors
 
-| Name                               | Requirement                                                                                                                      |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `plugin_skills_path_wrong_type`    | `skills` must be a string path for the root `skills/` directory.                                                                 |
-| `plugin_skills_path_empty`         | `skills` must be a non-empty path to the root `skills/` directory when provided.                                                 |
-| `plugin_skills_path_unsupported`   | `skills` must resolve to the root `skills/` directory.                                                                           |
-| `plugin_skills_directory_missing`  | A declared root `skills/` directory must exist.                                                                                  |
-| `plugin_skills_path_not_directory` | Root `skills/` must be a directory when declared.                                                                                |
-| `plugin_apps_path_wrong_type`      | `apps` must be a string path for the root `.app.json`.                                                                           |
-| `plugin_apps_path_empty`           | `apps` must be a non-empty path to the root `.app.json` when provided.                                                           |
-| `plugin_apps_path_unsupported`     | `apps` must resolve to the root `.app.json`.                                                                                     |
-| `plugin_apps_file_missing`         | A declared root `.app.json` file must exist.                                                                                     |
-| `plugin_apps_path_not_file`        | Root `.app.json` must be a regular file when declared.                                                                           |
-| `plugin_mcp_path_wrong_type`       | `mcpServers` must be a string path for the root `.mcp.json`.                                                                     |
-| `plugin_mcp_path_empty`            | `mcpServers` must be a nonempty path. Set it to `./.mcp.json` or remove the field.                                               |
-| `plugin_mcp_path_unsupported`      | `mcpServers` must resolve to the root `.mcp.json`.                                                                               |
-| `plugin_mcp_file_missing`          | `mcpServers` declares the root `.mcp.json`, but that file doesn't exist.                                                         |
-| `plugin_mcp_path_not_file`         | Root `.mcp.json` must be a regular file.                                                                                         |
-| `plugin_runtime_surface_missing`   | A skills-only ZIP must contain at least one valid skill. Local and workspace packages can also reference an eligible MCP server. |
+| Name                               | Requirement                                                                                                                                                              |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `plugin_skills_path_wrong_type`    | `skills` must be a string path for the root `skills/` directory.                                                                                                         |
+| `plugin_skills_path_empty`         | `skills` must be a non-empty path to the root `skills/` directory when provided.                                                                                         |
+| `plugin_skills_path_unsupported`   | `skills` must resolve to the root `skills/` directory.                                                                                                                   |
+| `plugin_skills_directory_missing`  | A declared root `skills/` directory must exist.                                                                                                                          |
+| `plugin_skills_path_not_directory` | Root `skills/` must be a directory when declared.                                                                                                                        |
+| `plugin_apps_path_wrong_type`      | `apps` must be a string path for the root `.app.json`.                                                                                                                   |
+| `plugin_apps_path_empty`           | `apps` must be a non-empty path to the root `.app.json` when provided.                                                                                                   |
+| `plugin_apps_path_unsupported`     | `apps` must resolve to the root `.app.json`.                                                                                                                             |
+| `plugin_apps_file_missing`         | A declared root `.app.json` file must exist.                                                                                                                             |
+| `plugin_apps_path_not_file`        | Root `.app.json` must be a regular file when declared.                                                                                                                   |
+| `plugin_mcp_path_wrong_type`       | `mcpServers` must be a string path for the root `.mcp.json`.                                                                                                             |
+| `plugin_mcp_path_empty`            | `mcpServers` must be a nonempty path. Set it to `./.mcp.json` or remove the field.                                                                                       |
+| `plugin_mcp_path_unsupported`      | `mcpServers` must resolve to the root `.mcp.json`.                                                                                                                       |
+| `plugin_mcp_file_missing`          | `mcpServers` declares the root `.mcp.json`, but that file doesn't exist.                                                                                                 |
+| `plugin_mcp_path_not_file`         | Root `.mcp.json` must be a regular file.                                                                                                                                 |
+| `plugin_runtime_surface_missing`   | A public submission ZIP must contain at least one valid skill (or an approved local MCP server). Local and workspace packages can also reference an eligible MCP server. |
 
 #### MCP manifest errors
 
@@ -34804,6 +34806,10 @@ Before submitting, follow the [plugin package guide](https://developers.openai.c
 
 **_Plugins overview._** _Start a submission and track publication, review progress, and MCP setup from the Plugins page._
 
+Submit remote MCP servers through **With MCP** using a stable, public HTTPS
+endpoint. If your plugin runs a local MCP server or requires desktop execution,
+see [Submit desktop-only plugins](https://developers.openai.com/plugins/deploy/desktop-only).
+
 #### 1. Upload your plugin ZIP
 
 #### Confirm access and publishing identity
@@ -34856,6 +34862,11 @@ Your package can declare multiple MCP servers, but **only one MCP server can be 
 6. Correct connection problems or server-side findings, then use **Reconnect** or **Rescan**, as applicable, and check the new results.
 
 **_MCP connection and domain verification._** _Connect the server and complete domain verification before checking the discovered tools._
+
+For an approved local MCP plugin, choose **Skills only** and follow the
+[desktop-only submission instructions](https://developers.openai.com/plugins/deploy/desktop-only).
+
+The portal saves the submission as a draft while you complete the form.
 
 If connecting or scanning fails, check endpoint availability and authentication, then reconnect or rescan. Resolve **Complete MCP setup** findings and connection failures before submitting. See the [plugin guidelines](https://developers.openai.com/plugins/plugin-guidelines) for MCP server URL, authentication, tool metadata, and UI requirements.
 
@@ -35015,7 +35026,7 @@ For troubleshooting, see [submission errors](https://developers.openai.com/plugi
 
 You can include listing, review, and publication details in your plugin manifest so they’re filled in when you upload your ZIP. The reference below covers supported fields, how uploads apply them, and examples for each package format.
 
-Plugin ZIPs containing app references (`apps` / `.app.json`) or lifecycle hooks cannot currently be submitted. Declare MCP server URLs in your MCP configuration and complete setup in the dashboard.
+Plugin ZIP packages containing app references (`apps` / `.app.json`) or lifecycle hooks cannot currently be submitted. Declare MCP server URLs in your MCP configuration and complete setup in the dashboard.
 
 Remove lifecycle hooks before public directory submission. If your plugin depends
 on lifecycle hooks, distribute it so users can install it manually in Codex desktop.

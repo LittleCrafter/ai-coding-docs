@@ -411,6 +411,8 @@ agy models
 ```
 
 ```plaintext
+gemini-4-argon-high       Gemini 4 Argon (High)
+gemini-4-argon-medium     Gemini 4 Argon (Medium)
 gemini-3.8-flash-high     Gemini 3.8 Flash (High)
 gemini-3.8-flash-medium   Gemini 3.8 Flash (Medium)
 gemini-3.7-flash-high     Gemini 3.7 Flash (High)
