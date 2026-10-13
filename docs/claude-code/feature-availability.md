@@ -34,7 +34,7 @@ These work on every provider:
 
 These have provider-specific differences:
 
-* **MCP servers**: [connectors from claude.ai](./mcp.md#use-mcp-servers-from-claude-ai) load only when your claude.ai subscription is the active authentication method. [Tool search](./mcp.md#configure-tool-search) is off by default when `ANTHROPIC_BASE_URL` points to a non-first-party host, and isn't supported on Google Cloud's Agent Platform models earlier than the Claude 4.5 generation or on Microsoft Foundry [deployments hosted on Azure](https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry#hosting-options)
+* **MCP servers**: [connectors from claude.ai](./mcp.md#use-mcp-servers-from-claude-ai) load only when your claude.ai subscription is the active authentication method. [Tool search](./mcp.md#configure-tool-search) is off by default when `ANTHROPIC_BASE_URL` points to a non-first-party host, and isn't supported on Google Cloud's Agent Platform models earlier than Claude Opus 4.5, Claude Sonnet 4.5, and Claude Haiku 4.5 or on Microsoft Foundry [deployments hosted on Azure](https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry#hosting-options)
 * **Subagents**: when the main conversation runs Fable, the built-in [Explore subagent](./sub-agents.md#built-in-subagents) runs on Opus with a Claude subscription, an Anthropic Console account, or an [LLM gateway](./llm-gateway.md) reached through `ANTHROPIC_BASE_URL`. On other providers, including Claude Platform on AWS, it runs on Fable
 * **[Commands](./commands.md#all-commands)**:
   * `/design-sync` and `/import` with its `claude import` subcommand form are unavailable on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, and Claude Platform on AWS, and through a [Claude apps gateway](./claude-apps-gateway.md#availability-and-limitations)
@@ -209,7 +209,7 @@ Organization-level controls and usage visibility.
   </tbody>
 </table>
 
-<a id="fn1"></a><sup>1</sup> On Google Cloud's Agent Platform, web search is available for Claude 4 models and later.<br />
+<a id="fn1"></a><sup>1</sup> On Google Cloud's Agent Platform, web search is available for Opus 4, Sonnet 4, Haiku 4.5, and later models.<br />
 <a id="fn2"></a><sup>2</sup> On these providers, auto mode supports only Claude Sonnet 5 or later, Opus 4.7 or later, Haiku 5.5, and the Fable models. See [Auto mode configuration](./auto-mode-config.md). For the permission mode a session on these providers starts in, see [Which mode a session starts in](./permission-modes.md#which-mode-a-session-starts-in). In v2.1.158 through v2.1.206, auto mode on these providers also required setting `CLAUDE_CODE_ENABLE_AUTO_MODE=1`; v2.1.207 removed the requirement.<br />
 <a id="fn3"></a><sup>3</sup> Subject to your agreement with the cloud provider.<br />
 <a id="fn4"></a><sup>4</sup> Dashboard and API only. [Contribution metrics](./analytics.md#enable-contribution-metrics) requires a claude.ai Team or Enterprise organization.<br />
@@ -256,7 +256,7 @@ Each tab lists what is unavailable or partially supported on that provider, with
 **Partial support:**
 
 * [Desktop](./desktop.md): via [managed settings](https://claude.com/docs/third-party/claude-desktop/configuration) or [Claude Desktop on 3P](https://claude.com/docs/third-party/claude-desktop/overview)
-* [Web search](./tools-reference.md#websearch-tool-behavior): Claude 4 models and later
+* [Web search](./tools-reference.md#websearch-tool-behavior): Opus 4, Sonnet 4, Haiku 4.5, and later models
 * [Auto mode](./auto-mode-config.md): Sonnet 5 or later, Opus 4.7 or later, Haiku 5.5, and Fable models only
 * [Cross-session messaging](./cross-session-messaging.md): between your sessions on this machine only <sup><a href="#fn5">5</a></sup>
 * [Zero Data Retention](./zero-data-retention.md): subject to your Google Cloud agreement

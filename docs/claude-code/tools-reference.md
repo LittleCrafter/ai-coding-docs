@@ -579,7 +579,7 @@ Claude Code includes the tool in interactive terminal sessions on your own machi
 
 ## Task tool availability
 
-The task-tracking tools, `TaskCreate`, `TaskGet`, `TaskUpdate`, `TaskList`, and `TodoWrite`, are available by default only on Claude 3.x models, Opus 4 through 4.7, Sonnet 4 through 4.6, and Haiku 4.5. Wherever the tools are available, you get the four Task tools, or `TodoWrite` instead when you set [`CLAUDE_CODE_ENABLE_TASKS=0`](./env-vars.md).
+The task-tracking tools, `TaskCreate`, `TaskGet`, `TaskUpdate`, `TaskList`, and `TodoWrite`, are available by default only on Opus 4.7, Sonnet 4.6, Haiku 4.5, and earlier models. Wherever the tools are available, you get the four Task tools, or `TodoWrite` instead when you set [`CLAUDE_CODE_ENABLE_TASKS=0`](./env-vars.md).
 
 On every other model, Claude Code leaves the tools out unless you opt in. The same applies to a model ID Claude Code doesn't recognize, such as a custom model name served through an [LLM gateway](./llm-gateway.md). On newer models, Claude keeps track of multi-step work without a written checklist, and the tools' definitions and reminders take up context. Without the tools, Claude adds nothing to the [task list](./interactive-mode.md#task-list) while it works.
 
@@ -649,7 +649,7 @@ WebSearch permission rules take no specifier. A bare `WebSearch` entry in `allow
 The search backend is not configurable. To search with a different provider, add an [MCP server](./mcp.md) that exposes a search tool.
 
 > [!NOTE]
-> WebSearch is available on the Claude API, [Claude Platform on AWS](./claude-platform-on-aws.md), and Microsoft Foundry. On Google Cloud's Agent Platform it works with Claude 4 and later models, including Opus, Sonnet, and Haiku. Amazon Bedrock doesn't expose the server-side web search tool.
+> WebSearch is available on the Claude API, [Claude Platform on AWS](./claude-platform-on-aws.md), and Microsoft Foundry. On Google Cloud's Agent Platform it works with Opus 4, Sonnet 4, Haiku 4.5, and later models. Amazon Bedrock doesn't expose the server-side web search tool.
 
 ### Session search limit
 
