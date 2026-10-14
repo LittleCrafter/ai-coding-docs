@@ -76,7 +76,7 @@ Adjust how much filesystem and network access Codex has while executing commands
 sandbox_mode = "workspace-write"
 ```
 
-For mode-by-mode behavior (including protected `.git`/`.codex` paths and network defaults), see [Sandbox and approvals](./agent-approvals-security.md#sandbox-and-approvals), [Protected paths in writable roots](./agent-approvals-security.md#protected-paths-in-writable-roots), and [Network access](./agent-approvals-security.md#network-access).
+For mode-by-mode behavior (including protected `.git`, `.agents`, `.codex`, and `.aws` paths and network defaults), see [Sandbox and approvals](./agent-approvals-security.md#sandbox-and-approvals), [Protected paths in writable roots](./agent-approvals-security.md#protected-paths-in-writable-roots), and [Network access](./agent-approvals-security.md#network-access).
 
 ##### Permission profiles
 Codex also supports named permission profiles for reusable filesystem and
@@ -120,13 +120,16 @@ model_reasoning_effort = "medium"
 ```
 
 ##### Communication style
-Set a default communication style for supported models.
+To omit the built-in personality instructions, set:
 
 ```toml
-personality = "friendly" # or "pragmatic" or "none"
+personality = "none"
 ```
 
-You can override this later in an active session with `/personality` or per thread/turn when using the app-server APIs.
+This removes the `Personality` section from the model's built-in instructions.
+It doesn't change explicit custom base instructions. The older `friendly` and
+`pragmatic` values no longer select a style. Codex no longer provides the
+`/personality` command.
 
 ##### TUI keymap
 Customize terminal shortcuts under `tui.keymap`. Selected composer actions fall back to matching `tui.keymap.global` bindings; context-specific bindings take precedence when supported. An empty list unbinds the action.
@@ -179,22 +182,21 @@ codex -c log_dir=./.codex-log
 Use the `[features]` table in `config.toml` to toggle optional and experimental capabilities.
 
 #### Common feature flags
-| Key                  |        Default        | Maturity     | Description                                                                              |
-| -------------------- | :-------------------: | ------------ | ---------------------------------------------------------------------------------------- |
-| `apps`               |         true          | Stable       | Enable app (connector) integrations                                                      |
-| `goals`              |         true          | Stable       | Enable persisted goals and automatic continuation                                        |
-| `hooks`              |         true          | Stable       | Enable lifecycle hooks from `hooks.json` or inline `[hooks]`. See [Hooks](./hooks.md). |
-| `fast_mode`          |         true          | Stable       | Enable Fast mode selection and the `service_tier = "fast"` path                          |
-| `memories`           |         false         | Experimental | Enable [Memories](./customization/memories.md)                                         |
-| `multi_agent`        |         true          | Stable       | Enable subagent collaboration tools                                                      |
-| `personality`        |         true          | Stable       | Enable personality selection controls                                                    |
-| `remote_plugin`      |         true          | Stable       | Enable the remote plugin catalog                                                         |
-| `shell_snapshot`     |         true          | Stable       | Snapshot your shell environment to speed up repeated commands                            |
-| `shell_tool`         |         true          | Stable       | Enable the default `shell` tool                                                          |
-| `unified_exec`       | `true` except Windows | Stable       | Use the unified PTY-backed exec tool                                                     |
-| `web_search`         |         true          | Deprecated   | Legacy toggle; prefer the top-level `web_search` setting                                 |
-| `web_search_cached`  |         false         | Deprecated   | Legacy toggle that maps to `web_search = "cached"` when unset                            |
-| `web_search_request` |         false         | Deprecated   | Legacy toggle that maps to `web_search = "live"` when unset                              |
+| Key                  | Default | Maturity     | Description                                                                              |
+| -------------------- | :-----: | ------------ | ---------------------------------------------------------------------------------------- |
+| `apps`               |  true   | Stable       | Enable app (connector) integrations                                                      |
+| `goals`              |  true   | Stable       | Enable persisted goals and automatic continuation                                        |
+| `hooks`              |  true   | Stable       | Enable lifecycle hooks from `hooks.json` or inline `[hooks]`. See [Hooks](./hooks.md). |
+| `fast_mode`          |  true   | Stable       | Enable Fast mode selection and the `service_tier = "fast"` path                          |
+| `memories`           |  false  | Experimental | Enable [Memories](./customization/memories.md)                                         |
+| `multi_agent`        |  true   | Stable       | Enable subagent collaboration tools                                                      |
+| `remote_plugin`      |  true   | Stable       | Enable the remote plugin catalog                                                         |
+| `shell_snapshot`     |  true   | Stable       | Snapshot your shell environment to speed up repeated commands                            |
+| `shell_tool`         |  true   | Stable       | Enable command execution tools                                                           |
+| `unified_exec`       |  true   | Stable       | Enable resumable command execution; only managed requirements can disable it             |
+| `web_search`         |  true   | Deprecated   | Legacy toggle; prefer the top-level `web_search` setting                                 |
+| `web_search_cached`  |  false  | Deprecated   | Legacy toggle that maps to `web_search = "cached"` when unset                            |
+| `web_search_request` |  false  | Deprecated   | Legacy toggle that maps to `web_search = "live"` when unset                              |
 
 This table lists common user-facing flags, not every internal or
   under-development feature. The Maturity column uses labels such as
@@ -569,11 +571,11 @@ For the complete key list and requirements constraints, see
 [Configuration Reference](./config-file/config-reference.md) and
 [Managed configuration](./enterprise/managed-configuration.md).
 
-In workspace-write mode, some environments keep `.git/` and `.codex/`
-  read-only even when the rest of the workspace is writable. This is why
-  commands like `git commit` may still require approval to run outside the
-  sandbox. If you want Codex to skip specific commands (for example, block `git
-  commit` outside the sandbox), use
+In workspace-write mode, some environments keep `.git/`, `.agents/`,
+  `.codex/`, and `.aws/` read-only even when the rest of the workspace is
+  writable. This is why commands like `git commit` may still require approval to
+  run outside the sandbox. If you want Codex to skip specific commands (for
+  example, block `git commit` outside the sandbox), use
   [rules](./agent-configuration/rules.md).
 
 Disable sandboxing entirely (use only if your environment already isolates processes):
@@ -687,12 +689,14 @@ For more security and privacy guidance around telemetry, see [Security](./agent-
 #### Metrics
 By default, Codex periodically sends a small amount of anonymous usage and health data back to OpenAI. This helps detect when Codex isn't working correctly and shows what features and configuration options are being used, so the Codex team can focus on what matters most. These metrics don't contain any personally identifiable information (PII). Metrics collection is independent of OTel log/trace export.
 
-If you want to disable metrics collection entirely across the ChatGPT desktop app, Codex CLI, and IDE extension on a machine, set the analytics flag in your config:
+To disable analytics and metrics collection in Codex CLI, set the analytics flag in your config:
 
 ```toml
 [analytics]
 enabled = false
 ```
+
+This also disables custom OTLP metrics exporters in Codex CLI.
 
 Each metric includes its own fields plus the default context fields below.
 
@@ -1173,14 +1177,14 @@ Set `model` to one available to your signed-in account or workspace. See
 | `notify` | `array<string>` | Command invoked for notifications; receives a JSON payload from Codex. |
 | `check_for_update_on_startup` | `boolean` | Check for Codex updates on startup (set to false only when updates are centrally managed). |
 | `feedback.enabled` | `boolean` | Enable feedback submission via `/feedback` across local clients (default: true). |
-| `analytics.enabled` | `boolean` | Enable or disable analytics for this machine/profile. When unset, the client default applies. |
+| `analytics.enabled` | `boolean` | Enable or disable analytics for this machine/profile. In Codex CLI, `false` also disables custom OTLP metrics exporters. When unset, the client default applies. |
 | `instructions` | `string` | Reserved for future use; prefer `model_instructions_file` or `AGENTS.md`. |
 | `developer_instructions` | `string` | Additional developer instructions injected into the session (optional). |
 | `log_dir` | `string (path)` | Directory where Codex writes log files; defaults to `$CODEX_HOME/log`. Setting this explicitly also enables the opt-in plaintext TUI log, `codex-tui.log`, in that directory. |
 | `sqlite_home` | `string (path)` | Directory where Codex stores the SQLite-backed state DB used by agent jobs and other resumable runtime state. |
 | `compact_prompt` | `string` | Inline override for the history compaction prompt. |
 | `model_instructions_file` | `string (path)` | Replacement for built-in instructions instead of `AGENTS.md`. |
-| `personality` | `none \| friendly \| pragmatic` | Default communication style for models that advertise `supportsPersonality`; can be overridden per thread/turn or via `/personality`. |
+| `personality` | `none \| friendly \| pragmatic` | Deprecated compatibility setting. `friendly` and `pragmatic` no longer select a style. `none` omits the built-in Personality section from model instructions; explicit instruction overrides are unchanged. |
 | `service_tier` | `string` | Preferred service tier for new turns. Use `fast` or another tier advertised by the active model; `fast` maps to the request value `priority`. |
 | `experimental_compact_prompt_file` | `string (path)` | Load the compaction prompt override from a file (experimental). |
 | `skills.max_context_tokens` | `integer (positive)` | Token budget for the available-skills catalog. Defaults to 2% of the model's context window. Explicit values are capped at `10000` tokens. |
@@ -1229,6 +1233,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `mcp_servers.<id>.url` | `string` | Endpoint for an MCP streamable HTTP server. |
 | `mcp_servers.<id>.auth` | `oauth \| chatgpt` | Authentication fallback for an MCP HTTP server after configured bearer tokens and authorization headers. `oauth` (default) uses stored MCP OAuth credentials when available. `chatgpt` uses the current ChatGPT session for the trusted first-party ChatGPT origin, then falls back to stored OAuth. Both modes can connect without authentication if no credential source resolves. |
 | `mcp_servers.<id>.oauth.client_id` | `string` | Pre-registered OAuth client ID used for authorization and token exchange with this MCP server. |
+| `mcp_servers.<id>.oauth.client_secret` | `string` | OAuth client secret for token exchange with a pre-registered client. Requires a nonempty `oauth.client_id`; the secret must also be nonempty. Stored in configuration. |
 | `mcp_servers.<id>.oauth.callback_url` | `string` | Server-specific OAuth callback. Pre-registered clients reuse it when issuer identification is supported or the URL already ends in the server-specific callback ID. Otherwise, Codex uses the global or default callback with that ID appended. Clients without a pre-registered ID use this callback during client registration. |
 | `mcp_servers.<id>.oauth.callback_port` | `integer` | Fixed OAuth callback listener port for this MCP server. Overrides `mcp_oauth_callback_port`. For a direct loopback callback with an explicit URL port, configure the same listener port. |
 | `mcp_servers.<id>.bearer_token_env_var` | `string` | Environment variable sourcing the bearer token for an MCP HTTP server. |
@@ -1269,12 +1274,12 @@ Set `model` to one available to your signed-in account or workspace. See
 | `memories.extract_model` | `string` | Optional model override for per-thread memory extraction. |
 | `memories.consolidation_model` | `string` | Optional model override for global memory consolidation. |
 | `features.prefer_mxc` | `boolean` | Prefer MXC for local Windows execution when native capabilities and policy allow it; otherwise retain the configured legacy sandbox and setup. Disabled by default in the standalone CLI; the desktop app can enable it through rollout configuration. Command failures don't trigger fallback. |
-| `features.unified_exec` | `boolean` | Use the unified PTY-backed exec tool (stable; enabled by default except on Windows). |
+| `features.unified_exec` | `boolean` | Use resumable command execution (stable; enabled on all platforms). User opt-outs are ignored. Managed requirements can disable resumable processes and `write_stdin`, leaving one-shot `exec_command` available. |
 | `features.shell_snapshot` | `boolean` | Snapshot shell environment to speed up repeated commands (stable; on by default). |
 | `features.multi_agent` | `boolean` | Enable multi-agent collaboration tools (`spawn_agent`, `send_input`, `resume_agent`, `wait_agent`, and `close_agent`) (stable; on by default). |
 | `features.goals` | `boolean` | Enable persisted goals and automatic continuation (stable; on by default). |
 | `features.remote_plugin` | `boolean` | Enable the remote plugin catalog (stable; on by default). |
-| `features.personality` | `boolean` | Enable personality selection controls (stable; on by default). |
+| `features.personality` | `boolean` | Removed feature flag. Accepted for compatibility and ignored. |
 | `features.network_proxy` | `boolean \| table` | Start the network proxy for sandboxed commands (experimental; off by default). Required to enforce permission-profile domain rules unless enabled administrator-managed `experimental_network` requirements start the proxy. Use a table when setting feature-level policy options such as `domains`. Does not filter web search, apps, MCP, or other hosted tools. |
 | `features.network_proxy.enabled` | `boolean` | Start the sandboxed-command network proxy when command network access is enabled. Defaults to `false`; permission-profile domain rules are not enforced while the proxy is off. |
 | `features.network_proxy.domains` | `map<string, allow \| deny>` | Domain policy for sandboxed networking. Unset by default, which means no external destinations are allowed until you add `allow` rules. Supports exact hosts, `*.example.com` for subdomains only, `**.example.com` for apex plus subdomains, and global `*` allow rules. Prefer scoped rules because `*` broadly opens public outbound access. Add `deny` rules for blocked destinations; `deny` wins on conflicts. |
@@ -1290,15 +1295,19 @@ Set `model` to one available to your signed-in account or workspace. See
 | `features.web_search` | `boolean` | Deprecated legacy toggle; prefer the top-level `web_search` setting. |
 | `features.web_search_cached` | `boolean` | Deprecated legacy toggle. When `web_search` is unset, true maps to `web_search = "cached"`. |
 | `features.web_search_request` | `boolean` | Deprecated legacy toggle. When `web_search` is unset, true maps to `web_search = "live"`. |
-| `features.shell_tool` | `boolean` | Enable the default `shell` tool for running commands (stable; on by default). |
+| `features.shell_tool` | `boolean` | Enable command execution tools (stable; on by default). |
 | `features.enable_request_compression` | `boolean` | Compress streaming request bodies with zstd when supported (stable; on by default). |
 | `features.skill_mcp_dependency_install` | `boolean` | Allow prompting and installing missing MCP dependencies for skills (stable; on by default). |
-| `features.fast_mode` | `boolean` | Enable model-catalog service tier selection in the TUI, including Fast-tier commands when the active model advertises them (stable; on by default). |
+| `features.fast_mode` | `boolean` | Enable Fast mode controls advertised by the active model (stable; on by default), independently of `features.ultrafast_mode`. Availability still depends on the model and account. |
+| `features.ultrafast_mode` | `boolean` | Enable Ultrafast mode controls (stable; on by default), independently of `features.fast_mode`. Availability still depends on the model and account. |
 | `features.prevent_idle_sleep` | `boolean` | Prevent the machine from sleeping while a turn is actively running (experimental; off by default). |
 | `suppress_unstable_features_warning` | `boolean` | Suppress the warning that appears when under-development feature flags are enabled. |
 | `model_providers.<id>` | `table` | Custom provider definition. Built-in provider IDs (`openai`, `ollama`, and `lmstudio`) are reserved and cannot be overridden. |
 | `model_providers.<id>.name` | `string` | Display name for a custom model provider. |
 | `model_providers.<id>.base_url` | `string` | API base URL for the model provider. |
+| `model_providers.<id>.model_catalog_url` | `string` | Full URL for a Codex-native model catalog. Omit to keep the provider's default model discovery. |
+| `model_providers.<id>.capabilities.external_web_access` | `boolean` | Whether the provider's hosted web search can access the live web. Omit to keep provider defaults; model and turn settings may restrict access further. |
+| `model_providers.<id>.capabilities.remote_compaction` | `unsupported \| v2` | Provider compaction protocol. `unsupported` uses local compaction; `v2` sends compaction triggers through Responses. Omit to keep provider defaults; model and turn settings may restrict support further. |
 | `model_providers.<id>.env_key` | `string` | Environment variable supplying the provider API key. |
 | `model_providers.<id>.env_key_instructions` | `string` | Optional setup guidance for the provider API key. |
 | `model_providers.<id>.experimental_bearer_token` | `string` | Direct bearer token for the provider (discouraged; use `env_key`). |
@@ -1343,7 +1352,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `otel.environment` | `string` | Environment tag applied to emitted OpenTelemetry events (default: `dev`). |
 | `otel.exporter` | `none \| otlp-http \| otlp-grpc` | Select the OpenTelemetry exporter and provide any endpoint metadata. |
 | `otel.trace_exporter` | `none \| otlp-http \| otlp-grpc` | Select the OpenTelemetry trace exporter and provide any endpoint metadata. |
-| `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Select the OpenTelemetry metrics exporter (defaults to `statsig`). |
+| `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Select the OpenTelemetry metrics exporter (defaults to `statsig`). In Codex CLI, `analytics.enabled = false` disables this exporter, including custom OTLP exporters. Set to `none` to disable metrics export independently. |
 | `otel.log_user_prompt` | `boolean` | Opt in to exporting raw user prompts with OpenTelemetry logs. |
 | `otel.exporter.<id>.endpoint` | `string` | Exporter endpoint for OTEL logs. |
 | `otel.exporter.<id>.protocol` | `binary \| json` | Protocol used by the OTLP/HTTP exporter. |
@@ -1369,11 +1378,14 @@ Set `model` to one available to your signed-in account or workspace. See
 | `tui.notification_method` | `auto \| osc9 \| bel` | Notification method for terminal notifications (default: auto). |
 | `tui.notification_condition` | `unfocused \| always` | Control whether TUI notifications fire only when the terminal is unfocused or regardless of focus. Defaults to `unfocused`. |
 | `tui.animations` | `boolean` | Enable terminal animations (welcome screen, shimmer, spinner) (default: true). |
+| `tui.disable_paste_burst` | `boolean` | Disable burst-paste detection in the TUI (default: false). Takes precedence over the legacy top-level `disable_paste_burst` setting. |
 | `tui.alternate_screen` | `auto \| always \| never` | Control alternate screen usage for the TUI (default: auto; auto skips it in Zellij to preserve scrollback). |
 | `tui.resume_cwd` | `current \| session` | Working directory to use when resuming or forking a session. When unset, Codex asks you to choose if your current directory differs from the session's saved directory. |
 | `tui.vim_mode_default` | `boolean` | Start the composer in Vim normal mode instead of insert mode (default: false). You can still toggle it per session with `/vim`. |
 | `tui.raw_output_mode` | `boolean` | Start the TUI in raw scrollback mode for copy-friendly terminal selection (default: false). You can toggle it with `/raw` or the default `alt-r` key binding. |
 | `tui.show_tooltips` | `boolean` | Show onboarding tooltips in the TUI welcome screen (default: true). |
+| `tui.auto_recap` | `boolean` | Generate automatic conversation recaps while the terminal is unfocused (default: true). Set to `false` to disable automatic recaps; `/recap` remains available. |
+| `tui.show_server_version_notice` | `boolean` | Show informational notices about connected app-server version differences (default: true). Does not hide compatibility errors or version status. |
 | `tui.status_line` | `array<string> \| null` | Ordered list of TUI footer status-line item identifiers. `null` disables the status line. |
 | `tui.terminal_title` | `array<string> \| null` | Ordered list of terminal window/tab title item identifiers. Defaults to `["spinner", "project"]`; `null` disables title updates. |
 | `tui.theme` | `string` | Syntax-highlighting theme override (kebab-case theme name). |
@@ -1392,7 +1404,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `tui.model_availability_nux.<model>` | `integer` | Internal startup-tooltip state keyed by model slug. |
 | `hide_agent_reasoning` | `boolean` | Suppress reasoning events in both the TUI and `codex exec` output. |
 | `show_raw_agent_reasoning` | `boolean` | Surface raw reasoning content when the active model emits it. |
-| `disable_paste_burst` | `boolean` | Disable burst-paste detection in the TUI. |
+| `disable_paste_burst` | `boolean` | Legacy fallback for `tui.disable_paste_burst`. Prefer the setting under `[tui]`. |
 | `windows_wsl_setup_acknowledged` | `boolean` | Track Windows onboarding acknowledgement (Windows only). |
 | `chatgpt_base_url` | `string` | Override the base URL used during the ChatGPT login flow. |
 | `cli_auth_credentials_store` | `file \| keyring \| auto \| ephemeral` | Control where the CLI stores cached credentials. |

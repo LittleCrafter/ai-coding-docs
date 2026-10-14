@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.296",
-  "last_updated": "2026-10-13T09:48:32Z",
+  "last_updated": "2026-10-14T00:01:06Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -640,8 +640,8 @@
       "source_url": "https://code.claude.com/docs/en/cloud-environments",
       "source_md_url": "https://code.claude.com/docs/en/cloud-environments.md",
       "source_id": "cloud-environments",
-      "hash": "93df6a43c130164002e0fbf419055a7a62f1f0e47bd74bd482bc554f82d2e3fb",
-      "last_updated": "2026-10-10T02:51:12Z"
+      "hash": "c8471974b7015ac85c51655ce31f48cbe13e9d9edf764c64d00375cf3f6725f4",
+      "last_updated": "2026-10-14T00:01:06Z"
     },
     "code-review": {
       "slug": "code-review",
@@ -770,8 +770,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop",
       "source_md_url": "https://code.claude.com/docs/en/desktop.md",
       "source_id": "desktop",
-      "hash": "03780b618b0b666167c86811e9b3c8ba5c76bb151f9424310dc9d5dba6c9e630",
-      "last_updated": "2026-10-11T21:07:42Z"
+      "hash": "78506e7963ac4c0f27ca783c86027b75b808af93ffa67c85f2ce15cc415a5669",
+      "last_updated": "2026-10-14T00:01:06Z"
     },
     "desktop-ios-simulator": {
       "slug": "desktop-ios-simulator",
@@ -800,8 +800,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop-quickstart",
       "source_md_url": "https://code.claude.com/docs/en/desktop-quickstart.md",
       "source_id": "desktop-quickstart",
-      "hash": "31490821aadd9c183eb10851172d32f69eb43ba0071923642a3121842a72f7ef",
-      "last_updated": "2026-10-06T01:35:35Z"
+      "hash": "05d8dc50f5871bb2cb0142d898b3fe3adf076a84c67803551ffaac8cf2f554d7",
+      "last_updated": "2026-10-14T00:01:06Z"
     },
     "desktop-scheduled-tasks": {
       "slug": "desktop-scheduled-tasks",
@@ -1610,8 +1610,8 @@
       "source_url": "https://code.claude.com/docs/en/remote-control",
       "source_md_url": "https://code.claude.com/docs/en/remote-control.md",
       "source_id": "remote-control",
-      "hash": "ae2187852cb8397a18d572b02ab4da3dcc47e0f8909b53cb042654b71682181f",
-      "last_updated": "2026-10-11T21:07:42Z"
+      "hash": "592b0fe3ca1fbbbc2e9c3f71765d505679d91ec5d7e4d80f730e8cc7b8614cb3",
+      "last_updated": "2026-10-14T00:01:06Z"
     },
     "routines": {
       "slug": "routines",
@@ -2215,8 +2215,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-13T09:48:32Z",
-    "fetch_duration_seconds": 77.214,
+    "last_fetch_completed": "2026-10-14T00:01:06Z",
+    "fetch_duration_seconds": 77.27,
     "total_pages_discovered": 221,
     "pages_fetched_successfully": 221,
     "pages_failed": 0,

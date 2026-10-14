@@ -142,14 +142,14 @@ For the complete order and common options, see [Config basics](./config-file/con
 The interactive terminal UI provides pickers for common session and display
 settings:
 
-| Goal                      | Command                                      | Related configuration                         |
-| ------------------------- | -------------------------------------------- | --------------------------------------------- |
-| Choose a model            | `/model`                                     | `model`, `model_reasoning_effort`             |
-| Change permissions        | `/permissions`                               | Approval and sandbox settings                 |
-| Choose a response style   | `/personality`                               | `personality`                                 |
-| Configure optional tools  | `/experimental`, `/memories`                 | Feature-specific `config.toml` keys           |
-| Customize the terminal UI | `/keymap`, `/statusline`, `/title`, `/theme` | Keys under `[tui]`                            |
-| Set editing defaults      | `/vim`, `/raw`                               | `tui.vim_mode_default`, `tui.raw_output_mode` |
+| Goal                      | Command                                      | Related configuration                          |
+| ------------------------- | -------------------------------------------- | ---------------------------------------------- |
+| Choose a terminal mode    | `/tui`                                       | `tui.fullscreen_transcript` (restart required) |
+| Choose a model            | `/model`                                     | `model`, `model_reasoning_effort`              |
+| Change permissions        | `/permissions`                               | Approval and sandbox settings                  |
+| Configure optional tools  | `/experimental`, `/memories`                 | Feature-specific `config.toml` keys            |
+| Customize the terminal UI | `/keymap`, `/statusline`, `/title`, `/theme` | Keys under `[tui]`                             |
+| Set editing defaults      | `/vim`, `/raw`                               | `tui.vim_mode_default`, `tui.raw_output_mode`  |
 
 Some commands apply only to the current session, while some pickers offer to
 save the choice. Set the related configuration key when you want a default for

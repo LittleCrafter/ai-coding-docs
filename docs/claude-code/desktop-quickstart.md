@@ -61,7 +61,7 @@ With the Code tab open, choose a project and give Claude something to do.
    You can also select:
 
    * **Cloud**: Run sessions in the cloud that continue even if you close the app. See [Use Claude Code in the cloud](./claude-code-on-the-web.md) for how cloud sessions work.
-   * **SSH**: Connect to a remote machine over SSH, such as your own servers, cloud VMs, or dev containers. Desktop installs Claude Code on the remote machine automatically the first time you connect.
+   * **SSH**: Connect to a remote machine over SSH, such as your own servers, cloud VMs, or dev containers. Desktop installs Claude Code on the remote machine automatically the first time you connect. A running task can [keep going while Desktop is disconnected](./desktop.md#keep-a-task-running-while-desktop-is-disconnected), but with a Claude account it can stop when its sign-in expires.
    * **WSL** (Windows): Run the session inside a [WSL 2 distribution](./desktop-wsl.md); Claude Code, tools, and git execute on the Linux side with native paths.
 2. **Choose a model**
 

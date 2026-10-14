@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 221
 - **Version:** 2.1.296
-- **Last updated:** 2026-10-13T09:48:32Z
+- **Last updated:** 2026-10-14T00:01:06Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
