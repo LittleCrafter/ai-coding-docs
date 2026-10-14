@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.299",
-  "last_updated": "2026-10-14T10:41:48Z",
+  "last_updated": "2026-10-14T16:01:35Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1270,8 +1270,8 @@
       "source_url": "https://code.claude.com/docs/en/plugin-evals",
       "source_md_url": "https://code.claude.com/docs/en/plugin-evals.md",
       "source_id": "plugin-evals",
-      "hash": "9e3fe1d056dfde5e7b07e26227344f68fad590e06d2684c4291e7c8b26269c56",
-      "last_updated": "2026-10-14T03:28:48Z"
+      "hash": "6b054c6a04ed513d281e048577473dc0554c21c835b66e3f3c95e9caecd124b6",
+      "last_updated": "2026-10-14T16:01:35Z"
     },
     "plugins/anthropic-marketplaces": {
       "slug": "plugins/anthropic-marketplaces",
@@ -1300,8 +1300,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins/cli-reference",
       "source_md_url": "https://code.claude.com/docs/en/plugins/cli-reference.md",
       "source_id": "plugins/cli-reference",
-      "hash": "f2a4deed20174d7cd35539502c68f880291e3b2dfc9f6b53f8b6f17147ee4e73",
-      "last_updated": "2026-10-09T00:44:15Z"
+      "hash": "6c581b026adbfb1451b98b9e5d0421c00faac03a03aabdad4102c89c233186cb",
+      "last_updated": "2026-10-14T16:01:35Z"
     },
     "plugins/code-intelligence": {
       "slug": "plugins/code-intelligence",
@@ -2215,8 +2215,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-14T10:41:48Z",
-    "fetch_duration_seconds": 77.2,
+    "last_fetch_completed": "2026-10-14T16:01:35Z",
+    "fetch_duration_seconds": 77.316,
     "total_pages_discovered": 221,
     "pages_fetched_successfully": 221,
     "pages_failed": 0,
