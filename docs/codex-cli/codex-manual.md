@@ -1910,9 +1910,10 @@ Source: [Pricing](./pricing.md)
 ChatGPT Work and Codex share usage. ChatGPT Work usage inside
 ChatGPT uses the same pricing, credits, and usage limits as Codex.
 
-GPT-5.5 retires from ChatGPT, ChatGPT Work, and Codex on all plans on
-October 14, 2026. The OpenAI API isn't affected. See
-[GPT-5.5 retirement](./models.md#gpt-55-retirement) for migration guidance.
+GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026, at noon
+PDT (19:00 UTC). The OpenAI API and Codex sessions authenticated with an API
+key aren't affected. See [GPT-5.5 retirement](./models.md#gpt-55-retirement)
+for migration guidance.
 
 See [token rates](#token-rates) for credit-based plans and
 [GPT-6.1 Sol model guidance](./models.md#gpt-61-sol) for model details.
@@ -2250,11 +2251,6 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         125 credits
         12.5 credits
         625 credits
-
-        GPT-5.5
-        125 credits
-        12.50 credits
-        750 credits
 
         GPT-Image-2 (image)
         200 credits
@@ -3377,8 +3373,8 @@ You can increase model speed in Codex in exchange for higher usage.
 #### Fast mode
 
 Fast mode speeds up supported models, including GPT-6.1 Sol, GPT-6 Astra,
-GPT-6 Sol, and GPT-6 Luna, where available. For GPT-5.6 and GPT-5.5, the
-speed increase is 1.5x.
+GPT-6 Sol, and GPT-6 Luna, where available. For GPT-5.6, the speed increase
+is 1.5x.
 
 Use `/fast` in the CLI to toggle Fast mode. Use `/statusline` to show it in the
 footer. You can also persist the default with `service_tier = "fast"` plus
@@ -3443,8 +3439,9 @@ For API availability, request configuration, and pricing, see
 
 #### Retirement and migration
 
-[GPT-5.5 retires](./models.md#gpt-55-retirement) from ChatGPT, ChatGPT Work,
-and Codex on all plans on October 14, 2026. The OpenAI API isn't affected.
+[GPT-5.5 retires](./models.md#gpt-55-retirement) from Codex with ChatGPT
+sign-in on October 14, 2026, at noon PDT (19:00 UTC). The OpenAI API and
+Codex sessions authenticated with an API key aren't affected.
 
 ### Connect computers and apps to your dot
 
@@ -7249,8 +7246,10 @@ If access is unavailable, check with your workspace administrator.
 #### 2. Connect GitHub
 
 Confirm that [Codex cloud](./cloud.md) is set up for your workspace. In the
-plugin, select **Scan**. If prompted, select **Connect GitHub** and grant
-access to the repositories you want to scan.
+plugin, select **Scan**. If prompted, select **Connect GitHub** and sign in with
+your own GitHub account. Grant access to the repositories you want to scan.
+
+Codex Security Cloud doesn't support workspace connections.
 
 If a repository is missing, check its GitHub connection and permissions.
 
@@ -15341,15 +15340,14 @@ Source: [Models](./models.md)
 
 #### GPT-5.5 retirement
 
-On October 14, 2026, GPT-5.5 will retire from ChatGPT, ChatGPT Work, and Codex
-on all plans, including consumer, Business, Enterprise, and Edu plans. This
-retirement does not apply to the OpenAI API.
+Effective October 14, 2026, at noon PDT (19:00 UTC), GPT-5.5 retires from
+Codex for users signed in with ChatGPT. The OpenAI API and Codex sessions
+authenticated with an API key aren't affected.
 
-If you use Codex with ChatGPT sign-in, choose an available replacement before
-October 14:
+For Codex with ChatGPT sign-in, choose an available replacement:
 
-- On Plus, Pro, Business, Enterprise, and Edu plans, choose **GPT-6 Sol**
-  (`gpt-6-sol`) when available.
+- On Plus, Pro, Business, Enterprise, and Edu plans, choose **GPT-6.1 Sol**
+  (`gpt-6.1-sol`) when available.
 - On Free and Go plans, choose **GPT-6 Luna** (`gpt-6-luna`) in the desktop app
   when available.
 
@@ -15542,9 +15540,9 @@ slider, go to **Settings** > **Configuration**, then turn on
 
 #### Other models
 
-When you sign in with ChatGPT, Codex works best with the recommended models listed above.
-
-#### View other models
+With API-key authentication, model availability follows your API organization
+and project. GPT-5.5 remains available through the OpenAI API and in Codex
+sessions authenticated with an API key. See the [API model catalog](https://developers.openai.com/api/docs/models).
 
 For a custom model provider or gateway, use a compatible Responses API endpoint.
 See [Custom model providers](./config-file/config-advanced.md#custom-model-providers)
@@ -15560,8 +15558,9 @@ configurations, custom agents, and scripts that select `gpt-5.3-codex-spark`
 to use an [available model](./models.md#recommended-models). See the
 [Spark retirement notice](https://learn.chatgpt.com/docs/changelog#codex-2026-09-14-codex-spark-deprecation).
 
-GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026. Replace
-`gpt-5.5` with a model available to your account and client. See
+GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026, at noon
+PDT (19:00 UTC). Replace `gpt-5.5` with a model available to your account and
+client. API-key sessions aren't affected. See
 [GPT-5.5 retirement](./models.md#gpt-55-retirement) for plan-specific
 replacements and the migration checklist.
 
@@ -39612,10 +39611,10 @@ scheduled tasks with [skills](./build-skills.md) for more complex work.
 
 **For workspace admins:** See [Set up and manage teams and Team Tasks](./enterprise/teams.md) for recurring or event-triggered work shared by a team, including permissions and connection setup. Team Tasks run in the cloud through the team's service account and configured app connections.
 
-GPT-5.5 retires from ChatGPT, ChatGPT Work, and Codex on all plans on
-October 14, 2026. Review scheduled tasks that use GPT-5.5 and choose an
-available replacement before that date. For Codex with ChatGPT sign-in, choose
-`gpt-6-sol` (GPT-6 Sol) if your plan and workspace provide access. The OpenAI API isn't
+GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026, at noon
+PDT (19:00 UTC). Review scheduled tasks that use GPT-5.5 in Codex and choose
+`gpt-6.1-sol` (GPT-6.1 Sol) if your plan and workspace provide access.
+The OpenAI API and Codex sessions authenticated with an API key aren't
 affected. See [GPT-5.5 retirement](./models.md#gpt-55-retirement) for
 plan-specific replacements.
 
@@ -44320,12 +44319,12 @@ startup, they override the user's local `config.toml` and any CLI `--config`
 overrides. Users can still change those settings during the current run, and the
 defaults apply again the next time the client starts.
 
-If a managed default, macOS MDM profile, or saved configuration pins
-`gpt-5.5` for Codex users signed in with ChatGPT, replace it with an available
-model before October 14, 2026. Choose `gpt-6-sol` once an administrator has
-enabled it for the affected users. GPT-5.5 retires from ChatGPT,
-ChatGPT Work, and Codex on all plans on that date. The OpenAI API isn't
-affected. See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement).
+GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026, at noon
+PDT (19:00 UTC). If a managed default, macOS MDM profile, or saved
+configuration pins `gpt-5.5` for those users, replace it with an available
+model. Choose `gpt-6.1-sol` once an administrator has enabled it for the
+affected users. The OpenAI API and Codex sessions authenticated with an API
+key aren't affected. See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement).
 
 For configurations that still pin `gpt-5.4` or `gpt-5.4-mini`, follow the
 [GPT-5.4 migration guidance](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-54-retirement).
@@ -45155,25 +45154,74 @@ To move from a deployed gateway to a verified developer experience, complete the
 
 Set Codex's `model` to the gateway's model name. Configure the gateway to route that name to the approved upstream model.
 
-| Gateway model name                                                                                                     | Codex configuration                                                                                |
-| ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| A [built-in model name](./enterprise/gateway-compatibility.md#recognized-model-names) included in your Codex version | Set `model` in `config.toml` to this exact name.                                                   |
-| A custom alias, such as `company-coding-model`                                                                         | Set `model_catalog_json` to a catalog containing the alias and the corresponding model's metadata. |
+| Gateway model name                                                                                                     | Codex configuration                                                                           |
+| ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| A [built-in model name](./enterprise/gateway-compatibility.md#recognized-model-names) included in your Codex version | Set `model` in `config.toml` to this exact name.                                              |
+| A custom alias, such as `company-coding-model`                                                                         | Supply a remote or local catalog containing the alias and the corresponding model's metadata. |
 
 #### Use a model catalog for custom names
 
-Use [`model_catalog_json`](./config-file/config-reference.md) when your gateway uses a model name Codex does not recognize. The catalog supplies the instructions, reasoning options, context limits, and tool capabilities Codex uses for that name. Without a matching entry, a request can reach the intended upstream model while Codex uses generic settings.
+Supply a model catalog when your gateway uses a model name Codex does not recognize. The catalog supplies the instructions, reasoning options, context limits, and tool capabilities Codex uses for that name. Without a matching entry, a request can reach the intended upstream model while Codex uses generic settings.
+
+Host a remote catalog with `model_providers..model_catalog_url` to update model metadata centrally, or distribute a local file with `model_catalog_json`. See the [configuration reference](./config-file/config-reference.md) for both settings.
 
 For example, to use `company-coding-model` as an alias for `gpt-6-luna`:
 
 1. Create the `company-coding-model` alias on the gateway and route it to the approved upstream `gpt-6-luna` model.
 2. Download the [Codex model catalog](https://github.com/openai/codex/blob/main/codex-rs/models-manager/models.json) for your Codex version and save a copy as `gateway-models.json`. Use this file as your starting point.
 3. Edit the `gpt-6-luna` entry in your copy: set `slug` to `company-coding-model` and check that the remaining metadata matches the upstream model and gateway capabilities. For an alias without a model migration, set `upgrade` to `null`.
-4. Keep the entries in the top-level `models` array and distribute the file to each client. A custom catalog replaces the bundled catalog, so include every model users need to select.
+4. Keep the entries in the top-level `models` array. Include every model users need to select, then serve the file from a catalog endpoint or distribute it locally as described below.
 
 To use a catalog for a specific Codex version, check `codex --version` and select the matching `rust-v` tag. For a custom build, use its exact source commit. For a desktop deployment, match the bundled CLI version.
 
 For Bedrock through LiteLLM, apply the [required catalog edits](./enterprise/bedrock-through-litellm.md#prepare-the-client-catalog).
+
+#### Serve a remote catalog
+
+Serve the prepared `gateway-models.json` as the response body of an HTTPS endpoint.
+Distribute the full endpoint URL in the selected provider's `config.toml` table:
+
+```toml
+model = "company-coding-model"
+model_provider = "enterprise-gateway"
+web_search = "disabled"
+
+[model_providers.enterprise-gateway]
+name = "Organization Gateway"
+base_url = "https://gateway.example.com/v1"
+model_catalog_url = "https://gateway.example.com/codex/models.json"
+wire_api = "responses"
+env_key = "CODEX_GATEWAY_API_KEY"
+```
+
+Make `CODEX_GATEWAY_API_KEY` available to the Codex process. Set `base_url`
+separately to route inference through the gateway. If you omit it, Codex uses the
+default OpenAI endpoint for the current authentication mode.
+
+Discovery requires API-key, command-backed, or Codex-backend authentication.
+Custom headers alone don't trigger it.
+
+The catalog endpoint must:
+
+- Accept `GET` requests at the configured URL, including the `client_version`
+  query parameter Codex adds and any configured provider `query_params`.
+- Accept the selected provider's authentication and configured headers. Host
+  the catalog on a service authorized to receive those credentials.
+- Return a top-level `models` array with complete Codex model metadata matching
+  the client's version. Use the version-matched catalog prepared above, rather
+  than a list of model IDs. Give each entry a unique, nonempty `slug`.
+- Return the JSON directly without redirects and keep the response within 1 MiB.
+
+Update the catalog when your approved models change. Restart the client after
+changing its configuration.
+
+Remove any effective `model_catalog_json` setting, including one enforced through
+`requirements.toml`. It takes precedence over the remote URL and prevents fetching.
+
+#### Distribute a local catalog
+
+Use `model_catalog_json` to load the prepared file at startup. A local custom
+catalog replaces the bundled catalog.
 
 Set the gateway alias, catalog `slug`, and Codex `model` to `company-coding-model`. Add these settings before the first TOML table in the Codex configuration you distribute, using the file's actual absolute path:
 
@@ -45267,7 +45315,14 @@ Windows, place `config.toml` in `%ProgramData%\OpenAI\Codex\`. Users and
 profiles can override these defaults. The linked references describe supported
 requirements and their file locations.
 
-Distribute any referenced helper executables and catalog files separately.
+Distribute any referenced helper executables and local catalog files separately.
+
+To enforce a remote catalog URL, put the complete provider definition in
+`requirements.toml` under `[model_providers.]`. An enforced provider
+definition replaces the matching provider table from ordinary configuration;
+include its `base_url`, authentication settings, and other required fields.
+Use the `model_provider` requirement when you also need to enforce provider
+selection.
 
 `model_catalog_json` points to a local JSON file. If you enforce it through
 `requirements.toml`, the requirement pins the path; it doesn't distribute the
@@ -45290,7 +45345,7 @@ inherit native Windows configuration.
 
 #### Hand developers the configuration values
 
-If you do not have managed distribution, give each developer the gateway URL, provider ID, model alias, credential variable or resolver, and any catalog path. Send them to [Use API/provider credentials](./enterprise/connect-to-a-gateway.md) to configure and verify their own machine.
+If you do not have managed distribution, give each developer the gateway URL, provider ID, model alias, credential variable or resolver, and any catalog URL or local path. Send them to [Use API/provider credentials](./enterprise/connect-to-a-gateway.md) to configure and verify their own machine.
 
 Manual setup is not an enforcement channel. Project-local `.codex/config.toml` cannot override sensitive provider or authentication routing keys.
 
@@ -46354,7 +46409,7 @@ organization. To configure Codex yourself, get these values from your gateway te
 - The model name and provider ID to use.
 - Your scoped gateway credential and its environment variable, or an installed
   token resolver and its configuration.
-- Any required model catalog file and its absolute local path.
+- Any required model catalog URL, or a catalog file and its absolute local path.
 
 #### Configure the provider
 
@@ -46383,7 +46438,18 @@ wire_api = "responses"
 env_key = "CODEX_GATEWAY_API_KEY"
 ```
 
-If your administrator supplies a model catalog, save it locally and add
+If your administrator supplies a catalog URL, add it to the existing
+`[model_providers.enterprise-gateway]` table:
+
+```toml
+model_catalog_url = "https://gateway.example.com/codex/models.json"
+```
+
+Remove any effective `model_catalog_json` setting; it takes precedence over the
+URL. Administrators can find endpoint requirements in
+[remote catalog setup](./enterprise/roll-out-a-gateway.md#serve-a-remote-catalog).
+
+If your administrator supplies a local model catalog file, save it and add
 `model_catalog_json` before the first TOML table, using the file's absolute path.
 Custom aliases need matching catalog metadata. For example:
 
@@ -46418,6 +46484,9 @@ Use the exact header name your administrator provides. Codex reads the value fro
 the named environment variable; keep the credential out of the configuration file.
 See the [configuration reference](./config-file/config-reference.md) for
 `model_providers..env_http_headers`.
+
+If the custom header is your only authentication mechanism, use
+`model_catalog_json`; remote catalog discovery won't run.
 
 #### Use an organization credential helper
 
@@ -47336,6 +47405,8 @@ Use an organization-approved GitHub user account, preferably dedicated to this s
 
 If a repository is missing, check the designated account’s GitHub access and the app’s allowed actions in ChatGPT.
 
+Codex Security Cloud uses a personal GitHub connection. See [Cloud setup](./security/setup.md#2-connect-github).
+
 #### Notion
 
 #### Prepare a dedicated Notion account
@@ -47527,6 +47598,22 @@ enforced `features.fast_mode` setting in
 This setting can pin Fast mode on or off for managed local Codex clients; it
 isn't a starting default and can't override workspace or product availability.
 
+#### Save Preview and Launch access
+
+Where separate Preview and Launch access settings are visible and editable,
+select **Save changes** to save your choices.
+
+If **Sync preview and launch access** is available and editable, turn it on to
+copy your Preview choices to Launch when you save. Sync runs when you save;
+it doesn't continuously update Launch access. Turning optional Sync off and
+saving keeps the latest saved Launch choices unless you also edit them. You
+can edit and save Launch choices separately with Sync off.
+
+After a successful save, reopen the access settings to verify the saved choices.
+If the page reports that it couldn't save all changes, some changes may
+already be saved. Follow the on-screen guidance to review and save the
+remaining changes.
+
 #### GPT-6 Sol and Luna in Enterprise
 
 GPT-6 Sol and GPT-6 Luna are off by default in Enterprise workspaces at
@@ -47568,14 +47655,13 @@ model or changing local configuration doesn't grant access by itself.
 
 #### Prepare for the GPT-5.5 retirement
 
-On October 14, 2026, GPT-5.5 will retire from ChatGPT, ChatGPT Work, and Codex
-on all plans, including consumer, Business, Enterprise, and Edu plans. This
-retirement does not apply to the OpenAI API.
+GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026, at noon
+PDT (19:00 UTC). The OpenAI API and Codex sessions authenticated with an API
+key aren't affected.
 
-Before October 14, review workspace defaults for ChatGPT, ChatGPT Work, and
-Codex and choose an available replacement for each surface. For Work and Codex
-with ChatGPT sign-in, choose `gpt-6-sol` (GPT-6 Sol) once an administrator has
-enabled it for the affected users. Replace `gpt-5.5` in workspace defaults,
+Review Codex workspace defaults and choose an available replacement. Choose
+`gpt-6.1-sol` (GPT-6.1 Sol) once an administrator has enabled it for the
+affected users. Replace `gpt-5.5` in workspace defaults,
 saved model settings, managed configurations, custom agents, and scheduled
 tasks. Check scripts and commands that explicitly select `gpt-5.5` too.
 

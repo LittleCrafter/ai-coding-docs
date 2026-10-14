@@ -847,7 +847,7 @@ Skills, command files, subagents, output styles, and rules read their configurat
 | - | - | - |
 | `skills/<name>/SKILL.md` | `name`, `description`, `when_to_use`, `argument-hint`, `arguments`, `disable-model-invocation`, `user-invocable`, `allowed-tools`, `disallowed-tools`, `model`, `effort`, `context`, `agent`, `background`, `hooks`, `paths`, `shell`, `metadata`, `license`, `compatibility` | [Skill frontmatter](./skills.md#frontmatter-reference) |
 | `commands/*.md` | The skill fields except `name` and `paths` | [Skill frontmatter](./skills.md#frontmatter-reference) |
-| `agents/*.md` | `name`, `description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `maxTurns`, `skills`, `mcpServers`, `hooks`, `memory`, `background`, `effort`, `isolation`, `color`, `initialPrompt`, `omitClaudeMd`, `experimental` | [Subagent frontmatter](./sub-agents.md#supported-frontmatter-fields) |
+| `agents/*.md` | `name`, `description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `maxTurns`, `autoCompactWindow`, `skills`, `mcpServers`, `hooks`, `memory`, `background`, `effort`, `isolation`, `color`, `initialPrompt`, `omitClaudeMd`, `experimental` | [Subagent frontmatter](./sub-agents.md#supported-frontmatter-fields) |
 | `output-styles/*.md` | `name`, `description`, `keep-coding-instructions`, `force-for-plugin` | [Output style frontmatter](./output-styles.md#frontmatter) |
 | `rules/*.md` | `paths` | [Rule frontmatter](./memory.md#rules-frontmatter-reference) |
 

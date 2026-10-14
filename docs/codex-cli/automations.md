@@ -9,10 +9,10 @@ scheduled tasks with [skills](./build-skills.md) for more complex work.
 
 **For workspace admins:** See [Set up and manage teams and Team Tasks](./enterprise/teams.md) for recurring or event-triggered work shared by a team, including permissions and connection setup. Team Tasks run in the cloud through the team's service account and configured app connections.
 
-GPT-5.5 retires from ChatGPT, ChatGPT Work, and Codex on all plans on
-October 14, 2026. Review scheduled tasks that use GPT-5.5 and choose an
-available replacement before that date. For Codex with ChatGPT sign-in, choose
-`gpt-6-sol` (GPT-6 Sol) if your plan and workspace provide access. The OpenAI API isn't
+GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026, at noon
+PDT (19:00 UTC). Review scheduled tasks that use GPT-5.5 in Codex and choose
+`gpt-6.1-sol` (GPT-6.1 Sol) if your plan and workspace provide access.
+The OpenAI API and Codex sessions authenticated with an API key aren't
 affected. See [GPT-5.5 retirement](./models.md#gpt-55-retirement) for
 plan-specific replacements.
 

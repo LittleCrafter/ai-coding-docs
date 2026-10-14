@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 192
 - **Version:** 0.162.1
-- **Last updated:** 2026-10-14T00:02:15Z
+- **Last updated:** 2026-10-14T21:03:11Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
