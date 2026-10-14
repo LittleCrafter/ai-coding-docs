@@ -90,7 +90,7 @@ Outside an interactive TUI session, you can install and manage plugins from your
 
 Cross-surface synchronization
 
-Plugins installed in Antigravity 2.0 are automatically updated and shown in the CLI’s **Installed** tab. For more details, refer to the [Marketplace guide](https://antigravity.google/docs/marketplace?tab=cli).
+Plugins installed in the Antigravity app are automatically updated and shown in the CLI’s **Installed** tab. For more details, refer to the [Marketplace guide](https://antigravity.google/docs/marketplace?tab=cli).
 
 **Accessing plugin components** Once staged and loaded, you can interact with the plugin components inside the CLI using slash commands.
 

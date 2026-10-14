@@ -38,7 +38,7 @@ To install Claude Code, open a terminal and run the command for your system. If 
 
 **macOS, Linux, WSL:**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
@@ -46,13 +46,13 @@ On Windows, your prompt shows `PS C:\` when you're in PowerShell and `C:\` witho
 
 **Windows PowerShell:**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 irm https://claude.ai/install.ps1 | iex
 ```
 
 **Windows CMD:**
 
-```batch theme={null}
+```batch theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
@@ -69,7 +69,7 @@ If the install command fails with `syntax error near unexpected token '<'`, a `4
 
 **Homebrew**
 
-```bash theme={null}
+```bash theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 brew install --cask claude-code
 ```
 
@@ -80,7 +80,7 @@ Homebrew offers two casks. `claude-code` tracks the stable release channel, whic
 
 **WinGet**
 
-```powershell theme={null}
+```powershell theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null} theme={null}
 winget install Anthropic.ClaudeCode
 ```
 
@@ -198,7 +198,7 @@ Claude Code checks for updates on startup and periodically while running. Update
 
 Run `claude doctor` to see the result of the most recent update attempt.
 
-On macOS and Linux, the native installer manages the launcher at `~/.local/bin/claude` as a symlink into `~/.local/share/claude/versions/`. If you replace that launcher with your own script or symlink, auto-update and `claude update` leave it in place: new versions still install under the `versions/` directory, and your launcher decides which version runs. Before v2.1.207, the auto-updater replaced a custom launcher at that path with its own symlink on every update.
+On macOS and Linux, the native installer manages the launcher at `~/.local/bin/claude` as a symlink into `~/.local/share/claude/versions/`. If you replace that launcher with your own script or symlink, auto-update and `claude update` leave it in place: new versions still install under the `versions/` directory, and your launcher decides which version runs.
 
 With a custom launcher, Claude Code also keeps every installed version on disk because it can't tell which version the launcher needs. `claude doctor` reports a launcher that the native installer didn't create.
 

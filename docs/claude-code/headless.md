@@ -164,7 +164,7 @@ claude -p "Extract the main function names from auth.py" \
   --json-schema '{"type":"object","properties":{"functions":{"type":"array","items":{"type":"string"}}},"required":["functions"]}'
 ```
 
-If the value isn't a valid JSON Schema, `claude` exits with `Error: --json-schema is not a valid JSON Schema` followed by the validator's diagnostic. Claude Code accepts schemas that use the `format` keyword, such as `"format": "email"`, but treats `format` as an annotation and doesn't enforce it. Before v2.1.205, Claude Code silently ignored an invalid schema and returned unstructured text, and treated any schema containing `format` as invalid.
+If the value isn't a valid JSON Schema, `claude` exits with `Error: --json-schema is not a valid JSON Schema` followed by the validator's diagnostic. Claude Code accepts schemas that use the `format` keyword, such as `"format": "email"`, but treats `format` as an annotation and doesn't enforce it.
 
 > [!TIP]
 > Use a tool like [jq](https://jqlang.org/) to parse the response and extract specific fields:
@@ -252,9 +252,9 @@ When an API request fails with a retryable error, Claude Code emits a `system/ap
 The `system/init` event reports session metadata including the model, tools, MCP servers, and loaded plugins. It is the first event in the stream unless startup events precede it:
 
 * `plugin_install` events, when [`CLAUDE_CODE_SYNC_PLUGIN_INSTALL`](./env-vars.md) is set.
-* [`hook_started`, `hook_progress`, and `hook_response` events](./agent-sdk/typescript.md#sdkhookstartedmessage), while a configured [`SessionStart`](./hooks.md#sessionstart) or [`Setup`](./hooks.md#setup) hook runs. These stream as the hook produces them. Claude Code v2.1.169 through v2.1.203 delivered them in one batch after the hook completed, still ahead of `system/init`; v2.1.204 restored live delivery.
+* [`hook_started`, `hook_progress`, and `hook_response` events](./agent-sdk/typescript.md#sdkhookstartedmessage), while a configured [`SessionStart`](./hooks.md#sessionstart) or [`Setup`](./hooks.md#setup) hook runs. These stream as the hook produces them.
 
-The event also carries an optional `capabilities` array of strings naming the protocol behaviors this Claude Code version implements, such as `interrupt_receipt_v1` or `interrupt_cancel_queued_v1`. Check it to feature-detect instead of comparing version strings, and ignore values you don't recognize. The field requires Claude Code v2.1.205 or later and is absent from earlier versions. See [`SDKSystemMessage`](./agent-sdk/typescript.md#sdksystemmessage) for the capability list.
+The event also carries an optional `capabilities` array of strings naming the protocol behaviors this Claude Code version implements, such as `interrupt_receipt_v1` or `interrupt_cancel_queued_v1`. Check it to feature-detect instead of comparing version strings, and ignore values you don't recognize. See [`SDKSystemMessage`](./agent-sdk/typescript.md#sdksystemmessage) for the capability list.
 
 #### Fail CI when a plugin or MCP server doesn't load
 
@@ -348,7 +348,7 @@ The `--allowedTools` flag uses [permission rule syntax](./settings-reference.md#
 >
 > * User-invoked [skills](./skills.md) and custom commands work. Include `/skill-name` in the prompt string and Claude Code expands it before running.
 > * Built-in commands that only run in the terminal interface, such as `/login`, aren't available.
-> * `/model`, `/effort`, `/fast`, `/color`, and `/rename` accept the value as an argument, for example `/model sonnet`, and `/mcp` with no argument prints a text summary of server status. These forms require Claude Code v2.1.205 or later and follow each command's [availability notes](./commands.md#all-commands).
+> * `/model`, `/effort`, `/fast`, `/color`, and `/rename` accept the value as an argument, for example `/model sonnet`, and `/mcp` with no argument prints a text summary of server status. These forms follow each command's [availability notes](./commands.md#all-commands).
 > * To change a setting, pass `key=value` to `/config`, for example `/config thinking=false`.
 > * `/output-style <style>` switches [output styles](./output-styles.md) and `/output-style` alone lists them. Requires Claude Code v2.1.269 or later.
 

@@ -153,7 +153,7 @@ Focus on:
 | `initialPrompt` | `string` | No | Auto-submitted as the first user turn when this agent runs as the main thread agent. Ignored when the agent is invoked as a subagent |
 | `maxTurns` | `number` | No | Maximum number of agentic turns before the agent stops. When the agent reaches the limit, Claude Code returns its output marked as partial, and you can [resume the agent](#resume-subagents) to continue. The partial marking requires Claude Code v2.1.246 or later |
 | `background` | `boolean` | No | Run this agent as a non-blocking background task when invoked |
-| `omitClaudeMd` | `boolean` | No | Run this agent without the user, project, and local CLAUDE.md files when it runs as a subagent; managed policy files still load. Ignored when the agent runs as the main thread agent. Requires TypeScript Agent SDK v0.3.271 or later. The Python SDK's [`AgentDefinition`](./python.md#agentdefinition) doesn't have this field |
+| `omitClaudeMd` | `boolean` | No | Leave the user, project, and local CLAUDE.md files out of this agent's initial context; managed policy files still load. Ignored when the agent runs as the main thread agent. Requires TypeScript Agent SDK v0.3.271 or later. The Python SDK's [`AgentDefinition`](./python.md#agentdefinition) doesn't have this field |
 | `effort` | `'low' \| 'medium' \| 'high' \| 'xhigh' \| 'max' \| number` | No | Reasoning effort level for this agent |
 | `permissionMode` | `PermissionMode` | No | Permission mode for tool execution within this agent. The [subagent inheritance rules](./permissions.md#available-modes) decide when it applies |
 
@@ -183,7 +183,7 @@ The table below lists what a non-fork subagent's context contains and what it le
 | The subagent receives | The subagent doesn't receive |
 | :- | :- |
 | Its own system prompt (`AgentDefinition.prompt`) and the Agent tool's prompt | The parent's conversation history or tool results |
-| Project CLAUDE.md (loaded via [`settingSources`](./claude-code-features.md#control-filesystem-settings-with-settingsources)), unless the agent sets [`omitClaudeMd`](#agentdefinition-configuration) | Preloaded skill content, unless listed in `AgentDefinition.skills` |
+| Project CLAUDE.md (loaded via [`settingSources`](./claude-code-features.md#control-filesystem-settings-with-settingsources)). An agent that sets [`omitClaudeMd`](#agentdefinition-configuration) starts without it | Preloaded skill content, unless listed in `AgentDefinition.skills` |
 | Tool definitions (inherited from parent or the subset in `tools`, [filtered for background runs](../sub-agents.md#available-tools)) | The parent's system prompt |
 
 > [!NOTE]

@@ -1267,7 +1267,7 @@ Skill bodies are re-injected after compaction, but large skills are truncated to
 
 ## When your context fills up
 
-Claude Code compacts automatically as you approach the limit, so a full context window doesn't end your session. The automatic pass works the same way as the `/compact` step in the timeline. See [When context fills up](./how-claude-code-works.md#when-context-fills-up) for what it preserves.
+Claude Code compacts automatically as you approach the limit, so a full context window doesn't end your session. The automatic pass works the same way as the `/compact` step in the timeline. See [When context fills up](./how-claude-code-works.md#when-context-fills-up) for what it preserves. For when Claude Code also compacts a conversation you leave idle, see [idle compaction](./settings-reference.md#idlecompaction).
 
 You can also act before the automatic pass runs:
 
