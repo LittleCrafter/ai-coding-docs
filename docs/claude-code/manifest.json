@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.299",
-  "last_updated": "2026-10-14T03:28:48Z",
+  "last_updated": "2026-10-14T10:41:48Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -410,8 +410,8 @@
       "source_url": "https://code.claude.com/docs/en/artifacts",
       "source_md_url": "https://code.claude.com/docs/en/artifacts.md",
       "source_id": "artifacts",
-      "hash": "d4e71a8dac2d270b68b72e54e71bb7f69fca0a648e89988f9a7f08f1d8689e80",
-      "last_updated": "2026-10-09T00:44:15Z"
+      "hash": "7b6593cdece2d3364e86003ce177f7b2ab691a01df13524a79325ece0707843a",
+      "last_updated": "2026-10-14T10:41:48Z"
     },
     "authentication": {
       "slug": "authentication",
@@ -840,8 +840,8 @@
       "source_url": "https://code.claude.com/docs/en/env-vars",
       "source_md_url": "https://code.claude.com/docs/en/env-vars.md",
       "source_id": "env-vars",
-      "hash": "40deda9dce0194b2d042ccb712450cd4d3f40df382efc386cb8ddad3b811f181",
-      "last_updated": "2026-10-14T03:28:48Z"
+      "hash": "6f7c985a69affe4ac2eb8c9364505dfaa860967a2ea0791cc32ee98d15fd4239",
+      "last_updated": "2026-10-14T10:41:48Z"
     },
     "errors": {
       "slug": "errors",
@@ -1000,8 +1000,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks",
       "source_md_url": "https://code.claude.com/docs/en/hooks.md",
       "source_id": "hooks",
-      "hash": "4b5e9bf9edeeb39f1982311f1f3e3e437205fc43f64b65446cec397aab639d18",
-      "last_updated": "2026-10-14T03:28:48Z"
+      "hash": "b96cf6d25458c4d28b38d6d3e2f7986e52dce24c2c4b1dbf7ee841399a2d2247",
+      "last_updated": "2026-10-14T10:41:48Z"
     },
     "hooks-guide": {
       "slug": "hooks-guide",
@@ -1030,8 +1030,8 @@
       "source_url": "https://code.claude.com/docs/en/interactive-mode",
       "source_md_url": "https://code.claude.com/docs/en/interactive-mode.md",
       "source_id": "interactive-mode",
-      "hash": "da318a4fa802bc5392c2c0b0836d367909590c57d51197a8b87698cbeb406ca9",
-      "last_updated": "2026-10-13T09:48:32Z"
+      "hash": "1fae946ade70ad2abbeb79ea262af83473522a69840217bf66204508eca29188",
+      "last_updated": "2026-10-14T10:41:48Z"
     },
     "jetbrains": {
       "slug": "jetbrains",
@@ -1480,8 +1480,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins/mods/overview",
       "source_md_url": "https://code.claude.com/docs/en/plugins/mods/overview.md",
       "source_id": "plugins/mods/overview",
-      "hash": "591c9b387b94ef54697a060a8d00ac91de35bede57541f16b3dab113d109ee6b",
-      "last_updated": "2026-10-08T20:17:38Z"
+      "hash": "9c32990b5dfb9a482a73af41850c00ddcac10a06ba7cdbb6982287770d5501fa",
+      "last_updated": "2026-10-14T10:41:48Z"
     },
     "plugins/mods/reference": {
       "slug": "plugins/mods/reference",
@@ -1530,8 +1530,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins/overview",
       "source_md_url": "https://code.claude.com/docs/en/plugins/overview.md",
       "source_id": "plugins/overview",
-      "hash": "ff68f42edb1d70b51adb8e797ecb03d2d2e32b4cb29b2cf0165b7f8222f7a0ae",
-      "last_updated": "2026-10-02T09:04:47Z"
+      "hash": "07dcb77aced3a6fb34b5b0960cf28bdc02124dd98d2c11682ae72b5d0d47b01a",
+      "last_updated": "2026-10-14T10:41:48Z"
     },
     "plugins/publish": {
       "slug": "plugins/publish",
@@ -1790,8 +1790,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "b6da524c5325cf6497d98b4d7dfe7bb5bba2d301652f4800492b4cfde7596713",
-      "last_updated": "2026-10-14T03:28:48Z"
+      "hash": "3e63f31cb2e8bcb477d10959ddfef9576c00f3b11ce6336e1bca6fbec3057e02",
+      "last_updated": "2026-10-14T10:41:48Z"
     },
     "setup": {
       "slug": "setup",
@@ -2215,8 +2215,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-14T03:28:48Z",
-    "fetch_duration_seconds": 77.149,
+    "last_fetch_completed": "2026-10-14T10:41:48Z",
+    "fetch_duration_seconds": 77.2,
     "total_pages_discovered": 221,
     "pages_fetched_successfully": 221,
     "pages_failed": 0,

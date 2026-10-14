@@ -1,14 +1,14 @@
 # Antigravity CLI overview
 
-The Antigravity CLI is the lightweight Terminal User Interface (TUI) surface of Antigravity. It brings the same core agentic capabilities as Antigravity 2.0 (such as multi-step reasoning, multi-file editing, tool calling, and conversation history) directly to your terminal.
+The Antigravity CLI is the lightweight Terminal User Interface (TUI) surface of Antigravity. It brings the same core agentic capabilities as the Antigravity app (such as multi-step reasoning, multi-file editing, tool calling, and conversation history) directly to your terminal.
 
 ## Why Antigravity CLI?
 
-Antigravity CLI brings the reasoning, execution, and orchestration capabilities of the shared agent harness directly into your local shell. While Antigravity 2.0 offers a comprehensive visual editor interface, the CLI is custom-built for speed, lightweight operation, and seamless integration with terminal-first workflows.
+Antigravity CLI brings the reasoning, execution, and orchestration capabilities of the shared agent harness directly into your local shell. While the Antigravity app offers a comprehensive visual editor interface, the CLI is custom-built for speed, lightweight operation, and seamless integration with terminal-first workflows.
 
 ### Platform comparison
 
-| Feature | Antigravity CLI | Antigravity 2.0 |
+| Feature | Antigravity CLI | Antigravity app |
 | :-- | :-- | :-- |
 | **Primary interface** | Keyboard-driven TUI | Visual desktop editor / IDE |
 | **Performance overhead** | Near-zero, extremely lightweight | Standard desktop IDE footprint |
@@ -18,11 +18,11 @@ Antigravity CLI brings the reasoning, execution, and orchestration capabilities 
 
 ## Integration features
 
-Antigravity CLI operates in tandem with Antigravity 2.0, sharing configurations and enabling frictionless transitions between interfaces:
+Antigravity CLI operates in tandem with the Antigravity app, sharing configurations and enabling frictionless transitions between interfaces:
 
 *   **Shared agent harness**: Both environments run on the same agent core. Any enhancements to multi-step reasoning, tool usage, or code comprehension apply across both platforms.
 *   **Shared settings sync**: Your core preferences, permissions, and security configurations synchronize automatically across both interfaces. Updating a permission rule or standard configuration in one platform immediately updates the other.
-*   **Conversation export**: Seamlessly move active conversations between platforms. If a terminal session grows in complexity and requires visual orchestration, export the conversation to Antigravity 2.0 to continue with the visual editor interface.
+*   **Conversation export**: Seamlessly move active conversations between platforms. If a terminal session grows in complexity and requires visual orchestration, export the conversation to the Antigravity app to continue with the visual editor interface.
 
 ## Migrating from Gemini CLI
 

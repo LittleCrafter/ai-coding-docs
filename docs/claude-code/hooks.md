@@ -760,7 +760,7 @@ The `tool_name`, `tool_input`, and `tool_use_id` fields are event-specific. Each
 
 Your hook's exit code tells Claude Code whether to continue with the action that triggered the hook, such as a tool call or a prompt. A run that finishes has one of three outcomes:
 
-* **Success**: your hook exits 0. Claude Code applies any [JSON output](#json-output) fields your hook printed, and the action goes ahead unless those fields block or deny it.
+* **Success**: your hook exits 0. Claude Code applies any [JSON output](#json-output) fields your hook printed, and the action goes ahead unless those fields block or deny it. [Hooks that start a background process](#hooks-that-start-a-background-process) covers the exception.
 * **Blocking error**: your hook exits 2. On [events that can block](#exit-code-2-behavior-per-event), Claude Code stops the action.
 * **Non-blocking error**: your hook exits with any other code, or fails in some other way, such as not starting or printing invalid JSON. The action goes ahead, and on events such as `PreToolUse` you see a `<hook name> hook error` notice in the transcript. If you want a failed hook to block the action, set [`onFailure: "block"`](#block-the-action-when-a-hook-fails).
 
@@ -855,6 +855,27 @@ On [`PreModelSwitch`](#premodelswitch), a hook canceled at its timeout blocks th
 
 * A timed-out `command`, `http`, or `mcp_tool` hook doesn't block the tool call. The call continues through the normal [permission flow](./permissions.md), so don't count on a stalled hook to act as a gate. To block the call when a `command` or `http` hook times out, set [`onFailure: "block"`](#block-the-action-when-a-hook-fails).
 * An [Agent SDK callback hook](./agent-sdk/hooks.md) that exceeds its timeout [blocks the tool call](#pretooluse).
+
+#### Hooks that start a background process
+
+If your command hook makes its decision in a background process and exits, a deny that process prints after Claude Code has stopped reading doesn't block the tool call. For a hook that isn't [async](#run-hooks-in-the-background), Claude Code finishes reading the hook's output shortly after the hook's own process exits.
+
+Print the decision before you start a background process, and redirect that process's stdout and stderr. If your script prints an allow, then starts a background process without redirecting that process's stdout and stderr, Claude Code blocks the tool call. The hook error includes `refusing to honor the suspect capture`.
+
+This `PreToolUse` hook script prints the decision with `policy-check.sh`, then uploads metrics in the background:
+
+```bash theme={null}
+#!/bin/bash
+"$CLAUDE_PROJECT_DIR"/.claude/hooks/policy-check.sh || exit $?
+"$CLAUDE_PROJECT_DIR"/.claude/hooks/upload-metrics.sh >/dev/null 2>&1 &
+```
+
+The rest of the script does this:
+
+* **`|| exit $?`**: makes the check's exit code the hook's own, so a check that exits 2 to deny still blocks. Otherwise the hook exits with the last line's code, which is 0.
+* **`>/dev/null 2>&1 &`**: runs `upload-metrics.sh` in the background with its output redirected, so it doesn't keep the hook's output open.
+
+To test the script, make `policy-check.sh` exit 2, then trigger a tool call that the hook matches. The tool call is blocked.
 
 #### Block the action when a hook fails
 
