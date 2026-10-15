@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 192
+- **Pages mirrored:** 193
 - **Version:** 0.162.1
-- **Last updated:** 2026-10-15T01:58:27Z
+- **Last updated:** 2026-10-15T07:48:13Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -216,6 +216,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Codex Micro | [features/codex-micro.md](./features/codex-micro.md) | [source](<https://learn.chatgpt.com/docs/features/codex-micro>) |
+| Composer Predictions | [features/composer-predictions.md](./features/composer-predictions.md) | [source](<https://learn.chatgpt.com/docs/features/composer-predictions>) |
 | ChatGPT Voice | [features/voice.md](./features/voice.md) | [source](<https://learn.chatgpt.com/docs/features/voice>) |
 
 ## linux

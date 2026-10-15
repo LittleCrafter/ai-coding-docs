@@ -30,6 +30,7 @@ Tools ChatGPT can use to understand, create, and take action.
 - [Browser](./browser.md) — Let ChatGPT browse websites and take action while you stay in control.
 - [Computer use](./computer-use.md) — Let ChatGPT interact with apps through the visual interface.
 - [ChatGPT Voice](./features/voice.md) — Try voice in Chat, Work, and Codex in the ChatGPT desktop app.
+- [Composer Predictions](./features/composer-predictions.md) — Get suggestions for your next message in Codex.
 - [Plugins](./plugins.md) — Install reusable workflows, connected tools, and shared context.
 - [Sign in with ChatGPT](./sign-in-with-chatgpt.md) — Use your ChatGPT account in other apps and choose how they use your plan.
 - [Web search](./web-search.md) — Find current information and bring sources into a task.

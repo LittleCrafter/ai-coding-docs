@@ -53,7 +53,14 @@ After typing the full command name, press `Enter` to execute. If the `/`-prefixe
 | `/plan clear` | — | Clear the current plan | No |
 | `/swarm on\|off` | — | Turn swarm mode on or off without sending a prompt. | Yes |
 | `/swarm <task>` | — | Turn swarm mode on, then send `<task>` as a normal prompt. If the turn completes normally, swarm mode turns off automatically. In `manual` permission mode, Kimi Code asks whether to switch to Ask When Needed or Never Ask mode before starting. | No |
+| `/tower` or `/tower status` | — | Show the base, missions, roster, review gates, inbox, concurrency, and recent activity without starting a model turn | Yes |
+| `/tower on` | — | Turn Tower mode on without changing the recorded base or sending a prompt; first initialization defaults to the current local branch | Yes |
+| `/tower off` | — | Exit Tower mode without stopping running background agents or removing `.tower/` state | Yes |
+| `/tower <base-branch>` | — | Enable Tower and set or re-anchor the local base branch that missions merge into; this does not send an objective | Yes |
+| `/tower teardown` | — | Ask the agent to remove eligible mission worktrees while protecting dirty or live-agent worktrees; branches and `.tower/comms/` are kept, and Tower mode stays on | Yes |
 | `/goal [...]` | — | Start or manage an autonomous goal | See below |
+
+Tower is experimental. For enablement, workflow, safety, and cleanup boundaries, see [Tower multi-agent collaboration](../guides/tower.md).
 
 > [!WARNING]
 > `/yolo` skips approval for regular tool calls. Please make sure you understand the potential risks before enabling it. Plan mode exit approval is not bypassed by `/yolo`; `Bash` inside Plan mode is still subject to the regular `/yolo` allow rules.
