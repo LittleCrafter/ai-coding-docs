@@ -8,7 +8,7 @@ Custom commands let you specify a prompt you want to run when that command is ex
 /my-command
 ```
 
-Custom commands are in addition to the built-in commands like `/init`, `/undo`, `/redo`, `/share`, `/help`. [Learn more](./tui.md#commands).
+Custom commands are in addition to the built-in commands like `/init`, `/undo`, `/redo`, `/help`. [Learn more](./tui.md#commands).
 
 ---
 
@@ -313,7 +313,7 @@ This is an **optional** config option.
 
 ## Built-in
 
-opencode includes several built-in commands like `/init`, `/undo`, `/redo`, `/share`, `/help`; [learn more](./tui.md#commands).
+opencode includes several built-in commands like `/init`, `/undo`, `/redo`, `/help`; [learn more](./tui.md#commands).
 
 > [!NOTE]
 > Custom commands can override built-in commands.

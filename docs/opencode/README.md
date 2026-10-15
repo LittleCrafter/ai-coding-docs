@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 34
+- **Pages mirrored:** 33
 - **Version:** 1.19.0
-- **Last updated:** 2026-10-13T09:50:26Z
+- **Last updated:** 2026-10-15T18:47:05Z
 - **Official docs:** https://opencode.ai/docs
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -38,7 +38,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Rules | [rules.md](./rules.md) | [source](<https://opencode.ai/docs/rules>) |
 | SDK | [sdk.md](./sdk.md) | [source](<https://opencode.ai/docs/sdk>) |
 | Server | [server.md](./server.md) | [source](<https://opencode.ai/docs/server>) |
-| Share | [share.md](./share.md) | [source](<https://opencode.ai/docs/share>) |
 | Agent Skills | [skills.md](./skills.md) | [source](<https://opencode.ai/docs/skills>) |
 | Themes | [themes.md](./themes.md) | [source](<https://opencode.ai/docs/themes>) |
 | Tools | [tools.md](./tools.md) | [source](<https://opencode.ai/docs/tools>) |

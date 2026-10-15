@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.19.0",
-  "last_updated": "2026-10-13T09:50:26Z",
+  "last_updated": "2026-10-15T18:47:05Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -30,8 +30,8 @@
       "source_url": "https://opencode.ai/docs/cli",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/cli.mdx",
       "source_id": "packages/web/src/content/docs/cli.mdx",
-      "hash": "a78b0c2c245dd49de6c7958d3e582d6e1aae81669f776411e997875fc2db8e96",
-      "last_updated": "2026-10-10T16:27:51Z"
+      "hash": "4de0bc75ea69bae0dbf8fa6c25a31b2a5aacb42cb0e951d494d46bcb34fd47df",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "commands": {
       "slug": "commands",
@@ -40,8 +40,8 @@
       "source_url": "https://opencode.ai/docs/commands",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/commands.mdx",
       "source_id": "packages/web/src/content/docs/commands.mdx",
-      "hash": "be2af47d957fc3173a87df16c66c95530a22684ba881061d67129f0508633ca2",
-      "last_updated": "2026-09-11T03:07:15Z"
+      "hash": "2b018eff23e18e1393e959230bcf1f97068ede12e29b56ac22936a4743ffc8e8",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "config": {
       "slug": "config",
@@ -50,8 +50,8 @@
       "source_url": "https://opencode.ai/docs/config",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/config.mdx",
       "source_id": "packages/web/src/content/docs/config.mdx",
-      "hash": "4a9618daf68dcfc961d0f5b4745addd3a6fd0733f00870a8d08ffc08f905af18",
-      "last_updated": "2026-10-13T09:50:26Z"
+      "hash": "a6f705f7d0b2e6bc8a4a83bbd65f9b0a96607063eafb19f83ff018d7b3de7c58",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "custom-tools": {
       "slug": "custom-tools",
@@ -80,8 +80,8 @@
       "source_url": "https://opencode.ai/docs/enterprise",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/enterprise.mdx",
       "source_id": "packages/web/src/content/docs/enterprise.mdx",
-      "hash": "6f9bb062742ccd2dd85228096cf6b967af0b5fd220e74105ab444083bccc2ba2",
-      "last_updated": "2026-09-11T03:07:15Z"
+      "hash": "154de629f2f9e5ee6b694b7422490b716c023a06c88f3ef0831d4a0d94088b42",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "formatters": {
       "slug": "formatters",
@@ -100,8 +100,8 @@
       "source_url": "https://opencode.ai/docs/github",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/github.mdx",
       "source_id": "packages/web/src/content/docs/github.mdx",
-      "hash": "d8a5f541609af718eee6152776b023a75cdf0cfd16b38ed0ff557aaa509644fe",
-      "last_updated": "2026-09-11T03:07:15Z"
+      "hash": "42cc904ceec0018a6061d9b3a8655761410823dfd7f965efb8e21363c537e223",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "gitlab": {
       "slug": "gitlab",
@@ -130,8 +130,8 @@
       "source_url": "https://opencode.ai/docs",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/index.mdx",
       "source_id": "packages/web/src/content/docs/index.mdx",
-      "hash": "2a19477d041d8505990be68b711432e72b844cc25062c4cbe5d92b1951062886",
-      "last_updated": "2026-10-12T09:53:15Z"
+      "hash": "e4690bb407bdda88b3cacadf6c59bcb0e1b7d4f6be63207c7ad58d727494ee40",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "keybinds": {
       "slug": "keybinds",
@@ -140,8 +140,8 @@
       "source_url": "https://opencode.ai/docs/keybinds",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/keybinds.mdx",
       "source_id": "packages/web/src/content/docs/keybinds.mdx",
-      "hash": "6eddd703e35010a339094453aee19438cbac83a1a28dd7cc90114ae8e0dfcbdf",
-      "last_updated": "2026-10-10T16:27:51Z"
+      "hash": "a428b24e6c22704cf4b731c11835e802c807144171f67ca637fcc43706ab4a91",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "lsp": {
       "slug": "lsp",
@@ -220,8 +220,8 @@
       "source_url": "https://opencode.ai/docs/providers",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/providers.mdx",
       "source_id": "packages/web/src/content/docs/providers.mdx",
-      "hash": "a198046902a67dcf2b10f0982d5f9619d3e4f4cc471622c991901cef0b1de32a",
-      "last_updated": "2026-10-12T09:53:15Z"
+      "hash": "b74f21b6577e9d5baa1405704e2a001dafe88dff807a6447bac2ea6296e17c03",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "references": {
       "slug": "references",
@@ -260,18 +260,8 @@
       "source_url": "https://opencode.ai/docs/server",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/server.mdx",
       "source_id": "packages/web/src/content/docs/server.mdx",
-      "hash": "8819a2d43333c2045d1edcc6c7821957c79eef52cb50a815dc9b4089450ce32b",
-      "last_updated": "2026-10-10T16:27:51Z"
-    },
-    "share": {
-      "slug": "share",
-      "title": "Share",
-      "group": "root",
-      "source_url": "https://opencode.ai/docs/share",
-      "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/share.mdx",
-      "source_id": "packages/web/src/content/docs/share.mdx",
-      "hash": "1bc34c6dd08c84cdf23c32a29f25251214c395a05435602c63a742726b6a61d3",
-      "last_updated": "2026-09-11T03:07:15Z"
+      "hash": "08cd9a67bfd63bc12e41473eb52b90bc7488fa0b754a4c1405e7216bdc3e1f1b",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "skills": {
       "slug": "skills",
@@ -320,8 +310,8 @@
       "source_url": "https://opencode.ai/docs/tui",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/tui.mdx",
       "source_id": "packages/web/src/content/docs/tui.mdx",
-      "hash": "12738d85be3fc1ba1088be60860d0d229db41fb578da32b29149123e0c5f824a",
-      "last_updated": "2026-09-11T03:26:48Z"
+      "hash": "415378712d10de48155276fae91ae1d09b62491b42979639221a1d6bfa856318",
+      "last_updated": "2026-10-15T18:47:05Z"
     },
     "web": {
       "slug": "web",
@@ -345,10 +335,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-13T09:50:26Z",
-    "fetch_duration_seconds": 11.667,
-    "total_pages_discovered": 34,
-    "pages_fetched_successfully": 34,
+    "last_fetch_completed": "2026-10-15T18:47:05Z",
+    "fetch_duration_seconds": 11.731,
+    "total_pages_discovered": 33,
+    "pages_fetched_successfully": 33,
     "pages_failed": 0,
     "failed_pages": []
   }

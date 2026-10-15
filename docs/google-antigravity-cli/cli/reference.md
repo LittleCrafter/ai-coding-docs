@@ -10,15 +10,17 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | :-- | :-- | :-- | :-- |
 | **`/add-dir <path>`** | Utilities | — | Add a directory path to the active workspace. |
 | **[`/agents`](./commands/agents.md)** | Tools & Tasks | — | Open the [Agent Manager panel](./commands/agents.md) to switch custom agents and monitor background subagents. |
-| **[`/boost`](https://antigravity.google/docs/boost)** `<task>` | Reasoning | — | Run on-demand multi-agent deep reasoning loops. |
 | **`/artifact`** | Tools & Tasks | — | Open the Artifact Review panel. |
-| **`/btw <query>`** | Utilities | — | Ask a side question in the background without interrupting the main conversation. |
+| **[`/boost`](https://antigravity.google/docs/boost)** `<task>` | Reasoning | — | Run on-demand multi-agent deep reasoning loops. |
+| **[`/btw`](./commands/btw.md) `<query>`** | Utilities | — | Ask a [side question in the background](./commands/btw.md) without interrupting the main conversation. |
+| **[`/changelog`](./commands/changelog.md)** | Utilities | — | Open the [interactive release notes viewer](./commands/changelog.md) or print CLI changes in headless mode. |
 | **`/clear`** | Utilities | `/new` | Clear the terminal and reset active conversation contexts. |
 | **`/config`** | Configurations | `/settings` | Open the interactive Settings Editor overlay. |
-| **`/context`** | Utilities | — | Open the context usage visualization panel. |
-| **`/copy`** | Utilities | — | Copy the last agent response to the system clipboard. |
+| **[`/context`](./commands/context.md)** | Utilities | — | Open the [context usage visualization panel](./commands/context.md). |
+| **`/copy [n|btw]`** | Utilities | — | Copy the last agent response, the n-th most recent response, or the latest [`/btw`](./commands/btw.md) answer. |
 | **[`/credits`](./commands/credits.md)** | Account | — | View remaining G1 credits and purchase links. |
 | **[`/diff`](./commands/diff.md)** | Utilities | — | Open the [interactive diff viewer](./commands/diff.md) to view changes, turns, and commits. |
+| **[`/effort`](./commands/effort.md) `[level]`** | Configurations | — | Set or inspect the active model’s [reasoning effort level](./commands/effort.md) (`low` through `max`, depending on the model). |
 | **`/exit`** | Core | `/quit` | Close the TUI session and restore your host shell. |
 | **`/fast`** | Configurations | — | Enable fast mode (bypass reasoning plans) for quick actions. |
 | **`/feedback`** | Utilities | — | Open the feedback submission panel. |

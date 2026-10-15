@@ -322,24 +322,6 @@ Or you **can redo** the changes using the `/redo` command.
 
 ---
 
-## Share
-
-The conversations that you have with OpenCode can be [shared with your
-team](./share.md).
-
-```bash frame="none"
-/share
-```
-
-This will create a link to the current conversation and copy it to your clipboard.
-
-> [!NOTE]
-> Conversations are not shared by default.
-
-Here's an [example conversation](https://opencode.ai/s/4XP1fce5) with OpenCode.
-
----
-
 ## Customize
 
 And that's it! You are now a pro at using OpenCode.

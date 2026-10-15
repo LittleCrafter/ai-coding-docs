@@ -213,16 +213,6 @@ List and switch between sessions. _Aliases_: `/resume`, `/continue`
 
 ---
 
-### share
-
-Share current session. [Learn more](./share.md).
-
-```bash frame="none"
-/share
-```
-
----
-
 ### themes
 
 List available themes.
@@ -263,16 +253,6 @@ be a Git repository**.
 ```
 
 **Keybind:** `ctrl+x u`
-
----
-
-### unshare
-
-Unshare current session. [Learn more](./share.md#un-sharing).
-
-```bash frame="none"
-/unshare
-```
 
 ---
 

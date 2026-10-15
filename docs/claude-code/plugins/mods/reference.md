@@ -6,7 +6,7 @@
 
 > Complete reference for Claude Code mods: hooks module layout, events, mods API methods, render sites, elements by surface, limits, and settings.
 
-Look up any event a [mod](./overview.md) can handle, mods API method it can call, or render site it can draw in, for the Claude Code CLI and the Desktop app as of v2.1.290. Each entry gives the name and a one-line description, and links to the guide section that explains it where there is one.
+Look up any event a [mod](./overview.md) can handle, mods API method it can call, or render site it can draw in. Entries cover the Claude Code CLI and the Desktop app as of v2.1.290, and the VS Code extension as of v2.1.299. Each entry gives the name and a one-line description, and links to the guide section that explains it where there is one.
 
 > [!NOTE]
 > The complete reference is Claude Code's [TypeScript declarations for mods](https://github.com/anthropics/claude-code/blob/main/mods/types/claude-code.d.ts), which describe every event, method, and element, with examples. The copy on GitHub can be older than the Claude Code version you have installed. When the two disagree, trust [the copy Claude Code writes for your version](./create.md#get-the-types-for-your-build).
@@ -222,31 +222,33 @@ The mods API is the `$` argument every hook receives. Its methods are grouped in
 
 ## Render sites
 
-A render site is an extension point in Claude Code's interface. Each row is a value of `e.component` in a `ui.render` hook, with the fields of `e.props` and the apps that render it. `e.surface` is `terminal` or `desktop`. [Change what Claude Code already draws](./interface.md#change-what-claude-code-already-draws) shows what a hook can do at a site, with an example of each choice.
+A render site is an extension point in Claude Code's interface. Each row is a value of `e.component` in a `ui.render` hook, with the fields of `e.props` and the apps that render it. `e.surface` names the app that's drawing, such as `terminal`, `desktop`, or `vscode`. [Change what Claude Code already draws](./interface.md#change-what-claude-code-already-draws) shows what a hook can do at a site, with an example of each choice.
+
+Rendering in the VS Code extension requires extension version 2.1.299 or later and a session that [fetches feature flags](../../env-vars.md#features-that-need-feature-flag-fetching). [Draw in the VS Code extension](./interface.md#draw-in-the-vs-code-extension) lists what the extension draws differently.
 
 | Site | `e.props` | `e.requestId` | Rendered on |
 | :- | :- | :- | :- |
-| [`Pane`](./interface.md#pick-where-to-draw) | `title`, `isFocused`, `bodyColumns`, `placement`, `scroll`, `view` | The pane's `id` | Terminal, Desktop |
+| [`Pane`](./interface.md#pick-where-to-draw) | `title`, `isFocused`, `bodyColumns`, `placement`, `scroll`, `view` | The pane's `id` | Terminal, Desktop, VS Code |
 | [`AbovePrompt`](./interface.md#pick-where-to-draw) | `hasSurvey`, `isWorking`, `maxRows`, `bodyColumns`, `scroll`, `view` | One instance | Terminal, Desktop |
-| `UserMessage` | `text`, `origin`, `isExpanded`, and `task` or `from` by origin | The message id | Terminal, Desktop |
-| `AssistantMessage` | The reply's text | The message id | Terminal, Desktop |
-| `ToolUse`, `ToolResult`, `ToolGroup` | The tool's name, input, and result | The tool call id | Terminal, Desktop |
+| `UserMessage` | `text`, `origin`, `isExpanded`, and `task` or `from` by origin | The message id | Terminal, Desktop, VS Code |
+| `AssistantMessage` | The reply's text | The message id | Terminal, Desktop, VS Code |
+| `ToolUse`, `ToolResult`, `ToolGroup` | The tool's name, input, and result | The tool call id | Terminal, Desktop, VS Code |
 | `CommandOutput` | `command`, `text` | The message id | Terminal, Desktop |
-| [`AskUserQuestion`](./interface.md#change-what-claude-code-already-draws) | The question and options | The tool call id | Terminal, Desktop |
+| [`AskUserQuestion`](./interface.md#change-what-claude-code-already-draws) | The question and options | The tool call id | Terminal, Desktop, VS Code |
 | `ToolProgress` | `kind` | The tool call id | Terminal |
-| [`Spinner`](./interface.md#change-what-claude-code-already-draws) | `word`, `message`, `suffix`, `mode` | The agent id | Terminal, Desktop |
+| [`Spinner`](./interface.md#change-what-claude-code-already-draws) | `word`, `message`, `suffix`, `mode` | The agent id | Terminal, Desktop, VS Code |
 | `TurnDuration` | `word`, `durationMs` | The message id | Terminal |
 | `InfoNotice` | `text`, `command` | The message id | Terminal |
 | `SessionMode` | `modes` | One instance | Terminal, Desktop |
 | `PromptHint` | `isDraft`, `isWorking`, `hint` | One instance | Terminal, Desktop |
 
-`e.viewport` holds `columns`, `rows`, and `isFullscreen`. It's absent until the app has measured its window. Its `rows` is the height of the whole window, not of your pane.
+`e.viewport` holds `columns`, `rows`, and `isFullscreen`. In the terminal and the Desktop app, it's absent until the app has measured its window. There, its `rows` is the height of the whole window, not of your pane. In the VS Code extension, it's always present.
 
 To fit a tree to its site, read these props in the hook:
 
 * **Width of a `Pane` or the band**: draw to `e.props.bodyColumns`
 * **Height of a `Pane` beside the transcript**: where `e.props.placement` is `'dock'`, `e.props.scroll.bodyRows` is the number of rows the pane has for your tree
-* **Height of a `Pane` above the prompt**: where `e.props.placement` is `'inline'`, the pane grows with your tree up to a limit, and `bodyRows` is that limit. The [`rows` field of `$.ui.open`](./interface.md#open-a-pane-at-the-right-time) asks for a different one.
+* **Height of a `Pane` above the prompt**: where `e.props.placement` is `'inline'`, the pane grows with your tree up to a limit, and `bodyRows` is that limit. To ask for a different limit, see the [`rows` field of `$.ui.open`](./interface.md#open-a-pane-at-the-right-time).
 
 A tree taller than the pane scrolls as a whole.
 
@@ -254,22 +256,29 @@ A tree taller than the pane scrolls as a whole.
 
 Elements are the building blocks of a tree a `ui.render` hook returns, and you get them from `$.ui.resolve(e)`. [Build a tree from elements](./interface.md#build-a-tree-from-elements) shows the common ones with how the terminal draws them, and the [interface gallery](./gallery.md) has screenshots of most. A check mark means the app can draw the element.
 
-| Element | Main props | Terminal | Desktop |
-| :- | :- | :-: | :-: |
-| [`Box`](./interface.md#build-a-tree-from-elements) | `key`, flex layout, `gap`, `padding`, `margin`, `width`, `height`, [`borderStyle`](#box-border-styles), `backgroundColor`, `position`, `hover` | ✓ | ✓ |
-| [`Text`](./interface.md#build-a-tree-from-elements) | `color`, `backgroundColor`, `bold`, `italic`, `underline`, `dimColor`, `inverse`, `wrap` | ✓ | ✓ |
-| [`Button`](./interface.md#respond-to-presses-and-typing) | `key`, `label`, `onPress`, `hotkey`, `plain`, `dimColor`, `autoFocus`, `action` | ✓ | ✓ |
-| [`Link`](./interface.md#link-in-the-desktop-app) | `href`, `label`. See [Limits](#limits). | ✓ | ✓ |
-| [`Code`](./gallery.md#show-code-and-changes) | `source`, `language`, `path`, `startLine`, `format`, `wrap` | ✓ | ✓ |
-| `Markdown` | `text`, `key`, `dimColor`, `onLinkPress`, `pressableLinks` | ✓ | ✓ |
-| [`Input`](./interface.md#take-typed-input-and-draw-a-row-for-each-item) | `key`, `label`, `placeholder`, `value`, `submitLabel`, `onSubmit`, `onInput`, `autoFocus` | ✓ | ✓ |
-| `Select` | `key`, `label`, `options`, `value`, `onSelect`, `autoFocus` | ✓ | ✓ |
-| `Svg` | An SVG document, up to 131,072 characters | | ✓ |
-| [`Client`](./interface.md#build-a-tree-from-elements) | `module`, `key` | ✓ | ✓ |
-| [`Raster`](./interface.md#draw-a-grid-of-colored-cells) | `key`, `columns` up to 512, `rows` up to 256, `cells`. See [Draw a grid of colored cells](./interface.md#draw-a-grid-of-colored-cells). | ✓ | |
-| `Image` | PNG or RGBA bytes up to 2 MiB, or a file path, `columns` and `rows` up to 255, and `alt` text. | ✓ | |
+| Element | Main props | Terminal | Desktop | VS Code |
+| :- | :- | :-: | :-: | :-: |
+| [`Box`](./interface.md#build-a-tree-from-elements) | `key`, flex layout, `gap`, `padding`, `margin`, `width`, `height`, [`borderStyle`](#box-border-styles), `backgroundColor`, `position`, `hover` | ✓ | ✓ | ✓ |
+| [`Text`](./interface.md#build-a-tree-from-elements) | `color`, `backgroundColor`, `bold`, `italic`, `underline`, `dimColor`, `inverse`, `wrap` | ✓ | ✓ | ✓ |
+| [`Button`](./interface.md#respond-to-presses-and-typing) | `key`, `label`, `onPress`, `hotkey`, `plain`, `dimColor`, `autoFocus`, `action` | ✓ | ✓ | ✓ |
+| [`Link`](./interface.md#link-in-the-desktop-app) | `href`, `label`. See [Limits](#limits). | ✓ | ✓ | ✓ |
+| [`Code`](./gallery.md#show-code-and-changes) | `source`, `language`, `path`, `startLine`, `format`, `wrap` | ✓ | ✓ | ✓ |
+| `Markdown` | `text`, `key`, `dimColor`, `onLinkPress`, `pressableLinks` | ✓ | ✓ | ✓ |
+| [`Input`](./interface.md#take-typed-input-and-draw-a-row-for-each-item) | `key`, `label`, `placeholder`, `value`, `submitLabel`, `onSubmit`, `onInput`, `autoFocus` | ✓ | ✓ | ✓ |
+| `Select` | `key`, `label`, `options`, `value`, `onSelect`, `autoFocus` | ✓ | ✓ | ✓ |
+| `Svg` | An SVG document, up to 131,072 characters | | ✓ | ✓ |
+| [`Client`](./interface.md#build-a-tree-from-elements) | `module`, `key` | ✓ | ✓ | |
+| [`Raster`](./interface.md#draw-a-grid-of-colored-cells) | `key`, `columns` up to 512, `rows` up to 256, `cells`. See [Draw a grid of colored cells](./interface.md#draw-a-grid-of-colored-cells). | ✓ | | |
+| `Image` | PNG or RGBA bytes up to 2 MiB, or a file path, `columns` and `rows` up to 255, and `alt` text. | ✓ | | |
 
 More `Button` rules: `action` names one of Claude Code's own [keybinding actions](../../keybindings.md), and the user's binding for it presses the button when that binding is a chord or a modified key. A digit `hotkey` on a button in the band also fires when the user types that digit alone into an empty prompt and pauses. When two buttons in one drawing name the same `hotkey`, the later one gets it. `autoFocus` accepts only `true` on any control, so omit the prop to leave it off.
+
+The VS Code extension ignores some element props and draws the element as if you had left them out:
+
+* **`Box`**: `position` and `hover`
+* **`Button`**: `hotkey`, `plain`, `autoFocus`, and `action`, so the user presses a button there with a click, or with Enter once it has focus
+* **`Code`**: `language`, `path`, `startLine`, `format`, and `wrap`, so code draws without colors or line numbers, and a `format: 'diff'` block shows the diff's raw text
+* **`Input` and `Select`**: `autoFocus`
 
 <h3 id="box-border-styles">
   `Box` border styles
