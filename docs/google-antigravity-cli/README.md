@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 28
+- **Pages mirrored:** 32
 - **Version:** 1.2.0
-- **Last updated:** 2026-10-15T07:45:24Z
+- **Last updated:** 2026-10-15T13:44:13Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -36,9 +36,13 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Agents command (/agents) | [cli/commands/agents.md](./cli/commands/agents.md) | [source](<https://antigravity.google/docs/cli/commands/agents>) |
+| Side question command (/btw) | [cli/commands/btw.md](./cli/commands/btw.md) | [source](<https://antigravity.google/docs/cli/commands/btw>) |
+| Changelog command (/changelog) | [cli/commands/changelog.md](./cli/commands/changelog.md) | [source](<https://antigravity.google/docs/cli/commands/changelog>) |
 | Code search command (/codesearch) | [cli/commands/codesearch.md](./cli/commands/codesearch.md) | [source](<https://antigravity.google/docs/cli/commands/codesearch>) |
+| Context command (/context) | [cli/commands/context.md](./cli/commands/context.md) | [source](<https://antigravity.google/docs/cli/commands/context>) |
 | AI credits command (/credits) | [cli/commands/credits.md](./cli/commands/credits.md) | [source](<https://antigravity.google/docs/cli/commands/credits>) |
 | Diff command (/diff) | [cli/commands/diff.md](./cli/commands/diff.md) | [source](<https://antigravity.google/docs/cli/commands/diff>) |
+| Effort command (/effort) | [cli/commands/effort.md](./cli/commands/effort.md) | [source](<https://antigravity.google/docs/cli/commands/effort>) |
 | Permissions command (/permissions) | [cli/commands/permissions.md](./cli/commands/permissions.md) | [source](<https://antigravity.google/docs/cli/commands/permissions>) |
 | Resume command (/resume) | [cli/commands/resume.md](./cli/commands/resume.md) | [source](<https://antigravity.google/docs/cli/commands/resume>) |
 | Status line command (/statusline) | [cli/commands/statusline.md](./cli/commands/statusline.md) | [source](<https://antigravity.google/docs/cli/commands/statusline>) |

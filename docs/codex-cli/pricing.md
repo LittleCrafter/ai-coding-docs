@@ -458,6 +458,7 @@ API-key access follows API model availability.
 
 | Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
 | --- | --- | --- | --- | --- | --- |
+| [Composer predictions (beta)](./features/composer-predictions.md) | No | Limited | No | No | No |
 | [Local code review with `/review`](./prompting.md#do-a-local-code-review) | Yes | Yes | Yes | Yes | Yes |
 | [Auto-review for approval requests](./sandboxing/auto-review.md) | Yes | Yes | Yes | Yes | Yes |
 | [Sandboxing and permission controls](./permissions.md) | Yes | Yes | Yes | Yes | Yes |

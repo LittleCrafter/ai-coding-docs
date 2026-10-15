@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-15T07:45:24Z",
+  "last_updated": "2026-10-15T13:44:13Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -33,6 +33,26 @@
       "hash": "178192066f7dc91ec9b8bafa8948b206f5e759d7442f76c7f2b3d9278f559565",
       "last_updated": "2026-10-13T23:59:30Z"
     },
+    "cli/commands/btw": {
+      "slug": "cli/commands/btw",
+      "title": "Side question command (/btw)",
+      "group": "cli/commands",
+      "source_url": "https://antigravity.google/docs/cli/commands/btw",
+      "source_md_url": "https://antigravity.google/docs/cli/commands/btw.md",
+      "source_id": "cli/commands/btw",
+      "hash": "0dc91e0dce7dad1f39f3daa4213caf5b26a2eccae56cb161a0560f00135729c3",
+      "last_updated": "2026-10-15T13:44:13Z"
+    },
+    "cli/commands/changelog": {
+      "slug": "cli/commands/changelog",
+      "title": "Changelog command (/changelog)",
+      "group": "cli/commands",
+      "source_url": "https://antigravity.google/docs/cli/commands/changelog",
+      "source_md_url": "https://antigravity.google/docs/cli/commands/changelog.md",
+      "source_id": "cli/commands/changelog",
+      "hash": "c9ca55115752e5afa166cefec666e0505e2dc034eb02baf627a150d1494707c4",
+      "last_updated": "2026-10-15T13:44:13Z"
+    },
     "cli/commands/codesearch": {
       "slug": "cli/commands/codesearch",
       "title": "Code search command (/codesearch)",
@@ -42,6 +62,16 @@
       "source_id": "cli/commands/codesearch",
       "hash": "a4e9a535efe4d8a428eb17ef70a8212e4b9ee34c4531880927ea6da6480126f1",
       "last_updated": "2026-10-01T02:32:05Z"
+    },
+    "cli/commands/context": {
+      "slug": "cli/commands/context",
+      "title": "Context command (/context)",
+      "group": "cli/commands",
+      "source_url": "https://antigravity.google/docs/cli/commands/context",
+      "source_md_url": "https://antigravity.google/docs/cli/commands/context.md",
+      "source_id": "cli/commands/context",
+      "hash": "40e0b82cfcc9d7234d8e0ba1267a164b824621ebbffdb116b01df7e982e3b550",
+      "last_updated": "2026-10-15T13:44:13Z"
     },
     "cli/commands/credits": {
       "slug": "cli/commands/credits",
@@ -62,6 +92,16 @@
       "source_id": "cli/commands/diff",
       "hash": "5eace57c7160214e2de334466ef4f4454fbb87472ffa4a5e21003ad50995346f",
       "last_updated": "2026-10-01T02:32:05Z"
+    },
+    "cli/commands/effort": {
+      "slug": "cli/commands/effort",
+      "title": "Effort command (/effort)",
+      "group": "cli/commands",
+      "source_url": "https://antigravity.google/docs/cli/commands/effort",
+      "source_md_url": "https://antigravity.google/docs/cli/commands/effort.md",
+      "source_id": "cli/commands/effort",
+      "hash": "b0184ca19b54b7f7eeb899929bfb78dcdbc90a35e1c0292ea86137f9d89562d7",
+      "last_updated": "2026-10-15T13:44:13Z"
     },
     "cli/commands/permissions": {
       "slug": "cli/commands/permissions",
@@ -285,10 +325,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-15T07:45:24Z",
-    "fetch_duration_seconds": 9.465,
-    "total_pages_discovered": 28,
-    "pages_fetched_successfully": 28,
+    "last_fetch_completed": "2026-10-15T13:44:13Z",
+    "fetch_duration_seconds": 10.921,
+    "total_pages_discovered": 32,
+    "pages_fetched_successfully": 32,
     "pages_failed": 0,
     "failed_pages": []
   }
