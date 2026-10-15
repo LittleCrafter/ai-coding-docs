@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 52
-- **Last updated:** 2026-10-14T21:03:32Z
+- **Last updated:** 2026-10-15T01:58:47Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -58,10 +58,10 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DeepSeek-R1 Release | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
 | DeepSeek-V3-0324 Release | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
 | DeepSeek-R1-0528 Release | [news/news250528.md](./news/news250528.md) | [source](<https://api-docs.deepseek.com/news/news250528>) |
-| DeepSeek-V3.1 Release | [news/news250821.md](./news/news250821.md) | [source](<https://api-docs.deepseek.com/news/news250821>) |
+| Your First API Call | [news/news250821.md](./news/news250821.md) | [source](<https://api-docs.deepseek.com/news/news250821>) |
 | DeepSeek-V3.1-Terminus | [news/news250922.md](./news/news250922.md) | [source](<https://api-docs.deepseek.com/news/news250922>) |
 | Introducing DeepSeek-V3.2-Exp | [news/news250929.md](./news/news250929.md) | [source](<https://api-docs.deepseek.com/news/news250929>) |
-| Your First API Call | [news/news251201.md](./news/news251201.md) | [source](<https://api-docs.deepseek.com/news/news251201>) |
+| DeepSeek-V3.2 Release | [news/news251201.md](./news/news251201.md) | [source](<https://api-docs.deepseek.com/news/news251201>) |
 | DeepSeek V4 Preview Release | [news/news260424.md](./news/news260424.md) | [source](<https://api-docs.deepseek.com/news/news260424>) |
 | DeepSeek-V4-Pro GA Release | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
 | DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live | [news/news260821.md](./news/news260821.md) | [source](<https://api-docs.deepseek.com/news/news260821>) |

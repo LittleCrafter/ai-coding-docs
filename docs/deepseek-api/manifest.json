@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-10-14T21:03:32Z",
+  "last_updated": "2026-10-15T01:58:47Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -315,13 +315,13 @@
     },
     "news/news250821": {
       "slug": "news/news250821",
-      "title": "DeepSeek-V3.1 Release",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250821",
       "source_md_url": "https://api-docs.deepseek.com/news/news250821",
       "source_id": "news/news250821",
-      "hash": "4c31f02df6e06e652b11482874653fc7625abe73fa13751d91a115a7a1a64fd0",
-      "last_updated": "2026-10-14T21:03:32Z"
+      "hash": "24695569fe96dbbcfd810be23f00c4aab3a0bed4821feaaa9561730e07f38a31",
+      "last_updated": "2026-10-15T01:58:47Z"
     },
     "news/news250922": {
       "slug": "news/news250922",
@@ -345,13 +345,13 @@
     },
     "news/news251201": {
       "slug": "news/news251201",
-      "title": "Your First API Call",
+      "title": "DeepSeek-V3.2 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news251201",
       "source_md_url": "https://api-docs.deepseek.com/news/news251201",
       "source_id": "news/news251201",
-      "hash": "24695569fe96dbbcfd810be23f00c4aab3a0bed4821feaaa9561730e07f38a31",
-      "last_updated": "2026-10-14T10:43:15Z"
+      "hash": "fde80d36807c7d3a387a41378f74cc486923bb33164a514e792e6442dc51a1ac",
+      "last_updated": "2026-10-15T01:58:47Z"
     },
     "news/news260424": {
       "slug": "news/news260424",
@@ -525,8 +525,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-14T21:03:32Z",
-    "fetch_duration_seconds": 19.095,
+    "last_fetch_completed": "2026-10-15T01:58:47Z",
+    "fetch_duration_seconds": 19.457,
     "total_pages_discovered": 52,
     "pages_fetched_successfully": 52,
     "pages_failed": 0,

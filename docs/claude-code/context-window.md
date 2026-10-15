@@ -1249,7 +1249,7 @@ When a long session compacts, Claude Code summarizes the conversation history to
 | System prompt and output style | Both still apply |
 | Project-root CLAUDE.md and unscoped rules | Re-injected from disk |
 | Auto memory | Re-injected from disk |
-| [Git status snapshot](./settings-reference.md#includegitinstructions) | Claude Code reads a fresh one from your repository |
+| [Git status snapshot](./settings-reference.md#includegitinstructions) | If the session started with one, Claude Code reads a fresh one from your repository |
 | The plan Claude wrote in [plan mode](./permission-modes.md#analyze-before-you-edit-with-plan-mode) | Re-injected from disk |
 | Rules with `paths:` frontmatter | Claude Code reloads them [on demand](./memory.md#path-specific-rules) |
 | Nested CLAUDE.md in subdirectories | Claude Code reloads them [on demand](./memory.md#how-claude-md-files-load) |

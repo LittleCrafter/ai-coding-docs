@@ -125,23 +125,27 @@ The Antigravity CLI supports a variety of slash commands typed directly into the
 
 | Command | Category | Purpose |
 | :-- | :-- | :-- |
-| **`/resume`** _(alias `/switch`)_ | Conversation | Open the conversation picker to resume or switch sessions. |
+| **[`/resume`](./commands/resume.md)** _(alias `/switch`)_ | Conversation | Open the conversation picker to resume or switch sessions. |
 | **[`/boost <task>`](https://antigravity.google/docs/boost)** | Reasoning | Multi-agent deep reasoning for complex bugs, race conditions, and algorithms. |
 | **[`/teamwork-preview <task>`](https://antigravity.google/docs/teamwork)** | Reasoning | Launch [collaborative multi-agent teams](https://antigravity.google/docs/teamwork) for long-horizon projects (paid plans). |
+| **[`/effort [level]`](https://antigravity.google/docs/cli/commands/effort)** | Configuration | Set the active model’s [reasoning effort level](https://antigravity.google/docs/cli/commands/effort) (`low` through `max`, depending on the model). |
 | **`/rewind`** _(alias `/undo`)_ | Conversation | Roll back conversation history to a previous checkpoint. |
 | **`/rename <name>`** | Conversation | Rename the active conversation thread for easier tracking. |
-| **`/permissions`** | Configuration | Select agent autonomy level (`request-review`, `always-proceed`, or `strict`). |
+| **[`/permissions`](./commands/permissions.md)** | Configuration | Select agent autonomy level (`request-review`, `always-proceed`, or `strict`). |
 | **`/model`** | Configuration | Select the default reasoning model (persists across sessions). |
 | **`/keybindings`** | Configuration | Open the interactive keyboard shortcut editor. |
-| **`/statusline`** | Configuration | Customize real-time indicators displayed in the CLI status bar. |
+| **[`/statusline`](./commands/statusline.md)** | Configuration | Customize real-time indicators displayed in the CLI status bar. |
 | **`/tasks`** | Tools & Monitoring | Monitor, view logs for, or terminate active background tasks. |
-| **`/plugin`** _(alias `/plugins`)_ | Tools & Monitoring | Open the interactive [Plugins Manager](https://antigravity.google/docs/marketplace?tab=cli) to discover, install, enable, disable, or uninstall plugins. |
+| **[`/plugin`](https://antigravity.google/docs/plugins?tab=cli)** _(alias `/plugins`)_ | Tools & Monitoring | Open the interactive [Plugins Manager](https://antigravity.google/docs/marketplace?tab=cli) to discover, install, enable, disable, or uninstall plugins. |
 | **`/skills`** | Tools & Monitoring | Browse local and global encapsulated agent workflows. |
 | **`/mcp`** | Tools & Monitoring | Open the panel to configure and manage Model Context Protocol servers. |
+| **[`/btw <query>`](https://antigravity.google/docs/cli/commands/btw)** | Utility | Ask a [side question in the background](https://antigravity.google/docs/cli/commands/btw) without interrupting the active conversation. |
+| **[`/context`](https://antigravity.google/docs/cli/commands/context)** | Utility | Visualize [active context window usage](https://antigravity.google/docs/cli/commands/context), category token breakdowns, and checkpoints. |
 | **`/open <path>`** | Utility | Immediately open a file in your preferred external editor. |
-| **`/diff`** | Utility | Open the [interactive diff viewer](./commands/diff.md) to review changes and steer the agent. |
+| **[`/diff`](./commands/diff.md)** | Utility | Open the [interactive diff viewer](./commands/diff.md) to review changes and steer the agent. |
 | **[`/remote-control`](https://antigravity.google/docs/remote-control?tab=cli#interactive-mode)** | Utility | Turn on or off Remote Control for the active terminal session. |
-| **`/usage`** | Utility | Open the inline interactive help manual inside the terminal. |
+| **[`/changelog`](https://antigravity.google/docs/cli/commands/changelog)** | Utility | View [versioned CLI release notes](https://antigravity.google/docs/cli/commands/changelog) in the TUI or headless mode. |
+| **[`/usage`](./commands/usage.md)** | Utility | Display model quota usage and refresh limits. |
 | **`/logout`** | Account | Log out of your Google session and clear cached credentials. |
 
 ### Advanced customization using `settings.json`
