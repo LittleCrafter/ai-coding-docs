@@ -179,7 +179,7 @@ In local, [SSH](#ssh-sessions), and [WSL](./desktop-wsl.md) sessions, the findin
 * Click **Walk through in diff** to open the diff view and step through the findings one at a time. A finding in the current diff appears at its line, where you can click **Fix this one** or dismiss it.
 * Click **Apply fixes** to ask Claude to fix the findings that are still open.
 
-In any session, you can also ask Claude in the prompt box to fix what the review found. For what `/code-review` looks for and the arguments it takes, see [Review a diff locally](./code-review.md#review-a-diff-locally).
+In any session, you can also ask Claude in the prompt box to fix what the review found. For what `/code-review` looks for and the arguments it takes, see [Review locally with `/code-review`](./code-review-local.md).
 
 ### Monitor pull request status
 

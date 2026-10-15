@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 221
-- **Version:** 2.1.300
-- **Last updated:** 2026-10-15T18:45:13Z
+- **Pages mirrored:** 227
+- **Version:** 2.1.301
+- **Last updated:** 2026-10-15T23:22:50Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -45,6 +45,12 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | CLI reference | [cli-reference.md](./cli-reference.md) | [source](<https://code.claude.com/docs/en/cli-reference>) |
 | Configure cloud environments | [cloud-environments.md](./cloud-environments.md) | [source](<https://code.claude.com/docs/en/cloud-environments>) |
 | Code Review | [code-review.md](./code-review.md) | [source](<https://code.claude.com/docs/en/code-review>) |
+| Code Review costs and usage | [code-review-costs.md](./code-review-costs.md) | [source](<https://code.claude.com/docs/en/code-review-costs>) |
+| Customize Code Review | [code-review-customize.md](./code-review-customize.md) | [source](<https://code.claude.com/docs/en/code-review-customize>) |
+| Review locally with /code-review | [code-review-local.md](./code-review-local.md) | [source](<https://code.claude.com/docs/en/code-review-local>) |
+| Read and request reviews on a pull request | [code-review-pull-requests.md](./code-review-pull-requests.md) | [source](<https://code.claude.com/docs/en/code-review-pull-requests>) |
+| Set up Code Review | [code-review-setup.md](./code-review-setup.md) | [source](<https://code.claude.com/docs/en/code-review-setup>) |
+| Troubleshoot Code Review | [code-review-troubleshooting.md](./code-review-troubleshooting.md) | [source](<https://code.claude.com/docs/en/code-review-troubleshooting>) |
 | Commands | [commands.md](./commands.md) | [source](<https://code.claude.com/docs/en/commands>) |
 | Common workflows | [common-workflows.md](./common-workflows.md) | [source](<https://code.claude.com/docs/en/common-workflows>) |
 | Communications kit | [communications-kit.md](./communications-kit.md) | [source](<https://code.claude.com/docs/en/communications-kit>) |

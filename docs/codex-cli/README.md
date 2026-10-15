@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 193
-- **Version:** 0.162.1
-- **Last updated:** 2026-10-15T13:46:52Z
+- **Pages mirrored:** 197
+- **Version:** 0.163.0
+- **Last updated:** 2026-10-15T23:24:00Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -265,6 +265,15 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Security Review | [security/security-review.md](./security/security-review.md) | [source](<https://learn.chatgpt.com/docs/security/security-review>) |
 | Codex Security Cloud setup | [security/setup.md](./security/setup.md) | [source](<https://learn.chatgpt.com/docs/security/setup>) |
 | Improving the threat model | [security/threat-model.md](./security/threat-model.md) | [source](<https://learn.chatgpt.com/docs/security/threat-model>) |
+
+## sites
+
+| Page | Local | Source |
+| --- | --- | --- |
+| Create a site | [sites/creating-a-site.md](./sites/creating-a-site.md) | [source](<https://learn.chatgpt.com/docs/sites/creating-a-site>) |
+| Data and connections | [sites/data-and-connections.md](./sites/data-and-connections.md) | [source](<https://learn.chatgpt.com/docs/sites/data-and-connections>) |
+| Manage a site | [sites/managing-a-site.md](./sites/managing-a-site.md) | [source](<https://learn.chatgpt.com/docs/sites/managing-a-site>) |
+| Publish and share | [sites/publishing-and-sharing.md](./sites/publishing-and-sharing.md) | [source](<https://learn.chatgpt.com/docs/sites/publishing-and-sharing>) |
 
 ## space
 

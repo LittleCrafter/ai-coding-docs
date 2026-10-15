@@ -48,7 +48,7 @@ The guided setup generates a GitHub App manifest and redirects you to your GHES 
    From the GitHub App page on your GHES instance, install the app on the repositories or organizations you want Claude to access. You can start with a subset and add more later.
 5. **Enable Code Review**
 
-   Go to [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code) and enable [Code Review](./code-review.md#set-up-code-review) for your GHES repositories using the same configuration as github.com.
+   Go to [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code) and enable [Code Review](./code-review-setup.md) for your GHES repositories using the same configuration as github.com.
 
 ### GitHub App permissions
 

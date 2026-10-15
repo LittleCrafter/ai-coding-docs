@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-15T18:43:43Z",
+  "last_updated": "2026-10-15T23:21:13Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -15,13 +15,13 @@
     },
     "cli/best-practices": {
       "slug": "cli/best-practices",
-      "title": "Best practices for Antigravity CLI",
+      "title": "CLI best practices",
       "group": "cli",
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "25ff9900ab856837641c72176cfcf0907e340efd40436444762b7580c79985b3",
-      "last_updated": "2026-10-01T02:32:05Z"
+      "hash": "db9e11f30fe2f1c44e587a59c51bf5c0a200683b890f5aaf07ef02d8afe654d6",
+      "last_updated": "2026-10-15T23:21:13Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -305,13 +305,13 @@
     },
     "cli/using": {
       "slug": "cli/using",
-      "title": "Using Antigravity CLI",
+      "title": "CLI settings and tips",
       "group": "cli",
       "source_url": "https://antigravity.google/docs/cli/using",
       "source_md_url": "https://antigravity.google/docs/cli/using.md",
       "source_id": "cli/using",
-      "hash": "880be2d30bea4d1d72d6494428ffaf586937fd6ee83b176e73c8faab1ca539e1",
-      "last_updated": "2026-10-01T02:32:05Z"
+      "hash": "9af8dfd4aeb984f0d43280b17dce364a22663f9638d7e1e2d4ca7cae5ea3c57e",
+      "last_updated": "2026-10-15T23:21:13Z"
     },
     "cli/vim-editor-mode": {
       "slug": "cli/vim-editor-mode",
@@ -325,11 +325,14 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-15T18:43:43Z",
-    "fetch_duration_seconds": 10.982,
+    "last_fetch_completed": "2026-10-15T23:21:13Z",
+    "fetch_duration_seconds": 10.969,
     "total_pages_discovered": 32,
-    "pages_fetched_successfully": 32,
-    "pages_failed": 0,
-    "failed_pages": []
+    "pages_fetched_successfully": 30,
+    "pages_failed": 2,
+    "failed_pages": [
+      "cli/install",
+      "cli/tutorial"
+    ]
   }
 }

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "0.162.1",
-  "last_updated": "2026-10-15T13:46:52Z",
+  "version": "0.163.0",
+  "last_updated": "2026-10-15T23:24:00Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "87b2ba488380396cf8a7e7b7f70ea2332614c5b8c5fb536cf12a6cf7d7bf4ce1",
-      "last_updated": "2026-10-09T17:37:12Z"
+      "hash": "20051773f73c6bcc7890beb4031e9f30f379f6b87e6dedd8f0056d7e3a36248a",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -180,8 +180,8 @@
       "source_url": "https://learn.chatgpt.com/docs/build-plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/build-plugins.md",
       "source_id": "llms:build-plugins",
-      "hash": "9a7678d7ea9ddeab4c97fe199eaeaa5ac41c30d1046c8f084b146c5df3f6526f",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "b8e4b017c2acfabbab781926fc0be80fd9df4ef65b2a801ab82f8da2f286b996",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "build-skills": {
       "slug": "build-skills",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "178b02fff437b21b4cc8beb623a9e62bf1e430676eaa80e21a3e15fd98eb687c",
-      "last_updated": "2026-10-15T13:46:52Z"
+      "hash": "8604965eb02d4e435fc3ee4d0f49a72ea255bbeb669e9d10a58e78195225546f",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -830,8 +830,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/sites",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/sites.md",
       "source_id": "llms:enterprise/sites",
-      "hash": "01ff93fbc9f6672952f611e99a399c51439cbd23978620e4b96b8fe2a5af57cb",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "9e199c2124eae18775afd9a150a9c41e1cfcda3464b904134c84d9033a75ff3f",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "enterprise/skills": {
       "slug": "enterprise/skills",
@@ -1000,8 +1000,8 @@
       "source_url": "https://learn.chatgpt.com/docs/extend/mcp",
       "source_md_url": "https://learn.chatgpt.com/docs/extend/mcp.md",
       "source_id": "llms:extend/mcp",
-      "hash": "9e9d477b8d5a5750a12aad0e2b6f969724f7a68abca4a47f89737347c27bac10",
-      "last_updated": "2026-10-14T00:02:15Z"
+      "hash": "03521f723cd1e5f02c5400c6860a878fa2c934cd3b194af832dbcbf095ab158c",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "extend/record-and-replay": {
       "slug": "extend/record-and-replay",
@@ -1030,8 +1030,8 @@
       "source_url": "https://learn.chatgpt.com/docs/features",
       "source_md_url": "https://learn.chatgpt.com/docs/features.md",
       "source_id": "llms:features",
-      "hash": "d1b779bb100ad589b2e0d4ed15313d3e629027c230f4efd81be03a1b78872e33",
-      "last_updated": "2026-10-15T07:48:13Z"
+      "hash": "9118a9eb79cc02abd2f1b8c57bc174daedea68e52719ce4e1818c498dad40f53",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "features/codex-micro": {
       "slug": "features/codex-micro",
@@ -1210,8 +1210,8 @@
       "source_url": "https://learn.chatgpt.com/docs/migrate-custom-gpts",
       "source_md_url": "https://learn.chatgpt.com/docs/migrate-custom-gpts.md",
       "source_id": "llms:migrate-custom-gpts",
-      "hash": "657984c328b48a4c703de6f28bc78fb8536de6756be148cfa7d2086b11ca3999",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "4538fb11b18789d493b54f9b2db7fcdd91758a25f0ad062953c34cc0b226e9f2",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "mobile": {
       "slug": "mobile",
@@ -1330,8 +1330,8 @@
       "source_url": "https://learn.chatgpt.com/docs/plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/plugins.md",
       "source_id": "llms:plugins",
-      "hash": "bd0c852b4ed470a4844a248ceafed69787145d477b79cb2abd49e02672442d61",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "3d348249e48eecb5e71f3b9279852577c629709adbc3ee6d1757097bf66f5c57",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "pricing": {
       "slug": "pricing",
@@ -1650,8 +1650,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/security-review",
       "source_md_url": "https://learn.chatgpt.com/docs/security/security-review.md",
       "source_id": "llms:security/security-review",
-      "hash": "6e3e708461408dacbc1dd22cb184567208aa15f71e6a233a0f6822e229259598",
-      "last_updated": "2026-10-12T20:29:39Z"
+      "hash": "34db4bbaf4c2ce44f98dfbd0f6480e1163485c892ff2396acf92904263ca07ce",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "security/setup": {
       "slug": "security/setup",
@@ -1660,8 +1660,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/setup",
       "source_md_url": "https://learn.chatgpt.com/docs/security/setup.md",
       "source_id": "llms:security/setup",
-      "hash": "2ce5a938886e2f70f6749647d1be997e3a67ec49f02be82d454c9f04d0fa7515",
-      "last_updated": "2026-10-14T21:03:11Z"
+      "hash": "b0c0d0a5e64d8a847543c00938de0f1376f3f52a671a288e82f7582ffeeab881",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "security/threat-model": {
       "slug": "security/threat-model",
@@ -1690,8 +1690,48 @@
       "source_url": "https://learn.chatgpt.com/docs/sites",
       "source_md_url": "https://learn.chatgpt.com/docs/sites.md",
       "source_id": "llms:sites",
-      "hash": "e0f8145fa48c8d6bedf2130cf213e4de20f2d98b5bee09543e63ec745c327d19",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "9fcffc31d6cadad5f2598d3bd678ad5795d8d200f97d27b8792a5ddbf3c919b8",
+      "last_updated": "2026-10-15T23:24:00Z"
+    },
+    "sites/creating-a-site": {
+      "slug": "sites/creating-a-site",
+      "title": "Create a site",
+      "group": "sites",
+      "source_url": "https://learn.chatgpt.com/docs/sites/creating-a-site",
+      "source_md_url": "https://learn.chatgpt.com/docs/sites/creating-a-site.md",
+      "source_id": "llms:sites/creating-a-site",
+      "hash": "5640ea584b75f4b4c666f9148d4efe3dc197a06c697c57b0ea4ad16754c49551",
+      "last_updated": "2026-10-15T23:24:00Z"
+    },
+    "sites/data-and-connections": {
+      "slug": "sites/data-and-connections",
+      "title": "Data and connections",
+      "group": "sites",
+      "source_url": "https://learn.chatgpt.com/docs/sites/data-and-connections",
+      "source_md_url": "https://learn.chatgpt.com/docs/sites/data-and-connections.md",
+      "source_id": "llms:sites/data-and-connections",
+      "hash": "b4549f69bd6c2fbd6eb690d9923fd71812c9607a9db39f8bcede3b2131375225",
+      "last_updated": "2026-10-15T23:24:00Z"
+    },
+    "sites/managing-a-site": {
+      "slug": "sites/managing-a-site",
+      "title": "Manage a site",
+      "group": "sites",
+      "source_url": "https://learn.chatgpt.com/docs/sites/managing-a-site",
+      "source_md_url": "https://learn.chatgpt.com/docs/sites/managing-a-site.md",
+      "source_id": "llms:sites/managing-a-site",
+      "hash": "8aaf91f7c047ac1501f40492d8d1d04140e59aa3e8d22595fd6aaede75aace08",
+      "last_updated": "2026-10-15T23:24:00Z"
+    },
+    "sites/publishing-and-sharing": {
+      "slug": "sites/publishing-and-sharing",
+      "title": "Publish and share",
+      "group": "sites",
+      "source_url": "https://learn.chatgpt.com/docs/sites/publishing-and-sharing",
+      "source_md_url": "https://learn.chatgpt.com/docs/sites/publishing-and-sharing.md",
+      "source_id": "llms:sites/publishing-and-sharing",
+      "hash": "80a25f50ac3cc4bda8b46e8b5947515a0cb70ccdf223f391d5d50d6c41ec2d19",
+      "last_updated": "2026-10-15T23:24:00Z"
     },
     "skills-and-plugins": {
       "slug": "skills-and-plugins",
@@ -1935,10 +1975,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-15T13:46:52Z",
-    "fetch_duration_seconds": 67.356,
-    "total_pages_discovered": 193,
-    "pages_fetched_successfully": 193,
+    "last_fetch_completed": "2026-10-15T23:24:00Z",
+    "fetch_duration_seconds": 68.71,
+    "total_pages_discovered": 197,
+    "pages_fetched_successfully": 197,
     "pages_failed": 0,
     "failed_pages": []
   }

@@ -1,4 +1,4 @@
-# Using Antigravity CLI
+# CLI settings and tips
 
 ### Settings
 

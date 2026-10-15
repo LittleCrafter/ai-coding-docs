@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 32
 - **Version:** 1.2.0
-- **Last updated:** 2026-10-15T18:43:43Z
+- **Last updated:** 2026-10-15T23:21:13Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -13,7 +13,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Reviewing artifacts | [cli/artifacts.md](./cli/artifacts.md) | [source](<https://antigravity.google/docs/cli/artifacts>) |
-| Best practices for Antigravity CLI | [cli/best-practices.md](./cli/best-practices.md) | [source](<https://antigravity.google/docs/cli/best-practices>) |
+| CLI best practices | [cli/best-practices.md](./cli/best-practices.md) | [source](<https://antigravity.google/docs/cli/best-practices>) |
 | Managing conversations | [cli/conversations.md](./cli/conversations.md) | [source](<https://antigravity.google/docs/cli/conversations>) |
 | Managing AI credits and quotas | [cli/credits.md](./cli/credits.md) | [source](<https://antigravity.google/docs/cli/credits>) |
 | Antigravity CLI features | [cli/features.md](./cli/features.md) | [source](<https://antigravity.google/docs/cli/features>) |
@@ -28,7 +28,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Terminal title customization | [cli/title.md](./cli/title.md) | [source](<https://antigravity.google/docs/cli/title>) |
 | Troubleshooting | [cli/troubleshooting.md](./cli/troubleshooting.md) | [source](<https://antigravity.google/docs/cli/troubleshooting>) |
 | Antigravity CLI tutorial | [cli/tutorial.md](./cli/tutorial.md) | [source](<https://antigravity.google/docs/cli/tutorial>) |
-| Using Antigravity CLI | [cli/using.md](./cli/using.md) | [source](<https://antigravity.google/docs/cli/using>) |
+| CLI settings and tips | [cli/using.md](./cli/using.md) | [source](<https://antigravity.google/docs/cli/using>) |
 | Vim editor mode | [cli/vim-editor-mode.md](./cli/vim-editor-mode.md) | [source](<https://antigravity.google/docs/cli/vim-editor-mode>) |
 
 ## cli/commands

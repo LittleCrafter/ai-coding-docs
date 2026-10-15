@@ -15,17 +15,17 @@ Plan your rollout and explore tools for routine administration.
 - [Admin rollout guide](./enterprise/admin-setup.md) — Plan access, assign owners, configure controls, and verify the rollout.
 - [Admin plugin](./enterprise/admin-plugin.md) — Use the Admin plugin for permissions, approvals, and supported administrative workflows.
 
-## Feature setup
+## Feature Configuration
 
 Choose a setup task, then review its access and security requirements.
 
 - [Configure dots permissions](./dots/controls.md#for-workspace-admins) — Manage dots access, communication, computers, and custom rules.
 - [Manage Space sharing and access](./space/collaboration.md#for-workspace-admins) — Control Library sharing permissions and help members share pages.
+- [Sites administration](./enterprise/sites.md) — Enable sites, configure connections, and review hosting, access controls, and data responsibilities.
 - [Set up teams and Team Tasks](./enterprise/teams.md#for-workspace-admins) — Set team permissions, connect shared accounts, and create recurring tasks.
 - [Set up @ChatGPT in Slack or Teams](./enterprise/chatgpt-slack-and-teams.md) — Review administrator responsibilities and deployment prerequisites.
 - [Set up a workspace connection](./enterprise/shared-connections.md#set-up-a-connection) — Prepare company-managed accounts and configure a workspace connection.
 - [Local computer access for Work Cloud and dots](./enterprise/cloud-local-access.md#how-to-set-up-local-computer-access) — Review shared policies and compatibility, then enable local computer access separately for Work and dots.
-- [Set up Sites and connected plugins](./enterprise/sites.md#enable-plugin-use-in-sites) — Enable tenant and plugin access so Sites can use visitors' connected accounts.
 
 ## Identity and access
 

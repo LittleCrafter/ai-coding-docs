@@ -9,6 +9,8 @@ can include skills and MCP servers. Both products use one universal plugin
 directory, so the same public plugins are discoverable from their supported
 surfaces.
 
+[Watch: Plugins in ChatGPT](https://www.youtube.com/watch?v=pKwRNdDtai0)
+
 Plugins work in Chat and Work across ChatGPT on the web, desktop, and mobile,
 and in Codex in the ChatGPT desktop app. Codex CLI also has a plugin browser
 for Codex environments. The IDE extension doesn't support plugins.
@@ -177,7 +179,7 @@ should use. See [Skills & Plugins](./skills-and-plugins.md).
 
 Use plugins in Sites to build a Site that uses each
 visitor's own connected accounts and permissions. See [Bring user data to your Site
-with plugins](./sites.md#bring-user-data-to-your-site-with-plugins) for setup and visitor
+with plugins](./sites/data-and-connections.md#bring-user-data-to-your-site-with-plugins) for setup and visitor
 access requirements.
 
 **Surface: Desktop app**

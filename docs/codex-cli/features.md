@@ -14,7 +14,6 @@ Ways to organize, delegate, and review work.
 
 - [Projects and chats](./projects.md) — Keep related chats, context, and work together.
 - [Codex on mobile](./mobile.md) — Start tasks, approve actions, and review work from your phone.
-- [Sites](./sites.md) — Create, save, and publish interactive websites and apps in ChatGPT.
 - [Build plugins](./build-plugins.md) — Create and refine reusable workflows in a conversation with ChatGPT.
 - [Visualizations](./visualizations.md) — Turn ideas and information into interactive visual explanations.
 - [Scheduled tasks](./automations.md) — Schedule recurring work and review completed results.
@@ -39,6 +38,16 @@ Tools ChatGPT can use to understand, create, and take action.
 - [Appshots](./appshots.md) — Capture app state for visual inspection and debugging.
 - [Browser extension](./chrome-extension.md) — Use Chrome, Edge, Brave, Opera, or Vivaldi with ChatGPT.
 - [Work with files](./artifacts-viewer.md) — Create, preview, and refine documents and other generated files.
+
+## Sites
+
+Build, connect, publish, and manage websites in ChatGPT.
+
+- [Overview](./sites.md) — Explore what you can build and find availability and limits.
+- [Create a site](./sites/creating-a-site.md) — Describe, build, and refine a website in ChatGPT.
+- [Data and connections](./sites/data-and-connections.md) — Save records, connect apps, and add sign-in to your site.
+- [Publish and share](./sites/publishing-and-sharing.md) — Review your site, choose its audience, and invite editors.
+- [Manage a site](./sites/managing-a-site.md) — Review analytics, change settings, and manage site versions.
 
 ## ChatGPT dots
 
