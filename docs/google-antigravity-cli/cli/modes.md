@@ -6,7 +6,7 @@ Control whether Antigravity CLI pauses to ask before modifying files or executin
 
 Make sure you meet the following prerequisites:
 
-*   [Install Antigravity CLI](./install.md).
+*   [Install Antigravity CLI](https://antigravity.google/docs/cli/install).
 *   Have an active project repository with source code to edit.
 
 ## Available modes

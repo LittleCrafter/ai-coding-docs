@@ -145,4 +145,4 @@ Explore the following guides to learn more about CLI commands and interaction:
 
 *   **[CLI reference](../reference.md)**: View all available slash commands and keybindings.
 *   **[Prompting and interaction](../prompting.md)**: Multiline editing, interrupts, and pasting media into the prompt.
-*   **[Installation and auth](../install.md)**: Sign-in flows, including the remote SSH OAuth loop.
+*   **[Installation and auth](https://antigravity.google/docs/cli/install)**: Sign-in flows, including the remote SSH OAuth loop.

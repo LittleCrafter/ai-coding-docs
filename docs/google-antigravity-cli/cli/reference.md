@@ -1,4 +1,4 @@
-# CLI commands
+# CLI reference
 
 Review tables listing all TUI slash commands, default keyboard shortcuts, and JSON configuration parameters.
 
@@ -12,7 +12,6 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **[`/agents`](./commands/agents.md)** | Tools & Tasks | — | Open the [Agent Manager panel](./commands/agents.md) to switch custom agents and monitor background subagents. |
 | **`/artifact`** | Tools & Tasks | — | Open the Artifact Review panel. |
 | **[`/boost`](https://antigravity.google/docs/boost)** `<task>` | Reasoning | — | Run on-demand multi-agent deep reasoning loops. |
-| **[`/browser`](https://antigravity.google/docs/commands/browser)** `<task>` | Tools & Tasks | — | Delegate web browsing, UI verification, and in-browser debugging to the [browser subagent](https://antigravity.google/docs/commands/browser). |
 | **[`/btw`](./commands/btw.md) `<query>`** | Utilities | — | Ask a [side question in the background](./commands/btw.md) without interrupting the main conversation. |
 | **[`/changelog`](./commands/changelog.md)** | Utilities | — | Open the [interactive release notes viewer](./commands/changelog.md) or print CLI changes in headless mode. |
 | **`/clear`** | Utilities | `/new` | Clear the terminal and reset active conversation contexts. |
@@ -26,11 +25,9 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **`/fast`** | Configurations | — | Enable fast mode (bypass reasoning plans) for quick actions. |
 | **`/feedback`** | Utilities | — | Open the feedback submission panel. |
 | **`/fork`** | Conversations | `/branch` | Clone the current conversation thread into a new parallel session. |
-| **[`/goal`](https://antigravity.google/docs/commands/goal)** `<objective>` | Reasoning | — | Run autonomously until the [goal is verified complete](https://antigravity.google/docs/commands/goal), without intermediate pauses. |
 | **`/help`** | Utilities | — | Open the help panel showing commands and shortcuts. |
 | **`/hooks`** | Tools & Tasks | — | Browse active pre-flight/post-format script hooks. |
 | **`/keybindings`** | Configurations | — | Open the interactive Keyboard Shortcut Editor. |
-| **[`/learn`](https://antigravity.google/docs/commands/learn)** `[instruction]` | Tools & Tasks | — | Capture session corrections as persistent [rules or skills](https://antigravity.google/docs/commands/learn) through a reviewable proposal. |
 | **`/logout`** | Account | — | Disconnect your profile and purge authentication tokens from the secure keyring. |
 | **`/mcp`** | Tools & Tasks | — | Open the Model Context Protocol (MCP) server manager. |
 | **`/model`** | Configurations | — | Choose your preferred reasoning model (persists across sessions). |
@@ -42,7 +39,6 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **[`/remote-control`](https://antigravity.google/docs/remote-control?tab=cli#interactive-mode) \[on/off\]** | Utilities | — | Toggle Remote Control for the active terminal session. |
 | **[`/resume`](./commands/resume.md)** | Conversations | `/switch`, `/conversation` | Open the [conversation picker overlay](./commands/resume.md) to select and load previous threads. |
 | **`/rewind`** | Conversations | `/undo` | Roll back your conversation history to a previous message. |
-| **[`/schedule`](https://antigravity.google/docs/commands/schedule)** `<when> <task>` | Tools & Tasks | — | Set a [one-shot timer or recurring cron schedule](https://antigravity.google/docs/commands/schedule) that wakes the agent with an instruction. |
 | **`/skills`** | Tools & Tasks | — | Browse loaded local and global Agent Skills. |
 | **[`/statusline`](./commands/statusline.md)** | Configurations | — | Open the Status Bar customization overlay. |
 | **`/tasks`** | Tools & Tasks | — | Open the Task Manager panel to monitor background shell execution logs. |
@@ -150,4 +146,4 @@ Learn how to safely deploy permission policies, sandboxes, and customize plugins
 
 *   **[Permissions and sandbox](https://antigravity.google/docs/cli/sandbox)**: Enforce command-line containment rules.
 *   **[Plugins and skills](https://antigravity.google/docs/cli/plugins)**: Create your own custom skills slash commands.
-*   **[Installation and auth](./install.md)**: Update your CLI installation.
+*   **[Installation and auth](https://antigravity.google/docs/cli/install)**: Update your CLI installation.

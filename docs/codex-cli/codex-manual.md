@@ -5133,13 +5133,6 @@ with the [CLI quickstart](./security/cli.md).
 
 #### Repository scans
 
-#### Who can use the CLI
-
-The `@openai/codex-security` package is public.
-
-Running scans requires Codex Security access. For best results, use an account
-verified for [Trusted Access for Cyber](https://chatgpt.com/cyber).
-
 #### Why does a scan use an API key after sign-in
 
 When your environment includes `OPENAI_API_KEY` or `CODEX_API_KEY`, scans
@@ -5164,31 +5157,6 @@ To make your stored credentials the automatic default, run
 `unset OPENAI_API_KEY CODEX_API_KEY`. For all supported authentication modes,
 see the [CLI reference](./security/cli/reference.md#select-scan-authentication).
 
-#### How does bulk repository scanning work
-
-Sign in with GitHub CLI:
-
-```bash
-gh auth login
-```
-
-Discover and select repositories from a GitHub account or organization:
-
-```bash
-npx @openai/codex-security bulk-scan
-```
-
-For a prepared list, provide a repository CSV and an output directory:
-
-```bash
-npx @openai/codex-security bulk-scan repositories.csv \
-  --output-dir /path/outside/repositories/security-scans \
-  --workers 4
-```
-
-See [Run bulk security scans](./security/cli/bulk-scans.md) for GitHub
-discovery, the CSV format, campaign results, and available options.
-
 #### Can an interrupted bulk scan resume
 
 Yes. Run the same bulk-scan command with the original CSV and output directory.
@@ -5203,24 +5171,8 @@ npx @openai/codex-security bulk-scan repositories.csv \
   --max-attempts 3
 ```
 
-A completed scan with `partial` or `unknown` coverage keeps its results and
-causes the campaign to exit with code `2`. It isn't retried, even with
-`--max-attempts`.
-
-#### How can a scan use architecture and security policies
-
-Pass architecture documents, threat models, or security policies with
-`--knowledge-base`:
-
-```bash
-npx @openai/codex-security scan . \
-  --knowledge-base /path/to/architecture.md \
-  --knowledge-base /path/to/security-policies
-```
-
-Codex Security uses these documents as context for the current scan. For
-supported file types and directory behavior, see [Add security
-context](./security/cli/reference.md#add-security-context).
+Completed scans keep their results and aren't retried, even when coverage gaps
+remain. Coverage gaps don't cause the campaign to exit with code `2`.
 
 #### Findings and coverage
 
@@ -5273,9 +5225,11 @@ npx @openai/codex-security scans compare PREVIOUS_SCAN_ID CURRENT_SCAN_ID
 ```
 
 The comparison automatically matches findings by root cause, reuses saved
-matches, and identifies new, persisting, reopened, resolved, and unknown
-findings. A finding counts as resolved only when the later scan covers its
-original target and affected path without coverage gaps.
+matches, and identifies new, persisting, reopened, not observed, resolved, and
+unknown findings. When a later scan doesn't find an earlier finding in the code
+it scanned, the finding is not observed. It counts as resolved only after it is
+explicitly closed as already fixed. Excluded paths and uncertain matches remain
+unknown.
 
 #### How does false-positive feedback work
 
@@ -5324,39 +5278,30 @@ important finding that disappears.
 
 #### How can a team confirm that a fix worked
 
-After applying a fix, rerun the original scan:
-
-```bash
-npx @openai/codex-security scans rerun BEFORE_SCAN_ID
-```
-
-Compare the original findings with the new scan:
-
-```bash
-npx @openai/codex-security scans compare BEFORE_SCAN_ID AFTER_SCAN_ID
-```
-
-Confirm that the new scan covers the original target and affected path without
-coverage gaps. Then directly recheck the original finding against the current
-checkout:
+Recheck the original finding against the changed checkout. From that checkout,
+pass its report and the issue you want to validate:
 
 ```bash
 npx @openai/codex-security validate /path/to/original/findings.json \
   "Recheck the SQL injection in src/orders.ts:42 against the current code"
 ```
 
-A missing finding or scan comparison alone doesn't prove that a fix worked.
+Review the evidence that the vulnerable path is closed and legitimate behavior
+still works. Run the original reproducer or regression test when available.
+If the check can't run, note the remaining uncertainty in the result.
+
+A [scan comparison](./security/cli/reference.md#match-and-compare-findings)
+can show how findings changed, but a missing finding alone doesn't verify a fix.
 
 #### What does incomplete coverage mean
 
-Coverage can be `complete`, `partial`, or `unknown`. Review `coverage.json`
-for excluded paths, deferred surfaces, and open questions before treating a
-scan as evidence of review.
+Review `coverage.json` for excluded paths, deferred surfaces, and open questions.
+New results don't include a coverage-completeness field. Check `scan.status` in
+`scan-manifest.json` for execution status.
 
-Scans with partial or unknown coverage return exit code `2`, even without a
-severity policy. They still keep any available findings and coverage. A later
-scan can't establish that an earlier finding no longer exists when it doesn't
-cover that finding's original path.
+Coverage gaps don't change a completed scan's exit code. Exit `0` doesn't mean
+every file was reviewed. A later scan can't establish that an earlier finding
+no longer exists when it doesn't cover that finding's original path.
 
 #### Automation and cost
 
@@ -5370,9 +5315,9 @@ npx @openai/codex-security scan . --mode deep --max-time-hours 1.5
 
 The default is `96` hours. Use any positive value up to `96`, including
 fractions. At the deadline, Codex Security stops unfinished workers, keeps
-completed standard-scan results, and aggregates them into the final report. If
-no worker finishes source review, the report records partial coverage and the
-CLI returns exit code `2`.
+completed standard-scan results, and aggregates them into the final report.
+Check the report for reviewed areas and deferred work. The deadline alone
+doesn't determine the exit code; execution status and the severity policy do.
 
 For persistent settings or bulk campaigns, set `max_time_hours` under
 `[deep_scan]` in the [deep-scan
@@ -5388,82 +5333,48 @@ npx @openai/codex-security scan . --max-cost 5
 
 The limit is an estimate, not a hard spending cap. Requests already in
 progress can finish above it. If a deep scan reaches the limit after Codex
-Security aggregates completed worker results, the CLI saves the completed
-report with partial coverage and exits with code `2`. Otherwise, it preserves
-any available partial output.
+Security aggregates completed worker results, the CLI can save a completed
+report with a budget warning. It returns `0`, or `1` if findings meet the
+configured severity threshold. If it can't produce a valid completed result,
+it returns `2` and preserves any available output.
 
-#### Can scans check commits and pull requests
-
-Install a pre-commit security check for staged and unstaged changes:
-
-```bash
-npx @openai/codex-security install-hook
-```
-
-For pull-request checks, scan the committed changes and set a severity
-threshold:
-
-```bash
-npx @openai/codex-security scan . \
-  --diff origin/main \
-  --fail-on-severity high
-```
-
-A complete scan returns exit code `1` when it finds an issue at or above the
-selected severity. See [Run scans in CI](./security/cli/ci.md) for the
-complete GitHub Actions workflow, artifact handling, and SARIF export.
-
-#### Can another application run scans directly
-
-Yes. Use the [TypeScript SDK](./security/sdk.md) to start scans, select
-targets, inspect findings and coverage, track progress, and apply cost controls
-from an application or developer tool.
+For pull-request checks, see [Run scans in CI](./security/cli/ci.md).
+For a check before each commit, use
+[`install-hook`](./security/cli/reference.md#codex-security-install-hook).
 
 ### Codex Security CLI quickstart
 
 Source: [Codex Security CLI quickstart](./security/cli.md)
 
-Codex Security helps security and engineering teams find, confirm, and fix
-vulnerabilities. Use its command-line interface (CLI) to scan
-repositories you own or have permission to assess, review findings over time,
-and check changes before they land.
-
-The `@openai/codex-security` package is public. Scans using OpenAI inference
-require Codex Security access. For an interactive scan in Codex, start with
-the [Codex Security plugin quickstart](./security/plugin.md). For connected
-GitHub repositories, see [Codex Security cloud setup](./security/setup.md).
+Run a standard scan of a local repository with the standalone Codex Security
+CLI. This quickstart ends with a saved report you can review and revisit.
+For scans inside a Codex conversation, use the [Codex Security
+plugin](./security/plugin.md).
 
 #### Check the prerequisites
 
-The CLI requires Node.js 22 (22.13.0 or later), 24, or 26. Scans, bulk scans,
-exports, scan history, and saved findings also require Python 3.10 or later.
-For more detail, see [Authentication and
-prerequisites](./security/cli/reference.md#authentication-and-prerequisites).
+You need Node.js 22 (22.13.0 or later), 24, or 26, plus Python 3.10 or later.
+Python 3.10 also needs `tomli`. Scans using OpenAI inference require Codex Security access.
+Depending on your account and repository, full-repository scans may also
+require [Trusted Access for Cyber](https://chatgpt.com/cyber).
+
+The CLI runs with your operating-system permissions and doesn't pause for
+approval.
+Scan processes can inherit your environment, so remove unrelated credentials
+before starting. See [Local scan
+permissions](./security/cli/reference.md#local-scan-permissions).
 
 #### Set up and verify the CLI
 
-Run the CLI with `npx` and check its version:
+Run the public package with `npx`:
 
 ```bash
 npx @openai/codex-security --version
 ```
 
-To see both the package version and the version of its bundled plugin, run:
-
-```bash
-npx @openai/codex-security info --json
-```
-
-See the [CLI and SDK releases](https://github.com/openai/codex-security/releases)
-for package changes.
-
-List the available commands:
-
-```bash
-npx @openai/codex-security --help
-```
-
-See also [CLI reference](./security/cli/reference.md).
+The command prints the installed package version. Use `info --json` to check
+the bundled plugin version, or `--help` to list commands. Package changes are
+listed in the [CLI and SDK releases](https://github.com/openai/codex-security/releases).
 
 #### Sign in
 
@@ -5473,411 +5384,128 @@ Sign in with your ChatGPT account:
 npx @openai/codex-security login
 ```
 
-On a remote or headless machine, use device authentication:
+On a machine without a browser, add `--device-auth` and follow the displayed
+sign-in instructions. Use `--auth chatgpt` in the scan commands below to select
+that sign-in even when your environment also contains an API key.
 
-```bash
-npx @openai/codex-security login --device-auth
-```
-
-For CI and other automated workflows, set an OpenAI API key:
-
-```bash
-export OPENAI_API_KEY="<your-api-key>"
-```
-
-For Amazon Bedrock, follow the [Amazon Bedrock
-setup](./security/cli/reference.md#use-amazon-bedrock) instead of signing in
-with ChatGPT or setting an OpenAI API key. Check [Bedrock release
-status](./security/cli/reference.md#bedrock-release-status) to see what your
-installed version supports.
-
-For [OpenRouter or
-Fireworks](./security/cli/reference.md#use-openrouter-or-fireworks), set the
-provider's API key and select a model with `--provider` and `--model`.
-
-To use your ChatGPT sign-in when an API key is also set, select it explicitly:
-
-```bash
-npx @openai/codex-security scan . --auth chatgpt
-```
-
-To require the environment API key, select API-key authentication:
-
-```bash
-npx @openai/codex-security scan . --auth api-key
-```
-
-Depending on your account and repository, full-repository scans may also
-require [Trusted Access for Cyber](https://chatgpt.com/cyber).
+For API keys and other providers, see [Select scan
+authentication](./security/cli/reference.md#select-scan-authentication).
+For Amazon Bedrock, use [AWS credentials and model
+access](./security/cli/reference.md#use-amazon-bedrock) instead of a ChatGPT
+sign-in or OpenAI API key.
 
 #### Prepare a scan
 
-Choose a repository you trust and have permission to assess. Scans use your
-local operating-system permissions and don't pause for approval. Scan
-processes can inherit your environment, so remove unrelated credentials before
-you start. See [Local scan
-permissions](./security/cli/reference.md#local-scan-permissions).
-
-Choose a directory outside the repository for the scan results:
+Replace these paths with your repository and a new results directory outside
+its Git worktree:
 
 ```bash
 REPOSITORY=/path/to/repository
 SCAN_DIR=/path/outside/repository/codex-security-results
 ```
 
-If you omit `--output-dir`, Codex Security saves results in its own persistent
-state directory. Results can include source excerpts and vulnerability details,
-so choose a private location and an appropriate retention policy.
+Results can include source excerpts and vulnerability details. Choose a private
+location. If you omit `--output-dir`, the CLI uses its persistent state directory.
 
-If the default state directory isn't writable, select a writable directory
-outside the scanned repository:
+Check the target and output location:
 
 ```bash
-export CODEX_SECURITY_STATE_DIR=/path/outside/repository/codex-security-state
+npx @openai/codex-security scan "$REPOSITORY" \
+  --auth chatgpt --output-dir "$SCAN_DIR" --dry-run
 ```
 
-Check the repository, target, and output directory before starting a scan:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" --output-dir "$SCAN_DIR" --dry-run
-```
-
-The dry run checks local inputs, including any `--knowledge-base` paths,
-without starting Codex, loading credentials, or probing the plugin's Python
-interpreter.
+A successful dry run confirms the local inputs. It doesn't start a scan, load
+credentials, or check the plugin's Python interpreter, so it doesn't establish
+that authentication and runtime setup will succeed.
 
 #### Run your first scan
 
-Run a standard scan and keep its results in the selected directory:
+Remove `--dry-run` to start the scan:
 
 ```bash
-npx @openai/codex-security scan "$REPOSITORY" --output-dir "$SCAN_DIR"
+npx @openai/codex-security scan "$REPOSITORY" \
+  --auth chatgpt --output-dir "$SCAN_DIR"
 ```
 
-Interactive terminals show a live scan dashboard. Add `--headless` to show
-plain progress lines instead. CI and terminals without an interactive session
-use plain progress automatically.
+An interactive terminal shows a live dashboard. Non-interactive terminals show progress
+lines. Add `--headless` to use progress lines in an interactive terminal too.
+The dashboard and saved logs can contain source code or credentials. Review
+them before sharing.
 
-The dashboard also shows live session details. These can contain source code
-or credentials, so review them before sharing.
-
-By default, the CLI writes scan progress and its completion summary to stderr.
-It doesn't print the full scan result to stdout. A completed scan prints a
-summary like this:
+When the scan finishes, stderr includes the report path, finding count, and
+elapsed time. For example:
 
 ```text
   REPORT    /path/outside/repository/codex-security-results/report.md
 
   FINDINGS  2 (2 confirmed this scan; 0 previously found; 1 high, 1 medium)
-  COVERAGE  complete
   ELAPSED   42s
   RESULTS   /path/outside/repository/codex-security-results
 ```
 
-Token usage and estimated cost appear when available. To print the complete
-result as machine-readable JSON, request structured output explicitly:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" --output-dir "$SCAN_DIR" --json
-```
-
-Scans are report-only by default, so findings remain available for local
-review. You may want to add a severity threshold when you are ready to [run scans in
-CI](./security/cli/ci.md).
-
-#### Choose a model and reasoning effort
-
-Scans use `gpt-5.6-sol` with `xhigh` reasoning effort by default. Select a
-different model and effort when the task requires them. Choose a model your
-credentials can access. If you use ChatGPT sign-in, check [GPT-6.1 Sol
-availability](./models.md#gpt-6.1-sol) before using this example:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" \
-  --model gpt-6.1-sol \
-  --effort medium
-```
-
-Available effort levels depend on the selected model. The CLI supports `minimal`,
-`low`, `medium`, `high`, `xhigh`, and `max`; GPT-6.1 Sol requires at least `low`.
+By default, the severity of a finding doesn't cause a scan to fail. For
+machine-readable stdout, add `--json`. To make findings fail a CI check, set a
+[severity policy](./security/cli/ci.md#choose-a-severity-policy).
 
 #### Review the results
 
-Open `report.md` for the readable result. The scan directory also contains the
-structured files used by automation:
+Open `report.md` from the reported directory. Confirm the target and revision,
+then read the coverage before reviewing individual findings.
 
-```text
-codex-security-results/
-├── scan-manifest.json
-├── findings.json
-├── coverage.json
-├── report.md
-├── artifacts/
-└── exports/
-    └── results.sarif       # when produced
-```
+Check `scan.status` in `scan-manifest.json` to confirm that the scan completed.
+Review `coverage.json` for reviewed surfaces, excluded paths, deferred work,
+and open questions.
 
-- `scan-manifest.json` records the target, scope, producer, and sealed
-  artifacts.
-- `findings.json` records severity, confidence, locations, evidence, and
-  remediation for each finding.
-- `coverage.json` records reviewed surfaces, exclusions, deferred work, open
-  questions, and coverage completeness.
+A completed scan exits with `0` unless findings meet a configured severity
+threshold, which returns `1`. Coverage gaps don't change the exit code, so
+exit `0` doesn't mean every file was reviewed. Input, execution, result-integrity,
+or required-output failures return `2`. The
+[CLI reference](./security/cli/reference.md#exit-codes-and-signals) explains
+the exit codes.
 
-Coverage can be `complete`, `partial`, or `unknown`. Read any deferred areas or
-open questions before treating the scan as evidence of review.
-The [CLI reference](./security/cli/reference.md#scan-artifacts) describes
-the full artifact and output contract.
+For each finding, check the affected code, attacker prerequisites, validation
+evidence, and remaining uncertainty. A source-based finding doesn't necessarily
+include a successful runtime reproduction. Select a finding for remediation
+only after its evidence supports the claimed issue.
 
-#### Review and patch findings
-
-After a complete interactive scan with findings, the CLI offers a finding
-browser. Review the evidence and choose which findings to fix. You can find
-the saved tasks in the Codex desktop app.
-
-To patch high and critical findings without the browser:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" \
-  --patch --patch-severity high --json
-```
-
-Add `--create-pr` to commit verified patches and open a GitHub pull request.
-
-You can also patch saved findings or import Linear issues. See the
-[`validate` and `patch` reference](./security/cli/reference.md#codex-security-validate-and-codex-security-patch).
-
-#### Choose the next scan
-
-Use a path scan when a repository contains separate services or packages:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" \
-  --path services/billing \
-  --path packages/auth
-```
-
-Review committed changes between the base revision and `HEAD`:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" --diff origin/main --head HEAD
-```
-
-Review staged and unstaged changes against `HEAD`:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" --working-tree --base HEAD
-```
-
-Diff and working-tree scans expect the repository argument to be the Git
-worktree root. Fetch the selected revisions before starting a diff scan.
-
-Use deep mode when a repository or path needs broader review:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" --mode deep
-```
-
-To control workers, subagents, and when the scan stops:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" \
-  --mode deep \
-  --workers 2 \
-  --subagents 0 \
-  --stop-after-no-new 3 \
-  --max-discovery-runs 10 \
-  --max-time-hours 1.5
-```
-
-These options require deep mode, which supports repository and path targets,
-not diff or working-tree scans. Here, `--workers` controls independent
-standard-scan workers within one scan; `bulk-scan --workers` controls concurrent
-repository scans. `--max-time-hours` accepts a positive number up to `96`,
-including fractional hours. At the limit, the scan stops unfinished workers,
-preserves completed scan results, and aggregates them into the final report.
-
-#### Add architecture and security context
-
-Provide architecture documents, threat models, or security policies as scan
-context. This helps Codex Security evaluate findings against how your system
-actually works:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" \
-  --knowledge-base /path/to/architecture.md \
-  --knowledge-base /path/to/security-policies
-```
-
-#### Add custom scan instructions
-
-Add instructions that focus the scan on your security priorities. Use a
-second file for follow-up instructions:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" \
-  --scan-prompt-file /path/to/scan.md \
-  --post-scan-prompt-file /path/to/follow-up.md
-```
-
-The follow-up runs in the same authenticated session after successful scans
-and scans with incomplete coverage or errors. If the follow-up fails, the CLI
-reports a warning and keeps the completed scan. It doesn't run after
-cancellation or a scan that reaches its cost limit. Both options also work
-with `bulk-scan`; a CSV `prompt` column adds repository-specific instructions.
-
-#### Set a scan budget
-
-Use `--max-cost` to stop a scan when its estimated model cost exceeds a limit
-in USD:
-
-```bash
-npx @openai/codex-security scan "$REPOSITORY" --max-cost 5
-```
-
-Requests already in progress can finish slightly above the limit. If a deep
-scan reaches the limit after Codex Security aggregates completed worker
-results, the CLI saves the completed report, marks its coverage as `partial`,
-and returns exit code `2`. If the scan can't produce a completed report, any
-available partial output stays on disk.
-
-#### Scan changes before each commit
-
-Install a Git pre-commit security check for your repository:
-
-```bash
-npx @openai/codex-security install-hook
-```
-
-The check scans staged and unstaged changes before each commit. It blocks
-high-severity findings and scan errors without replacing an existing
-pre-commit script.
-
-#### Scan repositories in bulk
-
-Sign in to GitHub before discovering repositories:
-
-```bash
-gh auth login
-```
-
-Discover and select repositories from your GitHub account or organization:
-
-```bash
-npx @openai/codex-security bulk-scan
-```
-
-The interactive flow excludes archived repositories and forks. It asks you to
-confirm the selected repositories before scanning.
-
-To scan a prepared repository list, provide a CSV and an output directory:
-
-```bash
-npx @openai/codex-security bulk-scan repositories.csv \
-  --output-dir /path/outside/repositories/security-scans \
-  --workers 4
-```
-
-Run the same command again to resume an existing bulk scan. Codex Security
-skips completed repositories. Add `--max-attempts 3` when you want to retry
-temporary repository or scan errors.
-
-For GitHub discovery, CSV preparation, campaign results, and Docker setup, see
-[Run bulk security scans](./security/cli/bulk-scans.md).
-
-#### Run bulk scans in Docker
-
-If your access includes the Codex Security Docker image, use the supplied
-hardened Compose configuration and security profile on a Linux Docker host.
-The host must support unprivileged user namespace creation. Supply a repository
-CSV, keep results and sign-in state in persistent mounted directories, and
-provide credentials through your environment or a secret manager:
-
-```bash
-docker compose run --rm codex-security \
-  bulk-scan /input/repositories.csv \
-  --output-dir /output \
-  --workers 4
-```
-
-The container runs bulk scans without interactive prompts. Use the CLI outside
-Docker when you want to discover repositories interactively. For private
-repositories, provide `GH_TOKEN` or `GITHUB_TOKEN` through your environment or
-secret manager. The [sign-in requirements](#sign-in), including account and
-repository access, also apply to containerized scans.
+Keep the scan directory together when sharing or archiving it. It contains
+`scan-manifest.json`, `findings.json`, and `coverage.json` alongside the report
+and supporting artifacts. See [Scan
+artifacts](./security/cli/reference.md#scan-artifacts) for the full layout.
 
 #### Revisit a saved scan
 
-List the saved scans for your repository:
+List scans for the repository:
 
 ```bash
 npx @openai/codex-security scans list "$REPOSITORY"
 ```
 
-Copy a scan ID from the results to inspect its findings and configuration:
+Copy a scan ID from the results:
 
 ```bash
 npx @openai/codex-security scans show SCAN_ID
 ```
 
-To inspect the saved events from a scan and its workers:
+After a complete interactive scan with findings, the CLI also offers a finding
+browser. Review the evidence there before choosing a fix. For saved findings,
+use the [validate and patch
+commands](./security/cli/reference.md#codex-security-validate-and-codex-security-patch).
 
-```bash
-npx @openai/codex-security scans logs SCAN_ID
-```
+#### Choose the next scan
 
-Saved logs aren't redacted and can contain source code or credentials. Review
-them before sharing.
+| Goal                                     | Guide                                                                                    |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Scan selected paths or a diff            | [Select the scan target](./security/cli/reference.md#select-the-scan-target)           |
+| Use deep scans or limit their runtime    | [Configure deep scans](./security/cli/reference.md#configure-deep-scans)               |
+| Supply architecture or security policies | [Add security context](./security/cli/reference.md#add-security-context)               |
+| Change the model or reasoning effort     | [Configure the runtime](./security/cli/reference.md#configure-the-runtime)             |
+| Set an estimated cost limit              | [Output and policy options](./security/cli/reference.md#set-output-and-policy-options) |
+| Scan multiple repositories               | [Bulk scans](./security/cli/bulk-scans.md)                                             |
+| Check pull requests automatically        | [CI guide](./security/cli/ci.md)                                                       |
 
-List open findings across the repository's scans:
-
-```bash
-npx @openai/codex-security findings list "$REPOSITORY"
-```
-
-An earlier finding stays open when the latest scan doesn't confirm it.
-
-To mark a reviewed finding as a false positive, explain why the finding doesn't
-apply:
-
-```bash
-npx @openai/codex-security findings false-positive FINDING_OCCURRENCE_ID \
-  --reason "The route already checks permissions"
-```
-
-Later scans consider that explanation but still recheck the current code.
-
-Run the same scan against the current checkout using its original configuration:
-
-```bash
-npx @openai/codex-security scans rerun SCAN_ID
-```
-
-Compare two scans to find new, persisting, reopened, resolved, or unknown
-findings:
-
-```bash
-npx @openai/codex-security scans compare PREVIOUS_SCAN_ID CURRENT_SCAN_ID
-```
-
-The comparison automatically matches findings by root cause and reuses saved
-matches.
-
-For the bulk-scan CSV format, scan-history filters, and command options, see
-the [CLI reference](./security/cli/reference.md).
-
-Continue with the workflow that fits your goal:
-
-- [Run bulk security scans](./security/cli/bulk-scans.md) to discover GitHub
-  repositories or scan a pinned CSV inventory.
-- [Read the CLI FAQ](./security/cli/faq.md) for answers about scan history,
-  false-positive feedback, coverage, and fix verification.
-- [Run scans in CI](./security/cli/ci.md) to review pull requests, preserve
-  results, and set a severity policy.
-- [Use the CLI reference](./security/cli/reference.md) to check every flag,
-  output format, artifact, and exit code.
-- [Integrate the TypeScript SDK](./security/sdk.md) to run scans from an
-  application or developer tool.
+For authentication problems, repeat-scan differences, or false-positive
+feedback, see the [CLI FAQ](./security/cli/faq.md).
 
 ### Codex Security CLI reference
 
@@ -6215,8 +5843,9 @@ npx @openai/codex-security scan . \
 ```
 
 When the time limit expires, the scan stops unfinished workers, keeps completed
-scan results, and aggregates them into the final report. If no worker finishes
-source review, the scan records partial coverage and returns exit code `2`.
+scan results, and aggregates them into the final report. Check the report for
+reviewed areas and deferred work. The deadline alone doesn't determine the exit
+code; execution status and the severity policy do.
 
 Set persistent defaults in `~/.codex/codex-security/config.toml`, or in
 `$CODEX_HOME/codex-security/config.toml` when you set `CODEX_HOME`:
@@ -6256,7 +5885,7 @@ outside the saved scan results.
 To add scan instructions, provide a text or Markdown file with
 `--scan-prompt-file`. Use `--post-scan-prompt-file` to run follow-up
 instructions in the same authenticated session after successful scans and
-scans with incomplete coverage or errors:
+scan errors:
 
 ```bash
 npx @openai/codex-security scan . \
@@ -6293,9 +5922,10 @@ machine-readable result.
 
 The cost limit is an estimate, not a hard spending cap. Requests already in
 progress can finish slightly above the limit. If a deep scan reaches the limit
-after Codex Security aggregates completed worker results, the CLI seals the
-available results, marks coverage as `partial`, and returns exit code `2`.
-Otherwise, it returns `2` and leaves any available partial output on disk.
+after Codex Security aggregates completed worker results, the CLI can seal a
+completed result and report the budget warning. It returns `0`, or `1` if
+findings meet the configured severity threshold. If it can't produce a valid
+completed result, it returns `2` and leaves any available output on disk.
 
 When you omit `--output-dir`, results persist under
 `$CODEX_HOME/state/plugins/codex-security/scans/`. `CODEX_HOME`
@@ -6392,7 +6022,7 @@ npx @openai/codex-security install-hook . --fail-on-severity medium
 #### `codex-security bulk-scan`
 
 Discover and scan GitHub repositories, or run a resumable scan from a
-repository CSV:
+repository CSV.
 
 For a complete guide to GitHub discovery, CSV inventories, campaign results,
 and containerized scans, see [Run bulk security
@@ -6443,17 +6073,17 @@ Use `--knowledge-base PATH` to share security documents across every
 repository. Use `--scan-prompt-file FILE` to add shared scan instructions; the
 CSV `prompt` column adds repository-specific instructions after that shared
 prompt. `--post-scan-prompt-file FILE` runs follow-up instructions after each
-scan, including scans with incomplete coverage or errors. It doesn't run after
+scan, including scan errors. It doesn't run after
 cancellation or when a scan reaches its cost limit.
 
 `--workers` limits simultaneous repository scans and defaults to `4`. `--mode`
 defaults to `standard`, and `--max-attempts` defaults to `1`. Set
-`--max-attempts` to retry repository or scan errors. Completed scans with
-incomplete coverage aren't retried. Their results remain available, and the
-command returns exit code `2`.
+`--max-attempts` to retry repository or scan errors. Completed scans aren't
+retried because of coverage gaps or severity-policy violations. Their results
+remain available.
 
 Run the same command again to resume from an existing output directory. The CLI
-skips completed scans, including scans with incomplete coverage.
+skips completed scans, including scans with coverage gaps.
 
 For containerized campaigns, see [Run bulk scans in
 Docker](./security/cli/bulk-scans.md#run-bulk-scans-in-docker).
@@ -6510,12 +6140,12 @@ before sharing:
 npx @openai/codex-security scans logs SCAN_ID
 ```
 
-Add `--json` for a machine-formatted result containing full information.
+Add `--json` for structured output.
 
 #### Match and compare findings
 
-Compare two scans to find new, persisting, reopened, resolved, and unknown
-findings:
+Compare two scans to find new, persisting, reopened, not observed, resolved, and
+unknown findings:
 
 ```bash
 npx @openai/codex-security scans compare PREVIOUS_SCAN_ID CURRENT_SCAN_ID
@@ -6528,9 +6158,10 @@ and reuses saved matches. To save matches explicitly, use `scans match`:
 npx @openai/codex-security scans match PREVIOUS_SCAN_ID CURRENT_SCAN_ID
 ```
 
-A finding is unknown when the later scan has incomplete coverage or doesn't
-cover the finding's original location. Add `--force` to `match` when you need to
-recompute an existing match.
+A finding is unknown when its path is excluded or its match is uncertain. If
+the later scan doesn't find it in the code it scanned, it is not observed.
+Only a finding explicitly closed as already fixed is resolved. Add `--force`
+to `match` when you need to recompute an existing match.
 
 To match all completed scans for the current repository, including scans from
 other checkouts:
@@ -6561,8 +6192,8 @@ npx @openai/codex-security findings list /path/to/repository
 Add `--json` for structured output. The list identifies findings seen in the
 latest scan and earlier findings that weren't confirmed in that scan.
 
-Note that earlier findings remain open until resolved or dismissed (absence
-from the latest scan is not interpreted as proof that it's fixed).
+Earlier findings remain open until resolved or dismissed. Their absence from
+the latest scan doesn't establish that they are fixed.
 
 To record a reviewed finding as a false positive:
 
@@ -6683,8 +6314,8 @@ run validates the sealed artifacts without this persistence check.
 | `--json`                             | Write structured publication results to stdout. Progress remains on stderr.                                                                                      |
 
 Linear issue descriptions and dry-run output can include source code snippets
-and vulnerability details. Publish only to an authorized Linear team or
-project, and treat saved output as sensitive.
+and vulnerability details. Check who can view the destination team or project
+before publishing.
 
 Each non-dry-run invocation attempts to create a new issue for every finding.
 Publishing the same scan again doesn't match, update, or reuse existing issues.
@@ -6903,14 +6534,13 @@ flag. `LOG_LEVEL=debug` also enables diagnostics when
 #### Completion summary
 
 A completed scan writes its open repository finding count, severity breakdown,
-coverage, elapsed time, report path, and result directory to stderr. It
-includes token usage and estimated cost when available:
+elapsed time, report path, and result directory to stderr. It
+includes token usage and estimated cost when available. For example:
 
 ```text
   REPORT    /path/to/scan/report.md
 
   FINDINGS  4 (3 confirmed this scan; 1 previously found; 1 critical, 2 high, 1 informational)
-  COVERAGE  complete
   ELAPSED   1s
   TOKENS    1,250 input, 200 cached, 30 output
   RESULTS   /path/to/scan
@@ -6949,7 +6579,7 @@ results and any created pull request.
 
 Progress, completion summaries, archive notices, and errors remain on stderr.
 A completed scan still prints the full JSON result when a severity policy
-returns exit `1` or incomplete coverage returns exit `2`.
+returns exit `1`.
 
 `codex-security scan --json` emits one JSON document. `codex exec --json`
 emits a JSON Lines event stream. Use the output format that matches the
@@ -6957,7 +6587,9 @@ command you run.
 
 #### Scan artifacts
 
-A completed scan keeps the readable report and structured artifacts together:
+A completed scan keeps the readable report and structured artifacts together.
+The sealed manifest records artifact hashes so later readers can check that
+those files haven't changed:
 
 ```text
 <scan-directory>/
@@ -6976,34 +6608,31 @@ The structured files serve different jobs:
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `scan-manifest.json`    | Scan identity, status, target, scope, producer, and sealed artifact records.                                                    |
 | `findings.json`         | Finding identifiers, severity, confidence, taxonomy, locations, evidence, validation, data flow, reachability, and remediation. |
-| `coverage.json`         | Reviewed surfaces, exclusions, deferred work, open questions, and coverage completeness.                                        |
+| `coverage.json`         | Reviewed surfaces, exclusions, deferred work, and open questions.                                                               |
 | `report.md`             | Readable scan report.                                                                                                           |
 | `artifacts/`            | Supporting scan artifacts.                                                                                                      |
 | `exports/results.sarif` | SARIF generated during the scan, when present.                                                                                  |
 
-Coverage completeness has three values:
-
-- `complete`: The scan records complete coverage for its selected scope.
-- `partial`: The scan records deferred work or other coverage limits.
-- `unknown`: The scan reports coverage completeness as unknown.
-
-Review deferred surfaces, explicit exclusions, and open questions before using
-coverage as evidence for a security decision.
+Read `scan.status` in `scan-manifest.json` for execution status: `completed`,
+`failed`, `canceled`, or `interrupted`. New results don't include
+`coverage.completeness`. Review deferred surfaces, explicit exclusions, and
+open questions in `coverage.json` to understand what the scan reviewed.
 
 #### Exit codes and signals
 
 The CLI uses these exit codes:
 
-| Exit  | Condition                                                                                                                                                                     |
-| ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0`   | A scan completed with complete coverage and passed its severity policy, a bulk scan or publication completed without failures, or another command succeeded.                  |
-| `1`   | A completed scan reports a finding at or above the configured severity.                                                                                                       |
-| `2`   | The CLI found an input, runtime, or export error, a scan has incomplete coverage, a bulk scan has repositories with errors, or a publication has one or more failed findings. |
-| `130` | Ctrl-C interrupted a scan or publication.                                                                                                                                     |
-| `143` | SIGTERM terminated a scan or publication.                                                                                                                                     |
+| Exit  | Condition                                                                                                                                 |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `0`   | A scan or bulk campaign completed and passed its severity policy, a publication completed without failures, or another command succeeded. |
+| `1`   | A completed scan or bulk campaign reports a finding at or above the configured severity.                                                  |
+| `2`   | An input, execution, result-integrity, required-output, or export failure occurred, or a publication has one or more failed findings.     |
+| `130` | Ctrl-C interrupted a scan or publication.                                                                                                 |
+| `143` | SIGTERM terminated a scan or publication.                                                                                                 |
 
-Any scan with `partial` or `unknown` coverage returns `2`, even without a
-severity policy. When you request structured output, completed scans and
+Coverage gaps don't change a completed scan's exit code or bypass its severity
+policy. Exit `0` doesn't mean every file was reviewed. When you request
+structured output, completed scans and
 partial publications still write the available results to stdout. The CLI
 prints the location of any partial output after an interruption or runtime
 error.
@@ -7021,8 +6650,8 @@ Settings supplied through CLI `--codex` or SDK `codexOverrides`, including
 or restrict these scan controls. Host and network restrictions still apply.
 
 Scan and workbench processes can inherit your environment, including unrelated
-API tokens and cloud credentials. Scan only repositories you trust and have
-permission to assess, and provide only the credentials the scan requires.
+API tokens and cloud credentials. Remove unrelated credentials before
+starting a scan.
 
 #### Authentication and prerequisites
 
@@ -7050,45 +6679,9 @@ guide](./security/cli/ci.md), or [TypeScript SDK guide](./security/sdk.md).
 
 Source: [Codex Security Cloud FAQ](./security/faq.md)
 
-This FAQ covers the Codex Security Cloud plugin. For local scans and workflows that run in
-a Codex task, see the [Codex Security plugin quickstart](./security/plugin.md).
-
-{/_ vale Microsoft.Auto = NO _/}
-{/_ vale Vale.Spelling = NO _/}
-
-#### Cloud security FAQ: getting started
-
-#### What is Codex Security Cloud?
-
-Codex Security Cloud scans connected GitHub repositories, validates likely
-vulnerabilities, and presents findings with evidence and remediation guidance.
-Use its plugin on the web or in the desktop app to run repository scans and
-monitor new commits.
-
-#### How do I open Codex Security Cloud?
-
-Open **Plugins** to find and install **Codex Security Cloud**, then open it.
-See [Cloud setup](./security/setup.md) for the full workflow.
-
-#### Is this the same plugin as local Codex Security?
-
-No. The Codex Security Cloud plugin scans connected GitHub repositories in
-Codex cloud. The [Codex Security plugin](./security/plugin.md) runs local
-scans in a Codex task.
-
-#### What if access is unavailable?
-
-Check with your workspace administrator.
-
-#### How does Codex Security work?
-
-Codex Security runs analysis in an ephemeral, isolated container and temporarily clones the target repository. It performs code-level analysis and returns structured findings with a description, file and location, criticality, root cause, and a suggested remediation.
-
-For findings with verification steps, it runs commands or tests in the sandbox and attaches the results as evidence.
-
-#### Does it replace SAST?
-
-No. Codex Security complements SAST. It adds semantic, LLM-based reasoning and automated validation, while existing SAST tools still provide broad deterministic coverage.
+These answers apply to Codex Security Cloud. For installation and a first scan,
+use [Cloud setup](./security/setup.md). Local scans have separate
+[plugin](./security/plugin.md) and [CLI](./security/cli.md) guides.
 
 #### Billing
 
@@ -7149,102 +6742,108 @@ along with any amount covered by free scanning credits.
 Scans marked "Exempt from billing. No charges apply." incur no charges,
 even when they show token usage and cost.
 
-#### Features
-
-#### What is the analysis pipeline?
-
-1. **Analysis** builds a threat model for the repository.
-2. **Scanning** reviews the repository once or monitors commit changes for likely issues.
-3. **Validation** tries to reproduce likely vulnerabilities in a sandbox to reduce false positives.
-4. **Remediation** provides guidance and, where available, proposed patches to review before opening a PR.
-
-#### What languages are supported?
-
-Codex Security is language-agnostic. In practice, performance depends on the model's reasoning ability for the language and framework used by the repository.
-
-#### What outputs do I get after the scan completes?
-
-You get ranked findings with criticality, validation evidence, remediation guidance, and a proposed patch when one is available.
-
-#### How is customer code isolated?
-
-Each analysis and validation job runs in an ephemeral Codex container with session-scoped tools. Artifacts are extracted for review, and the container is torn down after the job completes.
-
-#### Does Codex Security auto-apply patches?
-
-No. When a finding has a proposed patch, review it before selecting **Create draft pull request**.
+#### Scanning
 
 #### Does the project need to be built for scanning?
 
-No. Codex Security can produce findings from repository and commit context without a compile step. During auto-validation, it may try to build the project inside the container if that helps reproduce the issue. For environment setup details, see [Codex cloud environments](./environments/cloud-environment.md).
+Codex Security can analyze source without a successful build. Validation may
+need dependencies or a working build to reproduce an issue. Configure those
+requirements in the [Codex cloud
+environment](./environments/cloud-environment.md).
 
-#### How does Codex Security reduce false positives and avoid broken patches?
+If validation can't run, inspect what the finding establishes from source and
+what still depends on runtime or deployment behavior.
 
-Codex Security uses two stages. First, the model ranks likely issues. Then auto-validation tries to reproduce each issue in a clean container. Findings that successfully reproduce are marked as validated, which helps reduce false positives before human review.
+#### What languages are supported?
+
+Codex Security analyzes source across languages. Results depend on the model's
+ability to reason about the language and framework, and on the available
+repository context. A successful scan doesn't imply equal coverage across
+languages or components. Check the report for the scope actually reviewed.
 
 #### How do repository scans and commit monitoring differ?
 
-A **Repository** scan runs once across the repository. **Commit changes**
-monitors new commits and can review existing commit history. See
-[Monitor new commits](./security/setup.md#5-monitor-new-commits).
-
-#### How long do scans take?
-
-Scan time varies with repository size and validation work. Check **Scans** for
-progress and status.
+A **One-Time Scan** reviews the repository once. **Continuous Scanning** monitors
+new commits and can review selected commit history. Enable it after the first
+scan using [Monitor new commits](./security/setup.md#5-monitor-new-commits).
 
 #### Can I pause commit monitoring?
 
-Yes. Open **Repositories**, select the repository, and open **Monitoring
-settings**. Set monitoring to **Paused** and select **Save**.
-
-#### What is a threat model?
-
-A threat model is the scan-time security context for a repository. It combines a concise project overview with attack-surface details such as entry points, trust boundaries, auth assumptions, and risky components. For more detail, see [Improving the threat model](./security/threat-model.md).
-
-#### How is a threat model generated?
-
-Codex Security analyzes the repository's code to summarize its architecture and security entry points.
-
-#### Does it replace manual security review?
-
-No. Codex Security accelerates review and helps rank findings, but it does not replace code-level validation, exploitability checks, or human threat assessment.
+Open **Repositories**, select the repository, and open **Monitoring settings**.
+Set monitoring to **Paused** and select **Save**. You can enable it again from
+the same settings.
 
 #### Can I edit the threat model?
 
-For a monitored repository, Codex Security creates the initial threat model. Open the repository's **Monitoring settings** to update it as the architecture, risks, and business context change. For the editing workflow, see [Improving the threat model](./security/threat-model.md).
+Yes. Update it in the monitored repository's **Monitoring settings** when the
+architecture, deployment, or security assumptions change. The [threat-model
+guide](./security/threat-model.md) explains what to include. Changes apply to
+future scans.
 
-#### What does the proposed patch contain?
+#### Findings and validation
 
-The proposed patch contains a minimal actionable diff with filename and line context when a remediation can be generated for the finding.
+#### What does validation establish?
 
-#### Does the patch directly modify my PR branch?
+Read the evidence attached to the particular finding. Source analysis can
+establish a vulnerable code path. Execution evidence can show that a specific
+reproducer or test demonstrated the issue.
 
-No. The workflow generates a diff, patch file, or suggested change for maintainers and reviewers to inspect before applying.
-
-#### Validation
-
-#### What is auto-validation?
-
-Auto-validation is the phase that tries to reproduce a suspected issue in an isolated container. It records whether reproduction succeeded or failed and captures logs, commands, and related artifacts as evidence.
+A finding's recorded status and severity help organize review. Use the
+underlying evidence and prerequisites to decide whether it applies to your
+system and what to fix.
 
 #### What happens if validation fails?
 
-The finding remains unvalidated. Logs and reports still capture what was attempted so engineers can retry, investigate further, or adjust the reproduction steps.
+Inspect the attempted validation and any available logs. A failed reproducer
+can mean the issue doesn't apply, but it can also mean the environment or test
+was unsuitable. Resolve the stated gap before dismissing the finding or
+claiming that it was reproduced.
 
-{/_ vale Microsoft.Auto = YES _/}
-{/_ vale Vale.Spelling = YES _/}
+#### What if the scan reports no findings?
+
+Confirm that the scan completed and reviewed the intended repository and
+revision. Read any recorded limits or unfinished work. A scan that reports no
+findings can still miss vulnerabilities.
+
+#### Fixes
+
+#### Does Codex Security apply patches automatically?
+
+The action depends on the finding. **Fix with Codex** on a repository finding
+starts a conversation that asks Codex to verify the issue, implement a fix,
+and run relevant tests. Review the changes in that conversation.
+
+For a finding with a suggested patch, review the diff before selecting
+**Create draft pull request**. Creating the draft doesn't merge the fix.
+
+#### How do I know whether a patch fixed the issue?
+
+Review the patch's validation evidence, including whether the original issue
+still reproduces and whether legitimate behavior still works. If validation
+wasn't completed, keep that uncertainty with the finding. A proposed patch,
+draft pull request, or status change alone doesn't verify a fix.
 
 ### Codex Security Cloud setup
 
 Source: [Codex Security Cloud setup](./security/setup.md)
 
-Use the Codex Security Cloud plugin to scan connected GitHub repositories,
-review findings, and monitor new commits.
+Run a first scan of a connected GitHub repository with Codex Security Cloud,
+then review its findings. Afterward, you can enable monitoring for new commits.
 
 Codex Security Cloud runs scans in [Codex cloud](./cloud.md). For scans of a
 local repository in the desktop app or CLI, use the separate [Codex Security
 plugin](./security/plugin.md).
+
+#### Before you start
+
+Use a workspace with Codex Security Cloud access and [Codex cloud](./cloud.md)
+set up. You need permission to connect the GitHub repository you want to scan.
+You can create its cloud environment during setup.
+
+If the plugin is unavailable, check access with your workspace administrator.
+If a repository is missing, use **Configure access** in the repository picker to
+check the GitHub app's organization and repository access. If you can't grant
+access yourself, ask your GitHub administrator to add the repository.
 
 #### 1. Install and open the plugin
 
@@ -7255,8 +6854,6 @@ plugin](./security/plugin.md).
 
 [Open plugin marketplace](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
 
-If access is unavailable, check with your workspace administrator.
-
 #### 2. Connect GitHub
 
 Confirm that [Codex cloud](./cloud.md) is set up for your workspace. In the
@@ -7265,10 +6862,6 @@ with your own GitHub account. Each person who starts scans needs their own
 connection and access to the repository.
 
 Codex Security Cloud doesn't support workspace connections.
-
-If a repository is missing, use **Configure access** in the repository picker to
-check the GitHub app's organization and repository access. If you can't grant
-access yourself, ask your GitHub administrator to add the repository.
 
 #### 3. Start a repository scan
 
@@ -7279,8 +6872,9 @@ access yourself, ask your GitHub administrator to add the repository.
 3. Under **Scan Method**, select **One-Time Scan**.
 4. Select **Create**.
 
-Open the scan in **Scans** to follow its progress and review its findings and
-artifacts.
+Open the scan in **Scans** to follow progress. Wait for it to finish, then
+check the reported status and target before interpreting its findings. If it
+fails or is canceled, read the available output as an incomplete review.
 
 #### 4. Review findings and available fixes
 
@@ -7290,17 +6884,26 @@ narrow the results. The **Severity and status** chart summarizes the matching
 findings.
 
     Filter and review open findings. Repositories, findings, and counts are
-    fictional and match the overview example.
+    fictional.
 
-Select an issue to review its affected code, validation evidence, and
-remediation guidance.
+Open a finding from the scan or from **Findings**. Check its affected code and
+revision, the path an attacker could take, and the validation evidence. Read
+any unresolved assumptions before deciding whether the issue applies. A scan
+with no reported findings doesn't establish that the repository has no
+vulnerabilities.
 
-When a finding offers **Fix with Codex**, select it to generate a proposed
-patch. Review the patch before selecting **Create draft pull request**.
+When a repository finding offers **Fix with Codex**, selecting it starts a
+Codex conversation to check the finding against current code, implement a fix,
+and run relevant tests. Review the resulting changes and test evidence there.
+
+Findings from commit monitoring can instead offer a suggested patch. Review
+that patch before selecting **Create draft pull request**. These actions have
+different effects, so follow the workflow shown for the finding.
 
 #### 5. Monitor new commits
 
-To review changes as new commits arrive:
+Once you've reviewed the first scan, you can monitor changes as new commits
+arrive:
 
 1. Select **Scan**, then choose the repository and review the environment.
 2. Under **Scan Method**, select **Continuous Scanning**. Codex Security scans
@@ -7323,15 +6926,13 @@ that repository's shared configuration in the workspace, not just to the person
 making the change. If you can't edit it, ask the scan owner or a Codex Security
 administrator.
 
-Review and edit the generated threat model under **Project context**, then
-select **Save**. See [Improving the threat model](./security/threat-model.md)
-for guidance.
+Review the generated threat model in **Monitoring settings** and update it
+with deployment or security context the code doesn't establish. See
+[Improve the threat model](./security/threat-model.md).
 
-#### Security setup references
-
-- [Codex Security](./security.md) gives the product overview.
-- [Codex Security Cloud FAQ](./security/faq.md) covers common Cloud questions.
-- [Improving the threat model](./security/threat-model.md) explains how to improve scan context and finding prioritization.
+For questions about builds, validation, or result interpretation, see the
+[Cloud FAQ](./security/faq.md). To review GitHub pull requests, use
+[Security Review](./security/security-review.md).
 
 ### Codex Security plugin changelog
 
@@ -7828,7 +7429,7 @@ package and bundled plugin versions together.
 
 - Run standard scans against Git repositories, individual folders, or
   codebases without Git history. Deep scans can also target a specific folder.
-- Cancel an active scan explicitly, resume an interrupted scan without another
+- Cancel an active scan, resume an interrupted scan without another
   setup prompt, and receive a warning before starting concurrent deep scans.
 - Follow clearer setup and progress states, with more compact progress
   summaries and errors that remain visible until you address them.
@@ -7859,7 +7460,7 @@ package and bundled plugin versions together.
 
 #### Run evidence-backed security reviews
 
-- Scan an authorized repository or selected folder for security
+- Scan a repository or selected folder for security
   vulnerabilities.
 - Run repeated discovery across an entire repository when you need more
   thorough coverage.
@@ -7867,20 +7468,16 @@ package and bundled plugin versions together.
   security regressions.
 - Move each candidate through threat modeling, finding discovery, validation,
   and impact analysis before generating scan reports.
-- Fix one accepted finding with a focused patch, regression coverage, and
+- Fix one accepted finding with a patch, regression coverage, and
   verification of the original issue.
 
 ### Codex Security plugin quickstart
 
 Source: [Codex Security plugin quickstart](./security/plugin.md)
 
-Codex Security scans your code for vulnerabilities and validates plausible
-findings. For each reportable issue, it gives you the evidence and remediation
-guidance you need to review the result. Scan only code you own or have
-permission to assess.
-
-Follow this quickstart to install the plugin and run a standard, read-only scan
-of a local repository in Codex.
+Install the Codex Security plugin, run a standard scan of a local repository,
+and review its findings. The scan leaves your source unchanged and saves a
+report with evidence and remediation guidance.
 
 This page covers the Codex Security plugin in the desktop app or Codex CLI. To
 scan a connected GitHub repository in Codex cloud, install the separate
@@ -7909,10 +7506,9 @@ Install the Codex Security plugin
 To install Codex Security for a local repository, use the ChatGPT desktop app
 or Codex CLI.
 
-Check the [plugin changelog](./security/plugin/changelog.md) before you rely
-on a feature or start a long-running scan. If **Security** doesn't appear in
-the desktop-app sidebar, update the app and plugin and confirm that the plugin
-is enabled.
+If **Security** doesn't appear in the desktop-app sidebar, confirm that
+**Codex** is selected and the plugin is enabled. Update the app and plugin if
+needed, and check whether your workspace administrator allows the plugin.
 
 #### Run your first scan
 
@@ -7931,10 +7527,10 @@ with `xhigh` reasoning effort.
     leave **Deep scan** off, and select the entire repository or one folder.
     Confirm that the branch and revision identify the code you intended to scan.
 
-3.  Add relevant context
+3.  Add security context
 
     Choose the model and reasoning effort. Open **Additional context** only when
-    you need to describe a specific attack vector, security-sensitive area, or
+    you need to describe an attack vector, security-sensitive area, or
     repository detail that should guide the review.
 
         Turn on additional context to describe attack vectors, focus areas, and
@@ -7975,57 +7571,37 @@ with `xhigh` reasoning effort.
 
 Run this local plugin workflow in the ChatGPT desktop app or Codex CLI.
 
+#### Interpret the result
+
+Check the target and revision first. Then read which areas were reviewed and
+which were deferred. A completed scan can still have coverage gaps. A review
+that reports no findings hasn't necessarily ruled out every vulnerability.
+
+Open a finding and read its source evidence, attacker prerequisites, validation,
+and remaining uncertainty. Validation can use source analysis without running
+a reproducer. Use the recorded method and evidence to decide whether the issue
+applies to your system.
+
 #### What the scan creates
 
-Completed scans remain available in **Scans**. Review their findings and
-coverage in the Security workbench, or inspect related findings and repository
-history in **Findings** and **Repositories**. The scan also creates the files
-below.
+In the desktop app, completed scans remain in **Scans**. In Codex CLI, use the
+scan directory reported in the conversation. Open `report.md` for the readable
+result. Detailed vulnerability reports under `findings/` and design proposals
+under `hardening/` are optional outputs you can request.
 
-Every completed scan reports a summary in the terminal and creates the files
-below.
-
-Run this local plugin workflow in the ChatGPT desktop app or Codex CLI.
-
-- `report.md`, the primary readable entry point to the scan results.
-- `findings//`, when detailed vulnerability reports and supporting
-  proof-of-concept files are available.
-- `hardening/`, when structural hardening guidance and supporting proposals or
-  diagrams are available.
-- Structured scan data in `scan-manifest.json`, `findings.json`, and
-  `coverage.json` for automation and integrations. You can review scan results
-  without opening these files.
-
-Keep the full scan directory together when sharing or archiving results so the
-links from `report.md` continue to work.
+The directory also contains `scan-manifest.json`, `findings.json`, and
+`coverage.json` for tools and automation. Keep it together when sharing or
+archiving results so the report's links continue to work.
 
 #### Choose your next workflow
 
-- [Use the Security workbench](./security/plugin/workbench.md) to manage
-  saved scans, findings, repositories, and scan activity in the desktop app.
-- [Run a scan from the CLI](./security/cli.md) if you have beta access and
-  need a repeatable terminal workflow with structured results.
-- [Run a standard or scoped scan](./security/plugin/scans.md) to review a
-  repository or one folder with the default workflow.
-- [Assess a first scan](./security/plugin/scans.md#assess-a-first-scan)
-  to check the results against known issues and decide when to scan again.
-- [Run a deep scan](./security/plugin/deep-scans.md) for a more thorough scan
-  when you can allow for a longer runtime.
-- [Review code changes](./security/plugin/code-changes.md) to assess a pull
-  request, commit, branch range, or working-tree patch.
-- [Triage a backlog](./security/plugin/triage-backlog.md) to review existing
-  security findings.
+- [Configure scope and security context](./security/plugin/scans.md) for the
+  next scan, or [review a code change](./security/plugin/code-changes.md).
 - [Fix and verify a finding](./security/plugin/fix-findings.md) after you
-  accept one finding for remediation.
-- [Export or track findings](./security/plugin/export-findings.md) to create
-  JSON, CSV, SARIF, an approval-gated Linear, GitHub, or Jira issue, or a private
-  draft GitHub Security Advisory.
-- [Write vulnerability reports](./security/plugin/vulnerability-reports.md)
-  to turn supplied findings, disclosure notes, source, and PoCs into
-  self-contained reports.
-- [Propose security hardening](./security/plugin/security-hardening.md) to
-  consider structural or architectural options based on scan results or other
-  security evidence.
+  accept its evidence, or [track it in an issue](./security/plugin/export-findings.md).
+
+For other scan modes and workflows, return to the [Codex Security
+overview](./security.md).
 
 ### Codex Security TypeScript SDK
 
@@ -8040,11 +7616,9 @@ The SDK uses ECMAScript modules (ESM) and runs server-side with Node.js 22
 (22.13.0 or later), 24, or 26. Scanning also requires Python 3.10 or later.
 Python 3.10 also requires the `tomli` package.
 
-The Codex Security SDK is [publicly available on
-GitHub](https://github.com/openai/codex-security). Running scans requires
-Codex Security access. For general coding agents, see the [Codex SDK
-guide](./codex-sdk.md). For terminal and CI workflows, see the [Codex
-Security CLI quickstart](./security/cli.md).
+Running scans requires Codex Security access. For general coding agents, see
+the [Codex SDK guide](./codex-sdk.md). For terminal and CI workflows, see
+the [Codex Security CLI quickstart](./security/cli.md).
 
 #### Set up the SDK
 
@@ -8060,25 +7634,24 @@ provider](#configure-the-runtime-and-credentials). Amazon Bedrock uses AWS
 credentials; OpenRouter and Fireworks use provider-specific API keys and
 configuration.
 
-For best results, use an account verified for [Trusted Access for
-Cyber](https://chatgpt.com/cyber). Signing in or providing an API key does not
+For best results, use an account verified for [Trusted Access for Cyber](https://chatgpt.com/cyber). Signing in or providing an API key does not
 grant Trusted Access.
 
 #### Run a scan
 
-Scan only repositories you trust and have permission to assess. The SDK runs
-with your local operating-system permissions and never pauses for approval.
+The SDK runs with your local operating-system permissions and doesn't pause
+for approval.
 Scan processes can inherit your environment, so remove unrelated credentials
 before you start. See [Local scan
 permissions](./security/cli/reference.md#local-scan-permissions).
 
-Create one `CodexSecurity` client, run a standard repository scan, and close
-the client when the work completes. Pass `outputDir` to choose a private
+Save this example as `scan.mjs`. Replace the paths, run a standard repository
+scan, and close the client when the work completes. Pass `outputDir` to choose a private
 results directory outside the enclosing Git worktree.
 
 If you omit `outputDir`, Codex Security saves results in its own persistent
 state directory. Results can include source excerpts and vulnerability
-details, so choose appropriate permissions and retention policies.
+details. Set who can read them and how long to keep them.
 
 ```ts
 import { CodexSecurity } from "@openai/codex-security";
@@ -8091,16 +7664,32 @@ try {
   });
 
   console.log(result.reportPath);
-  console.log(result.coverage.completeness);
+  console.log(result.manifest.scan.status);
   console.log(result.findings.findings.length);
 } finally {
   await security.close();
 }
 ```
 
-`run` starts the scan, waits for completion, validates the sealed artifacts,
-and returns a `ScanResult`. `close` releases the isolated runtime and supports
-repeated calls.
+Run it with Node.js:
+
+```bash
+node scan.mjs
+```
+
+The example prints the report path, scan status, and finding count.
+Open the report to review the evidence. The count varies with the repository
+and scan, so don't use an expected count to check whether the integration works.
+
+`run` validates the saved artifacts and returns a `ScanResult` when
+`result.manifest.scan.status` is `"completed"`. Check `result.coverage` for
+reviewed surfaces, exclusions, and deferred work. A completed scan can still
+have coverage gaps. Runtime, input, or result-integrity failures can throw an
+[error](#handle-scan-errors).
+
+In later examples, reuse the open `security` client and keep `close()` in
+`finally` to release the runtime. Add any additional imports at the top of
+`scan.mjs`.
 
 #### Check inputs with preflight
 
@@ -8120,9 +7709,9 @@ console.log(plan.mode);
 console.log(plan.outputDir);
 ```
 
-Preflight leaves the Codex runtime and credentials untouched. It also leaves
-plugin and Python discovery for the scan itself. This makes preflight useful
-for checking user input before a long-running or credentialed operation.
+Preflight checks local inputs without starting Codex, loading credentials, or
+checking Python and plugin availability. A successful preflight doesn't prove
+that the scan can authenticate or start.
 
 To preview archival for an existing result directory, set
 `archiveExisting: true`:
@@ -8228,8 +7817,7 @@ require `mode: "deep"`.
 `maxTimeHours` defaults to `96` and accepts a positive number up to `96`,
 including fractional hours. At the deadline, Codex Security stops unfinished
 workers, keeps completed scan results, and aggregates them into the final
-report. Review `result.coverage.completeness` before treating a time-limited
-scan as evidence of full coverage.
+report. Review `result.coverage` for deferred work and open questions.
 
 #### Add a security knowledge base
 
@@ -8283,11 +7871,11 @@ console.log(result.cost?.estimatedUsd);
 
 The limit estimates spending but isn't a hard cap, so requests already in
 progress can finish slightly above it. If a deep scan reaches the limit after
-Codex Security aggregates completed worker results, `run` returns a result
-with `coverage.completeness` set to `"partial"` and reports the budget warning
-through `onWarning`.
+Codex Security aggregates completed worker results, `run` can return a result
+with `manifest.scan.status` set to `"completed"` and report the budget warning
+through `onWarning`. Check `result.coverage` for the work left unfinished.
 
-If the scan can't produce a completed partial result, `run` throws
+If the scan can't produce a valid completed result, `run` throws
 `ScanCostLimitExceededError` and preserves any available output.
 
 #### Work with scan results
@@ -8300,7 +7888,7 @@ paths:
 | `manifest`           | The sealed scan manifest, including target, scope, producer, and artifact records. |
 | `findings`           | Findings from the current scan. Read finding objects from `findings.findings`.     |
 | `repositoryFindings` | Open findings across repository scans, when scan history is available.             |
-| `coverage`           | Reviewed surfaces, exclusions, deferred work, open questions, and completeness.    |
+| `coverage`           | Reviewed surfaces, exclusions, deferred work, and open questions.                  |
 | `scanDir`            | The scan directory.                                                                |
 | `threadId`           | The Codex thread identifier for the scan.                                          |
 | `turnResult`         | Turn status, response, and available usage metadata.                               |
@@ -8348,9 +7936,9 @@ for (const finding of result.repositoryFindings ?? []) {
 }
 ```
 
-Coverage completeness is `complete`, `partial`, or `unknown`. Review deferred
-surfaces, exclusions, and open questions before using a scan as evidence for a
-security decision.
+New results don't include `coverage.completeness`. Use `manifest.scan.status`
+for execution status, and review deferred surfaces, exclusions, and open
+questions in `coverage` to understand what the scan reviewed.
 
 `result.toJSON()` returns the manifest, repository and current-scan findings,
 coverage, scan and thread identifiers, `reportPath`, `artifactsDir`,
@@ -8387,22 +7975,18 @@ const result = await security.run("/path/to/repository", {
 console.log(result.reportPath);
 ```
 
-Pass an `AbortSignal` when cancellation comes from a request, job controller,
-or timeout:
+Pass an `AbortSignal` from your request or job controller to cancel a scan.
+If the scan is still running after 30 minutes, this example interrupts it and
+prints the directory containing any saved output:
 
 ```ts
 import { ScanInterruptedError } from "@openai/codex-security";
 
-const controller = new AbortController();
-
 try {
-  const scan = security.run("/path/to/repository", {
+  await security.run("/path/to/repository", {
     outputDir: "/path/outside/repository/results",
-    signal: controller.signal,
+    signal: AbortSignal.timeout(30 * 60 * 1000),
   });
-
-  controller.abort();
-  await scan;
 } catch (error) {
   if (error instanceof ScanInterruptedError) {
     console.error(error.scanDir);
@@ -8509,8 +8093,8 @@ The client also exposes supported authentication methods:
 
 A login handle provides `waitForInstructions`, `authUrl`, `verificationUrl`,
 `userCode`, `wait`, and `cancel` so an application can present and complete the
-selected sign-in flow. The SDK can reuse a file-backed Codex sign-in. API keys
-are a useful fit for CI and server-side automation.
+selected sign-in flow. The SDK can reuse a file-backed Codex sign-in. Use API keys
+for CI and server-side automation.
 
 When both an API key and a stored sign-in are available, the SDK uses the API
 key by default. To use your ChatGPT sign-in instead, select it for the scan:
@@ -8604,7 +8188,7 @@ service.
 #### Track selected findings
 
 Run `$codex-security:track-findings` with one validated finding or an
-explicitly selected batch of up to 25 findings from the same sealed scan. Each
+selected batch of up to 25 findings from the same sealed scan. Each
 run uses one provider and one destination. A private draft GitHub Security
 Advisory accepts only one finding.
 
@@ -8653,8 +8237,8 @@ create anything until I approve that payload.
 
 Draft advisories require one finding from a sealed `git_revision` scan, the
 verified public canonical source repository, and administrator access. The
-workflow doesn't batch, update, publish, or close advisories. Use an approved
-private issue destination when the source doesn't meet those requirements.
+workflow doesn't batch, update, publish, or close advisories. Use a private
+issue destination when the source doesn't meet those requirements.
 
 #### Review the proposed write
 
@@ -8693,27 +8277,21 @@ when the owner accepts the item for remediation.
 
 Source: [Fix and verify security findings](./security/plugin/fix-findings.md)
 
-Use Codex Security to turn an accepted security finding into a focused,
-verified patch. You can work in the Security workbench or run the remediation
-workflow from a prompt, the command line, or CI/CD. Codex validates the issue
-and, when testing is safe and practical, adds a focused regression test that
-fails before the fix and passes after it. It also checks that legitimate
-behavior still works. If a regression test is unsafe or infeasible, Codex
-records the proof gap and provides the strongest repeatable validation
-artifact instead.
+Start with one finding whose evidence you accept. Generate a patch,
+review it, and verify the original issue against the changed code. A generated
+or applied patch isn't yet a verified fix.
 
-Start with one accepted finding and review the proposed patch and verification
-evidence. If the workflow meets your standards, process other accepted
-findings one at a time in separate Codex tasks or CI/CD jobs. Keeping each task
-scoped makes its code changes and evidence easier to review.
+In the desktop workbench, generation leaves the selected checkout unchanged.
+Applying the patch changes that checkout. Verification checks the patch and
+records evidence without automatically closing the finding.
 
 #### Fix a finding in the UI
 
 Open an accepted finding from **Findings** or a completed scan in **Scans**.
 Review its evidence, then use **Patch** to generate, review, apply, and verify
-one focused fix.
+a fix.
 
-1. Generate a focused patch
+1. Generate a patch
 
    Open the finding, select the **Patch** tab, and select **Generate patch**.
    Codex validates or reproduces the issue when feasible and writes a patch
@@ -8721,9 +8299,8 @@ one focused fix.
 
 2. Review the proposed diff
 
-   Read every changed source, regression test, and validation artifact. Reject
-   broad refactors, unrelated cleanup, or changes that weaken another security
-   control.
+   Check the affected code and tests. Confirm that the change addresses the
+   finding without unrelated refactors or weakened security controls.
 
 3. Apply the patch locally
 
@@ -8733,14 +8310,13 @@ one focused fix.
 
 4. Verify the fix
 
-   Select **Verify fix**. Codex reruns the original reproducer or the strongest
-   available exploit check. If a regression test is safe and practical, Codex
-   checks that it fails before the fix and passes after it. If the test is
-   unsafe or infeasible, Codex records the proof gap and provides the
-   strongest repeatable validation artifact instead. It also checks
-   legitimate behavior, nearby bypasses, and relevant repository tests.
+   Select **Verify fix**. Codex reruns the original reproducer or another
+   exploit check. When it can run a regression test, it checks that the test
+   fails before the fix and passes after it. Otherwise, it records the
+   verification gap and the checks it could complete. It also checks
+   legitimate behavior, nearby bypasses, and repository tests.
 
-5. Close the finding deliberately
+5. Close the finding
 
    Verification doesn't automatically close a finding. Review the commands,
    results, and remaining proof gap, then close the finding with an accurate
@@ -8748,122 +8324,84 @@ one focused fix.
 
    Review the generated security fix before applying it to your checkout.
 
-#### Fix a finding from the CLI
+#### Fix a finding in a conversation
 
-Use the Codex CLI for an accepted finding from a scan, ticket, advisory,
-disclosure, security assessment, or internal review.
-
-Install Codex Security in the `CODEX_HOME` that `codex exec` uses before you
-run these commands. A fresh CI runner doesn't include marketplace plugins by
-default.
+Use the installed plugin with a finding from a scan, ticket, advisory, or other
+review. Supply the finding ID and report path, plus a reproducer or validation
+command if you have one:
 
 ```text
-Use $codex-security:fix-finding to fix finding <finding-id> from <report-path>. Validate the issue, make the smallest safe change, and add a focused regression test that fails before the fix and passes after it. If that test is unsafe or infeasible, record the proof gap and provide the strongest repeatable validation artifact instead. Verify that the issue no longer reproduces.
+Use $codex-security:fix-finding to fix finding <finding-id> from <report-path>. Verify the issue against this checkout, fix it, and test the original failure and legitimate behavior. Record any verification you couldn't complete.
 ```
 
-Include the known source, sink, attacker input, impact, expected invariant,
-reproducer, affected files, and validation command. Codex can inspect the
-repository for missing technical details. It should ask before assuming a
-product policy or intended security invariant.
+This authorizes edits to the checkout. Codex can inspect the repository for
+missing technical details, but may need you to clarify an intended security
+policy before choosing a fix.
 
-For an automated run, check out the code, make the finding report available,
-and install the plugin in the runner's `CODEX_HOME`. Then enable workspace
-writes and pass the prompt to `codex exec`:
+#### Run remediation without interaction
+
+For repeatable scans and patch generation, use the standalone
+CLI [validate and patch commands](./security/cli/reference.md#codex-security-validate-and-codex-security-patch).
+
+To invoke the installed plugin through Codex CLI, install Codex Security in
+the runner's `CODEX_HOME` first. A fresh runner doesn't include marketplace
+plugins by default. Use a separate checkout or job for each accepted finding:
 
 ```bash
-codex exec --sandbox workspace-write 'Use $codex-security:fix-finding to fix finding <finding-id> from <report-path>. Validate the issue, make the smallest safe change, and add a focused regression test that fails before the fix and passes after it. If that test is unsafe or infeasible, record the proof gap and provide the strongest repeatable validation artifact instead. Verify that the issue no longer reproduces.'
+codex exec --sandbox workspace-write 'Use $codex-security:fix-finding to fix finding <finding-id> from <report-path>. Verify the issue against this checkout, fix it, and test the original failure and legitimate behavior. Record any verification you could not complete.'
 ```
 
-#### Scan and fix findings in CI/CD
+The writable sandbox allows the workflow to edit source and tests. Preserve
+the patch and verification evidence for review. For installation, scan setup,
+and artifact handling, see [Automate reviews in
+CI/CD](./security/plugin/code-changes.md#automate-reviews-in-cicd).
 
-Install Codex Security in the runner's `CODEX_HOME` before you invoke either
-skill. The commands below use the installed plugin; they don't install it.
+After verification, merge the change through your normal code-review process.
+If verification is incomplete, keep the finding open with the remaining work.
 
-In CI/CD, separate the change scan from remediation and require the scan to
-leave the checkout unchanged. Preserve the completed scan directory as a job
-artifact, review the findings, and start a separate Codex task or job for each
-finding accepted for remediation.
+### Improve the Cloud threat model
 
-By default, `codex exec` uses a read-only sandbox. Run both the change scan and
-remediation with `--sandbox workspace-write`. The scan needs that permission
-to save temporary artifacts, but its prompt must still require `Do not modify
-the checkout`. Remediation needs the same permission to write the focused
-patch and verification evidence. See [Permissions and
-safety](./non-interactive-mode.md#permissions-and-safety).
+Source: [Improve the Cloud threat model](./security/threat-model.md)
 
-For each scan and accepted finding:
-
-1. Resolve the base and head revisions for the change.
-2. Run `$codex-security:security-diff-scan` against that diff without modifying
-   the checkout.
-3. Preserve the complete scan directory and select the findings to fix.
-4. Invoke `$codex-security:fix-finding` once for each accepted finding, passing
-   its finding ID and completed scan directory.
-5. Generate one focused patch and add a regression test that fails before the
-   fix and passes after it. If that test is unsafe or infeasible, record the
-   proof gap and use the strongest repeatable validation artifact instead.
-6. Verify the original issue and legitimate behavior. Return each patch, test
-   or fallback validation artifact, verification command, and any proof gap
-   independently.
-
-First, scan the change without modifying the checkout:
-
-```bash
-codex exec --sandbox workspace-write 'Use $codex-security:security-diff-scan to review changes from <base-revision> to <head-revision> for security regressions. Do not modify the checkout.'
-```
-
-Then fix one accepted finding from the completed scan:
-
-```bash
-codex exec --sandbox workspace-write 'Use $codex-security:fix-finding to fix finding <finding-id> from <completed-scan-directory>. Validate the finding, generate one minimal patch, and add a focused regression test that fails before the fix and passes after it. If that test is unsafe or infeasible, record the proof gap and provide the strongest repeatable validation artifact instead. Verify that the issue no longer reproduces.'
-```
-
-Repeat the second command in an independent task or job for each remaining
-accepted finding. After verification, merge each patch through your normal
-code-review and release process. To hand findings to another team before
-remediation, see [Export or track
-findings](./security/plugin/export-findings.md).
-
-### Improving the threat model
-
-Source: [Improving the threat model](./security/threat-model.md)
-
-Review and update the threat model for a repository monitored by Codex Security Cloud.
+Update a monitored repository's threat model when the generated version misses
+security assumptions or deployment context. This guide applies to Codex
+Security Cloud. For local plugin policy, see [Configure the
+scan](./security/plugin/scans.md#configure-the-scan).
 
 #### What a threat model is
 
 A threat model is a short security summary of how your repository works. Codex Security creates the first draft from the code and uses it to guide future commit scans and prioritize findings.
 
-A useful threat model calls out:
+A threat model describes:
 
-- entry points and untrusted inputs
-- trust boundaries and auth assumptions
-- sensitive data paths or privileged actions
-- the areas your team wants reviewed first
+- Entry points and who can supply input to them
+- Trust boundaries and authentication or authorization assumptions
+- Sensitive data and privileged actions
+- Areas that need particular attention
 
 For example:
 
-> Public API for account changes. Accepts JSON requests and file uploads. Uses an internal auth service for identity checks and writes billing changes through an internal service. Focus review on auth checks, upload parsing, and service-to-service trust boundaries.
+> The public account API accepts authenticated users' JSON requests and file
+> uploads. Users may change only accounts in their own tenant. The identity
+> service authenticates the caller, but each handler must check tenant access.
+> Billing changes go through a privileged internal service. Prioritize missing
+> tenant checks and upload paths that can reach that service.
 
-#### Improving and revisiting the threat model
+Identify uncertain assumptions. For example, don't describe an endpoint
+as internal-only unless that is true of the deployment you want assessed.
 
-Update the threat model when your architecture or priorities change, or when findings miss the areas you care about.
-
-#### Where to edit
+#### Edit the threat model
 
 1. Open the Codex Security Cloud plugin. See [Cloud setup](./security/setup.md)
    if you haven't installed it or configured commit monitoring.
 2. Open **Repositories** and select the monitored repository.
 3. Open **Monitoring settings**.
-4. Under **Project context**, edit **Threat model**, then select **Save**.
+4. Edit **Threat model**, then select **Save**.
 
 Changes apply to future scans.
 
-#### Threat model references
-
-- [Codex Security Cloud setup](./security/setup.md) covers repository setup and findings review.
-- [Codex Security](./security.md) gives the product overview.
-- [Codex Security Cloud FAQ](./security/faq.md) covers common cloud questions.
+Revisit the model after changes to authentication, tenant boundaries, or exposed
+services. Keep facts about the deployment separate from priorities for the scan.
 
 ### Propose security hardening
 
@@ -8875,25 +8413,24 @@ workflow can analyze a completed Codex Security scan or start from supplied
 findings, disclosure reports, incident reviews, assessment documents, and
 source code.
 
-The result is a design portfolio, not a patch, and doesn't prove that it fixes a
-vulnerability. Codex changes the repository only after you select an option and
-explicitly ask it to make that change.
+The result compares design options and their engineering tradeoffs. Codex
+changes the repository only after you select an option and ask it
+to implement it.
 
 #### Prepare the evidence
 
 Provide the workflow with:
 
-- A scan directory or an explicit collection of findings and reports.
-- The target source tree and relevant revision or snapshot when available.
+- A scan directory or a collection of findings and reports.
+- The target source tree and revision or snapshot when available.
 - PoCs, traces, incident evidence, or assessment material that supports the
   findings.
 - Constraints for performance, memory, compatibility, reliability, operations,
   delivery time, or change scope.
 
-The workflow uses the evidence to identify repeated broken invariants, dispersed
-controls, privileged choke points, weak isolation boundaries, and recurring
-remediation patterns. It can also conclude that local fixes are more
-proportionate than an architectural change.
+For example, repeated authorization bugs may suggest that a shared control
+would be easier to enforce than checks in each handler. The evidence may also
+support keeping a local fix instead of changing the architecture.
 
 #### Run the workflow
 
@@ -8903,20 +8440,20 @@ Send a prompt like:
 Use $codex-security:propose-security-hardening to analyze [scan directory or finding paths] against [source tree and revision]. Develop evidence-backed structural hardening options with engineering tradeoffs, before-and-after diagrams, a migration plan, and an implementation handoff. Do not modify the repository.
 ```
 
-#### Review the portfolio
+#### Choose an option
 
-A useful portfolio should:
+Before choosing an option, check that the proposal:
 
-- Connect each proposed change to concrete findings, source, and threat-model
+- Connects each proposed change to findings, source, and threat-model
   evidence.
-- Describe the current design and the security invariants the new design should
+- Describes the current design and the security invariants the new design should
   preserve.
-- Compare distinct options, including residual risk, performance,
+- Compares distinct options, including residual risk, performance,
   reliability, operations, compatibility, and migration cost.
-- Recommend an option only when the evidence supports it, with explicit
-  assumptions and open questions.
-- Include rollout, validation, rollback, and implementation guidance.
-- Separate observed facts, inferences, and proposed design properties.
+- Supports its recommendation with evidence and states assumptions and open
+  questions.
+- Includes rollout, validation, rollback, and implementation guidance.
+- Separates observed facts, inferences, and proposed design properties.
 
 Review the evidence and tradeoffs before choosing an option. An architecture
 diagram or design recommendation doesn't replace validation of the original
@@ -8989,7 +8526,7 @@ findings](./security/plugin/export-findings.md).
 
 #### Automate reviews in CI/CD
 
-If you have access to the beta standalone CLI, see [Run Codex Security in
+For the standalone CLI, see [Run Codex Security in
 CI](./security/cli/ci.md) for structured JSON, a severity policy, and SARIF
 upload. Continue with this section to invoke the installed plugin skill
 through `codex exec`.
@@ -9008,9 +8545,8 @@ Install the Codex Security plugin in the CLI:
 codex plugin add codex-security@openai-curated
 ```
 
-The install command uses the public Codex CLI plugin marketplace. Check the
-[plugin changelog](./security/plugin/changelog.md) before you depend on a
-specific plugin version or feature in CI.
+The install command uses the public Codex CLI plugin marketplace. See the [plugin changelog](./security/plugin/changelog.md) for version-specific
+requirements.
 
 Next, provide an OpenAI API key from your CI secret store as
 `CODEX_SECURITY_API_KEY`. Expose the credential only for the scan:
@@ -9027,37 +8563,17 @@ still requires Codex to leave the source checkout unchanged.
 The scan writes its output to
 `$TMPDIR/codex-security-scans///`:
 
-| File                 | Contents                                                                                                                                                  |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `report.md`          | Primary readable entry point to the complete scan directory.                                                                                              |
-| `findings//`         | Detailed vulnerability reports and supporting proof-of-concept files, when requested.                                                                     |
-| `hardening/`         | Structural hardening guidance and supporting proposals, when requested.                                                                                   |
-| `findings.json`      | Findings with stable identifiers, severity, confidence, source locations, and remediation. Feed approved internal security workflows or downstream tools. |
-| `scan-manifest.json` | Sealed scan receipt with the reviewed target, revisions, and artifact hashes.                                                                             |
-| `coverage.json`      | Reviewed and deferred surfaces, exclusions, and coverage completeness.                                                                                    |
+| File                 | Contents                                                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `report.md`          | Primary readable entry point to the complete scan directory.                                                                                           |
+| `findings//`         | Detailed vulnerability reports and supporting proof-of-concept files, when requested.                                                                  |
+| `hardening/`         | Structural hardening guidance and supporting proposals, when requested.                                                                                |
+| `findings.json`      | Findings with stable identifiers, severity, confidence, source locations, and remediation. Use these fields in security workflows or downstream tools. |
+| `scan-manifest.json` | Sealed scan receipt with the reviewed target, revisions, and artifact hashes.                                                                          |
+| `coverage.json`      | Reviewed and deferred surfaces, exclusions, and coverage completeness.                                                                                 |
 
-The [`findings.json` schema](https://github.com/openai/plugins/blob/main/plugins/codex-security/schemas/findings.schema.json)
-defines the complete structure. The schema includes these fields:
-
-| Field                     | Type   | Description                                                            |
-| ------------------------- | ------ | ---------------------------------------------------------------------- |
-| `documentType`            | String | Identifies the document as `codex-security.findings`.                  |
-| `schemaVersion`           | String | Identifies the findings schema version.                                |
-| `scanId`                  | String | Identifies the scan that produced the findings.                        |
-| `findings`                | Array  | Contains zero or more finding objects.                                 |
-| `findings[].findingId`    | String | Stable finding identifier derived from the finding fingerprint.        |
-| `findings[].occurrenceId` | String | Identifies this occurrence of the finding in a specific scan.          |
-| `findings[].ruleId`       | String | Identifies the vulnerability family.                                   |
-| `findings[].identity`     | Object | Contains the semantic anchor and optional sibling-instance identifier. |
-| `findings[].fingerprints` | Object | Contains the fingerprint algorithm and primary fingerprint.            |
-| `findings[].title`        | String | Provides the short finding title.                                      |
-| `findings[].summary`      | String | Summarizes the vulnerability and its impact.                           |
-| `findings[].severity`     | Object | Contains the severity level and optional scoring details.              |
-| `findings[].confidence`   | Object | Contains the confidence level and rationale.                           |
-| `findings[].taxonomy`     | Object | Contains the vulnerability category and CWE identifiers.               |
-| `findings[].locations`    | Array  | Lists affected files, line numbers, and location roles.                |
-| `findings[].remediation`  | String | Describes the recommended fix.                                         |
-| `findings[].provenance`   | Object | Identifies the source of the finding.                                  |
+For field definitions, see the [findings schema](https://github.com/openai/plugins/blob/main/plugins/codex-security/schemas/findings.schema.json). Use `findingId` to identify the finding and `occurrenceId` for its occurrence
+in this scan.
 
 For example, this command prints one tab-separated row per finding:
 
@@ -9073,11 +8589,9 @@ These examples assume a trusted Linux runner with Node.js and `npm`, Git, Python
 3, `jq`, and the provider's command-line tools. The `npm` global package prefix
 must be writable.
 
-Choose the example for your CI provider:
-
 Scan results can include sensitive vulnerability details. Keep artifacts
-private, and publish findings only after reviewing the audience, content, and
-required approvals.
+private, and review the destination and content before publishing findings.
+Choose the example for your CI provider:
 
 ```yaml
 name: Codex Security review
@@ -9272,12 +8786,14 @@ input at the same `CODEX_HOME`.
 
 Source: [Run a Codex Security scan](./security/plugin/scans.md)
 
-Start with a standard Codex Security scan for an initial review or a routine
-repository or component assessment. It runs the full scan workflow once.
+Use a standard scan to review a repository or a selected folder. This guide
+explains how to set the scope, supply security context, and assess the result.
+If you haven't installed the plugin, start with the [plugin
+quickstart](./security/plugin.md).
 
-For a more thorough assessment, review the results and then run a [deep
-scan](./security/plugin/deep-scans.md). Deep scans take longer and search
-more extensively.
+For repeated reviews of the same scope, use a [deep
+scan](./security/plugin/deep-scans.md). For a pull request or local diff,
+[review code changes](./security/plugin/code-changes.md).
 
 #### Choose the scan area
 
@@ -9286,7 +8802,7 @@ Choose an existing repository or another folder, then select **Codebase**.
 
 Scan the whole repository when you need broad coverage and the repository is a
 reasonable review unit. For a monorepo, choose one folder when a service,
-package, or component has a clear owner and security boundary.
+package, or component has an owner and security boundary.
 
 You can also start a scan from a Codex conversation:
 
@@ -9297,10 +8813,8 @@ Use $codex-security:security-scan to scan this repository for security vulnerabi
 To focus that conversation on a particular folder, identify the component:
 
 ```text
-Use $codex-security:security-scan to scan this repository for security vulnerabilities, focusing on the services/billing component.
+Use $codex-security:security-scan to scan only services/billing in this repository for security vulnerabilities.
 ```
-
-For a large monorepo, start with one meaningful product or service boundary.
 
 #### Configure the scan
 
@@ -9311,9 +8825,8 @@ with `xhigh` reasoning effort.
 2. Confirm the selected repository, current branch, and latest revision.
 3. Set **Scan area** to the entire repository or choose one folder.
 4. Choose a model and reasoning effort.
-5. Open **Additional context** only when it changes the review. Useful context
-   names attacker-controlled inputs, trust boundaries, sensitive actions, or a
-   specific area to prioritize.
+5. Use **Additional context** to describe attacker-controlled inputs, trust
+   boundaries, sensitive actions, or an area to prioritize.
 6. Select **Start scan**.
 
 Add `SECURITY.md` to the repository root for persistent security guidance.
@@ -9326,74 +8839,43 @@ not executable instructions.
 Use `AGENTS.md` for supported build and validation commands and other
 repository-specific instructions.
 
-#### Let the phases complete
+#### Follow scan progress
 
-A scan runs these phases in order:
-
-1. **Threat modeling** identifies assets, entry points, trust boundaries, and
-   security invariants.
-2. **Finding discovery** reviews the requested code for plausible broken
-   controls and source-to-sink paths.
-3. **Validation** tests or otherwise checks each candidate and records evidence
-   or proof gaps.
-4. **Impact and path analysis** evaluates each candidate's realistic paths,
-   impact, and severity.
-5. **Reporting** records validated findings, coverage, and scan metadata.
-   Detailed per-finding reports are available when requested.
-6. **Structural hardening**, when requested, analyzes the finding set and
-   creates design guidance.
-7. **Finalization** validates the structured scan contract and generates
-   `report.md`, including links to any detailed reports or hardening guidance.
-
-The workbench shows the active scan phase and any progress the plugin reports.
-Select **View activity** to inspect the Codex task. Wait for the complete
-result instead of judging early candidates or stopping because one phase takes
-longer than another.
+The workbench shows the current phase and reported progress. Select **View
+activity** to inspect the Codex task. Review the final result after the scan
+finishes, since findings can change while Codex checks the evidence.
 
 #### Review the completed scan
 
 Review the result in this order:
 
 1. Confirm the target, revision, and scan area.
-2. Read reviewed surfaces and every explicit deferred or follow-up area.
-3. For each finding, inspect the root control or sink, attacker-controlled
-   input, validation method, remaining uncertainty, realistic reachability,
-   severity rationale, and proposed remediation.
-4. Dismiss findings whose evidence doesn't support the claimed path or impact.
+2. Read reviewed surfaces and any deferred or follow-up areas.
+3. For each finding, check how an attacker reaches the affected code, which
+   control fails, and what impact the evidence supports. Read the validation
+   method and any unresolved questions.
+4. Investigate findings with missing evidence. Dismiss a finding when you can
+   explain why it doesn't apply, and keep that explanation with the result.
 5. Select one accepted finding before starting a fix.
 
-   Review the finding's severity, validation status, root cause, and attack
-   path.
+A completed scan and complete coverage are separate claims. Read deferred
+areas even when the scan finishes successfully. Source-based validation can
+support a finding without a runtime reproduction. To resolve uncertainty
+that depends on execution, ask for validation of the specific finding.
 
-#### Assess a first scan
+    Review the finding's severity, validation status, root cause, and attack
+    path.
 
-Before scanning, choose two to four evaluation criteria, such as independent
-discovery, evidence quality, false positives, or remediation quality. If you
+#### Use your first scan as a baseline
+
+Before scanning, decide what you want to compare, such as evidence quality
+or false positives. If you
 test against a known finding, record whether you provided it to Codex or
 withheld it from the scan.
 
 Record the repository revision, plugin version, model, and reasoning effort.
 Use this baseline to compare later scans after the code, security controls, or
 scan settings change.
-
-#### Choose a scan cadence
-
-Set your scan cadence based on the repository's risk and your team's capacity
-to address findings. Scan at these points:
-
-- **Baseline:** Run a standard scan when you onboard a repository, take
-  ownership of a component, or need a starting point for a new threat model.
-- **Code changes:** [Review code
-  changes](./security/plugin/code-changes.md) when a pull request or commit
-  changes security-sensitive code or an external integration.
-- **Regular review:** Set a recurring review interval based on your system's
-  exposure and how often the code changes. Adjust it to your team's capacity to
-  address findings.
-- **After a fix:** [Fix and verify the
-  finding](./security/plugin/fix-findings.md). Confirm that the issue no
-  longer reproduces and keep the original scan for comparison.
-
-These scan triggers don't create an automated schedule.
 
 #### Reopen a previous scan
 
@@ -9404,46 +8886,79 @@ earlier scan or its artifacts.
 
 #### Use the results
 
-Use the Security workbench to review findings, coverage, and follow-up areas
-without inspecting raw JSON. Open `report.md` when available for the readable
-entry point to the complete scan directory. Keep the directory together when
-you share or archive it: the report links to detailed reports in `findings/`
-and structural hardening guidance in `hardening/` when those optional artifacts
-are available.
-
-Behind the workspace, each scan preserves `scan-manifest.json`, `findings.json`,
-and `coverage.json` for automation and integrations. You normally don't need to
-open these files yourself.
-
-For portable artifacts or external issue tracking, see [Export or track
-findings](./security/plugin/export-findings.md).
-
-#### Next step
-
-After you accept a finding, use [Fix and verify a
-finding](./security/plugin/fix-findings.md) to generate and review one
-bounded patch. Don't ask Codex to fix every finding from a scan in one chat.
+Open `report.md` for a portable report, and keep its scan directory together
+when sharing or archiving it. Use [Export and track
+findings](./security/plugin/export-findings.md) for other formats or issue
+tracking. After accepting a finding, [generate and verify a
+fix](./security/plugin/fix-findings.md).
 
 ### Run a deep security scan
 
 Source: [Run a deep security scan](./security/plugin/deep-scans.md)
 
-Run a deep scan when you need a more thorough review and can allow for a longer
-runtime. Deep scans search a repository more extensively and can reduce
-variability between runs.
+A deep scan runs multiple independent standard scans over the same repository
+or folder and combines their findings. Use it when you want repeated review
+and can allow for the additional runtime and token use.
 
-Start with a [standard scan](./security/plugin/scans.md) to check your scope
-and results. Then use a deep scan when you need a more thorough assessment.
+Start with a [standard scan](./security/plugin/scans.md) to check that the
+scope and security context match your goal. Repeated review can find issues
+missed by an earlier pass, but doesn't guarantee complete detection or identical
+results between runs.
 
 #### Choose between standard and deep scans
 
-|                         | Standard scan                                      | Deep scan                                             |
-| ----------------------- | -------------------------------------------------- | ----------------------------------------------------- |
-| Best for                | First runs and routine repository or folder review | More thorough reviews after a standard scan           |
-| Variability             | Standard                                           | Reduced                                               |
-| Scope                   | Repository or explicit folder                      | Repository or explicit folder                         |
-| Runtime and resources   | Lower                                              | Higher                                                |
-| Pull requests and diffs | Use the change-review workflow                     | Not supported; use the change-review workflow instead |
+|            | Standard scan                               | Deep scan                                      |
+| ---------- | ------------------------------------------- | ---------------------------------------------- |
+| Review     | One standard scan                           | Multiple standard scans with combined findings |
+| Use it for | A first scan or a review of a defined scope | Additional independent reviews of that scope   |
+| Scope      | Repository or folder                        | Repository or folder                           |
+| Changes    | Use the change-review workflow              | Not supported                                  |
+
+#### Start the deep scan
+
+For the best scan quality, use `gpt-5.6-sol`
+with `xhigh` reasoning effort.
+
+1. Open **Security** > **Scans** and select **+ Scan**.
+2. Choose a repository or folder, select **Codebase**, and turn on **Deep scan**.
+   The scan reviews the entire selected repository or folder.
+3. Choose the model and reasoning effort. Add threat-model or deployment
+   context under **Additional context**.
+4. Select **Start scan**.
+
+You can also start it from a Codex conversation:
+
+```text
+Use $codex-security:deep-security-scan to run a deep security scan of this repository.
+```
+
+For one component, replace "this repository" with the path to its folder.
+
+Deep scan workers inherit your selected model and reasoning settings. Each
+worker runs a complete standard scan, and Codex Security aggregates the
+completed results. Follow the saved scan from **Scans**, or select **View
+activity** to inspect its Codex task. Set [runtime limits](#configure-deep-scan-runtime) before starting if you need
+to limit concurrency or duration.
+
+    Track the active deep-scan phase and inspect its Codex activity before
+    reviewing the completed result.
+
+#### Review the result
+
+Deep scans use the same saved scan details and complete scan directory as
+standard scans. Open the completed scan in **Scans** or review its findings in
+**Findings**. The generated `report.md` links to detailed vulnerability reports
+or structural hardening guidance when you request those outputs.
+Keep any linked `findings/` and `hardening/` directories with the report when
+sharing or archiving the result.
+
+Review the coverage summary before the findings. Even a deep scan has limits,
+so check deferred surfaces and remaining proof gaps before drawing a
+conclusion. For a finding you accept, continue with [Fix and verify a
+finding](./security/plugin/fix-findings.md).
+
+To review a pull request, commit, branch range, or local patch, use [Review code
+changes](./security/plugin/code-changes.md). Deep scans don't accept diff targets.
 
 #### Configure deep-scan runtime
 
@@ -9481,68 +8996,6 @@ coverage.
 
 The `max_time_hours` setting requires plugin version `0.1.19` or later. See the
 [plugin changelog](./security/plugin/changelog.md) for release details.
-
-#### Start the deep scan
-
-In the desktop app, open **Security**, select **Scans**, and select **+ Scan**.
-Choose a repository or another folder, select **Codebase**, and turn on
-**Deep scan**. The scan covers the entire selected repository or folder.
-
-You can also start a repository-wide deep scan from a Codex conversation:
-
-```text
-Use $codex-security:deep-security-scan to run a deep security scan of this repository.
-```
-
-For one component in a monorepo, identify the folder explicitly:
-
-```text
-Use $codex-security:deep-security-scan to run a deep security scan of /absolute/path/to/repository/services/payments.
-```
-
-For a scoped deep scan in the desktop app, select the folder as the codebase.
-The scan covers the entire selected folder.
-
-#### Confirm setup and preflight
-
-For the best scan quality, use `gpt-5.6-sol`
-with `xhigh` reasoning effort.
-
-1. Select **Codebase** and turn on **Deep scan**.
-2. Confirm that the repository or selected folder is the code you intended to
-   scan.
-3. Choose a model and reasoning effort.
-4. Open **Additional context** for concrete attack vectors, sensitive
-   application areas, or repository context that the code can't reveal.
-5. Select **Start scan**.
-
-Deep scan workers inherit your selected model and reasoning settings. Each
-worker runs a complete standard scan, and Codex Security aggregates the
-completed results. Follow the saved scan from **Scans**, or select **View
-activity** to inspect its Codex task. Check the [plugin
-changelog](./security/plugin/changelog.md) before you update the plugin or
-start a long-running scan.
-
-    Track the active deep-scan phase and inspect its Codex activity before
-    reviewing the completed result.
-
-#### Review the result
-
-Deep scans use the same saved scan details and complete scan directory as
-standard scans. Open the completed scan in **Scans** or review its findings in
-**Findings**. The generated `report.md` links to detailed vulnerability reports
-or structural hardening guidance when you request those outputs.
-Keep any linked `findings/` and `hardening/` directories with the report when
-sharing or archiving the result.
-
-Review the coverage summary before the findings. Even a deep scan has limits,
-so check deferred surfaces and remaining proof gaps before drawing a
-conclusion. For a finding you accept, continue with [Fix and verify a
-finding](./security/plugin/fix-findings.md).
-
-To review a pull request, commit, branch range, or local patch, use [Review code
-changes](./security/plugin/code-changes.md). A deep scan never substitutes
-for the diff-focused workflow.
 
 ### Run bulk security scans
 
@@ -9658,8 +9111,8 @@ the campaign. The `--max-time-hours` flag works with `scan`, not `bulk-scan`.
 
 The CLI checks out each pinned revision, scans the selected target, records the
 result, and removes the temporary repository checkout. A repository counts as
-complete only when its scan has complete coverage and all required result
-artifacts exist.
+complete when its scan has a `completed` manifest status and valid required
+result artifacts. Coverage gaps don't make the scan fail.
 
 #### Share security context and instructions
 
@@ -9685,7 +9138,7 @@ npx @openai/codex-security bulk-scan repositories.csv \
 
 The CLI appends each repository's CSV `prompt` after the shared scan
 instructions. Follow-up instructions run in the same authenticated session
-after successful scans and scans with incomplete coverage or errors, but not
+after successful scans and scan errors, but not
 after cancellation or a scan that reaches its cost limit. Prompt file paths
 resolve from your current directory.
 
@@ -9722,8 +9175,8 @@ Bedrock setup](./security/cli/reference.md#use-amazon-bedrock).
 
 #### Review campaign results
 
-The output directory contains the pinned campaign, an append-only results
-ledger, and separate artifacts for each repository and attempt:
+The output directory keeps the campaign configuration, a record of each attempt,
+and separate results for each repository:
 
 ```text
 security-scans/
@@ -9763,8 +9216,8 @@ npx @openai/codex-security export \
 ```
 
 Results can contain source excerpts and vulnerability details. Keep the
-output directory private, outside scanned repositories, and subject to an
-appropriate retention policy.
+output directory private and outside scanned repositories. Set how long to
+keep the results.
 
 #### Resume a campaign
 
@@ -9776,9 +9229,9 @@ npx @openai/codex-security bulk-scan repositories.csv \
   --workers 4
 ```
 
-The CLI resumes unfinished repository scans and skips completed ones. Scans
-with incomplete coverage aren't retried. Their results remain available, and
-the command exits with code `2`.
+The CLI resumes the campaign, starting new attempts for eligible unfinished
+repositories and skipping completed scans, including scans with coverage gaps.
+Their results remain available.
 
 Don't change the repository inventory or scan and follow-up instructions for
 an existing output directory. The CLI checks the pinned manifest and rejects a
@@ -9797,24 +9250,24 @@ npx @openai/codex-security bulk-scan repositories.csv \
   --max-attempts 3
 ```
 
-The default is one attempt per repository. Every attempt receives its own
-receipt and artifact directory. Retries cover checkout errors, scan failures,
-and missing required artifacts. Completed scans with incomplete coverage
-aren't retried.
+The default is one attempt per repository. Each attempt has its own result
+record and artifact directory. Retries cover checkout errors, scan failures,
+and missing or invalid required artifacts. Completed scans aren't retried
+because of coverage gaps or severity-policy violations.
 
 Bulk scans use these exit codes:
 
-| Exit code | Meaning                                                                                                               |
-| --------- | --------------------------------------------------------------------------------------------------------------------- |
-| `0`       | Every repository completed successfully.                                                                              |
-| `2`       | A repository couldn't complete, a scan had incomplete coverage, or the command encountered an input or runtime error. |
-| `130`     | Ctrl-C interrupted the campaign.                                                                                      |
-| `143`     | SIGTERM terminated the campaign.                                                                                      |
+| Exit code | Meaning                                                                                         |
+| --------- | ----------------------------------------------------------------------------------------------- |
+| `0`       | Every repository completed, and any configured severity policy passed.                          |
+| `1`       | Scans completed, but findings met a configured severity threshold.                              |
+| `2`       | A repository failed because of an input, execution, result-integrity, or required-output error. |
+| `130`     | Ctrl-C interrupted the campaign.                                                                |
+| `143`     | SIGTERM terminated the campaign.                                                                |
 
 #### Run bulk scans in Docker
 
-The [Codex Security
-repository](https://github.com/openai/codex-security) includes a hardened
+The [Codex Security repository](https://github.com/openai/codex-security) includes a hardened
 Compose configuration for automated CSV campaigns on a Linux Docker host. The
 host must support unprivileged user namespace creation.
 
@@ -9852,8 +9305,9 @@ runtime, then add a severity policy that fits your repository.
 Install the public `@openai/codex-security` package. Running scans still
 requires Codex Security access.
 
-This guide includes examples for GitHub Actions and GitLab CI/CD. The same scan
-and export commands work in other CI systems.
+This page provides a GitHub Actions workflow. For GitLab, use the
+[GitLab CI/CD guide](./security/cli/ci/gitlab.md). The same scan and export
+commands work in other CI systems.
 
 #### Prepare the workflow
 
@@ -9880,8 +9334,7 @@ The runner needs:
 
 #### Add the GitHub Actions workflow
 
-For private or internal repositories, enable
-[GitHub Code Security](https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github)
+For private or internal repositories, enable [GitHub Code Security](https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github)
 before you upload SARIF.
 
 Create `.github/workflows/codex-security.yml`. Before checking out the pull
@@ -10010,8 +9463,8 @@ differs from `codex exec --json`, which emits a JSON Lines event stream.
 
 The export step reads a completed, sealed scan and writes SARIF. It leaves the
 Codex runtime and credentials untouched. Scan artifacts can contain vulnerable
-source snippets, evidence, and remediation details. Choose access controls and a
-short retention window appropriate for your repository.
+source snippets, evidence, and remediation details. Set who can read them and
+how long to keep them.
 
 #### Add the GitLab CI/CD pipeline
 
@@ -10020,163 +9473,13 @@ deep scans, separate SARIF policy gating, and optional verified draft merge
 requests, use [Run Codex Security in GitLab
 CI/CD](./security/cli/ci/gitlab.md).
 
-GitLab can ingest
-[SARIF 2.1.0 reports](https://docs.gitlab.com/ci/yaml/artifacts_reports/#artifactsreportssarif)
-on GitLab Ultimate 19.2 or later. Add a masked and hidden
-`CODEX_SECURITY_API_KEY` CI/CD variable before you run the pipeline.
-
-The following minimal example adds a scan-only `security` job to the root
-`.gitlab-ci.yml`. Keep any existing stages and jobs in the file. It scans
-merge-request changes by default. Set `CODEX_SECURITY_FULL_SCAN_DEFAULT_BRANCH`
-to `"true"` to also scan the complete default branch:
-
-```yaml
-variables:
-  CODEX_SECURITY_FULL_SCAN_DEFAULT_BRANCH: "false"
-
-stages:
-  - test
-  - security
-
-codex-security:
-  stage: security
-  image: node:26-bookworm-slim
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == $CI_PROJECT_ID'
-      variables:
-        CODEX_SECURITY_SCAN_SCOPE: "diff"
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CODEX_SECURITY_FULL_SCAN_DEFAULT_BRANCH == "true"'
-      variables:
-        CODEX_SECURITY_SCAN_SCOPE: "full"
-  variables:
-    GIT_DEPTH: "0"
-    CODEX_SECURITY_CLI_DIR: "/tmp/codex-security-cli"
-  before_script:
-    - |
-      set -eu
-      apt-get update -qq
-      apt-get install -y -qq --no-install-recommends \
-        ca-certificates \
-        git \
-        python3 \
-        ripgrep
-      npm install \
-        --prefix "$CODEX_SECURITY_CLI_DIR" \
-        --ignore-scripts \
-        --no-audit \
-        --no-fund \
-        @openai/codex-security@0.1.20
-      export CODEX_SECURITY_BIN="$CODEX_SECURITY_CLI_DIR/node_modules/.bin/codex-security"
-      test -x "$CODEX_SECURITY_BIN"
-      "$CODEX_SECURITY_BIN" --version
-  script:
-    - |
-      set -eu
-      if test -z "${CODEX_SECURITY_API_KEY:-}"; then
-        echo "Set the CODEX_SECURITY_API_KEY CI/CD variable." >&2
-        exit 2
-      fi
-
-      codex_security_api_key="$CODEX_SECURITY_API_KEY"
-      unset CODEX_SECURITY_API_KEY
-
-      case "${CODEX_SECURITY_SCAN_SCOPE:-}" in
-        diff)
-          BASE_SHA="$CI_MERGE_REQUEST_DIFF_BASE_SHA"
-          HEAD_SHA="$CI_COMMIT_SHA"
-          BASE_REVISION="$(git merge-base "$BASE_SHA" "$HEAD_SHA")"
-          set -- --diff "$BASE_REVISION" --head "$HEAD_SHA"
-          echo "Scanning committed changes from $BASE_REVISION to $HEAD_SHA."
-          ;;
-        full)
-          set -- --mode standard
-          echo "Scanning the complete default branch at $CI_COMMIT_SHA."
-          ;;
-        *)
-          echo "Unsupported Codex Security scan scope: ${CODEX_SECURITY_SCAN_SCOPE:-unset}" >&2
-          exit 2
-          ;;
-      esac
-
-      export CODEX_SECURITY_STATE_DIR="/tmp/codex-security-state-$CI_JOB_ID"
-      SCAN_DIR="/tmp/codex-security-results-$CI_JOB_ID"
-      JSON_FILE="/tmp/codex-security-$CI_JOB_ID.json"
-      SARIF_FILE="/tmp/codex-security-$CI_JOB_ID.sarif"
-
-      install -d -m 700 "$CODEX_SECURITY_STATE_DIR" "$SCAN_DIR"
-
-      set +e
-      OPENAI_API_KEY="$codex_security_api_key" \
-        "$CODEX_SECURITY_BIN" scan . \
-          "$@" \
-          --auth api-key \
-          --output-dir "$SCAN_DIR" \
-          --json > "$JSON_FILE"
-      scan_exit="$?"
-      set -e
-      unset codex_security_api_key
-
-      install -d -m 700 codex-security-artifacts/results
-      cp -R "$SCAN_DIR"/. codex-security-artifacts/results/
-      if test -s "$JSON_FILE"; then
-        cp "$JSON_FILE" codex-security-artifacts/codex-security.json
-      fi
-      printf '%s\n' "$scan_exit" > codex-security-artifacts/scan-exit-code.txt
-
-      export_exit=0
-      if test -f "$SCAN_DIR/scan-manifest.json"; then
-        set +e
-        "$CODEX_SECURITY_BIN" export "$SCAN_DIR" \
-          --export-format sarif \
-          --source-root "$CI_PROJECT_DIR" \
-          --output "$SARIF_FILE"
-        export_exit="$?"
-        set -e
-        if test -s "$SARIF_FILE"; then
-          cp "$SARIF_FILE" codex-security-artifacts/codex-security.sarif
-        fi
-      fi
-
-      if test "$scan_exit" -ne 0; then
-        exit "$scan_exit"
-      fi
-      exit "$export_exit"
-  artifacts:
-    when: always
-    access: maintainer
-    expire_in: 7 days
-    paths:
-      - codex-security-artifacts/
-    reports:
-      sarif: codex-security-artifacts/codex-security.sarif
-```
-
-By default, the job runs only for merge requests from branches in the same
-project, so fork pipelines don't receive the scan credential. Set
-`CODEX_SECURITY_FULL_SCAN_DEFAULT_BRANCH` to `"true"` at the group, project, or
-pipeline level to also run a standard full scan on the default branch. Full
-scans take longer and cost more than diff scans.
-
-`GIT_DEPTH: "0"` provides the history needed to calculate the merge base from
-`CI_MERGE_REQUEST_DIFF_BASE_SHA` and `CI_COMMIT_SHA` for merge-request scans.
-
-The job installs the CLI under `/tmp`, runs it by absolute path, and exposes the
-API key only to the scan process. `artifacts: when: always` preserves the SARIF
-report when the scan fails, while `artifacts:access: maintainer` limits access
-to detailed scan results.
-
-Changes to `.gitlab-ci.yml` can expose CI/CD variables, so review pipeline
-changes before running the job. If you
-[protect `CODEX_SECURITY_API_KEY`](https://docs.gitlab.com/ci/pipelines/merge_request_pipelines/#control-access-to-protected-variables-and-runners),
-GitLab makes it available only for same-project merge requests between
-protected branches and only when the user can access the target branch.
-
-The dedicated GitLab guide expands this minimal job into the production
-workflow linked at the start of this section.
+The GitLab guide includes a scan-only starting point and the complete pipeline.
+It covers protected variables, artifact access, and a separate policy gate so
+GitLab can ingest findings even when the scanner returns a nonzero exit code.
 
 #### Choose a severity policy
 
-Both examples are report-only because they omit `--fail-on-severity`. Once you
+The GitHub example is report-only because it omits `--fail-on-severity`. Once you
 are ready to make findings affect the check, add a threshold to the scan
 command:
 
@@ -10193,17 +9496,17 @@ Earlier open findings shown in the repository summary don't affect the policy.
 
 The scan step uses these exit codes:
 
-| Exit  | Meaning                                                                                 |
-| ----- | --------------------------------------------------------------------------------------- |
-| `0`   | The scan completed with complete coverage, and any configured policy passed.            |
-| `1`   | The completed scan contains a finding at or above the threshold.                        |
-| `2`   | The CLI found an input or runtime error, or the completed scan has incomplete coverage. |
-| `130` | Ctrl-C interrupted the scan.                                                            |
-| `143` | SIGTERM terminated the scan.                                                            |
+| Exit  | Meaning                                                                     |
+| ----- | --------------------------------------------------------------------------- |
+| `0`   | The scan completed, and any configured severity policy passed.              |
+| `1`   | The completed scan contains a finding at or above the threshold.            |
+| `2`   | An input, execution, result-integrity, or required-output failure occurred. |
+| `130` | Ctrl-C interrupted the scan.                                                |
+| `143` | SIGTERM terminated the scan.                                                |
 
-A scan with `partial` or `unknown` coverage returns `2`, even without a severity
-policy. The CLI still writes its available findings and coverage. Review the
-deferred areas in `coverage.json` before treating the check as conclusive.
+Coverage gaps don't change a completed scan's exit code or bypass its severity
+policy. Exit `0` doesn't mean every file was reviewed. Review excluded paths,
+deferred work, and open questions in `coverage.json` when assessing the result.
 
 #### Retry with an existing result directory
 
@@ -10233,7 +9536,7 @@ The command archives the earlier results and starts with an empty scan directory
   directory outside the repository.
 - **Python setup error:** Confirm that the runner uses Python 3.10 or later.
 - **Incomplete coverage:** Review `coverage.json`, including deferred surfaces
-  and open questions, then rerun with an appropriate target or environment.
+  and open questions. Resolve the reported gaps before rerunning the scan.
 - **SARIF export error:** Confirm that the scan completed and the full scan
   directory is available. Export validates the sealed artifacts before writing
   SARIF.
@@ -10244,8 +9547,7 @@ The command archives the earlier results and starts with an empty scan directory
   the job uploads a SARIF 2.1.0 file through `artifacts:reports:sarif`.
 
 For every command, flag, artifact, and output field, see the [CLI
-reference](./security/cli/reference.md). For an interactive plugin-based CI
-review, see [Review code changes for security](./security/plugin/code-changes.md#automate-reviews-in-cicd).
+reference](./security/cli/reference.md). To invoke the plugin through `codex exec`, see [Review code changes for security](./security/plugin/code-changes.md#automate-reviews-in-cicd).
 
 ### Run Codex Security in GitLab CI/CD
 
@@ -10267,17 +9569,13 @@ You need:
 
 - A GitLab project with a trusted runner that supports the Codex sandbox's
   user namespace.
-- The Maintainer or Owner role in the GitLab project so you can configure
-  [project CI/CD variables](https://docs.gitlab.com/ci/variables/) and protected
-  resources.
+- The Maintainer or Owner role in the GitLab project so you can configure [project CI/CD variables](https://docs.gitlab.com/ci/variables/)
+  and protected resources.
 - An OpenAI API key with Codex Security access. Organizations using Platform
-  API keys can [request Trusted Access for
-  Cyber](https://openai.com/form/enterprise-trusted-access-for-cyber/).
-  Individuals using ChatGPT authentication can use the [personal Trusted Access
-  flow](https://chatgpt.com/cyber). Some accounts or repositories require this
+  API keys can [request Trusted Access for Cyber](https://openai.com/form/enterprise-trusted-access-for-cyber/).
+  Individuals using ChatGPT authentication can use the [personal Trusted Access flow](https://chatgpt.com/cyber). Some accounts or repositories require this
   access for full-repository scans.
-- GitLab Ultimate 19.2 or later for [SARIF 2.1.0
-  ingestion](https://docs.gitlab.com/user/application_security/detect/sarif/).
+- GitLab Ultimate 19.2 or later for [SARIF 2.1.0 ingestion](https://docs.gitlab.com/user/application_security/detect/sarif/).
 - Full Git history so merge request jobs can calculate the merge base.
 
 The pipeline image installs Node.js 26, Python 3, Git, `rg`, and the pinned
@@ -10289,10 +9587,9 @@ without protected credentials.
 
 Create a masked, hidden, protected GitLab CI/CD variable named
 `CODEX_SECURITY_API_KEY`. Use an OpenAI Platform API key with Codex Security
-access, and set its environment scope to `codex-security/openai`. See
-[environment-scoped CI/CD variables](https://docs.gitlab.com/ci/environments/#limit-the-environment-scope-of-a-cicd-variable).
+access, and set its environment scope to `codex-security/openai`. See [environment-scoped CI/CD variables](https://docs.gitlab.com/ci/environments/#limit-the-environment-scope-of-a-cicd-variable).
 
-Add this minimal pipeline to a test project first. It scans committed changes
+Add this pipeline to a test project first. It scans committed changes
 in eligible protected merge requests, publishes SARIF from a successful report
 job, and restores the scanner result in a separate gate:
 
@@ -10315,6 +9612,8 @@ codex-security:
   variables:
     GIT_DEPTH: "0"
   before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq --no-install-recommends ca-certificates git python3 ripgrep
     - npm install --prefix /tmp/codex-security-cli --ignore-scripts --no-audit --no-fund @openai/codex-security@0.1.20
   script:
     - |
@@ -10376,7 +9675,7 @@ codex-security-gate:
 ```
 
 Review every change to `.gitlab-ci.yml` before running a secret-bearing job.
-The minimal example intentionally omits full scans and remediation.
+This example omits full scans and remediation.
 
 #### Adopt the production pipeline
 
@@ -10401,8 +9700,7 @@ budgets to enable scheduled deep scans on the protected default branch.
 A merge request pipeline can access protected variables and runners only when:
 
 - You protect the source and target branches in the same project.
-- The project [permits merge request pipelines to access protected variables and
-  runners](https://docs.gitlab.com/ci/pipelines/merge_request_pipelines/#control-access-to-protected-variables-and-runners).
+- The project [permits merge request pipelines to access protected variables and runners](https://docs.gitlab.com/ci/pipelines/merge_request_pipelines/#control-access-to-protected-variables-and-runners).
 - The user who starts the pipeline can push or merge into the target branch.
 
 Fork pipelines and unprotected merge requests don't receive the scan
@@ -10495,17 +9793,12 @@ pipelines. The Codex remediation process and repository-controlled verification
 commands do not receive the GitLab project access token or runner-injected
 credentials.
 
-The security contract has three parts: repository-controlled commands never
-receive OpenAI or GitLab credentials, only the publishing job receives
-repository-write access, and every generated change stays a draft until a
-human reviews and merges it.
-
 The workflow:
 
 1. Requires complete scan coverage and a `high`- or `critical`-severity
    finding.
 2. Confirms that the configured regression test fails before patching.
-3. Generates a focused patch and rejects changes to CI, credential, binary, or
+3. Generates a patch and rejects changes to CI, credential, binary, or
    other protected files.
 4. Runs the regression test without OpenAI, GitLab, registry, deployment, or
    job-token credentials.
@@ -10530,7 +9823,7 @@ source changes.
 The `validate`, `patch`, and `verify-fix` commands receive a process-scoped
 `CODEX_API_KEY`. Repository-controlled setup and test commands run as a
 separate unprivileged user in a writable copy of the tracked source files.
-The copy intentionally excludes Git metadata, submodule contents, and
+The copy excludes Git metadata, submodule contents, and
 downloaded artifacts. Setup and test commands that require `.git` or
 submodules must run in a separately designed credential-free job.
 
@@ -10543,8 +9836,7 @@ job before enabling remediation.
 
 #### Publish a draft merge request
 
-Create a [GitLab project access
-token](https://docs.gitlab.com/user/project/settings/project_access_tokens/#create-a-project-access-token)
+Create a [GitLab project access token](https://docs.gitlab.com/user/project/settings/project_access_tokens/#create-a-project-access-token)
 with the Developer role and the `api` and `write_repository` scopes. Store it as
 a protected, masked, hidden `GITLAB_REMEDIATION_TOKEN` scoped only to the
 `codex-security/publish` environment.
@@ -10598,7 +9890,7 @@ identity from the normalized base and head revisions.
 
 #### Tune enforcement and cost
 
-Use focused diff scans for merge request feedback, standard repository scans
+Use diff scans for merge request feedback, standard repository scans
 for the default branch, and scheduled deep scans for broader coverage. Both
 full-repository profiles are off by default. A scheduled deep scan also requires
 `CODEX_SECURITY_DEEP_MAX_TIME_HOURS` and `CODEX_SECURITY_DEEP_MAX_COST`; keep the
@@ -10630,17 +9922,15 @@ reference](./security/cli/reference.md).
 Source: [Security Review](./security/security-review.md)
 
 Codex Security Review is available to ChatGPT Enterprise, Business, Edu, and
-Pro customers; it is not available on Plus. Security reviews consume included
+Pro customers. It isn't available on Plus. Security reviews consume included
 Codex allowance or ChatGPT credits.
 
-Codex Security Review is an additional review for customers that want to
-pay particular attention to security issues in pull requests.
+Use Security Review to check a GitHub pull request for security issues in its
+diff and supporting code. It uses threat-model context or security guidance
+when configured and posts findings that meet your reporting threshold.
 
-Codex Security Review goes deeper than [Code
-Review](./third-party/github.md) on security-specific risks by analyzing the
-pull request diff, supporting repository context, and configured threat models
-or security guidance. Code Review can also identify security-related issues as
-part of its general review, so you may see occasional overlap between findings.
+[Code Review](./third-party/github.md) can also report security issues during
+its general review, so the two reviews may report the same finding.
 
 #### Before you start
 
@@ -10698,9 +9988,8 @@ automatic and manual reviews, and add path-based overrides.
 Findings posted to a pull request inherit that pull request's GitHub
 visibility. Anyone who can view the pull request can view those findings,
 including on public repositories or pull requests from contributors outside
-your workspace. Choose reporting thresholds carefully for repositories where
-pull request comments may be broadly visible. The reporting threshold controls
-what Codex posts to GitHub; the full Codex Security Review report remains in
+your workspace. The reporting threshold controls
+what Codex posts to GitHub. The full Codex Security Review report remains in
 Codex.
 
 #### Request a Codex Security Review
@@ -10714,7 +10003,9 @@ manual reporting threshold directly on the pull request. Open the associated
 Codex task and select the **Security Report** tab to view the full report,
 including severity, attack path, supporting evidence, validation, and
 remediation guidance. If no issues meet the reporting threshold, Codex does not
-post findings to the pull request.
+post findings to the pull request. Check the task status and full report
+before interpreting an empty comment result as a completed review with no
+findings.
 
 #### Related docs
 
@@ -10737,15 +10028,8 @@ assess. Codex must be able to read the repository's source code. Jira and Linear
 connectors can provide finding data, while GitHub findings require authenticated
 GitHub REST access. Neither replaces access to the source code.
 
-Under the hood, Codex starts from the cited code or version information. It
-traces the claimed attacker-controlled source, relevant security controls,
-dangerous sink, and reachable path. It also checks the product surface and trust
-boundary, looks for contradictory evidence, and records proof gaps. Codex then returns
-one verdict per finding and ranks the findings that need action or further
-review.
-
 This differs from `$codex-security:validation`, which can build or run code,
-create a focused test or proof of concept, or exercise a real interface to
+create a test or proof of concept, or exercise a real interface to
 reproduce or disprove a finding. Use triage to classify and rank an
 existing backlog. Use validation when runtime evidence could resolve a finding
 that static evidence leaves uncertain.
@@ -10758,11 +10042,11 @@ doesn't modify the repository or implement fixes.
 
 You can supply one finding or a collection from these sources:
 
-| Source                   | What to provide                                                                                                                                                                                                                                                                                                                                                                                                                                        | Requirements                                                                                                                                                                                     |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Pasted or local findings | SARIF results, a CVE or GHSA, an advisory, a scanner ticket, a bug bounty report, a Codex Security finding artifact, or a plain-language vulnerability claim.                                                                                                                                                                                                                                                                                          | No connector required.                                                                                                                                                                           |
-| Jira or Linear           | Exact security or vulnerability issue URLs or identifiers, Jira JQL, or a Linear team, project, or search phrase. Codex retrieves the selected issue content before triage.                                                                                                                                                                                                                                                                            | [Jira through Atlassian Rovo](codex://plugins/plugin_connector_692de805e3ec8191834719067174a384) or [Linear](codex://plugins/plugin_asdk_app_69a089a326dc8191b32a3f2553f5be2c) with read access. |
-| GitHub                   | A repository and one finding source: code scanning, `Dependabot` vulnerabilities and malware, security advisories and private vulnerability reports, or all sources. If you don't specify a repository, Codex uses the GitHub repository attached to the current Codex project when available. GitHub Issues aren't included in the default GitHub sources; provide a specific issue or ask for GitHub Issues explicitly when you want to triage them. | Authenticated GitHub REST access, such as `gh auth token`, `GH_TOKEN`, or `GITHUB_TOKEN`, with permission to read the selected repository and finding type.                                      |
+| Source                   | What to provide                                                                                                                                                                                                                                                                                                                                                                                        | Requirements                                                                                                                                                                                     |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Pasted or local findings | SARIF results, a CVE or GHSA, an advisory, a scanner ticket, a bug bounty report, a Codex Security finding artifact, or a plain-language vulnerability claim.                                                                                                                                                                                                                                          | No connector required.                                                                                                                                                                           |
+| Jira or Linear           | Exact security or vulnerability issue URLs or identifiers, Jira JQL, or a Linear team, project, or search phrase. Codex retrieves the selected issue content before triage.                                                                                                                                                                                                                            | [Jira through Atlassian Rovo](codex://plugins/plugin_connector_692de805e3ec8191834719067174a384) or [Linear](codex://plugins/plugin_asdk_app_69a089a326dc8191b32a3f2553f5be2c) with read access. |
+| GitHub                   | A repository and one finding source: code scanning, `Dependabot` vulnerabilities and malware, security advisories and private vulnerability reports, or all sources. If you don't specify a repository, Codex uses the GitHub repository attached to the current Codex project when available. GitHub Issues aren't included by default. Provide a specific issue or ask for GitHub Issues explicitly. | Authenticated GitHub REST access, such as `gh auth token`, `GH_TOKEN`, or `GITHUB_TOKEN`, with permission to read the selected repository and finding type.                                      |
 
 Codex keeps one result for every supplied finding, in input order, so each
 source finding stays traceable. It doesn't merge or drop findings that look
@@ -10799,31 +10083,9 @@ only the finding source:
 Use $codex-security:triage-finding to import and triage [code scanning, Dependabot vulnerabilities and malware, security advisories and private vulnerability reports, or all] from GitHub against this repository. Use the GitHub repository attached to the current Codex project.
 ```
 
-The workflow proceeds in this order:
-
-1. Collect and organize the findings
-
-   Codex retrieves any requested issue or GitHub content, preserves source
-   identifiers and references, and creates one triage item per input. It builds
-   the complete item list before assigning verdicts.
-
-2. Confirm the repository context
-
-   Codex resolves the current repository and revision when available. It reads
-   `SECURITY.md` when present so supported versions, trusted inputs, product
-   boundaries, and out-of-scope surfaces inform the assessment.
-
-3. Inspect the static evidence
-
-   For each finding, Codex traces the claimed attacker-controlled source,
-   relevant security control, vulnerable sink, reachable path, and supported
-   security boundary. It records supporting evidence, evidence against the
-   claim, and proof gaps.
-
-4. Assign verdicts and ranks
-
-   Codex assigns a verdict and confidence to every finding. It ranks
-   `confirmed` and `needs_review` findings by exploitability in separate queues.
+Codex checks the current source and applicable `SECURITY.md` policy, then
+returns a verdict for every input finding. It records evidence both for and
+against the claim, along with unresolved questions.
 
 #### Review the results
 
@@ -10833,27 +10095,16 @@ The workflow proceeds in this order:
 | `not_actionable` | Repository evidence rules out the claim, such as by showing an unaffected version, unreachable path, effective guard, or non-shipped surface.                 |
 | `needs_review`   | Repository evidence isn't enough to decide because required information is missing, ambiguous, runtime-dependent, environment-dependent, or policy-dependent. |
 
-Exploitability ranks use positive integers starting at `1`, independently
-within each verdict queue. This keeps remediation priorities separate from
-unresolved review work. Rank `1` is the most exploitable `confirmed` finding
-or the highest-priority `needs_review` finding in that result set. The rank
-isn't a scanner severity score, and `not_actionable` findings aren't ranked.
+Use the rankings to decide which `confirmed` findings to fix first and which
+`needs_review` findings to investigate first. Each group is ranked separately.
 
-For each finding, review:
+Read the verdict's rationale alongside the affected code and attacker
+prerequisites. Check the evidence against the claim and any open questions
+before acting on the rank. Here, `confirmed` means supported by static
+repository evidence, not reproduced by executing the application.
 
-- the rationale for the verdict and rank
-- supporting evidence and evidence against the claim
-- open questions and remaining proof gaps
-- the affected location and component
-- the product surface and source trust level
-- the recommended next step
-- the [`$codex-security:fix-finding`](./security/plugin/fix-findings.md)
-  handoff, when the finding is `confirmed`
-
-Triage is complete when every supplied finding has one result, Codex preserves
-its source identifier, and any uncertainty is explicit. Jira, Linear, and other
-backlog records remain unchanged unless you ask Codex to write back after
-reviewing the triage results.
+Jira, Linear, and other backlog records remain unchanged unless you ask Codex
+to update them after reviewing the triage results.
 
 #### Next steps
 
@@ -10862,18 +10113,17 @@ reviewing the triage results.
   verify it. Triage prepares a prompt-ready handoff but doesn't invoke the skill
   automatically.
 - `needs_review`: If running code can resolve the proof gap, use
-  `$codex-security:validation` to perform bounded dynamic validation. Pass
+  `$codex-security:validation` to test the finding against running code. Pass
   the finding claim, affected locations, preconditions, static evidence, and
   proof gaps from the triage result:
 
   ```text
-  Use $codex-security:validation to dynamically validate finding [triage item ID or source ID] from the backlog triage result. Use the strongest realistic, bounded method, record exactly what was tested, and preserve any remaining proof gaps.
+  Use $codex-security:validation to dynamically validate finding [triage item ID or source ID] from the backlog triage result. Reproduce or disprove the finding, record what you tested, and list any remaining uncertainty.
   ```
 
-  Unlike triage, validation may build or run code, create a focused test or
-  proof of concept, or exercise a real interface. Review the proposed commands
-  before approving them and keep [Codex approval and security
-  policies](./agent-approvals-security.md) in place.
+  Unlike triage, validation may build or run code, create a test or
+  proof of concept, or exercise a real interface. See [Codex approval and
+  security policies](./agent-approvals-security.md) for execution controls.
 
 - `needs_review`: If the finding depends on product policy or deployment
   context, answer the listed open questions before changing code.
@@ -10886,9 +10136,9 @@ reviewing the triage results.
 
 Source: [Use the Codex Security workbench](./security/plugin/workbench.md)
 
-The Security workbench brings your scans, findings, and repositories together
-in the Codex desktop app. Codex performs scan analysis in a regular task, while
-the workbench keeps the scan and its results available when you return.
+Use the Security workbench to start scans, review saved findings, and inspect
+a repository's scan history. Each scan runs in a Codex task you can open to
+inspect its activity.
 
 In the ChatGPT desktop app, open the ChatGPT dropdown and select **Codex**.
 Install and enable the [Codex Security plugin](./security/plugin.md), then
@@ -10907,14 +10157,13 @@ with `xhigh` reasoning effort.
 2. Select an existing repository or choose another folder.
 3. Choose **Codebase** to scan a repository or **Changes** to review a
    Git-backed change.
-4. For a standard codebase scan, select the entire repository or a folder.
-5. For a deep scan, first select the repository or folder as the codebase, then
-   turn on **Deep scan**. Deep scans review the entire selected codebase.
-6. For a changes scan, select uncommitted changes, a commit, or a revision
-   range. **Deep scan** isn't available for changes scans.
-7. Choose a model and reasoning effort. Open **Additional context** to describe
-   relevant attack vectors, focus areas, or other security context.
-8. Select **Start scan**.
+4. Set the scope. For **Codebase**, choose the entire repository or a folder.
+   Turn on **Deep scan** for repeated review of the selected codebase. For
+   **Changes**, choose uncommitted changes, a commit, or a revision range.
+   Deep scans aren't available for changes.
+5. Choose a model and reasoning effort. Use **Additional context** for
+   threat-model or deployment details.
+6. Select **Start scan**.
 
    Choose a repository and configure a scan in the Security workbench.
 
@@ -10925,13 +10174,11 @@ type.
 
 #### Follow scan progress
 
-The scan page shows the current phase and any scan progress the plugin reports.
-For a standard scan, phases include threat modeling, discovery, validation,
-impact and path analysis, reporting, and finalization.
+The scan page shows the current phase and any progress the plugin reports.
 
 Select **View activity** to open the Codex task that runs the scan. You can
 leave the workbench and return to **Scans** without losing a saved scan. To stop
-work intentionally, open the scan and select **Stop scan**.
+work, open the scan and select **Stop scan**.
 
 When the scan completes, open its results to review the target, revision,
 findings, coverage, and available report artifacts.
@@ -10946,7 +10193,7 @@ Search or filter the list, then select a finding to review its summary, source
 evidence, validation, and impact.
 
 Use **Summary** for the finding details and **Patch** when you want to generate,
-review, apply, or verify a focused fix. See [Fix and verify security
+review, apply, or verify a fix. See [Fix and verify security
 findings](./security/plugin/fix-findings.md) for the remediation workflow.
 
 The **Findings** tab shows findings from saved Codex Security scans. Imported
@@ -10989,24 +10236,22 @@ Provide the workflow with:
 - The target source tree and affected revision or release.
 - Existing PoCs, logs, traces, screenshots, or diagnostic output.
 - Fix commits or diffs when available.
-- The authorization boundary for any testing.
 
-Source access is important because Codex checks each claim against the affected
-code before writing the final report. If the source or affected revision isn't
-available, decide whether an explicitly labeled, lower-confidence report is useful
-before proceeding.
+Codex checks each claim against the affected source code before writing the
+report. If the source or affected revision isn't available, decide whether to
+proceed with a report that identifies the unverified claims.
 
 #### Run the workflow
 
 Send a prompt like:
 
 ```text
-Use $codex-security:vulnerability-writeup to create one self-contained report for each distinct vulnerability in [input paths]. Verify the claims against [source path and revision], preserve or improve the supplied PoCs, and write the reports to [output directory]. Do not test public or production systems.
+Use $codex-security:vulnerability-writeup to create one self-contained report for each distinct vulnerability in [input paths]. Verify the claims against [source path and revision], preserve or improve the supplied PoCs, and write the reports to [output directory]. Use a local test environment for reproductions.
 ```
 
 Codex inventories the supplied material, groups reports that describe the same
 root cause and vulnerable path, and creates one report directory per distinct
-vulnerability. Each directory contains a descriptively named Markdown report
+vulnerability. Each directory contains a Markdown report
 and a `poc/` directory when supporting PoC files are available.
 
 #### Review each report
@@ -11016,15 +10261,12 @@ Before distributing a report, confirm that it:
 - Traces the bug from the attacker-controlled entry point to the broken
   security invariant and impact.
 - Distinguishes verified behavior from hypotheses and unresolved constraints.
-- Includes focused source excerpts with paths, functions, and the affected
+- Includes source excerpts with paths, functions, and the affected
   revision.
-- Includes usable PoC source, build or run instructions, representative output,
+- Includes PoC source, build or run instructions, representative output,
   and safety limitations when a PoC is practical.
 - Uses portable paths and doesn't depend on internal storage or local absolute
   paths.
-
-Never test a public or production target unless you have explicit authorization
-for that exact target.
 
 #### Use reports from a scan
 
@@ -12274,6 +11516,19 @@ profile-defined workspace root. Use it when you want to preserve normal
 workspace writes while keeping environment files, generated secrets, or similar
 credential-bearing files unreadable.
 
+On Linux, WSL, and native Windows with MXC or `elevated`, deny-read glob matches
+are enumerated when each sandboxed process starts. Matching files created afterward are not
+added to that process's deny list and remain readable if its other permissions
+allow access. For example, a long-running shell, script, watcher, or development
+server can read a matching `.env` file created after it started.
+
+This snapshot lasts for the sandboxed process's lifetime, not the whole Codex
+session. Starting a new sandboxed process through Codex enumerates the matches
+again; continuing to use an already-running process does not refresh its deny
+list. Don't rely on a glob to block newly created files in that running process.
+See [Windows MXC compatibility](./windows/windows-sandbox.md#mxc-compatibility)
+for Windows-specific limits.
+
 `deny` glob patterns are supported as deny-read rules. `read` or `write` globs
 are less portable on Linux, WSL, and native Windows sandboxing, so prefer exact
 paths or subtree rules such as `"docs/**" = "read"` when possible.
@@ -13048,124 +12303,59 @@ Security and privacy are foundational to user trust. Bake them into your plannin
 
 Source: [Codex Security](https://learn.chatgpt.com/docs/security/index.md)
 
-Codex Security is an application security agent that helps security and
-engineering teams find, confirm, and fix vulnerabilities. Use it in
-Codex, from your terminal, through the TypeScript SDK, or with connected GitHub
-repositories.
+Codex Security reviews code for vulnerabilities and reports evidence you can
+use to investigate and fix them. Choose how to run it based on where your code
+lives and how you want to review the results.
 
-[Install local Security plugin](https://chatgpt.com/plugins/share/676aca3811d54fa7bcdef5255236b3c4)
+#### Choose where to start
 
-For your first local scan, start with the [Codex Security plugin
-quickstart](./security/plugin.md).
+| Use                   | When you want to                                                          | Start here                                          |
+| --------------------- | ------------------------------------------------------------------------- | --------------------------------------------------- |
+| Codex Security Cloud  | Scan connected GitHub repositories in Codex cloud or monitor new commits. | [Cloud setup](./security/setup.md)                |
+| Codex Security plugin | Scan a local repository in Codex and work through findings interactively. | [Run your first local scan](./security/plugin.md) |
+| Codex Security CLI    | Run repeatable terminal scans or add checks to CI.                        | [CLI quickstart](./security/cli.md)               |
+| Codex Security SDK    | Run scans and handle results in an application or developer tool.         | [SDK guide](./security/sdk.md)                    |
 
-#### Use Codex Security in the desktop app
+For your first local scan, use the plugin. In the ChatGPT desktop app, select
+**Codex**, install **Codex Security**, and open **Security** in the sidebar.
+The [Security workbench](./security/plugin/workbench.md) keeps saved scans
+and findings available for review. You can also use the plugin in Codex CLI.
 
-In the ChatGPT desktop app, open the ChatGPT dropdown and select **Codex**.
-Install and enable the Codex Security plugin to open **Security** in the
-sidebar. The Security workbench keeps your scans, findings, and repositories in
-one place while Codex runs each scan in a task.
+The Codex Security CLI and SDK are distributed in the public [@openai/codex-security package](https://github.com/openai/codex-security). Scans using OpenAI inference require Codex Security access. See each quickstart for its
+runtime and authentication requirements.
 
-- Use **Scans** to start scans, follow their progress, and review saved results.
-- Use **Findings** to inspect issues and evidence across completed scans.
-- Use **Repositories** to review repository history and open findings.
-
-See [Use the Security workbench](./security/plugin/workbench.md) for the
-complete desktop-app workflow.
-
-#### Explore plugin use cases
-
-- [Run a security scan](./security/plugin/scans.md) for a repository or one scoped folder.
-- [Run a deep security scan](./security/plugin/deep-scans.md) when you need broader review and can wait longer for it to finish.
-- [Review code changes](./security/plugin/code-changes.md) before you merge a pull request or branch.
-- [Triage a backlog](./security/plugin/triage-backlog.md) when you have existing security findings to review.
-- [Fix and verify findings](./security/plugin/fix-findings.md) with bounded patches for approved findings.
-- [Export or track findings](./security/plugin/export-findings.md) as portable artifacts or approval-gated tracking destinations.
-- [Write vulnerability reports](./security/plugin/vulnerability-reports.md) from supplied findings, disclosure notes, source, and PoCs.
-- [Propose security hardening](./security/plugin/security-hardening.md) from scan results or other security evidence.
-- [See what's new](./security/plugin/changelog.md) in the Codex Security plugin.
-
-The desktop Security workbench and Codex CLI use the Codex Security plugin.
-The separate Codex Security Cloud plugin scans connected GitHub repositories
-in Codex cloud. For Codex sandboxing, approvals, network controls, and admin
-settings, see [Agent approvals & security](./agent-approvals-security.md).
-
-#### Codex Security CLI and SDK
-
-The CLI and TypeScript SDK are available as the public
-[`@openai/codex-security`](https://github.com/openai/codex-security) package.
-Run the CLI with `npx`:
-
-```bash
-npx @openai/codex-security --help
-```
-
-Running scans requires Codex Security access. For best results, use an account
-verified for [Trusted Access for Cyber](https://chatgpt.com/cyber).
-
-Use the same scanner as the plugin across repositories and over time. The CLI
-discovers GitHub repositories, resumes bulk scans, tracks findings across
-scans, and records false-positive feedback. Add your architecture and security
-policies, set an estimated cost limit, or run checks in CI and before commits.
-Use the TypeScript SDK to build scanning, progress reporting, and cost controls
-into an application or developer tool.
-
-- [Start with the CLI quickstart](./security/cli.md) to set up the CLI,
-  preflight a repository, and run a local scan.
-- [Run bulk security scans](./security/cli/bulk-scans.md) to discover GitHub
-  repositories or run a resumable campaign from a CSV inventory.
-- [Run scans in CI](./security/cli/ci.md) to review pull-request changes,
-  preserve artifacts, upload SARIF, and set a severity policy.
-- [Read the CLI FAQ](./security/cli/faq.md) for answers about scan history,
-  false-positive feedback, coverage, and fix verification.
-- [Use the CLI reference](./security/cli/reference.md) to check supported
-  commands, flags, output formats, artifacts, and exit codes.
-- [Integrate the TypeScript SDK](./security/sdk.md) to select targets,
-  inspect results, track progress, and cancel scans from code.
-
-#### Codex Security Cloud
-
-Codex Security Cloud is a plugin for scanning connected GitHub repositories
-in Codex cloud. It's available in research preview on the web and in the
-desktop app.
-
-Open **Plugins** to find and install **Codex Security Cloud**. Follow
-[Cloud setup](./security/setup.md) to connect GitHub and start your first scan.
-
-[Find Codex Security Cloud](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
+Codex Security Cloud is a separate plugin, available in research preview on
+the web and in the desktop app. It requires workspace access, a GitHub
+connection, and a compatible Codex cloud environment. You can connect the
+repository and create an environment during setup.
 
     Track open findings and fixes across repositories. This example uses
     fictional repositories, findings, and counts.
 
-#### How Codex Security Cloud works
+For security reviews posted to GitHub pull requests, see
+[Security Review](./security/security-review.md).
 
-Choose **One-Time Scan** to review a repository once, or **Continuous Scanning**
-to monitor new commits. Codex uses repository context to identify likely
-vulnerabilities and validates issues in an isolated environment when possible.
+#### Choose the next task
 
-Use **Scans** to follow progress, **Findings** to review issues, and
-**Repositories** to manage monitoring. Review proposed patches before
-creating a pull request.
+After a local scan, review its scope and findings before deciding what to do next.
 
-#### Codex Security Cloud access and prerequisites
+| Task                                                  | Guide                                                               |
+| ----------------------------------------------------- | ------------------------------------------------------------------- |
+| Focus a scan on a service or add security context     | [Run a security scan](./security/plugin/scans.md)                 |
+| Run repeated reviews of the same repository or folder | [Run a deep scan](./security/plugin/deep-scans.md)                |
+| Check a pull request, commit, or local diff           | [Review code changes](./security/plugin/code-changes.md)          |
+| Assess findings from another scanner or issue tracker | [Triage a backlog](./security/plugin/triage-backlog.md)           |
+| Generate a patch and check whether it fixes the issue | [Fix and verify findings](./security/plugin/fix-findings.md)      |
+| Share results or assign remediation work              | [Export and track findings](./security/plugin/export-findings.md) |
 
-Use a workspace with Codex Security Cloud access, a connected GitHub
-repository, and a compatible Codex cloud environment. You can connect GitHub
-and create an environment during scan setup.
+For automation, use the CLI guides to [scan repositories in
+bulk](./security/cli/bulk-scans.md) or [run scans in
+CI](./security/cli/ci.md). Look up commands and defaults in the
+[CLI reference](./security/cli/reference.md).
 
-If access is unavailable, check with your workspace administrator.
-
-#### Security overview references
-
-- [Codex Security plugin quickstart](./security/plugin.md) walks through installation and a first local scan.
-- [Security workbench](./security/plugin/workbench.md) explains saved scans, findings, repositories, and scan activity in the desktop app.
-- [Codex Security CLI quickstart](./security/cli.md) walks through setup, preflight, and a first terminal scan.
-- [Run bulk security scans](./security/cli/bulk-scans.md) explains GitHub discovery, CSV inventories, campaign results, and resume behavior.
-- [Codex Security CLI FAQ](./security/cli/faq.md) answers common questions about scans, findings, coverage, and costs.
-- [Codex Security TypeScript SDK](./security/sdk.md) explains how to run scans from an application or developer tool.
-- [Codex Security Cloud setup](./security/setup.md) details setup, scanning, and findings review.
-- [Security Review](./security/security-review.md) explains how to run in-depth security reviews on GitHub pull requests.
-- [Improving the threat model](./security/threat-model.md) explains how to tune scope, entry points, and criticality assumptions.
-- [Codex Security Cloud FAQ](./security/faq.md) covers common cloud product questions.
+Codex Security scans application code. For permissions and sandbox controls
+that govern Codex itself, see [Agent approvals and
+security](./agent-approvals-security.md).
 
 ### Security
 
@@ -49036,6 +48226,7 @@ Note these compatibility limits:
 
 - Managed networking requires effective `allow_local_binding = true`. MXC permits connections to and from services on host loopback. Proxy domain rules still apply to proxied traffic, but the proxy's additional private-network destination checks are removed.
 - Remaining child processes stop when the foreground command exits. Test workflows that rely on detached development servers.
+- Deny-read globs use the files that match when each sandboxed process starts, as on Linux and WSL. Matching files created later remain readable to that running process if its other permissions allow access. Long-running shells, scripts, watchers, and development servers keep that snapshot for their lifetime, not the whole Codex session. See [deny-read glob timing](./permissions.md#deny-reads-with-exact-paths-or-globs).
 
 #### Configure a legacy fallback
 
@@ -49047,6 +48238,8 @@ sandbox = "elevated" # or "unelevated"
 ```
 
 `elevated` is the preferred legacy fallback. It uses dedicated lower-privilege sandbox users, filesystem permission boundaries, firewall rules, and local policy changes needed for commands that run in the sandbox.
+
+Like MXC, `elevated` enumerates deny-read glob matches when each sandboxed process starts. Matching files created later remain readable to that running process if its other permissions allow access. See [deny-read glob timing](./permissions.md#deny-reads-with-exact-paths-or-globs) for the consequences for long-running processes.
 
 `unelevated` is a legacy fallback. It runs commands with a restricted Windows token derived from your current user, applies ACL-based filesystem boundaries, and uses environment-level offline controls instead of the dedicated offline-user firewall rule. It provides weaker network isolation than `elevated` and doesn't support denied read paths, but is still useful when administrator-approved setup is blocked by local or enterprise policy.
 

@@ -51,16 +51,16 @@ To clean up obsolete threads, follow these steps:
 
 ![Deleting a Conversation](../../assets/image/docs/cli/resume-delete.png)
 
-### Importing from the Antigravity app
+### Importing from the Antigravity App
 
-You can import and resume active threads initiated in the Antigravity app:
+You can import and resume active threads initiated in the Antigravity App:
 
 1.  With the **Session Picker** open, press Tab to switch from the **CLI** tab to the **Antigravity** tab.
 2.  Highlight the desktop conversation you want to import.
 3.  Press Enter. A confirmation prompt `[Import this? (y/n)]` appears.
 4.  Press Enter (or Y) to confirm. The CLI clones the history, context, and tool trajectories into your terminal session.
 
-![Importing from the Antigravity app](../../assets/image/docs/cli/resume-antigravity.png)
+![Importing from the Antigravity App](../../assets/image/docs/cli/resume-antigravity.png)
 
 * * *
 

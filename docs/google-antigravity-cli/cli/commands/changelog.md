@@ -64,6 +64,6 @@ agy changelog
 
 Explore the following resources to keep your CLI installation up to date and discover more commands:
 
-*   **[Installation and auth](../install.md)**: update your CLI binary to the latest version using `agy update`.
+*   **[Installation and auth](https://antigravity.google/docs/cli/install)**: update your CLI binary to the latest version using `agy update`.
 *   **[Release changelog](https://antigravity.google/docs/changelog)**: view the full web changelog for Google Antigravity.
 *   **[CLI reference](../reference.md)**: view all available slash commands and keyboard shortcuts.

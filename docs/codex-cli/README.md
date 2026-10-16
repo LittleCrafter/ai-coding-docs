@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 197
 - **Version:** 0.163.0
-- **Last updated:** 2026-10-15T23:24:00Z
+- **Last updated:** 2026-10-16T07:36:35Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -264,7 +264,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Codex Security TypeScript SDK | [security/sdk.md](./security/sdk.md) | [source](<https://learn.chatgpt.com/docs/security/sdk>) |
 | Security Review | [security/security-review.md](./security/security-review.md) | [source](<https://learn.chatgpt.com/docs/security/security-review>) |
 | Codex Security Cloud setup | [security/setup.md](./security/setup.md) | [source](<https://learn.chatgpt.com/docs/security/setup>) |
-| Improving the threat model | [security/threat-model.md](./security/threat-model.md) | [source](<https://learn.chatgpt.com/docs/security/threat-model>) |
+| Improve the Cloud threat model | [security/threat-model.md](./security/threat-model.md) | [source](<https://learn.chatgpt.com/docs/security/threat-model>) |
 
 ## sites
 

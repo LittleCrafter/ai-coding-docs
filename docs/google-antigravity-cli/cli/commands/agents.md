@@ -6,7 +6,7 @@ Browse, select, and switch between custom agents, or monitor active and complete
 
 Make sure you meet the following prerequisites:
 
-*   [Install Antigravity CLI](../install.md).
+*   [Install Antigravity CLI](https://antigravity.google/docs/cli/install).
 *   Understand the [asynchronous execution model](https://antigravity.google/docs/cli/subagents).
 
 ## Overview
@@ -18,7 +18,7 @@ The `/agents` command opens the interactive **Agent Manager** panel. This interf
 
 Note
 
-**Subagent specification**: For complete details on subagent lifecycle states, inter-agent communication, and custom Markdown agent specifications (`.md`), refer to the [Antigravity app subagents documentation](https://antigravity.google/docs/subagents) and [CLI subagents guide](https://antigravity.google/docs/cli/subagents).
+**Subagent specification**: For complete details on subagent lifecycle states, inter-agent communication, and custom Markdown agent specifications (`.md`), refer to the [Antigravity App subagents documentation](https://antigravity.google/docs/subagents) and [CLI subagents guide](https://antigravity.google/docs/cli/subagents).
 
 To open the panel inside the TUI, type `/agents` and press Enter:
 
