@@ -675,8 +675,6 @@ In [plan mode](./permission-modes.md#analyze-before-you-edit-with-plan-mode), Cl
 These checks still apply:
 
 * Content-scoped ask rules like `Bash(git push *)` still force a prompt
-* Explicit deny rules still apply
-* `rm` or `rmdir` commands that target a [critical path](./permission-modes.md#critical-paths) still go through the regular permission flow
 * Other sandboxed commands can go through the regular permission flow too, as [Auto-allow mode](./sandboxing.md#auto-allow-mode) describes
 
 Commands that won't run sandboxed, such as excluded commands, respect the bare `Bash` ask rule as usual. See [sandbox modes](./sandboxing.md#sandbox-modes) to change this behavior.

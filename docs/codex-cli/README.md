@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 197
+- **Pages mirrored:** 198
 - **Version:** 0.163.0
-- **Last updated:** 2026-10-16T18:31:03Z
+- **Last updated:** 2026-10-16T23:07:10Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -180,6 +180,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Prisma AIRS | [enterprise/prisma-airs.md](./enterprise/prisma-airs.md) | [source](<https://learn.chatgpt.com/docs/enterprise/prisma-airs>) |
 | Roles and workspace permissions | [enterprise/roles-and-workspace-permissions.md](./enterprise/roles-and-workspace-permissions.md) | [source](<https://learn.chatgpt.com/docs/enterprise/roles-and-workspace-permissions>) |
 | Roll out a gateway | [enterprise/roll-out-a-gateway.md](./enterprise/roll-out-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/roll-out-a-gateway>) |
+| Codex security cookbook | [enterprise/security-cookbook.md](./enterprise/security-cookbook.md) | [source](<https://learn.chatgpt.com/docs/enterprise/security-cookbook>) |
 | Service accounts | [enterprise/service-accounts.md](./enterprise/service-accounts.md) | [source](<https://learn.chatgpt.com/docs/enterprise/service-accounts>) |
 | Workspace connections | [enterprise/shared-connections.md](./enterprise/shared-connections.md) | [source](<https://learn.chatgpt.com/docs/enterprise/shared-connections>) |
 | Sign in with ChatGPT through a gateway | [enterprise/sign-in-with-chatgpt-through-a-gateway.md](./enterprise/sign-in-with-chatgpt-through-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/sign-in-with-chatgpt-through-a-gateway>) |
@@ -189,7 +190,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Usage Insights for ChatGPT Work in Codex | [enterprise/usage-insights.md](./enterprise/usage-insights.md) | [source](<https://learn.chatgpt.com/docs/enterprise/usage-insights>) |
 | ChatGPT usage limits and spend controls | [enterprise/usage-limits.md](./enterprise/usage-limits.md) | [source](<https://learn.chatgpt.com/docs/enterprise/usage-limits>) |
 | User lifecycle management | [enterprise/user-lifecycle.md](./enterprise/user-lifecycle.md) | [source](<https://learn.chatgpt.com/docs/enterprise/user-lifecycle>) |
-| Deploy the Windows app | [enterprise/windows-deployment.md](./enterprise/windows-deployment.md) | [source](<https://learn.chatgpt.com/docs/enterprise/windows-deployment>) |
+| Deploy the Windows app and Codex CLI | [enterprise/windows-deployment.md](./enterprise/windows-deployment.md) | [source](<https://learn.chatgpt.com/docs/enterprise/windows-deployment>) |
 | ChatGPT Work admin FAQ | [enterprise/work-admin-faq.md](./enterprise/work-admin-faq.md) | [source](<https://learn.chatgpt.com/docs/enterprise/work-admin-faq>) |
 | Workspace analytics | [enterprise/workspace-analytics.md](./enterprise/workspace-analytics.md) | [source](<https://learn.chatgpt.com/docs/enterprise/workspace-analytics>) |
 | Workspace model availability | [enterprise/workspace-model-availability.md](./enterprise/workspace-model-availability.md) | [source](<https://learn.chatgpt.com/docs/enterprise/workspace-model-availability>) |

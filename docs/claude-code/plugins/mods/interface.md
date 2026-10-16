@@ -425,8 +425,8 @@ The [interface gallery](./gallery.md) has samples and screenshots of most elemen
 
 | Element | What it draws | Where |
 | :- | :- | :- |
-| `Box` | A flex container. Takes layout props such as `flexDirection`, `columnGap`, `padding`, [`borderStyle`](./reference.md#box-border-styles), and `width`. | Everywhere |
-| `Text` | Styled text. Takes `color`, `bold`, `dimColor`, `italic`, and `wrap`. A `color` is a theme key or a color such as `'red'`. A `wrap` is `'wrap'`, `'truncate'`, `'truncate-start'`, `'truncate-middle'`, or `'truncate-end'`. | Everywhere |
+| `Box` | A flex container that takes layout props such as `flexDirection`, [`borderStyle`](./reference.md#box-border-styles), and `width`. Spacing props such as `columnGap` and `padding` take a number or a [step name](./reference.md#box-spacing-steps) from `'xs'` to `'xl'`. | Everywhere |
+| `Text` | Styled text. Takes `color`, `bold`, `dimColor`, `italic`, `wrap`, and others such as [`weight`](./reference.md#text-typography). A `color` is a theme key or a color such as `'red'`. A `wrap` is `'wrap'`, `'truncate'`, `'truncate-start'`, `'truncate-middle'`, or `'truncate-end'`. | Everywhere |
 | `Button` | A control that calls `onPress` | Everywhere |
 | `Link`, `Code`, `Markdown` | A link with `href` and an optional `label`, a code block, and text formatted the way Claude's replies are. `Markdown` takes its content in a `text` prop, not in `children`, and needs a `key` when you pass `onLinkPress`. | Everywhere |
 | `Input`, `Select` | A text field and a dropdown | Terminal, Desktop, VS Code |

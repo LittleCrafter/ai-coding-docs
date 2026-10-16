@@ -4,6 +4,14 @@
 
 For every versioned update, bug fix, and minor improvement, see the [ChatGPT and Codex changelog](https://learn.chatgpt.com/docs/changelog) and [API changelog](https://developers.openai.com/api/docs/changelog).
 
+## October 12–16, 2026
+
+### Open your dot from iOS widgets and Shortcuts
+
+Add the **Your dot** Home Screen widget to open your conversation, with optional message and call buttons. In Apple Shortcuts, use **Open your dot** with **Messaging**, **Dictation**, or **Call** mode. You can assign a saved shortcut to your iPhone's Action button on supported models.
+
+These features are rolling out with ChatGPT for iOS 1.2026.279 and require [dot access](./dots.md#access). [Set up widgets and shortcuts](./dots/channels.md#ios-widgets-and-shortcuts).
+
 ## [October 5–9, 2026](./whats-new/october-5-9-2026.md)
 
 ### [Create your dot in the ChatGPT mobile app](./whats-new/dots-october-9-2026.md)

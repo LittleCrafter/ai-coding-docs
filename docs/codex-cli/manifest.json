@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.163.0",
-  "last_updated": "2026-10-16T18:31:03Z",
+  "last_updated": "2026-10-16T23:07:10Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "20051773f73c6bcc7890beb4031e9f30f379f6b87e6dedd8f0056d7e3a36248a",
-      "last_updated": "2026-10-15T23:24:00Z"
+      "hash": "8e58a6e723d7f2a3591e5a550d6d32d649ab7869ca52dd1fa3ee29d4d4f0eedf",
+      "last_updated": "2026-10-16T23:07:10Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "f4e11d2b15e2e252de39e40efa7cb78e2972aec06b675e87b6a40fa573a79e0a",
-      "last_updated": "2026-10-16T18:31:03Z"
+      "hash": "9a68d0f2a4ac7100f361dfb0629bef8801617a73f06860d499265ad9f6af6f5f",
+      "last_updated": "2026-10-16T23:07:10Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -480,8 +480,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/channels",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/channels.md",
       "source_id": "llms:dots/channels",
-      "hash": "83b525a75dffb4ea61498bc247b9829eaecc1d1d131ee21061453a5d2b70b195",
-      "last_updated": "2026-10-09T21:56:38Z"
+      "hash": "0eef4fd36b701bda7dbe9c52d02f1e121769eabf9fb02f1643ab048dbe48a1e8",
+      "last_updated": "2026-10-16T23:07:10Z"
     },
     "dots/computers-and-apps": {
       "slug": "dots/computers-and-apps",
@@ -770,8 +770,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/prisma-airs",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/prisma-airs.md",
       "source_id": "llms:enterprise/prisma-airs",
-      "hash": "4451522b12aec6d5bf345c3469b06f559514ee40ccd1cedb704d195ecca8a628",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "83211fbd346f235a1af2119120ac153f0232c3154a23cc49d279ef33b62ec3ef",
+      "last_updated": "2026-10-16T23:07:10Z"
     },
     "enterprise/roles-and-workspace-permissions": {
       "slug": "enterprise/roles-and-workspace-permissions",
@@ -792,6 +792,16 @@
       "source_id": "llms:enterprise/roll-out-a-gateway",
       "hash": "071e448a500a3c481c2afd2d0a755122dadcb53ce1421959f6788a4797a8863c",
       "last_updated": "2026-10-14T21:03:11Z"
+    },
+    "enterprise/security-cookbook": {
+      "slug": "enterprise/security-cookbook",
+      "title": "Codex security cookbook",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/security-cookbook",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/security-cookbook.md",
+      "source_id": "llms:enterprise/security-cookbook",
+      "hash": "330338e9e1b1e2349b45c5cf5f0bd003f311991c1bcb117cb73eda854be85f27",
+      "last_updated": "2026-10-16T23:07:10Z"
     },
     "enterprise/service-accounts": {
       "slug": "enterprise/service-accounts",
@@ -885,13 +895,13 @@
     },
     "enterprise/windows-deployment": {
       "slug": "enterprise/windows-deployment",
-      "title": "Deploy the Windows app",
+      "title": "Deploy the Windows app and Codex CLI",
       "group": "enterprise",
       "source_url": "https://learn.chatgpt.com/docs/enterprise/windows-deployment",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/windows-deployment.md",
       "source_id": "llms:enterprise/windows-deployment",
-      "hash": "fa143ecb21fe01404e446ed1da7977926d4b4003ba07cdc38c31c1d9795cb26a",
-      "last_updated": "2026-09-18T20:03:40Z"
+      "hash": "bad60111bb665fdb23128e11591717929c12326098ec546906edaf1540e26aaa",
+      "last_updated": "2026-10-16T23:07:10Z"
     },
     "enterprise/work-admin-faq": {
       "slug": "enterprise/work-admin-faq",
@@ -1900,8 +1910,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new.md",
       "source_id": "llms:whats-new",
-      "hash": "77ea03ebfdb59f278b802712da19e30822d33f4e964d1086fb7a9d35601aa1b5",
-      "last_updated": "2026-10-09T21:56:38Z"
+      "hash": "d92fbafe02266dfff2f0d605c4783c9145533f8d25913e3f2e5d9a617fe99398",
+      "last_updated": "2026-10-16T23:07:10Z"
     },
     "whats-new/devday-2026": {
       "slug": "whats-new/devday-2026",
@@ -1975,10 +1985,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-16T18:31:03Z",
-    "fetch_duration_seconds": 68.714,
-    "total_pages_discovered": 197,
-    "pages_fetched_successfully": 197,
+    "last_fetch_completed": "2026-10-16T23:07:10Z",
+    "fetch_duration_seconds": 69.039,
+    "total_pages_discovered": 198,
+    "pages_fetched_successfully": 198,
     "pages_failed": 0,
     "failed_pages": []
   }

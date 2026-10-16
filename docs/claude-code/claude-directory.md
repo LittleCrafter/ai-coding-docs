@@ -335,7 +335,7 @@ A file at `commands/deploy.md` creates `/deploy` the same way a skill at `skills
 
 * Use `$ARGUMENTS` in the file to accept parameters: `/fix-issue 123`
 * If a skill and command share a name, the skill takes precedence
-* New commands should usually be skills instead; commands remain supported
+* New commands should usually be skills instead; command files still work
 
 [Full docs](./skills.md)
 

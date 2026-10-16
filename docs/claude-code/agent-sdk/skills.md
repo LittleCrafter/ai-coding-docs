@@ -494,7 +494,7 @@ For general skills troubleshooting, such as YAML syntax errors and debugging, se
 The [Claude Code skills guide](../skills.md) covers authoring in depth. Its guidance applies to SDK sessions. Start with these sections:
 
 * [Frontmatter reference](../skills.md#frontmatter-reference): every supported field
-* [Pass arguments to skills](../skills.md#pass-arguments-to-skills): `$ARGUMENTS`, `$0`, `$1`, and skill stacking. The [full substitution table](../skills.md#available-string-substitutions) adds named arguments and the `${CLAUDE_*}` variables
+* [Pass arguments to skills](../skills.md#pass-arguments-to-skills): `$ARGUMENTS`, `$0`, and `$1`. The [full substitution table](../skills.md#available-string-substitutions) adds named arguments and the `${CLAUDE_*}` variables
 * [Inject dynamic context](../skills.md#inject-dynamic-context): `` !`command` `` lines that run before Claude sees the skill content
 * [Choose where skills load](../skills.md#where-skills-live): every skill location, plugin namespacing, and which skill runs when two share a name
 

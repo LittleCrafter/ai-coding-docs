@@ -249,7 +249,7 @@ Color added and removed code in file edits and reviews.
 
 #### Fullscreen mode
 
-Claude Code paints `userMessageBackground`, `bashMessageBackgroundColor`, and `memoryBackgroundColor` in both the default and fullscreen renderers. It uses `userMessageBackgroundHover` and `selectionBg` only in [fullscreen rendering mode](./fullscreen.md).
+Claude Code uses `userMessageBackgroundHover`, `selectionBg`, and `composerSidebarBackground` only in [fullscreen rendering mode](./fullscreen.md). It paints `userMessageBackground`, `bashMessageBackgroundColor`, and `memoryBackgroundColor` in both the default and fullscreen renderers.
 
 | Token | Controls |
 | :- | :- |
@@ -258,6 +258,7 @@ Claude Code paints `userMessageBackground`, `bashMessageBackgroundColor`, and `m
 | `bashMessageBackgroundColor` | Background behind `!` shell command entries in the transcript |
 | `memoryBackgroundColor` | Background behind `#` memory entries in the transcript |
 | `selectionBg` | Background of text selected with the mouse |
+| `composerSidebarBackground` | Background of the panel beside the conversation, such as the [diff panel](./fullscreen.md#watch-your-changes-in-the-diff-panel) or a [mod's pane](./plugins/mods/interface.md) |
 
 #### Usage meter and speaker labels
 
