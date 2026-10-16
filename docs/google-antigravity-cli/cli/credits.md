@@ -1,4 +1,4 @@
-# Managing AI credits and quotas
+# CLI AI credits
 
 The Antigravity CLI integrates with your subscription to monitor and manage your AI Premium credits and usage quotas.
 

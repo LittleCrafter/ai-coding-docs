@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 32
 - **Version:** 1.2.0
-- **Last updated:** 2026-10-15T23:21:13Z
+- **Last updated:** 2026-10-16T01:45:43Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -13,9 +13,9 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Reviewing artifacts | [cli/artifacts.md](./cli/artifacts.md) | [source](<https://antigravity.google/docs/cli/artifacts>) |
-| CLI best practices | [cli/best-practices.md](./cli/best-practices.md) | [source](<https://antigravity.google/docs/cli/best-practices>) |
+| Best practices for Antigravity CLI | [cli/best-practices.md](./cli/best-practices.md) | [source](<https://antigravity.google/docs/cli/best-practices>) |
 | Managing conversations | [cli/conversations.md](./cli/conversations.md) | [source](<https://antigravity.google/docs/cli/conversations>) |
-| Managing AI credits and quotas | [cli/credits.md](./cli/credits.md) | [source](<https://antigravity.google/docs/cli/credits>) |
+| CLI AI credits | [cli/credits.md](./cli/credits.md) | [source](<https://antigravity.google/docs/cli/credits>) |
 | Antigravity CLI features | [cli/features.md](./cli/features.md) | [source](<https://antigravity.google/docs/cli/features>) |
 | Migrating from Gemini CLI | [cli/gcli-migration.md](./cli/gcli-migration.md) | [source](<https://antigravity.google/docs/cli/gcli-migration>) |
 | Headless mode | [cli/headless.md](./cli/headless.md) | [source](<https://antigravity.google/docs/cli/headless>) |
@@ -23,10 +23,10 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Choose an execution mode | [cli/modes.md](./cli/modes.md) | [source](<https://antigravity.google/docs/cli/modes>) |
 | Antigravity CLI overview | [cli/overview.md](./cli/overview.md) | [source](<https://antigravity.google/docs/cli/overview>) |
 | Prompting and interaction | [cli/prompting.md](./cli/prompting.md) | [source](<https://antigravity.google/docs/cli/prompting>) |
-| CLI reference | [cli/reference.md](./cli/reference.md) | [source](<https://antigravity.google/docs/cli/reference>) |
+| CLI commands | [cli/reference.md](./cli/reference.md) | [source](<https://antigravity.google/docs/cli/reference>) |
 | Status line customization | [cli/statusline.md](./cli/statusline.md) | [source](<https://antigravity.google/docs/cli/statusline>) |
 | Terminal title customization | [cli/title.md](./cli/title.md) | [source](<https://antigravity.google/docs/cli/title>) |
-| Troubleshooting | [cli/troubleshooting.md](./cli/troubleshooting.md) | [source](<https://antigravity.google/docs/cli/troubleshooting>) |
+| CLI troubleshooting | [cli/troubleshooting.md](./cli/troubleshooting.md) | [source](<https://antigravity.google/docs/cli/troubleshooting>) |
 | Antigravity CLI tutorial | [cli/tutorial.md](./cli/tutorial.md) | [source](<https://antigravity.google/docs/cli/tutorial>) |
 | CLI settings and tips | [cli/using.md](./cli/using.md) | [source](<https://antigravity.google/docs/cli/using>) |
 | Vim editor mode | [cli/vim-editor-mode.md](./cli/vim-editor-mode.md) | [source](<https://antigravity.google/docs/cli/vim-editor-mode>) |

@@ -1,4 +1,4 @@
-# Troubleshooting
+# CLI troubleshooting
 
 Diagnose and resolve common anomalies with installation PATHs, local self-updating locks, keyring access permissions, and SSH clipboard forwarding.
 

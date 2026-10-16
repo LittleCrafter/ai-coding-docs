@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-15T23:21:13Z",
+  "last_updated": "2026-10-16T01:45:43Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -15,13 +15,13 @@
     },
     "cli/best-practices": {
       "slug": "cli/best-practices",
-      "title": "CLI best practices",
+      "title": "Best practices for Antigravity CLI",
       "group": "cli",
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "db9e11f30fe2f1c44e587a59c51bf5c0a200683b890f5aaf07ef02d8afe654d6",
-      "last_updated": "2026-10-15T23:21:13Z"
+      "hash": "25ff9900ab856837641c72176cfcf0907e340efd40436444762b7580c79985b3",
+      "last_updated": "2026-10-16T01:45:43Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -175,13 +175,13 @@
     },
     "cli/credits": {
       "slug": "cli/credits",
-      "title": "Managing AI credits and quotas",
+      "title": "CLI AI credits",
       "group": "cli",
       "source_url": "https://antigravity.google/docs/cli/credits",
       "source_md_url": "https://antigravity.google/docs/cli/credits.md",
       "source_id": "cli/credits",
-      "hash": "274a436d93c6448c5aa98b9c231be699c5be26878a73308fcc5b755fd5cf2cdb",
-      "last_updated": "2026-10-01T02:32:05Z"
+      "hash": "b6dc737de5ac2a6bec9ccb11054748b69432ac9b3c8e5cf22897d9f6df23098d",
+      "last_updated": "2026-10-16T01:45:43Z"
     },
     "cli/features": {
       "slug": "cli/features",
@@ -255,13 +255,13 @@
     },
     "cli/reference": {
       "slug": "cli/reference",
-      "title": "CLI reference",
+      "title": "CLI commands",
       "group": "cli",
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "1b734f21c2c4f0b129d43ed1f003a0092da7b22f6521be8a2caeaa7091d861dd",
-      "last_updated": "2026-10-15T18:43:43Z"
+      "hash": "aa0f9a086fe6907f8febe6be740b31dcbc44e5b7f4abf380e20e64a062df6719",
+      "last_updated": "2026-10-16T01:45:43Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -285,13 +285,13 @@
     },
     "cli/troubleshooting": {
       "slug": "cli/troubleshooting",
-      "title": "Troubleshooting",
+      "title": "CLI troubleshooting",
       "group": "cli",
       "source_url": "https://antigravity.google/docs/cli/troubleshooting",
       "source_md_url": "https://antigravity.google/docs/cli/troubleshooting.md",
       "source_id": "cli/troubleshooting",
-      "hash": "bc4dcce8a044b37b571b241ed2f58c3bdbc62f0792fcaf9231fd7d4e30d710e9",
-      "last_updated": "2026-10-10T09:07:19Z"
+      "hash": "abf94ae235d38ee6358977ef3b9630f7ea574130dfc3bb700656bee3c2268298",
+      "last_updated": "2026-10-16T01:45:43Z"
     },
     "cli/tutorial": {
       "slug": "cli/tutorial",
@@ -325,14 +325,14 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-15T23:21:13Z",
-    "fetch_duration_seconds": 10.969,
+    "last_fetch_completed": "2026-10-16T01:45:43Z",
+    "fetch_duration_seconds": 10.899,
     "total_pages_discovered": 32,
     "pages_fetched_successfully": 30,
     "pages_failed": 2,
     "failed_pages": [
       "cli/install",
-      "cli/tutorial"
+      "cli/overview"
     ]
   }
 }
