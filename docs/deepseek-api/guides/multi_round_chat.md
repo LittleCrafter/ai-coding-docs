@@ -14,7 +14,7 @@ client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com
 messages = [{"role": "user", "content": "What's the highest mountain in the world?"}]
 response = client.chat.completions.create(
     model="deepseek-flash",
-    messages=messages
+    messages=messages,
 )
 
 messages.append(response.choices[0].message)
@@ -24,7 +24,7 @@ print(f"Messages Round 1: {messages}")
 messages.append({"role": "user", "content": "What is the second?"})
 response = client.chat.completions.create(
     model="deepseek-flash",
-    messages=messages
+    messages=messages,
 )
 
 messages.append(response.choices[0].message)

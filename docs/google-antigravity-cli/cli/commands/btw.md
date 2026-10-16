@@ -17,7 +17,7 @@ The `/btw` command runs an ephemeral, single-turn side query in the background:
 
 You can ask a side question across Antigravity surfaces.
 
-### Antigravity app
+### Antigravity App
 
 Once a conversation is active (that is, after you’ve sent your first message), type `/btw` followed by your question in the composer:
 

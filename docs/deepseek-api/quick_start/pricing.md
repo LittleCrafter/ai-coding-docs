@@ -1,6 +1,6 @@
 # Models & Pricing
 
-The prices listed below are in units of per 1M tokens. A token, the smallest unit of text that the model recognizes, can be a word, a number, or even a punctuation mark. We will bill based on the total number of input and output tokens by the model.
+Model prices are listed in units of per 1M tokens. A token, the smallest unit of text that the model recognizes, can be a word, a number, or even a punctuation mark. We bill model usage based on the total number of input and output tokens by the model.
 
 * * *
 
@@ -41,8 +41,23 @@ Concurrency Limit(3)| 2500| 500
 
 * * *
 
+## Search & Fetch Pricing
+
+Search and Fetch are standalone APIs billed per request.
+
+API| Unit| Price  
+---|---|---  
+Search| Per 1,000 successful requests| $0.75  
+Fetch| Per 1,000 successful requests| $0.75  
+  
+**Web search in Claude Code and Codex:** Search requests made through Claude Code's built-in Web Search tool or Codex's `web_search` feature will not incur Search API request fees during the first two weeks after the Search API launch. Standard Search API pricing applies after that period; the billing start date will be announced separately.
+
+See the [Search & Fetch guide](<https://api-docs.deepseek.com/guides/search>) for API usage and complete billing rules.
+
+* * *
+
 ## Deduction Rules
 
-The expense = number of tokens × price. The corresponding fees will be directly deducted from your topped-up balance or granted balance, with a preference for using the granted balance first when both balances are available.
+For model usage, the expense = number of tokens × price. Search and Fetch are charged per successful request at the rates above. The corresponding fees will be directly deducted from your topped-up balance or granted balance, with a preference for using the granted balance first when both balances are available.
 
 Product prices may vary and DeepSeek reserves the right to adjust them. We recommend topping up based on your actual usage and regularly checking this page for the most recent pricing information.

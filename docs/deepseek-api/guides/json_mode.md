@@ -48,8 +48,8 @@ response = client.chat.completions.create(
     model="deepseek-flash",
     messages=messages,
     response_format={
-        'type': 'json_object'
-    }
+        'type': 'json_object',
+    },
 )
 
 print(json.loads(response.choices[0].message.content))

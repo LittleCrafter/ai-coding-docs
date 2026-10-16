@@ -23,7 +23,7 @@ response = client.completions.create(
     model="deepseek-flash",
     prompt="def fib(a):",
     suffix="    return fib(a-1) + fib(a-2)",
-    max_tokens=128
+    max_tokens=128,
 )
 print(response.choices[0].text)
 ```

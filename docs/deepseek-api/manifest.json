@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-10-16T07:36:54Z",
+  "last_updated": "2026-10-16T13:37:24Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -40,8 +40,8 @@
       "source_url": "https://api-docs.deepseek.com/api/create-response",
       "source_md_url": "https://api-docs.deepseek.com/api/create-response",
       "source_id": "api/create-response",
-      "hash": "4d24ed3c6b2577fee51f9d1a3f39766a72caf16b376be707cf363183006c35d4",
-      "last_updated": "2026-09-24T13:53:22Z"
+      "hash": "a1fcaa337ddf1cdcd5b6e0ca91a4e7b129f13f32e3e3d8b966df85944fc4f3f5",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "api/delete-file": {
       "slug": "api/delete-file",
@@ -52,6 +52,16 @@
       "source_id": "api/delete-file",
       "hash": "60e40aef96adced03dd2915de7d33c7ad2fa5880bfd86db88138e7c9847ba7c0",
       "last_updated": "2026-09-11T04:44:14Z"
+    },
+    "api/fetch": {
+      "slug": "api/fetch",
+      "title": "Fetch",
+      "group": "api",
+      "source_url": "https://api-docs.deepseek.com/api/fetch",
+      "source_md_url": "https://api-docs.deepseek.com/api/fetch",
+      "source_id": "api/fetch",
+      "hash": "4965c2129bbd239dc4cbe2e1c8590c063995acaa63d7e3ca66ba9658276d6d70",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "api/get-user-balance": {
       "slug": "api/get-user-balance",
@@ -100,8 +110,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/anthropic_api",
       "source_md_url": "https://api-docs.deepseek.com/guides/anthropic_api",
       "source_id": "guides/anthropic_api",
-      "hash": "c88db085d7cbb67fc65df72c33b6eec3277ecf7b9de8ff572c9003186416b5fd",
-      "last_updated": "2026-09-24T13:53:22Z"
+      "hash": "4e462acb67770f663ff204858f4129ca616d825848b441a270b7fd5cdd0d8678",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/chat_prefix_completion": {
       "slug": "guides/chat_prefix_completion",
@@ -110,8 +120,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/chat_prefix_completion",
       "source_md_url": "https://api-docs.deepseek.com/guides/chat_prefix_completion",
       "source_id": "guides/chat_prefix_completion",
-      "hash": "2c7f680f8dacf9d1f32f360c6af1b1f63bad07b64fc4370ac21c3238f4a48cbe",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "e322d6d7c9e7450293ba9cb27517f1be91e9d363581715e61ac2ef9fa75cd5a7",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/files_api": {
       "slug": "guides/files_api",
@@ -120,8 +130,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/files_api",
       "source_md_url": "https://api-docs.deepseek.com/guides/files_api",
       "source_id": "guides/files_api",
-      "hash": "97fe14017dda714b9f581a08c740e4e22aa8c7346b77b108d1b843aca5d3b5f1",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "acbffe13db47d353a24a2590092173960d055d8fc5a211d964b032357068feb2",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/fim_completion": {
       "slug": "guides/fim_completion",
@@ -130,8 +140,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/fim_completion",
       "source_md_url": "https://api-docs.deepseek.com/guides/fim_completion",
       "source_id": "guides/fim_completion",
-      "hash": "e000bc069338b36e5e142ca09d743b0ad45800d63c88e9635b3cdffa6c561c2f",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "b4aa022990424d0a17ff866c93f17dcb6c0f02372e08da7956dc289e1ec4dfe6",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/json_mode": {
       "slug": "guides/json_mode",
@@ -140,8 +150,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/json_mode",
       "source_md_url": "https://api-docs.deepseek.com/guides/json_mode",
       "source_id": "guides/json_mode",
-      "hash": "02abfc54f168b2c5248c5381551eb82e9120b6223bb633447ba0881120c6ba13",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "e39fa8212a84f4704bf3e593b330e1e34b87bd8e0b1537d25202917e301c9e4e",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/kv_cache": {
       "slug": "guides/kv_cache",
@@ -150,8 +160,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/kv_cache",
       "source_md_url": "https://api-docs.deepseek.com/guides/kv_cache",
       "source_id": "guides/kv_cache",
-      "hash": "0d015ab71e265fa600711bf44a86213056be4970c64c3ffcd636ca2aa8cc792c",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "e3d2ebab79fe232243be6a58eece257f504b7e606833e96c3fc1ccc421bdba76",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/multi_round_chat": {
       "slug": "guides/multi_round_chat",
@@ -160,8 +170,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/multi_round_chat",
       "source_md_url": "https://api-docs.deepseek.com/guides/multi_round_chat",
       "source_id": "guides/multi_round_chat",
-      "hash": "faf07e256bd9cf713219a8b8a16d0cc5882a59ad0b04b4d16d675dd1322c2164",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "6d7e8729f07ec777c3e81b0af1259b302f20e6fe69b44da842739d4974cd67f9",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/responses_api": {
       "slug": "guides/responses_api",
@@ -170,8 +180,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/responses_api",
       "source_md_url": "https://api-docs.deepseek.com/guides/responses_api",
       "source_id": "guides/responses_api",
-      "hash": "657ca70dd5ec2ab6c8b5eccf931b72341cf6c6c8a0532c1bcdb093edcd74159f",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "1b906925eed42f11176c8d75a523eb553375bd09644dac556603f35c87c56c7c",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/thinking_mode": {
       "slug": "guides/thinking_mode",
@@ -180,8 +190,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/thinking_mode",
       "source_md_url": "https://api-docs.deepseek.com/guides/thinking_mode",
       "source_id": "guides/thinking_mode",
-      "hash": "87332522cc8667194e3f1b8a7123c6d9add415b78057d69b2f142ec113ff66db",
-      "last_updated": "2026-09-19T07:36:45Z"
+      "hash": "81f9494172c9c7fd40129e70ae44cb2cd5592a631fecba01f5b91363605276fd",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/tool_calls": {
       "slug": "guides/tool_calls",
@@ -190,8 +200,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/tool_calls",
       "source_md_url": "https://api-docs.deepseek.com/guides/tool_calls",
       "source_id": "guides/tool_calls",
-      "hash": "68acb9819df13ff6d05e3f1dddeb5848b262566754a71d601824096e872fde11",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "8ba9dcb63f20a786738985fb625f3f0dbdf22ea5b635d99b792dcb80e2c7c85f",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "guides/vision": {
       "slug": "guides/vision",
@@ -200,8 +210,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/vision",
       "source_md_url": "https://api-docs.deepseek.com/guides/vision",
       "source_id": "guides/vision",
-      "hash": "53f6586d7dc3cfca15df64e8ad7cb0fae4ec8164ab6f417d8f53c69fdc7ff00d",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "441621b1529d98f047b055c5e8baca574035c9e7cf1037dbaf574301b1c338d4",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "index": {
       "slug": "index",
@@ -210,8 +220,8 @@
       "source_url": "https://api-docs.deepseek.com",
       "source_md_url": "https://api-docs.deepseek.com",
       "source_id": "index",
-      "hash": "6a2c3c1853c6a263d5e8b2b6dcbe7f648669bb804638264aa87d6f336a1e8747",
-      "last_updated": "2026-09-19T07:36:45Z"
+      "hash": "316a69d3f6ad0ab19dd4801a40a2d7163c1b1741a4dfc2876659d59c9e5aed91",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "news/news0725": {
       "slug": "news/news0725",
@@ -285,13 +295,13 @@
     },
     "news/news250120": {
       "slug": "news/news250120",
-      "title": "Your First API Call",
+      "title": "DeepSeek-R1 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250120",
       "source_md_url": "https://api-docs.deepseek.com/news/news250120",
       "source_id": "news/news250120",
-      "hash": "24695569fe96dbbcfd810be23f00c4aab3a0bed4821feaaa9561730e07f38a31",
-      "last_updated": "2026-10-16T07:36:54Z"
+      "hash": "c26512dcc9b13a6fdd79dca4287e33d5d465ddd814ac9153acc2e2c4c9d6cac5",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "news/news250325": {
       "slug": "news/news250325",
@@ -315,13 +325,13 @@
     },
     "news/news250821": {
       "slug": "news/news250821",
-      "title": "Your First API Call",
+      "title": "DeepSeek-V3.1 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250821",
       "source_md_url": "https://api-docs.deepseek.com/news/news250821",
       "source_id": "news/news250821",
-      "hash": "24695569fe96dbbcfd810be23f00c4aab3a0bed4821feaaa9561730e07f38a31",
-      "last_updated": "2026-10-15T01:58:47Z"
+      "hash": "4c31f02df6e06e652b11482874653fc7625abe73fa13751d91a115a7a1a64fd0",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "news/news250922": {
       "slug": "news/news250922",
@@ -345,13 +355,13 @@
     },
     "news/news251201": {
       "slug": "news/news251201",
-      "title": "Your First API Call",
+      "title": "DeepSeek-V3.2 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news251201",
       "source_md_url": "https://api-docs.deepseek.com/news/news251201",
       "source_id": "news/news251201",
-      "hash": "24695569fe96dbbcfd810be23f00c4aab3a0bed4821feaaa9561730e07f38a31",
-      "last_updated": "2026-10-15T07:48:33Z"
+      "hash": "fde80d36807c7d3a387a41378f74cc486923bb33164a514e792e6442dc51a1ac",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "news/news260424": {
       "slug": "news/news260424",
@@ -400,8 +410,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code",
       "source_id": "quick_start/agent_integrations/claude_code",
-      "hash": "1c23da3022c15bdb471a0bc4e524e757fc25886ee982b1d49d764e6985ef9651",
-      "last_updated": "2026-09-11T13:06:23Z"
+      "hash": "209b306a8ea643caf2e1b36eefe7c8938019f5ed9584ed0cbb8c46cb14b5a677",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "quick_start/agent_integrations/codex": {
       "slug": "quick_start/agent_integrations/codex",
@@ -410,8 +420,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/codex",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/codex",
       "source_id": "quick_start/agent_integrations/codex",
-      "hash": "cf1077961a5da1bbb63f34642cf4862dad1fc28ce8f0d7c70b2fb5962a2cb9d2",
-      "last_updated": "2026-09-24T13:53:22Z"
+      "hash": "0681083c4a8ee0085b3cf019a51c0baddc133bb5d82fb9508676ecb4f25c8793",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "quick_start/agent_integrations/hermes": {
       "slug": "quick_start/agent_integrations/hermes",
@@ -480,8 +490,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/error_codes",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/error_codes",
       "source_id": "quick_start/error_codes",
-      "hash": "6b54d1eeea5e2130309f1d093fd3d945ce680d08a3ff37b536a1ea4d5a2cb86f",
-      "last_updated": "2026-08-02T00:45:00Z"
+      "hash": "e917546f28b441f2803d0c12993f37a5a41f0b8ffd53f46408a98e9186ade20a",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
@@ -490,8 +500,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "96cf8cb65cc100815d3deb63ab24756b39f6e5fd03fbe52fc4a1c72235ab8a4d",
-      "last_updated": "2026-10-03T14:01:29Z"
+      "hash": "eaab11e9f47ddbb3d9eb9422dc2f93317ae743decc2bafe612c1ffccc1844edd",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -500,8 +510,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/rate_limit",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/rate_limit",
       "source_id": "quick_start/rate_limit",
-      "hash": "cd1f0eb8a7148c205323f2f1287c19a7f56b9d9eb605548bda625d1b3a69380e",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "1ffd35cfd0da136c826c5f774eb345942b538056115209c6659c56b9af44db12",
+      "last_updated": "2026-10-16T13:37:24Z"
     },
     "quick_start/token_usage": {
       "slug": "quick_start/token_usage",
@@ -525,10 +535,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-16T07:36:54Z",
-    "fetch_duration_seconds": 18.285,
-    "total_pages_discovered": 52,
-    "pages_fetched_successfully": 52,
+    "last_fetch_completed": "2026-10-16T13:37:24Z",
+    "fetch_duration_seconds": 18.993,
+    "total_pages_discovered": 53,
+    "pages_fetched_successfully": 53,
     "pages_failed": 0,
     "failed_pages": []
   }

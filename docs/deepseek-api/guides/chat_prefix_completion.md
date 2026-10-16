@@ -21,7 +21,7 @@ client = OpenAI(
 
 messages = [
     {"role": "user", "content": "Please write quick sort code"},
-    {"role": "assistant", "content": "```python\n", "prefix": True}
+    {"role": "assistant", "content": "```python\n", "prefix": True},
 ]
 response = client.chat.completions.create(
     model="deepseek-flash",

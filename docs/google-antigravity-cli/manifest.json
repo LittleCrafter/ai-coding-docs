@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-16T07:33:51Z",
+  "last_updated": "2026-10-16T13:34:21Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -40,8 +40,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/btw",
       "source_md_url": "https://antigravity.google/docs/cli/commands/btw.md",
       "source_id": "cli/commands/btw",
-      "hash": "0dc91e0dce7dad1f39f3daa4213caf5b26a2eccae56cb161a0560f00135729c3",
-      "last_updated": "2026-10-15T13:44:13Z"
+      "hash": "5134d9a2c8195b2dbcabc51cca32e4f5c2292317ae12b961bdbe79b66847e2ab",
+      "last_updated": "2026-10-16T13:34:21Z"
     },
     "cli/commands/changelog": {
       "slug": "cli/commands/changelog",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-16T07:33:51Z",
-    "fetch_duration_seconds": 9.983,
+    "last_fetch_completed": "2026-10-16T13:34:21Z",
+    "fetch_duration_seconds": 9.861,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,
