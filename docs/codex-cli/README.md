@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 197
 - **Version:** 0.163.0
-- **Last updated:** 2026-10-16T07:36:35Z
+- **Last updated:** 2026-10-16T18:31:03Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -161,7 +161,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Plugin controls | [enterprise/apps-and-connectors.md](./enterprise/apps-and-connectors.md) | [source](<https://learn.chatgpt.com/docs/enterprise/apps-and-connectors>) |
 | Bedrock through LiteLLM | [enterprise/bedrock-through-litellm.md](./enterprise/bedrock-through-litellm.md) | [source](<https://learn.chatgpt.com/docs/enterprise/bedrock-through-litellm>) |
 | Set up and manage @ChatGPT in Slack and Microsoft Teams | [enterprise/chatgpt-slack-and-teams.md](./enterprise/chatgpt-slack-and-teams.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-slack-and-teams>) |
-| Manage ChatGPT Space and shared pages | [enterprise/chatgpt-space.md](./enterprise/chatgpt-space.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-space>) |
+| Manage ChatGPT Space, pages, and slides | [enterprise/chatgpt-space.md](./enterprise/chatgpt-space.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-space>) |
 | ChatGPT Work cloud security | [enterprise/chatgpt-work-cloud-security.md](./enterprise/chatgpt-work-cloud-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-cloud-security>) |
 | ChatGPT Work local security | [enterprise/chatgpt-work-local-security.md](./enterprise/chatgpt-work-local-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-local-security>) |
 | ChatGPT Work Overview | [enterprise/chatgpt-work-overview.md](./enterprise/chatgpt-work-overview.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-overview>) |

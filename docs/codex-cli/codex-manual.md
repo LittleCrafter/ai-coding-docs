@@ -21147,8 +21147,8 @@ permissions:
 
 Source: [ChatGPT Space](./space.md)
 
-ChatGPT Space brings your pages, files, and shared work into one place. Write and
-edit alongside ChatGPT, then invite other people to work with you.
+ChatGPT Space brings your pages, slides, files, and shared work into one place.
+Write and edit alongside ChatGPT, then invite other people to work with you.
 
 [Open Space in ChatGPT](https://chatgpt.com/space).
 
@@ -21171,8 +21171,10 @@ collaborators.
 
 Space also brings together:
 
-- **Spreadsheets and presentations:** Create and edit tables, calculations, and
-  slides with ChatGPT.
+- **[ChatGPT Slides](./space/getting-started.md#create-and-refine-slides):**
+  Build a presentation from a conversation, files, or a template. Edit the same
+  deck with your team and ChatGPT, then present or export it.
+- **Spreadsheets:** Create and edit tables and calculations with ChatGPT.
 - **[Sites](./sites.md):** Websites and tools you build with ChatGPT.
 - **Images and files:** Uploaded files and saved work you can open and reuse.
 
@@ -21187,7 +21189,8 @@ Linked files keep their original permissions. Content you copy or summarize
 onto a page is visible to people who can access that page. Sharing a page
 doesn't share your private chats or saved memory.
 
-To create your first page, see [Getting started](./space/getting-started.md).
+To create your first page or slide deck, see
+[Getting started](./space/getting-started.md).
 For workspace controls, see [Manage ChatGPT Space](./enterprise/chatgpt-space.md).
 
 ### Codex on mobile
@@ -21201,7 +21204,8 @@ Start, guide, approve, and review Codex tasks on a connected computer from your 
 Source: [Collaborate in Space](./space/collaboration.md)
 
 Share a page on its own or, where available, share a Space to give people access
-to a group of related pages.
+to a group of related pages. You can also share a slide deck to work on a
+presentation together.
 
 #### Choose an access level
 
@@ -21253,6 +21257,21 @@ decisions your team has already made.
 
 Check access to linked source material separately. A collaborator who can read
 your page may still lack permission to open a source linked from it.
+
+#### Collaborate on slides
+
+Open a deck in Space and use its sharing controls to invite collaborators.
+Choose view access for people who need to read the deck or edit access for
+people who will revise it with you. Slides currently supports view and edit
+access; a separate comment-only role isn't available.
+
+With edit access, you and your teammates can change the same deck at the same
+time. Use shared comments to discuss feedback, mention a teammate, or mention
+ChatGPT or your dot to request an update. For a change to a specific element,
+select it and choose **Request edits**.
+
+To start a deck, refine its content, or export the result, see
+[Create and refine slides](./space/getting-started.md#create-and-refine-slides).
 
 #### Resolve an access problem
 
@@ -21521,8 +21540,8 @@ workspace and allowed by workspace settings.
 
 Source: [Get started with ChatGPT Space](./space/getting-started.md)
 
-Start with a blank page, notes you already have, or a conversation you want to
-save. You need an account with Space enabled.
+Create a page or slide deck from notes, files, or a conversation. You need an
+account with Space enabled.
 
 #### Open Space
 
@@ -21559,6 +21578,52 @@ Organize the notes on this page into a clear draft. Use headings and bullet poin
 
    Change the text directly or ask ChatGPT for a revision. Check the result on
    the page before sharing it.
+
+#### Create and refine slides
+
+ChatGPT Slides lets you build a presentation with your team and ChatGPT in
+Space. On mobile, you can create slides through conversation and view decks.
+Use the web or desktop to edit slide elements directly.
+
+1. Start with your material
+
+   Ask ChatGPT to create a presentation in Space from a conversation, an outline,
+   or source files. Describe the audience, goal, and length. You can also provide
+   a reference deck or template to guide the layout and style.
+
+**Prompt:**
+
+```text
+Create an 8-slide quarterly business review in Space using these notes and metrics. The audience is our leadership team. Cover results, risks, and decisions needed. Use the attached deck as a style reference, preserve the source numbers, and flag missing information.
+```
+
+2. Refine the deck
+
+   Open the editable deck in Space. Edit text, images, shapes, tables, and charts
+   directly, or select an element and choose **Request edits** to ask ChatGPT for
+   a change. Use the prompt bar for changes across the deck, such as shortening
+   the story for an executive audience. Ask ChatGPT to generate images or use
+   visuals you upload.
+
+3. Work with your team
+
+   Share the deck and give collaborators edit access to work on the same slides
+   at the same time. Use shared comments to discuss changes or mention ChatGPT
+   or your dot to request a revision. See
+   [Collaborate on slides](./space/collaboration.md#collaborate-on-slides) for
+   permissions and feedback.
+
+4. Present or export
+
+   Check the facts, charts, and layout before presenting. Present directly in
+   ChatGPT with speaker notes, or export the deck. On the web, you can export to
+   PowerPoint (`.pptx`), PDF, or Google Slides. In the desktop app, options to
+   open the deck in PowerPoint or Keynote appear when those apps are installed.
+   Review the exported deck's content and formatting before sharing it.
+
+If the Windows desktop app creates a PowerPoint file instead of a collaborative
+deck, switch to cloud mode or use ChatGPT on the web to create and edit slides
+in Space.
 
 #### Group related pages in a space
 
@@ -42822,13 +42887,13 @@ installed the update. The policy controls only the app's built-in updater.
 - [`requirements.toml` configuration reference](./config-file/config-reference.md#requirementstoml)
 - [Admin rollout guide](./enterprise/admin-setup.md)
 
-### Manage ChatGPT Space and shared pages
+### Manage ChatGPT Space, pages, and slides
 
-Source: [Manage ChatGPT Space and shared pages](./enterprise/chatgpt-space.md)
+Source: [Manage ChatGPT Space, pages, and slides](./enterprise/chatgpt-space.md)
 
 #### What is ChatGPT Space?
 
-ChatGPT Space (formerly Library) brings together pages, uploaded files, and shared content so people and agents can collaborate. Teams can draft documents, [edit pages](./space/pages.md#revise-the-content), or [ask ChatGPT for revisions](./space/agents.md#start-with-a-bounded-request).
+ChatGPT Space (formerly Library) brings together pages, slide decks, uploaded files, and shared content so people and agents can collaborate. Teams can draft documents, [edit pages](./space/pages.md#revise-the-content), [create presentations](./space/getting-started.md#create-and-refine-slides), or [ask ChatGPT for revisions](./space/agents.md#start-with-a-bounded-request).
 
 For product guidance, see the [ChatGPT Space guide](./space.md) and [Help Center guidance on Library files](https://help.openai.com/en/articles/20001052-using-library-to-manage-files-in-chatgpt).
 
@@ -42845,6 +42910,14 @@ Users can [create a page](./space/getting-started.md#draft-your-first-page) and 
 Sharing a page keeps private chats and saved memory private. Private details added to the page are visible to its collaborators.
 
 Uploads follow the page’s permissions. Linked source files retain their own permissions. Content copied or summarized onto a page is visible to its collaborators.
+
+#### Help users create and share slides
+
+ChatGPT Slides lets members create and edit presentations in Space with ChatGPT and their teammates. Slides uses the same access setting as Space and pages. For workspace sharing guidance, see [Space sharing, data, and controls](https://help.openai.com/en/articles/20001544-chatgpt-space-sharing-data-and-controls).
+
+Members can share a deck with view or edit access. People with edit access can revise the same deck together and discuss changes in shared comments. See [Collaborate on slides](./space/collaboration.md#collaborate-on-slides) for permissions and feedback.
+
+If the Windows desktop app creates a PowerPoint file instead of a collaborative deck, direct the member to cloud mode or ChatGPT on the web. For the full workflow, see [Create and refine slides](./space/getting-started.md#create-and-refine-slides). For platform requirements, see [Creating and collaborating on slides in ChatGPT](https://help.openai.com/articles/20001605) in the Help Center.
 
 #### Plugins and connected accounts
 

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-16T13:34:21Z",
+  "last_updated": "2026-10-16T18:28:19Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -235,13 +235,13 @@
     },
     "cli/reference": {
       "slug": "cli/reference",
-      "title": "CLI reference",
+      "title": "CLI commands",
       "group": "cli",
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "a6a7ed3d284aad9cb763f85e35ecfa26b6bb9441a5e5877579614c10211dbd25",
-      "last_updated": "2026-10-16T07:33:51Z"
+      "hash": "28c6e5fcdb9445fca4a693a74c41d0feaf072603407597363ab74e61917d0310",
+      "last_updated": "2026-10-16T18:28:19Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-16T13:34:21Z",
-    "fetch_duration_seconds": 9.861,
+    "last_fetch_completed": "2026-10-16T18:28:19Z",
+    "fetch_duration_seconds": 9.872,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,

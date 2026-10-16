@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 29
 - **Version:** 1.2.0
-- **Last updated:** 2026-10-16T13:34:21Z
+- **Last updated:** 2026-10-16T18:28:19Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -21,7 +21,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Headless mode | [cli/headless.md](./cli/headless.md) | [source](<https://antigravity.google/docs/cli/headless>) |
 | Choose an execution mode | [cli/modes.md](./cli/modes.md) | [source](<https://antigravity.google/docs/cli/modes>) |
 | Prompting and interaction | [cli/prompting.md](./cli/prompting.md) | [source](<https://antigravity.google/docs/cli/prompting>) |
-| CLI reference | [cli/reference.md](./cli/reference.md) | [source](<https://antigravity.google/docs/cli/reference>) |
+| CLI commands | [cli/reference.md](./cli/reference.md) | [source](<https://antigravity.google/docs/cli/reference>) |
 | Status line customization | [cli/statusline.md](./cli/statusline.md) | [source](<https://antigravity.google/docs/cli/statusline>) |
 | Terminal title customization | [cli/title.md](./cli/title.md) | [source](<https://antigravity.google/docs/cli/title>) |
 | CLI troubleshooting | [cli/troubleshooting.md](./cli/troubleshooting.md) | [source](<https://antigravity.google/docs/cli/troubleshooting>) |

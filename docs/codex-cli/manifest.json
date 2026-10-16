@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.163.0",
-  "last_updated": "2026-10-16T07:36:35Z",
+  "last_updated": "2026-10-16T18:31:03Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "9a69a55b9c7e2d66cd47825fb22ab899ea9b97cfaf16188204b76d2521688103",
-      "last_updated": "2026-10-16T07:36:35Z"
+      "hash": "f4e11d2b15e2e252de39e40efa7cb78e2972aec06b675e87b6a40fa573a79e0a",
+      "last_updated": "2026-10-16T18:31:03Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -605,13 +605,13 @@
     },
     "enterprise/chatgpt-space": {
       "slug": "enterprise/chatgpt-space",
-      "title": "Manage ChatGPT Space and shared pages",
+      "title": "Manage ChatGPT Space, pages, and slides",
       "group": "enterprise",
       "source_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-space",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-space.md",
       "source_id": "llms:enterprise/chatgpt-space",
-      "hash": "22be327409d17b323e1a5b493587de93c7b6210c7fa27c016b6202647b9f78b9",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "e2c1b8ff66f6ed251fdcc6a79fe453c77310c521bed3e63209dc4826ff308b37",
+      "last_updated": "2026-10-16T18:31:03Z"
     },
     "enterprise/chatgpt-work-cloud-security": {
       "slug": "enterprise/chatgpt-work-cloud-security",
@@ -1760,8 +1760,8 @@
       "source_url": "https://learn.chatgpt.com/docs/space",
       "source_md_url": "https://learn.chatgpt.com/docs/space.md",
       "source_id": "llms:space",
-      "hash": "dd26db2141abc1bbe64e9d0ac7759edcfa30252b993f9be392d040387142ab72",
-      "last_updated": "2026-10-12T20:29:39Z"
+      "hash": "819abade5cf6bedc6666373b4971359afa5b123f7358487d11880b284a91125d",
+      "last_updated": "2026-10-16T18:31:03Z"
     },
     "space/agents": {
       "slug": "space/agents",
@@ -1780,8 +1780,8 @@
       "source_url": "https://learn.chatgpt.com/docs/space/collaboration",
       "source_md_url": "https://learn.chatgpt.com/docs/space/collaboration.md",
       "source_id": "llms:space/collaboration",
-      "hash": "f017aed30a466f471ec203378eb55c3cbbdb3582f886afa5d911705ee3e7e29e",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "dc9dee90d2516cff59ca916e9d659117308f7c5ceab7dc9c318c1b311241af45",
+      "last_updated": "2026-10-16T18:31:03Z"
     },
     "space/getting-started": {
       "slug": "space/getting-started",
@@ -1790,8 +1790,8 @@
       "source_url": "https://learn.chatgpt.com/docs/space/getting-started",
       "source_md_url": "https://learn.chatgpt.com/docs/space/getting-started.md",
       "source_id": "llms:space/getting-started",
-      "hash": "11532414e344508fa5287cbf43270ca838b6e5aae4f9e96ad73c087c40f77d5a",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "9085ab9f043c1bdc3ec36f071f04be8743e9990ae0497b1328634433c0792456",
+      "last_updated": "2026-10-16T18:31:03Z"
     },
     "space/pages": {
       "slug": "space/pages",
@@ -1975,8 +1975,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-16T07:36:35Z",
-    "fetch_duration_seconds": 68.686,
+    "last_fetch_completed": "2026-10-16T18:31:03Z",
+    "fetch_duration_seconds": 68.714,
     "total_pages_discovered": 197,
     "pages_fetched_successfully": 197,
     "pages_failed": 0,

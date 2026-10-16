@@ -2,8 +2,8 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-ChatGPT Space brings your pages, files, and shared work into one place. Write and
-edit alongside ChatGPT, then invite other people to work with you.
+ChatGPT Space brings your pages, slides, files, and shared work into one place.
+Write and edit alongside ChatGPT, then invite other people to work with you.
 
 > Illustration: ChatGPT Space with pages, collaborative slides, templates, and a shared launch plan. Move your pointer over the illustration to see a cursor labeled You.
 
@@ -30,8 +30,10 @@ collaborators.
 
 Space also brings together:
 
-- **Spreadsheets and presentations:** Create and edit tables, calculations, and
-  slides with ChatGPT.
+- **[ChatGPT Slides](./space/getting-started.md#create-and-refine-slides):**
+  Build a presentation from a conversation, files, or a template. Edit the same
+  deck with your team and ChatGPT, then present or export it.
+- **Spreadsheets:** Create and edit tables and calculations with ChatGPT.
 - **[Sites](./sites.md):** Websites and tools you build with ChatGPT.
 - **Images and files:** Uploaded files and saved work you can open and reuse.
 
@@ -46,5 +48,6 @@ Linked files keep their original permissions. Content you copy or summarize
 onto a page is visible to people who can access that page. Sharing a page
 doesn't share your private chats or saved memory.
 
-To create your first page, see [Getting started](./space/getting-started.md).
+To create your first page or slide deck, see
+[Getting started](./space/getting-started.md).
 For workspace controls, see [Manage ChatGPT Space](./enterprise/chatgpt-space.md).
