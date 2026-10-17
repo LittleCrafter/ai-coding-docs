@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 54
-- **Last updated:** 2026-10-17T12:33:46Z
+- **Last updated:** 2026-10-17T17:37:35Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -12,7 +12,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Your First API Call | [index.md](./index.md) | [source](<https://api-docs.deepseek.com>) |
-| Your First API Call | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
+| Change Log | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
 
 ## api
 
@@ -57,7 +57,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | 🚀 Introducing DeepSeek-V3 | [news/news1226.md](./news/news1226.md) | [source](<https://api-docs.deepseek.com/news/news1226>) |
 | Introducing DeepSeek App | [news/news250115.md](./news/news250115.md) | [source](<https://api-docs.deepseek.com/news/news250115>) |
 | Your First API Call | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
-| DeepSeek-V3-0324 Release | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
+| Your First API Call | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
 | DeepSeek-R1-0528 Release | [news/news250528.md](./news/news250528.md) | [source](<https://api-docs.deepseek.com/news/news250528>) |
 | DeepSeek-V3.1 Release | [news/news250821.md](./news/news250821.md) | [source](<https://api-docs.deepseek.com/news/news250821>) |
 | DeepSeek-V3.1-Terminus | [news/news250922.md](./news/news250922.md) | [source](<https://api-docs.deepseek.com/news/news250922>) |

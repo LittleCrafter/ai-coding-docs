@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-10-17T12:33:46Z",
+  "last_updated": "2026-10-17T17:37:35Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -305,13 +305,13 @@
     },
     "news/news250325": {
       "slug": "news/news250325",
-      "title": "DeepSeek-V3-0324 Release",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250325",
       "source_md_url": "https://api-docs.deepseek.com/news/news250325",
       "source_id": "news/news250325",
-      "hash": "4c57940939c00fd1f395eb113013e78c40b220d45557470df976fa1be4f20086",
-      "last_updated": "2026-10-02T21:30:39Z"
+      "hash": "d2269900c77786e82b4d71ff75a719e523f814e3eb57619070cf758279515370",
+      "last_updated": "2026-10-17T17:37:35Z"
     },
     "news/news250528": {
       "slug": "news/news250528",
@@ -535,18 +535,18 @@
     },
     "updates": {
       "slug": "updates",
-      "title": "Your First API Call",
+      "title": "Change Log",
       "group": "root",
       "source_url": "https://api-docs.deepseek.com/updates",
       "source_md_url": "https://api-docs.deepseek.com/updates",
       "source_id": "updates",
-      "hash": "cef1e46ef2169de3173d6b5c3a1bf52cd9d0d7783d4c73f6f57c8a96fa8a622c",
-      "last_updated": "2026-10-17T12:33:46Z"
+      "hash": "c8c137042015976bc21d0f629a8c90fc2db2be33c91b5a660c2587c59c80e844",
+      "last_updated": "2026-10-17T17:37:35Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-17T12:33:46Z",
-    "fetch_duration_seconds": 20.408,
+    "last_fetch_completed": "2026-10-17T17:37:35Z",
+    "fetch_duration_seconds": 19.538,
     "total_pages_discovered": 54,
     "pages_fetched_successfully": 54,
     "pages_failed": 0,
