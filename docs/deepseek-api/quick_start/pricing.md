@@ -50,7 +50,7 @@ API| Unit| Price
 Search| Per 1,000 successful requests| $0.75  
 Fetch| Per 1,000 successful requests| $0.75  
   
-**Web search in Claude Code and Codex:** Search requests made through Claude Code's built-in Web Search tool or Codex's `web_search` feature will not incur Search API request fees during the first two weeks after the Search API launch. Standard Search API pricing applies after that period; the billing start date will be announced separately.
+Note: when you use the DeepSeek API through DeepSeek Harness, Claude Code, or Codex, server-side tool calls already hit the Search and Fetch APIs. These calls are currently free of charge; per-request billing starts at 00:00 Beijing time on November 1, 2026.
 
 See the [Search & Fetch guide](<https://api-docs.deepseek.com/guides/search>) for API usage and complete billing rules.
 

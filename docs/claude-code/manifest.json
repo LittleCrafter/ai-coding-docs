@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.302",
-  "last_updated": "2026-10-17T01:41:37Z",
+  "last_updated": "2026-10-17T07:15:09Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -200,8 +200,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/python",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/python.md",
       "source_id": "agent-sdk/python",
-      "hash": "097b7218ebef57c573762023b436a7ebb31b0b8ee9bc79b44b919ae31e70f41f",
-      "last_updated": "2026-10-17T01:41:37Z"
+      "hash": "c7cbfbb8a97e27d4f9dfc3c5e8aaedc29c6e4110c7f3a9dd31239708f7a330a8",
+      "last_updated": "2026-10-17T07:15:09Z"
     },
     "agent-sdk/quickstart": {
       "slug": "agent-sdk/quickstart",
@@ -330,8 +330,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/typescript",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/typescript.md",
       "source_id": "agent-sdk/typescript",
-      "hash": "6bd0676e8be9e4addfafebaaea15ebf96dab2d027ff2957596c5f2fd46b0116c",
-      "last_updated": "2026-10-17T01:41:37Z"
+      "hash": "7b2d75e999da579ad247679c6b9c70782db9a32a233303cd12850605d2f4c345",
+      "last_updated": "2026-10-17T07:15:09Z"
     },
     "agent-sdk/typescript-v2-preview": {
       "slug": "agent-sdk/typescript-v2-preview",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-17T01:41:37Z",
-    "fetch_duration_seconds": 80.267,
+    "last_fetch_completed": "2026-10-17T07:15:09Z",
+    "fetch_duration_seconds": 79.215,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

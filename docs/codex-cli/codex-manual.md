@@ -5400,7 +5400,8 @@ plugin](./security/plugin.md).
 
 #### Check the prerequisites
 
-You need Node.js 22 (22.13.0 or later), 24, or 26, plus Python 3.10 or later.
+Use Node.js 24 or 26, or Node.js 22 starting with 22.13.0.
+You also need Python 3.10 or later.
 Python 3.10 also needs `tomli`. Scans using OpenAI inference require Codex Security access.
 Depending on your account and repository, full-repository scans may also
 require [Trusted Access for Cyber](https://chatgpt.com/cyber).
@@ -6713,8 +6714,9 @@ authentication](#select-scan-authentication).
 
 For CI, keep the API key scoped to the scan step and use a trusted workflow.
 
-The CLI requires Node.js 22 (22.13.0 or later), 24, or 26. Scans, bulk scans,
-exports, scan history, and saved findings also require Python 3.10 or later.
+The CLI requires Node.js 24 or 26, or Node.js 22 starting with 22.13.0.
+Scans, bulk scans, exports, scan history, and saved findings also require
+Python 3.10 or later.
 Python 3.10 also requires `tomli`. Use `--python` with `scan`, `bulk-scan`, or
 `export`, or set `PYTHON` for any Python-backed command.
 
@@ -7659,8 +7661,8 @@ code changes from your application or developer tool. The SDK returns typed
 findings, coverage details, and paths to scan artifacts. For longer scans, it
 supports preflight checks, cost limits, progress callbacks, and cancellation.
 
-The SDK uses ECMAScript modules (ESM) and runs server-side with Node.js 22
-(22.13.0 or later), 24, or 26. Scanning also requires Python 3.10 or later.
+The SDK uses ECMAScript modules (ESM) and runs server-side with Node.js 24 or 26,
+or Node.js 22 starting with 22.13.0. Scanning also requires Python 3.10 or later.
 Python 3.10 also requires the `tomli` package.
 
 Running scans requires Codex Security access. For general coding agents, see
@@ -9372,7 +9374,7 @@ credentials out of it.
 
 The runner needs:
 
-- Node.js 22 (22.13.0 or later), 24, or 26.
+- Node.js 24 or 26, or Node.js 22 starting with 22.13.0.
 - Python 3.10 or later.
 - The published `@openai/codex-security` package, installed outside the
   repository checkout.

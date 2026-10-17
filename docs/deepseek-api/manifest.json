@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-10-16T13:37:24Z",
+  "last_updated": "2026-10-17T07:16:38Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -500,8 +500,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "eaab11e9f47ddbb3d9eb9422dc2f93317ae743decc2bafe612c1ffccc1844edd",
-      "last_updated": "2026-10-16T13:37:24Z"
+      "hash": "f0044fce78646e3529a7661c717a2575439ecfe9da6542af8473a6218e899167",
+      "last_updated": "2026-10-17T07:16:38Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -535,8 +535,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-16T13:37:24Z",
-    "fetch_duration_seconds": 18.993,
+    "last_fetch_completed": "2026-10-17T07:16:38Z",
+    "fetch_duration_seconds": 18.644,
     "total_pages_discovered": 53,
     "pages_fetched_successfully": 53,
     "pages_failed": 0,
