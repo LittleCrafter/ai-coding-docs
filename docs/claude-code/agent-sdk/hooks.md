@@ -216,7 +216,7 @@ SDK matchers follow the same rules as [matchers in settings files](../hooks.md#m
 
 | Option | Type | Default | Description |
 | - | - | - | - |
-| `matcher` | `string` | `undefined` | Pattern matched against the event's filter field, following the [rules for matchers in settings files](../hooks.md#matcher-patterns). For tool hooks, this is the tool name. Built-in tools include `Bash`, `Read`, `Write`, `Edit`, `Glob`, `Grep`, `WebFetch`, `Agent`, and others (see [Tool Input Types](./typescript.md#tool-input-types) for the full list). MCP tools use the pattern `mcp__<server>__<action>`, where `<server>` is the key you use in the `mcpServers` configuration. |
+| `matcher` | `string` | `undefined` | Pattern matched against the event's filter field, following the [rules for matchers in settings files](../hooks.md#matcher-patterns). For tool hooks, that field is the tool name. Built-in tools include `Bash`, `Read`, `Write`, `Edit`, `Glob`, `Grep`, `WebFetch`, `Agent`, and others. See [Tool Input Types](./typescript.md#tool-input-types) for the full list. MCP tools use the pattern `mcp__<server>__<action>`, where `<server>` is the key you use in the `mcpServers` configuration, spelled as the [tool naming convention](./mcp.md#tool-naming-convention) describes. |
 | `hooks` | `HookCallback[]` | - | Required. Array of callback functions to execute when the pattern matches |
 | `timeout` | `number` | `undefined` | Timeout in seconds. When omitted, Claude Code applies the [event's default timeout](#hook-timeout). Your SDK callbacks follow the `command` hook defaults |
 

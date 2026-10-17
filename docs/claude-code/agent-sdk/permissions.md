@@ -14,7 +14,7 @@ When Claude requests a tool, the SDK checks permissions in this order:
 
 1. **Hooks**
 
-   Run [hooks](./hooks.md) first. A hook can deny the call outright or pass it on. A hook that returns `allow` does not skip the deny and ask rules below; those are evaluated regardless of the hook result. A `PreToolUse` hook allow also can't approve an `rm` or `rmdir` removal targeting a [critical path](../permission-modes.md#critical-paths).
+   Run [hooks](./hooks.md) first. A hook can deny the call outright or pass it on. A hook that returns `allow` does not skip the deny and ask rules below; those are evaluated regardless of the hook result. A `PreToolUse` hook that returns `allow` also can't approve an `rm` or `rmdir` removal targeting a [critical path](../permission-modes.md#critical-paths). For what that `allow` does in plan mode, see [Hook approvals in plan mode](../permissions.md#hook-approvals-in-plan-mode).
 2. **Deny rules**
 
    Check `deny` rules (from `disallowed_tools` and [settings.json](../settings-reference.md#permission-settings)). If a deny rule matches, the tool is blocked, even in `bypassPermissions` mode. Bare-name deny rules like `Bash` remove the tool from Claude's context before this evaluation begins, so only scoped rules like `Bash(rm *)` are checked at this step.
@@ -141,7 +141,7 @@ You can set the permission mode once when starting a query, or change it dynamic
 
 **At query time**
 
-Pass `permission_mode` (Python) or `permissionMode` (TypeScript) when creating a query. This mode applies for the entire session unless changed dynamically.
+Pass `permission_mode` (Python) or `permissionMode` (TypeScript) when creating a query.
 
 ```python Python theme={null}
 import asyncio
@@ -277,13 +277,24 @@ Auto-approves tool uses without prompting, except the cases listed in the warnin
 
 Claude explores the codebase and produces a plan without editing your source files. Read-only tools run as they do in the `default` permission mode.
 
-File edits are never auto-approved in plan mode, even when an allow rule matches. They prompt through your `canUseTool` callback instead. On Claude Code v2.1.212 or later, shell commands that modify files, such as `touch` and `rm`, reach your `canUseTool` callback the same way.
+File edits are never auto-approved in plan mode, even when an allow rule matches or a `PreToolUse` hook returns `allow`. They prompt through your `canUseTool` callback instead. On Claude Code v2.1.212 or later, shell commands that modify files, such as `touch` and `rm`, reach your `canUseTool` callback the same way.
 
 In the TypeScript SDK, if you set `allowDangerouslySkipPermissions: true` alongside `permissionMode: 'plan'`, file edits and shell commands that modify files still reach your `canUseTool` callback. The option lets you switch to `bypassPermissions` later with `setPermissionMode()`.
 
 Claude may use `AskUserQuestion` to clarify requirements before finalizing the plan. See [Handle approvals and user input](./user-input.md#handle-clarifying-questions) for handling these prompts.
 
 **Use when:** you want Claude to propose changes without executing them, such as during code review or when you need to approve changes before they're made.
+
+#### Auto mode (`auto`)
+
+A classifier model reviews actions such as shell commands and network requests before they run, and allows or blocks each one it reviews. For the models and providers auto mode requires and the order it evaluates actions in, see [Eliminate permission prompts with auto mode](../permission-modes.md#eliminate-prompts-with-auto-mode).
+
+If you switch a session that's in auto mode to a model that auto mode doesn't support, using [`set_model()`](./python.md#claudesdkclient), [`setModel()`](./typescript.md#query-object), or [`applyFlagSettings()`](./typescript.md#applyflagsettings), the session changes to `default` mode:
+
+* **What you see**: a `system` message with subtype `status` and `permissionMode` set to `"default"`, which the TypeScript SDK types as [`SDKStatusMessage`](./typescript.md#sdkstatusmessage). From then on, calls that need approval and match no allow rule reach your `canUseTool` callback.
+* **To return to auto mode**: switch to a supported model, then call `set_permission_mode("auto")` or `setPermissionMode("auto")`. If you switch the model back without making that call, the session stays in `default` mode. While the unsupported model is active, the call fails with `Cannot set permission mode to auto: auto mode unavailable for this model`.
+
+The change to `default` mode after a `set_model()`, `setModel()`, or `applyFlagSettings()` call requires Claude Code v2.1.299 or later.
 
 ## Related resources
 
