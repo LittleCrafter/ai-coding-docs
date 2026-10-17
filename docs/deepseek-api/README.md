@@ -2,8 +2,8 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 53
-- **Last updated:** 2026-10-17T07:16:38Z
+- **Pages mirrored:** 54
+- **Last updated:** 2026-10-17T12:33:46Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -12,7 +12,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Your First API Call | [index.md](./index.md) | [source](<https://api-docs.deepseek.com>) |
-| Change Log | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
+| Your First API Call | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
 
 ## api
 
@@ -56,7 +56,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | 🚀 DeepSeek V2.5: The Grand Finale 🎉 | [news/news1210.md](./news/news1210.md) | [source](<https://api-docs.deepseek.com/news/news1210>) |
 | 🚀 Introducing DeepSeek-V3 | [news/news1226.md](./news/news1226.md) | [source](<https://api-docs.deepseek.com/news/news1226>) |
 | Introducing DeepSeek App | [news/news250115.md](./news/news250115.md) | [source](<https://api-docs.deepseek.com/news/news250115>) |
-| DeepSeek-R1 Release | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
+| Your First API Call | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
 | DeepSeek-V3-0324 Release | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
 | DeepSeek-R1-0528 Release | [news/news250528.md](./news/news250528.md) | [source](<https://api-docs.deepseek.com/news/news250528>) |
 | DeepSeek-V3.1 Release | [news/news250821.md](./news/news250821.md) | [source](<https://api-docs.deepseek.com/news/news250821>) |
@@ -67,6 +67,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DeepSeek-V4-Pro GA Release | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
 | DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live | [news/news260821.md](./news/news260821.md) | [source](<https://api-docs.deepseek.com/news/news260821>) |
 | DeepSeek-V4.1-Flash: Smarter, Faster, More Efficient | [news/news260910.md](./news/news260910.md) | [source](<https://api-docs.deepseek.com/news/news260910>) |
+| DeepSeek-V4.1-Flash-1017: Wish-Driven Programming Made Real | [news/news261017.md](./news/news261017.md) | [source](<https://api-docs.deepseek.com/news/news261017>) |
 
 ## quick_start
 

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-10-17T07:16:38Z",
+  "last_updated": "2026-10-17T12:33:46Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -220,8 +220,8 @@
       "source_url": "https://api-docs.deepseek.com",
       "source_md_url": "https://api-docs.deepseek.com",
       "source_id": "index",
-      "hash": "316a69d3f6ad0ab19dd4801a40a2d7163c1b1741a4dfc2876659d59c9e5aed91",
-      "last_updated": "2026-10-16T13:37:24Z"
+      "hash": "cef1e46ef2169de3173d6b5c3a1bf52cd9d0d7783d4c73f6f57c8a96fa8a622c",
+      "last_updated": "2026-10-17T12:33:46Z"
     },
     "news/news0725": {
       "slug": "news/news0725",
@@ -295,13 +295,13 @@
     },
     "news/news250120": {
       "slug": "news/news250120",
-      "title": "DeepSeek-R1 Release",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250120",
       "source_md_url": "https://api-docs.deepseek.com/news/news250120",
       "source_id": "news/news250120",
-      "hash": "c26512dcc9b13a6fdd79dca4287e33d5d465ddd814ac9153acc2e2c4c9d6cac5",
-      "last_updated": "2026-10-16T13:37:24Z"
+      "hash": "d2269900c77786e82b4d71ff75a719e523f814e3eb57619070cf758279515370",
+      "last_updated": "2026-10-17T12:33:46Z"
     },
     "news/news250325": {
       "slug": "news/news250325",
@@ -403,6 +403,16 @@
       "hash": "04e8dc1e737b8baa4e3d5bf6d6466a95372d59fdd7cb54465d165cd2a2353ee9",
       "last_updated": "2026-09-24T13:53:22Z"
     },
+    "news/news261017": {
+      "slug": "news/news261017",
+      "title": "DeepSeek-V4.1-Flash-1017: Wish-Driven Programming Made Real",
+      "group": "news",
+      "source_url": "https://api-docs.deepseek.com/news/news261017",
+      "source_md_url": "https://api-docs.deepseek.com/news/news261017",
+      "source_id": "news/news261017",
+      "hash": "ecc18019dc90e72229119f38e6dd61a1b42a48f68155c1e37716e9cc29586176",
+      "last_updated": "2026-10-17T12:33:46Z"
+    },
     "quick_start/agent_integrations/claude_code": {
       "slug": "quick_start/agent_integrations/claude_code",
       "title": "Integrate with Claude Code",
@@ -500,8 +510,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "f0044fce78646e3529a7661c717a2575439ecfe9da6542af8473a6218e899167",
-      "last_updated": "2026-10-17T07:16:38Z"
+      "hash": "6186355441a6c05bf611a809c5bb6c441af9629750f8082a433735a5966e926f",
+      "last_updated": "2026-10-17T12:33:46Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -525,20 +535,20 @@
     },
     "updates": {
       "slug": "updates",
-      "title": "Change Log",
+      "title": "Your First API Call",
       "group": "root",
       "source_url": "https://api-docs.deepseek.com/updates",
       "source_md_url": "https://api-docs.deepseek.com/updates",
       "source_id": "updates",
-      "hash": "3f2b61acbbea67f6143d575bf471145a52d07b8572595ec9f9dddc7af787f5d5",
-      "last_updated": "2026-09-24T13:53:22Z"
+      "hash": "cef1e46ef2169de3173d6b5c3a1bf52cd9d0d7783d4c73f6f57c8a96fa8a622c",
+      "last_updated": "2026-10-17T12:33:46Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-17T07:16:38Z",
-    "fetch_duration_seconds": 18.644,
-    "total_pages_discovered": 53,
-    "pages_fetched_successfully": 53,
+    "last_fetch_completed": "2026-10-17T12:33:46Z",
+    "fetch_duration_seconds": 20.408,
+    "total_pages_discovered": 54,
+    "pages_fetched_successfully": 54,
     "pages_failed": 0,
     "failed_pages": []
   }

@@ -10,7 +10,7 @@ api_key| apply for an [API key](<https://platform.deepseek.com/api_keys>)
 model| `deepseek-flash`(1)  
 `deepseek-v4-pro`  
   
-(1) Use `deepseek-flash` as the model name. The legacy names `deepseek-v4-flash` and `deepseek-v4-flash-vision-exp` are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.
+(1) Use `deepseek-flash` as the model name. It is now served by DeepSeek-V4.1-Flash-1017, and the calling method remains unchanged. The legacy names `deepseek-v4-flash` and `deepseek-v4-flash-vision-exp` are still accepted, but the corresponding models have been retired; their requests are served by DeepSeek-V4.1-Flash-1017 and billed at the Flash price.
 
 ## Integrate with Agent Tools
 

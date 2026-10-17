@@ -10,7 +10,7 @@ Model prices are listed in units of per 1M tokens. A token, the smallest unit of
 ---|---|---  
 BASE URL (OpenAI Format)| <https://api.deepseek.com>  
 BASE URL (Anthropic Format)| <https://api.deepseek.com/anthropic>  
-MODEL VERSION| DeepSeek-V4.1-Flash| DeepSeek-V4-Pro-0813  
+MODEL VERSION| DeepSeek-V4.1-Flash-1017| DeepSeek-V4-Pro-0813  
 THINKING MODE| Supports both non-thinking and thinking (default) modes  
 See [Thinking Mode](<../guides/thinking_mode.md>) for how to switch  
 CONTEXT LENGTH| 1M  
@@ -33,7 +33,7 @@ PEAK| $1.2| $3.96
 Concurrency Limit(3)| 2500| 500  
 **
 
-(1) Use `deepseek-flash` as the model name. The legacy names `deepseek-v4-flash` and `deepseek-v4-flash-vision-exp` are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.
+(1) Use `deepseek-flash` as the model name. The legacy names `deepseek-v4-flash` and `deepseek-v4-flash-vision-exp` are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash-1017 model and billed at the Flash price.
 
 (2) Off-peak rates are half of the peak rates. Peak hours are 01:00 - 04:00 and 06:00 - 10:00 UTC, Monday through Friday, excluding Chinese public holidays. All other hours are off-peak, including weekends and Chinese public holidays in full.
 
