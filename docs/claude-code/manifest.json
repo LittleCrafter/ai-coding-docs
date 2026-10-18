@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.302",
-  "last_updated": "2026-10-17T07:15:09Z",
+  "version": "2.1.303",
+  "last_updated": "2026-10-18T22:40:22Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -470,8 +470,8 @@
       "source_url": "https://code.claude.com/docs/en/changelog",
       "source_md_url": "https://code.claude.com/docs/en/changelog.md",
       "source_id": "changelog",
-      "hash": "c0492d227ef233a47fb5c2b5a20e455d21eb67fcd7fa7fc1b106e6edea4f42ad",
-      "last_updated": "2026-10-16T23:05:59Z"
+      "hash": "b705b112b8b317701c4d702c317104e6e8cd45e4415d9a318ecf66ae2c8ec502",
+      "last_updated": "2026-10-18T22:40:22Z"
     },
     "channels": {
       "slug": "channels",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-17T07:15:09Z",
-    "fetch_duration_seconds": 79.215,
+    "last_fetch_completed": "2026-10-18T22:40:22Z",
+    "fetch_duration_seconds": 79.266,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,
