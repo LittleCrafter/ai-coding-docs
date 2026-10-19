@@ -15,6 +15,7 @@ This page covers performance, stability, and search problems once Claude Code is
 | Login loops, OAuth errors, `403 Forbidden`, "organization disabled", Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry credentials | [Troubleshoot installation and login](./troubleshoot-install.md#login-and-authentication) |
 | Settings not applying, hooks not firing, MCP servers not loading | [Debug your configuration](./debug-your-config.md) |
 | Session started in auto mode, or Claude edits files and runs commands without asking | [Which mode a session starts in](./permission-modes.md#which-mode-a-session-starts-in) |
+| After you update Claude Code or the Agent SDK, tool calls are denied in `claude -p` or SDK runs that don't pass `--permission-mode`, `permissionMode`, or `permission_mode` | [Tool calls denied in `claude -p` and Agent SDK runs](./permission-modes.md#which-mode-a-non-interactive-run-starts-in) |
 | `API Error: 5xx`, `529 Overloaded`, `429`, request validation errors | [Error reference](./errors.md) |
 | `model not found` or `you may not have access to it` | [Error reference](./errors.md#theres-an-issue-with-the-selected-model) |
 | A command Claude runs fails with `Your disk quota is full`, `is full (ENOSPC)`, or `Command output was lost` | [Error reference](./errors.md#disk-quota-or-temp-filesystem-is-full) |
