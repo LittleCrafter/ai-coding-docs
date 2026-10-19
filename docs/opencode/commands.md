@@ -162,7 +162,7 @@ This replaces:
 
 ### Shell output
 
-Use _!`command`_ to inject [bash command](./tui.md#bash-commands) output into your prompt.
+Use _!`command`_ to inject [shell command](./tui.md#shell-commands) output into your prompt.
 
 For example, to create a custom command that analyzes test coverage:
 
