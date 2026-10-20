@@ -190,7 +190,7 @@ A mod's hooks run in every kind of session that loads the plugin, whichever prov
 | `claude` in a terminal, including an editor's integrated terminal and the JetBrains plugin | Yes | Yes |
 | The Code tab of the Desktop app, except in a WSL session | Yes | Yes, except elements the [elements table](./reference.md#elements) marks terminal-only |
 | A [WSL session](../../desktop-wsl.md) in the Desktop app | No, because plugins aren't available in WSL sessions | No |
-| The VS Code extension's chat panel | Yes | Yes, with extension version 2.1.299 or later, in a session that [fetches feature flags](../../env-vars.md#features-that-need-feature-flag-fetching). The [render sites](./reference.md#render-sites) and [elements](./reference.md#elements) tables mark what the panel draws. |
+| The VS Code extension's chat panel | Yes | Yes, with extension version 2.1.299 or later. A session that [doesn't fetch feature flags](../../env-vars.md#features-that-need-feature-flag-fetching), such as one on Amazon Bedrock, needs 2.1.304 or later. The [render sites](./reference.md#render-sites) and [elements](./reference.md#elements) tables mark what the panel draws. |
 | `claude -p` and the [Agent SDK](../../agent-sdk/overview.md) | Yes | No |
 | [Remote Control](../../remote-control.md) from claude.ai or the mobile app | Yes, in the session on your machine | In the terminal on your machine |
 | A [cloud session](../../claude-code-on-the-web.md) | Yes, for a plugin that [reaches the cloud session](../../cloud-environments.md#what-carries-over-from-your-setup) | No |

@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 198
+- **Pages mirrored:** 199
 - **Version:** 0.163.0
-- **Last updated:** 2026-10-17T07:16:19Z
+- **Last updated:** 2026-10-20T02:14:38Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -246,7 +246,8 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | --- | --- | --- |
 | Codex Security CLI quickstart | [security/cli.md](./security/cli.md) | [source](<https://learn.chatgpt.com/docs/security/cli>) |
 | Run bulk security scans | [security/cli/bulk-scans.md](./security/cli/bulk-scans.md) | [source](<https://learn.chatgpt.com/docs/security/cli/bulk-scans>) |
-| Run Codex Security in CI | [security/cli/ci.md](./security/cli/ci.md) | [source](<https://learn.chatgpt.com/docs/security/cli/ci>) |
+| Codex Security CI/CD overview | [security/cli/ci.md](./security/cli/ci.md) | [source](<https://learn.chatgpt.com/docs/security/cli/ci>) |
+| Run Codex Security in GitHub Actions | [security/cli/ci/github.md](./security/cli/ci/github.md) | [source](<https://learn.chatgpt.com/docs/security/cli/ci/github>) |
 | Run Codex Security in GitLab CI/CD | [security/cli/ci/gitlab.md](./security/cli/ci/gitlab.md) | [source](<https://learn.chatgpt.com/docs/security/cli/ci/gitlab>) |
 | Codex Security CLI FAQ | [security/cli/faq.md](./security/cli/faq.md) | [source](<https://learn.chatgpt.com/docs/security/cli/faq>) |
 | Codex Security CLI reference | [security/cli/reference.md](./security/cli/reference.md) | [source](<https://learn.chatgpt.com/docs/security/cli/reference>) |

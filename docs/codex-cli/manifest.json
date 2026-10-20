@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.163.0",
-  "last_updated": "2026-10-17T07:16:19Z",
+  "last_updated": "2026-10-20T02:14:38Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "341ca5258ac5769a1511a5b18ac2b731295fb39747ca6da74521951d9e4b94f1",
-      "last_updated": "2026-10-17T07:16:19Z"
+      "hash": "65d82cba54e07d689713ac5e6a7df5be42a345581db89adc0f741d94a8a7f20a",
+      "last_updated": "2026-10-20T02:14:38Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -500,8 +500,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/controls",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/controls.md",
       "source_id": "llms:dots/controls",
-      "hash": "25af2c838e3817e2c69f3ad1f6c89338dcb22c420cd897329eb2e25624513b43",
-      "last_updated": "2026-10-01T17:34:20Z"
+      "hash": "a8cd811571c9e83215a357e3cafa74bd2ac862be454b1c3f183c05ba7f698d73",
+      "last_updated": "2026-10-20T02:14:38Z"
     },
     "dots/getting-started": {
       "slug": "dots/getting-started",
@@ -520,8 +520,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/tasks-and-memory",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/tasks-and-memory.md",
       "source_id": "llms:dots/tasks-and-memory",
-      "hash": "87dd5a1fdd32fedfac7bf07360b2ccf4018df114c24f95bc514803f015752ada",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "c49763e79e751d3dc91224c1b626c67eed973006dc89079c31051af2f1e8f627",
+      "last_updated": "2026-10-20T02:14:38Z"
     },
     "enterprise/access-tokens": {
       "slug": "enterprise/access-tokens",
@@ -750,8 +750,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration.md",
       "source_id": "llms:enterprise/managed-configuration",
-      "hash": "9643757b6402deac8f0a0835d8214644d0f3462b885ddb0d16d88bb6a50edcb6",
-      "last_updated": "2026-10-15T13:46:52Z"
+      "hash": "10eed0e26630066a93487e27029dafd6b80f9dc5ca669e2c357d791129da2df9",
+      "last_updated": "2026-10-20T02:14:38Z"
     },
     "enterprise/plugin-management": {
       "slug": "enterprise/plugin-management",
@@ -1470,8 +1470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli.md",
       "source_id": "llms:security/cli",
-      "hash": "9e64788265919fe94f26f5cd845e895cb3e335b14c52cc21d34456929890dc68",
-      "last_updated": "2026-10-17T07:16:19Z"
+      "hash": "dd89590c918888161939c298780723bb27aac98b85dea529d9de2872cf53e51c",
+      "last_updated": "2026-10-20T02:14:38Z"
     },
     "security/cli/bulk-scans": {
       "slug": "security/cli/bulk-scans",
@@ -1485,13 +1485,23 @@
     },
     "security/cli/ci": {
       "slug": "security/cli/ci",
-      "title": "Run Codex Security in CI",
+      "title": "Codex Security CI/CD overview",
       "group": "security",
       "source_url": "https://learn.chatgpt.com/docs/security/cli/ci",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/ci.md",
       "source_id": "llms:security/cli/ci",
-      "hash": "b7eaac532254468c4ff4cb761e9451c783e2a067e904b6b9720ba07bde4b7b9a",
-      "last_updated": "2026-10-17T07:16:19Z"
+      "hash": "53869f26eb18457ce73b3b4cfc03c03e97bc0c37c58fea50acaf2f1627067ea4",
+      "last_updated": "2026-10-20T02:14:38Z"
+    },
+    "security/cli/ci/github": {
+      "slug": "security/cli/ci/github",
+      "title": "Run Codex Security in GitHub Actions",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/cli/ci/github",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/cli/ci/github.md",
+      "source_id": "llms:security/cli/ci/github",
+      "hash": "070ac153017db1d8ad7e723d623134b956d90871cf9582a1b577f9e978ff8e29",
+      "last_updated": "2026-10-20T02:14:38Z"
     },
     "security/cli/ci/gitlab": {
       "slug": "security/cli/ci/gitlab",
@@ -1500,8 +1510,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/ci/gitlab",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/ci/gitlab.md",
       "source_id": "llms:security/cli/ci/gitlab",
-      "hash": "625810487f29d0ddee3c55eeb49e6b5f390c7e76bda02778284fc70c5b950e79",
-      "last_updated": "2026-10-16T07:36:35Z"
+      "hash": "3a6dca100744a9a5d77ea20cddcdafbcac76c960d7e75b2ab6dbca20ac084a26",
+      "last_updated": "2026-10-20T02:14:38Z"
     },
     "security/cli/faq": {
       "slug": "security/cli/faq",
@@ -1510,8 +1520,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/faq",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/faq.md",
       "source_id": "llms:security/cli/faq",
-      "hash": "3c9466e0c1329f0d29c144e7bd2a3f1a8fc34f1afce6207e5c922cd05b05cf08",
-      "last_updated": "2026-10-16T07:36:35Z"
+      "hash": "7ab601edc5a31ad54075ada319a4f6facac94f501b36845a6856f138fc2d34ac",
+      "last_updated": "2026-10-20T02:14:38Z"
     },
     "security/cli/reference": {
       "slug": "security/cli/reference",
@@ -1985,10 +1995,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-17T07:16:19Z",
-    "fetch_duration_seconds": 69.032,
-    "total_pages_discovered": 198,
-    "pages_fetched_successfully": 198,
+    "last_fetch_completed": "2026-10-20T02:14:38Z",
+    "fetch_duration_seconds": 70.391,
+    "total_pages_discovered": 199,
+    "pages_fetched_successfully": 199,
     "pages_failed": 0,
     "failed_pages": []
   }

@@ -151,15 +151,16 @@ commands](./cli/reference.md#codex-security-validate-and-codex-security-patch).
 
 ## Choose the next scan
 
-| Goal                                     | Guide                                                                                    |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Scan selected paths or a diff            | [Select the scan target](./cli/reference.md#select-the-scan-target)           |
-| Use deep scans or limit their runtime    | [Configure deep scans](./cli/reference.md#configure-deep-scans)               |
-| Supply architecture or security policies | [Add security context](./cli/reference.md#add-security-context)               |
-| Change the model or reasoning effort     | [Configure the runtime](./cli/reference.md#configure-the-runtime)             |
-| Set an estimated cost limit              | [Output and policy options](./cli/reference.md#set-output-and-policy-options) |
-| Scan multiple repositories               | [Bulk scans](./cli/bulk-scans.md)                                             |
-| Check pull requests automatically        | [CI guide](./cli/ci.md)                                                       |
+| Goal                                             | Guide                                                                                    |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| Scan selected paths or a diff                    | [Select the scan target](./cli/reference.md#select-the-scan-target)           |
+| Use deep scans or limit their runtime            | [Configure deep scans](./cli/reference.md#configure-deep-scans)               |
+| Supply architecture or security policies         | [Add security context](./cli/reference.md#add-security-context)               |
+| Change the model or reasoning effort             | [Configure the runtime](./cli/reference.md#configure-the-runtime)             |
+| Set an estimated cost limit                      | [Output and policy options](./cli/reference.md#set-output-and-policy-options) |
+| Scan multiple repositories                       | [Bulk scans](./cli/bulk-scans.md)                                             |
+| Scan GitHub pull requests or run scheduled scans | [GitHub Actions guide](./cli/ci/github.md)                                    |
+| Choose another CI provider                       | [CI/CD overview](./cli/ci.md)                                                 |
 
 For authentication problems, repeat-scan differences, or false-positive
 feedback, see the [CLI FAQ](./cli/faq.md).

@@ -3615,8 +3615,11 @@ Custom rules are optional controls for specific ongoing boundaries. Start with
 clear instructions in your conversation; you don’t need to create a rule for
 every approval.
 
-After setting up your dot, open **Settings** > **Personalization** and select
-**Custom rules** under **Permissions**.
+After setting up your dot, open custom rules for your app:
+
+- **Desktop and web:** Open **Settings** > **Personalization** and select
+  **Custom rules** under **Permissions**.
+- **iOS and Android:** Open the sidebar, then select **Customize** > **Custom rules**.
 
 Select **Add**, describe the action, choose how your dot should handle it,
 and select **Add rule**. The choices are:
@@ -5092,6 +5095,10 @@ For example:
 Ask your dot to confirm what it saved. Use **Scheduled** to review recurring
 work, or ask your dot to list, change, or cancel its scheduled tasks.
 
+Your dot can also read and edit your existing ChatGPT Work automations. Ask it
+to review what's scheduled or change a recurring task's instructions or timing.
+Identify the automation you want to change and ask it to confirm the update.
+
 Stopping active work and canceling a schedule are separate actions. See
 [Controls](./dots/controls.md#stop-work).
 
@@ -5116,6 +5123,12 @@ Context is the information available to your dot while it responds or works:
 messages, instructions, relevant source material, and results from its tools
 or delegated work. It can use this information to connect a new request to work
 already underway.
+
+Your dot can search your past ChatGPT conversations for relevant context. For
+example, ask it to find an earlier discussion and use the decisions from it
+in your current task. Retrieved conversation content is context for the work;
+it isn't the same as persistent memory or a complete history included in every
+task.
 
 The context available for an interaction is a selection of this information.
 Calls use selected conversation context, which can differ from the information
@@ -5169,6 +5182,86 @@ permissions and schedule are separate from proactive research.
 <a id="approvals-sandboxing-and-security"></a>
 
 Sandbox behavior, approvals, cyber-safety, and security-specific guidance.
+
+### Codex Security CI/CD overview
+
+Source: [Codex Security CI/CD overview](./security/cli/ci.md)
+
+Run Codex Security in CI to review pull-request or merge-request changes, scan
+your default branch, and preserve findings and coverage. See your CI
+provider's guide for the workflow, report handling, and enforcement options.
+
+#### Prepare the workflow
+
+Running scans requires Codex Security access. Store an OpenAI API key in your
+CI provider's secret store as `CODEX_SECURITY_API_KEY`, then map it to the scan
+process's `OPENAI_API_KEY` environment variable.
+
+Run scans only for repositories and changes you trust. Scans use the runner's
+local permissions and don't pause for approval. Keep unrelated credentials and
+deployment steps in separate jobs.
+
+#### Use an approved Daybreak model
+
+For Daybreak Blue access through [Trusted Access for
+Cyber](./cyber-safety.md#trusted-access-for-cyber), set the GitHub Action's
+`model` input to `gpt-6-sol` and `cyber-access-program` to
+`daybreak_blue`. For direct CLI scans, use `--model gpt-6-sol`
+and `--cyber-access-program daybreak_blue`.
+
+Use an API key from a project that has Daybreak Blue enabled and access to the
+selected model. Setting the model or program does not grant access. See
+[Configure optional Daybreak access](./security/cli/ci/github.md#configure-optional-daybreak-access)
+for the Action settings.
+
+#### Choose an integration
+
+#### Add the GitHub Actions workflow
+
+Use the [GitHub Actions guide](./security/cli/ci/github.md) for pull-request
+checks and scheduled repository scans. The Codex Security Action installs the CLI,
+saves reports, and adds a job summary and source annotations. The guide includes
+runner setup, optional Daybreak access, SARIF upload, and severity enforcement.
+
+#### Add the GitLab CI/CD pipeline
+
+Use the [GitLab CI/CD guide](./security/cli/ci/gitlab.md) for merge-request,
+default-branch, and scheduled scans. Start with a scan-only pipeline, then
+adopt report handling, policy enforcement, and optional verified remediation.
+
+#### Use another CI system
+
+Install the public `@openai/codex-security` package and run the CLI directly.
+Use `--auth api-key`, choose a repository or diff scan, and save the output in a
+private directory outside the Git worktree. Your runner must provide the
+dependencies described in the [CLI quickstart](./security/cli.md#check-the-prerequisites).
+
+See the [CLI reference](./security/cli/reference.md) for scan options, diff
+revisions, report formats, state and output directories, and retry behavior.
+
+#### Choose a severity policy
+
+Start with advisory results. Review representative findings, scan coverage,
+cost, and runtime before deciding which outcomes should block a merge.
+
+Evaluate both findings and scan completeness. The severity policy evaluates
+findings from the current scan at or above the configured threshold. Earlier
+open findings in the repository summary don't affect that policy. An
+incomplete scan can leave areas without a review even when it reports no
+findings.
+
+In the Action release `action-v0.3.0`, a completed scan means the configured analysis
+produced a valid result. Scope exclusions, deferred investigations, and other
+coverage notes do not bypass the severity policy. Scanner and required
+reporting errors fail the job. CLI `0.3.0` returns exit code `2` for input,
+execution, result-integrity, or required-output failures. Review `coverage.json` when assessing the result; completion does
+not certify that every vulnerability was found.
+
+Configure enforcement in the [GitHub Actions
+guide](./security/cli/ci/github.md#choose-a-severity-policy) or the [GitLab
+CI/CD guide](./security/cli/ci/gitlab.md#separate-reporting-from-policy-enforcement).
+For direct CLI integrations, see [severity enforcement and exit
+codes](./security/cli/reference.md#exit-codes-and-signals).
 
 ### Codex Security CLI FAQ
 
@@ -5385,7 +5478,16 @@ report with a budget warning. It returns `0`, or `1` if findings meet the
 configured severity threshold. If it can't produce a valid completed result,
 it returns `2` and preserves any available output.
 
-For pull-request checks, see [Run scans in CI](./security/cli/ci.md).
+For GitHub pull-request checks and scheduled repository scans, use the
+[Codex Security GitHub Action](./security/cli/ci/github.md). With
+`action-v0.3.0`, a completed scan means the configured analysis produced a
+valid result. Scope exclusions and deferred investigations do not bypass the
+severity policy. Review `coverage.json` to assess the scan's scope and
+limitations. To also reject empty diffs and dry runs, require the Action's
+`scan-status` output to be `completed`; see [Choose a severity
+policy](./security/cli/ci/github.md#choose-a-severity-policy).
+
+For other providers, see the [CI/CD overview](./security/cli/ci.md).
 For a check before each commit, use
 [`install-hook`](./security/cli/reference.md#codex-security-install-hook).
 
@@ -5542,15 +5644,16 @@ commands](./security/cli/reference.md#codex-security-validate-and-codex-security
 
 #### Choose the next scan
 
-| Goal                                     | Guide                                                                                    |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Scan selected paths or a diff            | [Select the scan target](./security/cli/reference.md#select-the-scan-target)           |
-| Use deep scans or limit their runtime    | [Configure deep scans](./security/cli/reference.md#configure-deep-scans)               |
-| Supply architecture or security policies | [Add security context](./security/cli/reference.md#add-security-context)               |
-| Change the model or reasoning effort     | [Configure the runtime](./security/cli/reference.md#configure-the-runtime)             |
-| Set an estimated cost limit              | [Output and policy options](./security/cli/reference.md#set-output-and-policy-options) |
-| Scan multiple repositories               | [Bulk scans](./security/cli/bulk-scans.md)                                             |
-| Check pull requests automatically        | [CI guide](./security/cli/ci.md)                                                       |
+| Goal                                             | Guide                                                                                    |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| Scan selected paths or a diff                    | [Select the scan target](./security/cli/reference.md#select-the-scan-target)           |
+| Use deep scans or limit their runtime            | [Configure deep scans](./security/cli/reference.md#configure-deep-scans)               |
+| Supply architecture or security policies         | [Add security context](./security/cli/reference.md#add-security-context)               |
+| Change the model or reasoning effort             | [Configure the runtime](./security/cli/reference.md#configure-the-runtime)             |
+| Set an estimated cost limit                      | [Output and policy options](./security/cli/reference.md#set-output-and-policy-options) |
+| Scan multiple repositories                       | [Bulk scans](./security/cli/bulk-scans.md)                                             |
+| Scan GitHub pull requests or run scheduled scans | [GitHub Actions guide](./security/cli/ci/github.md)                                    |
+| Choose another CI provider                       | [CI/CD overview](./security/cli/ci.md)                                                 |
 
 For authentication problems, repeat-scan differences, or false-positive
 feedback, see the [CLI FAQ](./security/cli/faq.md).
@@ -9342,261 +9445,363 @@ reference](./security/cli/reference.md#codex-security-bulk-scan). For common
 questions about scan coverage and findings, see the [CLI
 FAQ](./security/cli/faq.md).
 
-### Run Codex Security in CI
+### Run Codex Security in GitHub Actions
 
-Source: [Run Codex Security in CI](./security/cli/ci.md)
+Source: [Run Codex Security in GitHub Actions](./security/cli/ci/github.md)
 
-Run the Codex Security CLI in CI to review the exact changes in a pull request
-or merge request, keep findings and coverage, and optionally fail the check at
-a chosen severity. Start with advisory results, review scan quality and
-runtime, then add a severity policy that fits your repository.
-
-Install the public `@openai/codex-security` package. Running scans still
-requires Codex Security access.
-
-This page provides a GitHub Actions workflow. For GitLab, use the
-[GitLab CI/CD guide](./security/cli/ci/gitlab.md). The same scan and export
-commands work in other CI systems.
+Run Codex Security in GitHub Actions to review pull-request changes or scan
+your repository on a schedule. The Action installs the CLI, saves structured
+reports, and adds a job summary and source annotations. Start with advisory
+results, then configure enforcement after reviewing coverage and scan quality.
 
 #### Prepare the workflow
 
-Store an OpenAI API key in your CI provider's secret store as
-`CODEX_SECURITY_API_KEY`.
+Running scans requires Codex Security access. To add your OpenAI API key:
 
-Map this secret directly to the scan step's `OPENAI_API_KEY` environment
-variable. Keep the credential scoped to the scan process and use
-`--auth api-key` to select it explicitly.
+1. In your GitHub repository, open **Settings → Secrets and variables → Actions**.
+2. Select **New repository secret**.
+3. Enter `CODEX_SECURITY_API_KEY` as the name and paste your OpenAI API key as
+   the value. Save the secret.
+
+The workflow examples below pass this secret to the Codex Security Action
+automatically. You don't need to put your API key in the workflow file.
 
 Run the workflow only for repositories and pull requests you trust. Scans use
-the runner's local permissions and don't pause for approval. Scan processes
-can inherit the job environment, so keep unrelated tokens and cloud
-credentials out of it.
-
-The runner needs:
-
-- Node.js 24 or 26, or Node.js 22 starting with 22.13.0.
-- Python 3.10 or later.
-- The published `@openai/codex-security` package, installed outside the
-  repository checkout.
-- The pull-request or merge-request head and base history so Git can calculate
-  the merge base.
+the runner's local permissions and don't pause for approval. Keep unrelated
+credentials and deployment steps in separate jobs.
 
 #### Add the GitHub Actions workflow
 
-For private or internal repositories, enable [GitHub Code Security](https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github)
-before you upload SARIF.
+**Scan costs:** These workflows use your API key and may incur charges. Both
+examples omit `max-cost`, so they have no estimated cost stop threshold. To
+set a threshold of $5 per scan, add `max-cost: "5"` to the Codex Security
+Action's `with` settings. This isn't a hard spending cap: requests already in
+progress can exceed it. See [Set an optional scan
+budget](#set-an-optional-scan-budget) for pricing-support requirements.
 
-Create `.github/workflows/codex-security.yml`. Before checking out the pull
-request, install `@openai/codex-security` under
-`$RUNNER_TEMP/codex-security` so the trusted executable is available at
-`$RUNNER_TEMP/codex-security/node_modules/.bin/codex-security`:
+#### Scan the repository on a schedule
+
+The workflow below scans your default branch every Monday at 07:23 UTC. You
+can also run it manually from GitHub's **Actions** tab. It uses an x64
+GitHub-hosted Ubuntu 24.04 runner and sets up the required sandbox automatically.
+
+1. In your repository, select **Add file → Create new file**.
+2. Name the file `.github/workflows/codex-security-repository.yml`.
+3. Paste the workflow below and commit it to your default branch.
 
 ```yaml
-name: Codex Security scan
+name: Codex Security repository
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 7 * * 1" # Mondays at 07:23 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  security:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Set up the Ubuntu sandbox
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes bubblewrap apparmor-profiles
+          sudo apparmor_parser -r /usr/share/apparmor/extra-profiles/bwrap-userns-restrict
+
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Scan the repository
+        id: security
+        uses: openai/codex-security@3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3 # action-v0.3.0
+        with:
+          scope: repository
+          model: gpt-6-sol
+          # For approved Daybreak Blue access, uncomment the next input.
+          # cyber-access-program: daybreak_blue
+          effort: high
+          fail-on-severity: none
+          upload-artifacts: "true"
+        env:
+          OPENAI_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
+```
+
+**About the version:** Both examples pin the Codex Security Action to commit
+`3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3` for the `action-v0.3.0` release,
+which installs CLI `0.3.0`. Review a newer Action release before updating the
+pinned commit.
+
+**Adapting the runner:** The Action needs Node.js 24 and Python 3.11 or later,
+which this runner provides. The sandbox setup installs the `bubblewrap`
+package and loads the supplied AppArmor profile before the scan. Installing
+the package alone is not enough on this runner.
+
+To run the workflow manually, open **Actions → Codex Security repository →
+Run workflow**. Open a completed run to review the summary, annotations, and
+downloadable reports.
+
+Findings are report-only because `fail-on-severity` is `none`. Scanner and
+required reporting errors still fail the job.
+
+To scan selected folders, add newline-separated literal paths to the scan
+step's `with` block:
+
+```yaml
+paths: |
+  src/api
+  src/auth
+```
+
+Paths require `scope: repository` and do not expand globs. For diff scans, omit
+`paths`. Keep `persist-credentials: false` and run the scan
+immediately after checkout.
+
+#### Scan pull-request changes
+
+Using the same secret, create `.github/workflows/codex-security-pr.yml`:
+
+```yaml
+name: Codex Security PR
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codex-security-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
-  codex-security:
+  security:
     if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
+    name: Codex Security
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: "26"
-
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
-        with:
-          python-version: "3.14"
-
-      - name: Install Codex Security
+      - name: Set up the Ubuntu sandbox
         run: |
-          set -euo pipefail
-          npm install \
-            --prefix "$RUNNER_TEMP/codex-security" \
-            --ignore-scripts \
-            --no-audit \
-            --no-fund \
-            @openai/codex-security
-
-      - name: Verify Codex Security
-        env:
-          CODEX_SECURITY_BIN: ${{ runner.temp }}/codex-security/node_modules/.bin/codex-security
-        run: |
-          set -euo pipefail
-          test -x "$CODEX_SECURITY_BIN"
-          "$CODEX_SECURITY_BIN" --version
+          sudo apt-get update
+          sudo apt-get install --yes bubblewrap apparmor-profiles
+          sudo apparmor_parser -r /usr/share/apparmor/extra-profiles/bwrap-userns-restrict
 
       - name: Check out the pull request
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Scan the pull request
+      - name: Scan PR changes
+        id: security
+        uses: openai/codex-security@3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3 # action-v0.3.0
+        with:
+          scope: diff
+          model: gpt-6-sol
+          # For approved Daybreak Blue access, uncomment the next input.
+          # cyber-access-program: daybreak_blue
+          effort: high
+          fail-on-severity: none
+          upload-artifacts: "true"
         env:
           OPENAI_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
-          CODEX_SECURITY_BIN: ${{ runner.temp }}/codex-security/node_modules/.bin/codex-security
-          CODEX_SECURITY_STATE_DIR: ${{ runner.temp }}/codex-security-state
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-          SCAN_DIR: ${{ runner.temp }}/codex-security-results
-        run: |
-          set -euo pipefail
-          BASE_REVISION="$(git merge-base "$BASE_SHA" "$HEAD_SHA")"
-          "$CODEX_SECURITY_BIN" scan . \
-            --diff "$BASE_REVISION" \
-            --head "$HEAD_SHA" \
-            --auth api-key \
-            --output-dir "$SCAN_DIR" \
-            --json > "$RUNNER_TEMP/codex-security.json"
-
-      - name: Export SARIF
-        id: export-sarif
-        if: always()
-        env:
-          CODEX_SECURITY_BIN: ${{ runner.temp }}/codex-security/node_modules/.bin/codex-security
-          SCAN_DIR: ${{ runner.temp }}/codex-security-results
-          SARIF_FILE: ${{ runner.temp }}/codex-security.sarif
-        run: |
-          set -euo pipefail
-          if test -f "$SCAN_DIR/scan-manifest.json"; then
-            "$CODEX_SECURITY_BIN" export "$SCAN_DIR" \
-              --export-format sarif \
-              --source-root "$GITHUB_WORKSPACE" \
-              --output "$SARIF_FILE"
-            echo "available=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Upload SARIF
-        if: always() && steps.export-sarif.outputs.available == 'true'
-        uses: github/codeql-action/upload-sarif@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4
-        with:
-          sarif_file: ${{ runner.temp }}/codex-security.sarif
-          ref: refs/pull/${{ github.event.pull_request.number }}/head
-          sha: ${{ github.event.pull_request.head.sha }}
-          category: codex-security
-
-      - name: Preserve scan results
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
-        with:
-          name: codex-security-results
-          path: |
-            ${{ runner.temp }}/codex-security-results
-            ${{ runner.temp }}/codex-security.json
-          if-no-files-found: warn
-          retention-days: 7
 ```
 
-The workflow checks out the pull-request head, calculates its merge base, and
-scans the committed changes between those revisions. Full history keeps the
-target exact. `persist-credentials: false` keeps the repository token out of
-the checked-out Git configuration. Installing the CLI before checkout and
-running its absolute path keeps repository-controlled executables away from
-the scan credential. `--auth api-key` explicitly selects the scoped API key.
-The scan saves its history in a writable state directory outside the
-repository.
+Open or update a PR from a branch in the same repository. The Action uses
+the full history to find the exact merge base and scans changes through the
+checked-out PR head. View the **Codex Security**
+check under **Checks** in the PR. Start with advisory findings, then [choose a severity
+policy](#choose-a-severity-policy) when you are ready to gate changes.
 
-`--json` writes one complete JSON document to stdout, so the workflow can save
-it directly. Progress, completion summaries, and errors remain on stderr. This
-differs from `codex exec --json`, which emits a JSON Lines event stream.
+This example skips fork PRs and PRs opened by `dependabot[bot]`. A skipped job
+is not evidence of a security review. To include these bot PRs, remove the actor
+exclusion and also
+configure `CODEX_SECURITY_API_KEY` as a [secret
+for dependabot[bot]](https://docs.github.com/en/code-security/reference/supply-chain-security/troubleshoot-dependabot/dependabot-on-actions#accessing-secrets). The Action does not support `pull_request_target` or `workflow_run`.
 
-The export step reads a completed, sealed scan and writes SARIF. It leaves the
-Codex runtime and credentials untouched. Scan artifacts can contain vulnerable
-source snippets, evidence, and remediation details. Set who can read them and
-how long to keep them.
+The scanner reads applicable `SECURITY.md` guidance from the checkout,
+including policy changes in the PR. Review those changes alongside the code.
 
-#### Add the GitLab CI/CD pipeline
+#### Configure optional Daybreak access
 
-For a production workflow with protected default-branch scans, opt-in scheduled
-deep scans, separate SARIF policy gating, and optional verified draft merge
-requests, use [Run Codex Security in GitLab
-CI/CD](./security/cli/ci/gitlab.md).
+Daybreak is optional. Both workflow examples use `gpt-6-sol`. If your
+organization has been approved for [Trusted Access for
+Cyber](./cyber-safety.md#trusted-access-for-cyber), remove the `#` before
+`cyber-access-program` in the scan step's `with` block:
 
-The GitLab guide includes a scan-only starting point and the complete pipeline.
-It covers protected variables, artifact access, and a separate policy gate so
-GitLab can ingest findings even when the scanner returns a nonzero exit code.
+```yaml
+model: gpt-6-sol
+cyber-access-program: daybreak_blue
+```
+
+Use an API key from a project enabled for Daybreak Blue with access to
+`gpt-6-sol`.
+
+The program input also accepts `standard`. Without Daybreak access, use a
+model your API key can access under standard safeguards and omit
+`cyber-access-program` or set it to `standard`. Selecting a model or program
+does not grant access. See the Action's [Daybreak access guidance](https://github.com/openai/codex-security/blob/3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3/github-action/README.md#daybreak-access-and-refusals).
+
+A refusal or safety block that aborts the scan fails the Action, including when
+`fail-on-severity` is `none`. That input controls findings policy, not scanner
+errors.
+
+#### Set an optional scan budget
+
+Both workflow examples omit `max-cost`, so they have no estimated cost stop
+threshold. To set one, add a positive USD amount with the `max-cost` input.
+For direct CLI scans, use `--max-cost`.
+
+The cost limit requires CLI pricing support for the selected model. The
+estimated threshold is not a hard spending cap: the cost of requests already
+in progress can exceed it.
+Review findings and `coverage.json` if a scan stops at the threshold. See
+[output and policy options](./security/cli/reference.md#set-output-and-policy-options)
+for cost-limit behavior.
+
+#### Save reports and upload SARIF
+
+The examples set `upload-artifacts: "true"` to save downloadable reports with a
+seven-day retention window. Reports can contain source snippets, vulnerability
+evidence, and remediation details. Choose a retention window and repository
+access appropriate for your code. The Action uploads only validated reports
+on its allowlist; do not recursively upload its `results-directory` output.
+
+SARIF upload is optional. For private or internal repositories, enable [GitHub Code Security](https://docs.github.com/en/code-security/how-tos/find-and-fix-code-vulnerabilities/integrate-with-existing-tools/upload-sarif-file) before uploading. Replace the workflow's `permissions` block with:
+
+```yaml
+permissions:
+  contents: read
+  security-events: write
+  actions: read # Required for private repositories
+```
+
+Then add this step after the scan in either workflow:
+
+```yaml
+- name: Upload security findings
+  if: ${{ always() && steps.security.outputs.sarif-upload-ready == 'true' }}
+  uses: github/codeql-action/upload-sarif@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4.38.0
+  with:
+    sarif_file: ${{ steps.security.outputs.sarif-path }}
+    sha: ${{ steps.security.outputs.scanned-sha }}
+    ref: ${{ steps.security.outputs.analysis-ref }}
+    category: codex-security-repository
+```
+
+For the PR workflow, use `category: codex-security-pr` so each scope has a
+distinct category. Keep `id: security` on the scan step. Complete, validated
+reports remain available for upload when findings fail the severity policy.
+SARIF is not uploaded for failed or interrupted scans, empty diffs, or dry
+runs.
+
+See the Action's [input
+and output reference](https://github.com/openai/codex-security/blob/3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3/github-action/README.md#inputs) for all settings, status fields, and report paths.
 
 #### Choose a severity policy
 
-The GitHub example is report-only because it omits `--fail-on-severity`. Once you
-are ready to make findings affect the check, add a threshold to the scan
-command:
+The GitHub workflows start with `fail-on-severity: none`. To fail on high or
+critical findings from a completed scan, change the scan step's input:
 
-```bash
-"$CODEX_SECURITY_BIN" scan . \
-  --diff origin/main \
-  --output-dir /path/outside/repository/results \
-  --fail-on-severity high
+```yaml
+fail-on-severity: high
 ```
 
-The supported thresholds are `critical`, `high`, `medium`, and `low`. A
-threshold includes findings from the current scan at that severity and above.
-Earlier open findings shown in the repository summary don't affect the policy.
+Make **Codex Security** a required status check in your repository rules to
+block merges when the PR job fails. GitHub treats a [conditionally skipped job as successful](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks),
+even for required checks. Fork PRs and PRs from `dependabot[bot]` pass this
+check without a scan. To block those skips, [require a
+successful, completed scan](#require-a-successful-completed-scan).
 
-The scan step uses these exit codes:
+The Action follows the CLI outcome:
 
-| Exit  | Meaning                                                                     |
-| ----- | --------------------------------------------------------------------------- |
-| `0`   | The scan completed, and any configured severity policy passed.              |
-| `1`   | The completed scan contains a finding at or above the threshold.            |
-| `2`   | An input, execution, result-integrity, or required-output failure occurred. |
-| `130` | Ctrl-C interrupted the scan.                                                |
-| `143` | SIGTERM terminated the scan.                                                |
+- Exit code `0` sets `scan-status: completed` and `policy-status: passed`.
+- Exit code `1` sets `scan-status: completed` and `policy-status: failed`;
+  the step fails on findings at or above the configured severity.
+- Exit code `2` or an interrupted process sets `scan-status: failed` and
+  `policy-status: not-evaluated`; the step fails.
+- Invalid or missing required reports, a changed checkout, failures to upload
+  requested artifacts, and runtime cleanup failures also fail the step.
 
-Coverage gaps don't change a completed scan's exit code or bypass its severity
-policy. Exit `0` doesn't mean every file was reviewed. Review excluded paths,
-deferred work, and open questions in `coverage.json` when assessing the result.
+A completed scan means the configured analysis produced a valid result.
+Scope exclusions, deferred investigations, and other notes in `coverage.json`
+do not create a separate scan outcome or bypass the severity policy.
+Completion does not certify that every vulnerability was found. Review
+`coverage.json` when assessing the result.
 
-#### Retry with an existing result directory
+#### Require a successful, completed scan
 
-Use a fresh runner directory for each CI job. For a persistent or self-hosted
-runner, preserve an earlier result with `--archive-existing`:
+For a stricter policy, add a separate gate that runs even if the scan job
+fails or GitHub skips it. A step inside the scan job can't check a skipped job
+because none of its steps run.
 
-```bash
-"$CODEX_SECURITY_BIN" scan . \
-  --diff origin/main \
-  --output-dir /path/outside/repository/results \
-  --archive-existing
+In the PR workflow, add this `outputs` mapping to the existing `security` job,
+at the same indentation as `runs-on` and `steps`:
+
+```yaml
+outputs:
+  scan-status: ${{ steps.security.outputs.scan-status }}
 ```
 
-The command archives the earlier results and starts with an empty scan directory.
+Then add this job under `jobs`, alongside the existing `security` job:
 
-#### Troubleshoot a CI scan
+```yaml
+security-gate:
+  name: Codex Security gate
+  needs: security
+  if: ${{ always() }}
+  runs-on: ubuntu-24.04
+  steps:
+    - name: Require a successful, completed scan
+      env:
+        SCAN_RESULT: ${{ needs.security.result }}
+        SCAN_STATUS: ${{ needs.security.outputs.scan-status }}
+      run: test "$SCAN_RESULT" = success && test "$SCAN_STATUS" = completed
+```
 
-- **Unknown Git ref or unexpected diff:** Fetch the base and head history,
-  calculate the merge base, and pass both revisions explicitly.
-- **Protected or non-empty output directory:** Choose a private directory
-  outside the enclosing Git worktree. Use `--archive-existing` when the
-  directory already contains results.
+Make **Codex Security gate** the required status check for this policy. It
+requires both a successful scan job and `scan-status: completed`. Checking
+both preserves failures from the severity policy, reporting, and cleanup,
+even when the scan itself completed.
+
+With the example's exclusions, this gate blocks fork PRs and PRs from
+`dependabot[bot]`. It also blocks empty diffs and dry runs, which the Action
+marks as `skipped`.
+The gate doesn't scan excluded PRs. Choose this policy only if these cases
+should prevent merging.
+
+#### Troubleshoot a scan
+
+- **Unknown Git ref or unexpected diff:** Check out the PR head with
+  `fetch-depth: 0`.
+- **Sandbox startup error:** On Ubuntu 24.04, install the `bubblewrap` package
+  and load the AppArmor profile before the Action. Installing the package alone
+  does not load the required profile.
 - **Missing credentials:** Confirm that `CODEX_SECURITY_API_KEY` is available to
-  the trusted workflow or pipeline and mapped directly to the scan process's
-  `OPENAI_API_KEY` environment variable.
-- **Scan history error:** Set `CODEX_SECURITY_STATE_DIR` to a writable
-  directory outside the repository.
-- **Python setup error:** Confirm that the runner uses Python 3.10 or later.
-- **Incomplete coverage:** Review `coverage.json`, including deferred surfaces
-  and open questions. Resolve the reported gaps before rerunning the scan.
-- **SARIF export error:** Confirm that the scan completed and the full scan
-  directory is available. Export validates the sealed artifacts before writing
-  SARIF.
-- **SARIF upload error:** For GitHub Actions, confirm that your organization
-  turned on GitHub Code Security for the repository and the workflow grants
-  `actions: read`, `contents: read`, and `security-events: write`. For GitLab
-  CI/CD, confirm that the project uses GitLab Ultimate 19.2 or later and that
-  the job uploads a SARIF 2.1.0 file through `artifacts:reports:sarif`.
+  the trusted workflow and mapped to the scan step's `OPENAI_API_KEY`
+  environment variable.
+- **Python setup error:** The Action requires Python 3.11 or later.
+- **Coverage notes:** Review scope exclusions and deferred investigations in
+  `coverage.json`. These notes do not cause execution failures or bypass the
+  severity policy.
+- **Missing SARIF:** Inspect `scan-status`, `report-status`, and
+  `sarif-upload-ready`. If optional SARIF is missing, the Action warns without
+  changing the scan outcome; requested artifact-upload failures still fail the
+  job.
+- **SARIF upload error:** Confirm that your organization has enabled GitHub Code
+  Security for the repository and that the workflow grants `actions: read`,
+  `contents: read`, and `security-events: write`.
 
 For every command, flag, artifact, and output field, see the [CLI
-reference](./security/cli/reference.md). To invoke the plugin through `codex exec`, see [Review code changes for security](./security/plugin/code-changes.md#automate-reviews-in-cicd).
+reference](./security/cli/reference.md). For other providers, see the
+[CI/CD overview](./security/cli/ci.md).
 
 ### Run Codex Security in GitLab CI/CD
 
@@ -9948,9 +10153,10 @@ before setting a budget. Treat `--max-cost` as an estimated cost guardrail, not
 a hard billing cap.
 
 Start with report-only scans. Add `--fail-on-severity` after your team has
-reviewed representative findings, coverage, cost, and runtime. See [Run Codex
-Security in CI](./security/cli/ci.md) for severity policies and exit-code
-details.
+reviewed representative findings, coverage, cost, and runtime. See the
+[CI/CD overview](./security/cli/ci.md#choose-a-severity-policy) for severity
+policies and the [CLI reference](./security/cli/reference.md#exit-codes-and-signals)
+for exit-code details.
 
 When a job fails:
 
@@ -44334,7 +44540,12 @@ Source: [Managed configuration](./enterprise/managed-configuration.md)
 
 Managed configuration lets enterprise admins set supported requirements and defaults for ChatGPT Work and Codex. Requirements constrain what users and tasks can do. Defaults provide starting values. Support depends on the product, client version, and execution environment.
 
-For Work with local access and dots, supported Global policy governs the shared cloud orchestrator when managed policy is enabled; applicable local execution requirements govern the connected computer. Work cloud containers retain existing Work Cloud policies, and supported device controls still apply to local execution. Codex keeps its existing configuration behavior. Managed configuration does not grant a workspace seat or feature access. Use [Roles and workspace permissions](./enterprise/roles-and-workspace-permissions.md) for those controls.
+Start in **Agent security** in the Admin Console for supported cloud-managed
+settings. Use the settings controls for common tasks, or select **Edit as TOML**
+to inspect, copy, or edit the configuration text. Both views edit the same policy;
+TOML also exposes supported fields without a dedicated control. You don't need to
+distribute a local file to use cloud-managed settings. Authentication restrictions and
+device-managed deployments have separate [local setup](#manage-authentication-locally).
 
 Enterprise admins can control supported local client behavior with:
 
@@ -44346,35 +44557,376 @@ Enterprise admins can control supported local client behavior with:
 
 See [Agent Security](./enterprise/agent-security.md) for the Global baseline, environment overrides, and orchestrator and executor field lists.
 
-#### Agent Security and Local computer access with Work Cloud
+#### Configure a policy in Agent security
 
-Use Agent Security in the Admin Console to manage policies and configuration. It replaces Policies & Configuration. Agent Security will be available to everyone, independently of Local computer access with Work Cloud. Existing policies, assignments, and ordering are preserved. Review your existing policies in Agent Security. Local computer access with Work Cloud is a separate opt-in. See [Agent Security](./enterprise/agent-security.md) for migration guidance.
+Where Agent security is enabled, workspace owners, workspace admins, and members
+with Codex admin permissions can manage policies. Access to the policy editor
+doesn't grant members access to the features that a policy controls.
 
-Before moving policy automation to **Agent Security**:
+Use **Workspace default** for the workspace baseline. Use **Overrides** when
+specific users, groups, or roles need different settings. An audience override
+selects who receives a policy; an environment setting selects where supported
+execution controls apply.
 
-1. Identify affected integrations. Inventory Terraform configurations and scripts that update policies, and record which policies they manage.
+1. Open **Admin Console** > **Agent security** and select **Workspace default** or
+   the policy you want to edit under **Overrides**.
+1. Open **Requirements** to set enforced limits, or **Defaults** to set starting
+   values that members can change within those limits.
+1. Keep approval, web search, and other agent-wide settings in **Global**. Where
+   available, use **Add environment settings** in the relevant card to add
+   **Local Environments** or **Codex Cloud Environments** for supported execution
+   settings. An empty environment document inherits settings from Global; it doesn't copy or
+   pin the current baseline.
+1. Use the controls described in this guide. For advanced fields, select
+   **Edit as TOML** and edit the appropriate scope's `requirements.toml` or
+   `config.toml`. Select **Use settings controls** to return to the visual editor.
+1. Review validation messages, then select **Save changes**. Applying a rule in
+   a rule editor updates the draft; it doesn't save the policy by itself.
+1. Check policy selection and the supported client behavior as described in
+   [Confirm the admin and employee experience](#confirm-the-admin-and-employee-experience).
 
-1. Use the policy API to manage Global settings. To manage Local or Codex Cloud settings, use the Agent Security UI. Existing Global API workflows remain available after migration. Test your scripts and Terraform integrations, and confirm that policy assignments and ordering are unchanged.
+Environment editors and supported fields depend on the workspace and policy.
+See [Where settings apply](./enterprise/agent-security.md#where-settings-apply)
+before moving a Global setting into an environment. A setting in Global doesn't
+necessarily apply to every product or execution path.
 
-1. Make any required changes and test the automation. Verify that an intended update reaches the correct Agent Security policy and that the resulting controls are enforced.
+#### Copy or reuse a configuration
 
-Policy migration does not grant local computer access for Work or dots. Reviewing or creating policies is recommended before rollout, but the confirmation flow does not require policy creation to enable access. Before enabling **Allow local computer access**, review the migrated baseline or create a cloud baseline if your policies are currently delivered only through MDM. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots.
+The visual editor doesn't replace TOML. Select **Edit as TOML** to copy a
+configuration, keep a reference copy, or reuse settings in another policy.
+Select **Use settings controls** to switch back to the visual editor.
 
-Environment overrides vary supported settings within a policy. Within a given policy, the order from highest to lowest is OS-specific environment override → all-OS environment override → Global. A higher-priority policy still wins over a lower-priority policy, even when the lower-priority policy is more specific. Some requirements have field-specific merge rules. Confirm which override editors and fields are available for your workspace.
+1. Open the source policy and select **Edit as TOML**.
+1. Choose the scope you want to copy: **Global** or an available environment tab.
+   Copy the text from **Requirements** (`requirements.toml`), **Defaults**
+   (`config.toml`), or both, depending on what you want to reuse.
+1. Open the destination policy, select **Edit as TOML**, and choose the matching
+   scope. Paste requirements into `requirements.toml` and defaults into
+   `config.toml`. Review existing destination settings before replacing text;
+   keep unrelated settings that should still apply.
+1. Review validation messages and the destination policy's targets and priority,
+   then select **Save changes**. Confirm the resulting client behavior before
+   relying on the copied policy.
 
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows. Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail. See the [Configuration Reference](./config-file/config-reference.md).
+The copied text contains the authored settings for that policy and scope. It doesn't include assignments, policy order, other environment documents, or the
+effective configuration combined from other policies and device settings.
+Copy environment settings separately when needed. Switching views or copying
+text doesn't save a policy change.
 
-#### Configure plugin marketplaces and defaults
+Try the example below: change a setting, then select **Edit as TOML** to see its
+configuration. Switch back with **Use settings controls** to keep experimenting.
 
-Define local or Git marketplaces and plugin defaults in system `config.toml`
-or the supported configuration defaults in **Agent Security**.
-These settings are defaults, not enforced policy.
+#### Choose the right control
 
-See [Configuration Reference](./config-file/config-reference.md) for configuration keys,
-[Configuration precedence](./config-file/config-basic.md#configuration-precedence)
-for overrides, and [repo plugin settings](https://developers.openai.com/plugins/build/plugins#enable-or-disable-a-plugin-for-a-repo)
-for project-level configuration. [Workspace GitHub import and
-sync](./enterprise/plugin-management.md) is separate.
+| Task                                                                                              | Where to configure it                                                                  | What it changes                                                                                           |
+| ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| [Restrict browser and native-app access](#control-browser-and-computer-use)                       | **Requirements** > **Desktop feature availability**, **Site rules**, and **App rules** | Controls which supported desktop capabilities are available and which sites or apps they can access.      |
+| [Limit approval, sandbox, or web search choices](#set-approval-sandbox-and-web-search-guardrails) | **Requirements** > **Policy guardrails**                                               | Restricts the choices available to supported clients.                                                     |
+| [Set starting approval, permission, search, or tool behavior](#set-configuration-defaults)        | **Defaults**                                                                           | Sets values members can change within enforced requirements.                                              |
+| [Restrict command network destinations](#configure-network-access)                                | **Requirements** > **Network use controls**                                            | Applies managed networking rules to supported command traffic. It isn't a workspace-wide internet switch. |
+| [Configure plugins and managed hooks](#configure-plugins-and-managed-hooks)                       | **Edit as TOML**                                                                       | Lets you configure supported policy fields that have no dedicated visual control.                         |
+| [Restrict login methods or workspaces before sign-in](#manage-authentication-locally)             | Local system requirements or macOS MDM                                                 | Applies authentication restrictions before cloud policy is loaded.                                        |
+
+#### Control browser and Computer Use
+
+Use **Agent security** in the Admin Console to manage browser and native-app access
+for supported desktop clients. Start with the UI controls. The TOML examples below
+provide a configuration reference for file-based policy delivery and settings that
+need the TOML editor.
+
+Browser Use controls agent-driven activity in a browser. Computer Use controls
+agent-driven activity in native desktop apps. Settings for the built-in browser
+pane are separate from Browser Use. See [browser sessions and existing
+sign-ins](./enterprise/chatgpt-work-local-security.md#browser-sessions-and-existing-sign-ins)
+for the differences between browser paths.
+
+#### Before you begin
+
+Use an account with permission to manage Agent Security policies. Confirm which
+people receive the policy and which client versions and operating systems you need
+to support. Review [Agent Security](./enterprise/agent-security.md) for policy
+assignments, Global settings, and supported environment overrides.
+
+Use **Requirements** for limits users can't override. **Defaults** set starting
+values within those limits. Allowing a site or app doesn't install a plugin, grant
+operating-system permissions, sign a user in, or approve an action that still
+requires review.
+
+Under **Desktop feature availability**, review **Browser use**, **External browser
+use**, and **Computer use**. **Force off** disables the corresponding feature; an
+allow rule for a site or app doesn't override it. Review **Full CDP access**
+separately; **Block user opt-in** prevents users from enabling it.
+
+These desktop controls don't configure the hosted Work Cloud browser. Manage
+**Cloud browser use** and **Cloud network access** separately under
+**Admin Console > Permissions & roles > Workspace capabilities > Cloud computer capabilities**.
+See [how Agent Security applies to Work Cloud](./enterprise/agent-security.md#how-agent-security-applies-to-work-cloud).
+
+#### Configure browser access
+
+{/_ Preserve the console label "Auto-approve requests". _/}
+{/_ vale Microsoft.Auto = NO _/}
+
+1. Open **Admin Console > Agent security**. Use **Workspace default** for the
+   workspace baseline, or open the relevant policy under **Overrides**. In
+   **Requirements**, go to **Desktop browser controls**.
+1. In **Site rules**, open the **Default** row's actions and choose **Edit Default**.
+   For access limited to approved sites, set **Site access** to **Block**, then
+   choose **Apply rule**. The **Default** row supplies values that a matching site
+   rule leaves at **Use default rule**.
+1. Choose **Add site rule**. In **Site or pattern**, enter an origin: a scheme,
+   hostname, and optional port. For example, `https://example.com` is valid;
+   `https://example.com/files` isn't. Don't include a path, query, or fragment.
+   HTTP and HTTPS are different origins. Specify the port when it differs from
+   the scheme's default.
+1. Set **Site access** and review **Downloads**, **Uploads**, and **Debug/CDP**.
+   Choose **Allow** or **Block** as appropriate, or leave a setting at **Use default
+   rule**. **Debug/CDP** controls full Chrome DevTools Protocol access for browser
+   debugging. **Allow** lets normal policy and approval checks continue.
+1. Review **Auto-review**, **Always allow**, and **Approval duration** for the site.
+   **Approval duration** offers **This turn** and **This thread**. Review **Browser
+   history**, **Save site approvals**, and **Auto-approve requests** in **Desktop
+   browser controls** as well.
+1. Choose **Add rule**, review validation messages, and select **Save changes**.
+   Test an allowed site and a blocked site on a supported client that receives the policy. Test
+   uploads, downloads, and other restricted actions separately.
+
+{/_ vale Microsoft.Auto = YES _/}
+
+Disabling automatic review for browser actions sends those actions to the user for
+approval instead. It doesn't disable model safety monitoring.
+
+When several origin patterns match, the most restrictive value wins for each
+setting. Local configuration can't relax a managed denial. Managed network denies
+and exclusive allowlists also apply to browser tools. See the [browser policy
+fields](./config-file/config-reference.md#requirementstoml) for origin patterns
+and approval behavior.
+
+Computer Use can also operate a browser as a native app. Browser Use site and
+capability rules don't apply to that path. Review native-app access separately;
+see the [browser security
+boundaries](./enterprise/chatgpt-work-local-security.md#browser-sessions-and-existing-sign-ins).
+
+#### Configure native-app access
+
+1. In **Requirements**, go to **Desktop app controls > App rules**.
+1. Use the **Default** row's actions to configure access for apps without a matching
+   rule. To limit Computer Use to approved apps, block access by default and add
+   allow rules for those apps.
+1. Choose **Add app rule**. In the **Edit rule** dialog, select **macOS bundle ID**,
+   **Windows AUMID**, or **Windows executable** from **App**. Enter the exact **App
+   identifier** for a bundle ID or Application User Model ID (AUMID). For **Windows
+   executable**, enter **Publisher name** and **Product name**; **Binary name** is
+   optional. Use verified app identity information, not a display name or file path.
+1. Set **App access** for the rule, then choose **Add rule**. Review **Save app
+   approvals** under **Desktop app controls**, review validation messages, and
+   select **Save changes**. Disabling saved approvals still permits approvals for the current
+   session; allowing saved approvals doesn't approve an app.
+1. Test an allowed app and a blocked app on each supported operating system in
+   your deployment. Confirm that operating-system permissions still apply and that users must still provide required approvals.
+
+See the [Computer Use policy
+fields](./config-file/config-reference.md#requirementstoml) for Windows identity
+requirements and [locked-use restrictions](#restrict-locked-computer-use) for
+managed Macs.
+
+#### Check the effective policy
+
+If an allowed site or app is still blocked, check other matching rules, policy
+assignments and priority, device requirements, and user configuration. An allow
+rule in one source doesn't bypass another applicable denial. See [requirements
+locations and precedence](#locations-and-precedence).
+
+If a setting has no effect, verify that the client, operating system, and policy
+delivery path support it. Pay particular attention to Work Cloud with local
+computer access: some fields have partial support or require validation. See
+[Work compatibility in the Configuration Reference](./config-file/config-reference.md).
+
+Check [workspace permissions](./enterprise/roles-and-workspace-permissions.md)
+and [plugin controls](./enterprise/apps-and-connectors.md) separately when a user
+can't access the feature or required plugin.
+
+#### TOML configuration reference
+
+The following examples describe the same policy intent for `requirements.toml`.
+Use them when managing policy through files or the TOML editor. You don't need to
+edit a local file to use the controls available in Agent Security.
+
+This browser example denies access by default, allows `https://example.com`, blocks
+uploads and full CDP access there, and limits site-access approval to the current
+turn:
+
+```toml
+[browser_use]
+allow_history_access = false
+allow_global_persistent_approval = false
+
+[browser_use.default_origin_policy]
+access = "deny"
+
+[browser_use.origins."https://example.com"]
+access = "allow"
+uploads = "deny"
+downloads = "allow"
+full_cdp_access = "deny"
+persistent_approval = false
+access_approval_lifetime = "turn"
+```
+
+To disable automatic review for browser actions, set
+`browser_use.disable_auto_review = true`, or set `auto_review = "deny"` on an
+origin policy to restrict it for that origin.
+
+To enable [Site tools](./webmcp.md) for an eligible Enterprise workspace,
+set `browser_use.allow_webmcp = true`. This managed opt-in applies to the
+desktop app's built-in browser. Setting it to `false` or omitting it leaves
+normal feature availability checks in place; `false` does not enforce a block.
+User preferences and site permissions still apply.
+
+This native-app example allows Calculator on macOS, denies other apps by default,
+and prevents app approvals from persisting across sessions:
+
+```toml
+[computer_use]
+default_app_access = "deny"
+allow_persistent_approval = false
+
+[computer_use.macos.bundle_ids]
+"com.apple.calculator" = "allow"
+```
+
+Windows policies can identify packaged apps with `computer_use.windows.aumids` or
+executables with `computer_use.windows.exes`. Executable rules require
+`publisher_name`, `product_name`, and `access`; `binary_name` is optional.
+
+For all supported fields and values, use the
+[`requirements.toml` reference](./config-file/config-reference.md#requirementstoml).
+To disable a capability rather than restrict individual sites or apps, see
+[Pin feature flags](#pin-feature-flags).
+
+#### Other desktop controls
+
+The following desktop controls cover feature availability, Locked Use, Appshots, and device remote control. Use dedicated settings for feature availability and Locked Use; configure Appshots and device remote control with **Edit as TOML**. For destination restrictions on desktop-app traffic, see [Control desktop app network destinations](#control-desktop-app-network-destinations).
+
+#### Pin feature flags
+
+For desktop features exposed in Agent security, open **Global** > **Requirements** > **Desktop feature availability**. Set **In-app browser**, **Browser use**,
+**External browser use**, or **Computer use** to **Force off** to disable that
+capability, then select **Save changes**. For **Full CDP access**, choose
+**Block user opt-in** to prevent users from enabling it. Allowing a feature doesn't override its product, platform, or rollout availability.
+
+For other supported [feature flags](./config-file/config-basic.md#feature-flags),
+use **Edit as TOML** and the Global `requirements.toml` document, or a supported
+local requirements source. The following examples include both runtime and
+desktop-specific feature pins:
+
+```toml
+[features]
+hooks = true
+unified_exec = false
+
+# Disable surface-specific features when needed.
+browser_use = false
+browser_use_full_cdp_access = false
+browser_use_external = false
+in_app_browser = false
+in_app_updates = false
+computer_use = false
+```
+
+Use the canonical feature keys from `config.toml`'s `[features]` table for
+runtime features. The local runtime normalizes recognized features to meet these
+pins and rejects conflicting writes to `config.toml` or profile file feature
+settings.
+
+A managed `unified_exec = false` keeps command execution available, but disables
+resumable processes and the `write_stdin` tool. User configuration can't disable
+this feature.
+
+- `in_app_browser = false` disables the built-in browser pane.
+- `in_app_updates = false` disables the ChatGPT desktop app's own updater on
+  restart, where supported. It doesn't affect external package deployment or
+  extend support for older app versions. For setup and rollout guidance, see
+  [Manage app updates](./enterprise/manage-app-updates.md).
+- `browser_use = false` disables supported Browser Use capabilities. External
+  Browser Use and native-app Computer Use have separate controls.
+- `browser_use_full_cdp_access = false` disables full CDP access in the local
+  runtime, including Browser Developer mode, and prevents the ChatGPT desktop
+  app from enabling the corresponding setting.
+- `browser_use_external = false` disables agent-driven Browser Use through
+  supported browser extensions.
+- `computer_use = false` disables native-app Computer Use, including operating
+  a browser as a native app, along with Record & Replay and related install or
+  setup flows.
+
+**Disabling Browser Use alone does not block every browser path.** Native-app
+Computer Use can still operate a browser when that capability and app access are
+allowed; Browser Use site and capability rules do not apply to that path. To
+block it, set **Computer use** to **Force off** (`computer_use = false`), or
+[deny the browser app in App rules](#configure-native-app-access) if other native
+apps should remain available. Review **External browser use** and **In-app
+browser** separately. See [browser sessions and existing
+sign-ins](./enterprise/chatgpt-work-local-security.md#browser-sessions-and-existing-sign-ins)
+for the controls that apply to each path.
+
+If you omit these keys, policy allows the features, subject to normal client,
+platform, and rollout availability.
+
+#### Restrict locked computer use
+
+To prevent users from enabling [Locked Use](./computer-use.md#locked-use)
+on a managed Mac, open **Global** > **Requirements** > **Desktop app controls**,
+set **Allow use while locked** to **Disabled**, and select **Save changes**.
+This setting doesn't turn off Locked Use on a Mac where it's already enabled.
+
+The equivalent requirement for the TOML editor or device-managed delivery is:
+
+```toml
+[computer_use]
+allow_locked_computer_use = false
+```
+
+This requirement removes the controls for enabling Locked Use. It doesn't
+turn off Locked Use if it's already enabled. If you omit it, normal product
+availability and the user's local setting still apply.
+
+#### Disable Appshots
+
+Appshots let supported clients include application snapshots. To disable them
+for cloud-managed users, open **Edit as TOML** in Agent security and set the
+top-level `allow_appshots` field in Global `requirements.toml`. For device-managed
+deployments, use the applicable local requirements source:
+
+```toml
+allow_appshots = false
+```
+
+Where Appshots are available, `allow_appshots = false` disables them. If you
+omit the key, requirements don't constrain Appshots, and normal product
+availability checks apply. App-server clients that read effective requirements
+through `configRequirements/read` receive the same restriction as
+`allowAppshots`; an omitted or `null` `allowAppshots` value doesn't disable
+Appshots.
+
+#### Disable device remote control
+
+To disable [device remote control](./remote-connections.md#pick-up-work-from-another-device)
+for cloud-managed users, use **Edit as TOML** in Agent security and set the
+top-level `allow_remote_control` field in Global `requirements.toml`. You can
+also set `allow_remote_control` in a supported local requirements source:
+
+```toml
+allow_remote_control = false
+```
+
+Where device remote control is supported, `allow_remote_control = false`
+disables it. If you omit the key, requirements don't constrain device remote
+control, and normal product availability checks apply. This requirement doesn't
+disable SSH remote connections.
+
+#### Set approvals and execution permissions
+
+Use this section to set approval behavior, permission boundaries, and starting defaults. Begin with [Policy guardrails](#set-approval-sandbox-and-web-search-guardrails) and [Defaults](#set-configuration-defaults). The later tasks explain TOML requirements for reviewer enforcement, custom permission profiles, filesystem restrictions, host overrides, and command rules.
 
 #### Admin-enforced requirements (requirements.toml)
 
@@ -44388,6 +44940,77 @@ with `allowed_permission_profiles` and managed `default_permissions`. Use
 `sandbox_mode`.
 
 For the exact key list, see the [`requirements.toml` section in Configuration Reference](./config-file/config-reference.md#requirementstoml).
+
+#### Set approval, sandbox, and web search guardrails
+
+Use **Requirements** > **Policy guardrails** to limit supported client choices.
+These controls constrain configuration; they don't select the starting value.
+Set the starting value separately under **Defaults**.
+
+1. In **Global**, open **Approval policies** and select the allowed approval
+   styles. For example, **Ask when needed** allows the agent to request approval
+   for actions such as sandbox escalation. **Never ask** prevents approval
+   requests; it doesn't grant unrestricted execution.
+1. Open **Sandbox modes** to limit legacy sandbox choices. **Read-only** restricts
+   writes, **Workspace write** permits writes within the workspace and configured
+   writable roots, and **Full access** removes filesystem sandboxing. Use
+   [permission-profile requirements](#control-available-permission-profiles) for
+   deployments that use permission profiles instead of `sandbox_mode`.
+1. In **Global**, open **Web search modes** to limit web search. Choose **Cached**
+   to permit cached search without live search, or **Disabled** to turn off web
+   search. Web search restrictions are separate from command network rules.
+1. Review the allowed choices and corresponding defaults, then select
+   **Save changes**.
+
+Leaving a requirement unset imposes no limit under that policy. Other
+applicable policies still apply. The **Ask for untrusted commands** option
+corresponds to `untrusted` in the requirements allowlist; it doesn't restore the
+retired explicit `approval_policy = "untrusted"` setting. Follow the migration
+guidance below for that case.
+
+To constrain web search, use **Global** > **Requirements** > **Policy guardrails** > **Web search modes**. The equivalent TOML is:
+
+```toml
+allowed_web_search_modes = ["cached"] # "disabled" remains implicitly allowed
+```
+
+`allowed_web_search_modes = []` allows only `"disabled"`.
+For example, `allowed_web_search_modes = ["cached"]` prevents live web search even in `danger-full-access` sessions.
+
+#### Set configuration defaults
+
+Defaults give members a starting configuration. They don't enforce a
+restriction or grant access to a workspace capability.
+
+1. Open the policy's **Defaults** card. Keep agent-wide defaults in **Global**;
+   use an available environment tab for supported execution defaults.
+1. Under **Command execution**, choose the starting **Approval policy** and
+   **Approval reviewer**, and the applicable **Sandbox mode** or **Default
+   permissions**. The reviewer determines who reviews approval requests by
+   default; the approval policy determines when requests can occur.
+1. Under **Web search**, choose the starting **Web search** mode and **Web search
+   context**. Under **Apps and tools**, review **Apps/connectors**, **Open-world
+   tools**, and **Destructive tools** for supported app tools.
+1. Confirm the defaults meet your **Requirements**, then select **Save changes**.
+
+Use **Edit as TOML** for supported defaults without visual controls, such as
+plugin marketplace configuration. These cloud defaults use [normal configuration
+precedence](./config-file/config-basic.md#configuration-precedence). They differ
+from the [legacy `managed_config.toml` precedence](#precedence-and-layering),
+which places managed defaults above local configuration at startup.
+
+#### Example requirements.toml
+
+This example blocks `--ask-for-approval never` and `--sandbox danger-full-access` (including `--yolo`):
+
+```toml
+allowed_approval_policies = ["untrusted", "on-request"]
+allowed_sandbox_modes = ["read-only", "workspace-write"]
+```
+
+Here, `untrusted` preserves the stricter approval behavior derived from
+`trust_level = "untrusted"`; it does not make `approval_policy = "untrusted"` a
+supported explicit setting.
 
 #### Migrate the retired `untrusted` approval policy
 
@@ -44407,230 +45030,45 @@ overrides that policy. See
 [Migrate from the retired `untrusted` approval policy](./agent-approvals-security.md#migrate-from-the-retired-untrusted-approval-policy)
 for examples and security tradeoffs.
 
-#### Locations and precedence
+#### Configure automatic review policy
 
-For local execution, requirements are applied from lower to higher priority as follows. This ordering also applies to local steps in Local computer access with Work Cloud:
+To make automatic review the default, use **Global** > **Defaults** > **Command execution** > **Approval reviewer**. A default lets users choose
+another permitted reviewer. To require automatic review or supply your
+organization's review instructions, use **Edit as TOML** and edit Global
+`requirements.toml` instead. These requirements are separate from the browser's
+automatic-review controls.
 
-1. System `requirements.toml` (`/etc/codex/requirements.toml` on Unix systems,
-   including Linux and macOS, or `%ProgramData%\OpenAI\Codex\requirements.toml`
-   on Windows).
-2. Agent Security requirements delivered in the cloud config bundle.
-3. Legacy `managed_config.toml` fields that the local client reinterprets as requirements.
-4. macOS managed preferences (MDM) delivered through
-   `com.openai.codex:requirements_toml_base64`.
+Use `allowed_approvals_reviewers` to require or allow automatic review. Set it
+to `["auto_review"]` to require automatic review, or include `"user"` when users
+can choose manual approval.
 
-Higher-precedence layers override ordinary scalar and list values from lower
-layers. Tables merge by key, while requirements such as rules, hooks, and
-filesystem restrictions have field-specific composition behavior. Use the
-[`requirements.toml` reference](./config-file/config-reference.md#requirementstoml)
-for the current schema instead of assuming that every field merges the same
-way.
-
-For backward compatibility, supported local clients reinterpret the legacy
-`approval_policy`, `approvals_reviewer`, and `sandbox_mode` fields as
-requirements. This conversion adds compatibility choices where necessary; use
-`requirements.toml` for explicit allowlists.
-
-#### Precedence for Local computer access with Work Cloud
-
-For Work with local access and dots, distinguish Global orchestrator policy from execution policy. Applicable local requirements govern the connected computer. Work cloud containers and dots cloud computers use their own execution configuration and requirements, rather than the managed environment bundle used by other executors.
-
-For local execution, MDM and legacy managed-device requirements rank above Agent Security. The device's system requirements file ranks below Agent Security. Within each policy, resolve OS-specific environment overrides before all-OS environment overrides, then Global. Policy priority wins over specificity across policies.
-
-| Control                       | Local Work without sync and local Codex               | Local computer access with Work Cloud                                                                                                                       |
-| ----------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Enterprise requirements       | Follow the local requirements order above.            | Apply to local executors. Work cloud containers retain existing Work Cloud policies.                                                                        |
-| Device execution restrictions | Enforced by supported local controls.                 | Follow the local requirements order above, including MDM and legacy requirements above Agent Security.                                                      |
-| Environment overrides         | Use the configuration model for the relevant product. | Within one policy: OS-specific environment override, then all-OS environment override, then Global. A lower-priority policy cannot win through specificity. |
-
-Requirements impose constraints, while configuration defaults supply starting values. For Work with local access and dots, supported Global policy applies through the shared cloud orchestrator when managed policy is enabled. Applicable local `requirements.toml` requirements govern execution on a connected computer. Work cloud containers and dots cloud computers use their own execution configuration and requirements, rather than the managed environment bundle used by other executor types. Local execution restrictions do not automatically apply to these cloud computers. Review cloud capability permissions and test local and cloud execution separately.
-
-Keep orchestrator controls, including approvals and web search, in Global. Use the dedicated Allowed approval policies and Allowed web search modes controls where available, and TOML for other supported fields. See the [Configuration Reference](./config-file/config-reference.md) for the field list and execution scope.
-
-#### Network policy precedence and runtime limits
-
-Within a given policy, the order from highest to lowest is OS-specific environment override → all-OS environment override → Global. A higher-priority policy still wins over a lower-priority policy, even when the lower-priority policy is more specific. Some requirements have field-specific merge rules. The runtime then enforces the resolved requirements. Consider the field-specific network cases below separately from policy priority.
-
-These examples compare environment and Global settings within the same policy, with managed networking already configured and no higher-priority policy changing the values. They describe field-specific merge and runtime behavior.
-
-#### Set different domain access by environment
-
-For the same domain rule within a policy, an admin environment override can allow a domain denied in Global or deny a domain allowed in Global. Without an environment override, the Global rule is inherited. Other effective Deny rules or access controls can still block a request.
-
-**How domain rules combine**
-
-| Global rule   | Environment rule | Domain-policy result                                                  |
-| ------------- | ---------------- | --------------------------------------------------------------------- |
-| Deny          | Allow            | Allowed by the environment override, subject to the conditions below. |
-| Allow         | Deny             | Blocked in that environment.                                          |
-| Allow         | Allow            | Allowed by these domain rules.                                        |
-| Deny          | Deny             | Blocked by these domain rules.                                        |
-| Allow or Deny | No override      | Inherits the Global rule.                                             |
-
-These outcomes compare the same domain key within one policy, with no higher-priority policy changing the result. A higher-priority value replaces the same key. Other inherited keys remain. An Allow does not bypass a different matching Deny, such as an inherited wildcard. An empty environment map does not clear inherited rules.
-
-**Example:** Deny `packages.example.com` in Global and allow it in Development. Development can permit it under the conditions above. Production inherits the Global Deny unless overridden.
-
-Confirm the deployed executor supports these merge rules. Coverage for regular managed executors still needs validation.
-
-Orchestrator limits. Managed HTTP/SOCKS listener ports and non-loopback proxy listeners are unsupported by the cloud runtime; socket-rule support depends on the execution path. A local-execution setting in the table below is not a supported Orchestrator configuration.
-
-#### Other network runtime limits
-
-All field names below are under `experimental_network` in `requirements.toml`. The arrows show a Global value followed by an environment value within the same policy. These local-execution cases do not establish Orchestrator support for the same settings.
-
-| **Setting and attempted override**           | **Runtime behavior**                                                                                                                                                                      | **Admin action**                                                                                                   |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| domains: deny → allow                        | The environment Allow replaces the same Global domain key on supported paths. Other matching Deny rules still apply.                                                                      | Test both allowed and blocked requests on the deployed executor.                                                   |
-| `managed_allowed_domains_only`: true → false | Do not infer exclusivity behavior from domain-key composition. With effective `enabled = true` and `managed_allowed_domains_only = true`, ordinary commands need effective Allow entries. | Review effective settings and inherited Allow entries. A deny-only policy does not allow the rest of the internet. |
-| `allow_local_binding`: false → true          | On the supported Codex Cloud proxy path, an explicit false can prevent upstream-proxy access. A supported higher-priority Cloud override can change it.                                   | Check the source of the effective value and executor support. Do not apply the Cloud default to Local.             |
-
-Proxy activation, exclusivity, upstream-proxy behavior, and Unix-socket rules have executor-specific behavior. Do not generalize domain-key composition to these settings. Verify the effective values and test the deployed runtime. For Codex Cloud local/private connectivity, see [Configure network access requirements](#configure-network-access-requirements).
-
-#### Verify behavior before rollout
-
-Test the actual destinations, local listeners, proxy behavior, and socket paths your workflows use. Check an action that should succeed and one that should be blocked in each affected environment. Check that the deployed runtime version supports each setting you use.
-
-#### Cloud-managed requirements
-
-When a user signs in with ChatGPT on a supported plan, supported local clients
-can receive admin-enforced requirements associated with the workspace. This is
-a delivery channel for `requirements.toml`-compatible policy. It doesn't grant
-workspace access or replace workspace RBAC. Authentication requirements must be
-[managed locally](#manage-authentication-locally).
-
-Open **Agent Security** in the Admin Console to review and manage cloud
-requirements. Use the migrated global baseline for existing policies. For
-example, this policy limits
-approval and sandbox choices and prompts before a supported shell entry point
-runs:
+Set `guardian_policy_config` to replace the tenant-specific section of the
+automatic review policy. The local runtime still uses the built-in reviewer
+template and output contract. Managed `guardian_policy_config` takes precedence
+over local `[auto_review].policy`.
 
 ```toml
 allowed_approval_policies = ["on-request"]
-allowed_sandbox_modes = ["read-only", "workspace-write"]
+allowed_approvals_reviewers = ["auto_review"]
 
-[rules]
-prefix_rules = [
-  { pattern = [{ any_of = ["bash", "sh", "zsh"] }], decision = "prompt", justification = "Require explicit approval for shell entry points" },
-]
+guardian_policy_config = """
+## Environment Profile
+- Trusted internal destinations include github.com/my-org, artifacts.example.com,
+  and internal CI systems.
+
+## Tenant Risk Taxonomy and Allow/Deny Rules
+- Treat uploads to unapproved third-party file-sharing services as high risk.
+- Deny actions that expose credentials or private source code to untrusted
+  destinations.
+"""
 ```
-
-Check that every managed client version supports the keys you select. Assign the policy to the intended users or groups and verify that it takes effect on their supported clients. Use
-the configuration reference for the current schema and the administration
-surface for current assignment behavior.
-
-The service selects the enterprise-managed requirement layers that apply to the
-signed-in identity. The local client evaluates those layers with the other
-requirements sources described in [Locations and precedence](#locations-and-precedence).
-Use the current administration surface for workspace-side creation and
-assignment. Don't rely on a copied group-matching algorithm; the administration
-service owns that behavior and can change it independently of the local
-requirements format.
-
-For supported keys and examples, see
-[Example requirements.toml](#example-requirementstoml) and the
-[`requirements.toml` reference](./config-file/config-reference.md#requirementstoml).
-
-#### How local clients apply cloud-managed requirements
-
-The local loading and cache behavior below describes supported local clients. It does not establish when a changed cloud policy takes effect in an already-running task using Local computer access with Work Cloud. Verify the effective policy before relying on a changed restriction.
-
-When a user starts a supported local client and signs in with ChatGPT on a
-supported plan, the client first checks for a valid, identity-matched cache
-entry. If no valid entry is available, the client fetches the applicable bundle
-with retries and writes a signed cache entry on success. If the request fails or
-times out and no valid cache is available, the cloud config bundle load returns
-an error rather than silently starting without the cloud-managed requirements
-layer.
-
-After cache resolution, the client composes the cloud requirements with the
-other requirements layers described above. A background refresh can update the
-cache for a later start; it doesn't replace the requirements already loaded
-into the current process.
-
-#### Confirm the admin and employee experience
-
-Assign a person to own each managed policy, record which users or groups should
-receive it, and document the business reason for any filesystem, network,
-approval, or permission-profile restriction.
-
-Test an allowed workflow and a blocked workflow with a user who has the intended permissions. Check the effective settings in the supported client. A workspace role or group alone does not enforce a local runtime restriction.
-
-#### Manage authentication locally
-
-Set `allowed_login_methods`, `allowed_chatgpt_workspaces`,
-`cli_auth_credentials_store`, and `chatgpt_base_url` in the local system
-`requirements.toml` or macOS MDM requirements. Codex ignores these four fields
-in cloud-managed requirements. Local authentication requirements apply before
-credentials load and before Codex retrieves cloud policy.
-
-To require ChatGPT login to an approved workspace and store credentials in the
-OS credential store, use:
-
-```toml
-allowed_login_methods = ["chatgpt"]
-allowed_chatgpt_workspaces = ["00000000-0000-0000-0000-000000000000"]
-cli_auth_credentials_store = "keyring"
-```
-
-`allowed_login_methods` accepts `chatgpt`, `api`, or both. If omitted, this setting
-doesn't restrict login methods. If set, the list must contain at least one method.
-`api` permits API authentication, including Amazon Bedrock.
-The workspace restriction also applies to
-[Codex access tokens](./enterprise/access-tokens.md).
-
-User-configured `forced_login_method` and `forced_chatgpt_workspace_id` must
-follow the requirements. When a user selects a workspace, it must also appear
-in the managed workspace allowlist. If no workspaces match, ChatGPT login is
-unavailable. API authentication remains available when permitted. If no login method
-is available, Codex refuses to start.
-
-See the [requirements reference](./config-file/config-reference.md#requirementstoml)
-for credential storage modes and service URL configuration.
-
-#### Example requirements.toml
-
-This example blocks `--ask-for-approval never` and `--sandbox danger-full-access` (including `--yolo`):
-
-```toml
-allowed_approval_policies = ["untrusted", "on-request"]
-allowed_sandbox_modes = ["read-only", "workspace-write"]
-```
-
-Here, `untrusted` preserves the stricter approval behavior derived from
-`trust_level = "untrusted"`; it does not make `approval_policy = "untrusted"` a
-supported explicit setting.
-
-#### Disable Appshots
-
-To disable Appshots for managed users, set the top-level `allow_appshots` requirement:
-
-```toml
-allow_appshots = false
-```
-
-Where Appshots are available, `allow_appshots = false` disables them. If you
-omit the key, requirements don't constrain Appshots, and normal product
-availability checks apply. App-server clients that read effective requirements
-through `configRequirements/read` receive the same restriction as
-`allowAppshots`; an omitted or `null` `allowAppshots` value doesn't disable
-Appshots.
-
-#### Disable device remote control
-
-To disable [device remote control](./remote-connections.md#pick-up-work-from-another-device)
-for managed users, set the top-level `allow_remote_control` requirement:
-
-```toml
-allow_remote_control = false
-```
-
-Where device remote control is supported, `allow_remote_control = false`
-disables it. If you omit the key, requirements don't constrain device remote
-control, and normal product availability checks apply. This requirement doesn't
-disable SSH remote connections.
 
 #### Control available permission profiles
+
+Use **Defaults** > **Command execution** > **Default permissions** to choose the built-in profile users start with. To enforce which profiles users can select or to define
+custom profiles, use **Edit as TOML** and configure `requirements.toml` for the
+applicable Global or supported execution environment scope. Choosing a default
+alone doesn't restrict the available profiles.
 
 Use `allowed_permission_profiles` to control which built-in and custom
 [permission profiles](./permissions.md) users can select. This is the
@@ -44745,7 +45183,37 @@ select. Every entry must name a built-in profile or a custom profile defined in
 a loaded config or requirements source. Define custom profiles in managed
 requirements to control their behavior centrally.
 
+#### Enforce deny-read requirements
+
+Use **Edit as TOML** to add filesystem restrictions to the applicable Global or
+supported execution environment `requirements.toml`. These restrictions block
+reads of sensitive paths; a read-only default by itself doesn't hide files.
+
+Admins can deny reads for exact paths or glob patterns with
+`[permissions.filesystem]`. Users can't weaken these requirements with local
+configuration.
+
+```toml
+[permissions.filesystem]
+deny_read = [
+  # values can be absolute paths...
+  "/**/*.env",
+  # ...or relative to $HOME/%USERPROFILE% using `~`.
+  "~/.ssh",
+  # But relative paths starting with `./` are not allowed.
+]
+```
+
+When deny-read requirements are present, the local runtime rejects full-access
+permissions and keeps local execution in a read-only or workspace sandbox so it
+can enforce them. On native Windows, managed `deny_read` applies to direct file
+tools; shell subprocess reads don't use this sandbox rule.
+
 #### Override sandbox requirements by host
+
+Use **Edit as TOML** in Agent security to author host-specific requirements.
+Environment controls select an execution environment; host patterns select
+matching machines within the supported runtime.
 
 Use `[[remote_sandbox_config]]` when one managed policy should apply different
 sandbox requirements on different hosts. For example, you can keep a stricter
@@ -44770,14 +45238,66 @@ requirements source. If no entry matches, the local runtime keeps the top-level
 `allowed_sandbox_modes`. Host name matching is for policy selection only; don't
 treat it as authenticated device proof.
 
-You can also constrain web search mode:
+#### Enforce command rules from requirements
+
+Use **Edit as TOML** in Agent security to add command rules and MCP server
+restrictions to Global `requirements.toml`. Command rules specify approval or denial
+decisions for matching commands; MCP restrictions limit which server identities
+the client can enable. The **Approval policies** control doesn't author either
+of these rule sets.
+
+Admins can also enforce restrictive command rules from `requirements.toml`
+using a `[rules]` table. These rules merge with regular `.rules` files, and the
+most restrictive decision still wins.
+
+Unlike `.rules`, requirements rules must specify `decision`, and that decision
+must be `"prompt"` or `"forbidden"` (not `"allow"`).
 
 ```toml
-allowed_web_search_modes = ["cached"] # "disabled" remains implicitly allowed
+[rules]
+prefix_rules = [
+  { pattern = [{ token = "rm" }], decision = "forbidden", justification = "Use git clean -fd instead." },
+  { pattern = [{ token = "git" }, { any_of = ["push", "commit"] }], decision = "prompt", justification = "Require review before mutating history." },
+]
 ```
 
-`allowed_web_search_modes = []` allows only `"disabled"`.
-For example, `allowed_web_search_modes = ["cached"]` prevents live web search even in `danger-full-access` sessions.
+To restrict which MCP servers a local client can enable, add an `mcp_servers`
+approved list. For stdio servers, match on `command`; for streamable HTTP
+servers, match on `url`:
+
+```toml
+[mcp_servers.docs]
+identity = { command = "codex-mcp" }
+
+[mcp_servers.remote]
+identity = { url = "https://example.com/mcp" }
+```
+
+The string form of `identity.command` matches only the configured `command`. It
+doesn't inspect `args`, `cwd`, `env`, or `env_vars`.
+
+To constrain a complete stdio invocation, match the executable and each
+positional argument:
+
+```toml
+[mcp_servers.internal.identity]
+command = { executable = "/usr/local/bin/codex-mcp", args = [
+  { match = "exact", value = "serve" },
+  { match = "prefix", value = "--workspace=" },
+] }
+```
+
+The executable, argument count, and argument order must match. Argument and URL
+rules support `exact`, `prefix`, and full-value `regex` matching. Structured
+command rules still don't inspect `cwd`, `env`, or `env_vars`. Plugin-bundled
+MCP servers use the same identity shapes under
+`plugins..mcp_servers.`.
+
+If `mcp_servers` is present but empty, the local client disables all MCP servers.
+
+#### Configure network access
+
+Command networking and desktop-app networking use different controls. Start with **Network use controls** for supported command traffic, review the environment and runtime limits, then use the separate desktop-app requirements if needed. Browser site rules remain in [Control browser and Computer Use](#control-browser-and-computer-use).
 
 #### Configure network access requirements
 
@@ -44786,6 +45306,35 @@ requirements broadly across an enterprise deployment without validating them
 on the local client versions and operating systems your users run. Windows
 support is still limited; avoid applying this policy to Windows users unless
 you have tested it in your environment.
+
+Use **Requirements** > **Network use controls** to manage supported command
+networking in Agent security. Configure a shared baseline in **Global**, or an
+available **Local Environments** or **Codex Cloud Environments** tab for
+environment-specific execution settings.
+
+1. Set **Managed networking** to **On** to apply domain rules to managed command
+   traffic. Adding domain rules alone doesn't activate the managed proxy.
+1. Under **Network rules**, select **Add network rule**. Enter a **Domain** such
+   as `api.openai.com` or `**.example.com`, without a URL scheme or path. Choose
+   **Allow** or **Deny** under **Access**, then select **Save rule** to update the
+   draft. Repeat for other destinations.
+1. Set **Only allow domains added by admins** to **On** if user settings and
+   per-domain approvals must not expand the managed allowlist. Include the
+   required Allow entries; a deny-only list doesn't allow other destinations.
+1. Review **Allow local network access** for workflows that need local listeners
+   or private destinations. Direct local connections may bypass the proxy's
+   domain rules. Review the Codex Cloud connectivity limits below before changing
+   this setting.
+1. Review inherited rules and validation messages, then select **Save changes**.
+   Test a request that should succeed and one that should be blocked in every
+   affected execution environment.
+
+Setting **Managed networking** to **Off** clears that scope's authored network
+rules and stores an explicit off value; it doesn't disable internet access.
+**Not set** removes that scope's authored network settings so applicable policy
+or runtime defaults can apply. Removing environment settings can reveal inherited
+Global rules. Use **Edit as TOML** for advanced network fields or existing legacy
+domain lists that the visual editor can't represent.
 
 Use `[experimental_network]` in `requirements.toml` when administrators should
 define network access requirements centrally. These requirements are separate
@@ -44843,13 +45392,64 @@ On supported managed Codex Cloud execution paths, Agent Security requirements co
 
 A managed command allowlist applies to commands using the managed proxy. Where policy permits full sandbox escalation and it is approved, that execution can bypass the command proxy. A narrow network grant is different from full sandbox escalation. Configure enforced approval and sandbox requirements for the intended boundary, and test both ordinary and escalated commands.
 
-> **No effective allowed destinations:** When **Manage Networking** and **Only allow domains added by admins** are On, ordinary managed commands need effective allowed destinations. If no Allow entries are configured or inherited, those commands have no allowed destinations. A deny-only policy does not implicitly allow the rest of the internet. Add required Allow entries and check inherited rules before saving. This restriction applies to the managed command proxy, not every tool or approved full sandbox escalation.
+> **No effective allowed destinations:** When **Managed networking** and **Only allow domains added by admins** are On, ordinary managed commands need effective allowed destinations. If no Allow entries are configured or inherited, those commands have no allowed destinations. A deny-only policy does not implicitly allow the rest of the internet. Add required Allow entries and check inherited rules before saving. This restriction applies to the managed command proxy, not every tool or approved full sandbox escalation.
 
 > **Codex Cloud local/private connectivity:** An explicit Off value for local/private connectivity can prevent Codex Cloud from reaching its upstream proxy, even when the destination domain is allowed. Check the final `allow_local_binding` value and identify which policy or setting supplies it. On the supported Cloud proxy path, this defaults to true only when no applicable requirement, selected network profile, or proxy feature setting supplies a value. An inherited false still counts as an explicit setting. Where supported, set a higher-priority Cloud override to change this value for Codex Cloud without changing the Global value used by Local. This does not add domain Allow entries. Verify executor support before relying on the override. Do not apply this Cloud default to Local.
 
-Empty environment requirements inherit Global. Manage Networking Off is not the Cloud environment Internet access Off switch. See [Configure networking in the UI](./enterprise/agent-security.md#configure-networking-in-the-ui).
+When environment requirements are empty, Global requirements apply. **Managed networking** set to
+**Off** is separate from the Cloud environment's Internet access setting. See
+[Agent Security execution controls](./enterprise/agent-security.md#execution-controls-executor)
+for details about execution scope.
+
+#### Network policy precedence and runtime limits
+
+Within a given policy, the order from highest to lowest is OS-specific environment override → all-OS environment override → Global. A higher-priority policy still wins over a lower-priority policy, even when the lower-priority policy is more specific. Some requirements have field-specific merge rules. The runtime then enforces the resolved requirements. Consider the field-specific network cases below separately from policy priority.
+
+These examples compare environment and Global settings within the same policy, with managed networking already configured and no higher-priority policy changing the values. They describe field-specific merge and runtime behavior.
+
+#### Set different domain access by environment
+
+For the same domain rule within a policy, an admin environment override can allow a domain denied in Global or deny a domain allowed in Global. Without an environment override, the Global rule is inherited. Other effective Deny rules or access controls can still block a request.
+
+**How domain rules combine**
+
+| Global rule   | Environment rule | Domain-policy result                                                  |
+| ------------- | ---------------- | --------------------------------------------------------------------- |
+| Deny          | Allow            | Allowed by the environment override, subject to the conditions below. |
+| Allow         | Deny             | Blocked in that environment.                                          |
+| Allow         | Allow            | Allowed by these domain rules.                                        |
+| Deny          | Deny             | Blocked by these domain rules.                                        |
+| Allow or Deny | No override      | Inherits the Global rule.                                             |
+
+These outcomes compare the same domain key within one policy, with no higher-priority policy changing the result. A higher-priority value replaces the same key. Other inherited keys remain. An Allow does not bypass a different matching Deny, such as an inherited wildcard. An empty environment map does not clear inherited rules.
+
+**Example:** Deny `packages.example.com` in Global and allow it in Development. Development can permit it under the conditions above. Production inherits the Global Deny unless overridden.
+
+Confirm the deployed executor supports these merge rules. Coverage for regular managed executors still needs validation.
+
+Orchestrator limits. Managed HTTP/SOCKS listener ports and non-loopback proxy listeners are unsupported by the cloud runtime; socket-rule support depends on the execution path. A local-execution setting in the table below is not a supported Orchestrator configuration.
+
+#### Other network runtime limits
+
+All field names below are under `experimental_network` in `requirements.toml`. The arrows show a Global value followed by an environment value within the same policy. These local-execution cases do not establish Orchestrator support for the same settings.
+
+| **Setting and attempted override**           | **Runtime behavior**                                                                                                                                                                      | **Admin action**                                                                                                   |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| domains: deny → allow                        | The environment Allow replaces the same Global domain key on supported paths. Other matching Deny rules still apply.                                                                      | Test both allowed and blocked requests on the deployed executor.                                                   |
+| `managed_allowed_domains_only`: true → false | Do not infer exclusivity behavior from domain-key composition. With effective `enabled = true` and `managed_allowed_domains_only = true`, ordinary commands need effective Allow entries. | Review effective settings and inherited Allow entries. A deny-only policy does not allow the rest of the internet. |
+| `allow_local_binding`: false → true          | On the supported Codex Cloud proxy path, an explicit false can prevent upstream-proxy access. A supported higher-priority Cloud override can change it.                                   | Check the source of the effective value and executor support. Do not apply the Cloud default to Local.             |
+
+Proxy activation, exclusivity, upstream-proxy behavior, and Unix-socket rules have executor-specific behavior. Do not generalize domain-key composition to these settings. Verify the effective values and test the deployed runtime. For Codex Cloud local/private connectivity, see [Configure network access requirements](#configure-network-access-requirements).
+
+#### Verify behavior before rollout
+
+Test the actual destinations, local listeners, proxy behavior, and socket paths your workflows use. Check an action that should succeed and one that should be blocked in each affected environment. Check that the deployed runtime version supports each setting you use.
 
 #### Control desktop app network destinations
+
+Use **Edit as TOML** in Agent security to configure these desktop-specific
+requirements in Global. The **Network use controls** UI manages command
+networking, which is a separate policy.
 
 Use `[application.network]` in `requirements.toml` to restrict the desktop
 app's network destinations. With `enabled = true`, external requests must use
@@ -44862,285 +45462,31 @@ This policy is separate from command networking and browser origin rules. It
 doesn't impose destination restrictions on native modules or spawned processes,
 and it doesn't govern Work Cloud execution.
 
-#### Control browser and Computer Use
+#### Configure plugins and managed hooks
 
-Use the `[browser_use]` and `[computer_use]` tables in `requirements.toml` to
-restrict supported desktop clients. Validate the policy on the client versions
-and operating systems in your deployment. A configured allow rule doesn't
-install a plugin, grant an operating-system permission, or approve an action
-that still requires review.
+For these tasks, use **Edit as TOML** in Agent security or a supported local configuration source. Marketplace defaults, enforced plugin restrictions, and managed hooks have different purposes; choose the task that matches the policy you need.
 
-For browser access, configure an origin policy. An origin includes the scheme,
-host, and optional port, such as `https://example.com` or
-`https://*.example.com:8443`. Don't include a path, query, or fragment. Unlike
-command-network domain rules, browser origin rules distinguish HTTP from HTTPS
-and match the port.
+#### Configure plugin marketplaces and defaults
 
-This example restricts browser access to an approved site and prevents uploads
-and full Chrome DevTools Protocol (CDP) access there:
+Use **Agent security** > **Edit as TOML** to define local or Git marketplaces and
+plugin defaults in the Global `config.toml` document. You can also distribute
+these settings in system `config.toml`. They provide starting marketplace and
+plugin configuration, not enforced policy. To limit which sources members can
+use, configure [marketplace source requirements](#restrict-plugin-marketplace-sources).
 
-```toml
-[browser_use]
-allow_history_access = false
-allow_global_persistent_approval = false
-
-[browser_use.default_origin_policy]
-access = "deny"
-
-[browser_use.origins."https://example.com"]
-access = "allow"
-uploads = "deny"
-downloads = "allow"
-full_cdp_access = "deny"
-persistent_approval = false
-access_approval_lifetime = "turn"
-```
-
-Matching origin rules are resolved per field. A matching deny wins. Otherwise,
-the default origin policy supplies fields that matching rules don't specify.
-Local configuration can add restrictions but can't relax a managed deny.
-Network denies and exclusive managed network allowlists still apply.
-
-Set `browser_use.disable_auto_review = true` to disable automatic approval
-review for browser actions, or set `auto_review = "deny"` on an origin policy
-to restrict it for that origin. This controls approval handling; it doesn't
-disable model safety monitoring.
-
-To enable [Site tools](./webmcp.md) for an eligible Enterprise workspace,
-set `browser_use.allow_webmcp = true`. This managed opt-in applies to the
-desktop app's built-in browser. Setting it to `false` or omitting it leaves
-normal feature availability checks in place; `false` does not enforce a block.
-User preferences and site permissions still apply.
-
-For native apps, set a default access policy and identify permitted apps. For
-example, this macOS policy allows Calculator and prevents saved approvals:
-
-```toml
-[computer_use]
-default_app_access = "deny"
-allow_persistent_approval = false
-
-[computer_use.macos.bundle_ids]
-"com.apple.calculator" = "allow"
-```
-
-Windows policies can identify packaged apps with
-`computer_use.windows.aumids` or executables with
-`computer_use.windows.exes`. Executable rules require `publisher_name`,
-`product_name`, and `access`; `binary_name` is optional. Use the app's verified
-identity rather than its display name alone.
-
-See the [configuration reference](./config-file/config-reference.md#requirementstoml)
-for the complete fields and [locked-use restrictions](#restrict-locked-computer-use)
-for managed macOS devices.
-
-#### Pin feature flags
-
-You can also pin [feature flags](./config-file/config-basic.md#feature-flags) for users
-receiving a managed `requirements.toml`:
-
-```toml
-[features]
-hooks = true
-unified_exec = false
-
-# Disable surface-specific features when needed.
-browser_use = false
-browser_use_full_cdp_access = false
-browser_use_external = false
-in_app_browser = false
-in_app_updates = false
-computer_use = false
-```
-
-Use the canonical feature keys from `config.toml`'s `[features]` table for
-runtime features. The local runtime normalizes recognized features to meet these
-pins and rejects conflicting writes to `config.toml` or profile file feature
-settings.
-
-A managed `unified_exec = false` keeps command execution available, but disables
-resumable processes and the `write_stdin` tool. User configuration can't disable
-this feature.
-
-- `in_app_browser = false` disables the built-in browser pane.
-- `in_app_updates = false` disables the ChatGPT desktop app's own updater on
-  restart, where supported. It doesn't affect external package deployment or
-  extend support for older app versions. For setup and rollout guidance, see
-  [Manage app updates](./enterprise/manage-app-updates.md).
-- `browser_use = false` disables Computer Use in browsers and Browser Agent availability.
-- `browser_use_full_cdp_access = false` disables full CDP access in the local
-  runtime, including Browser Developer mode, and prevents the ChatGPT desktop
-  app from enabling the corresponding setting.
-- `browser_use_external = false` disables external Browser Use.
-- `computer_use = false` disables Computer Use, Record & Replay, and related
-  install or setup flows.
-
-If you omit these keys, policy allows the features, subject to normal client,
-platform, and rollout availability.
-
-#### Restrict locked computer use
-
-To prevent users from enabling [Locked Use](./computer-use.md#locked-use)
-on a managed Mac, add this requirement:
-
-```toml
-[computer_use]
-allow_locked_computer_use = false
-```
-
-This requirement removes the controls for enabling Locked Use. It doesn't
-turn off Locked Use if it's already enabled. If you omit it, normal product
-availability and the user's local setting still apply.
-
-#### Configure automatic review policy
-
-Use `allowed_approvals_reviewers` to require or allow automatic review. Set it
-to `["auto_review"]` to require automatic review, or include `"user"` when users
-can choose manual approval.
-
-Set `guardian_policy_config` to replace the tenant-specific section of the
-automatic review policy. The local runtime still uses the built-in reviewer
-template and output contract. Managed `guardian_policy_config` takes precedence
-over local `[auto_review].policy`.
-
-```toml
-allowed_approval_policies = ["on-request"]
-allowed_approvals_reviewers = ["auto_review"]
-
-guardian_policy_config = """
-## Environment Profile
-- Trusted internal destinations include github.com/my-org, artifacts.example.com,
-  and internal CI systems.
-
-## Tenant Risk Taxonomy and Allow/Deny Rules
-- Treat uploads to unapproved third-party file-sharing services as high risk.
-- Deny actions that expose credentials or private source code to untrusted
-  destinations.
-"""
-```
-
-#### Enforce deny-read requirements
-
-Admins can deny reads for exact paths or glob patterns with
-`[permissions.filesystem]`. Users can't weaken these requirements with local
-configuration.
-
-```toml
-[permissions.filesystem]
-deny_read = [
-  # values can be absolute paths...
-  "/**/*.env",
-  # ...or relative to $HOME/%USERPROFILE% using `~`.
-  "~/.ssh",
-  # But relative paths starting with `./` are not allowed.
-]
-```
-
-When deny-read requirements are present, the local runtime rejects full-access
-permissions and keeps local execution in a read-only or workspace sandbox so it
-can enforce them. On native Windows, managed `deny_read` applies to direct file
-tools; shell subprocess reads don't use this sandbox rule.
-
-#### Enforce managed hooks from requirements
-
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
-
-Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail. The following script and directory examples retain their Codex scope.
-
-Admins can also define managed lifecycle hooks directly in `requirements.toml`.
-Use `[hooks]` for the hook configuration itself, and point `managed_dir` at the
-directory where your MDM or endpoint-management tooling installs the referenced
-scripts.
-
-To enforce managed hooks even for users who turned hooks off locally, pin
-`[features].hooks = true` alongside `[hooks]`. To skip user, project, session,
-and plugin hooks while still allowing managed hooks, set
-`allow_managed_hooks_only = true`.
-
-```toml
-allow_managed_hooks_only = true
-
-[features]
-hooks = true
-
-[hooks]
-managed_dir = "/enterprise/hooks"
-windows_managed_dir = 'C:\enterprise\hooks'
-
-[[hooks.PreToolUse]]
-matcher = "^Bash$"
-
-[[hooks.PreToolUse.hooks]]
-type = "command"
-command = "python3 /enterprise/hooks/pre_tool_use_policy.py"
-command_windows = 'py -3 C:\enterprise\hooks\pre_tool_use_policy.py'
-timeout = 30
-statusMessage = "Checking managed Bash command"
-```
-
-Notes:
-
-- The local runtime enforces the hook configuration from `requirements.toml`,
-  but it doesn't distribute the scripts in `managed_dir`.
-- Deliver those scripts with your MDM or device-management solution.
-- Managed hook commands should reference absolute script paths under the
-  configured managed directory.
-- `allow_managed_hooks_only = true` skips hooks from user, project, session, and
-  plugin sources, but still loads hooks from `requirements.toml` and other
-  managed config layers.
-
-#### Enforce command rules from requirements
-
-Admins can also enforce restrictive command rules from `requirements.toml`
-using a `[rules]` table. These rules merge with regular `.rules` files, and the
-most restrictive decision still wins.
-
-Unlike `.rules`, requirements rules must specify `decision`, and that decision
-must be `"prompt"` or `"forbidden"` (not `"allow"`).
-
-```toml
-[rules]
-prefix_rules = [
-  { pattern = [{ token = "rm" }], decision = "forbidden", justification = "Use git clean -fd instead." },
-  { pattern = [{ token = "git" }, { any_of = ["push", "commit"] }], decision = "prompt", justification = "Require review before mutating history." },
-]
-```
-
-To restrict which MCP servers a local client can enable, add an `mcp_servers`
-approved list. For stdio servers, match on `command`; for streamable HTTP
-servers, match on `url`:
-
-```toml
-[mcp_servers.docs]
-identity = { command = "codex-mcp" }
-
-[mcp_servers.remote]
-identity = { url = "https://example.com/mcp" }
-```
-
-The string form of `identity.command` matches only the configured `command`. It
-doesn't inspect `args`, `cwd`, `env`, or `env_vars`.
-
-To constrain a complete stdio invocation, match the executable and each
-positional argument:
-
-```toml
-[mcp_servers.internal.identity]
-command = { executable = "/usr/local/bin/codex-mcp", args = [
-  { match = "exact", value = "serve" },
-  { match = "prefix", value = "--workspace=" },
-] }
-```
-
-The executable, argument count, and argument order must match. Argument and URL
-rules support `exact`, `prefix`, and full-value `regex` matching. Structured
-command rules still don't inspect `cwd`, `env`, or `env_vars`. Plugin-bundled
-MCP servers use the same identity shapes under
-`plugins..mcp_servers.`.
-
-If `mcp_servers` is present but empty, the local client disables all MCP servers.
+See [Configuration Reference](./config-file/config-reference.md) for configuration keys,
+[Configuration precedence](./config-file/config-basic.md#configuration-precedence)
+for overrides, and [repo plugin settings](https://developers.openai.com/plugins/build/plugins#enable-or-disable-a-plugin-for-a-repo)
+for project-level configuration. [Workspace GitHub import and
+sync](./enterprise/plugin-management.md) is separate.
 
 #### Control plugin availability
+
+Use **Edit as TOML** in Agent security for enforced plugin feature settings in
+Global `requirements.toml`, or distribute them through local requirements for
+device-managed clients. **Defaults** > **Apps and tools** > **Apps/connectors**
+sets app-tool defaults; it isn't the enforced `features.plugins` switch. For
+workspace plugin permissions, see [Apps and connectors](./enterprise/apps-and-connectors.md).
 
 To turn off plugins in supported local clients, set `features.plugins` to
 `false` in `requirements.toml`:
@@ -45155,6 +45501,11 @@ reference](./config-file/config-reference.md#requirementstoml) for the
 supported configuration.
 
 #### Restrict plugin marketplace sources
+
+Use **Edit as TOML** to configure marketplace source requirements in Global
+`requirements.toml`, or deliver them through local requirements. These rules
+limit which local or Git sources users can add and use. They are separate from
+the [marketplace defaults](#configure-plugin-marketplaces-and-defaults).
 
 To restrict plugin marketplace sources, set
 `restrict_to_allowed_sources = true` and define one or more source rules:
@@ -45206,7 +45557,241 @@ marketplace operations: ChatGPT and Codex in the desktop app, and Codex CLI.
 They don't control plugin use in ChatGPT on the web or mobile, and they don't
 add plugins to the IDE extension.
 
+#### Enforce managed hooks from requirements
+
+Managed hooks run administrator-defined actions at supported task or tool
+events. Use **Edit as TOML** in Agent security to configure them in Global
+`requirements.toml`; the settings controls don't include a dedicated hook editor. The execution paths below determine which hook types can run.
+
+When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
+
+Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail. The following script and directory examples retain their Codex scope.
+
+Admins can also define managed lifecycle hooks directly in `requirements.toml`.
+Use `[hooks]` for the hook configuration itself, and point `managed_dir` at the
+directory where your MDM or endpoint-management tooling installs the referenced
+scripts.
+
+To enforce managed hooks even for users who turned hooks off locally, pin
+`[features].hooks = true` alongside `[hooks]`. To skip user, project, session,
+and plugin hooks while still allowing managed hooks, set
+`allow_managed_hooks_only = true`.
+
+```toml
+allow_managed_hooks_only = true
+
+[features]
+hooks = true
+
+[hooks]
+managed_dir = "/enterprise/hooks"
+windows_managed_dir = 'C:\enterprise\hooks'
+
+[[hooks.PreToolUse]]
+matcher = "^Bash$"
+
+[[hooks.PreToolUse.hooks]]
+type = "command"
+command = "python3 /enterprise/hooks/pre_tool_use_policy.py"
+command_windows = 'py -3 C:\enterprise\hooks\pre_tool_use_policy.py'
+timeout = 30
+statusMessage = "Checking managed Bash command"
+```
+
+Notes:
+
+- The local runtime enforces the hook configuration from `requirements.toml`,
+  but it doesn't distribute the scripts in `managed_dir`.
+- Deliver those scripts with your MDM or device-management solution.
+- Managed hook commands should reference absolute script paths under the
+  configured managed directory.
+- `allow_managed_hooks_only = true` skips hooks from user, project, session, and
+  plugin sources, but still loads hooks from `requirements.toml` and other
+  managed config layers.
+
+#### Understand policy scope and precedence
+
+Use this section to check where a policy applies, how requirements combine, how clients receive cloud-managed settings, and how to verify the result.
+
+For Work with local access and dots, supported Global policy governs the shared cloud orchestrator when managed policy is enabled; applicable local execution requirements govern the connected computer. Work cloud containers retain existing Work Cloud policies, and supported device controls still apply to local execution. Codex keeps its existing configuration behavior. Managed configuration does not grant a workspace seat or feature access. Use [Roles and workspace permissions](./enterprise/roles-and-workspace-permissions.md) for those controls.
+
+#### Agent Security and Local computer access with Work Cloud
+
+Use Agent Security in the Admin Console to manage policies and configuration. It replaces Policies & Configuration. Agent Security is available in the Admin Console, independently of Local computer access with Work Cloud. Existing policies, assignments, and ordering are preserved. Review your existing policies in Agent Security. Local computer access with Work Cloud is a separate opt-in. See [Agent Security](./enterprise/agent-security.md) for migration guidance.
+
+Before moving policy automation to **Agent Security**:
+
+1. Identify affected integrations. Inventory Terraform configurations and scripts that update policies, and record which policies they manage.
+
+1. Use the policy API to manage Global settings. To manage Local or Codex Cloud settings, use the Agent Security UI. Existing Global API workflows remain available after migration. Test your scripts and Terraform integrations, and confirm that policy assignments and ordering are unchanged.
+
+1. Make any required changes and test the automation. Verify that an intended update reaches the correct Agent Security policy and that the resulting controls are enforced.
+
+Policy migration does not grant local computer access for Work or dots. Reviewing or creating policies is recommended before rollout, but the confirmation flow does not require policy creation to enable access. Before enabling **Allow local computer access**, review the migrated baseline or create a cloud baseline if your policies are currently delivered only through MDM. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots.
+
+Environment overrides vary supported settings within a policy. Within a given policy, the order from highest to lowest is OS-specific environment override → all-OS environment override → Global. A higher-priority policy still wins over a lower-priority policy, even when the lower-priority policy is more specific. Some requirements have field-specific merge rules. Confirm which override editors and fields are available for your workspace.
+
+When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows. Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail. See the [Configuration Reference](./config-file/config-reference.md).
+
+#### Locations and precedence
+
+For local execution, requirements are applied from lower to higher priority as follows. This ordering also applies to local steps in Local computer access with Work Cloud:
+
+1. System `requirements.toml` (`/etc/codex/requirements.toml` on Unix systems,
+   including Linux and macOS, or `%ProgramData%\OpenAI\Codex\requirements.toml`
+   on Windows).
+2. Agent Security requirements delivered in the cloud config bundle.
+3. Legacy `managed_config.toml` fields that the local client reinterprets as requirements.
+4. macOS managed preferences (MDM) delivered through
+   `com.openai.codex:requirements_toml_base64`.
+
+Higher-precedence layers override ordinary scalar and list values from lower
+layers. Tables merge by key, while requirements such as rules, hooks, and
+filesystem restrictions have field-specific composition behavior. Use the
+[`requirements.toml` reference](./config-file/config-reference.md#requirementstoml)
+for the current schema instead of assuming that every field merges the same
+way.
+
+For backward compatibility, supported local clients reinterpret the legacy
+`approval_policy`, `approvals_reviewer`, and `sandbox_mode` fields as
+requirements. This conversion adds compatibility choices where necessary; use
+`requirements.toml` for explicit allowlists.
+
+#### Precedence for Local computer access with Work Cloud
+
+For Work with local access and dots, distinguish Global orchestrator policy from execution policy. Applicable local requirements govern the connected computer. Work cloud containers and dots cloud computers use their own execution configuration and requirements, rather than the managed environment bundle used by other executors.
+
+For local execution, MDM and legacy managed-device requirements rank above Agent Security. The device's system requirements file ranks below Agent Security. Within each policy, resolve OS-specific environment overrides before all-OS environment overrides, then Global. Policy priority wins over specificity across policies.
+
+| Control                       | Local Work without sync and local Codex               | Local computer access with Work Cloud                                                                                                                       |
+| ----------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Enterprise requirements       | Follow the local requirements order above.            | Apply to local executors. Work cloud containers retain existing Work Cloud policies.                                                                        |
+| Device execution restrictions | Enforced by supported local controls.                 | Follow the local requirements order above, including MDM and legacy requirements above Agent Security.                                                      |
+| Environment overrides         | Use the configuration model for the relevant product. | Within one policy: OS-specific environment override, then all-OS environment override, then Global. A lower-priority policy cannot win through specificity. |
+
+Requirements impose constraints, while configuration defaults supply starting values. For Work with local access and dots, supported Global policy applies through the shared cloud orchestrator when managed policy is enabled. Applicable local `requirements.toml` requirements govern execution on a connected computer. Work cloud containers and dots cloud computers use their own execution configuration and requirements, rather than the managed environment bundle used by other executor types. Local execution restrictions do not automatically apply to these cloud computers. Review cloud capability permissions and test local and cloud execution separately.
+
+Keep orchestrator controls, including approvals and web search, in Global. Use the dedicated Allowed approval policies and Allowed web search modes controls where available, and TOML for other supported fields. See the [Configuration Reference](./config-file/config-reference.md) for the field list and execution scope.
+
+#### Cloud-managed requirements
+
+When a user signs in with ChatGPT on a supported plan, supported local clients
+can receive admin-enforced requirements associated with the workspace. This is
+a delivery channel for `requirements.toml`-compatible policy. It doesn't grant
+workspace access or replace workspace RBAC. Authentication requirements must be
+[managed locally](#manage-authentication-locally).
+
+Configure common requirements with the [Agent security
+controls](#configure-a-policy-in-agent-security). For a policy that allows only
+on-request approvals and read-only or workspace-write sandboxes, use **Approval
+policies** and **Sandbox modes** under **Policy guardrails**. To also prompt before
+a supported shell entry point runs, use **Edit as TOML** to add the `[rules]`
+table to Global `requirements.toml`.
+
+The complete TOML equivalent is:
+
+```toml
+allowed_approval_policies = ["on-request"]
+allowed_sandbox_modes = ["read-only", "workspace-write"]
+
+[rules]
+prefix_rules = [
+  { pattern = [{ any_of = ["bash", "sh", "zsh"] }], decision = "prompt", justification = "Require explicit approval for shell entry points" },
+]
+```
+
+Check that every managed client version supports the keys you select. Assign the policy to the intended users or groups and verify that it takes effect on their supported clients. Use
+the configuration reference for the current schema and the administration
+surface for current assignment behavior.
+
+The service selects the enterprise-managed requirement layers that apply to the
+signed-in identity. The local client evaluates those layers with the other
+requirements sources described in [Locations and precedence](#locations-and-precedence).
+Use the current administration surface for workspace-side creation and
+assignment. Don't rely on a copied group-matching algorithm; the administration
+service owns that behavior and can change it independently of the local
+requirements format.
+
+For supported keys and examples, see
+[Example requirements.toml](#example-requirementstoml) and the
+[`requirements.toml` reference](./config-file/config-reference.md#requirementstoml).
+
+#### How local clients apply cloud-managed requirements
+
+The local loading and cache behavior below describes supported local clients. It does not establish when a changed cloud policy takes effect in an already-running task using Local computer access with Work Cloud. Verify the effective policy before relying on a changed restriction.
+
+When a user starts a supported local client and signs in with ChatGPT on a
+supported plan, the client first checks for a valid, identity-matched cache
+entry. If no valid entry is available, the client fetches the applicable bundle
+with retries and writes a signed cache entry on success. If the request fails or
+times out and no valid cache is available, the cloud config bundle load returns
+an error rather than silently starting without the cloud-managed requirements
+layer.
+
+After cache resolution, the client composes the cloud requirements with the
+other requirements layers described above. A background refresh updates the
+cached bundle and makes it available to subsequent configuration loads. This
+doesn't guarantee that an already-running task immediately uses a changed policy.
+Some desktop settings require an app restart; follow any restart prompt and
+verify the effective settings before relying on the change.
+
+#### Confirm the admin and employee experience
+
+Assign a person to own each managed policy, record which users or groups should
+receive it, and document the business reason for any filesystem, network,
+approval, or permission-profile restriction.
+
+Test an allowed workflow and a blocked workflow with a user who has the intended permissions. Check the effective settings in the supported client. A workspace role or group alone does not enforce a local runtime restriction.
+
+Use **Test policies** in Agent security to check which policies match a member,
+group, or role selection. In an editable session, this checks the current draft
+without saving it. The result shows policy selection, not the final merged
+configuration or whether a client enforces a restriction. After saving, test
+the allowed and blocked workflows on each relevant client and execution path.
+
+#### Deploy device-managed configuration
+
+Use local system requirements or MDM for authentication restrictions and device-managed policies. The legacy `managed_config.toml` mechanism has different startup precedence from Agent security **Defaults**. The MDM workflow covers both requirements and legacy defaults.
+
+#### Manage authentication locally
+
+Set `allowed_login_methods`, `allowed_chatgpt_workspaces`,
+`cli_auth_credentials_store`, and `chatgpt_base_url` in the local system
+`requirements.toml` or macOS MDM requirements. Codex ignores these four fields
+in cloud-managed requirements. Local authentication requirements apply before
+credentials load and before Codex retrieves cloud policy.
+
+To require ChatGPT login to an approved workspace and store credentials in the
+OS credential store, use:
+
+```toml
+allowed_login_methods = ["chatgpt"]
+allowed_chatgpt_workspaces = ["00000000-0000-0000-0000-000000000000"]
+cli_auth_credentials_store = "keyring"
+```
+
+`allowed_login_methods` accepts `chatgpt`, `api`, or both. If omitted, this setting
+doesn't restrict login methods. If set, the list must contain at least one method.
+`api` permits API authentication, including Amazon Bedrock.
+The workspace restriction also applies to
+[Codex access tokens](./enterprise/access-tokens.md).
+
+User-configured `forced_login_method` and `forced_chatgpt_workspace_id` must
+follow the requirements. When a user selects a workspace, it must also appear
+in the managed workspace allowlist. If no workspaces match, ChatGPT login is
+unavailable. API authentication remains available when permitted. If no login method
+is available, Codex refuses to start.
+
+See the [requirements reference](./config-file/config-reference.md#requirementstoml)
+for credential storage modes and service URL configuration.
+
 #### Managed defaults (`managed_config.toml`)
+
+Use [Agent security Defaults](#set-configuration-defaults) for supported
+cloud-managed starting values. This section covers the legacy device-managed
+`managed_config.toml` mechanism and its different startup precedence. Editing
+**Defaults** in Agent security doesn't deploy a `managed_config.toml` file to
+members' devices.
 
 Managed defaults set the configuration a supported local client starts with. At
 startup, they override the user's local `config.toml` and any CLI `--config`
@@ -45248,37 +45833,6 @@ not the legacy ordering above. Cloud `requirements.toml` uses
 
 If the file is missing, the local runtime skips the managed layer.
 
-#### macOS managed preferences (MDM)
-
-On macOS, admins can push a device profile that provides base64-encoded TOML payloads at:
-
-- Preference domain: `com.openai.codex`
-- Keys:
-  - `config_toml_base64` (managed defaults)
-  - `requirements_toml_base64` (requirements)
-
-The local runtime parses these "managed preferences" payloads as TOML. For
-managed defaults (`config_toml_base64`), managed preferences have the highest
-precedence. For requirements (`requirements_toml_base64`), precedence follows
-the cloud-managed requirements order described above. The same
-requirements-side `[features]` table works in `requirements_toml_base64`; use
-canonical feature keys there as well.
-
-#### MDM setup workflow
-
-The local runtime honors standard macOS MDM payloads, so you can distribute
-settings with tooling like `Jamf Pro`, `Fleet`, or `Kandji`. A lightweight
-deployment looks like:
-
-1. Build the managed payload TOML and encode it with `base64` (no wrapping).
-2. Drop the string into your MDM profile under the `com.openai.codex` domain at `config_toml_base64` (managed defaults) or `requirements_toml_base64` (requirements).
-3. Push the profile, then ask users to restart the supported local client and
-   confirm the startup config summary reflects the managed values.
-4. When revoking or changing policy, update the managed payload; the client
-   reads the refreshed preference the next time it launches.
-
-Avoid embedding secrets or high-churn dynamic values in the payload. Treat the managed TOML like any other MDM setting under change control.
-
 #### Example managed_config.toml
 
 ```toml
@@ -45302,6 +45856,37 @@ log_user_prompt = false            # keep prompts redacted
 - Keep `network_access = false` unless your security review allows a collector or domains required by your workflows.
 - Use managed configuration to pin OTel settings (exporter, environment), but keep `log_user_prompt = false` unless your policy explicitly allows storing prompt contents.
 - Periodically audit diffs between local `config.toml` and managed policy to catch drift; managed layers should win over local flags and files.
+
+#### macOS managed preferences (MDM)
+
+On macOS, admins can push a device profile that provides base64-encoded TOML payloads at:
+
+- Preference domain: `com.openai.codex`
+- Keys:
+  - `config_toml_base64` (managed defaults)
+  - `requirements_toml_base64` (requirements)
+
+The local runtime parses these "managed preferences" payloads as TOML. For
+managed defaults (`config_toml_base64`), managed preferences have the highest
+precedence. For requirements (`requirements_toml_base64`), precedence follows
+the [requirements order](#locations-and-precedence). The same
+requirements-side `[features]` table works in `requirements_toml_base64`; use
+canonical feature keys there as well.
+
+#### MDM setup workflow
+
+The local runtime honors standard macOS MDM payloads, so you can distribute
+settings with tooling like `Jamf Pro`, `Fleet`, or `Kandji`. A lightweight
+deployment looks like:
+
+1. Build the managed payload TOML and encode it with `base64` (no wrapping).
+2. Drop the string into your MDM profile under the `com.openai.codex` domain at `config_toml_base64` (managed defaults) or `requirements_toml_base64` (requirements).
+3. Push the profile, then ask users to restart the supported local client and
+   confirm the startup config summary reflects the managed values.
+4. When revoking or changing policy, update the managed payload; the client
+   reads the refreshed preference the next time it launches.
+
+Avoid embedding secrets or high-churn dynamic values in the payload. Treat the managed TOML like any other MDM setting under change control.
 
 ### Plugin controls
 
