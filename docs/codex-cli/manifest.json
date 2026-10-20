@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.163.0",
-  "last_updated": "2026-10-20T02:14:38Z",
+  "last_updated": "2026-10-20T23:32:49Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "8e58a6e723d7f2a3591e5a550d6d32d649ab7869ca52dd1fa3ee29d4d4f0eedf",
-      "last_updated": "2026-10-16T23:07:10Z"
+      "hash": "027d906b3028dcccbbba23f5a6b111598032d940074edee3c24a484e3dc9e8fb",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "65d82cba54e07d689713ac5e6a7df5be42a345581db89adc0f741d94a8a7f20a",
-      "last_updated": "2026-10-20T02:14:38Z"
+      "hash": "aac8f3f4c29c0a9492fecd73e114b57dd00ffd0347460340df4465987a2eb358",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -470,8 +470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots",
       "source_md_url": "https://learn.chatgpt.com/docs/dots.md",
       "source_id": "llms:dots",
-      "hash": "d774640d0df88e1b9df052ae77377a1ddd05df2a0df9dc260f971aa077cf308f",
-      "last_updated": "2026-10-09T21:56:38Z"
+      "hash": "9194aeda17564a059fffc1da39b6dba553fd3de5e117c97fa61dc166f523b3dc",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "dots/channels": {
       "slug": "dots/channels",
@@ -500,8 +500,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/controls",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/controls.md",
       "source_id": "llms:dots/controls",
-      "hash": "a8cd811571c9e83215a357e3cafa74bd2ac862be454b1c3f183c05ba7f698d73",
-      "last_updated": "2026-10-20T02:14:38Z"
+      "hash": "67511e409bdf479d16f13a887d416bf527d5717605769805365a7c52ea7bc504",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "dots/getting-started": {
       "slug": "dots/getting-started",
@@ -620,8 +620,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-cloud-security",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/chatgpt-work-cloud-security.md",
       "source_id": "llms:enterprise/chatgpt-work-cloud-security",
-      "hash": "118199c65d5e1a32848bfe4c86f055a5f75b7213e112d7c56e2eb5646e6dbf6e",
-      "last_updated": "2026-10-02T16:54:14Z"
+      "hash": "295283f35889c8331f73b57aac4bca4d574a33e31eb7406b78e139875bc0b4de",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "enterprise/chatgpt-work-local-security": {
       "slug": "enterprise/chatgpt-work-local-security",
@@ -660,8 +660,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/cloud-local-access",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/cloud-local-access.md",
       "source_id": "llms:enterprise/cloud-local-access",
-      "hash": "5821a2868eb445b60356a0d1c35d64c00b47adbe0226da39a11c7245c07083f8",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "06f7c45a3b9b482f0ab11e9ac1fc7b6a3ec88b083dd4df8fefd3c7644044dd57",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "enterprise/compliance-api": {
       "slug": "enterprise/compliance-api",
@@ -682,6 +682,16 @@
       "source_id": "llms:enterprise/connect-to-a-gateway",
       "hash": "690a12d7a7e85f3c8815063867a7306f1a1a30779a5d613a25884ad39d3db51e",
       "last_updated": "2026-10-14T21:03:11Z"
+    },
+    "enterprise/dots-admin-guide": {
+      "slug": "enterprise/dots-admin-guide",
+      "title": "Manage dots permissions and capabilities",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/dots-admin-guide",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/dots-admin-guide.md",
+      "source_id": "llms:enterprise/dots-admin-guide",
+      "hash": "12aaa7d719959de35cfe1d38893778ff77a26f1be040681675ffa29853379d98",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "enterprise/dynamic-groups": {
       "slug": "enterprise/dynamic-groups",
@@ -950,8 +960,8 @@
       "source_url": "https://learn.chatgpt.com/docs/environments/cloud-environments",
       "source_md_url": "https://learn.chatgpt.com/docs/environments/cloud-environments.md",
       "source_id": "llms:environments/cloud-environments",
-      "hash": "cad68c947a064ed42207cb728b4757b8bb96afbfade75dfcc691db9ee88b84a5",
-      "last_updated": "2026-10-02T21:30:19Z"
+      "hash": "2b122c1ff5dfd61c1ef50870bd09a8d94bfc00184ad9a218451d80320dc9b10c",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "environments/git-worktrees": {
       "slug": "environments/git-worktrees",
@@ -1920,8 +1930,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new.md",
       "source_id": "llms:whats-new",
-      "hash": "d92fbafe02266dfff2f0d605c4783c9145533f8d25913e3f2e5d9a617fe99398",
-      "last_updated": "2026-10-16T23:07:10Z"
+      "hash": "36b9db22c07c08131e4dda9ab3c1f34235fa3c01dd2096eb9ce75db37f8f7f6f",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "whats-new/devday-2026": {
       "slug": "whats-new/devday-2026",
@@ -1930,8 +1940,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new/devday-2026",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new/devday-2026.md",
       "source_id": "llms:whats-new/devday-2026",
-      "hash": "2b96707d9cc90e8aa9b92e2b35056a5a6a7a8d464807d493ec4b5d8684613993",
-      "last_updated": "2026-10-01T17:34:20Z"
+      "hash": "71422a05bdfd07f200d607c115ee11166d9da18bc069036893114ce0856ba446",
+      "last_updated": "2026-10-20T23:32:49Z"
     },
     "whats-new/dots-october-9-2026": {
       "slug": "whats-new/dots-october-9-2026",
@@ -1995,10 +2005,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-20T02:14:38Z",
-    "fetch_duration_seconds": 70.391,
-    "total_pages_discovered": 199,
-    "pages_fetched_successfully": 199,
+    "last_fetch_completed": "2026-10-20T23:32:49Z",
+    "fetch_duration_seconds": 69.8,
+    "total_pages_discovered": 200,
+    "pages_fetched_successfully": 200,
     "pages_failed": 0,
     "failed_pages": []
   }

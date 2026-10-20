@@ -16,7 +16,7 @@ Dots are always-on agents that take on ongoing responsibility. Give your dot a g
 
 [Meet your dot](../dots.md)
 [Availability](../dots.md#access)
-[Admin guide](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide)
+[Admin guide](../enterprise/dots-admin-guide.md)
 
 ### Work across devices
 

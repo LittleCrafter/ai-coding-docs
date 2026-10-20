@@ -77,7 +77,7 @@ don't apply. See [Configure dots permissions](#for-workspace-admins).
 
 <a id="for-workspace-admins"></a>
 
-**For workspace admins:** See [Set up dots for work](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide) for workspace permissions, setup, and security and governance guidance.
+**For workspace admins:** See [Set up dots for work](../enterprise/dots-admin-guide.md) for workspace permissions, setup, and security and governance guidance.
 
 ## Manage data settings
 

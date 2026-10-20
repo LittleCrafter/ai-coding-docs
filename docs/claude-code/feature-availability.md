@@ -57,7 +57,7 @@ These require signing in with a claude.ai account and are not reachable with an 
 * [Artifacts](./artifacts.md): Pro, Max, Team, and Enterprise plans
 * [Voice dictation](./voice-dictation.md)
 
-Desktop is the partial exception: [gateway routing can be configured in the app or by an administrator](./llm-gateway-connect.md#desktop-app), Enterprise deployments can route Desktop to Google Cloud's Agent Platform or a gateway provider via [managed settings](https://claude.com/docs/third-party/claude-desktop/configuration), and [Claude Desktop on 3P](https://claude.com/docs/third-party/claude-desktop/overview) runs the Code tab on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or a self-hosted LLM gateway. For per-plan availability of these features, see [Availability by subscription plan](#availability-by-subscription-plan).
+Desktop is the partial exception: [gateway routing can be configured in the app or by an administrator](./llm-gateway-connect.md#desktop-app). [Claude Desktop on 3P](https://claude.com/docs/third-party/claude-desktop/overview) also runs the Code tab on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or a self-hosted LLM gateway. It also runs the Code tab on the [Claude API](https://claude.com/docs/third-party/claude-desktop/claude-api) with an Anthropic Console API key. For per-plan availability of these features, see [Availability by subscription plan](#availability-by-subscription-plan).
 
 ### CLI capabilities that vary by provider
 
@@ -286,6 +286,10 @@ Each tab lists what is unavailable or partially supported on that provider, with
 **Not available:** all [features that require a Claude subscription](#features-that-require-a-claude-subscription).
 
 Everything in [CLI capabilities that vary by provider](#cli-capabilities-that-vary-by-provider) is available, except that [fast mode](./fast-mode.md) requires [provisioned access](./fast-mode.md#enable-fast-mode-for-your-organization). [Server-managed settings](./server-managed-settings.md) that you configure in a claude.ai Team or Enterprise organization don't reach a session that authenticates with a Console API key. See [Platform availability](./server-managed-settings.md#platform-availability) for how to cover those sessions.
+
+**Partial support:**
+
+* [Desktop](./desktop.md): via [Claude Desktop on 3P with the Claude API](https://claude.com/docs/third-party/claude-desktop/claude-api)
 
 ## Availability by subscription plan
 

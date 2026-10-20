@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 199
+- **Pages mirrored:** 200
 - **Version:** 0.163.0
-- **Last updated:** 2026-10-20T02:14:38Z
+- **Last updated:** 2026-10-20T23:32:49Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -169,6 +169,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Local computer access for Work Cloud and dots | [enterprise/cloud-local-access.md](./enterprise/cloud-local-access.md) | [source](<https://learn.chatgpt.com/docs/enterprise/cloud-local-access>) |
 | Compliance API and audit events | [enterprise/compliance-api.md](./enterprise/compliance-api.md) | [source](<https://learn.chatgpt.com/docs/enterprise/compliance-api>) |
 | Use API/provider credentials through a gateway | [enterprise/connect-to-a-gateway.md](./enterprise/connect-to-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway>) |
+| Manage dots permissions and capabilities | [enterprise/dots-admin-guide.md](./enterprise/dots-admin-guide.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-admin-guide>) |
 | Dynamic groups | [enterprise/dynamic-groups.md](./enterprise/dynamic-groups.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dynamic-groups>) |
 | Gateway compatibility requirements | [enterprise/gateway-compatibility.md](./enterprise/gateway-compatibility.md) | [source](<https://learn.chatgpt.com/docs/enterprise/gateway-compatibility>) |
 | Governance | [enterprise/governance.md](./enterprise/governance.md) | [source](<https://learn.chatgpt.com/docs/enterprise/governance>) |

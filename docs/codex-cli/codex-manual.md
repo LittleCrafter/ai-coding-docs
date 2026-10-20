@@ -78,7 +78,7 @@ Dots are always-on agents that take on ongoing responsibility. Give your dot a g
 
 [Meet your dot](./dots.md)
 [Availability](./dots.md#access)
-[Admin guide](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide)
+[Admin guide](./enterprise/dots-admin-guide.md)
 
 #### Work across devices
 
@@ -775,7 +775,7 @@ Give your dot ongoing responsibility. Dots keep making progress between conversa
 
 [Meet your dot](./dots.md)
 [Availability](./dots.md#access)
-[Admin guide](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide)
+[Admin guide](./enterprise/dots-admin-guide.md)
 
 #### Work across devices
 
@@ -3648,7 +3648,7 @@ Use a rule's menu to edit or delete it. Select **Open Plugins** to review
 If your workspace disables custom rules, you can't edit saved rules, and they
 don't apply. See [Configure dots permissions](#for-workspace-admins).
 
-**For workspace admins:** See [Set up dots for work](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide) for workspace permissions, setup, and security and governance guidance.
+**For workspace admins:** See [Set up dots for work](./enterprise/dots-admin-guide.md) for workspace permissions, setup, and security and governance guidance.
 
 #### Manage data settings
 
@@ -4222,7 +4222,7 @@ Give your dot access to the relevant sources and tell it what to keep track of. 
 
 #### Access
 
-**For workspace admins:** See [Set up dots for work](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide) for workspace setup, permissions, and security and governance guidance.
+**For workspace admins:** See [Set up dots for work](./enterprise/dots-admin-guide.md) for workspace setup, permissions, and security and governance guidance.
 
 Dots are rolling out gradually. You may not see dots immediately, even if your plan is eligible.
 
@@ -18376,7 +18376,45 @@ republish to use them in new tasks. Editing a shared identity connection can
 affect other environments that use it.
 
 OIDC is available by request for Enterprise workspaces. Contact your OpenAI
-account team to enable it.
+account team to enable it. If you don't have an account team, [contact sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_codex).
+
+OIDC compatibility by provider
+
+Compatibility depends on the service, operation, and client you use. Support
+applies to the operations and clients listed here.
+
+#### AWS
+
+| Service or workflow           | Status            | Scope and limitations                                                                                |
+| ----------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------- |
+| AWS CLI and boto3             | Supported         | Authentication and credential renewal.                                                               |
+| Amazon S3                     | Supported         | Object reads and uploads, Terraform state, and presigned requests from within the Codex environment. |
+| Amazon ECR                    | Supported         | Image pulls and pushes for private registries.                                                       |
+| AWS CodeArtifact              | Supported         | npm and Python package installation and publishing.                                                  |
+| Amazon EKS                    | Supported         | `kubectl`, Helm, logs, exec, and port forwarding.                                                    |
+| Amazon ECS                    | Supported         | Fargate exec and port forwarding.                                                                    |
+| Amazon Bedrock                | Supported         | Nova Micro text inference and streaming. Other models are not covered.                               |
+| Amazon RDS IAM database login | Not yet supported | PostgreSQL and MySQL IAM database authentication.                                                    |
+
+#### Google Cloud
+
+| Service or workflow                | Status            | Scope and limitations                                                                                                       |
+| ---------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `gcloud` and Cloud Storage         | Supported         | `gcloud`, Terraform state, object reads, and uploads, including resumable uploads.                                          |
+| Artifact Registry containers       | Supported         | Docker image pulls and pushes, tested with layers up to 1 GiB.                                                              |
+| Artifact Registry packages         | Supported         | npm, Python, and Maven package installation and publishing. Uploads are limited to 10 MiB. Maven uses `gcloud` credentials. |
+| Google Kubernetes Engine (GKE)     | Supported         | `kubectl`, deployments, logs, exec, and port forwarding.                                                                    |
+| IAM, Secret Manager, and Cloud KMS | Supported         | Service account management, secret operations, and KMS encryption and signing. Service account key export is excluded.      |
+| Cloud SQL IAM database login       | Not yet supported | IAM database authentication.                                                                                                |
+
+#### Azure
+
+| Service or workflow                      | Status            | Scope and limitations                                    |
+| ---------------------------------------- | ----------------- | -------------------------------------------------------- |
+| Azure CLI and identity profiles          | Supported         | Authentication and profile selection.                    |
+| Resource Manager, Blob Storage, and ADLS | Not yet supported | OIDC workflows for these services are not yet supported. |
+| Container Registry image pulls           | Not yet supported | Image pulls are not yet supported.                       |
+| Container Registry image pushes          | Not yet supported | Image pushes are unavailable.                            |
 
 #### Run and return to a task
 
@@ -41161,13 +41199,17 @@ removes the interactive website-access review. Neither grants new app
 permissions or approves every action on a website. Consequential actions can
 still require separate confirmation.
 
-Configure **Cloud browser use** and **Cloud network access** under **Admin Console > Permissions & roles > Workspace capabilities > Cloud computer capabilities**. These shared capabilities are available to Work Cloud and dots and can be configured independently of Work Cloud access. A Work task still needs Work access and permission to use each capability it requires. Review browser access and code or shell network access separately. Disabling one does not automatically disable the other.
+Configure **Use a browser** and **Allow network access** under **Admin Console** > **Permissions** > **Workspace default** > **Workspace capabilities** > **Let agents use cloud computers**. These permissions are independent of Work Cloud access. Review browser access and code or shell network access separately. Disabling one does not automatically disable the other.
+
+When you enable Work Cloud, you may be prompted to enable the relevant cloud computer capabilities if they are not already enabled. These permissions are shared across dots, Work Cloud, and team automations; available functionality varies by product. Enable the capabilities your organization’s policies allow.
+
+To review them later, go to **Admin Console** > **Permissions** > **Workspace default** > **Workspace capabilities** > **Let agents use cloud computers**. Local computer access is a separate opt-in.
 
 For a Work task to use the cloud browser in an Enterprise workspace,
-administrators must enable both Work access and cloud browser access. See
+the user needs both Work access and cloud browser access. See
 [Using cloud browser in ChatGPT](https://help.openai.com/en/articles/20001280-using-cloud-browser-in-chatgpt).
 
-Also review **Cloud computer use** under **Workspace capabilities > Cloud computer capabilities**. This control also applies to ChatGPT Work. **Use password manager** is a separate permission directly under **Workspace capabilities**, outside the **Cloud computer capabilities** group. It governs password-manager access in the local in-app browser and cloud browser.
+Also review **Allow computer use** under **Admin Console** > **Permissions** > **Workspace default** > **Workspace capabilities** > **Let agents use cloud computers**. This control also applies to ChatGPT Work. **Use password manager** is a separate permission directly under **Workspace capabilities**, outside the **Let agents use cloud computers** group. It governs password-manager access in the local in-app browser and cloud browser.
 
 #### Code and shell networking
 
@@ -41219,7 +41261,7 @@ OpenAI API [Zero Data Retention](https://developers.openai.com/api/docs/guides/y
 
 Enable **Allow local computer access** under Work Cloud. **Use Codex locally on the ChatGPT desktop app** is not a prerequisite. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots. Before enabling it, review or create the global cloud baseline in **Agent Security**.
 
-Use the policy API to manage Global settings. To manage Local or Codex Cloud settings, use the Agent Security UI. Existing Global API workflows remain available after migration. Test your scripts and Terraform integrations, and confirm that policy assignments and ordering are unchanged.
+For policy API, migration, and Terraform guidance, see [What carries over](./enterprise/cloud-local-access.md#what-carries-over).
 
 Review each control in the context where it applies:
 
@@ -41235,7 +41277,7 @@ Turning off Local computer access with Work Cloud interrupts currently running t
 
 Review the controls that apply to each part of a cloud task:
 
-- **Work Cloud and Work Local:** Where independent controls are available, manage cloud and local Work as distinct controls in **Workspace settings** > **Permissions & roles**. In other workspaces, local Work can share a control with Codex Local.
+- **Work Cloud and Work Local:** Where independent controls are available, manage cloud and local Work as distinct controls in **Admin Console** > **Permissions**. In other workspaces, local Work can share a control with Codex Local.
 
 - **Apps and plugins:** Choose which integrations are available and which people or roles can use them.
 
@@ -44151,13 +44193,13 @@ A task has two parts: coordination and execution. Coordination decides which ste
 
 #### Where to review
 
-Open Admin Console → Agent Security. It replaces Policies & Configuration. Its rollout is independent of local computer access for Work and dots.
+Open Admin Console → Agent security. It replaces Policies & Configuration. Its rollout is independent of local computer access for Work and dots.
 
 - **Policy settings:** Review the Global baseline and any Local overrides. Keep orchestrator controls, including approvals and web search, in Global; environments cannot override them. Use the dedicated UI controls where available, including **Allowed approval policies** and **Allowed web search modes**, and TOML for other supported fields. See [orchestrator and executor controls](./enterprise/agent-security.md#choose-controls-and-configuration-fields) for where each setting applies.
 
 - **Requirements and Defaults:** Requirements set limits users cannot override. Defaults provide starting values within those limits and cannot override a requirement.
 
-- **Feature access:** Use Workspace settings → Permissions & roles. Local computer access is a separate opt-in for Work and for dots.
+- **Feature access:** Use Admin Console → Permissions. Local computer access is a separate opt-in for Work and for dots.
 
 #### What carries over
 
@@ -44190,8 +44232,6 @@ Shared behavior for Work and dots with local access spans the following scopes:
 - **Local execution:** When a tool runs on a connected computer, it enforces supported local-execution requirements from Agent Security and applicable device policies, including policies delivered through MDM where supported. These can include filesystem and network restrictions. Only fields supported by the local executor apply; configuring a field in MDM or local `requirements.toml` does not guarantee that it is enforced locally.
 
 - **Cloud execution:** Work cloud containers and dots’ cloud computers use separate execution controls. Local filesystem and network restrictions do not automatically apply to these cloud environments.
-
-To configure shared cloud capabilities, go to Admin Console → Permissions & roles → Workspace capabilities → Cloud computer capabilities. These permissions cover both Work Cloud and dots. Review **Cloud browser use** and **Cloud network access** separately; configuring one does not configure the other. Global policies and Codex Cloud overrides do not configure these permissions.
 
 #### Check compatibility and data requirements
 
@@ -44237,7 +44277,7 @@ Before rollout, review the policies and compatibility requirements above. Review
 
 #### Work
 
-1. As a workspace owner, open **Workspace settings > Permissions & roles**.
+1. As a workspace owner, open **Admin Console** > **Permissions**.
 
 1. Enable **Work Cloud** for the intended users. **Use Codex locally on the ChatGPT desktop app** is not a prerequisite for this feature.
 
@@ -44249,13 +44289,13 @@ Before rollout, review the policies and compatibility requirements above. Review
 
 #### Dots
 
-1. As a workspace owner, open **Workspace settings > Permissions & roles** and enable dots for the intended users, subject to the eligibility requirements above.
+1. As a workspace owner, open **Admin Console** > **Permissions** and enable dots for the intended users, subject to the eligibility requirements above.
 
-1. Under **Use Dots**, turn on **Allow local computer access**. Review the confirmation modal, then open **Agent Security** to review or set policies, or confirm to turn on access.
+1. Under **Use dots**, turn on **Allow local computer access**. Review the confirmation modal, then open **Agent Security** to review or set policies, or confirm to turn on access.
 
 1. Have users update to ChatGPT desktop app version 26.929 or higher. The update is required for local computer access to take effect.
 
-1. Have users open their dot’s details in the ChatGPT desktop app and choose **Computers**. Find **Your computer** (or the computer’s name), select **Allow**, then confirm with **Allow access**.
+1. Have users connect their computer using the [dots end-user steps](#dots-end-user-steps) below.
 
 1. Have a member with the intended permissions and a connected computer test a local task with their dot.
 
@@ -44533,6 +44573,218 @@ follow workspace retention policy.
 [Disconnecting an app](https://help.openai.com/en/articles/20001494-connecting-and-managing-app-accounts-in-chatgpt)
 stops future access through that connection but does not automatically delete
 saved content.
+
+### Manage dots permissions and capabilities
+
+Source: [Manage dots permissions and capabilities](./enterprise/dots-admin-guide.md)
+
+A dot is a personal agent in ChatGPT that can take on ongoing work, use connected apps, and delegate tasks to Work or Codex. You choose who can use dots and which capabilities they can access. Members connect their accounts and tell their dots what to work on.
+
+For detailed settings, see [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces). The [privacy, security, and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) covers data handling and approvals.
+
+#### Find what you need
+
+| If you need to…                                    | Start here                                                                                   |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Give a group access                                | [Set up dots for work](#set-up-dots-for-work)                                                |
+| Choose which data and tools a dot can use          | [App access](#2-configure-app-access) and [computer capabilities](#available-admin-controls) |
+| Set up Slack                                       | [Slack connections and dot identities](#3-configure-communication-channels)                  |
+| Understand background work and approvals           | [Actions and ongoing work](#actions-and-ongoing-work)                                        |
+| Track usage or investigate an action               | [Models and usage](#models-and-usage) and [Data and compliance](#data-and-compliance)        |
+| Remove access when someone changes roles or leaves | [Manage access changes](#manage-access-changes)                                              |
+
+#### Set up dots for work
+
+#### 1. Configure role-based access
+
+Workspace owners manage access through workspace defaults and custom roles. To give selected groups access, keep the workspace default off and assign a custom role to those groups. Check every role assigned to a member: if one role grants access, turning it off in another role won't remove it.
+
+Review these permissions in **Permissions**:
+
+- **Use dots**: Allow members to use dots.
+
+- **Add dots to Slack and Microsoft Teams**: Allow members to connect their dots to supported messaging channels where available.
+
+- **Allow local computer access**: Allow dots to use a member’s local computer.
+
+- **Use custom rules for dots**: Allow members to add or edit rules for their dots.
+
+For role creation, assignment, and access checks, see the [role-based access control guide](./enterprise/roles-and-workspace-permissions.md#set-the-workspace-default-then-create-targeted-custom-roles).
+
+1. Open **Admin Console** > **Permissions**.
+
+2. Under Permissions &gt; Workspace default &gt; Workspace capabilities, enable Use dots (Beta) if it should be available by default; otherwise grant access through a custom role.
+
+3. Set Slack participation and custom dot rules. Local computer access requires a separate admin opt-in; review [local computer access setup](./enterprise/cloud-local-access.md#enable-local-computer-access) before enabling it.
+
+4. Under **Let agents use cloud computers**, review **Use a browser**, **Allow network access**, and **Allow computer use** where your policies allow browsing websites, accessing online services, and interacting with apps. Review both workspace defaults and custom roles.
+
+5. Under Workspace capabilities, set Use password manager according to your workspace policy.
+
+6. Save, then check access for an intended member.
+
+When you enable dots, you may be asked to turn on cloud computer capabilities that are still off. Dots, Work Cloud, and team automations share these permissions. Choose the capabilities your organization's policies allow.
+
+To review them later, go to **Admin Console** > **Permissions** > **Workspace default** > **Workspace capabilities** > **Let agents use cloud computers**. Local computer access is a separate opt-in.
+
+Members still need to complete [Slack](./dots/channels.md#slack) and [local-computer setup](./dots/computers-and-apps.md#connect-your-computer) after you enable access. Supported app connections they've already set up may be available to their dot.
+
+#### 2. Configure app access
+
+Dots can use supported ChatGPT app connections. When setting up access, check:
+
+1. **Which apps members can use.** Set available apps and allowed actions in [Plugin controls](./enterprise/apps-and-connectors.md).
+2. **What the connected account can access.** Check the account's permissions in the source app. Enabling dots doesn't give it access to every shared drive, channel, or document.
+3. **When approval is required.** An app can be available while some actions still need approval. See [app permissions](https://help.openai.com/en/articles/20001495-managing-app-permissions-in-chatgpt) for the options.
+
+For example, permission to read a document may not include editing or sharing it. To restrict access to a particular source, check the connected account and app permissions.
+
+#### 3. Configure communication channels
+
+Members can connect Slack to their dot in two ways:
+
+| Setup                                              | Member experience                                                                                              | What to configure                                                           |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Connect the member’s Slack account through Plugins | Members talk to their dot in ChatGPT. It can use their Slack connection without having its own Slack identity. | Slack plugin access, the connected account, allowed actions, and approvals. |
+| Give the dot its own Slack identity                | The owner can message or mention the dot in Slack, and its posts are visible to people in that conversation.   | Dots messaging permission, Slack app approval, and each member’s dot setup. |
+
+Turning off a dot's Slack identity doesn't remove its access through the member's connected Slack account. Check both when removing Slack access. For member setup, see [Messaging](./dots/channels.md#slack).
+
+**Before members connect their dots to Slack**
+
+- **ChatGPT workspace owner:** Enable Use dots and Add dots to Slack and Microsoft Teams for the intended members through workspace defaults or custom roles.
+
+- **Slack workspace owner or app manager:** Ensure the ChatGPT app is installed in Slack. Approve app requests if required by your workspace. See [Slack’s app approval guidance](https://slack.com/help/articles/360024269514-Manage-app-requests-for-your-workspace).
+
+- **Each member:** Connect your dot to Slack from its profile. See [Message your dot in Slack](./dots/channels.md#slack).
+
+Enabling the ChatGPT permission does not install an app in Slack or connect a member’s dot.
+
+#### Available admin controls
+
+| **Area**                            | **Admin capability**                                                                                                   |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Access to dots                      | Grant or revoke dots access through workspace permissions.                                                             |
+| Cloud and connected local computers | Control Use a browser, Allow network access, Allow computer use, Use password manager, and local-computer access.      |
+| Messaging and participation         | Enable or disable Slack participation.                                                                                 |
+| Connected apps                      | Set available apps and allowed actions through [Plugin controls](./enterprise/apps-and-connectors.md).               |
+| Custom dot rules                    | When disabled, members cannot add or edit custom rules, and saved rules do not apply.                                  |
+| Models                              | Enterprise model controls and defaults do not apply to the main dot. Review delegated Work and Codex tasks separately. |
+
+#### Review availability and data requirements
+
+Before enabling dots, review current availability in [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and the workspace notices shown during setup. If your organization requires data or inference residency, Enterprise Key Management, or specific compliance coverage, confirm support for dots with your account team before enabling access.
+
+Check requirements for the dot itself, tasks it delegates to Work or Codex, and any connected computer. For cloud browser, network, and computer use, see [cloud security](./enterprise/chatgpt-work-cloud-security.md). For work on employee devices, see [local computer access](./enterprise/cloud-local-access.md).
+
+#### Dots FAQ
+
+#### Access and eligibility
+
+#### Does access to dots grant access to apps and websites?
+
+No. Dots access does not grant access to apps or websites. App connections require authorization; website work uses the browser’s signed-in account.
+
+#### Whose account does a dot use for connected work?
+
+For apps, a dot uses the connected account. For websites, it uses the account signed in to the cloud browser. Check the permissions for each account. See [Managing app accounts](https://help.openai.com/en/articles/20001494-connecting-and-managing-app-accounts-in-chatgpt).
+
+#### Can a dot use a local computer, VPN, or existing sign-in?
+
+A dot’s cloud computer is separate from a member’s local computer. Local work requires a connected, online computer with ChatGPT open and access enabled. Local sign-in, VPN access, and device policies do not automatically extend to the cloud computer.
+
+#### How do cloud policies affect local computer access?
+
+If any cloud policy has `enforce_residency` enabled, local computer access is unavailable for dots. Work Cloud remains available. See the [local-access safeguard](./enterprise/cloud-local-access.md#check-data-handling-and-the-local-access-safeguard) for the policy requirements.
+
+#### Actions and ongoing work
+
+#### Can a dot keep working when the user is away?
+
+Yes. Members can assign [ongoing responsibilities](./dots/tasks-and-memory.md#assigned-work). Workspace permissions and approval rules still apply. Local work requires the computer to stay online with ChatGPT open and access enabled.
+
+[Proactive research](./dots/tasks-and-memory.md#proactive-research) uses restricted tools to read connected apps. It cannot send messages, change content, or control a browser or computer. To act on what it finds, the dot needs the user's authorization and the required permissions and approvals.
+
+#### Who can message a dot or see its results?
+
+Only the owner can direct their dot through a Slack direct message or supported channel mention. Messages from other people do not start work.
+
+A dot may use other participants' messages as context when its owner brings it into a Slack thread. Anyone with access to the conversation can see its posts. Information from another channel doesn't give the dot permission to share it with a new audience. Check recipients before posting work content.
+
+Microsoft Teams access is limited to an invite-only alpha.
+
+#### Does a dot always ask before sending or changing something?
+
+[Auto-review](./dots/controls.md#how-action-review-works) checks proposed actions against the user's instructions, custom rules, and safety requirements. Asking a dot to draft a message doesn't give it permission to send it. See [app permissions](https://help.openai.com/en/articles/20001495-managing-app-permissions-in-chatgpt) for approval options.
+
+#### How do admins revoke dots access?
+
+See [Manage access changes](#manage-access-changes) for steps to remove access and check connected accounts, computers, and ongoing work.
+
+#### How do custom rules affect confirmations?
+
+[Custom dot rules](./dots/controls.md#set-custom-rules) guide when a dot acts or asks for confirmation. If you turn them off, members can't add or edit rules, and saved rules won't apply. The dot still follows default rules and the user's instructions.
+
+Custom rules don't grant tool access or override workspace permissions and built-in safety requirements. Turning them off also doesn't make the dot ask before every action. Check capability and app approval settings to control what it can do.
+
+#### What safeguards help protect work done by dots?
+
+Built-in safeguards help defend against malicious instructions and can pause or stop work when monitoring detects a safety concern.
+
+Members can follow progress in [Activity View](./dots/controls.md#review-work), redirect work, and check results before using them.
+
+#### Models and usage
+
+#### Do existing model controls and defaults apply to dots?
+
+Enterprise model controls and defaults do not apply to the main dot. Tasks it delegates to Work or Codex follow those products' permissions and controls. Check dots permissions and the settings for Work and Codex when configuring access.
+
+#### How should admins monitor adoption and usage?
+
+Use the [Analytics API](./enterprise/analytics-api.md) to see who is using dots. Tasks a dot starts or manages in Work or Codex count toward those products' usage limits and appear in their reporting. Include those tasks when reviewing usage, and check current plan terms when setting budgets. See [Work usage and cost](./enterprise/chatgpt-work-usage-and-cost.md) for the available controls.
+
+The daily usage endpoint `/v1/analytics/workspaces/{workspace_id}/usage` identifies dots with `client_id = DOTS` and supports per-user or workspace-level reporting.
+
+#### Data and compliance
+
+OpenAI does not use ChatGPT Enterprise data to improve its models by default. For OpenAI’s business data commitments, see [Enterprise privacy](https://openai.com/enterprise-privacy/).
+
+#### What does a dot remember between requests?
+
+A dot keeps its own context, separate from ChatGPT Memory. Turning off ChatGPT Memory stops memory sharing with the dot, but doesn't erase information it already has. Disconnecting a plugin stops future access through that connection; it doesn't remove information the dot has retained.
+
+Deleting a dot removes its own context. Files, Codex threads, and ChatGPT conversations it created are stored separately and aren't all deleted with it. Follow the deletion steps for each location.
+
+See the [dots privacy FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for what is retained and deleted, and [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) for the member’s Pause and Reset controls.
+
+#### How can admins investigate work a dot has done?
+
+Members can follow their dot's work in Activity View. Admins can use [Compliance API](./enterprise/compliance-api.md#confirm-the-administration-boundaries) records to investigate user messages and dots' replies. Check which records are available before relying on exports for an audit, DLP, legal hold, or e-discovery.
+
+Supported dots records are available through the Compliance Logs Platform, including user prompts and responses, supported tool-call events, and connected-app MCP calls and results. Records identify the user and workspace; dots-attributed records use `client_id = DOTS`, and the agent object includes the dot ID, name, and type when available.
+
+Workspace owners or admins can select their workspace in Admin Console, then open **Credentials > Admin keys** and create a key with the appropriate available permissions: `enterprise.analytics.usage.read` for unified usage reporting, or `CODEX_LOG` access for dots compliance records. Only workspace owners can grant broad compliance or **Conversation messages** access where supported. Use the [Admin API reference](https://chatgpt.com/public/admin/api-reference) to list and download compliance JSONL files and select records with `client_id = DOTS`.
+
+#### Manage access changes
+
+When someone changes roles or leaves, check their dot's permissions, connections, and ongoing work:
+
+1. **Remove dots access.** Check the workspace default and every role assigned directly or through groups. Remove each permission that grants access; any remaining grant can keep it enabled.
+2. **Check connected accounts and devices.** Review plugin authorizations, website sessions, local computer access, and the dot's Slack identity. Each has its own settings.
+3. **Decide what happens to ongoing work.** Check active tasks, recurring schedules, and tasks delegated to Work or Codex. Decide what should stop and who should take over any remaining responsibilities.
+4. **Delete data where needed.** Access changes and deletion are separate steps. Follow the deletion process for the dot's context and any files or tasks stored elsewhere.
+
+For adding and removing workspace members, see [User lifecycle management](./enterprise/user-lifecycle.md). For dots access removal, see [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces).
+
+#### Respond to an unexpected action
+
+Ask the member to pause their dot and review the affected task. Save the task link and available activity records, check the app or computer permissions involved, and follow your organization's incident process. Whether you can undo an action depends on the action and the service. See the [privacy and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for how to report an issue.
+
+#### Help members work well with dots
+
+Help members choose work to delegate and connect the accounts and tools they'll need. Encourage them to tell their dot what to do, when to do it, and who should see the result.
+
+For example, “Prepare a weekly project update for me to review” asks for a draft. “Post the approved update in our team channel every Friday” also gives permission to post. Members should check important results and know how to review activity, change a schedule, and pause their dot. Share [Getting started](./dots/getting-started.md), [Tasks and memory](./dots/tasks-and-memory.md), and [Controls](./dots/controls.md) to help them get started.
 
 ### Managed configuration
 
@@ -49205,7 +49457,7 @@ Plan your rollout and explore tools for routine administration.
 
 Choose a setup task, then review its access and security requirements.
 
-- [Configure dots permissions](./dots/controls.md#for-workspace-admins): Manage dots access, communication, computers, and custom rules.
+- [Configure dots permissions](./enterprise/dots-admin-guide.md): Manage dots access, communication, computers, and custom rules.
 
 - [Manage Space sharing and access](./space/collaboration.md#for-workspace-admins): Control Library sharing permissions and help members share pages.
 
