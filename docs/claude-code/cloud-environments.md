@@ -11,7 +11,16 @@
 
 Each [cloud session](./claude-code-on-the-web.md) runs in a cloud environment. You can configure an environment to allow or deny [network access](#access-levels), [set environment variables](#set-environment-variables) for the session, store [network secrets](#add-network-secrets) that sessions use without seeing them, and run a [setup script](#setup-scripts) before Claude starts working.
 
-The same environments apply wherever you start a cloud session: the [Desktop app](./desktop.md), the [Claude mobile app](./mobile.md), your browser at [claude.ai/code](https://claude.ai/code), the terminal with [`claude --cloud`](./claude-code-on-the-web.md#from-terminal-to-cloud), [routines](./routines.md), and [Claude Tag](https://claude.com/docs/claude-tag/overview). Each of these surfaces can also route to a [self-hosted environment](./self-hosted-environments.md). [Availability and limitations](./self-hosted-environments.md#availability-and-limitations) covers what Claude can't use yet when a Claude Tag session runs in one.
+The same environments apply wherever you start a cloud session:
+
+* The [Desktop app](./desktop.md)
+* The [Claude mobile app](./mobile.md)
+* Your browser at [claude.ai/code](https://claude.ai/code)
+* The terminal with [`claude --cloud`](./claude-code-on-the-web.md#from-terminal-to-cloud)
+* [Cloud scheduled tasks](./routines.md)
+* [Claude Tag](https://claude.com/docs/claude-tag/overview)
+
+Each of these surfaces can also route to a [self-hosted environment](./self-hosted-environments.md). [Availability and limitations](./self-hosted-environments.md#availability-and-limitations) covers what Claude can't use yet when a Claude Tag session runs in one.
 
 > [!NOTE]
 > [Remote Control](./remote-control.md) sessions connect the web and mobile interfaces to a session on your own machine, which uses your machine's network and files, not a cloud environment. Claude Tag channel sessions use organization-level environments only, either [shared environments](#organization-shared-environments) or [self-hosted environments](./self-hosted-environments.md).
@@ -169,7 +178,9 @@ Archiving affects new sessions, not running ones:
 * Sessions already running in the environment continue to work.
 * The environment disappears from the selector and from `/remote-env`, so you can't pick it for new sessions.
 * Network secrets on the environment stay attached in its running sessions. Delete any you no longer want before you archive.
-* No new session can start in an archived environment, on any surface. If the environment was your saved [CLI default](#select-an-environment-from-the-cli), Claude Code starts CLI cloud sessions in the Anthropic-hosted environment when your list has one, and otherwise in the first environment in your list that isn't a [Remote Control bridge environment](#the-default-environment). Anything configured with the environment explicitly, such as a [routine](./routines.md#environments-and-network-access), can't start new sessions in it. Point it at another environment.
+* No new session can start in an archived environment, on any surface:
+  * **Saved CLI default**: if the environment was your saved [CLI default](#select-an-environment-from-the-cli), Claude Code starts CLI cloud sessions in the Anthropic-hosted environment when your list has one. Otherwise, it starts them in the first environment in your list that isn't a [Remote Control bridge environment](#the-default-environment).
+  * **Configured explicitly**: anything configured with the environment explicitly, such as a [cloud scheduled task](./routines.md#environments-and-network-access), can't start new sessions in it. Point it at another environment.
 
 ### Organization-shared environments
 
@@ -180,7 +191,7 @@ Shared environments appear in each member's [environment selector](#configure-yo
 An Owner makes an environment available to the organization in one of two ways:
 
 * **Create a shared environment**: use the **Cloud environments** page in [admin settings](https://claude.ai/admin-settings), which is also where Owners edit and archive shared environments. Each one has a name, a [network access level](#access-levels), [environment variables](#set-environment-variables) in `.env` format, and a [setup script](#setup-scripts).
-* **Share a personal environment**: open one of your own environments for editing in the environment selector, then share it from the **Who can use it** row. The environment keeps its ID, so sessions and routines that already use it aren't affected, and every member can then see it and start sessions in it.
+* **Share a personal environment**: open one of your own environments for editing in the environment selector, then share it from the **Who can use it** row. The environment keeps its ID, so sessions and scheduled tasks that already use it aren't affected, and every member can then see it and start sessions in it.
 
 Owners choose the organization's [default environment](#the-default-environment) separately, at [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code).
 
@@ -197,12 +208,12 @@ In [Claude Tag](https://claude.com/docs/claude-tag/overview) channels, Claude wo
 
 Each environment sets one network access level, which controls the outbound connections its sessions can make. The default level, **Trusted**, allows package registries and other [allowlisted domains](#default-allowed-domains); **Custom** takes your own domain list.
 
-To change an environment's network access, [open it for editing](#configure-your-environment) and use the **Network access** selector in the dialog. A [shared environment](#organization-shared-environments) opens read-only there, so an Owner changes its network access from the **Cloud environments** page in [admin settings](https://claude.ai/admin-settings) instead. The control that opens the selector appears on the app surfaces listed under [The Default environment](#the-default-environment) and in the [routine editor](./routines.md#environments-and-network-access); personal environments don't have a separate page in your claude.ai account settings.
+To change an environment's network access, [open it for editing](#configure-your-environment) and use the **Network access** selector in the dialog. A [shared environment](#organization-shared-environments) opens read-only there, so an Owner changes its network access from the **Cloud environments** page in [admin settings](https://claude.ai/admin-settings) instead. The control that opens the selector appears on the app surfaces listed under [The Default environment](#the-default-environment) and in the [cloud scheduled task editor](./routines.md#environments-and-network-access). Personal environments don't have a separate page in your claude.ai account settings.
 
 When you change an Anthropic-hosted environment's network access, its existing sessions follow the new setting within about a minute, for requests that go through the session's [network allowlist](#access-levels). You don't need to start a new session.
 
 > [!NOTE]
-> MCP connectors you enable on a session or routine work without adding their hosts to **Allowed domains**, because connector traffic travels through Anthropic's servers rather than the session's network. This relies on the same Anthropic-bound channel noted under [Security and isolation](./claude-code-on-the-web.md#security-and-isolation). Turn off any connector you don't need to limit which tools Claude can reach.
+> MCP connectors you enable on a session or scheduled task work without adding their hosts to **Allowed domains**, because connector traffic travels through Anthropic's servers rather than the session's network. This relies on the same Anthropic-bound channel noted under [Security and isolation](./claude-code-on-the-web.md#security-and-isolation). Turn off any connector you don't need to limit which tools Claude can reach.
 
 ### Access levels
 
@@ -796,7 +807,7 @@ With **Trusted** network access, sessions can reach the following domains by def
 * [Cloud sessions reference](./claude-code-on-the-web.md): start, manage, and share cloud sessions
 * [Cloud sessions quickstart](./web-quickstart.md): connect GitHub and start your first cloud session
 * [Claude Tag](https://claude.com/docs/claude-tag/overview): sessions Claude starts from Slack run in the same environments
-* [Routines](./routines.md): scheduled runs use the same environments and network access levels
+* [Cloud scheduled tasks](./routines.md): scheduled runs use the same environments and network access levels
 * [Remote Control](./remote-control.md): run sessions on your own machine's network and files instead
 * [Self-hosted environments](./self-hosted-environments.md): run cloud sessions on your organization's own infrastructure
 * [SessionStart hooks](./hooks.md#sessionstart): repo-committed setup that runs in local and cloud sessions

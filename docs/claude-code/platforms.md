@@ -82,4 +82,4 @@ If you're not sure where to start, [install the CLI](./quickstart.md) and run it
 * [Dispatch](./desktop.md#sessions-from-dispatch): message a task from your phone and it can spawn a Desktop session
 * [Remote Control](./remote-control.md): drive a running session from your phone or browser
 * [Channels](./channels.md): push events from chat apps or your own servers into a session
-* [Scheduled tasks](./scheduled-tasks.md): run prompts on a recurring schedule
+* [Scheduling options](./scheduled-tasks.md#compare-scheduling-options): run prompts on a recurring schedule

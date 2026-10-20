@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 227
 - **Version:** 2.1.304
-- **Last updated:** 2026-10-20T02:13:26Z
+- **Last updated:** 2026-10-20T07:58:44Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -117,7 +117,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Prompt library | [prompt-library.md](./prompt-library.md) | [source](<https://code.claude.com/docs/en/prompt-library>) |
 | Quickstart | [quickstart.md](./quickstart.md) | [source](<https://code.claude.com/docs/en/quickstart>) |
 | Continue local sessions from any device with Remote Control | [remote-control.md](./remote-control.md) | [source](<https://code.claude.com/docs/en/remote-control>) |
-| Automate work with routines | [routines.md](./routines.md) | [source](<https://code.claude.com/docs/en/routines>) |
+| Automate work with scheduled tasks | [routines.md](./routines.md) | [source](<https://code.claude.com/docs/en/routines>) |
 | Choose a sandbox environment | [sandbox-environments.md](./sandbox-environments.md) | [source](<https://code.claude.com/docs/en/sandbox-environments>) |
 | Configure the sandboxed Bash tool | [sandboxing.md](./sandboxing.md) | [source](<https://code.claude.com/docs/en/sandboxing>) |
 | Run prompts on a schedule | [scheduled-tasks.md](./scheduled-tasks.md) | [source](<https://code.claude.com/docs/en/scheduled-tasks>) |

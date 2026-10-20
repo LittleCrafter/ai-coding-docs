@@ -1442,7 +1442,7 @@ block certain types of prompts.
 
 `UserPromptSubmit` hooks don't fire only on prompts you type. Claude Code also runs them on:
 
-* A [scheduled task](./scheduled-tasks.md) firing, including a `/loop` iteration
+* A [session-scoped scheduled task](./scheduled-tasks.md) firing, including a `/loop` iteration
 * A [background subagent](./sub-agents.md#run-subagents-in-foreground-or-background) reporting back to the session that started it
 * A [message another session sends](./cross-session-messaging.md) to your main conversation
 

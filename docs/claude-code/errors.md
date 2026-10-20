@@ -129,7 +129,7 @@ Match the message you see to a section below.
 | `SSL certificate verification failed` | [Network](#ssl-certificate-errors) |
 | `SSL certificate error (...)` during login or startup | [Network](#ssl-certificate-errors) |
 | `unable to get local issuer certificate` | [Network](#ssl-certificate-errors) |
-| `403` with `x-deny-reason: host_not_allowed` in a cloud or routine session | [Network](#host-not-allowed-in-a-cloud-session) |
+| `403` with `x-deny-reason: host_not_allowed` in a cloud session or cloud scheduled task | [Network](#host-not-allowed-in-a-cloud-session) |
 | `proxy refused the connection` | [Network](#the-proxy-refused-the-connection) |
 | `403` with `GitHub GraphQL is not available from Claude Code sessions` in a cloud session | [GitHub proxy](./cloud-environments.md#github-proxy) |
 | `The cloud environments service returned an empty response` / `The cloud environments service returned a response in an unexpected format` | [Network](#the-cloud-environments-service-returned-an-empty-or-unexpected-response) |
@@ -1114,7 +1114,7 @@ The Agent SDK and `-p` non-interactive mode surface this as the `oauth_org_not_a
   Routines are disabled by your organization's policy
 </h3>
 
-An Owner in your Team or Enterprise organization has turned off routines at the organization level. The error appears when you try to create or run a routine, for example from the [Routines](./routines.md) UI on claude.ai/code. On Claude Code v2.1.227 or later, the same setting also [hides `/schedule`](./routines.md#troubleshooting) in the CLI.
+An Owner in your Team or Enterprise organization has turned off [cloud scheduled tasks](./routines.md), formerly routines, at the organization level. The error appears when you try to create or run one, for example at [claude.ai/code/routines](https://claude.ai/code/routines). On Claude Code v2.1.227 or later, the same setting also [hides `/schedule`](./routines.md#troubleshooting) in the CLI.
 
 ```text theme={null}
 Routines are disabled by your organization's policy.
@@ -1124,8 +1124,7 @@ This is a server-side setting, so it can't be overridden from local settings, en
 
 **What to do:**
 
-* Ask an Owner in your organization to enable the **Routines** toggle at [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code)
-* For one-off scheduled work that does not require organization-level routines, see [scheduled tasks](./scheduled-tasks.md)
+* Ask an Owner in your organization to turn on the **Scheduled tasks (Was Routines)** toggle at [**Organization settings > Capabilities > Remote sessions**](https://claude.ai/admin-settings/capabilities)
 
 ### Remote Control requires the Anthropic API
 
@@ -1965,7 +1964,7 @@ On [Amazon Bedrock](./amazon-bedrock.md), the requests Claude Code itself sends 
 
 ### Host not allowed in a cloud session
 
-An outbound HTTP request from a cloud session or routine was blocked by the environment's network policy.
+An outbound HTTP request from a cloud session or cloud scheduled task was blocked by the environment's network policy.
 
 ```text theme={null}
 HTTP 403
@@ -1974,13 +1973,16 @@ x-deny-reason: host_not_allowed
 
 You may also see a TLS certificate that doesn't match the destination's real certificate. Cloud sessions route outbound traffic through a proxy that enforces the network policy, so a mismatched certificate means the proxy terminated the connection, not the destination.
 
-This is not a client-side network problem. Cloud sessions and [routines](./routines.md) run inside a sandboxed VM whose outbound traffic through the session's network is filtered to the [cloud environment's](./cloud-environments.md) allowlist; [GitHub operations](./cloud-environments.md#github-proxy) and MCP connector traffic use separate channels, which is why they can keep working while other hosts are blocked. The **Default** environment uses **Trusted** access, which permits the [default allowlist](./cloud-environments.md#default-allowed-domains) of package registries, cloud provider APIs, container registries, and common development domains and blocks other domains on that path.
+This error is not a client-side network problem. Cloud sessions and [cloud scheduled tasks](./routines.md) run inside a sandboxed VM whose outbound traffic through the session's network is filtered to the [cloud environment's](./cloud-environments.md) allowlist:
+
+* **GitHub and connector traffic**: [GitHub operations](./cloud-environments.md#github-proxy) and MCP connector traffic use separate channels, which is why they can keep working while other hosts are blocked
+* **Default environment**: the **Default** environment uses **Trusted** access, which permits the [default allowlist](./cloud-environments.md#default-allowed-domains) of package registries, cloud provider APIs, container registries, and common development domains and blocks other domains on that path
 
 **What to do:**
 
 These steps change one of your own environments. An [organization-shared environment](./cloud-environments.md#organization-shared-environments) opens read-only in the selector, so ask an Owner to change its network access from the **Cloud environments** page in [admin settings](https://claude.ai/admin-settings).
 
-* Open your environment for editing, either from the [routine's form](./routines.md#environments-and-network-access) or from the [environment selector](./cloud-environments.md#configure-your-environment) where you start cloud sessions.
+* Open your environment for editing, either from the [cloud scheduled task's form](./routines.md#environments-and-network-access) or from the [environment selector](./cloud-environments.md#configure-your-environment) where you start cloud sessions.
 * In the **Edit cloud environment** dialog, change **Network access** from **Trusted** to **Custom**, then add the blocked domain to **Allowed domains**. Enter one domain per line. Check **Also include default list of common package managers** to keep the [default allowlist](./cloud-environments.md#default-allowed-domains) alongside your custom domains. Select **Full** instead if you want unrestricted access.
 * Click **Save changes**. The next run uses the updated allowlist. For a cloud session that's already open, see [when a network access change reaches existing sessions](./cloud-environments.md#network-access).
 
@@ -3584,9 +3586,9 @@ Claude Code answers an unmatched `/` name this way only in an interactive termin
 * [Agent SDK](./agent-sdk/overview.md) applications
 * The Code tab of the [Desktop app](./desktop.md)
 * The chat panel of the [VS Code extension](./vs-code.md)
-* [Cloud sessions](./claude-code-on-the-web.md) and [routines](./routines.md)
+* [Cloud sessions](./claude-code-on-the-web.md) and [cloud scheduled tasks](./routines.md)
 
-For a built-in command that can't run in one of those sessions, Claude Code still answers that the command isn't available instead of sending it to Claude. Before v2.1.274, only cloud sessions and routines sent an unmatched name to Claude. Before v2.1.273, they answered `Unknown command` too.
+For a built-in command that can't run in one of those sessions, Claude Code still answers that the command isn't available instead of sending it to Claude. Before v2.1.274, only cloud sessions and cloud scheduled tasks sent an unmatched name to Claude. Before v2.1.273, they answered `Unknown command` too.
 
 Claude Code doesn't treat every prompt that starts with `/` as a command. It sends the prompt to Claude as a normal message when the first word after the `/` starts with punctuation, such as the `/--` that opens a Lean doc comment, or is a path such as `/var/log/syslog`.
 
@@ -3728,7 +3730,7 @@ You started a [cloud session](./claude-code-on-the-web.md) from your local repos
 GitHub isn't connected to your Claude account, so this repository can't be cloned in the cloud. Run /web-setup to connect with your GitHub CLI login, or connect on the web at https://claude.ai/connect-github
 ```
 
-When you create a routine with [`/schedule`](./routines.md), the same message appears as a setup note that names the repository; the note doesn't block creating the routine.
+When you create a cloud scheduled task with [`/schedule`](./routines.md), the same message appears as a setup note that names the repository; the note doesn't block creating the task.
 
 **What to do:**
 
@@ -3980,7 +3982,7 @@ Output styles are saved to local settings (.claude/settings.local.json), which t
   /recap only runs when you ask for it yourself
 </h3>
 
-The [`/recap`](./interactive-mode.md#session-recap) request didn't come from your own input. It arrived in a message relayed into the session from a Slack, Teams, or [project](./claude-projects.md) thread, or in a prompt that a [routine](./routines.md) or another program sent.
+The [`/recap`](./interactive-mode.md#session-recap) request didn't come from your own input. It arrived in a message relayed into the session from a Slack, Teams, or [project](./claude-projects.md) thread, or in a prompt that a [cloud scheduled task](./routines.md) or another program sent.
 
 A relayed message gets the notice even when you wrote it yourself. Claude Code can't tell that a relayed or automated message came from the person whose account runs the session, so it answers with this notice instead of a summary:
 
@@ -3993,7 +3995,7 @@ A `/recap` you pass to `claude -p`, or that your own [Agent SDK](./agent-sdk/ove
 **What to do:**
 
 * Open the session yourself and run `/recap` there: in its terminal, in the [Desktop app](./desktop.md) or the [mobile app](./mobile.md), at [claude.ai/code](https://claude.ai/code), or over [Remote Control](./remote-control.md)
-* If a routine or another program sent it, remove `/recap` from that prompt
+* If a cloud scheduled task or another program sent it, remove `/recap` from that prompt
 
 ## Plugin errors
 

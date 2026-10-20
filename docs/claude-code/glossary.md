@@ -102,7 +102,9 @@ Learn more: [CLAUDE.md files](./memory.md#claude-md-files)
 
 ### Cloud session
 
-A Claude Code session that keeps running after you close your laptop, because it runs on cloud infrastructure instead of your machine: Anthropic-managed by default, or a [self-hosted environment](./self-hosted-environments.md) your organization operates. You start one from claude.ai/code, the Claude mobile app, the Desktop app with **Cloud** selected, `claude --cloud`, or a [routine](./routines.md). A session in your terminal, IDE, or the Desktop app with **Local** selected is a local session; to reach a local session from another device, use [Remote Control](#remote-control).
+A Claude Code session that keeps running after you close your laptop, because it runs on cloud infrastructure instead of your machine. That infrastructure is Anthropic-managed by default, or a [self-hosted environment](./self-hosted-environments.md) your organization operates. You start one from claude.ai/code, the Claude mobile app, the Desktop app with **Cloud** selected, `claude --cloud`, or a [cloud scheduled task](./routines.md).
+
+A session in your terminal, IDE, or the Desktop app with **Local** selected is a local session; to reach a local session from another device, use [Remote Control](#remote-control).
 
 Learn more: [Use Claude Code in the cloud](./claude-code-on-the-web.md)
 

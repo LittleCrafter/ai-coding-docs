@@ -194,7 +194,7 @@ See the [CLI reference](./cli-reference.md) for the full set of commands and fla
 
 Run Claude on a schedule to automate work that repeats: morning PR reviews, overnight CI failure analysis, weekly dependency audits, or syncing docs after PRs merge.
 
-* [Routines](./routines.md) run in the cloud, so they keep running even when your computer is off. They can also trigger on API calls or GitHub events. Create them from the web, the Desktop app, or by running `/schedule` in the CLI.
+* [Cloud scheduled tasks](./routines.md), formerly routines, run in the cloud, so they keep running even when your computer is off. They can also trigger on API calls or GitHub events. Create them from the web, the Desktop app, or by running `/schedule` in the CLI.
 * [Desktop scheduled tasks](./desktop-scheduled-tasks.md) run on your machine, with direct access to your local files and tools
 * [`/loop`](./scheduled-tasks.md) repeats a prompt within a CLI session for quick polling
 
@@ -219,7 +219,7 @@ Beyond the [Terminal](./quickstart.md), [VS Code](./vs-code.md), [JetBrains](./j
 | Continue a local session from my phone or another device | [Remote Control](./remote-control.md) |
 | Push events from Telegram, Discord, iMessage, or my own webhooks into a session | [Channels](./channels.md) |
 | Start a task locally, continue on mobile | [`claude --cloud`](./claude-code-on-the-web.md#from-terminal-to-cloud), then the [Claude mobile app](./mobile.md) |
-| Run Claude on a recurring schedule | [Routines](./routines.md) or [Desktop scheduled tasks](./desktop-scheduled-tasks.md) |
+| Run Claude on a recurring schedule | [Cloud scheduled tasks](./routines.md) or [Desktop scheduled tasks](./desktop-scheduled-tasks.md) |
 | Automate PR reviews and issue triage | [GitHub Actions](./github-actions.md) or [GitLab CI/CD](./gitlab-ci-cd.md) |
 | Get automatic code review on every PR | [GitHub Code Review](./code-review.md) |
 | Route bug reports from Slack to pull requests | [Slack](./slack.md) |

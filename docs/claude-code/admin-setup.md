@@ -33,7 +33,7 @@ Claude Code connects to Claude through one of several API providers. Your choice
 | Google Cloud's Agent Platform | You want to inherit existing GCP compliance controls and billing |
 | Microsoft Foundry | You want to inherit existing Azure compliance controls and billing |
 
-Some Claude Code features require a claude.ai account. [Cloud sessions](./claude-code-on-the-web.md), [Routines](./routines.md), [Code Review](./code-review.md), [Remote Control](./remote-control.md), and the [Chrome extension](./chrome.md) aren't available through Console API keys or cloud-provider credentials alone. If you deploy through Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry, plan whether developers also need Claude for Teams or Enterprise seats. Each feature page lists its plan requirements.
+Some Claude Code features require a claude.ai account. [Cloud sessions](./claude-code-on-the-web.md), [cloud scheduled tasks](./routines.md), [Code Review](./code-review.md), [Remote Control](./remote-control.md), and the [Chrome extension](./chrome.md) aren't available through Console API keys or cloud-provider credentials alone. If you deploy through Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry, plan whether developers also need Claude for Teams or Enterprise seats. Each feature page lists its plan requirements.
 
 For the full provider comparison covering authentication, regions, and feature parity, see the [enterprise deployment overview](./third-party-integrations.md). Each provider's auth setup is in [Authentication](./authentication.md).
 

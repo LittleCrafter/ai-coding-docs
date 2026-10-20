@@ -76,7 +76,7 @@ A mod runs with your permissions, so before you install one, know what it has ac
 
 Mods aren't sandboxed. If you turn on [sandboxing](../../sandboxing.md), the sandbox isolates the Bash commands Claude runs, and a process that a mod starts runs outside it.
 
-A mod that approves tool calls can approve one that an `ask` rule would prompt for, or that one of your own `PreToolUse` hooks blocked. [Extend permissions with hooks](../../permissions.md#extend-permissions-with-hooks) lists what such a mod can approve, including when it can approve a call that a `deny` rule refuses.
+With [managed settings](../../settings.md#check-what-your-organization-enforces) or a Team or Enterprise [`/login`](../../authentication.md#authentication-precedence) as the session's credential, by default a mod's approval doesn't get a call past your `ask` rules or `PreToolUse` hooks. Without either, a mod can approve a call that an `ask` rule would prompt for, or that your `PreToolUse` hook blocked. To check when a mod can also approve a call that a `deny` rule refuses, see [Extend permissions with hooks](../../permissions.md#precedence-among-rules-hooks-and-mods).
 
 A mod can restyle much of Claude Code's interface, but not the permission prompt. It can't change what a prompt shows you.
 

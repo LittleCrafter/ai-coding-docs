@@ -348,4 +348,4 @@ Once you have a channel running, explore these related features:
 
 * [Build your own channel](./channels-reference.md) for systems that don't have plugins yet
 * [Remote Control](./remote-control.md) to drive a local session from your phone instead of forwarding events into it
-* [Scheduled tasks](./scheduled-tasks.md) to poll on a timer instead of reacting to pushed events
+* [Session-scoped scheduled tasks](./scheduled-tasks.md) to poll on a timer instead of reacting to pushed events
