@@ -8,21 +8,22 @@
 
 The desktop app gives you Claude Code with a graphical interface, so you can ask Claude to work on the code in a folder on your computer and review its changes without using a terminal. This page walks through installing the app and starting your first session in the **Code** tab. Claude Code requires a [Pro, Max, Team, or Enterprise subscription](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_pricing).
 
-**[Download for macOS](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect?utm_source=claude_code&utm_medium=docs)**
+> **[Download for macOS](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect?utm_source=claude_code\&utm_medium=docs)**
+>
+> Universal build for Intel and Apple Silicon
 
-Universal build for Intel and Apple Silicon
+> **[Download for Windows](https://claude.ai/api/desktop/win32/x64/setup/latest/redirect?utm_source=claude_code\&utm_medium=docs)**
+>
+> For x64 processors
 
-**[Download for Windows](https://claude.ai/api/desktop/win32/x64/setup/latest/redirect?utm_source=claude_code&utm_medium=docs)**
-
-For x64 processors
-
-**[Get Claude for Linux (beta)](./desktop-linux.md)**
-
-apt or .deb for Ubuntu and Debian
+> **[Get Claude for Linux (beta)](./desktop-linux.md)**
+>
+> apt or .deb for Ubuntu and Debian
 
 For Windows ARM64, download the [ARM64 installer](https://claude.ai/api/desktop/win32/arm64/setup/latest/redirect?utm_source=claude_code\&utm_medium=docs). On Linux, install with apt; see [Claude Desktop on Linux](./desktop-linux.md).
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **Already set up**: see [Use Claude Code Desktop](./desktop.md) for everything the Code tab can do
@@ -38,12 +39,13 @@ Chat and Cowork are covered in the [Claude Help Center](https://support.claude.c
 
 ## Install
 
-1. **Install and sign in**
+**1. Install and sign in**
 
-   On macOS and Windows, download the installer from the links above and run it. On Linux, follow the install steps in [Claude Desktop on Linux](./desktop-linux.md). Launch Claude from your Applications folder on macOS, the Start menu on Windows, or your application launcher on Linux, then sign in with your Anthropic account.
-2. **Open the Code tab**
+On macOS and Windows, download the installer from the links above and run it. On Linux, follow the install steps in [Claude Desktop on Linux](./desktop-linux.md). Launch Claude from your Applications folder on macOS, the Start menu on Windows, or your application launcher on Linux, then sign in with your Anthropic account.
 
-   Click the **Code** tab at the top center. If clicking Code prompts you to upgrade, you need to [subscribe to a paid plan](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_upgrade) first. If it prompts you to sign in online, complete the sign-in and restart the app. If you see a 403 error, see [authentication troubleshooting](./desktop.md#403-or-authentication-errors-in-the-code-tab).
+**2. Open the Code tab**
+
+Click the **Code** tab at the top center. If clicking Code prompts you to upgrade, you need to [subscribe to a paid plan](https://claude.com/pricing?utm_source=claude_code\&utm_medium=docs\&utm_content=desktop_quickstart_upgrade) first. If it prompts you to sign in online, complete the sign-in and restart the app. If you see a 403 error, see [authentication troubleshooting](./desktop.md#403-or-authentication-errors-in-the-code-tab).
 
 The desktop app includes Claude Code, so you don't need to install Node.js or the CLI to use the Code tab.
 
@@ -51,44 +53,48 @@ The desktop app includes Claude Code, so you don't need to install Node.js or th
 
 With the Code tab open, choose a project and give Claude something to do.
 
-1. **Choose an environment and folder**
+**1. Choose an environment and folder**
 
-   In the [row under the prompt box](./desktop.md#start-a-session), click the first control, the environment selector, and select the top entry in the **Local** group. Then click the project folder control beside the environment selector, select **Open folder…**, and choose your project's directory.
+In the [row under the prompt box](./desktop.md#start-a-session), click the first control, the environment selector, and select the top entry in the **Local** group. Then click the project folder control beside the environment selector, select **Open folder…**, and choose your project's directory.
 
-   If no environment selector appears under your prompt box, you have the earlier layout. See [Check which layout you have](./desktop.md#check-which-layout-you-have).
+If no environment selector appears under your prompt box, you have the earlier layout. See [Check which layout you have](./desktop.md#check-which-layout-you-have).
 
-   > [!TIP]
-   > Start with a small project you know well. It's the fastest way to see what Claude Code can do.
+> [!TIP]
+>
+> Start with a small project you know well. It's the fastest way to see what Claude Code can do.
 
-   You can also select:
+You can also select:
 
-   * **Cloud**: Run sessions in the cloud that continue even if you close the app. See [Use Claude Code in the cloud](./claude-code-on-the-web.md) for how cloud sessions work.
-   * **SSH**: Connect to a remote machine over SSH, such as your own servers, cloud VMs, or dev containers. [Add a connection](./desktop.md#ssh-sessions) first. Desktop installs Claude Code on the remote machine automatically the first time you connect. A running task can [keep going while Desktop is disconnected](./desktop.md#keep-a-task-running-while-desktop-is-disconnected), but with a Claude account it can stop when its sign-in expires.
-   * **WSL** (Windows): Run the session inside a [WSL 2 distribution](./desktop-wsl.md); Claude Code, tools, and git execute on the Linux side with native paths.
-2. **Choose a model**
+* **Cloud**: Run sessions in the cloud that continue even if you close the app. See [Use Claude Code in the cloud](./claude-code-on-the-web.md) for how cloud sessions work.
+* **SSH**: Connect to a remote machine over SSH, such as your own servers, cloud VMs, or dev containers. [Add a connection](./desktop.md#ssh-sessions) first. Desktop installs Claude Code on the remote machine automatically the first time you connect. A running task can [keep going while Desktop is disconnected](./desktop.md#keep-a-task-running-while-desktop-is-disconnected), but with a Claude account it can stop when its sign-in expires.
+* **WSL** (Windows): Run the session inside a [WSL 2 distribution](./desktop-wsl.md); Claude Code, tools, and git execute on the Linux side with native paths.
 
-   Select a model from the model picker toward the right end of the row under the prompt box. See [models](./model-config.md#available-models) for a comparison of the available models. You can change the model later from the model picker.
-3. **Tell Claude what to do**
+**2. Choose a model**
 
-   Type what you want Claude to do:
+Select a model from the model picker toward the right end of the row under the prompt box. See [models](./model-config.md#available-models) for a comparison of the available models. You can change the model later from the model picker.
 
-   * `Find a TODO comment and fix it`
-   * `Add tests for the main function`
-   * `Create a CLAUDE.md with instructions for this codebase`
+**3. Tell Claude what to do**
 
-   A [session](./desktop.md#work-in-parallel-with-sessions) is a conversation with Claude about your code. Each session tracks its own context and changes.
-4. **Review and accept changes**
+Type what you want Claude to do:
 
-   Check your [permission mode](./desktop.md#choose-a-permission-mode) in the row under the prompt box to see whether Claude waits for your approval:
+* `Find a TODO comment and fix it`
+* `Add tests for the main function`
+* `Create a CLAUDE.md with instructions for this codebase`
 
-   * **Auto or Accept edits**: Claude applies its file changes, and an indicator such as `+12 -1` appears so you can review them in the diff view
-   * **Manual**: Claude proposes each change and waits for your approval before applying it
+A [session](./desktop.md#work-in-parallel-with-sessions) is a conversation with Claude about your code. Each session tracks its own context and changes.
 
-   In Manual mode, you'll see:
+**4. Review and accept changes**
 
-   1. A [diff view](./desktop.md#review-changes-with-diff-view) showing exactly what will change in each file
-   2. Accept/Reject buttons to approve or decline each change
-   3. Real-time updates as Claude works through your request
+Check your [permission mode](./desktop.md#choose-a-permission-mode) in the row under the prompt box to see whether Claude waits for your approval:
+
+* **Auto or Accept edits**: Claude applies its file changes, and an indicator such as `+12 -1` appears so you can review them in the diff view
+* **Manual**: Claude proposes each change and waits for your approval before applying it
+
+In Manual mode, you'll see:
+
+1. A [diff view](./desktop.md#review-changes-with-diff-view) showing exactly what will change in each file
+2. Accept/Reject buttons to approve or decline each change
+3. Real-time updates as Claude works through your request
 
 ## Now what?
 

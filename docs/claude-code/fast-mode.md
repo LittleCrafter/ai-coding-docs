@@ -7,6 +7,7 @@
 > Get faster Opus responses in Claude Code by toggling fast mode.
 
 > [!NOTE]
+>
 > Fast mode is in [research preview](#research-preview). The feature, pricing, and availability may change based on feedback.
 
 Fast mode is a high-speed configuration for Claude Opus, making the model up to 2.5x faster at a higher cost per token. Toggle it on with `/fast` when you need speed for interactive work like rapid iteration or live debugging, and toggle it off when cost matters more than latency.
@@ -124,12 +125,14 @@ Fast mode requires all of the following:
   * On Team and Enterprise, a member with billing access turns them on for the organization at [**Organization settings > Usage**](https://claude.ai/admin-settings/usage), and a member without it runs `/usage-credits` to send the organization's admins a request.
 
 > [!NOTE]
+>
 > Fast mode usage draws directly from usage credits, even if you have remaining usage on your plan.
 
 * **Paid Console organization**: Claude Console accounts don't use usage credits, and your organization pays for fast mode per token with the rest of its API usage. On the Console's free Evaluation plan, `/fast` shows "Fast mode unavailable during evaluation. Please purchase credits." To clear it, purchase credits in your [Console billing settings](https://platform.claude.com/settings/billing).
 * **Owner enablement for Team and Enterprise**: fast mode is disabled by default for Team and Enterprise organizations. An Owner must explicitly [enable fast mode](#enable-fast-mode-for-your-organization) before users can access it.
 
 > [!NOTE]
+>
 > Four organization settings can block turning fast mode on with `/fast`:
 >
 > * **Fast mode not enabled**: if fast mode hasn't been enabled for your organization, turning fast mode on with `/fast` shows "Fast mode has been disabled by your organization."

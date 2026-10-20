@@ -21,105 +21,109 @@ Use the Agent SDK to build an AI agent that reads your code, finds bugs, and fix
 
 ## Setup
 
-1. **Create a project folder**
+**1. Create a project folder**
 
-   Create a new directory for this quickstart:
+Create a new directory for this quickstart:
 
-   ```bash theme={null}
-   mkdir my-agent
-   cd my-agent
-   ```
+```bash theme={null}
+mkdir my-agent
+cd my-agent
+```
 
-   For your own projects, you can run the SDK from any folder; it will have access to files in that directory and its subdirectories by default.
-2. **Install the SDK**
+For your own projects, you can run the SDK from any folder; it will have access to files in that directory and its subdirectories by default.
 
-   Install the Agent SDK package for your language:
+**2. Install the SDK**
 
-   **TypeScript (new project)**
+Install the Agent SDK package for your language:
 
-   ```bash theme={null}
-   npm init -y
-   npm pkg set type=module
-   npm install @anthropic-ai/claude-agent-sdk
-   npm install --save-dev tsx
-   ```
+**TypeScript (new project)**
 
-   Setting `"type": "module"` in `package.json` lets your agent script use top-level `await`, and [tsx](https://tsx.hirok.io) runs TypeScript files directly. npm prints `added N packages` when the install succeeds.
+```bash theme={null}
+npm init -y
+npm pkg set type=module
+npm install @anthropic-ai/claude-agent-sdk
+npm install --save-dev tsx
+```
 
-   **TypeScript (existing project)**
+Setting `"type": "module"` in `package.json` lets your agent script use top-level `await`, and [tsx](https://tsx.hirok.io) runs TypeScript files directly. npm prints `added N packages` when the install succeeds.
 
-   ```bash theme={null}
-   npm install @anthropic-ai/claude-agent-sdk
-   npm install --save-dev tsx
-   ```
+**TypeScript (existing project)**
 
-   [tsx](https://tsx.hirok.io) runs TypeScript files directly. If your project uses CommonJS, name your agent script `agent.mts` instead of `agent.ts`. The `.mts` extension makes tsx treat the file as an ES module, so top-level `await` works without converting your whole project to ES modules. Use `agent.mts` in place of `agent.ts` in the create and run steps later in this quickstart.
+```bash theme={null}
+npm install @anthropic-ai/claude-agent-sdk
+npm install --save-dev tsx
+```
 
-   **Python (uv)**
+[tsx](https://tsx.hirok.io) runs TypeScript files directly. If your project uses CommonJS, name your agent script `agent.mts` instead of `agent.ts`. The `.mts` extension makes tsx treat the file as an ES module, so top-level `await` works without converting your whole project to ES modules. Use `agent.mts` in place of `agent.ts` in the create and run steps later in this quickstart.
 
-   [Install uv](https://docs.astral.sh/uv/), a fast Python package manager that handles virtual environments automatically. Then initialize a project and add the SDK:
+**Python (uv)**
 
-   ```bash theme={null}
-   uv init
-   uv add claude-agent-sdk
-   ```
+[Install uv](https://docs.astral.sh/uv/), a fast Python package manager that handles virtual environments automatically. Then initialize a project and add the SDK:
 
-   **Python (pip)**
+```bash theme={null}
+uv init
+uv add claude-agent-sdk
+```
 
-   Create and activate a virtual environment, then install the package.
+**Python (pip)**
 
-   On macOS or Linux:
+Create and activate a virtual environment, then install the package.
 
-   ```bash theme={null}
-   python3 -m venv .venv
-   source .venv/bin/activate
-   pip install claude-agent-sdk
-   ```
+On macOS or Linux:
 
-   On Windows:
+```bash theme={null}
+python3 -m venv .venv
+source .venv/bin/activate
+pip install claude-agent-sdk
+```
 
-   ```powershell theme={null}
-   py -m venv .venv
-   .venv\Scripts\Activate.ps1
-   pip install claude-agent-sdk
-   ```
+On Windows:
 
-   If PowerShell blocks `Activate.ps1` with an execution policy error, run `Set-ExecutionPolicy -Scope Process RemoteSigned` first.
+```powershell theme={null}
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install claude-agent-sdk
+```
 
-   > [!NOTE]
-   > Both the TypeScript and Python SDKs bundle a native Claude Code binary, so most installs need no separate Claude Code install. Some installs have no bundled binary:
-   >
-   > * If pip installs the Python SDK's source distribution instead of a platform wheel, for example on ARM64 Windows, no binary is bundled. [Install Claude Code natively](../setup.md#install-claude-code). The Python SDK finds it on your `PATH`.
-   > * The TypeScript SDK installs its binary through npm optional dependencies, so an install that skips them, for example `npm ci --omit=optional`, gets no binary even on a supported platform. Reinstall without skipping optional dependencies, or [install Claude Code natively](../setup.md#install-claude-code) and set `pathToClaudeCodeExecutable` to its path.
-3. **Set your API key**
+If PowerShell blocks `Activate.ps1` with an execution policy error, run `Set-ExecutionPolicy -Scope Process RemoteSigned` first.
 
-   Get an API key from the [Claude Console](https://platform.claude.com/), then set it as an environment variable in the shell where you'll run your agent:
+> [!NOTE]
+>
+> Both the TypeScript and Python SDKs bundle a native Claude Code binary, so most installs need no separate Claude Code install. Some installs have no bundled binary:
+>
+> * If pip installs the Python SDK's source distribution instead of a platform wheel, for example on ARM64 Windows, no binary is bundled. [Install Claude Code natively](../setup.md#install-claude-code). The Python SDK finds it on your `PATH`.
+> * The TypeScript SDK installs its binary through npm optional dependencies, so an install that skips them, for example `npm ci --omit=optional`, gets no binary even on a supported platform. Reinstall without skipping optional dependencies, or [install Claude Code natively](../setup.md#install-claude-code) and set `pathToClaudeCodeExecutable` to its path.
 
-   **macOS / Linux**
+**3. Set your API key**
 
-   ```bash theme={null}
-   export ANTHROPIC_API_KEY=your-api-key
-   ```
+Get an API key from the [Claude Console](https://platform.claude.com/), then set it as an environment variable in the shell where you'll run your agent:
 
-   **Windows (PowerShell)**
+**macOS / Linux**
 
-   ```powershell theme={null}
-   $env:ANTHROPIC_API_KEY = "your-api-key"
-   ```
+```bash theme={null}
+export ANTHROPIC_API_KEY=your-api-key
+```
 
-   The SDK reads the key from the environment of the process that runs your agent; it doesn't load `.env` files automatically. If you keep the key in a `.env` file, load it yourself, for example with the `dotenv` package, before calling the SDK.
+**Windows (PowerShell)**
 
-   The SDK also supports authentication via third-party API providers:
+```powershell theme={null}
+$env:ANTHROPIC_API_KEY = "your-api-key"
+```
 
-   * **Amazon Bedrock**: set `CLAUDE_CODE_USE_BEDROCK=1` environment variable and configure AWS credentials
-   * **Claude Platform on AWS**: set `CLAUDE_CODE_USE_ANTHROPIC_AWS=1` and `ANTHROPIC_AWS_WORKSPACE_ID`, then configure AWS credentials
-   * **Google Cloud's Agent Platform**: set `CLAUDE_CODE_USE_VERTEX=1` environment variable and configure Google Cloud credentials
-   * **Microsoft Foundry**: set `CLAUDE_CODE_USE_FOUNDRY=1` environment variable and configure Azure credentials
+The SDK reads the key from the environment of the process that runs your agent; it doesn't load `.env` files automatically. If you keep the key in a `.env` file, load it yourself, for example with the `dotenv` package, before calling the SDK.
 
-   See the setup guides for [Amazon Bedrock](../amazon-bedrock.md), [Claude Platform on AWS](../claude-platform-on-aws.md), [Google Cloud's Agent Platform](../google-vertex-ai.md), or [Microsoft Foundry](../microsoft-foundry.md) for details.
+The SDK also supports authentication via third-party API providers:
 
-   > [!NOTE]
-   > Unless previously approved, Anthropic does not allow third party developers to offer claude.ai login or rate limits for their products, including agents built on the Claude Agent SDK. Use the API key authentication methods described in this document instead.
+* **Amazon Bedrock**: set `CLAUDE_CODE_USE_BEDROCK=1` environment variable and configure AWS credentials
+* **Claude Platform on AWS**: set `CLAUDE_CODE_USE_ANTHROPIC_AWS=1` and `ANTHROPIC_AWS_WORKSPACE_ID`, then configure AWS credentials
+* **Google Cloud's Agent Platform**: set `CLAUDE_CODE_USE_VERTEX=1` environment variable and configure Google Cloud credentials
+* **Microsoft Foundry**: set `CLAUDE_CODE_USE_FOUNDRY=1` environment variable and configure Azure credentials
+
+See the setup guides for [Amazon Bedrock](../amazon-bedrock.md), [Claude Platform on AWS](../claude-platform-on-aws.md), [Google Cloud's Agent Platform](../google-vertex-ai.md), or [Microsoft Foundry](../microsoft-foundry.md) for details.
+
+> [!NOTE]
+>
+> Unless previously approved, Anthropic does not allow third party developers to offer claude.ai login or rate limits for their products, including agents built on the Claude Agent SDK. Use the API key authentication methods described in this document instead.
 
 ## Create a buggy file
 
@@ -213,6 +217,7 @@ The `async for` loop keeps running as Claude thinks, calls tools, observes resul
 The message handling inside the loop filters for human-readable output. Without filtering, you'd see raw message objects including system initialization and internal state, which is useful for debugging but noisy otherwise.
 
 > [!NOTE]
+>
 > This example uses streaming to show progress in real-time. If you don't need live output (for example, for background jobs or CI pipelines), you can collect all messages at once. See [Streaming vs. single-turn mode](./streaming-vs-single-mode.md) for details.
 
 ### Run your agent
@@ -250,6 +255,7 @@ As it works, the agent prints its reasoning and each tool it calls, ending with 
 This is what makes the Agent SDK different: Claude executes tools directly instead of asking you to implement them.
 
 > [!NOTE]
+>
 > If you see an authentication error such as `Not logged in` or `Invalid API key`, make sure you've set the `ANTHROPIC_API_KEY` environment variable in the shell where you run your agent. The SDK doesn't load `.env` files automatically.
 >
 > For the causes and fixes behind these and other authentication errors, see [Authentication errors](../errors.md#authentication-errors) in the Error reference.

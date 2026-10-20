@@ -9,6 +9,7 @@
 Use this page when a plugin didn't load, loaded a different copy than you expected, or didn't pick up an update, and you want to see which source, settings scope, or file on disk decided that. It gives the rules Claude Code applies when a session starts and each time you run `/reload-plugins`. You can also ask Claude to read this page and diagnose your setup.
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **Install, enable, disable, and update steps**: see [Install and manage plugins](./install.md)
@@ -85,9 +86,7 @@ Personal-scope plugins have none of these restrictions.
 
 For how to write `--plugin-dir` and skills-directory plugins, see [Create plugins](./create.md).
 
-<h3 id="synced-plugins">
-  Plugins synced from claude.ai
-</h3>
+### Plugins synced from claude.ai
 
 A plugin you turn on for your claude.ai account also loads in Claude Code, alongside the plugins you install from marketplaces. That includes plugins your organization turns on for its members. Each of these plugins loads as `<name>@synced`, with no marketplace and no [install record](#check-which-stage-a-plugin-reached).
 
@@ -372,9 +371,7 @@ When enabled plugins from different origins share a manifest name, this order de
 
 Because the order compares manifest names, a `--plugin-dir` plugin named `hello-plugin` replaces `hello@example-marketplace` when that plugin's manifest also says `"name": "hello-plugin"`.
 
-<h3 id="hooks-when-two-enabled-plugins-share-a-name">
-  Hooks when two enabled plugins share a name
-</h3>
+### Hooks when two enabled plugins share a name
 
 When you install and enable two plugins with the same manifest name from different marketplaces, both appear as enabled in `/plugin`, but the hooks of one of them are left out. One plugin per name registers the hooks in its `hooks/hooks.json`, and one plugin per name loads a [hooks module](./mods/overview.md). When your organization's managed settings turn on one of the copies, that copy holds the name. Otherwise the copy Claude Code loads first holds it.
 

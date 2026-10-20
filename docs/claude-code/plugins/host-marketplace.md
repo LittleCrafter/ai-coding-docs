@@ -11,6 +11,7 @@ Hosting a marketplace means putting your `marketplace.json` catalog where other 
 This page is for the person who operates a marketplace.
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **You haven't written the catalog file yet**: start with [Create a marketplace](./create-marketplace.md)
@@ -374,18 +375,14 @@ In a non-interactive shell, pass [`--yes`](./cli-reference.md#plugin-install) to
 
 Claude Code runs only the command it showed, for the archive URL it showed. If the entry's command or archive URL changed in between, Claude Code refuses the install or update. A change in the query string alone doesn't count, except in the VS Code extension or with `--accept-command`.
 
-<h3 id="installs-and-updates-that-refuse-the-command-instead-of-asking">
-  Installs and updates that refuse a command instead of asking
-</h3>
+### Installs and updates that refuse a command instead of asking
 
 On any operation other than a single-plugin install or update, Claude Code neither runs an entry's command nor downloads its archive. The plugin stays at its installed version or stays uninstalled, and the user sees one of these results:
 
 * **Installing several plugins at once, from a plugin suggestion, or as another plugin's dependency**: Claude Code refuses the plugin that has the command and directs the user to that plugin's own view in `/plugin`. The other plugins in a bulk install still install. A plugin that depends on the refused plugin fails to install until the user installs the refused plugin by itself.
 * **Background auto-update, or session start for a plugin whose archive was never downloaded**: Claude Code lists the plugin in the `/plugin` Errors tab so the user knows to install or update it themselves.
 
-<h3 id="when-a-marketplace-url-sources-command-runs">
-  When a marketplace `url` source's command runs
-</h3>
+### When a marketplace `url` source's command runs
 
 You declare a marketplace `url` source's `headersHelper` in a settings file, such as an [`extraKnownMarketplaces`](../settings-reference.md#extraknownmarketplaces) entry, rather than in the catalog the marketplace publishes. Claude Code therefore doesn't ask the user to accept it on each install or update. Instead, the settings file that declares it decides when Claude Code runs it:
 

@@ -18,15 +18,17 @@ Use a WSL session when your repository lives inside the distribution's filesyste
 
 ## Start a WSL session
 
-1. **Pick a distribution**
+**1. Pick a distribution**
 
-   Start a new session in the Code tab and open the [environment selector](./desktop.md#start-a-session) under the prompt box, or above it in the [earlier layout](./desktop.md#check-which-layout-you-have). Your installed WSL 2 distributions appear under **WSL**. Pick one.
-2. **Choose a folder**
+Start a new session in the Code tab and open the [environment selector](./desktop.md#start-a-session) under the prompt box, or above it in the [earlier layout](./desktop.md#check-which-layout-you-have). Your installed WSL 2 distributions appear under **WSL**. Pick one.
 
-   The session starts in the distribution's home directory. Use the folder picker to choose a project folder. Browsing happens inside the distribution, with Linux paths like `/home/you/project`.
-3. **Trust the folder**
+**2. Choose a folder**
 
-   The first session in a folder shows the workspace trust dialog. You grant trust per distribution and folder. A folder you trust in one distribution isn't trusted in another distribution or at the same path on Windows.
+The session starts in the distribution's home directory. Use the folder picker to choose a project folder. Browsing happens inside the distribution, with Linux paths like `/home/you/project`.
+
+**3. Trust the folder**
+
+The first session in a folder shows the workspace trust dialog. You grant trust per distribution and folder. A folder you trust in one distribution isn't trusted in another distribution or at the same path on Windows.
 
 The first session in a distribution takes a little longer while Claude sets up inside it. You can also open a `\\wsl.localhost\...` folder from the normal folder picker, and it reopens inside that distribution.
 
@@ -40,8 +42,6 @@ If a Desktop feature is unavailable or limited in a WSL session, check whether i
 * **[Plugins](./desktop.md#install-plugins)**: not available in WSL sessions
 * **File editing**: you can view files in the [file pane](./desktop.md#open-and-edit-files) but can't edit them there, so ask Claude to make the changes
 * **Attachments**: if the **+** menu shows **Add image** in place of **Add files or photos**, you can attach only images. See [Add files and context to prompts](./desktop.md#add-files-and-context-to-prompts).
-
-<a id="check-for-the-terminal-and-connectors" />
 
 ### If the terminal or connectors are unavailable
 

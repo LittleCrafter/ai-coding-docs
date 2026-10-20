@@ -9,6 +9,7 @@
 The HIPAA configuration is an organization setting on Claude Enterprise plans, for organizations that handle protected health information (PHI) and have a [Business Associate Agreement (BAA)](https://support.claude.com/en/articles/8114513-business-associate-agreements-baa-for-commercial-customers) with Anthropic. It applies to Claude Code (local mode) and Cowork (local mode), and it restricts features in both products.
 
 > [!NOTE]
+>
 > "(local mode)" means a local session, not a [cloud session](./claude-code-on-the-web.md). Local sessions run in one of these places:
 >
 > * Claude Code in the terminal
@@ -138,6 +139,7 @@ The table shows what to set each key to and what Claude Code enforces for it.
 | [`cleanupPeriodDays`](./settings-reference.md#cleanupperioddays) | The number of days your records policy lets a computer keep session data | Every computer deletes old session data after the same number of days |
 
 > [!WARNING]
+>
 > Check the `forceLoginOrgUUID` value before you deploy it. If it doesn't match your organization ID, Claude Code exits at startup for every developer who signs in with a claude.ai account.
 
 The HIPAA configuration doesn't limit `cleanupPeriodDays`, so a developer can raise it in their own settings. When you set it in managed settings, Claude Code ignores the developer's value.
@@ -162,23 +164,27 @@ To find out whether your BAA covers a session that runs without the HIPAA config
 
 Run this check on one managed computer after the configuration is applied to your organization.
 
-1. **Restart Claude Code**
+**1. Restart Claude Code**
 
-   Quit any running session, open a terminal, and run `claude`. A running session that's in use picks up the configuration within about an hour without a restart. When you restart, Claude Code fetches it right away.
-2. **Check the startup notice**
+Quit any running session, open a terminal, and run `claude`. A running session that's in use picks up the configuration within about an hour without a restart. When you restart, Claude Code fetches it right away.
 
-   Confirm that Claude Code prints `Per your organization's policy, some features are limited · /status for details` when it starts.
-3. **Check the footer**
+**2. Check the startup notice**
 
-   Confirm that a `HIPAA configured` tag appears at the right of the footer, below the prompt. Before v2.1.286, the tag read `HIPAA`.
-4. **Run /status**
+Confirm that Claude Code prints `Per your organization's policy, some features are limited · /status for details` when it starts.
 
-   Enter `/status` at the prompt. Confirm that the **Status** tab lists `HIPAA` on the `Organization configuration` line.
-5. **Check Claude Desktop**
+**3. Check the footer**
 
-   Applying the HIPAA configuration turns the Code tab off for your organization. If your organization uses it, ask an Owner to go to [**Organization settings > Claude Code**](https://claude.ai/admin-settings/claude-code) and turn on the **Desktop** toggle. For Cowork, see [Confirm the HIPAA configuration in Claude Desktop](https://claude.com/docs/cowork/hipaa-setup#confirm-the-hipaa-configuration-in-claude-desktop).
+Confirm that a `HIPAA configured` tag appears at the right of the footer, below the prompt. Before v2.1.286, the tag read `HIPAA`.
 
-   Reload Claude Desktop or sign in again. Confirm that the title bar shows a **HIPAA configured** label. On a Mac, open the sidebar to see it.
+**4. Run /status**
+
+Enter `/status` at the prompt. Confirm that the **Status** tab lists `HIPAA` on the `Organization configuration` line.
+
+**5. Check Claude Desktop**
+
+Applying the HIPAA configuration turns the Code tab off for your organization. If your organization uses it, ask an Owner to go to [**Organization settings > Claude Code**](https://claude.ai/admin-settings/claude-code) and turn on the **Desktop** toggle. For Cowork, see [Confirm the HIPAA configuration in Claude Desktop](https://claude.com/docs/cowork/hipaa-setup#confirm-the-hipaa-configuration-in-claude-desktop).
+
+Reload Claude Desktop or sign in again. Confirm that the title bar shows a **HIPAA configured** label. On a Mac, open the sidebar to see it.
 
 If `HIPAA` is missing from `/status`, check these causes in order:
 

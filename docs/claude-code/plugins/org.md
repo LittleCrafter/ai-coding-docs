@@ -11,6 +11,7 @@ Managed settings let you decide which plugins Claude Code installs and allows on
 This page is for administrators, and the settings here govern Claude Code.
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **Installing plugins for yourself**: start at [Install plugins](./install.md)
@@ -120,24 +121,27 @@ For container images and CI runners that can't clone at runtime, pre-populate a 
 A seed also serves users who have no git-host account.
 
 > [!NOTE]
+>
 > In CI/CD environments, configure a git credential helper before installing plugins from private repositories. On GitHub Actions, export a token with read access to the marketplace repository as `GH_TOKEN`, then run `gh auth setup-git`. The default workflow token can only access the workflow's own repository, so a private marketplace in another repository needs a personal access token or app token.
 
-1. **Install into the seed at build time**
+**1. Install into the seed at build time**
 
-   Set `CLAUDE_CODE_PLUGIN_CACHE_DIR` to the seed path so the marketplace and plugins install there instead of `~/.claude/plugins`:
+Set `CLAUDE_CODE_PLUGIN_CACHE_DIR` to the seed path so the marketplace and plugins install there instead of `~/.claude/plugins`:
 
-   ```bash theme={null}
-   CLAUDE_CODE_PLUGIN_CACHE_DIR=/opt/claude-seed claude plugin marketplace add your-org/your-marketplace
-   CLAUDE_CODE_PLUGIN_CACHE_DIR=/opt/claude-seed claude plugin install code-formatter@your-marketplace
-   ```
+```bash theme={null}
+CLAUDE_CODE_PLUGIN_CACHE_DIR=/opt/claude-seed claude plugin marketplace add your-org/your-marketplace
+CLAUDE_CODE_PLUGIN_CACHE_DIR=/opt/claude-seed claude plugin install code-formatter@your-marketplace
+```
 
-   The seed has the same layout as `~/.claude/plugins`: `known_marketplaces.json`, `marketplaces/<name>/`, and `cache/<marketplace>/<plugin>/<version>/`. You can mount the seed at a different path than you built it at.
-2. **Point the runtime at the seed**
+The seed has the same layout as `~/.claude/plugins`: `known_marketplaces.json`, `marketplaces/<name>/`, and `cache/<marketplace>/<plugin>/<version>/`. You can mount the seed at a different path than you built it at.
 
-   Set `CLAUDE_CODE_PLUGIN_SEED_DIR=/opt/claude-seed` in the container's environment. To use several seeds, separate their paths with `:` on Unix or `;` on Windows. Claude Code uses the first seed that contains a given marketplace or plugin cache.
-3. **Enable the plugins**
+**2. Point the runtime at the seed**
 
-   The plugins in a seed aren't enabled on their own. Set `enabledPlugins` for each seed plugin you want loaded, in managed settings or in the repository's `.claude/settings.json`.
+Set `CLAUDE_CODE_PLUGIN_SEED_DIR=/opt/claude-seed` in the container's environment. To use several seeds, separate their paths with `:` on Unix or `;` on Windows. Claude Code uses the first seed that contains a given marketplace or plugin cache.
+
+**3. Enable the plugins**
+
+The plugins in a seed aren't enabled on their own. Set `enabledPlugins` for each seed plugin you want loaded, in managed settings or in the repository's `.claude/settings.json`.
 
 To verify a seed, run `claude -p` with `--output-format stream-json --verbose` in the image. In the `init` event's `plugins` list, each loaded plugin's `path` is under the seed, such as `/opt/claude-seed/cache/your-marketplace/code-formatter/1.0.0`.
 

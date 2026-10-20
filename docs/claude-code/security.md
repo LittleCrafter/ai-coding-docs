@@ -67,6 +67,7 @@ For full details, please review our [Commercial Terms of Service](https://www.an
 * **Secure credential storage**: API keys and tokens are stored in the macOS Keychain when available. On Linux they're stored in a file with mode `0600`, and on Windows in a file that inherits the access controls of your user profile directory. See [Credential Management](./authentication.md#credential-management)
 
 > [!WARNING]
+>
 > **Windows WebDAV security risk**: When running Claude Code on Windows, we recommend against enabling WebDAV or allowing Claude Code to access paths such as `\\*` that may contain WebDAV subdirectories. [WebDAV has been deprecated by Microsoft](https://learn.microsoft.com/en-us/windows/whats-new/deprecated-features#:~:text=The%20Webclient%20\(WebDAV\)%20service%20is%20deprecated) due to security risks. Enabling WebDAV may allow Claude Code to trigger network requests to remote hosts, bypassing the permission system.
 
 **Best practices for working with untrusted content**:
@@ -78,6 +79,7 @@ For full details, please review our [Commercial Terms of Service](https://www.an
 5. Report suspicious behavior with `/feedback`
 
 > [!WARNING]
+>
 > While these protections significantly reduce risk, no system is completely
 > immune to all attacks. Always maintain good security practices when working
 > with any AI tool.

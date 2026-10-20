@@ -15,6 +15,7 @@ This page is for the person who deploys managed settings for Claude Code, whethe
 * **Leave mods on with other limits**: [Choose how much to allow](#choose-how-much-to-allow)
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **You haven't deployed managed settings before**: start with [Deploy managed settings](../../managed-settings.md)
@@ -237,9 +238,7 @@ The [messages from the built-in guard](./troubleshoot.md#messages-from-the-built
 
 You can deploy mods of your own to every user, choose where they run relative to users' mods, and use one to enforce a policy.
 
-<h3 id="install-your-organizations-mods">
-  Install your organization's mods and set the order
-</h3>
+### Install your organization's mods and set the order
 
 Your organization's mods load where users' mods don't and can run ahead of them, so Claude Code has to be able to tell that a mod came from you. It treats a mod as your organization's only when all of these are true:
 

@@ -11,6 +11,7 @@ A plugin marketplace is a directory or repository with a `.claude-plugin/marketp
 Create your own marketplace when you want a group you choose, such as your team or your organization, to install your plugins and keep receiving your updates from a catalog you control. The repository can be private, it can list as many plugins as you like, and an administrator can [require it on every machine](./org.md).
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **Sharing one plugin with a few people**: send them the plugin's directory or a `.zip` of it. See [Share a plugin without a marketplace](./publish.md#share-a-plugin-without-a-marketplace).
@@ -25,91 +26,95 @@ The following steps create a marketplace on your machine, add a plugin to it, re
 
 You need a plugin to list. The example uses `my-first-plugin` from [Create your first plugin](./create.md#create-your-first-plugin), a plugin with one skill that you run as `/my-first-plugin:hello`; build it first if you don't have a plugin yet. To use a plugin of your own instead, substitute its directory and its `name` wherever the steps say `my-first-plugin`. For what a plugin directory can contain, see the [plugin directory explorer](./components.md#explore-the-plugin-directory).
 
-1. **Set up the marketplace directory**
+**1. Set up the marketplace directory**
 
-   A marketplace is a directory with a `.claude-plugin/marketplace.json` file, plus the plugins it lists. Create the marketplace directory and its `.claude-plugin/` folder, then copy your plugin in under `plugins/`:
+A marketplace is a directory with a `.claude-plugin/marketplace.json` file, plus the plugins it lists. Create the marketplace directory and its `.claude-plugin/` folder, then copy your plugin in under `plugins/`:
 
-   ```bash theme={null}
-   mkdir -p my-marketplace/.claude-plugin my-marketplace/plugins
-   cp -r my-first-plugin my-marketplace/plugins/
-   ```
+```bash theme={null}
+mkdir -p my-marketplace/.claude-plugin my-marketplace/plugins
+cp -r my-first-plugin my-marketplace/plugins/
+```
 
-   Check that the plugin is valid where it now sits, so that any later error is about the marketplace and not the plugin:
+Check that the plugin is valid where it now sits, so that any later error is about the marketplace and not the plugin:
 
-   ```bash theme={null}
-   claude plugin validate ./my-marketplace/plugins/my-first-plugin
-   ```
+```bash theme={null}
+claude plugin validate ./my-marketplace/plugins/my-first-plugin
+```
 
-   The last line of the output reads `✔ Validation passed`.
-2. **Create the marketplace file**
+The last line of the output reads `✔ Validation passed`.
 
-   Save `marketplace.json` at `my-marketplace/.claude-plugin/marketplace.json`. The file requires a `name`, an `owner`, and a `plugins` array.
+**2. Create the marketplace file**
 
-   Each object in `plugins` is a plugin entry and needs a `name` and a `source`. Write the entry's `source` as a path from the marketplace root. The root is `my-marketplace/`, the directory that contains `.claude-plugin/`.
+Save `marketplace.json` at `my-marketplace/.claude-plugin/marketplace.json`. The file requires a `name`, an `owner`, and a `plugins` array.
 
-   ```json my-marketplace/.claude-plugin/marketplace.json theme={null}
-   {
-     "name": "my-marketplace",
-     "description": "Plugins for my team",
-     "owner": {
-       "name": "Your Name"
-     },
-     "plugins": [
-       {
-         "name": "my-first-plugin",
-         "source": "./plugins/my-first-plugin",
-         "description": "A greeting plugin to learn the basics"
-       }
-     ]
-   }
-   ```
-3. **Validate the marketplace**
+Each object in `plugins` is a plugin entry and needs a `name` and a `source`. Write the entry's `source` as a path from the marketplace root. The root is `my-marketplace/`, the directory that contains `.claude-plugin/`.
 
-   Run `claude plugin validate` on the marketplace directory to check the JSON syntax, the required fields, and each plugin entry in its `.claude-plugin/marketplace.json`.
+```json my-marketplace/.claude-plugin/marketplace.json theme={null}
+{
+  "name": "my-marketplace",
+  "description": "Plugins for my team",
+  "owner": {
+    "name": "Your Name"
+  },
+  "plugins": [
+    {
+      "name": "my-first-plugin",
+      "source": "./plugins/my-first-plugin",
+      "description": "A greeting plugin to learn the basics"
+    }
+  ]
+}
+```
 
-   ```bash theme={null}
-   claude plugin validate ./my-marketplace
-   ```
+**3. Validate the marketplace**
 
-   For the file as written in step 2, the last line of the output reads `✔ Validation passed`.
-4. **Add the marketplace and install the plugin**
+Run `claude plugin validate` on the marketplace directory to check the JSON syntax, the required fields, and each plugin entry in its `.claude-plugin/marketplace.json`.
 
-   Register the directory as a marketplace.
+```bash theme={null}
+claude plugin validate ./my-marketplace
+```
 
-   ```bash theme={null}
-   claude plugin marketplace add ./my-marketplace
-   ```
+For the file as written in step 2, the last line of the output reads `✔ Validation passed`.
 
-   The command prints `✔ Successfully added marketplace: my-marketplace (declared in user settings)`, which means the marketplace is recorded in your user settings file.
+**4. Add the marketplace and install the plugin**
 
-   Install the plugin. The install id is the entry's `name`, an `@`, and the marketplace `name`.
+Register the directory as a marketplace.
 
-   ```bash theme={null}
-   claude plugin install my-first-plugin@my-marketplace
-   ```
+```bash theme={null}
+claude plugin marketplace add ./my-marketplace
+```
 
-   The command prints `✔ Successfully installed plugin: my-first-plugin@my-marketplace (scope: user)`.
+The command prints `✔ Successfully added marketplace: my-marketplace (declared in user settings)`, which means the marketplace is recorded in your user settings file.
 
-   Inside a session, `/plugin marketplace add ./my-marketplace` registers the marketplace the same way. `/plugin install my-first-plugin@my-marketplace` opens the plugin's details in the `/plugin` panel, where you install it. For that flow, see [Install and manage plugins](./install.md).
-5. **Confirm the plugin loaded**
+Install the plugin. The install id is the entry's `name`, an `@`, and the marketplace `name`.
 
-   List installed plugins.
+```bash theme={null}
+claude plugin install my-first-plugin@my-marketplace
+```
 
-   ```bash theme={null}
-   claude plugin list
-   ```
+The command prints `✔ Successfully installed plugin: my-first-plugin@my-marketplace (scope: user)`.
 
-   The output lists `my-first-plugin@my-marketplace` with `Status: ✔ enabled`.
+Inside a session, `/plugin marketplace add ./my-marketplace` registers the marketplace the same way. `/plugin install my-first-plugin@my-marketplace` opens the plugin's details in the `/plugin` panel, where you install it. For that flow, see [Install and manage plugins](./install.md).
 
-   To see what the plugin loaded, show its details.
+**5. Confirm the plugin loaded**
 
-   ```bash theme={null}
-   claude plugin details my-first-plugin
-   ```
+List installed plugins.
 
-   The `Component inventory` section reads `Skills (1)  hello`.
+```bash theme={null}
+claude plugin list
+```
 
-   To run the skill, start a session and enter `/my-first-plugin:hello`. Claude greets you. The command has the plugin's name as a prefix, as every plugin skill's name does.
+The output lists `my-first-plugin@my-marketplace` with `Status: ✔ enabled`.
+
+To see what the plugin loaded, show its details.
+
+```bash theme={null}
+claude plugin details my-first-plugin
+```
+
+The `Component inventory` section reads `Skills (1)  hello`.
+
+To run the skill, start a session and enter `/my-first-plugin:hello`. Claude greets you. The command has the plugin's name as a prefix, as every plugin skill's name does.
 
 ## Add plugin entries
 

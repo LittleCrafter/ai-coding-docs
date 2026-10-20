@@ -9,6 +9,7 @@
 This section covers using a gateway product your organization already runs, rather than [Claude apps gateway](./claude-apps-gateway.md). For what a gateway is, how it sits between Claude Code and your provider, and how to choose between Claude apps gateway and another product, see the [gateway overview](./gateways.md).
 
 > [!NOTE]
+>
 > * If you're a developer connecting to an existing gateway: [connect Claude Code to your gateway](./llm-gateway-connect.md)
 > * If you're an admin rolling out a gateway for your organization: [deploy and distribute a gateway](./llm-gateway-rollout.md)
 > * If you're configuring a gateway product: the [gateway compatibility guide](./llm-gateway-protocol.md)

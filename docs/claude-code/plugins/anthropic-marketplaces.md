@@ -11,6 +11,7 @@ Anthropic publishes three general-purpose plugin marketplaces for Claude Code: [
 Use this page to distinguish the three marketplaces and to find where to check whether the official one holds a given plugin.
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **How to install a plugin**: see [Install plugins](./install.md)

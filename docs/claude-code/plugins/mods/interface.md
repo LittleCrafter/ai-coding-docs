@@ -10,15 +10,14 @@ A mod can draw its own interface in Claude Code and change parts of the interfac
 
 This map shows where a mod can draw in a terminal session:
 
-<img src="../../media/images/mods-screen-map.svg" alt="Map of a Claude Code terminal session in fullscreen rendering. A mod can add a pane as a sidebar on the right, a toast at the top right of the transcript, a log line in the transcript, a band above the prompt, and a status line under the prompt. A mod can redraw messages, tool call rows, and the spinner. The prompt is Claude Code's own." width="600" height="336" />
-
-<img src="../../media/images/mods-screen-map-dark.svg" alt="Map of a Claude Code terminal session in fullscreen rendering. A mod can add a pane as a sidebar on the right, a toast at the top right of the transcript, a log line in the transcript, a band above the prompt, and a status line under the prompt. A mod can redraw messages, tool call rows, and the spinner. The prompt is Claude Code's own." width="600" height="336" />
+![Map of a Claude Code terminal session in fullscreen rendering. A mod can add a pane as a sidebar on the right, a toast at the top right of the transcript, a log line in the transcript, a band above the prompt, and a status line under the prompt. A mod can redraw messages, tool call rows, and the spinner. The prompt is Claude Code's own.](../../media/images/mods-screen-map.svg)
 
 In a narrower terminal, the pane sits above the prompt instead of beside the transcript.
 
 Build your [first mod](./create.md) before you start here. Begin with the worked example, which builds a pane with two tabs and a counter, then read the section for each piece you want to change.
 
 > [!NOTE]
+>
 > To look up one prop or limit, see the [reference](./reference.md#render-sites).
 
 ## Build a pane with tabs
@@ -29,151 +28,152 @@ The finished mod looks like this. The recording opens the pane, switches to the 
 
 [Video demo](https://mintcdn.com/claude-code/dgiVO_Od1X1faduV/images/mods-hello-tabs-light.mp4?fit=max&auto=format&n=dgiVO_Od1X1faduV&q=85&s=49d520094d87b5b44bfe50fa49677f06)
 
-[Video demo](https://mintcdn.com/claude-code/dgiVO_Od1X1faduV/images/mods-hello-tabs-dark.mp4?fit=max&auto=format&n=dgiVO_Od1X1faduV&q=85&s=ff7a14d713d6e5d3b0000efa8522ea4b)
-
 The tabs are two buttons in a row. The mod keeps track of which one is active and draws that tab's content under the row.
 
-1. **Create the plugin**
+**1. Create the plugin**
 
-   A mod is a plugin with a manifest, a `hooks.json` that points to your code, and the code file. [Create a mod](./create.md#write-a-mod-yourself) explains each one. Create a directory named `hello-tabs` with `.claude-plugin` and `hooks` directories inside it, then save the first two files.
+A mod is a plugin with a manifest, a `hooks.json` that points to your code, and the code file. [Create a mod](./create.md#write-a-mod-yourself) explains each one. Create a directory named `hello-tabs` with `.claude-plugin` and `hooks` directories inside it, then save the first two files.
 
-   Save the manifest as `hello-tabs/.claude-plugin/plugin.json`:
+Save the manifest as `hello-tabs/.claude-plugin/plugin.json`:
 
-   ```json hello-tabs/.claude-plugin/plugin.json theme={null}
-   {
-     "name": "hello-tabs",
-     "version": "0.1.0",
-     "description": "Opens a pane with two tabs and a counter",
-     "author": { "name": "Your Name" }
-   }
-   ```
+```json hello-tabs/.claude-plugin/plugin.json theme={null}
+{
+  "name": "hello-tabs",
+  "version": "0.1.0",
+  "description": "Opens a pane with two tabs and a counter",
+  "author": { "name": "Your Name" }
+}
+```
 
-   Name your entry point in `hello-tabs/hooks/hooks.json`:
+Name your entry point in `hello-tabs/hooks/hooks.json`:
 
-   ```json hello-tabs/hooks/hooks.json theme={null}
-   {
-     "modules": ["./register.js"]
-   }
-   ```
-2. **Write the code**
+```json hello-tabs/hooks/hooks.json theme={null}
+{
+  "modules": ["./register.js"]
+}
+```
 
-   This list says what each hook does, in the order they appear in the code:
+**2. Write the code**
 
-   * Adds the `/hello-tabs` command, and loads the count an earlier session saved
-   * Opens the pane when you run that command
-   * Draws the pane's content: the row of tabs and the open tab's body
+This list says what each hook does, in the order they appear in the code:
 
-   Two module-level variables, `tab` and `count`, hold the pane's state.
+* Adds the `/hello-tabs` command, and loads the count an earlier session saved
+* Opens the pane when you run that command
+* Draws the pane's content: the row of tabs and the open tab's body
 
-   Save this as `hello-tabs/hooks/register.js`:
+Two module-level variables, `tab` and `count`, hold the pane's state.
 
-   ```javascript hello-tabs/hooks/register.js theme={null}
-   // The pane's id, used to open the pane and to recognize it when drawing
-   const PANE = 'hello-tabs'
+Save this as `hello-tabs/hooks/register.js`:
 
-   // What the pane shows: which tab is open, and the counter's value
-   let tab = 'one'
-   let count = 0
+```javascript hello-tabs/hooks/register.js theme={null}
+// The pane's id, used to open the pane and to recognize it when drawing
+const PANE = 'hello-tabs'
 
-   export function register(on) {
-     // Runs before your first prompt, and again after a reload
-     on('session.start', async ($, e, next) => {
-       await $.command.register({ name: 'hello-tabs', description: 'Open the hello-tabs pane' })
-       // Load the count an earlier session saved, if there is one
-       const saved = await $.store.get('count')
-       if (typeof saved === 'number') count = saved
-       return next(e)
-     })
+// What the pane shows: which tab is open, and the counter's value
+let tab = 'one'
+let count = 0
 
-     // Runs when you type /hello-tabs
-     on('command.run', { command: 'hello-tabs' }, async ($) => {
-       // Open the pane, give it the keyboard, and let Esc close it
-       await $.ui.open({ id: PANE, title: 'Hello tabs', focus: true, closeOnEscape: true })
-       // Print nothing in the transcript
-       return {}
-     })
+export function register(on) {
+  // Runs before your first prompt, and again after a reload
+  on('session.start', async ($, e, next) => {
+    await $.command.register({ name: 'hello-tabs', description: 'Open the hello-tabs pane' })
+    // Load the count an earlier session saved, if there is one
+    const saved = await $.store.get('count')
+    if (typeof saved === 'number') count = saved
+    return next(e)
+  })
 
-     // Runs each time Claude Code draws a pane
-     on('ui.render', { component: 'Pane' }, async ($, e, next) => {
-       // Leave other mods' panes alone
-       if (e.requestId !== PANE) return next(e)
-       // Get the elements this app can draw
-       const { Box, Text, Button } = $.ui.resolve(e)
-       // Ask Claude Code to run this hook again
-       const redraw = () => $.ui.invalidate('ui.render')
+  // Runs when you type /hello-tabs
+  on('command.run', { command: 'hello-tabs' }, async ($) => {
+    // Open the pane, give it the keyboard, and let Esc close it
+    await $.ui.open({ id: PANE, title: 'Hello tabs', focus: true, closeOnEscape: true })
+    // Print nothing in the transcript
+    return {}
+  })
 
-       // One tab: a button that switches to its tab when pressed
-       const tabButton = (name, label, hotkey) =>
-         Button({
-           key: 'tab-' + name,
-           label,
-           hotkey,
-           plain: true,
-           // Dim the tab that isn't open
-           dimColor: tab !== name,
-           onPress: () => {
-             tab = name
-             redraw()
-           },
-         })
+  // Runs each time Claude Code draws a pane
+  on('ui.render', { component: 'Pane' }, async ($, e, next) => {
+    // Leave other mods' panes alone
+    if (e.requestId !== PANE) return next(e)
+    // Get the elements this app can draw
+    const { Box, Text, Button } = $.ui.resolve(e)
+    // Ask Claude Code to run this hook again
+    const redraw = () => $.ui.invalidate('ui.render')
 
-       // What goes under the tabs, depending on which one is open
-       const body =
-         tab === 'one'
-           ? [Text({ children: ['This is the first tab.'] })]
-           : [
-               Box({
-                 flexDirection: 'row',
-                 columnGap: 2,
-                 children: [
-                   Button({
-                     key: 'more',
-                     label: 'Add one',
-                     hotkey: 'a',
-                     onPress: async () => {
-                       count += 1
-                       redraw()
-                       // Save the count so it's there after a restart
-                       await $.store.set('count', count)
-                     },
-                   }),
-                   Text({ children: ['Count: ' + count] }),
-                 ],
-               }),
-             ]
+    // One tab: a button that switches to its tab when pressed
+    const tabButton = (name, label, hotkey) =>
+      Button({
+        key: 'tab-' + name,
+        label,
+        hotkey,
+        plain: true,
+        // Dim the tab that isn't open
+        dimColor: tab !== name,
+        onPress: () => {
+          tab = name
+          redraw()
+        },
+      })
 
-       // The whole pane: the row of tabs, a blank line, then the body
-       return Box({
-         flexDirection: 'column',
-         children: [
-           Box({
-             flexDirection: 'row',
-             columnGap: 3,
-             children: [tabButton('one', 'One', '1'), tabButton('two', 'Two', '2')],
-           }),
-           Text({ children: [' '] }),
-           ...body,
-         ],
-       })
-     })
-   }
-   ```
+    // What goes under the tabs, depending on which one is open
+    const body =
+      tab === 'one'
+        ? [Text({ children: ['This is the first tab.'] })]
+        : [
+            Box({
+              flexDirection: 'row',
+              columnGap: 2,
+              children: [
+                Button({
+                  key: 'more',
+                  label: 'Add one',
+                  hotkey: 'a',
+                  onPress: async () => {
+                    count += 1
+                    redraw()
+                    // Save the count so it's there after a restart
+                    await $.store.set('count', count)
+                  },
+                }),
+                Text({ children: ['Count: ' + count] }),
+              ],
+            }),
+          ]
 
-   Each hook also does something the code doesn't make plain:
+    // The whole pane: the row of tabs, a blank line, then the body
+    return Box({
+      flexDirection: 'column',
+      children: [
+        Box({
+          flexDirection: 'row',
+          columnGap: 3,
+          children: [tabButton('one', 'One', '1'), tabButton('two', 'Two', '2')],
+        }),
+        Text({ children: [' '] }),
+        ...body,
+      ],
+    })
+  })
+}
+```
 
-   * **[`session.start`](./reference.md#session)** also reads the saved count from [`$.store`](#keep-state), a key-value store that persists between sessions.
-   * **[`command.run`](./api.md#add-a-command)** only tells Claude Code the pane exists. Opening a pane draws nothing by itself: Claude Code then fires `ui.render` to ask what goes in it.
-   * **`ui.render`** returns the element tree, a `Box` that holds other boxes, text, and buttons, and builds it again from `tab` and `count` each time it runs.
+Each hook also does something the code doesn't make plain:
 
-   Pressing a button runs its `onPress` callback, which changes a variable and calls `redraw`. Claude Code then runs the `ui.render` hook again, and the hook builds a new tree from the new values. Every interactive drawing uses that render cycle: a callback changes state, and the hook renders again from the new state.
-3. **Open the pane**
+* **[`session.start`](./reference.md#session)** also reads the saved count from [`$.store`](#keep-state), a key-value store that persists between sessions.
+* **[`command.run`](./api.md#add-a-command)** only tells Claude Code the pane exists. Opening a pane draws nothing by itself: Claude Code then fires `ui.render` to ask what goes in it.
+* **`ui.render`** returns the element tree, a `Box` that holds other boxes, text, and buttons, and builds it again from `tab` and `count` each time it runs.
 
-   In your shell, start Claude Code with `claude --plugin-dir ./hello-tabs`. At the Claude Code prompt, run `/hello-tabs`. A pane opens with `1: One` and `2: Two` across the top. Press `2`, then press `a`, the hotkey for **Add one**, a few times. The count rises.
-4. **Check that the count was saved**
+Pressing a button runs its `onPress` callback, which changes a variable and calls `redraw`. Claude Code then runs the `ui.render` hook again, and the hook builds a new tree from the new values. Every interactive drawing uses that render cycle: a callback changes state, and the hook renders again from the new state.
 
-   Press Esc to close the pane, then exit the session. In your shell, start Claude Code again with the same `claude --plugin-dir ./hello-tabs` command, and at the Claude Code prompt run `/hello-tabs`. The count is where you left it.
+**3. Open the pane**
 
-   To clear the count, have the mod call `$.store.delete('count')`. [Keep state](#keep-state) covers how long each kind of value lasts.
+In your shell, start Claude Code with `claude --plugin-dir ./hello-tabs`. At the Claude Code prompt, run `/hello-tabs`. A pane opens with `1: One` and `2: Two` across the top. Press `2`, then press `a`, the hotkey for **Add one**, a few times. The count rises.
+
+**4. Check that the count was saved**
+
+Press Esc to close the pane, then exit the session. In your shell, start Claude Code again with the same `claude --plugin-dir ./hello-tabs` command, and at the Claude Code prompt run `/hello-tabs`. The count is where you left it.
+
+To clear the count, have the mod call `$.store.delete('count')`. [Keep state](#keep-state) covers how long each kind of value lasts.
 
 ## Pick where to draw
 
@@ -440,9 +440,7 @@ If a tree uses an element the app doesn't have, a prop an element doesn't take, 
 
 In a session started with `--plugin-dir`, a transcript line says so, such as `ui.render (Pane) refused: Text prop "bogusProp" is not allowed; the engine drew its own`. The [debug log](./troubleshoot.md#read-the-debug-log) records it as `ui.render (Pane): a hook returned a tree that does not validate` with the same reason. Nothing else appears in the session, so when a drawing doesn't show up, check that line or the log.
 
-<h3 id="link-in-the-desktop-app">
-  `Link` in the Desktop app and VS Code
-</h3>
+### `Link` in the Desktop app and VS Code
 
 In the Desktop app and the VS Code extension, a `Link` draws as plain text unless its `href` meets these requirements:
 
@@ -452,9 +450,7 @@ In the Desktop app and the VS Code extension, a `Link` draws as plain text unles
 
 In the terminal, these requirements don't apply.
 
-<h3 id="when-a-client-fails">
-  When a `Client` fails
-</h3>
+### When a `Client` fails
 
 In the terminal, when the file a `Client` runs fails, a dimmed line such as `my-mod: Client client/spinner.js: boom` takes the `Client`'s place, and the rest of your drawing still shows.
 
@@ -498,7 +494,7 @@ on('ui.render', { component: 'Pane' }, async ($, e, next) => {
 
 In the terminal, the pane shows the grid:
 
-<img src="../../media/images/mods-heat-map.svg" alt="A pane in the terminal that holds a small grid of colored blocks, two rows of three. The top row is green, amber, and red. The bottom row is green, green, and amber." width="360" height="132" />
+![A pane in the terminal that holds a small grid of colored blocks, two rows of three. The top row is green, amber, and red. The bottom row is green, green, and amber.](../../media/images/mods-heat-map.svg)
 
 The `rows` array is the part you'd change, and `cellsOf` turns it into the packed string. The hook draws only in a pane whose `id` is `heat`, so open one with `$.ui.open({ id: 'heat' })` from a command, as the [`hello-tabs` example](#build-a-pane-with-tabs) opens its pane.
 
@@ -514,9 +510,7 @@ When the user presses a button, types into a field, or picks from a list your mo
 
 A test presses or types into a control by its `key`, so give each control one. Each use of a control also fires [`ui.press`, `ui.input`, or `ui.select`](./reference.md#interface) with the `key` in `e.element`, and another mod can handle those events. Its hook runs before your callback, so it sees what the user types into your `Input` and can change it or answer in place of your callback. The mods API has no method that presses another mod's button.
 
-<h3 id="know-which-keys-your-mod-can-receive">
-  Keyboard focus and hotkeys
-</h3>
+### Keyboard focus and hotkeys
 
 Your mod never reads the keyboard itself. The user presses a key, Claude Code decides which of your controls it's for, and that control's callback runs. Apart from a [digit hotkey on the band](./reference.md#elements), that happens only while your pane or band has keyboard focus. The rest of the time, keys go to the prompt.
 
@@ -661,9 +655,7 @@ These props make up the field's line, `Note: Type a note and press Enter ⏎ add
 
 Submitting an `Input` doesn't start a turn unless your callback calls [`$.prompt.submit`](./api.md#start-a-turn-from-a-background-job).
 
-<h2 id="redraw-when-something-changes">
-  Redraw a site
-</h2>
+## Redraw a site
 
 A drawing is a snapshot: it shows what your `ui.render` hook returned the last time the hook ran. To show something new, the hook has to run again. Claude Code runs it again for some changes, and your mod asks for the rest.
 
@@ -808,9 +800,7 @@ To move `count` in `hello-tabs` into `$.state`, change every line that uses it:
 
 Keep `redraw` for the tab buttons, because `tab` is still a variable.
 
-<h3 id="load-a-saved-value-again-after-clear">
-  Load a saved value again after `/clear`
-</h3>
+### Load a saved value again after `/clear`
 
 If your mod copies a saved value from `$.store` into `$.state` at `session.start`, it has to copy it again after `/clear`, `/resume`, or `/branch`. Those commands reset every `$.state` value to its default, and `session.start` doesn't fire again. [`classic.SessionStart`](./events.md#hook-the-settings-hook-events) does fire after each of them, with `e.source` set to `clear`, `resume`, or `fork`, so copy the value again in a hook on it. Otherwise your drawing shows the default, and a callback that saves the `$.state` value writes the default over what you stored.
 

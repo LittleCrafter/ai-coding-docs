@@ -97,9 +97,8 @@ options = ClaudeAgentOptions(
 )
 ```
 
-<a id="sampling-parameters"></a>
-
 > [!NOTE]
+>
 > The [Messages API](https://platform.claude.com/docs/en/api/messages) request parameters `temperature`, `top_p`, and `max_tokens` have no fields on the options object in either language. Set the [effort level](./agent-loop.md#effort-level) or a [spend cap](#limit-turns-and-spend) instead, or call the Messages API when you need those parameters directly.
 
 ## Set environment variables
@@ -254,6 +253,7 @@ asyncio.run(main())
 On the Claude API, the program prints `First turn model: claude-sonnet-5`, then `Second turn model: claude-opus-5` after the switch.
 
 > [!NOTE]
+>
 > Each model has its own prompt cache, so after a mid-session switch the next request recomputes the full conversation uncached at the new model's rates. For more information, see [Switching models](../prompt-caching.md#switching-models).
 
 ## Configure specific features

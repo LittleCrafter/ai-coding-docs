@@ -11,6 +11,7 @@ Publishing a Claude Code plugin means listing it in a marketplace, a JSON catalo
 This page is for the author of a working plugin who is ready to share it.
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **Your plugin isn't finished yet**: start with [Create a plugin](./create.md)
@@ -34,30 +35,35 @@ Auto-update is a per-marketplace setting on the user's side that fetches new ver
 
 The name, the version, validation, and an install from a marketplace decide whether a release works for the people who install it. Check them before the first release and again before each later one.
 
-1. **Choose a permanent name**
+**1. Choose a permanent name**
 
-   Users install, enable, and configure your plugin by `name@marketplace`, so a renamed plugin is a different plugin to every existing install. Choose a kebab-case name such as `deploy-helper`, because `claude plugin validate` warns on other forms, and treat it as permanent. Set `displayName` in `plugin.json` for the label users see.
-2. **Decide how you'll version**
+Users install, enable, and configure your plugin by `name@marketplace`, so a renamed plugin is a different plugin to every existing install. Choose a kebab-case name such as `deploy-helper`, because `claude plugin validate` warns on other forms, and treat it as permanent. Set `displayName` in `plugin.json` for the label users see.
 
-   If you set `version` in `plugin.json` and later push commits without changing it, `claude plugin update` prints `<name> is already at the latest version (1.0.0).` and users keep the old copy. Either increment `version` on every release, or omit it in a git-hosted marketplace so Claude Code uses the commit SHA instead. See [Versions and updates](./loading.md#versions-and-updates).
-3. **Validate**
+**2. Decide how you'll version**
 
-   In your shell, run `claude plugin validate --strict ./your-plugin`. A clean run prints `✔ Validation passed`.
+If you set `version` in `plugin.json` and later push commits without changing it, `claude plugin update` prints `<name> is already at the latest version (1.0.0).` and users keep the old copy. Either increment `version` on every release, or omit it in a git-hosted marketplace so Claude Code uses the commit SHA instead. See [Versions and updates](./loading.md#versions-and-updates).
 
-   * **In CI**: keep `--strict`, which also fails the run with exit code 1 on warnings such as an unknown manifest field or a missing `version`. Drop `--strict` if you chose to omit `version` in the previous step.
-   * **Paths**: validation reports component paths that don't start with `./`. Inside hook commands and MCP server configs, refer to files as `${CLAUDE_PLUGIN_ROOT}/...`. See [path rules](./manifest-reference.md#path-rules).
-4. **Install it from a local marketplace**
+**3. Validate**
 
-   In your shell, add a local marketplace that lists the plugin with `claude plugin marketplace add ./path-to-marketplace`, install the plugin from it, and start a session to confirm it loads.
+In your shell, run `claude plugin validate --strict ./your-plugin`. A clean run prints `✔ Validation passed`.
 
-   * For the smallest marketplace that works, see [Create a marketplace](./create-marketplace.md).
-   * To know whether an install loads your source directory or a cached copy, see [In-place and copied plugins](./loading.md#in-place-and-copied-plugins).
-5. **Fill in the metadata users see**
+* **In CI**: keep `--strict`, which also fails the run with exit code 1 on warnings such as an unknown manifest field or a missing `version`. Drop `--strict` if you chose to omit `version` in the previous step.
+* **Paths**: validation reports component paths that don't start with `./`. Inside hook commands and MCP server configs, refer to files as `${CLAUDE_PLUGIN_ROOT}/...`. See [path rules](./manifest-reference.md#path-rules).
 
-   Set `description`, `author`, `homepage`, and `repository` in `plugin.json`, and add a `README.md` at the plugin root. `homepage` must parse as a URL. The [manifest reference](./manifest-reference.md#fields) lists every field.
-6. **Run your eval suite**
+**4. Install it from a local marketplace**
 
-   If you have an eval suite, run `claude plugin eval` in your shell. It runs the plugin's test cases and scores the results, which catches regressions when you change the plugin. See [Test plugins with evals](../plugin-evals.md).
+In your shell, add a local marketplace that lists the plugin with `claude plugin marketplace add ./path-to-marketplace`, install the plugin from it, and start a session to confirm it loads.
+
+* For the smallest marketplace that works, see [Create a marketplace](./create-marketplace.md).
+* To know whether an install loads your source directory or a cached copy, see [In-place and copied plugins](./loading.md#in-place-and-copied-plugins).
+
+**5. Fill in the metadata users see**
+
+Set `description`, `author`, `homepage`, and `repository` in `plugin.json`, and add a `README.md` at the plugin root. `homepage` must parse as a URL. The [manifest reference](./manifest-reference.md#fields) lists every field.
+
+**6. Run your eval suite**
+
+If you have an eval suite, run `claude plugin eval` in your shell. It runs the plugin's test cases and scores the results, which catches regressions when you change the plugin. See [Test plugins with evals](../plugin-evals.md).
 
 ## Share a plugin without a marketplace
 
@@ -116,9 +122,7 @@ Users receive a release when they ask for it or when auto-update is on for your 
 
 [Install plugins](./install.md) covers the user-side commands, and [when auto-update runs](./loading.md#when-auto-update-runs) covers the timing.
 
-<h2 id="submit-to-anthropics-directory">
-  Submit to Anthropic's directory
-</h2>
+## Submit to Anthropic's directory
 
 [Anthropic's directory](https://claude.ai/directory) is the catalog people browse on claude.ai and in Cowork to add plugins and connectors. One listing there reaches people on claude.ai, in Cowork, and in Claude Code. You submit from the developer portal at [claude.ai/directory/manage](https://claude.ai/directory/manage), and [Submit a plugin](https://claude.com/docs/plugins/submit#submit-a-plugin) on claude.com walks through the portal.
 
@@ -126,20 +130,23 @@ Anthropic's official marketplace, `claude-plugins-official`, doesn't take submis
 
 To submit a plugin:
 
-1. **Confirm you can submit**
+**1. Confirm you can submit**
 
-   Submitting requires a paid claude.ai plan. On Pro and Max you submit from your own account. On Team and Enterprise, an Owner can submit, and on Enterprise an Owner can also grant the **Directory** permission to other members through a custom role under **Organization settings > Roles**. See [Confirm you can submit to the directory](https://claude.com/docs/directory/publish#confirm-you-can-submit-to-the-directory).
-2. **Validate the plugin locally**
+Submitting requires a paid claude.ai plan. On Pro and Max you submit from your own account. On Team and Enterprise, an Owner can submit, and on Enterprise an Owner can also grant the **Directory** permission to other members through a custom role under **Organization settings > Roles**. See [Confirm you can submit to the directory](https://claude.com/docs/directory/publish#confirm-you-can-submit-to-the-directory).
 
-   Run `claude plugin validate ./your-plugin --strict` in your shell. Replace `./your-plugin` with the path to your plugin directory. The command catches manifest errors locally; [plugin validate](./cli-reference.md#plugin-validate) lists which files each run reads. The portal applies additional directory rules that the CLI doesn't check, so a clean local run doesn't guarantee a clean portal validation.
+**2. Validate the plugin locally**
 
-   The [plugin pre-submission checklist](https://claude.com/docs/plugins/pre-submission-checklist#run-the-checks-before-you-submit) on claude.com has the checks to run and fix before you submit.
-3. **Check what loads where**
+Run `claude plugin validate ./your-plugin --strict` in your shell. Replace `./your-plugin` with the path to your plugin directory. The command catches manifest errors locally; [plugin validate](./cli-reference.md#plugin-validate) lists which files each run reads. The portal applies additional directory rules that the CLI doesn't check, so a clean local run doesn't guarantee a clean portal validation.
 
-   Some plugin components are Claude Code-only and don't load on claude.ai or in Cowork. The [component support table](https://claude.com/docs/plugins/platform-support#compare-component-support-by-app) lists each component by app, so you know what users outside Claude Code will get.
-4. **Submit in the developer portal**
+The [plugin pre-submission checklist](https://claude.com/docs/plugins/pre-submission-checklist#run-the-checks-before-you-submit) on claude.com has the checks to run and fix before you submit.
 
-   Open the developer portal at [claude.ai/directory/manage](https://claude.ai/directory/manage) and follow [Submit a plugin](https://claude.com/docs/plugins/submit#submit-a-plugin) on claude.com.
+**3. Check what loads where**
+
+Some plugin components are Claude Code-only and don't load on claude.ai or in Cowork. The [component support table](https://claude.com/docs/plugins/platform-support#compare-component-support-by-app) lists each component by app, so you know what users outside Claude Code will get.
+
+**4. Submit in the developer portal**
+
+Open the developer portal at [claude.ai/directory/manage](https://claude.ai/directory/manage) and follow [Submit a plugin](https://claude.com/docs/plugins/submit#submit-a-plugin) on claude.com.
 
 The rest of the process is documented on claude.com:
 

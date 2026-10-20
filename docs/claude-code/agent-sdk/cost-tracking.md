@@ -10,9 +10,8 @@ The Claude Agent SDK provides detailed token usage information for each interact
 
 For complete API documentation, see the [TypeScript SDK reference](./typescript.md) and [Python SDK reference](./python.md).
 
-<a id="estimates-not-billing"></a>
-
 > [!WARNING]
+>
 > The `total_cost_usd` and `costUSD` fields are client-side estimates, not authoritative billing data. The SDK computes them locally from a price table bundled at build time, unless a [`modelPricing`](../settings-reference.md#modelpricing) table is in effect. They can drift from what you are actually billed when:
 >
 > * pricing changes
@@ -40,20 +39,19 @@ Cost tracking depends on understanding how the SDK scopes usage data:
 
 The following diagram shows the message stream from a single `query()` call, with token usage reported at each step and the cumulative estimate at the end:
 
-<img src="../media/images/agent-sdk/message-usage-flow.svg" alt="Diagram showing a query producing two steps of messages. Step 1 has four assistant messages sharing the same ID and usage (count once), Step 2 has one assistant message with a new ID, and the final result message shows the estimated total_cost_usd." width="760" height="520" />
+![Diagram showing a query producing two steps of messages. Step 1 has four assistant messages sharing the same ID and usage (count once), Step 2 has one assistant message with a new ID, and the final result message shows the estimated total\_cost\_usd.](../media/images/agent-sdk/message-usage-flow.svg)
 
-<img src="../media/images/agent-sdk/message-usage-flow-dark.svg" alt="Diagram showing a query producing two steps of messages. Step 1 has four assistant messages sharing the same ID and usage (count once), Step 2 has one assistant message with a new ID, and the final result message shows the estimated total_cost_usd." width="760" height="520" />
+**1. Each step produces assistant messages**
 
-1. **Each step produces assistant messages**
+When Claude responds, it sends one or more assistant messages. In TypeScript, each assistant message contains a nested `BetaMessage` (accessed via `message.message`) with an `id` and a [`usage`](https://platform.claude.com/docs/en/api/messages) object with token counts (`input_tokens`, `output_tokens`). In Python, the `AssistantMessage` dataclass exposes the same data directly via `message.usage` and `message.message_id`. When Claude uses multiple tools in one turn, all messages in that turn share the same ID, so deduplicate by ID to avoid double-counting.
 
-   When Claude responds, it sends one or more assistant messages. In TypeScript, each assistant message contains a nested `BetaMessage` (accessed via `message.message`) with an `id` and a [`usage`](https://platform.claude.com/docs/en/api/messages) object with token counts (`input_tokens`, `output_tokens`). In Python, the `AssistantMessage` dataclass exposes the same data directly via `message.usage` and `message.message_id`. When Claude uses multiple tools in one turn, all messages in that turn share the same ID, so deduplicate by ID to avoid double-counting.
-2. **The result message provides the cumulative estimate**
+**2. The result message provides the cumulative estimate**
 
-   When the `query()` call completes, the SDK emits a result message with `total_cost_usd` and cumulative `usage`, typed as [`SDKResultMessage`](./typescript.md#sdkresultmessage) in TypeScript and [`ResultMessage`](./python.md#resultmessage) in Python. If you only need the estimated total, you can ignore the per-step usage and read this single value.
+When the `query()` call completes, the SDK emits a result message with `total_cost_usd` and cumulative `usage`, typed as [`SDKResultMessage`](./typescript.md#sdkresultmessage) in TypeScript and [`ResultMessage`](./python.md#resultmessage) in Python. If you only need the estimated total, you can ignore the per-step usage and read this single value.
 
-   If you make multiple independent `query()` calls, each result reflects only the cost of that individual call. A call that resumes a session also counts the session's earlier spend.
+If you make multiple independent `query()` calls, each result reflects only the cost of that individual call. A call that resumes a session also counts the session's earlier spend.
 
-   In streaming input mode, each turn emits its own result message. See [Track costs in streaming input mode](#track-costs-in-streaming-input-mode) for how to read call totals in that mode.
+In streaming input mode, each turn emits its own result message. See [Track costs in streaming input mode](#track-costs-in-streaming-input-mode) for how to read call totals in that mode.
 
 ## Track costs in streaming input mode
 
@@ -146,6 +144,7 @@ The examples in this section use TypeScript field names. In Python, the equivale
 Each assistant message contains a nested `BetaMessage` (accessed via `message.message`) with an `id` and `usage` object with token counts. When Claude uses tools in parallel, multiple messages share the same `id` with identical usage data. Track which IDs you've already counted and skip duplicates to avoid inflated totals.
 
 > [!WARNING]
+>
 > The deduplicated per-step values are accurate for input and cache tokens. Per-step `output_tokens` is a placeholder, so [read output tokens from the result message](#read-output-tokens-from-the-result-message).
 
 The following example accumulates input tokens across all steps, counting each unique main-loop message ID only once and skipping subagent messages, and reads the output total from the result message, which covers the main loop:

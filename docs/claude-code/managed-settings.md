@@ -14,38 +14,36 @@ This page is for the administrator who deploys managed settings or debugs why on
 
 This is the quickest way to put a policy on each machine: a `managed-settings.json` file. If you haven't picked how to deliver managed settings yet, or your devices are under MDM or developers run cloud sessions, read [Choose a delivery mechanism](#choose-a-delivery-mechanism) first.
 
-1. **Write managed-settings.json**
+**1. Write managed-settings.json**
 
-   Write a `managed-settings.json` that holds the keys you've decided to enforce, in the same JSON shape as `settings.json`. The [Decide what to enforce](./admin-setup.md#decide-what-to-enforce) table lists the keys behind each control, and each entry in the [settings reference](./settings-reference.md) says whether a managed source can set it. This file blocks two file reads, turns off bypass mode, and makes Claude Code ignore permission rules from user, project, and local files and from `--allowedTools`:
+Write a `managed-settings.json` that holds the keys you've decided to enforce, in the same JSON shape as `settings.json`. The [Decide what to enforce](./admin-setup.md#decide-what-to-enforce) table lists the keys behind each control, and each entry in the [settings reference](./settings-reference.md) says whether a managed source can set it. This file blocks two file reads, turns off bypass mode, and makes Claude Code ignore permission rules from user, project, and local files and from `--allowedTools`:
 
-   ```json managed-settings.json theme={null}
-   {
-     "permissions": {
-       "deny": [
-         "Read(./.env)",
-         "Read(./secrets/**)"
-       ],
-       "disableBypassPermissionsMode": "disable"
-     },
-     "allowManagedPermissionRulesOnly": true
-   }
-   ```
+```json managed-settings.json theme={null}
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)"
+    ],
+    "disableBypassPermissionsMode": "disable"
+  },
+  "allowManagedPermissionRulesOnly": true
+}
+```
 
-   For a fuller example that shows the shape of more managed keys, including the login method, models, MCP servers, and marketplaces, see [An organization's managed settings](./settings-example.md#an-organizations-managed-settings).
-2. **Place the file on each machine**
+For a fuller example that shows the shape of more managed keys, including the login method, models, MCP servers, and marketplaces, see [An organization's managed settings](./settings-example.md#an-organizations-managed-settings).
 
-   Save the file as `managed-settings.json` in the system directory for the operating system, using whatever tooling already places files on your fleet:
+**2. Place the file on each machine**
 
-   * **macOS**: `/Library/Application Support/ClaudeCode/managed-settings.json`
-   * **Linux and WSL**: `/etc/claude-code/managed-settings.json`
-   * **Windows**: `C:\Program Files\ClaudeCode\managed-settings.json`
-3. **Confirm the policy applied**
+Save the file as `managed-settings.json` in the system directory for the operating system, using whatever tooling already places files on your fleet:
 
-   On one machine, run `/status` inside Claude Code. The `Setting sources` line shows `Enterprise managed settings (file)`. Roll out to the rest of the fleet after that; [Check that a policy is in force](#check-that-a-policy-is-in-force) covers what to look at when the line is missing.
+* **macOS**: `/Library/Application Support/ClaudeCode/managed-settings.json`
+* **Linux and WSL**: `/etc/claude-code/managed-settings.json`
+* **Windows**: `C:\Program Files\ClaudeCode\managed-settings.json`
 
-<a id="managed-settings-delivery"></a>
+**3. Confirm the policy applied**
 
-<a id="delivery-mechanisms"></a>
+On one machine, run `/status` inside Claude Code. The `Setting sources` line shows `Enterprise managed settings (file)`. Roll out to the rest of the fleet after that; [Check that a policy is in force](#check-that-a-policy-is-in-force) covers what to look at when the line is missing.
 
 ## Choose a delivery mechanism
 
@@ -95,8 +93,6 @@ A deployed policy reaches the developer's sessions as follows:
 * **Changes that need approval**: apart from the [updates that wait for the next launch](./server-managed-settings.md#fetch-and-caching-behavior), a server-managed change to a setting that [needs approval](./server-managed-settings.md#security-approval-dialogs), such as a hook or an `env` variable, waits for the developer to accept the dialog in an interactive session, and applies for the current run in a session an IDE extension or the Agent SDK hosts. Other server-managed changes apply on the next poll.
 * **Long-lived sessions**: a session left open for weeks can still lag a rollout. [`requiredMinimumVersion`](./settings-reference.md#requiredminimumversion) blocks an outdated binary from starting and doesn't end a session that's already running.
 
-<a id="format-the-policy-for-each-platform"></a>
-
 ### Where each mechanism stores the policy
 
 The keys are the same everywhere, but each mechanism stores them in a different place and shape:
@@ -122,10 +118,6 @@ When two files set the same key, Claude Code combines them by these rules:
 * **[`extraKnownMarketplaces`](./settings-reference.md#extraknownmarketplaces) and [`managedMcpServers`](./settings-reference.md#managedmcpservers)**: a later entry with the same name replaces the earlier one whole
 * **[`modelPicker`](./settings-reference.md#modelpicker)**: the later lineup replaces the earlier one whole
 
-<a id="precedence-within-the-managed-tier"></a>
-
-<a id="which-managed-source-claude-code-uses"></a>
-
 ## How Claude Code combines managed sources
 
 When your organization delivers more than one managed source to the same machine, the [`managedSourcesBehavior`](./settings-reference.md#managedsourcesbehavior) key decides what Claude Code does with the others:
@@ -147,13 +139,9 @@ Claude Code checks the sources in this order, highest priority first:
 
 This diagram shows the ranking, with examples of the cross-source keys Claude Code reads from the first three sources under either setting:
 
-<img src="media/images/managed-source-precedence.svg" alt="Diagram showing the four managed settings sources ranked from remote settings at the top through MDM, managed settings files, and the HKCU registry at the bottom. By default the first source with a policy key supplies the policy and the rest are skipped; with managedSourcesBehavior set to merge, every admin source with a policy key contributes, combined by kind of key, and the HKCU registry stays out. A side panel shows that cross-source keys such as the sandbox locks, forceRemoteSettingsRefresh, and the per-variable env merge are read from every admin source, which excludes the HKCU registry." width="680" height="330" />
+![Diagram showing the four managed settings sources ranked from remote settings at the top through MDM, managed settings files, and the HKCU registry at the bottom. By default the first source with a policy key supplies the policy and the rest are skipped; with managedSourcesBehavior set to merge, every admin source with a policy key contributes, combined by kind of key, and the HKCU registry stays out. A side panel shows that cross-source keys such as the sandbox locks, forceRemoteSettingsRefresh, and the per-variable env merge are read from every admin source, which excludes the HKCU registry.](media/images/managed-source-precedence.svg)
 
-<img src="media/images/managed-source-precedence-dark.svg" alt="Diagram showing the four managed settings sources ranked from remote settings at the top through MDM, managed settings files, and the HKCU registry at the bottom. By default the first source with a policy key supplies the policy and the rest are skipped; with managedSourcesBehavior set to merge, every admin source with a policy key contributes, combined by kind of key, and the HKCU registry stays out. A side panel shows that cross-source keys such as the sandbox locks, forceRemoteSettingsRefresh, and the per-variable env merge are read from every admin source, which excludes the HKCU registry." width="680" height="330" />
-
-<h3 id="present-admin-documents">
-  When an admin document counts as present
-</h3>
+### When an admin document counts as present
 
 In the [ranking of managed sources](#how-claude-code-combines-managed-sources), Claude Code never applies the user-writable HKCU registry beneath an admin document that is present. A document is present when:
 
@@ -223,12 +211,6 @@ A [`policyHelper`](./settings-reference.md#policyhelper) is an executable your M
 
 For which helper runs fail, and what Claude Code does when one does, see [Helper failures](./settings-reference.md#helper-failures).
 
-<a id="parent-settings-from-embedding-hosts"></a>
-
-<a id="control-policy-from-an-embedding-host"></a>
-
-<a id="merge-policy-from-an-embedding-host"></a>
-
 ### Let an embedding host add policy
 
 When another application launches Claude Code, such as Claude Desktop, an IDE extension, or an Agent SDK app, that host can pass its own managed settings through the SDK `managedSettings` option. Claude Code calls these parent settings.
@@ -281,10 +263,6 @@ A developer's own settings files, `--settings` values, and project files never o
 * **The server-managed cache**: server-managed settings come from Anthropic's servers, and an edit to the local cache [lasts only until the next successful fetch](./server-managed-settings.md#security-considerations).
 * **Other tools**: managed settings bind Claude Code only. A developer who calls the API from another tool isn't under them.
 
-<a id="verify-enforcement"></a>
-
-<a id="verify-that-a-policy-is-in-force"></a>
-
 ## Check that a policy is in force
 
 A developer reports that a policy isn't applying, or you want to confirm a rollout landed before pushing it to the fleet. Two commands on that machine answer it: `/status` shows which managed source Claude Code selected, and `claude doctor` lists what it dropped.
@@ -311,8 +289,6 @@ When the policy isn't applying, the `Setting sources` line tells you which of tw
 
   When you deployed through server-managed settings instead, run `claude doctor`, which reports the [fetch outcome](./server-managed-settings.md#verify-settings-delivery).
 * **The line names a source other than the one you deployed**: a higher-priority source is present and Claude Code ignored yours, and `Skipped sources` lists it. [How Claude Code combines managed sources](#how-claude-code-combines-managed-sources) gives the order.
-
-<a id="invalid-entries-in-managed-settings"></a>
 
 ### Find entries Claude Code dropped
 
@@ -406,8 +382,6 @@ The warning you get for an invalid field names the field and tells you what happ
 * While `network.deniedDomains` or any entry in it is invalid, Claude Code also withholds `network.allowedDomains`, so the managed allowlist grants nothing until you fix the deny list.
 * While `filesystem.denyRead`, `filesystem.denyWrite`, or any entry in either is invalid, Claude Code also withholds both `filesystem.allowRead` and `filesystem.allowWrite` until you fix the deny list.
 
-<a id="managed-only-settings"></a>
-
 ## Keys only a managed source can set
 
 Claude Code reads the following keys only from a managed source; placing them in user or project settings files has no effect.
@@ -441,6 +415,7 @@ The table covers the permission, plugin, and delivery controls. For any key not 
 | [`wslInheritsWindowsSettings`](./settings-reference.md#wslinheritswindowssettings) | When set in the HKLM registry or a file under `C:\Program Files\ClaudeCode`, have WSL read the Windows policy chain, and read `/etc/claude-code` only when [no Windows admin document is present](#present-admin-documents); the entry gives the order |
 
 > [!NOTE]
+>
 > On Team and Enterprise plans, an Owner enables or disables [Remote Control](./remote-control.md) and [cloud sessions](./claude-code-on-the-web.md) organization-wide in [Claude Code admin settings](https://claude.ai/admin-settings/claude-code). When an Owner turns Remote Control off, already-connected sessions that run Claude Code v2.1.286 or later disconnect too. Each one disconnects the next time it refreshes your organization's policy, about once an hour. For what happens in those sessions, see [`Remote Control was turned off by your organization's policy`](./remote-control.md#remote-control-was-turned-off-by-your-organizations-policy).
 >
 > Remote Control can additionally be disabled per device with the [`disableRemoteControl`](./settings-reference.md#disableremotecontrol) setting. Cloud sessions have no per-device managed settings key.

@@ -16,21 +16,25 @@ Hooks are callback functions that run your code in response to agent events, lik
 
 ## How hooks work
 
-1. **An event fires**
+**1. An event fires**
 
-   Something happens during agent execution and the SDK fires an event: a tool is about to be called (`PreToolUse`), a tool returned a result (`PostToolUse`), a subagent started or stopped, the agent is idle, or execution finished. See the [full list of events](#available-hooks).
-2. **The SDK collects registered hooks**
+Something happens during agent execution and the SDK fires an event: a tool is about to be called (`PreToolUse`), a tool returned a result (`PostToolUse`), a subagent started or stopped, the agent is idle, or execution finished. See the [full list of events](#available-hooks).
 
-   The SDK checks for hooks registered for that event type. This includes callback hooks you pass in `options.hooks` and shell command hooks from settings files when the corresponding [`settingSources`](./typescript.md#settingsource) or [`setting_sources`](./python.md#settingsource) entry is enabled, which it is for default `query()` options.
-3. **Matchers filter which hooks run**
+**2. The SDK collects registered hooks**
 
-   If a hook has a [`matcher`](#matchers) pattern (like `"Write|Edit"`), the SDK tests it against the event's target (for example, the tool name). Hooks without a matcher run for every event of that type.
-4. **Callback functions execute**
+The SDK checks for hooks registered for that event type. This includes callback hooks you pass in `options.hooks` and shell command hooks from settings files when the corresponding [`settingSources`](./typescript.md#settingsource) or [`setting_sources`](./python.md#settingsource) entry is enabled, which it is for default `query()` options.
 
-   Each matching hook's [callback function](#callback-functions) receives input about what's happening: the tool name, its arguments, the session ID, and other event-specific details.
-5. **Your callback returns a decision**
+**3. Matchers filter which hooks run**
 
-   After performing any operations (logging, API calls, validation), your callback returns an [output object](#outputs) that tells the agent what to do: allow the operation, block it, modify the input, or inject context into the conversation.
+If a hook has a [`matcher`](#matchers) pattern (like `"Write|Edit"`), the SDK tests it against the event's target (for example, the tool name). Hooks without a matcher run for every event of that type.
+
+**4. Callback functions execute**
+
+Each matching hook's [callback function](#callback-functions) receives input about what's happening: the tool name, its arguments, the session ID, and other event-specific details.
+
+**5. Your callback returns a decision**
+
+After performing any operations (logging, API calls, validation), your callback returns an [output object](#outputs) that tells the agent what to do: allow the operation, block it, modify the input, or inject context into the conversation.
 
 This example registers a `PreToolUse` hook (step 1) with a `"Write|Edit"` matcher (step 3) so the callback fires for the Write and Edit tools. When triggered, the callback receives the tool's input (step 4), checks if the file path targets a `.env` file, and returns `permissionDecision: "deny"` to block the operation (step 5):
 
@@ -133,6 +137,7 @@ for await (const message of query({
 The hook denies a Write or Edit call whose `file_path` ends in `/.env`, in any letter case. On Windows, `file_path` uses backslashes, such as `C:\project\.env`, and this hook allows a Write or Edit call to `C:\project\.env`.
 
 > [!WARNING]
+>
 > The `Write|Edit` matcher limits this hook to the Write and Edit tools. If Claude writes `.env` with a Bash command, the hook doesn't run. To block Bash writes to a file where [the sandbox runs](../sandboxing.md), see the sandbox configuration for [Python](./python.md#sandbox-configuration) or [TypeScript](./typescript.md#sandbox-configuration).
 
 ## Available hooks
@@ -247,6 +252,7 @@ Your callback returns an object with two categories of fields:
 Return `{}` to allow the operation without changes. SDK callback hooks use the same JSON output format as [Claude Code shell command hooks](../hooks.md#json-output), which documents every field and event-specific option. For the SDK type definitions, see the [TypeScript](./typescript.md#synchookjsonoutput) and [Python](./python.md#synchookjsonoutput) SDK references.
 
 > [!NOTE]
+>
 > When multiple `PreToolUse` hooks return different [decisions](../hooks.md#pretooluse-decision-control), `deny` takes priority over `defer`, which takes priority over `ask`, which takes priority over `allow`.
 
 #### Asynchronous output
@@ -274,6 +280,7 @@ const asyncHook: HookCallback = async (input, toolUseID, { signal }) => {
 | `asyncTimeout` | `number` | Optional timeout in milliseconds for the background operation |
 
 > [!NOTE]
+>
 > Async outputs can't block, modify, or inject context into the operation since the agent has already moved on. Use them only for side effects like logging, metrics, or notifications.
 
 ## Examples
@@ -328,6 +335,7 @@ const redirectToSandbox: HookCallback = async (input, toolUseID, { signal }) => 
 ```
 
 > [!NOTE]
+>
 > Pair `updatedInput` with `permissionDecision: 'allow'` to auto-approve the modified input, or `permissionDecision: 'ask'` to show it to the user. If you omit `permissionDecision`, the modified input still applies and flows through the normal permission evaluation. With `'defer'`, `updatedInput` is ignored. Always return a new object rather than mutating the original `tool_input`.
 
 To confirm the redirect, set the prefix to a path you can write to, such as `./sandbox` or `/tmp/sandbox` (macOS doesn't allow creating a root-level `/sandbox` directory), then ask the agent to write a file: the Write tool's result in the message stream names the path with your sandbox prefix rather than the one Claude requested.

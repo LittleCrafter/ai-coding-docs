@@ -7,6 +7,7 @@
 > Run Claude Code through Amazon Bedrock, Claude Platform on AWS, Google Cloud, or Microsoft Foundry behind a self-hosted gateway with SSO sign-in, per-group model access, and OTLP telemetry.
 
 > [!NOTE]
+>
 > The Claude apps gateway is designed for organizations that must, or prefer to, route inference through their own cloud provider, for example to meet [data residency](./claude-apps-gateway-deploy.md#compliance-posture) requirements. If you don't have this requirement, and want access to other features such as SCIM provisioning or Claude Code on web and mobile, Claude Enterprise may be a better fit. See the [feature availability](./feature-availability.md) page for a full comparison of all deployment methods.
 >
 > Claude Code uses one sign-in at a time: a gateway sign-in takes the place of a Claude for Teams or Enterprise login. Gateway sessions don't fetch the [server-managed settings](./server-managed-settings.md) you set in the claude.ai admin console, so deliver them from the gateway's [`managed` block](./claude-apps-gateway-config.md#managed). Leave `forceLoginMethod` and `forceLoginOrgUUID` out of that block, or [some signed-in sessions exit at startup](./claude-apps-gateway-config.md#client-side-managed-settings). See [Availability and limitations](#availability-and-limitations) for what gateway sessions lose.
@@ -34,9 +35,10 @@ The [gateway overview](./gateways.md) covers what a gateway does and why you'd r
 * **Telemetry**: each configured destination receives [OpenTelemetry Protocol (OTLP) metrics](./monitoring-usage.md) with token counts, model, user identity, and latency by default, with logs and traces as per-destination opt-ins.
 * **Upstream routing**: clients speak the Anthropic Messages API to the gateway, and the gateway translates for each upstream, whether Amazon Bedrock, [Claude Platform on AWS](./claude-platform-on-aws.md), Google Cloud's Agent Platform, Microsoft Foundry, or the Anthropic API, with failover between them. You can change regions, providers, or failover order without developers noticing or reconfiguring.
 
-<img src="media/images/claude-gateway-architecture.svg" alt="Diagram showing Claude Code clients and Claude Desktop's Chat, Cowork, and Code tabs connecting over HTTPS with bearer tokens to a self-hosted Claude apps gateway inside your infrastructure, which signs users in against your IdP, stores auth state in PostgreSQL, relays telemetry to your OTLP collector, and forwards inference to Amazon Bedrock, Claude Platform on AWS, Google Cloud, Microsoft Foundry, or the Anthropic API" width="760" height="320" />
+![Diagram showing Claude Code clients and Claude Desktop's Chat, Cowork, and Code tabs connecting over HTTPS with bearer tokens to a self-hosted Claude apps gateway inside your infrastructure, which signs users in against your IdP, stores auth state in PostgreSQL, relays telemetry to your OTLP collector, and forwards inference to Amazon Bedrock, Claude Platform on AWS, Google Cloud, Microsoft Foundry, or the Anthropic API](media/images/claude-gateway-architecture.svg)
 
 > [!NOTE]
+>
 > The gateway's own data plane sends nothing to Anthropic infrastructure unless the Anthropic API is a configured upstream. You control where telemetry, audit logs, managed settings, and your developers' IdP identity go, and the gateway sends none of them to Anthropic. For the remaining traffic the CLI process can send and how to close it, see [Compliance posture](./claude-apps-gateway-deploy.md#compliance-posture).
 
 For which Claude Code features work through the gateway and what the server itself supports, see [Availability and limitations](#availability-and-limitations) below. For decisions such as cost, bypass, running multiple gateways, and serverless platforms, see the [deployment guide](./claude-apps-gateway-deploy.md#deployment).
@@ -50,6 +52,7 @@ The [gateway compatibility guide](./llm-gateway-protocol.md) documents what Clau
 Breaking changes to the protocol are announced in advance, but indefinite backwards compatibility isn't guaranteed.
 
 > [!NOTE]
+>
 > A gateway sign-in token identifies the developer who approved the sign-in, not the program that uses it. Claude Code signs in without a client ID or secret of its own, so a gateway has no way to verify which program is signing in. Any client can set `User-Agent` and other request fields, so use them for routing or metrics, not as proof that a request comes from Claude Code.
 
 ## Quickstart
@@ -57,6 +60,7 @@ Breaking changes to the protocol are announced in advance, but indefinite backwa
 This quickstart walks the minimal path: register an OAuth client in your IdP, write a `gateway.yaml`, run the gateway alongside Postgres with Docker Compose, and verify sign-in end to end. It uses an Amazon Bedrock upstream; Claude Platform on AWS, Google Cloud's Agent Platform, Microsoft Foundry, and the Anthropic API are equally supported by swapping the `upstreams` block as shown in the [configuration reference](./claude-apps-gateway-config.md#upstreams). At the end you have a gateway a developer can `/login` to.
 
 > [!NOTE]
+>
 > **Deploy on your private network.** Claude Code only connects to a gateway whose address is private. This is a security guard, because a trusted gateway can push settings that run commands on developer machines. Put the gateway behind an internal load balancer or VPN and give it a hostname that resolves to private IPs only. If your internal network is numbered from public IPv4 space your organization owns, see [Allow a gateway on public address space you own](#allow-a-gateway-on-public-address-space-you-own).
 
 ### Prerequisites
@@ -75,171 +79,177 @@ Have these in place before you start:
 
 ### Steps
 
-1. **Register an OAuth client in your IdP**
+**1. Register an OAuth client in your IdP**
 
-   Decide the gateway's hostname first, because the redirect URI must match it. Create a new OIDC web application and set the redirect URI to `https://claude-gateway.<your-domain>/oauth/callback`, where the host is the same value you set as [`listen.public_url`](./claude-apps-gateway-config.md#listen) in step 3. Note the `client_id` and `client_secret`. Per-IdP instructions are in [Identity provider setup](./claude-apps-gateway-deploy.md#identity-provider-setup).
-2. **Provision a PostgreSQL database**
+Decide the gateway's hostname first, because the redirect URI must match it. Create a new OIDC web application and set the redirect URI to `https://claude-gateway.<your-domain>/oauth/callback`, where the host is the same value you set as [`listen.public_url`](./claude-apps-gateway-config.md#listen) in step 3. Note the `client_id` and `client_secret`. Per-IdP instructions are in [Identity provider setup](./claude-apps-gateway-deploy.md#identity-provider-setup).
 
-   Use PostgreSQL 11 or later. The smallest managed tier is enough. The gateway runs its own schema migrations at boot, so the database role needs rights to create and alter tables; see [`store`](./claude-apps-gateway-config.md#store).
-3. **Write gateway.yaml**
+**2. Provision a PostgreSQL database**
 
-   Secrets are read via `${ENV_VAR}` expansion so the file itself can live in version control. Use a `public_url` hostname that resolves to a private IP on your network, because `/login` rejects public addresses. The minimal config has five sections, and every other field has a default:
+Use PostgreSQL 11 or later. The smallest managed tier is enough. The gateway runs its own schema migrations at boot, so the database role needs rights to create and alter tables; see [`store`](./claude-apps-gateway-config.md#store).
 
-   ```yaml gateway.yaml theme={null}
-   listen:
-     host: 0.0.0.0
-     port: 8080
-     # Required unless host is a loopback address. Used for the IdP
-     # redirect_uri and the discovery document.
-     public_url: https://claude-gateway.internal.example.com
+**3. Write gateway.yaml**
 
-   oidc:
-     issuer: https://login.example.com        # must serve /.well-known/openid-configuration
-     client_id: 0oa1example2
-     client_secret: ${OIDC_CLIENT_SECRET}
-     allowed_email_domains: [example.com]        # reject id_tokens outside your org
-     userinfo_fallback: true                  # for IdPs whose id_token omits email/groups; harmless otherwise
+Secrets are read via `${ENV_VAR}` expansion so the file itself can live in version control. Use a `public_url` hostname that resolves to a private IP on your network, because `/login` rejects public addresses. The minimal config has five sections, and every other field has a default:
 
-   session:
-     jwt_secret: ${GATEWAY_JWT_SECRET}        # openssl rand -base64 32
-     ttl_hours: 1                             # also bounds revocation latency on IdP deprovision
+```yaml gateway.yaml theme={null}
+listen:
+  host: 0.0.0.0
+  port: 8080
+  # Required unless host is a loopback address. Used for the IdP
+  # redirect_uri and the discovery document.
+  public_url: https://claude-gateway.internal.example.com
 
-   store:
-     postgres_url: ${GATEWAY_POSTGRES_URL}    # add ?sslmode=require for managed Postgres
+oidc:
+  issuer: https://login.example.com        # must serve /.well-known/openid-configuration
+  client_id: 0oa1example2
+  client_secret: ${OIDC_CLIENT_SECRET}
+  allowed_email_domains: [example.com]        # reject id_tokens outside your org
+  userinfo_fallback: true                  # for IdPs whose id_token omits email/groups; harmless otherwise
 
-   upstreams:
-     - provider: bedrock
-       region: us-east-1
-       auth: {}                               # empty: AWS default credential chain
-                                              # (IRSA, EC2/ECS task role, env vars, ~/.aws)
+session:
+  jwt_secret: ${GATEWAY_JWT_SECRET}        # openssl rand -base64 32
+  ttl_hours: 1                             # also bounds revocation latency on IdP deprovision
 
-   # Models are translated per upstream automatically. The built-in catalog
-   # maps claude-opus-4-8 to us.anthropic.claude-opus-4-8 and so on for every
-   # Bedrock-supported Claude model. Set false and add a `models:` list to
-   # expose only specific models.
-   auto_include_builtin_models: true
-   ```
+store:
+  postgres_url: ${GATEWAY_POSTGRES_URL}    # add ?sslmode=require for managed Postgres
 
-   This config is enough for a working sign-in loop with the default Amazon Bedrock model catalog. Once it's running, add per-group RBAC and managed settings via [`managed.policies`](./claude-apps-gateway-config.md#managed), telemetry fan-out via [`telemetry`](./claude-apps-gateway-config.md#telemetry), and multi-upstream failover, provisioned-throughput ARNs, or non-US regions via [`models`](./claude-apps-gateway-config.md#models).
+upstreams:
+  - provider: bedrock
+    region: us-east-1
+    auth: {}                               # empty: AWS default credential chain
+                                           # (IRSA, EC2/ECS task role, env vars, ~/.aws)
 
-   > [!NOTE]
-   > The Amazon Bedrock upstream needs an AWS principal with `bedrock:InvokeModel` and `bedrock:InvokeModelWithResponseStream` on both the `inference-profile/us.anthropic.*` ARNs and the underlying `foundation-model/anthropic.*` ARNs. It also needs Anthropic's one-time use case form submitted for the account from the Bedrock console's Model catalog.
-   >
-   > Supply the credential with IRSA on EKS, an ECS task role, or an EC2 instance profile rather than static keys. The [`upstreams` reference](./claude-apps-gateway-config.md#upstreams) has the full IAM details, the cross-cloud credential matrix, and the `auth` blocks for the other providers.
-4. **Run it**
+# Models are translated per upstream automatically. The built-in catalog
+# maps claude-opus-4-8 to us.anthropic.claude-opus-4-8 and so on for every
+# Bedrock-supported Claude model. Set false and add a `models:` list to
+# expose only specific models.
+auto_include_builtin_models: true
+```
 
-   Build a container image around the `claude` binary that meets the [image requirements](./claude-apps-gateway-deploy.md#container-image), then run it alongside Postgres. The Compose file references the image as `registry.example.com/claude-gateway:2.1.198`; substitute your own registry and image tag:
+This config is enough for a working sign-in loop with the default Amazon Bedrock model catalog. Once it's running, add per-group RBAC and managed settings via [`managed.policies`](./claude-apps-gateway-config.md#managed), telemetry fan-out via [`telemetry`](./claude-apps-gateway-config.md#telemetry), and multi-upstream failover, provisioned-throughput ARNs, or non-US regions via [`models`](./claude-apps-gateway-config.md#models).
 
-   ```yaml docker-compose.yaml theme={null}
-   services:
-     gateway:
-       image: registry.example.com/claude-gateway:2.1.198
-       ports: ["8080:8080"]
-       volumes: ["./gateway.yaml:/etc/claude/gateway.yaml:ro"]
-       environment:
-         OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
-         GATEWAY_JWT_SECRET: ${GATEWAY_JWT_SECRET}
-         GATEWAY_POSTGRES_URL: postgres://gw:pw@postgres/gateway
-         # AWS credentials: in production, omit these and use an instance
-         # role. For local Compose testing, pass through your own:
-         AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-         AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-         AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
-       depends_on:
-         postgres:
-           condition: service_healthy
-     postgres:
-       image: postgres:16-alpine
-       environment: { POSTGRES_USER: gw, POSTGRES_PASSWORD: pw, POSTGRES_DB: gateway }
-       healthcheck:
-         test: ["CMD-SHELL", "pg_isready -U gw"]
-         interval: 5s
-       volumes: ["pgdata:/var/lib/postgresql/data"]
-   volumes: { pgdata: }
-   ```
+> [!NOTE]
+>
+> The Amazon Bedrock upstream needs an AWS principal with `bedrock:InvokeModel` and `bedrock:InvokeModelWithResponseStream` on both the `inference-profile/us.anthropic.*` ARNs and the underlying `foundation-model/anthropic.*` ARNs. It also needs Anthropic's one-time use case form submitted for the account from the Bedrock console's Model catalog.
+>
+> Supply the credential with IRSA on EKS, an ECS task role, or an EC2 instance profile rather than static keys. The [`upstreams` reference](./claude-apps-gateway-config.md#upstreams) has the full IAM details, the cross-cloud credential matrix, and the `auth` blocks for the other providers.
 
-   The gateway is a single Linux binary that reads the config, connects to Postgres and applies its schema migrations, runs OIDC discovery against your IdP, builds upstream clients, and starts listening.
+**4. Run it**
 
-   Boot is fail-closed for the config, the Postgres connection, OIDC discovery, and upstream client construction. If any of those is unreachable or misconfigured, the gateway exits with an error rather than serving traffic in a degraded state.
+Build a container image around the `claude` binary that meets the [image requirements](./claude-apps-gateway-deploy.md#container-image), then run it alongside Postgres. The Compose file references the image as `registry.example.com/claude-gateway:2.1.198`; substitute your own registry and image tag:
 
-   A successful boot doesn't validate the inference path, because Amazon Bedrock and Google Cloud's Agent Platform instance credentials resolve on the first request, not at boot.
+```yaml docker-compose.yaml theme={null}
+services:
+  gateway:
+    image: registry.example.com/claude-gateway:2.1.198
+    ports: ["8080:8080"]
+    volumes: ["./gateway.yaml:/etc/claude/gateway.yaml:ro"]
+    environment:
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      GATEWAY_JWT_SECRET: ${GATEWAY_JWT_SECRET}
+      GATEWAY_POSTGRES_URL: postgres://gw:pw@postgres/gateway
+      # AWS credentials: in production, omit these and use an instance
+      # role. For local Compose testing, pass through your own:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+    depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:16-alpine
+    environment: { POSTGRES_USER: gw, POSTGRES_PASSWORD: pw, POSTGRES_DB: gateway }
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gw"]
+      interval: 5s
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+volumes: { pgdata: }
+```
 
-   Watch stderr for the boot sequence. Log lines use the format `[gateway] <timestamp> <level> <message>`, audit events are single-line JSON with an `evt` field, and a startup banner, omitted below, prints between the migration and listening lines. A fresh database prints one `migration N applied` line per schema migration; an already-migrated database prints none. You should see, in order:
+The gateway is a single Linux binary that reads the config, connects to Postgres and applies its schema migrations, runs OIDC discovery against your IdP, builds upstream clients, and starts listening.
 
-   ```text theme={null}
-   {"ts":"2026-06-10T17:03:21.114Z","evt":"config.load","path":"/etc/claude/gateway.yaml","sha256":"…"}
-   [gateway] 2026-06-10T17:03:21.395Z info waiting for migration lock (another replica may be migrating; check pg_locks for key 6775156 if this persists)
-   [gateway] 2026-06-10T17:03:21.408Z info migration 1 applied
-   …
-   [gateway] 2026-06-10T17:03:21.431Z info migration 6 applied
-   [gateway] 2026-06-10T17:03:21.512Z info claude gateway listening on http://0.0.0.0:8080
-   ```
+Boot is fail-closed for the config, the Postgres connection, OIDC discovery, and upstream client construction. If any of those is unreachable or misconfigured, the gateway exits with an error rather than serving traffic in a degraded state.
 
-   The gateway also logs a warning that `access_control.allow_cidrs` is empty. That's expected here, because nothing limits which client addresses the gateway serves until you set an allow list. The [`access_control` reference](./claude-apps-gateway-config.md#http-tuning) has the recommended ranges.
+A successful boot doesn't validate the inference path, because Amazon Bedrock and Google Cloud's Agent Platform instance credentials resolve on the first request, not at boot.
 
-   If boot exits before the `claude gateway listening on` line, the last line of stderr names the problem:
+Watch stderr for the boot sequence. Log lines use the format `[gateway] <timestamp> <level> <message>`, audit events are single-line JSON with an `evt` field, and a startup banner, omitted below, prints between the migration and listening lines. A fresh database prints one `migration N applied` line per schema migration; an already-migrated database prints none. You should see, in order:
 
-   * an unreachable Postgres
-   * a Postgres role without DDL permission
-   * an unreachable or invalid OIDC discovery document
-   * a config schema violation with the offending field path
+```text theme={null}
+{"ts":"2026-06-10T17:03:21.114Z","evt":"config.load","path":"/etc/claude/gateway.yaml","sha256":"…"}
+[gateway] 2026-06-10T17:03:21.395Z info waiting for migration lock (another replica may be migrating; check pg_locks for key 6775156 if this persists)
+[gateway] 2026-06-10T17:03:21.408Z info migration 1 applied
+…
+[gateway] 2026-06-10T17:03:21.431Z info migration 6 applied
+[gateway] 2026-06-10T17:03:21.512Z info claude gateway listening on http://0.0.0.0:8080
+```
 
-   Fix it and restart.
+The gateway also logs a warning that `access_control.allow_cidrs` is empty. That's expected here, because nothing limits which client addresses the gateway serves until you set an allow list. The [`access_control` reference](./claude-apps-gateway-config.md#http-tuning) has the recommended ranges.
 
-   If you already have a TLS-terminating ingress, skip Compose and run the binary directly with `claude gateway --config gateway.yaml`. Set `public_url` to the ingress origin and bind `listen` to a loopback or cluster-internal address.
-5. **Verify the auth surface**
+If boot exits before the `claude gateway listening on` line, the last line of stderr names the problem:
 
-   Three checks confirm the gateway can authenticate a real user before you share it with a developer.
+* an unreachable Postgres
+* a Postgres role without DDL permission
+* an unreachable or invalid OIDC discovery document
+* a config schema violation with the offending field path
 
-   The examples use the gateway's public URL; for the local Compose setup without an ingress, substitute `http://localhost:8080` in the first two checks. The third check opens `verification_uri_complete`, which is built from `public_url`, so for local Compose set `public_url: http://localhost:8080` in `gateway.yaml`, and add `http://localhost:8080/oauth/callback` as a second redirect URI on the OAuth client from step 1, because the gateway builds the IdP `redirect_uri` from `public_url`. The verification link then opens in your local browser.
+Fix it and restart.
 
-   In Windows PowerShell, run `curl.exe`; the bare `curl` is an alias for `Invoke-WebRequest` and rejects these flags.
+If you already have a TLS-terminating ingress, skip Compose and run the binary directly with `claude gateway --config gateway.yaml`. Set `public_url` to the ingress origin and bind `listen` to a loopback or cluster-internal address.
 
-   First, fetch the discovery document, which confirms the gateway is up, the config is valid, and all boot checks passed:
+**5. Verify the auth surface**
 
-   ```bash theme={null}
-   curl -s https://claude-gateway.internal.example.com/.well-known/oauth-authorization-server | jq
-   ```
+Three checks confirm the gateway can authenticate a real user before you share it with a developer.
 
-   ```json theme={null}
-   {
-     "issuer": "https://claude-gateway.internal.example.com",
-     "device_authorization_endpoint": "…/oauth/device_authorization",
-     "token_endpoint": "…/oauth/token",
-     "grant_types_supported": ["urn:ietf:params:oauth:grant-type:device_code", "refresh_token"]
-   }
-   ```
+The examples use the gateway's public URL; for the local Compose setup without an ingress, substitute `http://localhost:8080` in the first two checks. The third check opens `verification_uri_complete`, which is built from `public_url`, so for local Compose set `public_url: http://localhost:8080` in `gateway.yaml`, and add `http://localhost:8080/oauth/callback` as a second redirect URI on the OAuth client from step 1, because the gateway builds the IdP `redirect_uri` from `public_url`. The verification link then opens in your local browser.
 
-   The response includes additional fields, such as `response_types_supported` and `scopes_supported`.
+In Windows PowerShell, run `curl.exe`; the bare `curl` is an alias for `Invoke-WebRequest` and rejects these flags.
 
-   Second, request a device authorization, which confirms the device sign-in flow works and Postgres is reachable and writable:
+First, fetch the discovery document, which confirms the gateway is up, the config is valid, and all boot checks passed:
 
-   ```bash theme={null}
-   curl -s -X POST https://claude-gateway.internal.example.com/oauth/device_authorization | jq
-   ```
+```bash theme={null}
+curl -s https://claude-gateway.internal.example.com/.well-known/oauth-authorization-server | jq
+```
 
-   ```json theme={null}
-   {
-     "device_code": "…",
-     "user_code": "WDJB-MJHT",
-     "verification_uri": "https://claude-gateway.internal.example.com/device",
-     "verification_uri_complete": "https://claude-gateway.internal.example.com/device?user_code=WDJB-MJHT",
-     "expires_in": 600,
-     "interval": 5
-   }
-   ```
+```json theme={null}
+{
+  "issuer": "https://claude-gateway.internal.example.com",
+  "device_authorization_endpoint": "…/oauth/device_authorization",
+  "token_endpoint": "…/oauth/token",
+  "grant_types_supported": ["urn:ietf:params:oauth:grant-type:device_code", "refresh_token"]
+}
+```
 
-   Third, test the browser leg by opening `verification_uri_complete` in a browser and confirming the code. You should be redirected to your IdP's sign-in page, and after signing in, land back on the gateway with a signed-in confirmation.
+The response includes additional fields, such as `response_types_supported` and `scopes_supported`.
 
-   Use the first failing check to locate the problem:
+Second, request a device authorization, which confirms the device sign-in flow works and Postgres is reachable and writable:
 
-   * **First check fails**: boot didn't complete; check stderr
-   * **Second check fails**: Postgres isn't reachable from the gateway or the role can't write; check the connection string and grants
-   * **Third check doesn't reach the IdP**: check that the IdP's redirect URI matches `https://<gateway>/oauth/callback` exactly
-   * **Third check reaches the IdP but bounces back with an error**: read the gateway's audit log, which records every auth rejection with the reason, such as `email domain not allowed`
-6. **Log a developer in**
+```bash theme={null}
+curl -s -X POST https://claude-gateway.internal.example.com/oauth/device_authorization | jq
+```
 
-   This last step happens on a developer machine, not the server. Set `forceLoginMethod` to `"gateway"`, `forceLoginGatewayUrl` to your gateway's `public_url`, and `parentSettingsBehavior` to `"merge"` in that machine's [managed settings file](./managed-settings.md#delivery-mechanisms), then run `/login`, press Enter on the **Cloud gateway** screen, and complete the browser sign-in. [Set the gateway URL](#set-the-gateway-url) below covers the three keys and distributing them to every developer machine.
+```json theme={null}
+{
+  "device_code": "…",
+  "user_code": "WDJB-MJHT",
+  "verification_uri": "https://claude-gateway.internal.example.com/device",
+  "verification_uri_complete": "https://claude-gateway.internal.example.com/device?user_code=WDJB-MJHT",
+  "expires_in": 600,
+  "interval": 5
+}
+```
+
+Third, test the browser leg by opening `verification_uri_complete` in a browser and confirming the code. You should be redirected to your IdP's sign-in page, and after signing in, land back on the gateway with a signed-in confirmation.
+
+Use the first failing check to locate the problem:
+
+* **First check fails**: boot didn't complete; check stderr
+* **Second check fails**: Postgres isn't reachable from the gateway or the role can't write; check the connection string and grants
+* **Third check doesn't reach the IdP**: check that the IdP's redirect URI matches `https://<gateway>/oauth/callback` exactly
+* **Third check reaches the IdP but bounces back with an error**: read the gateway's audit log, which records every auth rejection with the reason, such as `email domain not allowed`
+
+**6. Log a developer in**
+
+This last step happens on a developer machine, not the server. Set `forceLoginMethod` to `"gateway"`, `forceLoginGatewayUrl` to your gateway's `public_url`, and `parentSettingsBehavior` to `"merge"` in that machine's [managed settings file](./managed-settings.md#delivery-mechanisms), then run `/login`, press Enter on the **Cloud gateway** screen, and complete the browser sign-in. [Set the gateway URL](#set-the-gateway-url) below covers the three keys and distributing them to every developer machine.
 
 ## Connect developers
 
@@ -300,6 +310,7 @@ When the developer runs `/login` at the Claude Code prompt, the **Cloud gateway*
 Some organizations number their internal network from a public IPv4 block they own, such as a carrier's own address space or a legacy `/8`, so their gateway has no private address. List those blocks in the `gatewayInternalNetworks` managed setting. `/login` then accepts a gateway inside a listed block when the developer's machine connects to it from an address inside the same block. This requires Claude Code v2.1.268 or later on the developer machine; earlier versions ignore the key and apply the private-address rule.
 
 > [!WARNING]
+>
 > `gatewayInternalNetworks` is for internal networks that happen to be numbered from public address space. It doesn't make it safe to expose a gateway to the internet: a trusted gateway can push settings that run commands on developer machines.
 >
 > Keep the gateway unreachable from outside your network with your firewall or load balancer rules. Set the gateway's [`access_control.allow_cidrs`](./claude-apps-gateway-config.md#http-tuning) to the same blocks you declare here, so the gateway itself refuses clients from anywhere else. Behind a load balancer or ingress, set `listen.trusted_proxies` to that front end as well, because the gateway otherwise matches `allow_cidrs` against the front end's own address rather than the developer's.
@@ -359,19 +370,21 @@ Fleets whose [`policyHelper`](./settings-reference.md#policyhelper) supplies man
 
 Deploy the managed settings snippet from [Set the gateway URL](#set-the-gateway-url), mirror it to any client-side source that outranks the file, then verify.
 
-1. **Deploy the opt-in in the managed settings file**
+**1. Deploy the opt-in in the managed settings file**
 
-   The [snippet above](#set-the-gateway-url) already includes `parentSettingsBehavior: "merge"`, so the file you push to machines carries it.
-2. **Mirror the snippet to any source that outranks the file**
+The [snippet above](#set-the-gateway-url) already includes `parentSettingsBehavior: "merge"`, so the file you push to machines carries it.
 
-   Claude Code reads `parentSettingsBehavior` only from the [selected source](./managed-settings.md#which-managed-source-claude-code-uses). Adding any policy key to a source can make that source the selected one, so in a client-side source, mirror the whole snippet rather than `parentSettingsBehavior` alone. [Client-side managed settings](./claude-apps-gateway-config.md#client-side-managed-settings) covers fleets that deliver policy through Group Policy or configuration profiles. A managed-preferences plist on macOS or an HKLM policy on Windows outranks the `managed-settings.json` file, and the gateway's own remote managed settings outrank both, so on machines that sign in to the gateway, also set `parentSettingsBehavior` in the gateway policy's [`cli` or `code` block](./claude-apps-gateway-config.md#managed).
-3. **Check which source is selected**
+**2. Mirror the snippet to any source that outranks the file**
 
-   On a machine that only runs Claude Desktop, call the Agent SDK's [`resolveSettings()`](./agent-sdk/typescript.md#resolvesettings) and read `policyOrigin` on the `managed` entry in its `sources` list. The value names the selected client-side source, `plist`, `hklm`, or `file`, which is the source that must carry the snippet.
+Claude Code reads `parentSettingsBehavior` only from the [selected source](./managed-settings.md#which-managed-source-claude-code-uses). Adding any policy key to a source can make that source the selected one, so in a client-side source, mirror the whole snippet rather than `parentSettingsBehavior` alone. [Client-side managed settings](./claude-apps-gateway-config.md#client-side-managed-settings) covers fleets that deliver policy through Group Policy or configuration profiles. A managed-preferences plist on macOS or an HKLM policy on Windows outranks the `managed-settings.json` file, and the gateway's own remote managed settings outrank both, so on machines that sign in to the gateway, also set `parentSettingsBehavior` in the gateway policy's [`cli` or `code` block](./claude-apps-gateway-config.md#managed).
 
-   Cowork and Chat sessions don't fetch the gateway policy, so the gateway's block isn't the selected source for them.
+**3. Check which source is selected**
 
-   A Code tab session fetches it when the policy's settings are under `code` and the [conditions for the Code tab](./claude-apps-gateway-config.md#apply-code-settings-in-the-code-tab) hold. The gateway's `code` settings are then the selected source for that session.
+On a machine that only runs Claude Desktop, call the Agent SDK's [`resolveSettings()`](./agent-sdk/typescript.md#resolvesettings) and read `policyOrigin` on the `managed` entry in its `sources` list. The value names the selected client-side source, `plist`, `hklm`, or `file`, which is the source that must carry the snippet.
+
+Cowork and Chat sessions don't fetch the gateway policy, so the gateway's block isn't the selected source for them.
+
+A Code tab session fetches it when the policy's settings are under `code` and the [conditions for the Code tab](./claude-apps-gateway-config.md#apply-code-settings-in-the-code-tab) hold. The gateway's `code` settings are then the selected source for that session.
 
 ### Restrict parent settings
 
@@ -459,9 +472,7 @@ Once a developer has signed in, each Claude Code session on that machine uses th
 
 The device flow separates the polling CLI from the approving browser, so a remote development box with no display still works: the developer runs `/login` over SSH on the remote machine and opens the verification link in the browser on their laptop.
 
-<h3 id="whats-enforced-on-developers">
-  What's enforced on developers
-</h3>
+### What's enforced on developers
 
 These guarantees apply to every session signed in through `/login`. The embedded sessions Claude Desktop launches get their policy as described in [Deliver policy to Claude Desktop sessions](#deliver-policy-to-claude-desktop-sessions), and the telemetry bullet says where their exports go.
 

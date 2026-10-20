@@ -9,6 +9,7 @@
 ## Keyboard shortcuts
 
 > [!NOTE]
+>
 > Keyboard shortcuts may vary by platform and terminal. In [fullscreen rendering](./fullscreen.md), press `?` in the transcript viewer to see available shortcuts there.
 >
 > **macOS users**: Option/Alt key shortcuts (`Alt+B`, `Alt+F`, `Alt+D`, `Alt+Y`, `Alt+P`) require configuring Option as Meta in your terminal. See [Enable Option key shortcuts on macOS](./terminal-config.md#enable-option-key-shortcuts-on-macos) for the setting in each terminal.
@@ -56,9 +57,7 @@
 | `Alt+D` | Delete to end of word | Deletes to the end of the current word, or to the end of the next word when the cursor is between words. Stores deleted text for pasting. Requires [Option as Meta](#keyboard-shortcuts) on macOS |
 | `Ctrl+_` or `Ctrl+Shift+-` | Undo last input edit | Restores the previous input text and cursor position |
 
-<h3 id="make-ctrl-w-delete-back-to-whitespace">
-  Word boundaries in editing shortcuts
-</h3>
+### Word boundaries in editing shortcuts
 
 The word shortcuts `Alt+B`, `Alt+F`, `Alt+D`, `Option+Delete`, and `Ctrl+Backspace` treat a word as a run of letters and digits, so punctuation such as `_`, `.`, and `/` separates words. With `src/utils/foo.ts` in the prompt, repeated presses of `Alt+B` stop at the start of `ts`, `foo`, `utils`, and `src`.
 
@@ -197,6 +196,7 @@ Claude Code reads this setting from your user settings file, the `--settings` fl
 | `/` | Open reverse history search, same as `Ctrl+R`. The empty search prompt shows a hint: press `Esc` then `i` then `/` to open the command menu instead |
 
 > [!NOTE]
+>
 > In vim NORMAL mode, if the cursor is at the beginning or end of input and can't move further, `j`/`k` and `↑`/`↓` navigate command history instead. `←` on an empty prompt opens [agent view](./agent-view.md) from NORMAL mode as well as INSERT; before v2.1.219, `←` on an empty prompt did nothing in NORMAL mode.
 
 ### Editing (NORMAL mode)
@@ -781,6 +781,7 @@ Claude Code renders the badge as a hyperlink even when it can't detect hyperlink
 When you set [`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`](./env-vars.md), Claude Code doesn't check pull request or merge request status.
 
 > [!NOTE]
+>
 > PR status for GitHub repositories needs a GitHub token. Claude Code finds one based on the remote's host:
 >
 > * **github.com**: `GH_TOKEN` or `GITHUB_TOKEN`, or the token saved by `gh auth login`. Without one, the footer shows `install gh for PR status` when the `gh` CLI isn't installed, or `gh auth login for PR status` when it is

@@ -7,6 +7,7 @@
 > Run Claude Code sessions in the cloud from your browser, phone, Desktop app, or terminal, move them with `--cloud` and `--teleport`, and auto-fix pull requests.
 
 > [!NOTE]
+>
 > Cloud sessions are available on Pro, Max, and Team plans, and for Enterprise users with premium seats or Chat + Claude Code seats.
 
 A cloud session is a Claude Code session that runs on cloud infrastructure instead of on your machine. By default it runs on infrastructure Anthropic manages, or on your organization's [self-hosted environment](./self-hosted-environments.md) when routed there. The session keeps running after you close your laptop, and you can check on it or steer it from any device. It counts toward your plan's usage limits alongside the rest of your Claude and Claude Code usage, and there's no separate charge for the cloud VM.
@@ -24,6 +25,7 @@ You can start a cloud session from any of these surfaces:
 Once you're set up, use this page to move work between your terminal and the cloud, manage and share sessions, turn on auto-fix for pull requests, and troubleshoot.
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **Starting your first cloud session**: [Get started with cloud sessions](./web-quickstart.md) connects GitHub and walks through a task in the browser
@@ -58,6 +60,7 @@ In Anthropic-hosted environments, your GitHub credentials stay encrypted on Anth
 See [Connect from your terminal](./web-quickstart.md#connect-from-your-terminal) for the `/web-setup` walkthrough, including what `/web-setup` stores and how to remove it.
 
 > [!NOTE]
+>
 > Organizations with [Zero Data Retention](./zero-data-retention.md) enabled, or with the [HIPAA configuration](./hipaa-setup.md) applied, can't use `/web-setup` or other cloud session features. Organizations that use [customer-managed encryption keys](https://platform.claude.com/docs/en/manage-claude/cmek) (CMEK) can't start cloud sessions either.
 
 ### Quick setup for Team and Enterprise
@@ -77,9 +80,8 @@ An [Owner](./server-managed-settings.md#access-control) turns it on with the **Q
 These workflows require the [Claude Code CLI](./quickstart.md) signed in to the same claude.ai account. You can start new cloud sessions from your terminal, or pull cloud sessions into your terminal to continue locally. Cloud sessions persist even if you close your laptop, and you can monitor them from anywhere including the Claude mobile app.
 
 > [!NOTE]
+>
 > From the CLI, session handoff is one-way: you can pull cloud sessions into your terminal with `--teleport`, but you can't push an existing terminal session to the cloud. The `--cloud` flag with a task description creates a new cloud session for your current repository; with `-p` and a session ID or claude.ai/code URL it instead [queues a message into that existing session](./claude-code-on-the-web.md#send-follow-ups-from-the-cli). The [Desktop app](./desktop.md#continue-in-another-surface) can send a local session in its Code tab to the cloud from its **Open in** menu.
-
-<a id="from-terminal-to-cloud"></a>
 
 ### Start a cloud session from your terminal
 
@@ -89,13 +91,14 @@ Start a cloud session from the command line with the `--cloud` flag:
 claude --cloud "Fix the authentication bug in src/auth/login.ts"
 ```
 
-This creates a new cloud session on claude.ai. The cloud VM clones your current directory's GitHub remote at your current branch, not your local checkout, so push first if you have local commits. See [Send local repositories without GitHub](#send-local-repositories-without-github) for the cases where Claude Code uploads your local repository instead of cloning.
+This creates a new cloud session on claude.ai. The cloud VM clones your current directory's GitHub remote at your current branch, not your local checkout, so push first if you have local commits. See [Send local repositories without GitHub](#send-local-repositories-without-github) for the cases where Claude Code uploads your local repository instead of cloning. If the terminal prints `Branch <name> is not on GitHub`, see [Branch is not on GitHub](#branch-is-not-on-github).
 
 `--cloud` works with a single repository at a time. The task runs in the cloud while you continue working locally. The older `--remote` spelling still works as a deprecated alias for `--cloud`.
 
 While the cloud container starts, the CLI shows a live checklist of setup steps, such as cloning the repository and running your [setup script](./cloud-environments.md#setup-scripts). It queues messages you type during provisioning and sends them once the session is ready.
 
 > [!NOTE]
+>
 > `--cloud` creates cloud sessions. `--remote-control` is unrelated: it lets you monitor and steer a local CLI session from claude.ai or the Claude app. See [Remote Control](./remote-control.md).
 
 Open the session on claude.ai or the Claude mobile app to check progress or interact directly. From there you can steer Claude, provide feedback, or answer questions as in any other conversation.
@@ -177,6 +180,7 @@ The CLI queues the message into the session and exits without waiting for a repl
 For `<session-id>`, pass the bare ID, such as `session_...` or `cse_...`, or the session's `claude.ai/code/<id>` URL, with or without the scheme or query string. Find the ID in your session list at claude.ai/code.
 
 > [!NOTE]
+>
 > `--cloud` requires an Anthropic account. It's not available when Claude Code is configured for Amazon Bedrock, Google Cloud's Agent Platform, or another third-party provider. An [LLM gateway](./llm-gateway.md) configured only through `ANTHROPIC_BASE_URL` doesn't count as a third-party provider for this check, but you still need to sign in with `claude auth login`. Your organization's `allow_remote_sessions` policy must also be enabled. An Owner can turn it on in the Claude Code admin settings at claude.ai/admin-settings/claude-code.
 
 #### Output
@@ -192,8 +196,6 @@ View: https://claude.ai/code/session_01DiUkqY2kzbUbDmW1w96rfi?from=cli&m=0
 Pass `--output-format json` for a machine-readable result: `{ok, session_id, url}` on success, or `{ok: false, session_id, error}` when the send fails, for example when the session is missing or archived. Configuration errors, such as an unsupported provider or a disabled organization policy, print to stderr without JSON. `--output-format stream-json` isn't supported with `--cloud <session-id>`.
 
 If the send fails, see [Errors when sending to a cloud session](#errors-when-sending-to-a-cloud-session).
-
-<a id="from-cloud-to-terminal"></a>
 
 ### Continue a cloud session in your terminal
 
@@ -329,6 +331,7 @@ You will be asked to confirm before a session is deleted.
 Claude can watch a pull request and automatically respond to CI failures and review comments. Claude subscribes to GitHub activity on the PR, and when a check fails or a reviewer leaves a comment, Claude investigates and pushes a fix if one is clear.
 
 > [!NOTE]
+>
 > Auto-fix requires the Claude GitHub App to be installed on your repository. If you haven't already, install it from the [GitHub App page](https://github.com/apps/claude).
 
 There are a few ways to turn on auto-fix depending on where the PR came from and what device you're using:
@@ -353,6 +356,7 @@ GitHub does not emit a webhook when the base branch advances and creates a merge
 Claude may reply to review comment threads on GitHub as part of resolving them. These replies are posted using your GitHub account, so they appear under your username, but each reply is labeled as coming from Claude Code so reviewers know it was written by the agent and not by you directly.
 
 > [!WARNING]
+>
 > If your repository uses comment-triggered automation such as Atlantis, Terraform Cloud, or custom GitHub Actions that run on `issue_comment` events, be aware that Claude can reply on your behalf, which can trigger those workflows. Review your repository's automation before enabling auto-fix, and consider disabling auto-fix for repositories where a PR comment can deploy infrastructure or run privileged operations.
 
 ## Security and isolation
@@ -360,7 +364,7 @@ Claude may reply to review comment threads on GitHub as part of resolving them. 
 Each cloud session is separated from your machine and from other sessions through several layers:
 
 * **Isolated virtual machines**: each session runs in an isolated, Anthropic-managed VM. Sessions your organization routes to a [self-hosted environment](./self-hosted-environments.md) run on your own infrastructure instead, where isolation is your deployment's responsibility
-* <a id="default-allowed-domains"></a>**Network access controls**: in Anthropic-hosted environments, network access is limited by default and can be disabled. See [Network access](./cloud-environments.md#network-access) for the access levels, the [default allowed domains](./cloud-environments.md#default-allowed-domains), and the traffic that doesn't go through the allowlist. In a self-hosted environment, you restrict session egress at your own network boundary. When running with network access disabled, Claude Code can still communicate with the Anthropic API, which may allow data to exit the VM.
+* **Network access controls**: in Anthropic-hosted environments, network access is limited by default and can be disabled. See [Network access](./cloud-environments.md#network-access) for the access levels, the [default allowed domains](./cloud-environments.md#default-allowed-domains), and the traffic that doesn't go through the allowlist. In a self-hosted environment, you restrict session egress at your own network boundary. When running with network access disabled, Claude Code can still communicate with the Anthropic API, which may allow data to exit the VM.
 * **Credential protection**: in Anthropic-hosted environments, git credentials and signing keys stay outside the sandbox, and a proxy authenticates on the session's behalf with scoped credentials. In a self-hosted environment, your deployment supplies git credentials; see [Configure git](./self-hosted-environments-deploy.md#configure-git)
 * **Network secrets**: in Anthropic-hosted environments, keys you [add to a cloud environment](./cloud-environments.md#add-network-secrets) stay outside the sandbox the same way, attached to matching requests after they leave the session. A self-hosted environment doesn't have network secrets
 * **Secure analysis**: code is analyzed and modified within the session's isolated environment before creating PRs
@@ -388,6 +392,12 @@ If a new session fails to start with `Session creation failed` or stalls at prov
 Run [`claude auth login`](./cli-reference.md#cli-commands) in your shell to sign in with your claude.ai account, then retry the command. Inside a running session, `/login` does the same. If the error names your provider instead, see the [error table](#errors-when-sending-to-a-cloud-session): cloud sessions aren't available through third-party providers.
 
 From v2.1.274 through v2.1.289, the sign-in message read `Claude Code cloud sessions require authentication with a Claude.ai account. API key authentication is not sufficient. Please run /login to authenticate, or check your authentication status with /status.`
+
+### Branch is not on GitHub
+
+When `claude --cloud` prints a line starting with `Branch <name> is not on GitHub`, the cloud session still starts, but not from your branch. The line names where the session starts instead: a pushed commit from your branch's history, or the repository's default branch. Commits that exist only on your machine and uncommitted changes aren't in the session.
+
+You see this line when, for example, you never pushed the branch, or GitHub deleted it after its pull request merged. If the starting point the line names has what your task needs, use the session as it is. Otherwise, push the branch and start a new session so that it clones your branch.
 
 ### Remote Control session expired or access denied
 

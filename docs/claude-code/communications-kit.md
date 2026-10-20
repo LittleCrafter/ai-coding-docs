@@ -9,6 +9,7 @@
 This page is for administrators and engineering leads rolling Claude Code out to a team. It provides copy-ready launch announcements, a tips-and-tricks drip campaign, and one-line FAQ responses for the questions you will be asked most.
 
 > [!NOTE]
+>
 > Treat everything here as draft copy, not finished copy. Rewrite each message in your organization's voice, swap the example tasks for real bugs and modules from your own codebase, and replace the `[bracketed placeholders]` before sending. The announcements that drive adoption are the ones that read like someone at your company wrote them.
 
 ## Launch communications
@@ -520,4 +521,5 @@ Share these starter prompts with engineers who have installed but aren't sure wh
 | Debug a stack trace | "here's the stack trace, find the root cause, don't just paper over it" |
 
 > [!TIP]
+>
 > Claude Code ships frequently. Verify version-specific details against the [documentation home page](./overview.md) before distributing internally.

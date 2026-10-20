@@ -24,6 +24,7 @@ Tool search adds one extra round-trip each time Claude searches for tools, but f
 For details on the underlying API mechanism, see [Tool search in the API](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool).
 
 > [!NOTE]
+>
 > Tool search isn't supported on Microsoft Foundry [deployments hosted on Azure](https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry#hosting-options), which reject it server-side: the SDK detects the rejection and loads tool definitions upfront for that deployment instead. [`ENABLE_TOOL_SEARCH`](#configure-tool-search) can't override this, since the rejection comes from the deployment itself.
 
 ## Configure tool search

@@ -7,11 +7,12 @@
 > Artifacts turn Claude Code's work into live, interactive pages on claude.ai that you can keep private, share with your organization, or publish to a public link.
 
 > [!NOTE]
+>
 > Artifacts are available on Pro, Max, Team, and Enterprise plans and require a session signed in with [`/login`](./setup.md#authenticate). See [Availability](#availability) for the full set of requirements.
 
 An [artifact](https://claude.com/features/artifacts) is a live, interactive web page that Claude Code publishes from your session to a private URL on claude.ai. You open it in a browser, and it updates in place as the session continues. Share it from the page header when you want someone else to see it too.
 
-<img src="media/images/artifacts-viewer.png" alt="An artifact open in a browser at claude.ai/code/artifact. The viewer header shows the artifact title acme-funnel-fix, a Share button, and the author avatar. The Share menu is open with the Always share latest version toggle, a version picker reading Sharing version 2, an Everyone at Acme audience selector, and a Copy link button. Below the header, the artifact page shows two mobile mockups side by side, a funnel chart, and a row of metric cards." width="2511" height="1890" />
+![An artifact open in a browser at claude.ai/code/artifact. The viewer header shows the artifact title acme-funnel-fix, a Share button, and the author avatar. The Share menu is open with the Always share latest version toggle, a version picker reading Sharing version 2, an Everyone at Acme audience selector, and a Copy link button. Below the header, the artifact page shows two mobile mockups side by side, a funnel chart, and a row of metric cards.](media/images/artifacts-viewer.png)
 
 ## When to use an artifact
 
@@ -301,6 +302,7 @@ Instead of building a page from scratch, Claude can start an artifact from one o
 To start from a template, describe what you want, such as "turn the migration notes into a deck for Thursday's review" or "write this plan up as a doc for the team". Claude picks the matching template, fills it from your request and from what the session already has, and gives you the link. For a deck or a design you can also run `/slides` or `/design` with a brief.
 
 > [!NOTE]
+>
 > Templates are in beta. They're on by default on Pro, Max, and Team plans. On Enterprise plans, an Owner [turns each template on](https://support.claude.com/en/articles/16994751-artifacts-admin-guide-for-team-and-enterprise-plans) under **Organization settings > Artifacts**. If your organization has the Slides template turned off, `/slides` doesn't appear; if it has the Design template turned off, `/design` doesn't draft designs. Both commands require Claude Code v2.1.265 or later and a session where [artifacts are available](#availability).
 
 ### Make a slide deck

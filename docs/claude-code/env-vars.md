@@ -19,8 +19,6 @@ This page covers how to:
 
 A variable you set in your shell lasts for that terminal session, while a variable in a settings file applies every time `claude` runs.
 
-<a id="in-your-shell"></a>
-
 ### Set variables in your shell
 
 Set the variable before launching `claude`:
@@ -72,8 +70,6 @@ echo $env:API_TIMEOUT_MS
 echo %API_TIMEOUT_MS%
 ```
 
-<a id="in-settings-files"></a>
-
 ### Set variables in settings files
 
 Add variables under the `env` key in a `settings.json` file, creating the file if it doesn't exist. Claude Code reads them directly from the file, so they take effect no matter how `claude` was launched. A running session applies new and changed values to its environment when you save the file, but a feature that reads its variables once at startup, such as [OpenTelemetry monitoring](./monitoring-usage.md), keeps its startup values until you relaunch. Removing a variable from the file doesn't unset it in a running session; the removal takes effect the next time you launch `claude`.
@@ -119,6 +115,7 @@ Claude Code reads shell environment variables at startup, so changes to them tak
 Numeric variables such as timeouts, token budgets, and retry counts accept scientific notation and digit-separator spellings in addition to plain digits, except where a variable's row notes it takes plain digits only. For example, Claude Code reads `2e3` as 2000 and `64_000` as 64000. Before v2.1.211, these spellings could silently set a much smaller value, such as `1e6` setting a timeout to 1.
 
 > [!NOTE]
+>
 > For variables that turn a behavior on or off, set `1`, `true`, `yes`, or `on` to turn it on and `0`, `false`, `no`, or `off` to turn it off, in any casing.
 >
 > Some variables read only whether you set them at all, so any non-empty value including `0` turns the behavior on, and you turn the behavior off by unsetting the variable or setting it to an empty value. These variables work that way:

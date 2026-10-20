@@ -13,6 +13,7 @@ You install a plugin from a marketplace, which is the catalog Claude Code fetche
 Read this page if you're deciding whether to install a plugin, or if you review tools before your team can use them.
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **Claude Code's own security model**: see [Security](../security.md)
@@ -29,7 +30,7 @@ A plugin can carry content that runs code on your machine with your user privile
 * **Monitors**: a plugin's [monitors](./components.md#monitors) run as background shell commands that Claude Code starts on its own when the session starts, when you reload plugins, or the first time a named skill runs.
 * **Mods**: a plugin's [mod](./mods/overview.md) runs JavaScript inside Claude Code with your permissions. To list what a mod does before you install it, see [Decide whether to trust a mod](./mods/overview.md#decide-whether-to-trust-a-mod).
 * **MCP and LSP servers**: Claude Code connects to the [MCP servers](../mcp.md) an enabled plugin declares and gives Claude their tools. A stdio MCP server runs as a process that Claude Code starts on your machine. Claude Code also starts the language servers the plugin declares.
-* **`bin/` directory**: Claude Code adds each enabled plugin's `bin/` directory to the `PATH` of the Bash tool's shell, so Claude's Bash commands can run any executable there.
+* **`bin/` directory**: Claude Code adds each enabled plugin's `bin/` directory to the `PATH` of the Bash tool's shell, so Claude's Bash commands can run any executable there. A command that Claude runs with the [PowerShell tool](../tools-reference.md#powershell-tool) gets those directories on its `PATH` when it runs outside the [sandbox](../sandboxing.md), and not when it runs inside it.
 * **Skills, commands, and agents**: these enter Claude's context as instructions, so they influence what Claude does with the tools it already has.
 * **Updates**: when auto-update is on for the marketplace you installed a plugin from, Claude Code updates that plugin in the background, so the files you reviewed can change on disk. [When auto-update runs](./loading.md#when-auto-update-runs) has the timing. To turn auto-update on or off per marketplace, see [Keep plugins updated](./install.md#keep-plugins-updated).
 
@@ -42,9 +43,7 @@ Installing a plugin also enables it, unless its manifest or marketplace entry se
 
 To remove a plugin you no longer trust, see [Remove a plugin you no longer trust](#remove-a-plugin-you-no-longer-trust).
 
-<h2 id="marketplace-tiers">
-  Identify Anthropic's marketplaces by name
-</h2>
+## Identify Anthropic's marketplaces by name
 
 A marketplace's name places it in one of three tiers: official, community, or third-party. Claude Code accepts the official and community names only for marketplaces sourced from `github.com/anthropics/` repositories, so a third-party marketplace can't present itself as an Anthropic one. A marketplace that a coworker or your organization publishes is third-party.
 
@@ -83,22 +82,25 @@ For how the official, community, and demo marketplaces differ and where to brows
 
 Before you install a plugin, look at what it adds and where it comes from.
 
-1. **Check the marketplace's source**
+**1. Check the marketplace's source**
 
-   In your shell, run `claude plugin marketplace list` to print the source each marketplace was added from, such as a GitHub repository or a directory.
-2. **Read the details pane**
+In your shell, run `claude plugin marketplace list` to print the source each marketplace was added from, such as a GitHub repository or a directory.
 
-   In a Claude Code session, run `/plugin` and select the plugin. The details pane shows a **Will install** section listing the plugin's commands, agents, skills, hooks, and MCP and LSP servers. For a plugin Anthropic has no published component data for, the section shows what the marketplace entry declares, or a note: `Components will be discovered at installation` for a plugin stored inside the marketplace, or `Component summary not available for remote plugin` for one fetched from elsewhere.
-3. **Read the plugin's source**
+**2. Read the details pane**
 
-   In the details pane, select **Open homepage** or **View on GitHub** below the install options. If the pane offers neither, open the marketplace repository you found in the first step. Find the plugin's directory there. The **Will install** section shows that a hook exists but not what it runs, so read these files in the plugin's directory:
+In a Claude Code session, run `/plugin` and select the plugin. The details pane shows a **Will install** section listing the plugin's commands, agents, skills, hooks, and MCP and LSP servers. For a plugin Anthropic has no published component data for, the section shows what the marketplace entry declares, or a note: `Components will be discovered at installation` for a plugin stored inside the marketplace, or `Component summary not available for remote plugin` for one fetched from elsewhere.
 
-   * **`hooks/hooks.json`**: the command each hook runs
-   * **`.mcp.json`**: each server's command or URL
-   * **`bin/`**: every file in the directory
-4. **List what the plugin contains**
+**3. Read the plugin's source**
 
-   Clone the repository that holds the plugin's directory, then run `claude --plugin-dir <plugin directory> plugin details <plugin name>` in your shell to see what Claude Code finds in it. The command reads the plugin's files without starting a session and prints a `Component inventory` listing the plugin's skills and commands, agents, hooks with each hook's event, and MCP and LSP servers.
+In the details pane, select **Open homepage** or **View on GitHub** below the install options. If the pane offers neither, open the marketplace repository you found in the first step. Find the plugin's directory there. The **Will install** section shows that a hook exists but not what it runs, so read these files in the plugin's directory:
+
+* **`hooks/hooks.json`**: the command each hook runs
+* **`.mcp.json`**: each server's command or URL
+* **`bin/`**: every file in the directory
+
+**4. List what the plugin contains**
+
+Clone the repository that holds the plugin's directory, then run `claude --plugin-dir <plugin directory> plugin details <plugin name>` in your shell to see what Claude Code finds in it. The command reads the plugin's files without starting a session and prints a `Component inventory` listing the plugin's skills and commands, agents, hooks with each hook's event, and MCP and LSP servers.
 
 After you install a plugin, run `claude plugin details <plugin name>` in your shell to print the same `Component inventory` for the installed copy under `~/.claude/plugins/cache/<marketplace>/<plugin>/<version>/`.
 

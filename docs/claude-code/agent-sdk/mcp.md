@@ -11,6 +11,7 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-
 MCP servers can run as local processes, connect over HTTP, or execute directly within your SDK application.
 
 > [!NOTE]
+>
 > This page covers MCP configuration for the Agent SDK. To add MCP servers to the Claude Code CLI so they load in every project, see [MCP installation scopes](../mcp.md#mcp-installation-scopes).
 
 ## Quickstart
@@ -71,8 +72,6 @@ The agent connects to the documentation server, searches for information about h
 
 You can configure MCP servers in code when calling `query()`, or in a `.mcp.json` file loaded via [`settingSources`](#from-a-config-file).
 
-<a id="in-code"></a>
-
 ### Add a server in code
 
 Pass MCP servers directly in the `mcpServers` option. This example starts a local filesystem MCP server for `/Users/me/projects`. Replace that path with a directory on your machine:
@@ -125,8 +124,6 @@ async def main():
 
 asyncio.run(main())
 ```
-
-<a id="from-a-config-file"></a>
 
 ### Add a server from a config file
 
@@ -223,6 +220,7 @@ options = ClaudeAgentOptions(
 Wildcards (`*`) let you allow all tools from a server without listing each one individually.
 
 > [!NOTE]
+>
 > **Prefer `allowedTools` over permission modes for MCP access.** `permissionMode: "acceptEdits"` does not auto-approve MCP tools (only file edits and filesystem Bash commands). `permissionMode: "bypassPermissions"` does auto-approve MCP tools but also disables most other safety prompts, which is broader than necessary; see [How permissions are evaluated](./permissions.md#how-permissions-are-evaluated) for the prompts that remain. A wildcard in `allowedTools` grants exactly the MCP server you want and nothing more. See [Permission modes](./permissions.md#permission-modes) for a full comparison.
 
 ### Discover available tools

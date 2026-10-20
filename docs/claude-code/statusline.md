@@ -19,7 +19,7 @@ The status line renders in its own row above the built-in footer badges and does
 
 Here's an example of a [multi-line status line](#display-multiple-lines) that displays git info on the first line and a color-coded context bar on the second.
 
-<img src="media/images/statusline-multiline.png" alt="A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line" width="1224" height="262" />
+![A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line](media/images/statusline-multiline.png)
 
 This page walks through [setting up a basic status line](#set-up-a-status-line), explains [how the data flows](#how-status-lines-work) from Claude Code to your script, lists [all the fields you can display](#available-data), and provides [ready-to-use examples](#examples) for common patterns like git status, cost tracking, and progress bars.
 
@@ -77,59 +77,63 @@ Run `/statusline` and ask it to remove or clear your status line (for example, `
 This walkthrough shows what `/statusline` sets up for you by manually creating a status line that displays the current model, working directory, and context window usage percentage.
 
 > [!NOTE]
+>
 > Running [`/statusline`](#use-the-%2Fstatusline-command) with a description of what you want configures all of this for you automatically.
 
 These examples use Bash scripts, which work on macOS and Linux. On Windows, see [Windows configuration](#windows-configuration) for PowerShell and Git Bash examples.
 
-<img src="media/images/statusline-quickstart.png" alt="A status line showing model name, directory, and context percentage" width="1224" height="224" />
+![A status line showing model name, directory, and context percentage](media/images/statusline-quickstart.png)
 
-1. **Create a script that reads JSON and prints output**
+**1. Create a script that reads JSON and prints output**
 
-   Claude Code sends JSON data to your script via stdin. This script uses [`jq`](https://jqlang.org/), a command-line JSON parser you may need to install, to extract the model name, directory, and context percentage, then prints a formatted line.
+Claude Code sends JSON data to your script via stdin. This script uses [`jq`](https://jqlang.org/), a command-line JSON parser you may need to install, to extract the model name, directory, and context percentage, then prints a formatted line.
 
-   Save this to `~/.claude/statusline.sh` (where `~` is your home directory, such as `/Users/username` on macOS or `/home/username` on Linux):
+Save this to `~/.claude/statusline.sh` (where `~` is your home directory, such as `/Users/username` on macOS or `/home/username` on Linux):
 
-   ```bash theme={null}
-   #!/bin/bash
-   # Read JSON data that Claude Code sends to stdin
-   input=$(cat)
+```bash theme={null}
+#!/bin/bash
+# Read JSON data that Claude Code sends to stdin
+input=$(cat)
 
-   # Extract fields using jq
-   MODEL=$(echo "$input" | jq -r '.model.display_name')
-   DIR=$(echo "$input" | jq -r '.workspace.current_dir')
-   # The "// 0" provides a fallback if the field is null
-   PCT=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
+# Extract fields using jq
+MODEL=$(echo "$input" | jq -r '.model.display_name')
+DIR=$(echo "$input" | jq -r '.workspace.current_dir')
+# The "// 0" provides a fallback if the field is null
+PCT=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
 
-   # Output the status line - ${DIR##*/} extracts just the folder name
-   echo "[$MODEL] 📁 ${DIR##*/} | ${PCT}% context"
-   ```
-2. **Make it executable**
+# Output the status line - ${DIR##*/} extracts just the folder name
+echo "[$MODEL] 📁 ${DIR##*/} | ${PCT}% context"
+```
 
-   Mark the script as executable so your shell can run it:
+**2. Make it executable**
 
-   ```bash theme={null}
-   chmod +x ~/.claude/statusline.sh
-   ```
-3. **Add to settings**
+Mark the script as executable so your shell can run it:
 
-   Tell Claude Code to run your script as the status line. Add this configuration to `~/.claude/settings.json`, which sets `type` to `"command"` (meaning "run this shell command") and points `command` to your script:
+```bash theme={null}
+chmod +x ~/.claude/statusline.sh
+```
 
-   ```json theme={null}
-   {
-     "statusLine": {
-       "type": "command",
-       "command": "~/.claude/statusline.sh"
-     }
-   }
-   ```
+**3. Add to settings**
 
-   Your status line appears at the bottom of the interface. Claude Code reloads settings automatically and runs your script as soon as you save the file.
+Tell Claude Code to run your script as the status line. Add this configuration to `~/.claude/settings.json`, which sets `type` to `"command"` (meaning "run this shell command") and points `command` to your script:
+
+```json theme={null}
+{
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  }
+}
+```
+
+Your status line appears at the bottom of the interface. Claude Code reloads settings automatically and runs your script as soon as you save the file.
 
 ## How status lines work
 
 Claude Code runs your script with [JSON session data](#available-data) on stdin and displays whatever the script prints to stdout.
 
 > [!NOTE]
+>
 > The status line runs locally and does not consume API tokens. It temporarily hides during certain UI interactions, including the help menu and permission prompts.
 
 ### When the status line updates
@@ -208,144 +212,144 @@ Claude Code sends the following JSON fields to your script via stdin:
 | `worktree.original_cwd` | The directory Claude was in before entering the worktree |
 | `worktree.original_branch` | Git branch checked out before entering the worktree. Absent for hook-based worktrees |
 
-**Full JSON schema**
-
-Your status line command receives this JSON structure via stdin:
-
-```json theme={null}
-{
-  "cwd": "/current/working/directory",
-  "session_id": "abc123...",
-  "session_name": "my-session",
-  "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
-  "transcript_path": "/path/to/transcript.jsonl",
-  "model": {
-    "id": "claude-opus-5-5",
-    "display_name": "Opus"
-  },
-  "workspace": {
-    "current_dir": "/current/working/directory",
-    "project_dir": "/original/project/directory",
-    "added_dirs": [],
-    "git_worktree": "feature-xyz",
-    "repo": {
-      "host": "github.com",
-      "owner": "anthropics",
-      "name": "claude-code"
-    }
-  },
-  "version": "2.1.90",
-  "output_style": {
-    "name": "default"
-  },
-  "cost": {
-    "total_cost_usd": 0.01234,
-    "total_duration_ms": 45000,
-    "total_api_duration_ms": 2300,
-    "total_lines_added": 156,
-    "total_lines_removed": 23
-  },
-  "context_window": {
-    "total_input_tokens": 15500,
-    "total_output_tokens": 1200,
-    "context_window_size": 200000,
-    "used_percentage": 8,
-    "remaining_percentage": 92,
-    "current_usage": {
-      "input_tokens": 8500,
-      "output_tokens": 1200,
-      "cache_creation_input_tokens": 5000,
-      "cache_read_input_tokens": 2000
-    }
-  },
-  "exceeds_200k_tokens": false,
-  "prompt_cache": {
-    "warm": true,
-    "caching_observed": true,
-    "ttl": "1h",
-    "expires_at": 1738429200,
-    "requests": 14,
-    "misses": 2,
-    "expected_rebuilds": 1,
-    "hit_ratio": 0.91,
-    "cache_write_tokens": 352000,
-    "miss_recache_tokens": 310200,
-    "last_miss_at": 1738425230,
-    "last_miss_cause": {
-      "causes": ["tools_changed"],
-      "tools_added": 2,
-      "tools_removed": 0
-    },
-    "miss_causes": {
-      "tools_changed": 2
-    },
-    "recache_tokens_if_cold": 45000
-  },
-  "fast_mode": false,
-  "effort": {
-    "level": "high"
-  },
-  "thinking": {
-    "enabled": true
-  },
-  "rate_limits": {
-    "five_hour": {
-      "used_percentage": 23.5,
-      "resets_at": 1738425600
-    },
-    "seven_day": {
-      "used_percentage": 41.2,
-      "resets_at": 1738857600
-    },
-    "spend_limit": {
-      "used_percentage": 62.8,
-      "resets_at": 1740787200,
-      "used_usd": 314.12,
-      "limit_usd": 500,
-      "period": "monthly"
-    }
-  },
-  "vim": {
-    "mode": "NORMAL"
-  },
-  "agent": {
-    "name": "security-reviewer"
-  },
-  "pr": {
-    "number": 1234,
-    "url": "https://github.com/anthropics/claude-code/pull/1234",
-    "review_state": "pending"
-  },
-  "worktree": {
-    "name": "my-feature",
-    "path": "/path/to/.claude/worktrees/my-feature",
-    "branch": "worktree-my-feature",
-    "original_cwd": "/path/to/project",
-    "original_branch": "main"
-  }
-}
-```
-
-**Fields that may be absent** (not present in JSON):
-
-* `session_name`: appears when a custom name has been set with `--name` or `/rename`, or once an AI-generated session title exists. The default display name, such as `my-app-3f`, doesn't populate it
-* `prompt_id`: appears only after the first user input
-* `workspace.git_worktree`: appears only when the current directory is inside a linked git worktree
-* `workspace.repo`: appears only inside a git repository with an `origin` remote configured
-* `effort`: appears only when the current model supports the reasoning effort parameter
-* `vim`: appears only when vim mode is enabled
-* `agent`: appears only when running with the `--agent` flag or agent settings configured
-* `pr`: appears only while an open PR or GitLab merge request is found for the current branch, and is removed once it merges or closes. `pr.review_state` and `pr.kind` may be independently absent
-* `worktree`: appears only while the session is in a [worktree session](./worktrees.md). When present, `branch` and `original_branch` may also be absent for hook-based worktrees
-* `rate_limits`: appears only for claude.ai Pro and Max subscribers, or behind a Claude apps gateway that sets a spend limit for you, and only after the first API response in the session. Each window (`five_hour`, `seven_day`, `spend_limit`) may be independently absent, and Claude Code drops a window once its `resets_at` time passes. Use `jq -r '.rate_limits.five_hour.used_percentage // empty'` to handle absence gracefully.
-* `prompt_cache`: appears after the main conversation's first API response. See [prompt cache fields](#prompt-cache-fields)
-
-**Fields that may be `null`**:
-
-* `context_window.current_usage`: `null` before the first API call in a session, and again after `/compact` until the next API call repopulates it
-* `context_window.used_percentage`, `context_window.remaining_percentage`: may be `null` early in the session
-
-Handle missing fields with conditional access and null values with fallback defaults in your scripts.
+> **Full JSON schema**
+>
+> Your status line command receives this JSON structure via stdin:
+>
+> ```json theme={null}
+> {
+>   "cwd": "/current/working/directory",
+>   "session_id": "abc123...",
+>   "session_name": "my-session",
+>   "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+>   "transcript_path": "/path/to/transcript.jsonl",
+>   "model": {
+>     "id": "claude-opus-5-5",
+>     "display_name": "Opus"
+>   },
+>   "workspace": {
+>     "current_dir": "/current/working/directory",
+>     "project_dir": "/original/project/directory",
+>     "added_dirs": [],
+>     "git_worktree": "feature-xyz",
+>     "repo": {
+>       "host": "github.com",
+>       "owner": "anthropics",
+>       "name": "claude-code"
+>     }
+>   },
+>   "version": "2.1.90",
+>   "output_style": {
+>     "name": "default"
+>   },
+>   "cost": {
+>     "total_cost_usd": 0.01234,
+>     "total_duration_ms": 45000,
+>     "total_api_duration_ms": 2300,
+>     "total_lines_added": 156,
+>     "total_lines_removed": 23
+>   },
+>   "context_window": {
+>     "total_input_tokens": 15500,
+>     "total_output_tokens": 1200,
+>     "context_window_size": 200000,
+>     "used_percentage": 8,
+>     "remaining_percentage": 92,
+>     "current_usage": {
+>       "input_tokens": 8500,
+>       "output_tokens": 1200,
+>       "cache_creation_input_tokens": 5000,
+>       "cache_read_input_tokens": 2000
+>     }
+>   },
+>   "exceeds_200k_tokens": false,
+>   "prompt_cache": {
+>     "warm": true,
+>     "caching_observed": true,
+>     "ttl": "1h",
+>     "expires_at": 1738429200,
+>     "requests": 14,
+>     "misses": 2,
+>     "expected_rebuilds": 1,
+>     "hit_ratio": 0.91,
+>     "cache_write_tokens": 352000,
+>     "miss_recache_tokens": 310200,
+>     "last_miss_at": 1738425230,
+>     "last_miss_cause": {
+>       "causes": ["tools_changed"],
+>       "tools_added": 2,
+>       "tools_removed": 0
+>     },
+>     "miss_causes": {
+>       "tools_changed": 2
+>     },
+>     "recache_tokens_if_cold": 45000
+>   },
+>   "fast_mode": false,
+>   "effort": {
+>     "level": "high"
+>   },
+>   "thinking": {
+>     "enabled": true
+>   },
+>   "rate_limits": {
+>     "five_hour": {
+>       "used_percentage": 23.5,
+>       "resets_at": 1738425600
+>     },
+>     "seven_day": {
+>       "used_percentage": 41.2,
+>       "resets_at": 1738857600
+>     },
+>     "spend_limit": {
+>       "used_percentage": 62.8,
+>       "resets_at": 1740787200,
+>       "used_usd": 314.12,
+>       "limit_usd": 500,
+>       "period": "monthly"
+>     }
+>   },
+>   "vim": {
+>     "mode": "NORMAL"
+>   },
+>   "agent": {
+>     "name": "security-reviewer"
+>   },
+>   "pr": {
+>     "number": 1234,
+>     "url": "https://github.com/anthropics/claude-code/pull/1234",
+>     "review_state": "pending"
+>   },
+>   "worktree": {
+>     "name": "my-feature",
+>     "path": "/path/to/.claude/worktrees/my-feature",
+>     "branch": "worktree-my-feature",
+>     "original_cwd": "/path/to/project",
+>     "original_branch": "main"
+>   }
+> }
+> ```
+>
+> **Fields that may be absent** (not present in JSON):
+>
+> * `session_name`: appears when a custom name has been set with `--name` or `/rename`, or once an AI-generated session title exists. The default display name, such as `my-app-3f`, doesn't populate it
+> * `prompt_id`: appears only after the first user input
+> * `workspace.git_worktree`: appears only when the current directory is inside a linked git worktree
+> * `workspace.repo`: appears only inside a git repository with an `origin` remote configured
+> * `effort`: appears only when the current model supports the reasoning effort parameter
+> * `vim`: appears only when vim mode is enabled
+> * `agent`: appears only when running with the `--agent` flag or agent settings configured
+> * `pr`: appears only while an open PR or GitLab merge request is found for the current branch, and is removed once it merges or closes. `pr.review_state` and `pr.kind` may be independently absent
+> * `worktree`: appears only while the session is in a [worktree session](./worktrees.md). When present, `branch` and `original_branch` may also be absent for hook-based worktrees
+> * `rate_limits`: appears only for claude.ai Pro and Max subscribers, or behind a Claude apps gateway that sets a spend limit for you, and only after the first API response in the session. Each window (`five_hour`, `seven_day`, `spend_limit`) may be independently absent, and Claude Code drops a window once its `resets_at` time passes. Use `jq -r '.rate_limits.five_hour.used_percentage // empty'` to handle absence gracefully.
+> * `prompt_cache`: appears after the main conversation's first API response. See [prompt cache fields](#prompt-cache-fields)
+>
+> **Fields that may be `null`**:
+>
+> * `context_window.current_usage`: `null` before the first API call in a session, and again after `/compact` until the next API call repopulates it
+> * `context_window.used_percentage`, `context_window.remaining_percentage`: may be `null` early in the session
+>
+> Handle missing fields with conditional access and null values with fallback defaults in your scripts.
 
 ### Context window fields
 
@@ -405,9 +409,7 @@ The table lists each field with its meaning. Timestamps are Unix epoch seconds, 
 
 Claude Code shows the same statistics in the terminal, on the [`/usage` command's `Prompt cache (main)` line](./costs.md#prompt-cache-statistics).
 
-<h4 id="last-miss-cause">
-  Last miss cause
-</h4>
+#### Last miss cause
 
 The `last_miss_cause` object reports what Claude Code identified as the likely cause of the most recent miss. Its `causes` array holds one or more cause names, such as `tools_changed`, `system_prompt_changed`, `ttl_expired_5m`, or `likely_server_side`. The object is `null` until the session's first miss, and again whenever Claude Code couldn't identify a cause for the most recent miss. Requires Claude Code v2.1.260 or later.
 
@@ -430,7 +432,7 @@ The Bash examples use [`jq`](https://jqlang.org/) to parse JSON. Python and Node
 
 Display the current model and context window usage with a visual progress bar. Each script reads JSON from stdin, extracts the `used_percentage` field, and builds a 10-character bar where filled blocks (▓) represent usage:
 
-<img src="media/images/statusline-context-window-usage.png" alt="A status line showing model name and a progress bar with percentage" width="1224" height="224" />
+![A status line showing model name and a progress bar with percentage](media/images/statusline-context-window-usage.png)
 
 ```bash Bash theme={null}
 #!/bin/bash
@@ -493,7 +495,7 @@ process.stdin.on('end', () => {
 
 Show git branch with color-coded indicators for staged and modified files. This script uses [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) for terminal colors: `\033[32m` is green, `\033[33m` is yellow, and `\033[0m` resets to default.
 
-<img src="media/images/statusline-git-context.png" alt="A status line showing model, directory, git branch, and colored indicators for staged and modified files" width="1224" height="224" />
+![A status line showing model, directory, git branch, and colored indicators for staged and modified files](media/images/statusline-git-context.png)
 
 Each script checks if the current directory is a git repository, counts staged and modified files, and displays color-coded indicators:
 
@@ -585,7 +587,7 @@ Track your session's API costs and elapsed time. The `cost.total_cost_usd` field
 
 Each script formats cost as currency and converts milliseconds to minutes and seconds:
 
-<img src="media/images/statusline-cost-tracking.png" alt="A status line showing model name, session cost, and duration" width="1224" height="224" />
+![A status line showing model name, session cost, and duration](media/images/statusline-cost-tracking.png)
 
 ```bash Bash theme={null}
 #!/bin/bash
@@ -640,7 +642,7 @@ process.stdin.on('end', () => {
 
 Your script can output multiple lines to create a richer display.
 
-<img src="media/images/statusline-multiline.png" alt="A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line" width="1224" height="262" />
+![A multi-line status line showing model name, directory, git branch on the first line, and a context usage progress bar with cost and duration on the second line](media/images/statusline-multiline.png)
 
 This example combines several techniques: threshold-based colors (green under 70%, yellow 70-89%, red 90%+), a progress bar, and git branch info. Each `print` or `echo` statement creates a separate row:
 
@@ -743,7 +745,7 @@ process.stdin.on('end', () => {
 
 This example creates a clickable link to your GitHub repository. Hold Cmd (macOS) or Ctrl (Windows/Linux) and click to open the link in your browser.
 
-<img src="media/images/statusline-links.png" alt="A status line showing a clickable link to a GitHub repository" width="1224" height="224" />
+![A status line showing a clickable link to a GitHub repository](media/images/statusline-links.png)
 
 Each script gets the git remote URL, converts SSH format to HTTPS, and wraps the repo name in OSC 8 escape codes. The Bash version uses `printf '%b'` which interprets backslash escapes more reliably than `echo -e` across different shells:
 

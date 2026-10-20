@@ -7,6 +7,7 @@
 > Coordinate multiple Claude Code instances working together as a team, with shared tasks, inter-agent messaging, and centralized management.
 
 > [!WARNING]
+>
 > Agent teams are experimental and disabled by default. Enable them by setting `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` in your [settings.json](./settings.md) or environment. Without that variable, no team is set up at session start, no team directories are written, and Claude does not spawn or propose teammates. Agent teams have [known limitations](#limitations) around session resumption, task coordination, and shutdown behavior.
 
 Agent teams let you coordinate multiple Claude Code instances working together. One session acts as the team lead, coordinating work, assigning tasks, and synthesizing results. Teammates work independently, each in its own context window, and communicate directly with each other. You can also talk to any teammate directly without going through the lead.
@@ -28,9 +29,7 @@ Agent teams add coordination overhead and use significantly more tokens than a s
 
 Both agent teams and [subagents](./sub-agents.md) let you parallelize work, but they operate differently. For separate sessions that pass messages to each other without a team, see [cross-session messaging](./cross-session-messaging.md).
 
-<img src="media/images/subagents-vs-agent-teams-light.png" alt="Diagram comparing subagent and agent team architectures. Subagents are spawned by the main agent, do work, and report results back. Agent teams coordinate through a shared task list, with teammates communicating directly with each other." width="4245" height="1615" />
-
-<img src="media/images/subagents-vs-agent-teams-dark.png" alt="Diagram comparing subagent and agent team architectures. Subagents are spawned by the main agent, do work, and report results back. Agent teams coordinate through a shared task list, with teammates communicating directly with each other." width="4245" height="1615" />
+![Diagram comparing subagent and agent team architectures. Subagents are spawned by the main agent, do work, and report results back. Agent teams coordinate through a shared task list, with teammates communicating directly with each other.](media/images/subagents-vs-agent-teams-light.png)
 
 | | Subagents | Agent teams |
 | :- | :- | :- |
@@ -98,6 +97,7 @@ Agent teams support two display modes:
 * **Split panes**: each teammate gets its own pane. You can see everyone's output at once and click into a pane to interact directly. Requires tmux, or iTerm2.
 
 > [!NOTE]
+>
 > `tmux` has known limitations on certain operating systems and traditionally works best on macOS. Using `tmux -CC` in iTerm2 is the suggested entrypoint into `tmux`.
 
 The default is `"in-process"`. Set `"auto"` to enable split panes when you're already running inside a tmux session, or when your terminal is iTerm2 with the `it2` CLI installed, falling back to in-process otherwise. The `"tmux"` setting enables split-pane mode and auto-detects whether to use tmux or iTerm2 based on your terminal.
@@ -148,6 +148,7 @@ If you set [`CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`](./sub-agents.md#run-every-suba
 Before v2.1.251, `CLAUDE_CODE_SUBAGENT_MODEL` came first in this order.
 
 > [!NOTE]
+>
 > `teammateDefaultModel` was removed in v2.1.234; Claude Code ignores a leftover value. Name the model in your prompt instead.
 
 Claude Code checks the model it selects for a teammate against your organization's [`availableModels`](./model-config.md#restrict-model-selection) allowlist. When the allowlist blocks a value, Claude Code substitutes another model:
@@ -382,6 +383,7 @@ Scale up only when the work benefits from having teammates work simultaneously. 
 * **Just right**: self-contained units that produce a clear deliverable, such as a function, a test file, or a review
 
 > [!TIP]
+>
 > The lead breaks work into tasks and assigns them to teammates automatically. If it isn't creating enough tasks, ask it to split the work into smaller pieces. Having 5-6 tasks per teammate keeps everyone productive and lets the lead reassign work if someone gets stuck.
 
 ### Wait for teammates to finish

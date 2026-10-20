@@ -30,6 +30,7 @@ Claude Code runs on the following platforms and configurations:
 ## Install Claude Code
 
 > [!TIP]
+>
 > Prefer a graphical interface? The [Desktop app](./desktop-quickstart.md) lets you use Claude Code without the terminal. Download it for [macOS](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect?utm_source=claude_code\&utm_medium=docs), [Windows](https://claude.com/download?utm_source=claude_code\&utm_medium=docs), or [Linux](./desktop-linux.md).
 
 To install Claude Code, open a terminal and run the command for your system. If you haven't used a terminal before, the [terminal guide](https://code.claude.com/docs/en/terminal-guide) shows how to open one and paste the command.
@@ -65,6 +66,7 @@ If the install command fails with `syntax error near unexpected token '<'`, a `4
 [Git for Windows](https://git-scm.com/downloads/win) is recommended on native Windows so Claude Code can use the Bash tool. If Git for Windows is not installed, Claude Code uses PowerShell as the shell tool instead. WSL setups do not need Git for Windows.
 
 > [!NOTE]
+>
 > Native installations automatically update in the background to keep you on the latest version.
 
 **Homebrew**
@@ -76,6 +78,7 @@ brew install --cask claude-code
 Homebrew offers two casks. `claude-code` tracks the stable release channel, which is typically about a week behind and skips releases with major regressions. `claude-code@latest` tracks the latest channel and receives new versions as soon as they ship.
 
 > [!NOTE]
+>
 > Homebrew installations do not auto-update. Run `brew upgrade claude-code` or `brew upgrade claude-code@latest`, depending on which cask you installed, to get the latest features and security fixes.
 
 **WinGet**
@@ -85,6 +88,7 @@ winget install Anthropic.ClaudeCode
 ```
 
 > [!NOTE]
+>
 > WinGet installations do not auto-update. Run `winget upgrade Anthropic.ClaudeCode` periodically to get the latest features and security fixes.
 
 You can also install with [apt, dnf, or apk](./setup.md#install-with-linux-package-managers) on Debian, Fedora, RHEL, and Alpine.
@@ -207,6 +211,7 @@ To let Claude Code manage the launcher again, remove `~/.local/bin/claude` and r
 If an npm global install can't auto-update because the npm global directory isn't writable, Claude Code shows a one-time notice at startup, and `claude doctor` lists the available fixes. See [permission errors during installation](./troubleshoot-install.md#permission-errors-during-installation) for details.
 
 > [!NOTE]
+>
 > Homebrew, WinGet, apt, dnf, and apk installations do not auto-update by default; see below to opt in for Homebrew and WinGet. To upgrade Homebrew manually, run `brew upgrade claude-code` or `brew upgrade claude-code@latest`, depending on which cask you installed. For WinGet, run `winget upgrade Anthropic.ClaudeCode`. For Linux package managers, see the upgrade commands in [Install with Linux package managers](#install-with-linux-package-managers).
 >
 > To have Claude Code run the upgrade command for you on Homebrew or WinGet, set [`CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE`](./env-vars.md) to `1`. Claude Code then runs the upgrade in the background when a new version is available and shows a restart prompt on success. The upgrade targets only the Claude Code package and does not affect other software you have installed.
@@ -466,6 +471,7 @@ Supported npm install platforms are `darwin-arm64`, `darwin-x64`, `linux-x64`, `
 To upgrade an npm installation, run `npm install -g @anthropic-ai/claude-code@latest`. Avoid `npm update -g`, which respects the semver range from the original install and may not move you to the newest release.
 
 > [!WARNING]
+>
 > Do NOT use `sudo npm install -g` as this can lead to permission issues and security risks. If you encounter permission errors, see [troubleshooting permission errors](./troubleshoot-install.md#permission-errors-during-installation).
 
 ### Install on network storage
@@ -489,69 +495,73 @@ Each release publishes a `manifest.json` containing SHA256 checksums for every p
 
 Steps 1-3 require a POSIX shell with `gpg` and `curl`. On Windows, run them in Git Bash or WSL. Step 4 includes a PowerShell option.
 
-1. **Download and import the public key**
+**1. Download and import the public key**
 
-   The release signing key is published at a fixed URL.
+The release signing key is published at a fixed URL.
 
-   ```bash theme={null}
-   curl -fsSL https://downloads.claude.ai/keys/claude-code.asc | gpg --import
-   ```
+```bash theme={null}
+curl -fsSL https://downloads.claude.ai/keys/claude-code.asc | gpg --import
+```
 
-   Display the fingerprint of the imported key.
+Display the fingerprint of the imported key.
 
-   ```bash theme={null}
-   gpg --fingerprint security@anthropic.com
-   ```
+```bash theme={null}
+gpg --fingerprint security@anthropic.com
+```
 
-   Confirm the output includes this fingerprint:
+Confirm the output includes this fingerprint:
 
-   ```text theme={null}
-   31DD DE24 DDFA B679 F42D  7BD2 BAA9 29FF 1A7E CACE
-   ```
-2. **Download the manifest and signature**
+```text theme={null}
+31DD DE24 DDFA B679 F42D  7BD2 BAA9 29FF 1A7E CACE
+```
 
-   Set `VERSION` to the release you want to verify.
+**2. Download the manifest and signature**
 
-   ```bash theme={null}
-   REPO=https://downloads.claude.ai/claude-code-releases
-   VERSION=2.1.89
-   curl -fsSLO "$REPO/$VERSION/manifest.json"
-   curl -fsSLO "$REPO/$VERSION/manifest.json.sig"
-   ```
-3. **Verify the signature**
+Set `VERSION` to the release you want to verify.
 
-   Verify the detached signature against the manifest.
+```bash theme={null}
+REPO=https://downloads.claude.ai/claude-code-releases
+VERSION=2.1.89
+curl -fsSLO "$REPO/$VERSION/manifest.json"
+curl -fsSLO "$REPO/$VERSION/manifest.json.sig"
+```
 
-   ```bash theme={null}
-   gpg --verify manifest.json.sig manifest.json
-   ```
+**3. Verify the signature**
 
-   A valid result reports `Good signature from "Anthropic Claude Code Release Signing <security@anthropic.com>"`.
+Verify the detached signature against the manifest.
 
-   `gpg` also prints `WARNING: This key is not certified with a trusted signature!` for any freshly imported key. This is expected. The `Good signature` line confirms the cryptographic check passed. The fingerprint comparison in Step 1 confirms the key itself is authentic.
-4. **Check the binary against the manifest**
+```bash theme={null}
+gpg --verify manifest.json.sig manifest.json
+```
 
-   Compare the SHA256 checksum of the binary with the value listed under `platforms.<platform>.checksum` in `manifest.json`. The commands below assume a `claude` binary in the current directory. To verify an installed native binary instead, run the command against `~/.local/share/claude/versions/VERSION`, replacing VERSION with the release you set in Step 2.
+A valid result reports `Good signature from "Anthropic Claude Code Release Signing <security@anthropic.com>"`.
 
-   **Linux**
+`gpg` also prints `WARNING: This key is not certified with a trusted signature!` for any freshly imported key. This is expected. The `Good signature` line confirms the cryptographic check passed. The fingerprint comparison in Step 1 confirms the key itself is authentic.
 
-   ```bash theme={null}
-   sha256sum claude
-   ```
+**4. Check the binary against the manifest**
 
-   **macOS**
+Compare the SHA256 checksum of the binary with the value listed under `platforms.<platform>.checksum` in `manifest.json`. The commands below assume a `claude` binary in the current directory. To verify an installed native binary instead, run the command against `~/.local/share/claude/versions/VERSION`, replacing VERSION with the release you set in Step 2.
 
-   ```bash theme={null}
-   shasum -a 256 claude
-   ```
+**Linux**
 
-   **Windows PowerShell**
+```bash theme={null}
+sha256sum claude
+```
 
-   ```powershell theme={null}
-   (Get-FileHash claude.exe -Algorithm SHA256).Hash.ToLower()
-   ```
+**macOS**
+
+```bash theme={null}
+shasum -a 256 claude
+```
+
+**Windows PowerShell**
+
+```powershell theme={null}
+(Get-FileHash claude.exe -Algorithm SHA256).Hash.ToLower()
+```
 
 > [!NOTE]
+>
 > Manifest signatures are available for releases from `2.1.89` onward. Earlier releases publish checksums in `manifest.json` without a detached signature.
 
 #### Platform code signatures
@@ -565,8 +575,6 @@ In addition to the signed manifest, individual binaries carry platform-native co
 ## Uninstall Claude Code
 
 To remove Claude Code, follow the instructions for your installation method. If `claude` still runs afterward, you likely have a second installation or a leftover shell alias from an older installer. See [Check for conflicting installations](./troubleshoot-install.md#check-for-conflicting-installations) to find and remove it.
-
-<a id="native-installation"></a>
 
 ### Uninstall a native installation
 
@@ -586,8 +594,6 @@ Remove-Item -Path "$env:USERPROFILE\.local\bin\claude.exe" -Force
 Remove-Item -Path "$env:USERPROFILE\.local\share\claude" -Recurse -Force
 ```
 
-<a id="homebrew-installation"></a>
-
 ### Uninstall with Homebrew
 
 Remove the Homebrew cask you installed. If you installed the stable cask:
@@ -602,8 +608,6 @@ If you installed the latest cask:
 brew uninstall --cask claude-code@latest
 ```
 
-<a id="winget-installation"></a>
-
 ### Uninstall with WinGet
 
 Remove the WinGet package:
@@ -611,8 +615,6 @@ Remove the WinGet package:
 ```powershell theme={null}
 winget uninstall Anthropic.ClaudeCode
 ```
-
-<a id="apt-/-dnf-/-apk"></a>
 
 ### Uninstall with apt, dnf, or apk
 
@@ -640,8 +642,6 @@ sed -i '\|downloads.claude.ai/claude-code/apk|d' /etc/apk/repositories
 rm /etc/apk/keys/claude-code.rsa.pub
 ```
 
-<a id="npm"></a>
-
 ### Uninstall with npm
 
 Remove the global npm package:
@@ -653,6 +653,7 @@ npm uninstall -g @anthropic-ai/claude-code
 ### Remove configuration files
 
 > [!WARNING]
+>
 > Removing configuration files will delete all your settings, allowed tools, MCP server configurations, and session history.
 
 The VS Code extension, the JetBrains plugin, and the Desktop app also write to `~/.claude/`. If any of them is still installed, the directory is recreated the next time it runs. To remove Claude Code completely, uninstall the [VS Code extension](./vs-code.md#uninstall-the-extension), the JetBrains plugin, and the Desktop app before deleting these files.

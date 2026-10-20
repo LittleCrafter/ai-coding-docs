@@ -14,6 +14,7 @@ Use an output style to change the way Claude responds and works with you for a w
 * To write your own instructions, [create a custom output style](#create-a-custom-output-style).
 
 > [!NOTE]
+>
 > An output style gives Claude instructions to follow. It doesn't guarantee that something always happens or never happens. Some needs fit a different feature:
 >
 > * For what Claude should know about your project, use [CLAUDE.md](./memory.md).
@@ -118,43 +119,43 @@ A custom output style is a Markdown file: frontmatter for metadata, then the ins
 
 In the VS Code extension, you can also create the file from the [**Output styles** menu](./vs-code.md#use-the-prompt-box) rather than writing it by hand. This requires Claude Code v2.1.261 or later.
 
-1. **Create a Markdown file**
+**1. Create a Markdown file**
 
-   Save it at one of three levels. The file name becomes the style name unless you set `name` in the frontmatter.
+Save it at one of three levels. The file name becomes the style name unless you set `name` in the frontmatter.
 
-   * User: `~/.claude/output-styles`
-   * Project: `.claude/output-styles`
-   * Managed policy: `.claude/output-styles` inside the [managed settings directory](./managed-settings.md#delivery-mechanisms)
+* User: `~/.claude/output-styles`
+* Project: `.claude/output-styles`
+* Managed policy: `.claude/output-styles` inside the [managed settings directory](./managed-settings.md#delivery-mechanisms)
 
-   Project output styles load from every `.claude/output-styles/` between the working directory and the repository root. When more than one of these nested directories defines a style with the same name, Claude Code uses the one closest to the working directory.
-2. **Add frontmatter and instructions**
+Project output styles load from every `.claude/output-styles/` between the working directory and the repository root. When more than one of these nested directories defines a style with the same name, Claude Code uses the one closest to the working directory.
 
-   Decide whether to keep Claude Code's software engineering instructions. Set `keep-coding-instructions: true` if you're changing how Claude communicates but still want it coding the same way. Leave it out if Claude won't be doing software engineering.
+**2. Add frontmatter and instructions**
 
-   This example leads every explanation with a diagram while keeping Claude's coding behavior:
+Decide whether to keep Claude Code's software engineering instructions. Set `keep-coding-instructions: true` if you're changing how Claude communicates but still want it coding the same way. Leave it out if Claude won't be doing software engineering.
 
-   ```markdown theme={null}
-   ---
-   name: Diagrams first
-   description: Lead every explanation with a diagram
-   keep-coding-instructions: true
-   ---
+This example leads every explanation with a diagram while keeping Claude's coding behavior:
 
-   When explaining code, architecture, or data flow, start with a Mermaid diagram showing the structure, then explain in prose.
+```markdown theme={null}
+---
+name: Diagrams first
+description: Lead every explanation with a diagram
+keep-coding-instructions: true
+---
 
-   ## Diagram conventions
+When explaining code, architecture, or data flow, start with a Mermaid diagram showing the structure, then explain in prose.
 
-   Use `flowchart TD` for control flow and `sequenceDiagram` for request paths. Keep diagrams under 15 nodes.
-   ```
-3. **Switch to your style**
+## Diagram conventions
 
-   Run `/output-style <style>` in the terminal, or run `/config` and select your style under **Output style**. Claude uses the new style starting with your next message. In the terminal, Claude Code reads style files when it starts, so if you create or edit one during a running session, restart Claude Code to pick up the change.
+Use `flowchart TD` for control flow and `sequenceDiagram` for request paths. Keep diagrams under 15 nodes.
+```
+
+**3. Switch to your style**
+
+Run `/output-style <style>` in the terminal, or run `/config` and select your style under **Output style**. Claude uses the new style starting with your next message. In the terminal, Claude Code reads style files when it starts, so if you create or edit one during a running session, restart Claude Code to pick up the change.
 
 [Plugins](./plugins/manifest-reference.md) can also ship output styles in an `output-styles/` directory.
 
-<h3 id="frontmatter">
-  Frontmatter reference
-</h3>
+### Frontmatter reference
 
 Configure an output style with YAML [frontmatter](./glossary.md#frontmatter) between `---` markers at the top of the file. All fields are optional, and field names use lowercase words separated by hyphens. A misspelled field is ignored without an error. If the YAML doesn't parse, the style still loads under its file name with no fields set; run `claude --debug` to see the parse error.
 
@@ -164,8 +165,6 @@ Configure an output style with YAML [frontmatter](./glossary.md#frontmatter) bet
 | `description` | No | Description of the output style, shown in the `/config` picker |
 | `keep-coding-instructions` | No | Set to `true` to keep Claude Code's section of built-in software engineering instructions, which only the full system prompt includes, alongside your style. See [How output styles work](#how-output-styles-work). Default: `false` |
 | `force-for-plugin` | No | Plugin output styles only. Set to `true` to apply this style automatically whenever the plugin is enabled, without requiring users to select it. Overrides the user's `outputStyle` setting. If multiple enabled plugins set this, Claude Code uses the first one loaded. Default: `false` |
-
-<a id="comparisons-to-related-features"></a>
 
 ## Choose between an output style and other features
 

@@ -208,6 +208,7 @@ CLAUDE.md content and environment details such as the working directory, platfor
 To make the system prompt identical across sessions, set `excludeDynamicSections: true` in TypeScript or `"exclude_dynamic_sections": True` in Python. The per-user context moves into the first user message, leaving only the static preset and your `append` text in the system prompt so identical configurations share a cache entry across users and machines.
 
 > [!NOTE]
+>
 > `excludeDynamicSections` requires `@anthropic-ai/claude-agent-sdk` v0.2.98 or later, or `claude-agent-sdk` v0.1.58 or later for Python. Set it on the preset object form only. The SDK ignores it when you pass a custom prompt instead of the preset; to keep a custom prompt's instructions cached in the TypeScript SDK, see [Cache the static part of a custom prompt](#cache-the-static-part-of-a-custom-prompt).
 
 The following example pairs a shared `append` block with `excludeDynamicSections` so a fleet of agents can reuse the same cached system prompt:
@@ -324,6 +325,7 @@ In Python, load a large custom prompt from a file with `system_prompt={"type": "
 In the TypeScript SDK, you can pass a custom prompt as an array of strings instead of one string, with the `SYSTEM_PROMPT_DYNAMIC_BOUNDARY` marker between the static part and the rest. Use this when your prompt combines instructions that are the same on every request with context that changes per request, such as the customer or ticket the agent is handling. When you pass both parts as one string, a change to the per-request part changes the whole system prompt, so the static instructions miss the cache too. The array form isn't available in the Python SDK; [`ClaudeAgentOptions`](./python.md#claudeagentoptions) lists the forms `system_prompt` accepts.
 
 > [!NOTE]
+>
 > Claude Code splits the prompt only when it calls the Claude API directly or runs on [Claude Platform on AWS](../claude-platform-on-aws.md). In every other configuration, such as Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or an [LLM gateway](../llm-gateway-connect.md), it sends the whole prompt as one block, the same as passing one string. The same happens whenever you set [`CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1`](../llm-gateway-protocol.md#disable-pre-release-capabilities).
 
 To split the prompt, import `SYSTEM_PROMPT_DYNAMIC_BOUNDARY` from `@anthropic-ai/claude-agent-sdk` and pass it as its own array element between the two parts. The SDK sends the strings before the marker as one text block and the strings after it as a second block, each with its own cache breakpoint. In the example below, a support agent loads its triage instructions from a file and receives details about one ticket on each request, so the instructions stay cached while the ticket details change:

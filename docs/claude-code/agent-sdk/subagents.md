@@ -174,6 +174,7 @@ Claude waits when its next action needs the report: the call blocks and returns 
 You can also define subagents as markdown files in `.claude/agents/` directories. See the [Claude Code subagents documentation](../sub-agents.md) for details on this approach. Programmatically defined agents take precedence over filesystem-based agents with the same name.
 
 > [!NOTE]
+>
 > When Claude calls the Agent tool without a `subagent_type`, it gets the built-in `general-purpose` subagent, which Claude can spawn even when you define no agents of your own. Setting [`CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1`](../env-vars.md) removes that default, and such a call fails with [`subagent_type is required`](../errors.md#subagent-type-is-required).
 
 ## What subagents inherit
@@ -193,6 +194,7 @@ The table below lists what a non-fork subagent's context contains and what it le
 | Tool definitions (inherited from parent or the subset in `tools`, [filtered for background runs](../sub-agents.md#available-tools)) | The parent's system prompt |
 
 > [!NOTE]
+>
 > The parent receives the subagent's final report, but may summarize it in its own response. To preserve subagent output verbatim in the user-facing response, include an instruction to do so in the prompt or `systemPrompt` option you pass to the main `query()` call.
 >
 > In v2.1.210 and later, Claude Code [scans the final message for instruction-shaped patterns](../sub-agents.md#subagent-output-scanning) before the parent reads it. The scan treats three kinds of pattern differently:
@@ -324,6 +326,7 @@ Claude invokes subagents through the Agent tool. To detect when a subagent is in
 Messages from within a subagent's context include a `parent_tool_use_id` field. In TypeScript, each assistant and user message a subagent produces also carries [`agent_id`](./typescript.md#sdkassistantmessage): the `task_id` of that subagent's [task events](./typescript.md#sdktaskstartedmessage). `agent_id` requires TypeScript Agent SDK v0.3.292 or later.
 
 > [!NOTE]
+>
 > The tool appears as `"Agent"` in `tool_use` blocks but as `"Task"` in the `system:init` tools list. Before Claude Code v2.1.63, `tool_use` blocks also named it `"Task"`. To keep detection working across SDK versions, match both values in `block.name`.
 
 The message structure differs between SDKs. In Python, you access content blocks directly via `message.content`. In TypeScript, `SDKAssistantMessage` wraps the Claude API message, so you access content via `message.message.content`.
@@ -425,6 +428,7 @@ When a subagent completes, the Agent tool result includes a text block containin
 3. **Resume the session**: pass `resume: sessionId` in the second query's options, and include the agent ID in your prompt. Each `query()` call starts a new session by default, and you must resume the same session to access the subagent's transcript.
 
 > [!NOTE]
+>
 > When using a custom agent, pass the same agent definition in the `agents` parameter for both queries.
 
 The example below defines a custom `endpoint-finder` agent. The first query runs it and captures the session ID and agent ID from the Agent tool result, then the second query resumes the session to ask a follow-up question that requires context from the first analysis.
@@ -624,6 +628,7 @@ identify patterns, and suggest improvements without making changes.`,
 ## Cap subagent depth, concurrency, and spend
 
 > [!NOTE]
+>
 > This section describes TypeScript SDK v0.3.219 and Python SDK v0.2.127 and later, the releases that bundle Claude Code v2.1.219 or later. On earlier releases, some of these limits are missing or default differently, so upgrade before you rely on them to bound a run. The [environment variable reference](../env-vars.md) and [turns and budget](./agent-loop.md#turns-and-budget) record the Claude Code version that added each variable and the spend cap's subagent enforcement.
 
 Claude decides on its own when to spawn a subagent and how many to spawn. Each subagent makes its own API requests, which count toward the query's `total_cost_usd`, and a subagent can spawn subagents of its own, so one prompt can grow into a tree of agents.

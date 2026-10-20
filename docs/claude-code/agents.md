@@ -31,6 +31,7 @@ A few other features run Claude without you driving each step, but they solve a 
 * A [cloud scheduled task](./routines.md) runs a session on a schedule in the cloud, not in parallel on your machine.
 
 > [!NOTE]
+>
 > Running several sessions or subagents at once multiplies token usage. See [Costs](./costs.md) for usage and rate-limit details.
 
 ## Choose an approach

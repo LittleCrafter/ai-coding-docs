@@ -51,6 +51,7 @@ To update a review workflow that an earlier version generated, do one of the fol
 After installing the GitHub App, Claude Code asks whether to continue with GitHub Actions setup. Choose **Skip for now** to stop with only the GitHub App installed. Run `/install-github-app` again later to finish the workflow and secret steps.
 
 > [!NOTE]
+>
 > * When you install the GitHub App, you grant it several permissions. See [GitHub App permissions](#github-app-permissions) for the full set
 > * Quick setup works with the Claude API and Claude subscriptions. If you use Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry, see [Use Claude Code GitHub Actions with cloud providers](./github-actions-cloud-providers.md)
 
@@ -58,28 +59,31 @@ After installing the GitHub App, Claude Code asks whether to continue with GitHu
 
 To configure the Claude Code GitHub Action without running `/install-github-app`, install the app, add a secret, and copy a workflow file yourself:
 
-1. **Install the Claude GitHub App**
+**1. Install the Claude GitHub App**
 
-   Install the [Claude GitHub App](https://github.com/apps/claude) to your repository. The Claude Code GitHub Action relies on three of the app's permissions:
+Install the [Claude GitHub App](https://github.com/apps/claude) to your repository. The Claude Code GitHub Action relies on three of the app's permissions:
 
-   * **Contents**: read and write, so Claude can modify repository files
-   * **Issues**: read and write, so Claude can respond to issues
-   * **Pull requests**: read and write, so Claude can create PRs and push changes
+* **Contents**: read and write, so Claude can modify repository files
+* **Issues**: read and write, so Claude can respond to issues
+* **Pull requests**: read and write, so Claude can create PRs and push changes
 
-   During installation, you also grant permissions that other Claude features use. See [GitHub App permissions](#github-app-permissions) for the full set.
-2. **Add an authentication secret**
+During installation, you also grant permissions that other Claude features use. See [GitHub App permissions](#github-app-permissions) for the full set.
 
-   Add one of the following secrets to your repository, depending on how you authenticate. See GitHub's guide to [using secrets in GitHub Actions](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
+**2. Add an authentication secret**
 
-   * `ANTHROPIC_API_KEY`: a Claude API key from the [Claude Console](https://platform.claude.com)
-   * `CLAUDE_CODE_OAUTH_TOKEN`: an OAuth token that authenticates with your Claude subscription, available on Pro, Max, Team, and Enterprise plans. Generate one by running `claude setup-token` locally. See [Generate a long-lived token](./authentication.md#generate-a-long-lived-token)
+Add one of the following secrets to your repository, depending on how you authenticate. See GitHub's guide to [using secrets in GitHub Actions](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 
-   In workflow files, pass the secret to the matching input: `anthropic_api_key` for an API key, or `claude_code_oauth_token` for an OAuth token.
-3. **Copy the workflow file**
+* `ANTHROPIC_API_KEY`: a Claude API key from the [Claude Console](https://platform.claude.com)
+* `CLAUDE_CODE_OAUTH_TOKEN`: an OAuth token that authenticates with your Claude subscription, available on Pro, Max, Team, and Enterprise plans. Generate one by running `claude setup-token` locally. See [Generate a long-lived token](./authentication.md#generate-a-long-lived-token)
 
-   Copy [examples/claude.yml](https://github.com/anthropics/claude-code-action/blob/main/examples/claude.yml) into your repository's `.github/workflows/` directory. The file is a working workflow, not just an example. As committed, Claude responds whenever someone mentions `@claude` in an issue or pull request, authenticating with the `ANTHROPIC_API_KEY` secret. If you added `CLAUDE_CODE_OAUTH_TOKEN` instead, change the workflow's `anthropic_api_key` line to `claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}`.
+In workflow files, pass the secret to the matching input: `anthropic_api_key` for an API key, or `claude_code_oauth_token` for an OAuth token.
+
+**3. Copy the workflow file**
+
+Copy [examples/claude.yml](https://github.com/anthropics/claude-code-action/blob/main/examples/claude.yml) into your repository's `.github/workflows/` directory. The file is a working workflow, not just an example. As committed, Claude responds whenever someone mentions `@claude` in an issue or pull request, authenticating with the `ANTHROPIC_API_KEY` secret. If you added `CLAUDE_CODE_OAUTH_TOKEN` instead, change the workflow's `anthropic_api_key` line to `claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}`.
 
 > [!TIP]
+>
 > After setup, test the Claude Code GitHub Action by tagging `@claude` in an issue or PR comment.
 
 ### Set up for an organization
@@ -287,6 +291,7 @@ Create a `CLAUDE.md` file in your repository root to define code style guideline
 ### Protect your credentials
 
 > [!WARNING]
+>
 > Never commit API keys or OAuth tokens directly to your repository. Always store them as GitHub Secrets and reference them in workflows, for example `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}`.
 
 Grant the workflow only the permissions it needs, and review Claude's changes before merging.

@@ -16,75 +16,77 @@ The samples on this page are snippets, not whole mods. Each one is the code for 
 
 To see a sample in your own terminal, create the small mod in these steps and paste the sample into it. The mod adds a `/gallery` command that opens a pane and draws the sample there. A [pane](./interface.md#pick-where-to-draw) is a sidebar beside the transcript in a wide fullscreen terminal, or a framed region above the prompt otherwise.
 
-1. **Create the mod**
+**1. Create the mod**
 
-   Create a directory named `gallery` with `.claude-plugin` and `hooks` directories inside it. [Create a mod](./create.md#write-a-mod-yourself) explains the files.
+Create a directory named `gallery` with `.claude-plugin` and `hooks` directories inside it. [Create a mod](./create.md#write-a-mod-yourself) explains the files.
 
-   Save the manifest as `gallery/.claude-plugin/plugin.json`:
+Save the manifest as `gallery/.claude-plugin/plugin.json`:
 
-   ```json gallery/.claude-plugin/plugin.json theme={null}
-   {
-     "name": "gallery",
-     "version": "0.1.0",
-     "description": "Opens a pane that draws one sample",
-     "author": { "name": "Your Name" }
-   }
-   ```
+```json gallery/.claude-plugin/plugin.json theme={null}
+{
+  "name": "gallery",
+  "version": "0.1.0",
+  "description": "Opens a pane that draws one sample",
+  "author": { "name": "Your Name" }
+}
+```
 
-   Name your entry point in `gallery/hooks/hooks.json`:
+Name your entry point in `gallery/hooks/hooks.json`:
 
-   ```json gallery/hooks/hooks.json theme={null}
-   {
-     "modules": ["./register.js"]
-   }
-   ```
+```json gallery/hooks/hooks.json theme={null}
+{
+  "modules": ["./register.js"]
+}
+```
 
-   Save the code as `gallery/hooks/register.js`. It adds a `/gallery` command that opens a pane, and draws `Plain text` in that pane:
+Save the code as `gallery/hooks/register.js`. It adds a `/gallery` command that opens a pane, and draws `Plain text` in that pane:
 
-   ```javascript gallery/hooks/register.js theme={null}
-   // Stands in for your own callback in the samples that take one
-   const noop = () => {}
-   // The Select sample keeps its choice here
-   let picked = 'md'
+```javascript gallery/hooks/register.js theme={null}
+// Stands in for your own callback in the samples that take one
+const noop = () => {}
+// The Select sample keeps its choice here
+let picked = 'md'
 
-   // The Raster sample packs its cells with this function
-   const DEFAULT_COLOR = 0x01000000
-   function cellsOf(rows) {
-     const numbers = rows.flat().flatMap(([char, color]) => [char.codePointAt(0), color, DEFAULT_COLOR])
-     return new Uint8Array(Uint32Array.from(numbers).buffer).toBase64()
-   }
+// The Raster sample packs its cells with this function
+const DEFAULT_COLOR = 0x01000000
+function cellsOf(rows) {
+  const numbers = rows.flat().flatMap(([char, color]) => [char.codePointAt(0), color, DEFAULT_COLOR])
+  return new Uint8Array(Uint32Array.from(numbers).buffer).toBase64()
+}
 
-   export function register(on) {
-     on('session.start', async ($, e, next) => {
-       await $.command.register({ name: 'gallery', description: 'Open the sample pane' })
-       return next(e)
-     })
+export function register(on) {
+  on('session.start', async ($, e, next) => {
+    await $.command.register({ name: 'gallery', description: 'Open the sample pane' })
+    return next(e)
+  })
 
-     on('command.run', { command: 'gallery' }, async ($) => {
-       await $.ui.open({ id: 'gallery', focus: true, closeOnEscape: true })
-       return {}
-     })
+  on('command.run', { command: 'gallery' }, async ($) => {
+    await $.ui.open({ id: 'gallery', focus: true, closeOnEscape: true })
+    return {}
+  })
 
-     on('ui.render', { component: 'Pane' }, async ($, e, next) => {
-       if (e.requestId !== 'gallery') return next(e)
-       const { Box, Text, Button, Input, Select, Link, Markdown, Code, Raster, Svg } = $.ui.resolve(e)
-       // Replace the element after return with a sample
-       return Text({ children: ['Plain text'] })
-     })
-   }
-   ```
-2. **Run the mod**
+  on('ui.render', { component: 'Pane' }, async ($, e, next) => {
+    if (e.requestId !== 'gallery') return next(e)
+    const { Box, Text, Button, Input, Select, Link, Markdown, Code, Raster, Svg } = $.ui.resolve(e)
+    // Replace the element after return with a sample
+    return Text({ children: ['Plain text'] })
+  })
+}
+```
 
-   In your shell, start Claude Code from the directory that holds `gallery`:
+**2. Run the mod**
 
-   ```bash theme={null}
-   claude --plugin-dir ./gallery
-   ```
+In your shell, start Claude Code from the directory that holds `gallery`:
 
-   At the Claude Code prompt, run `/gallery`. A pane opens with `Plain text` in it.
-3. **Swap in a sample**
+```bash theme={null}
+claude --plugin-dir ./gallery
+```
 
-   Copy a sample from this page. In `register.js`, paste it over `Text({ children: ['Plain text'] })`, so that it follows `return`, and save the file. Claude Code reloads the module each time you save, so run `/gallery` again to see the new sample.
+At the Claude Code prompt, run `/gallery`. A pane opens with `Plain text` in it.
+
+**3. Swap in a sample**
+
+Copy a sample from this page. In `register.js`, paste it over `Text({ children: ['Plain text'] })`, so that it follows `return`, and save the file. Claude Code reloads the module each time you save, so run `/gallery` again to see the new sample.
 
 ## Pick an element
 
@@ -121,9 +123,7 @@ Box({
 })
 ```
 
-<img src="../../media/images/mods-el-text-light.png" alt="A pane with nine lines of text, each named for its style: plain, bold, italic, underline, strikethrough, dimColor in gray, inverse, color red, and backgroundColor blue." width="1872" height="490" />
-
-<img src="../../media/images/mods-el-text-dark.png" alt="A pane with nine lines of text, each named for its style: plain, bold, italic, underline, strikethrough, dimColor in gray, inverse, color red, and backgroundColor blue." width="1872" height="490" />
+![A pane with nine lines of text, each named for its style: plain, bold, italic, underline, strikethrough, dimColor in gray, inverse, color red, and backgroundColor blue.](../../media/images/mods-el-text-light.png)
 
 `dimColor` draws the text in gray. `backgroundColor` fills only as wide as the text.
 
@@ -137,9 +137,7 @@ Markdown({
 })
 ```
 
-<img src="../../media/images/mods-el-markdown-light.png" alt="A pane with a bold heading, Release notes, then a sentence with one bold word and one colored code word, a two-item list, and a quote drawn in italics with a bar on its left." width="1872" height="452" />
-
-<img src="../../media/images/mods-el-markdown-dark.png" alt="A pane with a bold heading, Release notes, then a sentence with one bold word and one colored code word, a two-item list, and a quote drawn in italics with a bar on its left." width="1872" height="452" />
+![A pane with a bold heading, Release notes, then a sentence with one bold word and one colored code word, a two-item list, and a quote drawn in italics with a bar on its left.](../../media/images/mods-el-markdown-light.png)
 
 A heading draws in bold without its `#` marks. Inline code draws in color without its backticks. A quote draws in italics with a bar on its left.
 
@@ -151,9 +149,7 @@ A heading draws in bold without its `#` marks. Inline code draws in color withou
 Link({ href: 'https://code.claude.com/docs', label: 'Claude Code docs' })
 ```
 
-<img src="../../media/images/mods-el-link-light.png" alt="A pane with one line: the label Claude Code docs, then the URL in gray." width="1872" height="186" />
-
-<img src="../../media/images/mods-el-link-dark.png" alt="A pane with one line: the label Claude Code docs, then the URL in gray." width="1872" height="186" />
+![A pane with one line: the label Claude Code docs, then the URL in gray.](../../media/images/mods-el-link-light.png)
 
 The terminal draws the URL as text after the label. Whether a click opens it depends on the user's terminal.
 
@@ -173,9 +169,7 @@ Code({
 })
 ```
 
-<img src="../../media/images/mods-el-code-light.png" alt="A pane with two numbered lines of JavaScript in syntax colors." width="1872" height="224" />
-
-<img src="../../media/images/mods-el-code-dark.png" alt="A pane with two numbered lines of JavaScript in syntax colors." width="1872" height="224" />
+![A pane with two numbered lines of JavaScript in syntax colors.](../../media/images/mods-el-code-light.png)
 
 The colors come from the user's theme.
 
@@ -190,9 +184,7 @@ Code({
 })
 ```
 
-<img src="../../media/images/mods-el-diff-light.png" alt="A pane with a four-line diff. The removed line is shaded red and the added line green, each with its line number. In the added line, the words that runs code have a stronger shade." width="1872" height="300" />
-
-<img src="../../media/images/mods-el-diff-dark.png" alt="A pane with a four-line diff. The removed line is shaded red and the added line green, each with its line number. In the added line, the words that runs code have a stronger shade." width="1872" height="300" />
+![A pane with a four-line diff. The removed line is shaded red and the added line green, each with its line number. In the added line, the words that runs code have a stronger shade.](../../media/images/mods-el-diff-light.png)
 
 Claude Code draws line numbers in place of the `@@` line. Where a removed line and an added line are alike, the words that changed get a stronger shade.
 
@@ -221,9 +213,7 @@ Box({
 })
 ```
 
-<img src="../../media/images/mods-el-box-light.png" alt="A pane with three words in a row, four columns apart, then a blank row, then a rounded border around one line of text. The border runs the full width of the pane." width="1872" height="338" />
-
-<img src="../../media/images/mods-el-box-dark.png" alt="A pane with three words in a row, four columns apart, then a blank row, then a rounded border around one line of text. The border runs the full width of the pane." width="1872" height="338" />
+![A pane with three words in a row, four columns apart, then a blank row, then a rounded border around one line of text. The border runs the full width of the pane.](../../media/images/mods-el-box-light.png)
 
 The border stretches to the width of the pane.
 
@@ -248,15 +238,11 @@ Box({
 })
 ```
 
-<img src="../../media/images/mods-el-button-light.png" alt="A pane with three buttons, one per line: Save in brackets, n: Next without brackets and with the n in color, and Skip in brackets in gray." width="1872" height="262" />
-
-<img src="../../media/images/mods-el-button-dark.png" alt="A pane with three buttons, one per line: Save in brackets, n: Next without brackets and with the n in color, and Skip in brackets in gray." width="1872" height="262" />
+![A pane with three buttons, one per line: Save in brackets, n: Next without brackets and with the n in color, and Skip in brackets in gray.](../../media/images/mods-el-button-light.png)
 
 A button that has the focus draws in inverse video. Here the user has pressed Tab twice:
 
-<img src="../../media/images/mods-el-button-plain-focused-light.png" alt="The same three buttons, with the second one, n: Next, drawn in inverse video." width="1872" height="262" />
-
-<img src="../../media/images/mods-el-button-plain-focused-dark.png" alt="The same three buttons, with the second one, n: Next, drawn in inverse video." width="1872" height="262" />
+![The same three buttons, with the second one, n: Next, drawn in inverse video.](../../media/images/mods-el-button-plain-focused-light.png)
 
 ### `Input`
 
@@ -275,21 +261,15 @@ Input({
 
 Without the focus, the field shows its label and its placeholder:
 
-<img src="../../media/images/mods-el-input-light.png" alt="A pane with one line: the label Title, then the placeholder Type a title and press Enter in gray." width="1872" height="186" />
-
-<img src="../../media/images/mods-el-input-dark.png" alt="A pane with one line: the label Title, then the placeholder Type a title and press Enter in gray." width="1872" height="186" />
+![A pane with one line: the label Title, then the placeholder Type a title and press Enter in gray.](../../media/images/mods-el-input-light.png)
 
 With the focus, the label turns bold, a cursor appears, and the `submitLabel` shows after `⏎`:
 
-<img src="../../media/images/mods-el-input-focused-light.png" alt="The same field with its label in bold, a block cursor on the first letter of the placeholder, and a return sign followed by the word save." width="1872" height="186" />
-
-<img src="../../media/images/mods-el-input-focused-dark.png" alt="The same field with its label in bold, a block cursor on the first letter of the placeholder, and a return sign followed by the word save." width="1872" height="186" />
+![The same field with its label in bold, a block cursor on the first letter of the placeholder, and a return sign followed by the word save.](../../media/images/mods-el-input-focused-light.png)
 
 Typing replaces the placeholder:
 
-<img src="../../media/images/mods-el-input-typed-light.png" alt="The same field holding the typed letters Rel, followed by the return sign and the word save." width="1872" height="186" />
-
-<img src="../../media/images/mods-el-input-typed-dark.png" alt="The same field holding the typed letters Rel, followed by the return sign and the word save." width="1872" height="186" />
+![The same field holding the typed letters Rel, followed by the return sign and the word save.](../../media/images/mods-el-input-typed-light.png)
 
 ### `Select`
 
@@ -313,21 +293,15 @@ Select({
 
 Closed, it shows its label and the current option:
 
-<img src="../../media/images/mods-el-select-light.png" alt="A pane with one line: the label Format, the current option Markdown, and a small down arrow." width="1872" height="186" />
-
-<img src="../../media/images/mods-el-select-dark.png" alt="A pane with one line: the label Format, the current option Markdown, and a small down arrow." width="1872" height="186" />
+![A pane with one line: the label Format, the current option Markdown, and a small down arrow.](../../media/images/mods-el-select-light.png)
 
 Open, it lists its options and marks one:
 
-<img src="../../media/images/mods-el-select-moved-light.png" alt="The picker open, with its three options listed under the label. The second option, HTML, is drawn in inverse video." width="1872" height="300" />
-
-<img src="../../media/images/mods-el-select-moved-dark.png" alt="The picker open, with its three options listed under the label. The second option, HTML, is drawn in inverse video." width="1872" height="300" />
+![The picker open, with its three options listed under the label. The second option, HTML, is drawn in inverse video.](../../media/images/mods-el-select-moved-light.png)
 
 After the user picks an option, the list closes:
 
-<img src="../../media/images/mods-el-select-picked-light.png" alt="The picker closed again, now showing HTML as the current option." width="1872" height="186" />
-
-<img src="../../media/images/mods-el-select-picked-dark.png" alt="The picker closed again, now showing HTML as the current option." width="1872" height="186" />
+![The picker closed again, now showing HTML as the current option.](../../media/images/mods-el-select-picked-light.png)
 
 ## Draw pictures
 
@@ -347,9 +321,7 @@ Raster({
 })
 ```
 
-<img src="../../media/images/mods-el-raster-light.png" alt="A pane with a small grid of colored blocks, two rows of three: green, amber, and red, then green, green, and amber." width="1872" height="224" />
-
-<img src="../../media/images/mods-el-raster-dark.png" alt="A pane with a small grid of colored blocks, two rows of three: green, amber, and red, then green, green, and amber." width="1872" height="224" />
+![A pane with a small grid of colored blocks, two rows of three: green, amber, and red, then green, green, and amber.](../../media/images/mods-el-raster-light.png)
 
 A `Raster` rounds each color to a smaller palette, so `0x2e7d32` draws as `#337733`.
 

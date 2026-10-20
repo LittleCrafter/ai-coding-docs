@@ -8,9 +8,7 @@
 
 The weekly dev digest highlights the features most likely to change how you work. Each entry includes runnable code, a short demo, and a link to the full docs. For every bug fix and minor improvement, see the [changelog](./changelog.md).
 
-## Week 37 (v2.1.263–v2.1.269)
-
-*September 7–11, 2026*
+**Week 37**
 
 **`claude plugin eval`**: run your plugin against a suite of test cases, score the results, and compare against a no-plugin baseline. `claude plugin eval init` drafts the cases and graders for you.
 
@@ -18,9 +16,7 @@ Also this week: pop any **Claude Code Desktop pane** out into its own window and
 
 [Read the Week 37 digest →](./whats-new/2026-w37.md)
 
-## Week 36 (v2.1.251–v2.1.261)
-
-*August 31 – September 4, 2026*
+**Week 36**
 
 **Claude Fable 5.1**: available in Claude Code with a 1M-token context window.
 
@@ -28,9 +24,7 @@ Also this week: on Pro and Max plans, **computer use in the Desktop app** works 
 
 [Read the Week 36 digest →](./whats-new/2026-w36.md)
 
-## Week 35 (v2.1.240–v2.1.250)
-
-*August 24–28, 2026*
+**Week 35**
 
 **Resume terminal sessions in the Desktop app**: type `/resume` in the Claude Code Desktop prompt box to pick up any session you started from the CLI, with the full conversation and context intact.
 
@@ -38,9 +32,7 @@ Also this week: **Claude-drafted feedback** has Claude write up a feedback repor
 
 [Read the Week 35 digest →](./whats-new/2026-w35.md)
 
-## Week 34 (v2.1.234–v2.1.239)
-
-*August 17–21, 2026*
+**Week 34**
 
 **`/design`**: a research preview that brings Claude Design's artboard workflow into the CLI and Claude Code Desktop, built on artifacts, so Claude drafts editable artboards for your UI and implements the one you pick.
 
@@ -48,9 +40,7 @@ Also this week: the built-in **Concise output style** makes Claude lead with the
 
 [Read the Week 34 digest →](./whats-new/2026-w34.md)
 
-## Week 33 (v2.1.225–v2.1.233)
-
-*August 10–14, 2026*
+**Week 33**
 
 **Auto-continue after a usage limit on Desktop**: when you hit your session limit in Claude Code Desktop, check **Auto-continue when limits reset** on the limit card and the app retries the interrupted turn once the limit resets.
 
@@ -58,9 +48,7 @@ Also this week: **fork mode** is on by default in interactive sessions, so Claud
 
 [Read the Week 33 digest →](./whats-new/2026-w33.md)
 
-## Week 32 (v2.1.220–v2.1.224)
-
-*August 3–7, 2026*
+**Week 32**
 
 **Cross-session messaging**: on macOS and Linux, your Claude Code sessions can now message each other, so Claude passes a finding or a decision from one session to another instead of you re-explaining it.
 
@@ -68,9 +56,7 @@ Also this week: **self-hosted environments** run Claude Code cloud sessions on i
 
 [Read the Week 32 digest →](./whats-new/2026-w32.md)
 
-## Week 30 (v2.1.214–v2.1.219)
-
-*July 20–24, 2026*
+**Week 30**
 
 **Claude Opus 5**: the new default Opus model in Claude Code, with a 1M-token context window and fast mode at \$10/\$50 per MTok.
 
@@ -78,9 +64,7 @@ Also this week: **Claude Code Desktop** opens an iOS Simulator pane in public be
 
 [Read the Week 30 digest →](./whats-new/2026-w30.md)
 
-## Week 29 (v2.1.207–v2.1.212)
-
-*July 13–17, 2026*
+**Week 29**
 
 **Artifacts call your MCP connectors**: a published artifact can pull live data and take actions through each viewer's own MCP connectors when they open the page, and this week also adds public sharing links, editor roles on Team and Enterprise, and artifacts created from Claude Tag sessions.
 
@@ -88,9 +72,7 @@ Also this week: **screen reader mode** replaces the visual terminal interface wi
 
 [Read the Week 29 digest →](./whats-new/2026-w29.md)
 
-## Week 28 (v2.1.202–v2.1.206)
-
-*July 6–10, 2026*
+**Week 28**
 
 **In-app browser on Desktop**: Claude Code on desktop gets a built-in browser, so Claude can pull up docs, designs, or any other site and interact with pages the same way it does with your local dev server previews.
 
@@ -98,9 +80,7 @@ Also this week: **`/doctor`** is a full setup checkup that diagnoses issues and 
 
 [Read the Week 28 digest →](./whats-new/2026-w28.md)
 
-## Week 27 (v2.1.195–v2.1.201)
-
-*June 29 – July 3, 2026*
+**Week 27**
 
 **Claude Sonnet 5**: the new default model for Pro, Team Standard, and Enterprise subscription seats, with top-tier coding and tool use at Sonnet pricing, a native 1M-token context window, and adaptive thinking on by default.
 
@@ -108,9 +88,7 @@ Also this week: **Claude in Chrome** is generally available on all direct Anthro
 
 [Read the Week 27 digest →](./whats-new/2026-w27.md)
 
-## Week 26 (v2.1.185–v2.1.193)
-
-*June 22–26, 2026*
+**Week 26**
 
 **`claude mcp login`**: authenticate a configured MCP server from your shell instead of the interactive `/mcp` menu, and clear its stored credentials later with `claude mcp logout`.
 
@@ -118,9 +96,7 @@ Also this week: **shell mode responds to command output** (`! npm test` gets an 
 
 [Read the Week 26 digest →](./whats-new/2026-w26.md)
 
-## Week 25 (v2.1.178–v2.1.183)
-
-*June 15–19, 2026*
+**Week 25**
 
 **Artifacts**: turn a session's output into a live, shareable page on claude.ai that updates in place as the session works, now in beta on Team and Enterprise plans.
 
@@ -128,9 +104,7 @@ Also this week: **deny and ask rules match tool parameters** with `Tool(param:va
 
 [Read the Week 25 digest →](./whats-new/2026-w25.md)
 
-## Week 24 (v2.1.166–v2.1.176)
-
-*June 8–12, 2026*
+**Week 24**
 
 **`/cd`**: move the current session to a new working directory mid-conversation without rebuilding the prompt cache.
 
@@ -138,9 +112,7 @@ Also this week: **sub-agents can spawn their own sub-agents** (background chains
 
 [Read the Week 24 digest →](./whats-new/2026-w24.md)
 
-## Week 23 (v2.1.158–v2.1.165)
-
-*June 1–5, 2026*
+**Week 23**
 
 **Auto mode on Amazon Bedrock, Google Cloud's Agent Platform, and Microsoft Foundry**: auto mode is now available on third-party providers for Opus 4.7 and Opus 4.8, replacing permission prompts with background safety checks.
 
@@ -148,9 +120,7 @@ Also this week: **safer automatic edits** prompt before writing files that can r
 
 [Read the Week 23 digest →](./whats-new/2026-w23.md)
 
-## Week 22 (v2.1.150–v2.1.157)
-
-*May 25–29, 2026*
+**Week 22**
 
 **Claude Opus 4.8**: the new default model for Max, Team Premium, Enterprise pay-as-you-go, and Anthropic API accounts, with high effort by default and `/effort xhigh` for the hardest tasks.
 
@@ -158,9 +128,7 @@ Also this week: **dynamic workflows** orchestrate dozens to hundreds of subagent
 
 [Read the Week 22 digest →](./whats-new/2026-w22.md)
 
-## Week 21 (v2.1.143–v2.1.149)
-
-*May 18–22, 2026*
+**Week 21**
 
 **Auto mode on the Pro plan**: auto mode now runs on Pro accounts and supports Sonnet 4.6 alongside Opus, replacing permission prompts with background safety checks.
 
@@ -168,9 +136,7 @@ Also this week: **`/usage`** breaks down what drives your plan limits by skill, 
 
 [Read the Week 21 digest →](./whats-new/2026-w21.md)
 
-## Week 20 (v2.1.139–v2.1.142)
-
-*May 11–15, 2026*
+**Week 20**
 
 **Agent view**: `claude agents` opens one screen for every Claude Code session, showing what's running, what's blocked on you, and what's done.
 
@@ -178,9 +144,7 @@ Also this week: **`/goal`** keeps Claude working across turns until a completion
 
 [Read the Week 20 digest →](./whats-new/2026-w20.md)
 
-## Week 19 (v2.1.128–v2.1.136)
-
-*May 4–8, 2026*
+**Week 19**
 
 **Plugins load from `.zip` archives and URLs**: `--plugin-dir` now accepts `.zip` files, and `--plugin-url` fetches a plugin archive for the current session.
 
@@ -188,9 +152,7 @@ Also this week: **`worktree.baseRef`** chooses whether new worktrees branch from
 
 [Read the Week 19 digest →](./whats-new/2026-w19.md)
 
-## Week 18 (v2.1.120–v2.1.126)
-
-*April 27 – May 1, 2026*
+**Week 18**
 
 **Windows without Git Bash**: Git for Windows is no longer required, and Claude Code uses PowerShell as the shell tool when Bash is absent.
 
@@ -198,9 +160,7 @@ Also this week: **`claude ultrareview`** brings cloud code review to CI and scri
 
 [Read the Week 18 digest →](./whats-new/2026-w18.md)
 
-## Week 17 (v2.1.114–v2.1.119)
-
-*April 20–24, 2026*
+**Week 17**
 
 **`/ultrareview`** opens as a public research preview: a fleet of bug-hunting agents runs in the cloud and findings land back in your CLI or Desktop automatically.
 
@@ -208,9 +168,7 @@ Also this week: **session recap** shows you what happened while a terminal was u
 
 [Read the Week 17 digest →](./whats-new/2026-w17.md)
 
-## Week 16 (v2.1.105–v2.1.113)
-
-*April 13–17, 2026*
+**Week 16**
 
 **Claude Opus 4.7** lands as the new default on Max and Team Premium, with a new `xhigh` effort level that's the recommended setting for most coding work and an interactive `/effort` slider to dial it in.
 
@@ -218,9 +176,7 @@ Also this week: **Routines** on Claude Code on the web fire templated cloud agen
 
 [Read the Week 16 digest →](./whats-new/2026-w16.md)
 
-## Week 15 (v2.1.92–v2.1.101)
-
-*April 6–10, 2026*
+**Week 15**
 
 **Ultraplan** enters early preview: draft a plan in the cloud from your CLI, review and comment on it in a web editor, then run it remotely or pull it back local. The first run now auto-creates a cloud environment for you.
 
@@ -228,9 +184,7 @@ Also this week: the **Monitor** tool streams background events into the conversa
 
 [Read the Week 15 digest →](./whats-new/2026-w15.md)
 
-## Week 14 (v2.1.86–v2.1.91)
-
-*March 30 – April 3, 2026*
+**Week 14**
 
 **Computer use** comes to the CLI in research preview: Claude can open native apps, click through UI, and verify changes from your terminal. Best for closing the loop on things only a GUI can verify.
 
@@ -238,9 +192,7 @@ Also this week: `/powerup` interactive lessons, flicker-free alt-screen renderin
 
 [Read the Week 14 digest →](./whats-new/2026-w14.md)
 
-## Week 13 (v2.1.83–v2.1.85)
-
-*March 23–27, 2026*
+**Week 13**
 
 **Auto mode** lands in research preview: a classifier handles your permission prompts so safe actions run without interruption and risky ones get blocked. The middle ground between approving everything and `--dangerously-skip-permissions`.
 

@@ -16,9 +16,7 @@ When you start an agent, the SDK runs the same [execution loop that powers Claud
 
 Every agent session follows the same cycle:
 
-<img src="../media/images/agent-loop-diagram.svg" alt="Diagram of the agent loop: your prompt enters the agentic loop, where Claude evaluates and either requests tool calls, whose results feed back into another evaluation, or returns the final answer" width="720" height="212" />
-
-<img src="../media/images/agent-loop-diagram-dark.svg" alt="Diagram of the agent loop: your prompt enters the agentic loop, where Claude evaluates and either requests tool calls, whose results feed back into another evaluation, or returns the final answer" width="720" height="212" />
+![Diagram of the agent loop: your prompt enters the agentic loop, where Claude evaluates and either requests tool calls, whose results feed back into another evaluation, or returns the final answer](../media/images/agent-loop-diagram.svg)
 
 1. **Receive prompt.** Claude receives your prompt, along with the system prompt, tool definitions, and conversation history. The SDK yields a [`SystemMessage`](#message-types) with subtype `"init"` containing session metadata.
 2. **Evaluate and respond.** Claude evaluates the current state and determines how to proceed. It may respond with text, request one or more tool calls, or both. The SDK yields one or more [`AssistantMessage`](#message-types) objects, one for each content block, such as a text block or a tool call request.
@@ -79,68 +77,68 @@ How you check message types depends on the SDK:
 * **Python:** check message types with `isinstance()` against classes imported from `claude_agent_sdk` (for example, `isinstance(message, ResultMessage)`).
 * **TypeScript:** check the `type` string field (for example, `message.type === "result"`). `AssistantMessage` and `UserMessage` wrap the raw API message in a `.message` field, so content blocks are at `message.message.content`, not `message.content`.
 
-**Example: Check message types and handle results**
-
-```python Python theme={null}
-import asyncio
-from claude_agent_sdk import query, AssistantMessage, ResultMessage, TextBlock, ToolUseBlock
-
-
-async def main():
-    try:
-        async for message in query(prompt="Summarize this project"):
-            if isinstance(message, AssistantMessage):
-                # Each AssistantMessage carries one content block
-                for block in message.content:
-                    if isinstance(block, TextBlock):
-                        print(f"Claude: {block.text}")
-                    elif isinstance(block, ToolUseBlock):
-                        print(f"Tool call: {block.name}")
-            if isinstance(message, ResultMessage):
-                if message.subtype == "success":
-                    print(message.result)
-                else:
-                    print(f"Stopped: {message.subtype}")
-    except Exception as error:
-        # A single-shot query() raises after yielding an error result. If the
-        # failure was an error result, the error subtype branches above have
-        # already run; connection or process failures yield no result message.
-        print(f"Session ended with an error: {error}")
-
-
-asyncio.run(main())
-```
-
-```typescript TypeScript theme={null}
-import { query } from "@anthropic-ai/claude-agent-sdk";
-
-try {
-  for await (const message of query({ prompt: "Summarize this project" })) {
-    if (message.type === "assistant") {
-      // Each assistant message carries one content block
-      for (const block of message.message.content) {
-        if (block.type === "text") {
-          console.log(`Claude: ${block.text}`);
-        } else if (block.type === "tool_use") {
-          console.log(`Tool call: ${block.name}`);
-        }
-      }
-    }
-    if (message.type === "result") {
-      if (message.subtype === "success") {
-        console.log(message.result);
-      } else {
-        console.log(`Stopped: ${message.subtype}`);
-      }
-    }
-  }
-} catch (error) {
-  // A single-shot query() throws after yielding an error result. If the
-  // failure was an error result, the error subtype branches above have
-  // already run; connection or process failures yield no result message.
-  console.log(`Session ended with an error: ${error}`);
-}
-```
+> **Example: Check message types and handle results**
+>
+> ```python Python theme={null}
+> import asyncio
+> from claude_agent_sdk import query, AssistantMessage, ResultMessage, TextBlock, ToolUseBlock
+>
+>
+> async def main():
+>     try:
+>         async for message in query(prompt="Summarize this project"):
+>             if isinstance(message, AssistantMessage):
+>                 # Each AssistantMessage carries one content block
+>                 for block in message.content:
+>                     if isinstance(block, TextBlock):
+>                         print(f"Claude: {block.text}")
+>                     elif isinstance(block, ToolUseBlock):
+>                         print(f"Tool call: {block.name}")
+>             if isinstance(message, ResultMessage):
+>                 if message.subtype == "success":
+>                     print(message.result)
+>                 else:
+>                     print(f"Stopped: {message.subtype}")
+>     except Exception as error:
+>         # A single-shot query() raises after yielding an error result. If the
+>         # failure was an error result, the error subtype branches above have
+>         # already run; connection or process failures yield no result message.
+>         print(f"Session ended with an error: {error}")
+>
+>
+> asyncio.run(main())
+> ```
+>
+> ```typescript TypeScript theme={null}
+> import { query } from "@anthropic-ai/claude-agent-sdk";
+>
+> try {
+>   for await (const message of query({ prompt: "Summarize this project" })) {
+>     if (message.type === "assistant") {
+>       // Each assistant message carries one content block
+>       for (const block of message.message.content) {
+>         if (block.type === "text") {
+>           console.log(`Claude: ${block.text}`);
+>         } else if (block.type === "tool_use") {
+>           console.log(`Tool call: ${block.name}`);
+>         }
+>       }
+>     }
+>     if (message.type === "result") {
+>       if (message.subtype === "success") {
+>         console.log(message.result);
+>       } else {
+>         console.log(`Stopped: ${message.subtype}`);
+>       }
+>     }
+>   }
+> } catch (error) {
+>   // A single-shot query() throws after yielding an error result. If the
+>   // failure was an error result, the error subtype branches above have
+>   // already run; connection or process failures yield no result message.
+>   console.log(`Session ended with an error: ${error}`);
+> }
+> ```
 
 ## Tool execution
 
@@ -221,6 +219,7 @@ The `effort` option controls how much reasoning Claude applies. Lower effort lev
 If you don't set `effort`, Claude Code resolves the effort level itself, in the order [Adjust effort level](../model-config.md#adjust-effort-level) describes.
 
 > [!NOTE]
+>
 > `effort` trades latency and token cost for reasoning depth within each response. [Extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) is a separate feature that produces `thinking` blocks in the output, and the `display` field on `ThinkingConfig` for [Python](./python.md#thinkingconfig) or [TypeScript](./typescript.md#thinkingconfig) controls whether you receive their text. They are independent: you can set `effort: "low"` with extended thinking enabled, or `effort: "max"` without it.
 
 Use lower effort for agents doing simple, well-scoped tasks (like listing files or running a single grep) to reduce cost and latency. Set `effort` in the top-level `query()` options for the whole session, or per subagent with the `effort` field on [`AgentDefinition`](./subagents.md#agentdefinition-configuration) to override the session level.
@@ -274,19 +273,19 @@ You can customize compaction behavior in several ways:
 * **`PreCompact` hook:** Run custom logic before compaction occurs, for example to archive the full transcript. The hook receives a `trigger` field (`manual` or `auto`). See [hooks](./hooks.md).
 * **Manual compaction:** Send `/compact` as a prompt string to trigger compaction on demand. Commands sent this way are ordinary SDK inputs. See [dispatch commands by name](./skills.md#dispatch-commands-by-name).
 
-**Example: Summarization instructions in CLAUDE.md**
-
-Add a section to your project's CLAUDE.md telling the compactor what to preserve. The header name isn't special; use any clear label.
-
-```markdown CLAUDE.md theme={null}
-# Summary instructions
-
-When summarizing this conversation, always preserve:
-- The current task objective and acceptance criteria
-- File paths that have been read or modified
-- Test results and error messages
-- Decisions made and the reasoning behind them
-```
+> **Example: Summarization instructions in CLAUDE.md**
+>
+> Add a section to your project's CLAUDE.md telling the compactor what to preserve. The header name isn't special; use any clear label.
+>
+> ```markdown CLAUDE.md theme={null}
+> # Summary instructions
+>
+> When summarizing this conversation, always preserve:
+> - The current task objective and acceptance criteria
+> - File paths that have been read or modified
+> - Test results and error messages
+> - Decisions made and the reasoning behind them
+> ```
 
 ### Keep context efficient
 
@@ -308,6 +307,7 @@ When you resume, the full context from previous turns is restored: files that we
 See [Session management](./sessions.md) for the full guide on resume, continue, and fork patterns. To resume sessions across stateless containers or serverless hosts, pass a [`session_store` / `sessionStore` adapter](./session-storage.md) so the SDK mirrors transcripts to your own backend and another host can resume them. The Claude Code subprocess still writes to local disk first. See [Dual-write architecture](./session-storage.md#dual-write-architecture) for which copy outlives a fresh session versus a run resumed from the store, and how to keep the local copy ephemeral.
 
 > [!NOTE]
+>
 > In Python, `ClaudeSDKClient` handles session IDs automatically across multiple calls. See the [Python SDK reference](./python.md#choosing-between-query-and-claudesdkclient) for details.
 
 ## Handle the result
@@ -332,6 +332,7 @@ All result subtypes carry `total_cost_usd`, `usage`, `num_turns`, and `session_i
 The `usage` field covers only the main agent loop. Use `modelUsage`, or `model_usage` in Python, for whole-tree token and cost accounting. See [Tracking costs and usage](./cost-tracking.md) for details on interpreting the `usage` fields.
 
 > [!NOTE]
+>
 > When a query ends on an error result:
 >
 > * A single-shot `query()` call yields the final result message, then raises an error that includes the failure text, such as `Reached maximum number of turns`. The raise is intentional. Wrap the loop in a try block if your code needs to continue past it. The underlying Claude Code process also exits with a nonzero code.

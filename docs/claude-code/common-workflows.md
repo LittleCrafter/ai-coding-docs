@@ -29,38 +29,42 @@ For configuring Claude Code in a monorepo or large codebase, see [Monorepos and 
 
 Suppose you've just joined a new project and need to understand its structure quickly.
 
-1. **Navigate to the project root directory**
+**1. Navigate to the project root directory**
 
-   ```bash theme={null}
-   cd /path/to/project 
-   ```
+```bash theme={null}
+cd /path/to/project 
+```
 
-   Replace `/path/to/project` with the path to your project.
-2. **Start Claude Code**
+Replace `/path/to/project` with the path to your project.
 
-   ```bash theme={null}
-   claude 
-   ```
-3. **Ask for a high-level overview**
+**2. Start Claude Code**
 
-   ```text wrap theme={null}
-   give me an overview of this codebase
-   ```
-4. **Dive deeper into specific components**
+```bash theme={null}
+claude 
+```
 
-   ```text wrap theme={null}
-   explain the main architecture patterns used here
-   ```
+**3. Ask for a high-level overview**
 
-   ```text wrap theme={null}
-   what are the key data models?
-   ```
+```text wrap theme={null}
+give me an overview of this codebase
+```
 
-   ```text wrap theme={null}
-   how is authentication handled?
-   ```
+**4. Dive deeper into specific components**
+
+```text wrap theme={null}
+explain the main architecture patterns used here
+```
+
+```text wrap theme={null}
+what are the key data models?
+```
+
+```text wrap theme={null}
+how is authentication handled?
+```
 
 > [!TIP]
+>
 > Tips:
 >
 > * Start with broad questions, then narrow down to specific areas
@@ -71,23 +75,26 @@ Suppose you've just joined a new project and need to understand its structure qu
 
 Suppose you need to locate code related to a specific feature or functionality.
 
-1. **Ask Claude to find relevant files**
+**1. Ask Claude to find relevant files**
 
-   ```text wrap theme={null}
-   find the files that handle user authentication
-   ```
-2. **Get context on how components interact**
+```text wrap theme={null}
+find the files that handle user authentication
+```
 
-   ```text wrap theme={null}
-   how do these authentication files work together?
-   ```
-3. **Understand the execution flow**
+**2. Get context on how components interact**
 
-   ```text wrap theme={null}
-   trace the login process from front-end to database
-   ```
+```text wrap theme={null}
+how do these authentication files work together?
+```
+
+**3. Understand the execution flow**
+
+```text wrap theme={null}
+trace the login process from front-end to database
+```
 
 > [!TIP]
+>
 > Tips:
 >
 > * Be specific about what you're looking for
@@ -100,23 +107,26 @@ Suppose you need to locate code related to a specific feature or functionality.
 
 Suppose you've encountered an error message and need to find and fix its source.
 
-1. **Share the error with Claude**
+**1. Share the error with Claude**
 
-   ```text wrap theme={null}
-   I'm seeing an error when I run npm test
-   ```
-2. **Ask for fix recommendations**
+```text wrap theme={null}
+I'm seeing an error when I run npm test
+```
 
-   ```text wrap theme={null}
-   suggest a few ways to fix the @ts-ignore in user.ts
-   ```
-3. **Apply the fix**
+**2. Ask for fix recommendations**
 
-   ```text wrap theme={null}
-   update user.ts to add the null check you suggested
-   ```
+```text wrap theme={null}
+suggest a few ways to fix the @ts-ignore in user.ts
+```
+
+**3. Apply the fix**
+
+```text wrap theme={null}
+update user.ts to add the null check you suggested
+```
 
 > [!TIP]
+>
 > Tips:
 >
 > * Tell Claude the command to reproduce the issue and get a stack trace
@@ -131,28 +141,32 @@ Suppose you need to update old code to use modern patterns and practices.
 
 For porting an entire codebase to a new language, see [how Anthropic runs large-scale code migrations with Claude Code](https://claude.com/blog/ai-code-migration) on the blog.
 
-1. **Identify legacy code for refactoring**
+**1. Identify legacy code for refactoring**
 
-   ```text wrap theme={null}
-   find deprecated API usage in our codebase
-   ```
-2. **Get refactoring recommendations**
+```text wrap theme={null}
+find deprecated API usage in our codebase
+```
 
-   ```text wrap theme={null}
-   suggest how to refactor utils.js to use modern JavaScript features
-   ```
-3. **Apply the changes safely**
+**2. Get refactoring recommendations**
 
-   ```text wrap theme={null}
-   refactor utils.js to use ES2024 features while maintaining the same behavior
-   ```
-4. **Verify the refactoring**
+```text wrap theme={null}
+suggest how to refactor utils.js to use modern JavaScript features
+```
 
-   ```text wrap theme={null}
-   run tests for the refactored code
-   ```
+**3. Apply the changes safely**
+
+```text wrap theme={null}
+refactor utils.js to use ES2024 features while maintaining the same behavior
+```
+
+**4. Verify the refactoring**
+
+```text wrap theme={null}
+run tests for the refactored code
+```
 
 > [!TIP]
+>
 > Tips:
 >
 > * Ask Claude to explain the benefits of the modern approach
@@ -165,26 +179,29 @@ For porting an entire codebase to a new language, see [how Anthropic runs large-
 
 Suppose you need to add tests for uncovered code.
 
-1. **Identify untested code**
+**1. Identify untested code**
 
-   ```text wrap theme={null}
-   find functions in NotificationsService.swift that are not covered by tests
-   ```
-2. **Generate test scaffolding**
+```text wrap theme={null}
+find functions in NotificationsService.swift that are not covered by tests
+```
 
-   ```text wrap theme={null}
-   add tests for the notification service
-   ```
-3. **Add meaningful test cases**
+**2. Generate test scaffolding**
 
-   ```text wrap theme={null}
-   add test cases for edge conditions in the notification service
-   ```
-4. **Run and verify tests**
+```text wrap theme={null}
+add tests for the notification service
+```
 
-   ```text wrap theme={null}
-   run the new tests and fix any failures
-   ```
+**3. Add meaningful test cases**
+
+```text wrap theme={null}
+add test cases for edge conditions in the notification service
+```
+
+**4. Run and verify tests**
+
+```text wrap theme={null}
+run the new tests and fix any failures
+```
 
 Claude can generate tests that follow your project's existing patterns and conventions. When asking for tests, be specific about what behavior you want to verify. Claude examines your existing test files to match the style, frameworks, and assertion patterns already in use.
 
@@ -196,53 +213,60 @@ To improve coverage, ask Claude to identify edge cases you might have missed. Cl
 
 You can create pull requests by asking Claude directly ("create a pr for my changes"), or guide Claude through it step-by-step:
 
-1. **Summarize your changes**
+**1. Summarize your changes**
 
-   ```text wrap theme={null}
-   summarize the changes I've made to the authentication module
-   ```
-2. **Generate a pull request**
+```text wrap theme={null}
+summarize the changes I've made to the authentication module
+```
 
-   ```text wrap theme={null}
-   create a pr
-   ```
-3. **Review and refine**
+**2. Generate a pull request**
 
-   ```text wrap theme={null}
-   enhance the PR description with more context about the security improvements
-   ```
+```text wrap theme={null}
+create a pr
+```
+
+**3. Review and refine**
+
+```text wrap theme={null}
+enhance the PR description with more context about the security improvements
+```
 
 To find the session later, run `claude --from-pr 1234` with your own PR number, which opens the session picker filtered to sessions linked to that PR, or paste the PR URL into the [`/resume` picker](./sessions.md#use-the-session-picker) search. Claude Code links the session to the PR when Claude creates it with `gh pr create` or `glab mr create`, and when Claude [works on an existing PR](./agent-view.md#pull-request-status).
 
 > [!TIP]
+>
 > Review Claude's generated PR before submitting and ask Claude to highlight potential risks or considerations.
 
 ### Handle documentation
 
 Suppose you need to add or update documentation for your code.
 
-1. **Identify undocumented code**
+**1. Identify undocumented code**
 
-   ```text wrap theme={null}
-   find functions without proper JSDoc comments in the auth module
-   ```
-2. **Generate documentation**
+```text wrap theme={null}
+find functions without proper JSDoc comments in the auth module
+```
 
-   ```text wrap theme={null}
-   add JSDoc comments to the undocumented functions in auth.js
-   ```
-3. **Review and enhance**
+**2. Generate documentation**
 
-   ```text wrap theme={null}
-   improve the generated documentation with more context and examples
-   ```
-4. **Verify documentation**
+```text wrap theme={null}
+add JSDoc comments to the undocumented functions in auth.js
+```
 
-   ```text wrap theme={null}
-   check if the documentation follows our project standards
-   ```
+**3. Review and enhance**
+
+```text wrap theme={null}
+improve the generated documentation with more context and examples
+```
+
+**4. Verify documentation**
+
+```text wrap theme={null}
+check if the documentation follows our project standards
+```
 
 > [!TIP]
+>
 > Tips:
 >
 > * Specify the documentation style you want (JSDoc, docstrings, etc.)
@@ -263,46 +287,50 @@ The `.claude/` directory and `CLAUDE.md` sit alongside other tools' config direc
 
 Suppose you need to work with images in your codebase, and you want Claude's help analyzing image content.
 
-1. **Add an image to the conversation**
+**1. Add an image to the conversation**
 
-   You can use any of these methods:
+You can use any of these methods:
 
-   1. Drag and drop an image into the Claude Code window
-   2. Copy an image and paste it into the CLI with `Ctrl+V`, or with [`Alt+V` on Windows and WSL](./interactive-mode.md#general-controls)
-   3. Provide an image path to Claude, for example "Analyze this image: /path/to/your/image.png"
-2. **Ask Claude to analyze the image**
+1. Drag and drop an image into the Claude Code window
+2. Copy an image and paste it into the CLI with `Ctrl+V`, or with [`Alt+V` on Windows and WSL](./interactive-mode.md#general-controls)
+3. Provide an image path to Claude, for example "Analyze this image: /path/to/your/image.png"
 
-   ```text wrap theme={null}
-   What does this image show?
-   ```
+**2. Ask Claude to analyze the image**
 
-   ```text wrap theme={null}
-   Describe the UI elements in this screenshot
-   ```
+```text wrap theme={null}
+What does this image show?
+```
 
-   ```text wrap theme={null}
-   Are there any problematic elements in this diagram?
-   ```
-3. **Use images for context**
+```text wrap theme={null}
+Describe the UI elements in this screenshot
+```
 
-   ```text wrap theme={null}
-   Here's a screenshot of the error. What's causing it?
-   ```
+```text wrap theme={null}
+Are there any problematic elements in this diagram?
+```
 
-   ```text wrap theme={null}
-   This is our current database schema. How should we modify it for the new feature?
-   ```
-4. **Get code suggestions from visual content**
+**3. Use images for context**
 
-   ```text wrap theme={null}
-   Generate CSS to match this design mockup
-   ```
+```text wrap theme={null}
+Here's a screenshot of the error. What's causing it?
+```
 
-   ```text wrap theme={null}
-   What HTML structure would recreate this component?
-   ```
+```text wrap theme={null}
+This is our current database schema. How should we modify it for the new feature?
+```
+
+**4. Get code suggestions from visual content**
+
+```text wrap theme={null}
+Generate CSS to match this design mockup
+```
+
+```text wrap theme={null}
+What HTML structure would recreate this component?
+```
 
 > [!TIP]
+>
 > Tips:
 >
 > * Use images when text descriptions would be unclear or cumbersome
@@ -317,27 +345,30 @@ Suppose you need to work with images in your codebase, and you want Claude's hel
 
 Use @ to quickly include files or directories without waiting for Claude to read them.
 
-1. **Reference a single file**
+**1. Reference a single file**
 
-   ```text wrap theme={null}
-   Explain the logic in @src/utils/auth.js
-   ```
+```text wrap theme={null}
+Explain the logic in @src/utils/auth.js
+```
 
-   This includes the content of the file in the conversation when it fits the [Read tool](./tools-reference.md#read-tool-behavior)'s token limit, 25,000 tokens by default. A text file larger than 256KB isn't included.
-2. **Reference a directory**
+This includes the content of the file in the conversation when it fits the [Read tool](./tools-reference.md#read-tool-behavior)'s token limit, 25,000 tokens by default. A text file larger than 256KB isn't included.
 
-   ```text wrap theme={null}
-   What's the structure of @src/components?
-   ```
-3. **Reference MCP resources**
+**2. Reference a directory**
 
-   ```text wrap theme={null}
-   Show me the data from @github:repos/owner/repo/issues
-   ```
+```text wrap theme={null}
+What's the structure of @src/components?
+```
 
-   This fetches data from connected MCP servers using the format @server:resource. See [MCP resources](./mcp.md#use-mcp-resources) for details.
+**3. Reference MCP resources**
+
+```text wrap theme={null}
+Show me the data from @github:repos/owner/repo/issues
+```
+
+This fetches data from connected MCP servers using the format @server:resource. See [MCP resources](./mcp.md#use-mcp-resources) for details.
 
 > [!TIP]
+>
 > Tips:
 >
 > * File paths can be relative or absolute
@@ -364,6 +395,7 @@ Pick a scheduling option based on where you want the task to run:
 | [`/loop`](./scheduled-tasks.md) | The current CLI session | Quick polling while a session is open. `--resume` and `--continue` restore unexpired fixed-interval loops. |
 
 > [!TIP]
+>
 > When writing prompts for scheduled tasks, be explicit about what success looks like and what to do with results. The task runs autonomously, so it can't ask clarifying questions. For example: "Review open PRs labeled `needs-review`, leave inline comments on any issues, and post a summary in the `#eng-reviews` Slack channel."
 
 ***
@@ -399,9 +431,11 @@ what are the limitations of Claude Code?
 ```
 
 > [!NOTE]
+>
 > Claude provides documentation-based answers to these questions. For hands-on demonstrations, run `/powerup` for interactive lessons with animated demos, or refer to the specific workflow sections above.
 
 > [!TIP]
+>
 > Tips:
 >
 > * Ask specific questions to get detailed answers
@@ -461,18 +495,18 @@ See [Non-interactive mode](./headless.md) for output formats, permission flags, 
 
 ## Next steps
 
-**[Best practices](./best-practices.md)**
+> **[Best practices](./best-practices.md)**
+>
+> Patterns for getting the most out of Claude Code
 
-Patterns for getting the most out of Claude Code
+> **[Manage sessions](./sessions.md)**
+>
+> Resume, name, and branch conversations
 
-**[Manage sessions](./sessions.md)**
+> **[Worktrees](./worktrees.md)**
+>
+> Run isolated parallel sessions
 
-Resume, name, and branch conversations
-
-**[Worktrees](./worktrees.md)**
-
-Run isolated parallel sessions
-
-**[Extend Claude Code](./features-overview.md)**
-
-Add skills, hooks, MCP, subagents, and plugins
+> **[Extend Claude Code](./features-overview.md)**
+>
+> Add skills, hooks, MCP, subagents, and plugins

@@ -9,6 +9,7 @@
 This page walks an administrator through rolling out an LLM gateway for Claude Code. It assumes you have a gateway product deployed that meets the [gateway requirements](#gateway-requirements). Deploying or operating any specific product isn't covered here; deploy yours following its vendor's documentation.
 
 > [!NOTE]
+>
 > * To connect Claude Code on your own machine to an existing gateway, see [Connect Claude Code to an LLM gateway](./llm-gateway-connect.md)
 > * For what Claude Code sends to a gateway and what to forward, see the [gateway compatibility guide](./llm-gateway-protocol.md)
 
@@ -85,6 +86,7 @@ Invoke-RestMethod -Method Post -Uri "https://llm-gateway.example.com/v1/messages
 Repeat the request once per Claude model name in your gateway's routing configuration. A name the gateway doesn't route returns `404` to any developer who selects it, so test every name before rollout.
 
 > [!NOTE]
+>
 > Avoid serving the gateway behind a redirect. A redirect can drop the request body or strip the credential header on inference requests, and [model discovery](./llm-gateway-protocol.md#model-discovery) treats any redirect as a failure so the credential cannot leak to a redirect target.
 
 ### Issue developer credentials

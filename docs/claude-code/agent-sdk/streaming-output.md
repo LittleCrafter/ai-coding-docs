@@ -9,6 +9,7 @@
 By default, the Agent SDK yields a complete `AssistantMessage` for each non-empty content block, such as a text block or a tool call, after Claude finishes generating that block. To receive incremental updates as text and tool calls are generated, enable partial message streaming.
 
 > [!TIP]
+>
 > This page covers output streaming (receiving tokens in real-time). For input modes (how you send messages), see [Send messages to agents](./streaming-vs-single-mode.md). You can also [stream responses using the Agent SDK via the CLI](../headless.md).
 
 ## Enable streaming output

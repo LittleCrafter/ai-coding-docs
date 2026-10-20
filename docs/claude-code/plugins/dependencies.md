@@ -11,6 +11,7 @@ A plugin dependency is another plugin that your plugin relies on, such as one wh
 This page is for plugin authors who declare dependencies in `plugin.json` and for marketplace maintainers who tag releases.
 
 > [!NOTE]
+>
 > These cases are covered on other pages:
 >
 > * **Installing a plugin that has dependencies**: see [Manage installed plugins](./install.md#manage-installed-plugins)
@@ -21,7 +22,7 @@ To add a constraint, start at [Declare a dependency with a version constraint](#
 
 ## Declare dependencies
 
-<a id="decide-whether-to-constrain-dependency-versions"></a>Without a version constraint, a dependency moves to each new release its marketplace publishes the next time users update. If that release renames an MCP tool your plugin calls, your plugin breaks for everyone who updates.
+Without a version constraint, a dependency moves to each new release its marketplace publishes the next time users update. If that release renames an MCP tool your plugin calls, your plugin breaks for everyone who updates.
 
 With a constraint such as `~2.1.0` on a dependency from a git-backed source, users who have your plugin installed keep receiving `2.1.x` patches of the dependency and never move to `2.2`. To upgrade on your own schedule, test against a newer release and then publish a new version of your plugin with a wider constraint.
 
@@ -130,9 +131,7 @@ Until you install the dependency from its marketplace, your plugin stops loading
 
 When both plugins are in one parent folder, you can pass that folder to `--plugin-dir` once. If the folder isn't itself a plugin, Claude Code loads each child folder that has a `.claude-plugin/plugin.json`. Requires Claude Code v2.1.265 or later.
 
-<h2 id="tag-plugin-releases-for-version-resolution">
-  Release a plugin that others depend on
-</h2>
+## Release a plugin that others depend on
 
 If you maintain a plugin that other plugins depend on with a version constraint, tag its releases so those constraints can resolve. A constraint resolves against git tags on the repository that hosts the plugin. Tag the repository that the plugin's [plugin source](./marketplace-reference.md#plugin-sources) in `marketplace.json` points at:
 

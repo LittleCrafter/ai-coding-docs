@@ -9,26 +9,14 @@
 Settings are the JSON keys that change how Claude Code behaves: which model it starts with, what it can run without asking, which files it can't read, how it looks in your terminal, and what your organization enforces.
 
 > [!TIP]
+>
 > To look up a specific key, go to [All settings](./settings-reference.md), which lists every key with the file you set it in, its default, and an example.
 
 Claude Code reads settings from JSON settings files such as `~/.claude/settings.json`. It looks for them in a few locations, and [the file it reads a setting from decides who the setting applies to](#settings-files-and-who-they-affect). This page covers those files: which one to put a setting in, how to change a setting and confirm it applied, and which value Claude Code uses when the same key is set in more than one file. [Configure permissions](./permissions.md) covers what Claude Code can run without asking and how to write `allow`, `ask`, and `deny` rules.
 
 > [!NOTE]
+>
 > This page covers Claude Code running on your machine: the terminal, the [VS Code](./vs-code.md) and [JetBrains](./jetbrains.md) extensions, and the [desktop app](./desktop.md), which all read the same settings files. A [cloud session](./claude-code-on-the-web.md) runs on a different machine and reads only some of them; see [Settings in cloud sessions](#settings-in-cloud-sessions).
-
-<a id="settings-files"></a>
-
-<a id="configuration-scopes"></a>
-
-<a id="available-scopes"></a>
-
-<a id="when-to-use-each-scope"></a>
-
-<a id="what-uses-scopes"></a>
-
-<a id="subagent-configuration"></a>
-
-<a id="where-settings-live"></a>
 
 ## Settings files and who they affect
 
@@ -43,27 +31,24 @@ Claude Code reads settings from four files, and an organization can also deliver
 
 In the File column, `~/.claude` is the `.claude` folder in your home directory, and a bare `.claude` is the `.claude` folder inside your project.
 
-<a id="where-each-file-applies"></a>
-
-<a id="compare-what-each-file-reaches"></a>
-
 ### Compare the scope of each settings file
 
 Suppose you have three projects on your machine, `website/`, `api/`, and `acme-app/`, a teammate has their own clone of `acme-app/`, and you start a [cloud session](#settings-in-cloud-sessions) on `acme-app/`.
 
 The graphic below shows which of those folders a setting applies in when you start Claude Code from them. Click a settings file to see the folders it reaches.
 
-* `~/.claude/settings.json`
-* `acme-app/.claude/settings.json`
-* `acme-app/.claude/settings.local.json`
-* `Managed settings` (managed-settings.json, MDM, or the claude.ai console)
+Settings file
+
+Your machine
+
+A teammate’s machine
+
+A cloud session
 
 * **`~/.claude/settings.json`**: every project on your machine, and nothing on your teammate's or in the cloud session
 * **`acme-app/.claude/settings.json`**: your `acme-app/`. It reaches your teammate's clone and the cloud session only if you commit the file to version control; until you do, it's a file on your disk like any other and nobody else has it
 * **`acme-app/.claude/settings.local.json`**: your `acme-app/` only. Claude Code adds it to your global git excludes the first time it writes the file, so it stays out of your commits; if you create the file by hand, [add it to `.gitignore` yourself](#keep-personal-settings-out-of-a-repository)
 * **Managed settings**, whether a `managed-settings.json` file, an MDM policy, or [server-managed settings](./server-managed-settings.md) from the claude.ai console: every project on every machine your organization deploys it to, or that you sign in to with your organization account. Only server-managed settings reach the cloud session
-
-<a id="which-files-you-have"></a>
 
 ### Find or create your settings files
 
@@ -74,6 +59,7 @@ Installing Claude Code doesn't create any settings file. If your machine or proj
 * **User** and **Project local**: create them yourself, or let Claude Code create them. It writes `~/.claude/settings.json` the first time you change an option in the `/config` menu that it stores in user settings, such as the theme, and `.claude/settings.local.json` the first time you give a standing approval on a permission prompt, such as "Yes, and don't ask again" for a Bash command. A few `/config` options, including **Show tips**, save to `.claude/settings.local.json` instead of the user file.
 
 > [!NOTE]
+>
 > On Windows, `~/.claude` means `%USERPROFILE%\.claude`. To keep the home-directory files somewhere else, set [`CLAUDE_CONFIG_DIR`](./env-vars.md); Claude Code then stores your settings, session history, and plugins there instead.
 
 Claude Code also keeps a fifth file, [`~/.claude.json`](./claude-directory.md#ce-claude-json), that it writes for itself; you don't need to edit it. It holds your sign-in session, [MCP server](./mcp.md) configurations, per-project state such as trust decisions, and the [global config keys](./settings-reference.md#global-config-settings) that `/config` writes for you.
@@ -84,14 +70,6 @@ Commit `.claude/settings.json` so everyone who clones the repository gets the sa
 
 Some of what you commit waits until each teammate [trusts the folder](./permissions.md#project-allow-rules-and-workspace-trust), and a few keys never take effect from a repository file; [Troubleshoot a setting that doesn't apply](#common-cases) covers both.
 
-<a id="local-settings-file"></a>
-
-<a id="where-claude-code-saves-the-project-local-file"></a>
-
-<a id="the-project-local-file"></a>
-
-<a id="keep-personal-settings-out-of-the-repository"></a>
-
 ### Keep personal settings out of a repository
 
 To change a setting for yourself in one project without changing it for your teammates, save it in `.claude/settings.local.json` inside the project. Claude Code applies that file over the committed `.claude/settings.json`, so if your team's file sets `"model": "claude-sonnet-5"` and you want Opus, put `"model": "claude-opus-5-5"` in your local file and only your sessions change.
@@ -101,12 +79,6 @@ Claude Code also writes to this file, keeps it out of your commits, and applies 
 * **Claude Code writes it too.** When Claude asks permission to run a Bash command and you choose "Yes, and don't ask again", Claude Code saves that [permission approval](./permissions.md#permission-system) here as an `allow` rule.
 * **You don't need to gitignore it yourself, unless you created it by hand.** The first time Claude Code writes the file in a git repository that doesn't already ignore it, it adds `**/.claude/settings.local.json` to your global git excludes file, so the file stays out of your commits in every repository. That file is `core.excludesFile` when your global git config sets it to an absolute or `~`-prefixed path; otherwise it's `$XDG_CONFIG_HOME/git/ignore`, or `~/.config/git/ignore` when `XDG_CONFIG_HOME` is unset. If you created the file by hand and Claude Code hasn't written to it yet, add it to `.gitignore` yourself.
 * **Its allow rules don't wait for trust while the file stays untracked.** Because the file is yours and not the repository's, Claude Code applies its `allow` rules without the [workspace trust](./permissions.md#project-allow-rules-and-workspace-trust) step it requires for the committed file. If the file is tracked by git, the trust step applies to it too; see [When your local settings file needs trust](./permissions.md#when-your-local-settings-file-needs-trust).
-
-<a id="where-claude-code-looks-for-each-file"></a>
-
-<a id="how-claude-code-keeps-the-local-file-out-of-git"></a>
-
-<a id="local-allow-rules-dont-wait-for-workspace-trust"></a>
 
 #### Where Claude Code keeps the local file in a git repository
 
@@ -120,16 +92,6 @@ Two rules qualify the root location:
 Before v2.1.211, Claude Code kept the file in the starting directory. It still reads a file an earlier version left there alongside the root file; where both set the same key, the root's value applies, and permission rules from both files apply. The Agent SDK's [`resolveSettings()`](./agent-sdk/typescript.md#resolvesettings) helper always reads the file from the starting directory.
 
 Claude Code reads the shared `.claude/settings.json` from the session's [primary working directory](./permissions.md#working-directories), so to use a file committed at the repository root, start Claude Code there. After you [move the session with `/cd`](./permissions.md#move-the-session-to-another-directory), Claude Code reads both project files from the new directory instead, placing the local file by the same rules. Reading them from the directory you moved to requires Claude Code v2.1.246 or later. For a worktree session that you start from the desktop app, see [What worktrees share with the main checkout](./worktrees.md#what-worktrees-share-with-the-main-checkout).
-
-<a id="managed-settings-delivery"></a>
-
-<a id="precedence-within-the-managed-tier"></a>
-
-<a id="parent-settings-from-embedding-hosts"></a>
-
-<a id="enforce-settings-for-an-organization"></a>
-
-<a id="settings-your-organization-manages"></a>
 
 ### Check what your organization enforces
 
@@ -149,8 +111,6 @@ If you're the administrator, [Set up Claude Code for your organization](./admin-
 
 You can change a setting from the `/config` menu, by editing a settings file, or for one session from the command line.
 
-<a id="system-prompt"></a>
-
 Claude Code's system prompt isn't published. To give Claude standing instructions, use [`CLAUDE.md` files](./memory.md) or the `--append-system-prompt` flag.
 
 ### Use the /config menu
@@ -164,6 +124,7 @@ Run `/config` inside Claude Code and open the **Config** tab. It lists a short s
 To set one option without the menu, pass `key=value`, such as `/config verbose=true`.
 
 > [!NOTE]
+>
 > `/config` is part of the terminal interface. The [VS Code](./vs-code.md) chat panel and the [desktop app](./desktop.md) don't open it; change settings there by editing a settings file or through those apps' own settings.
 
 ### Edit a settings file
@@ -191,8 +152,6 @@ Each entry under `permissions` is a rule that names a tool and what it may do; [
 After you save, run `/status` inside Claude Code to confirm the file loaded; [Confirm what loaded](#check-what-loaded) says what the `Setting sources` line shows and how a broken file is reported.
 
 For a complete personal file, team file, and organization file, each shown with a comment on every key it sets, see the [example settings files](./settings-example.md).
-
-<a id="pass-settings-for-one-session"></a>
 
 ### Change a setting for one session
 
@@ -225,10 +184,6 @@ Claude Code reads some keys only once, at session start, so an edit to one of th
 * [`model`](./settings-reference.md#model): use [`/model`](./model-config.md#setting-your-model) to switch mid-session. Each model has its own prompt cache, so the first request after a switch re-reads the whole conversation uncached; see [Switching models](./prompt-caching.md#switching-models)
 * [`effortLevel`](./settings-reference.md#effortlevel) and [`modelSettings`](./settings-reference.md#modelsettings): use [`/effort`](./model-config.md#adjust-effort-level) to change effort mid-session
 
-<a id="verify-active-settings"></a>
-
-<a id="check-what-loaded"></a>
-
 ### Confirm what loaded
 
 Run `/status` inside Claude Code to see which settings sources are active. The **Status** tab includes a `Setting sources` line that lists each settings file Claude Code loaded for the current session, such as `User settings` or `Project local settings`. When [managed settings](./admin-setup.md#decide-how-settings-reach-devices) are in effect, the managed settings entry shows in parentheses how they reached your machine.
@@ -248,25 +203,11 @@ After you continue, run `/status` to see the affected files and `claude doctor` 
 
 A `-p` run shows no dialog. Unless [a managed settings document can't be parsed](./errors.md#managed-settings-document-could-not-be-parsed), Claude Code skips the broken file or values and continues with the rest, so after a `-p` run that ignores a setting, run `claude doctor` to see what it dropped.
 
-<a id="how-scopes-interact"></a>
-
-<a id="key-points-about-the-configuration-system"></a>
-
-<a id="which-value-claude-code-uses"></a>
-
-<a id="which-value-wins"></a>
-
 ## Settings precedence
 
 When the same key appears in more than one place, Claude Code uses the value from the highest level that sets it. The stack below shows the levels, highest on top; a key at a higher level overrides the same key anywhere below it.
 
-| Level | Where you set it | Who it applies to |
-| ----- | ---------------- | ----------------- |
-| 1. Managed settings | managed-settings.json, MDM, or the claude.ai console | Your organization |
-| 2. Command line | claude --settings | You, this session |
-| 3. Project local | .claude/settings.local.json | You, this project |
-| 4. Shared project | .claude/settings.json | Everyone in the project |
-| 5. User | ~/.claude/settings.json | You, every project |
+Settings precedence, highest first: managed settings, command line, project local, shared project, user. A key set at a higher level overrides the same key set lower down.
 
 In order, highest precedence first:
 
@@ -288,8 +229,6 @@ When you set the same list key, such as `permissions.allow`, in more than one fi
 * [`modelPicker`](./settings-reference.md#modelpicker) holds one ordered list of rows plus a replace flag, so Claude Code never merges rows from two sources. It takes the whole value from the highest of managed settings, `--settings`, and user settings that defines it, and ignores the key in project and local settings. Requires Claude Code v2.1.242 or later.
 * [`availableModels`](./settings-reference.md#availablemodels): when the managed settings Claude Code applies define it, Claude Code applies that list as-is and ignores entries you add in user, project, or local settings, unless an app that embeds Claude Code supplies its own model list; see [Exceptions to managed settings precedence](#exceptions-to-managed-settings-precedence). Across managed sources the list never merges either; [how Claude Code combines managed sources](./managed-settings.md#how-claude-code-combines-managed-sources) says which source's list applies. Across non-managed scopes Claude Code merges the arrays as usual.
 * [`modelSettings`](./settings-reference.md#modelsettings): Claude Code resolves it one model at a time, together with [`effortLevel`](./settings-reference.md#effortlevel). The `modelSettings` entry states which file's value applies to a model.
-
-<a id="examples"></a>
 
 ### Precedence examples
 
@@ -318,14 +257,6 @@ You get your value back on the next session; `--settings` lasts one session and 
 Some keys have a command line flag or an environment variable that overrides the settings value regardless of which file set it: `ANTHROPIC_MODEL` overrides the [`model`](./settings-reference.md#model) setting, and `--model` overrides both for a session.
 
 Whether you can get your value back depends on the key: unset the variable or drop the flag, and check the key's entry on the [settings reference](./settings-reference.md) and the variable's row on the [environment variables reference](./env-vars.md) for which one Claude Code uses.
-
-<a id="keys-ignored-in-a-repository-file"></a>
-
-<a id="keys-only-you-or-your-organization-can-set"></a>
-
-<a id="common-cases"></a>
-
-<a id="which-value-applies-in-common-situations"></a>
 
 ### Troubleshoot a setting that doesn't apply
 
@@ -365,8 +296,6 @@ Two things keep a key in `.claude/settings.json` from applying for everyone who 
 
 * **You chose "Yes, and don't ask again" on a permission prompt but still get prompted for the same tool.** That choice saved an `allow` rule to your local file, and an `allow` rule there doesn't outrank an `ask` rule from a project or managed file; [how permission rules combine](./permissions.md#settings-precedence) explains the order. In the VS Code extension the approval card lets you pick the destination file, including the project's shared file, which changes the rule for everyone; in the CLI, Claude Code writes only to your local file.
 * **Your organization's allow rules still apply alongside yours.** That's expected: Claude Code merges [`permissions.allow`](./settings-reference.md#permissions-allow) across scopes, unless your organization sets [`allowManagedPermissionRulesOnly`](./settings-reference.md#allowmanagedpermissionrulesonly).
-
-<a id="security-keys-where-the-stricter-value-applies"></a>
 
 ### Exceptions to managed settings precedence
 

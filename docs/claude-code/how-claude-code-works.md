@@ -14,9 +14,7 @@ This guide covers the core architecture, built-in capabilities, and [tips for wo
 
 When you give Claude a task, it works through three phases: **gather context**, **take action**, and **verify results**. These phases blend together. Claude uses tools throughout, whether searching files to understand your code, editing to make changes, or running tests to check its work.
 
-<img src="media/images/agentic-loop.svg" alt="Diagram of the agentic loop: Your prompt leads to Claude gathering context, taking action, verifying results, and repeating until task complete. You can interrupt at any point." width="720" height="280" />
-
-<img src="media/images/agentic-loop-dark.svg" alt="Diagram of the agentic loop: Your prompt leads to Claude gathering context, taking action, verifying results, and repeating until task complete. You can interrupt at any point." width="720" height="280" />
+![Diagram of the agentic loop: Your prompt leads to Claude gathering context, taking action, verifying results, and repeating until task complete. You can interrupt at any point.](media/images/agentic-loop.svg)
 
 The loop adapts to what you ask. A question about your codebase might only need context gathering. A bug fix cycles through all three phases repeatedly. A refactor might involve extensive verification. Claude decides what each step requires based on what it learned from the previous step, chaining dozens of actions together and course-correcting along the way.
 
@@ -110,9 +108,7 @@ Since sessions are tied to directories, you can run parallel Claude sessions by 
 
 Resuming a session with `claude --continue` or `claude --resume` reopens it under the same session ID and appends new messages to the existing conversation. Forking with `--fork-session` or `/branch` copies the history into a new session ID, leaving the original unchanged.
 
-<img src="media/images/session-continuity.svg" alt="Diagram of session continuity: resume continues the same session, fork creates a new branch with a new ID." width="560" height="280" />
-
-<img src="media/images/session-continuity-dark.svg" alt="Diagram of session continuity: resume continues the same session, fork creates a new branch with a new ID." width="560" height="280" />
+![Diagram of session continuity: resume continues the same session, fork creates a new branch with a new ID.](media/images/session-continuity.svg)
 
 For the resume flags, the `/resume` picker, naming, and what happens when the same session is open in two terminals, see [Manage sessions](./sessions.md).
 
@@ -227,10 +223,10 @@ You don't need to specify which files to read or what commands to run. Claude fi
 
 ## What's next
 
-**[Extend with features](./features-overview.md)**
+> **[Extend with features](./features-overview.md)**
+>
+> Add skills and MCP connections
 
-Add skills and MCP connections
-
-**[Common workflows](./common-workflows.md)**
-
-Step-by-step guides for typical tasks
+> **[Common workflows](./common-workflows.md)**
+>
+> Step-by-step guides for typical tasks

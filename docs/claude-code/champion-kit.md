@@ -132,26 +132,29 @@ The objective is to establish a small number of lightweight habits that allow mo
 
 If a loose plan is helpful, the sequence below reflects what tends to work across most teams. Adjust freely to fit your context.
 
-1. **Week 1: Seed the channel**
+**1. Week 1: Seed the channel**
 
-   Create the channel, pin the [Quickstart](./quickstart.md), and post two or three of your own examples with the prompts included.
+Create the channel, pin the [Quickstart](./quickstart.md), and post two or three of your own examples with the prompts included.
 
-   **Signal that it is working:** a few colleagues react or reply, and at least one question is asked in the channel.
-2. **Week 2: Start the rhythm**
+**Signal that it is working:** a few colleagues react or reply, and at least one question is asked in the channel.
 
-   Start the weekly show-and-tell thread, answer every question publicly, and share one custom skill or `CLAUDE.md` snippet.
+**2. Week 2: Start the rhythm**
 
-   **Signal that it is working:** someone other than you posts an example of their own.
-3. **Week 3: Pair and consolidate**
+Start the weekly show-and-tell thread, answer every question publicly, and share one custom skill or `CLAUDE.md` snippet.
 
-   Offer two or three short pairing sessions and consolidate the most common questions and answers into a pinned FAQ message.
+**Signal that it is working:** someone other than you posts an example of their own.
 
-   **Signal that it is working:** you see repeat usage, with the same colleagues returning rather than trying once and stopping.
-4. **Week 4: Hand off**
+**3. Week 3: Pair and consolidate**
 
-   Identify a second champion and share a brief summary of what is working and what is not with your lead or administrator.
+Offer two or three short pairing sessions and consolidate the most common questions and answers into a pinned FAQ message.
 
-   **Signal that it is working:** questions in the channel are being answered by people other than you.
+**Signal that it is working:** you see repeat usage, with the same colleagues returning rather than trying once and stopping.
+
+**4. Week 4: Hand off**
+
+Identify a second champion and share a brief summary of what is working and what is not with your lead or administrator.
+
+**Signal that it is working:** questions in the channel are being answered by people other than you.
 
 ### When someone wants to go deeper
 
@@ -184,4 +187,5 @@ The techniques below are the ones that most reliably move someone from a first t
 | Keep edits surgical | Ask for a diff, or specify "only change X." Claude respects scope when scope is stated. |
 
 > [!TIP]
+>
 > Claude Code is updated frequently. Verify version-specific details against the [documentation home page](./overview.md) before distributing this material internally.

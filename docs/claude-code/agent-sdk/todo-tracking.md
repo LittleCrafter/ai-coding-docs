@@ -13,6 +13,7 @@ In a session that has the task-tracking tools, Claude keeps a written todo list,
 ## Model availability
 
 > [!NOTE]
+>
 > The following tools are available by default only on Claude Opus 4.7, Claude Sonnet 4.6, Claude Haiku 4.5, and earlier models. On every other model, including model IDs Claude Code doesn't recognize, they aren't available unless you opt in:
 >
 > * `TodoWrite`
@@ -60,6 +61,7 @@ Before running these examples, install the Claude Agent SDK by following the [qu
 * **Error handling**: these examples use single-shot `query()` calls. After yielding an `error_max_turns` result, `query()` raises an error that includes `Reached maximum number of turns`. Each example wraps its loop in a try block to exit cleanly when that happens. See [Handle the result](./agent-loop.md#handle-the-result) for the result subtypes.
 
 > [!NOTE]
+>
 > The task system messages, [`SDKTaskNotificationMessage`](./typescript.md#sdktasknotificationmessage) (TypeScript) or [`TaskNotificationMessage`](./python.md#tasknotificationmessage) (Python) among them, report background tasks such as backgrounded commands and subagents. In the message stream, you see todo activity as `tool_use` blocks in the assistant messages.
 
 ### Monitor todo changes

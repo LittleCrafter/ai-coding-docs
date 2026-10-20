@@ -49,6 +49,7 @@ If the install command fails with `syntax error near unexpected token '<'`, a `4
 [Git for Windows](https://git-scm.com/downloads/win) is recommended on native Windows so Claude Code can use the Bash tool. If Git for Windows is not installed, Claude Code uses PowerShell as the shell tool instead. WSL setups do not need Git for Windows.
 
 > [!NOTE]
+>
 > Native installations automatically update in the background to keep you on the latest version.
 
 **Homebrew**
@@ -60,6 +61,7 @@ brew install --cask claude-code
 Homebrew offers two casks. `claude-code` tracks the stable release channel, which is typically about a week behind and skips releases with major regressions. `claude-code@latest` tracks the latest channel and receives new versions as soon as they ship.
 
 > [!NOTE]
+>
 > Homebrew installations do not auto-update. Run `brew upgrade claude-code` or `brew upgrade claude-code@latest`, depending on which cask you installed, to get the latest features and security fixes.
 
 **WinGet**
@@ -69,6 +71,7 @@ winget install Anthropic.ClaudeCode
 ```
 
 > [!NOTE]
+>
 > WinGet installations do not auto-update. Run `winget upgrade Anthropic.ClaudeCode` periodically to get the latest features and security fixes.
 
 You can also install with [apt, dnf, or apk](./setup.md#install-with-linux-package-managers) on Debian, Fedora, RHEL, and Alpine.
@@ -83,6 +86,7 @@ claude
 Claude Code prompts you to log in on first use. If you've set the `ANTHROPIC_API_KEY` environment variable and you approve the key when Claude Code asks whether to use it, Claude Code skips the login prompt. [Continue with the Quickstart →](./quickstart.md)
 
 > [!TIP]
+>
 > See [advanced setup](./setup.md) for installation options, manual updates, or uninstallation instructions. Visit [installation troubleshooting](./troubleshoot-install.md) if you hit issues.
 
 **VS Code**
@@ -131,82 +135,82 @@ Install the [Claude Code plugin](https://plugins.jetbrains.com/plugin/27310-clau
 
 Here are some of the ways you can use Claude Code:
 
-**Automate the work you keep putting off**
+> **Automate the work you keep putting off**
+>
+> Claude Code handles the tedious tasks that eat up your day: writing tests for untested code, fixing lint errors across a project, resolving merge conflicts, updating dependencies, and writing release notes.
+>
+> ```bash theme={null}
+> claude "write tests for the auth module, run them, and fix any failures"
+> ```
 
-Claude Code handles the tedious tasks that eat up your day: writing tests for untested code, fixing lint errors across a project, resolving merge conflicts, updating dependencies, and writing release notes.
+> **Build features and fix bugs**
+>
+> Describe what you want in plain language. Claude Code plans the approach, writes the code across multiple files, and verifies it works.
+>
+> For bugs, paste an error message or describe the symptom. Claude Code traces the issue through your codebase, identifies the root cause, and implements a fix. See [common workflows](./common-workflows.md) for more examples.
 
-```bash theme={null}
-claude "write tests for the auth module, run them, and fix any failures"
-```
+> **Create commits and pull requests**
+>
+> Claude Code works directly with git. It stages changes, writes commit messages, creates branches, and opens pull requests.
+>
+> ```bash theme={null}
+> claude "commit my changes with a descriptive message"
+> ```
+>
+> In CI, you can automate code review and issue triage with [GitHub Actions](./github-actions.md) or [GitLab CI/CD](./gitlab-ci-cd.md).
 
-**Build features and fix bugs**
+> **Connect your tools with MCP**
+>
+> The [Model Context Protocol (MCP)](./mcp.md) is an open standard for connecting AI tools to external data sources. With MCP, Claude Code can read your design docs in Google Drive, update tickets in Jira, pull data from Slack, or use your own custom tooling. The [MCP quickstart](./mcp-quickstart.md) connects your first server end to end.
 
-Describe what you want in plain language. Claude Code plans the approach, writes the code across multiple files, and verifies it works.
+> **Customize with instructions, skills, and hooks**
+>
+> [`CLAUDE.md`](./memory.md) is a markdown file you add to your project root that Claude Code reads at the start of every session. Use it to set coding standards, architecture decisions, preferred libraries, and review checklists. If your repository already has an `AGENTS.md` for other coding agents, Claude Code [can read that](./memory.md#agents-md) in place of a `CLAUDE.md`. Claude also builds [auto memory](./memory.md#auto-memory) as it works, saving learnings across sessions without you writing anything.
+>
+> Create [skills](./skills.md) to package repeatable workflows your team can share, like `/review-pr` or `/deploy-staging`.
+>
+> [Hooks](./hooks.md) let you run shell commands before or after Claude Code actions, like auto-formatting after every file edit or running lint before a commit.
 
-For bugs, paste an error message or describe the symptom. Claude Code traces the issue through your codebase, identifies the root cause, and implements a fix. See [common workflows](./common-workflows.md) for more examples.
+> **Run agents in parallel and build custom agents**
+>
+> Spawn [multiple Claude Code agents](./sub-agents.md) that work on different parts of a task simultaneously. A lead agent coordinates the work, assigns subtasks, and merges results.
+>
+> To run several full sessions in parallel and watch them from one screen, use [background agents](./agent-view.md). For fully custom workflows, the [Agent SDK](./agent-sdk/overview.md) lets you build your own agents powered by Claude Code's tools and capabilities, with full control over orchestration, tool access, and permissions.
 
-**Create commits and pull requests**
+> **Pipe, script, and automate with the CLI**
+>
+> Claude Code is composable and follows the Unix philosophy. Pipe logs into it, run it in CI, or chain it with other tools:
+>
+> ```bash theme={null}
+> # Analyze recent log output
+> tail -200 app.log | claude -p "Slack me if you see any anomalies"
+>
+> # Automate translations in CI
+> claude -p "translate new strings into French and raise a PR for review"
+>
+> # Bulk operations across files
+> git diff main --name-only | claude -p "review these changed files for security issues"
+> ```
+>
+> See the [CLI reference](./cli-reference.md) for the full set of commands and flags.
 
-Claude Code works directly with git. It stages changes, writes commit messages, creates branches, and opens pull requests.
+> **Schedule recurring tasks**
+>
+> Run Claude on a schedule to automate work that repeats: morning PR reviews, overnight CI failure analysis, weekly dependency audits, or syncing docs after PRs merge.
+>
+> * [Cloud scheduled tasks](./routines.md), formerly routines, run in the cloud, so they keep running even when your computer is off. They can also trigger on API calls or GitHub events. Create them from the web, the Desktop app, or by running `/schedule` in the CLI.
+> * [Desktop scheduled tasks](./desktop-scheduled-tasks.md) run on your machine, with direct access to your local files and tools
+> * [`/loop`](./scheduled-tasks.md) repeats a prompt within a CLI session for quick polling
 
-```bash theme={null}
-claude "commit my changes with a descriptive message"
-```
-
-In CI, you can automate code review and issue triage with [GitHub Actions](./github-actions.md) or [GitLab CI/CD](./gitlab-ci-cd.md).
-
-**Connect your tools with MCP**
-
-The [Model Context Protocol (MCP)](./mcp.md) is an open standard for connecting AI tools to external data sources. With MCP, Claude Code can read your design docs in Google Drive, update tickets in Jira, pull data from Slack, or use your own custom tooling. The [MCP quickstart](./mcp-quickstart.md) connects your first server end to end.
-
-**Customize with instructions, skills, and hooks**
-
-[`CLAUDE.md`](./memory.md) is a markdown file you add to your project root that Claude Code reads at the start of every session. Use it to set coding standards, architecture decisions, preferred libraries, and review checklists. If your repository already has an `AGENTS.md` for other coding agents, Claude Code [can read that](./memory.md#agents-md) in place of a `CLAUDE.md`. Claude also builds [auto memory](./memory.md#auto-memory) as it works, saving learnings across sessions without you writing anything.
-
-Create [skills](./skills.md) to package repeatable workflows your team can share, like `/review-pr` or `/deploy-staging`.
-
-[Hooks](./hooks.md) let you run shell commands before or after Claude Code actions, like auto-formatting after every file edit or running lint before a commit.
-
-**Run agents in parallel and build custom agents**
-
-Spawn [multiple Claude Code agents](./sub-agents.md) that work on different parts of a task simultaneously. A lead agent coordinates the work, assigns subtasks, and merges results.
-
-To run several full sessions in parallel and watch them from one screen, use [background agents](./agent-view.md). For fully custom workflows, the [Agent SDK](./agent-sdk/overview.md) lets you build your own agents powered by Claude Code's tools and capabilities, with full control over orchestration, tool access, and permissions.
-
-**Pipe, script, and automate with the CLI**
-
-Claude Code is composable and follows the Unix philosophy. Pipe logs into it, run it in CI, or chain it with other tools:
-
-```bash theme={null}
-# Analyze recent log output
-tail -200 app.log | claude -p "Slack me if you see any anomalies"
-
-# Automate translations in CI
-claude -p "translate new strings into French and raise a PR for review"
-
-# Bulk operations across files
-git diff main --name-only | claude -p "review these changed files for security issues"
-```
-
-See the [CLI reference](./cli-reference.md) for the full set of commands and flags.
-
-**Schedule recurring tasks**
-
-Run Claude on a schedule to automate work that repeats: morning PR reviews, overnight CI failure analysis, weekly dependency audits, or syncing docs after PRs merge.
-
-* [Cloud scheduled tasks](./routines.md), formerly routines, run in the cloud, so they keep running even when your computer is off. They can also trigger on API calls or GitHub events. Create them from the web, the Desktop app, or by running `/schedule` in the CLI.
-* [Desktop scheduled tasks](./desktop-scheduled-tasks.md) run on your machine, with direct access to your local files and tools
-* [`/loop`](./scheduled-tasks.md) repeats a prompt within a CLI session for quick polling
-
-**Work from anywhere**
-
-Sessions aren't tied to a single surface. Move work between them as your context changes:
-
-* Step away from your desk and keep working from your phone or any browser with [Remote Control](./remote-control.md)
-* Message [Dispatch](./desktop.md#sessions-from-dispatch) a task from your phone and open the Desktop session it creates
-* Start a long-running task on the [web](./claude-code-on-the-web.md) or the [Claude mobile app](./mobile.md), then pull it into your terminal with `claude --teleport`. Teleport requires a claude.ai subscription.
-* Run `/desktop` to continue your current terminal session in the [Desktop app](./desktop.md), where you can review diffs visually. The `/desktop` handoff requires a claude.ai subscription. Available on macOS and x64 Windows.
-* Route tasks from team chat: mention `@Claude` in [Slack](./slack.md) with a bug report and get a pull request back
+> **Work from anywhere**
+>
+> Sessions aren't tied to a single surface. Move work between them as your context changes:
+>
+> * Step away from your desk and keep working from your phone or any browser with [Remote Control](./remote-control.md)
+> * Message [Dispatch](./desktop.md#sessions-from-dispatch) a task from your phone and open the Desktop session it creates
+> * Start a long-running task on the [web](./claude-code-on-the-web.md) or the [Claude mobile app](./mobile.md), then pull it into your terminal with `claude --teleport`. Teleport requires a claude.ai subscription.
+> * Run `/desktop` to continue your current terminal session in the [Desktop app](./desktop.md), where you can review diffs visually. The `/desktop` handoff requires a claude.ai subscription. Available on macOS and x64 Windows.
+> * Route tasks from team chat: mention `@Claude` in [Slack](./slack.md) with a bug report and get a pull request back
 
 ## Use Claude Code everywhere
 

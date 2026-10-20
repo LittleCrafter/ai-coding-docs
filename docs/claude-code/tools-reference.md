@@ -13,6 +13,7 @@ To control which tools Claude can use and when it asks first, configure [permiss
 To add custom tools, connect an [MCP server](./mcp.md). To extend Claude with reusable prompt-based workflows, write a [skill](./skills.md), which runs through the existing `Skill` tool rather than adding a new tool entry.
 
 > [!NOTE]
+>
 > In [auto mode](./permission-modes.md#eliminate-prompts-with-auto-mode), a classifier decides most permission prompts instead of you. The `Permission required` column shows whether the tool prompts in [Manual mode](./permission-modes.md) for paths inside the working directory. File-access tools marked No, including `Read`, `Grep`, and `Glob`, still prompt for paths outside the [working directory and additional directories](./permissions.md#working-directories). `Bash` is marked Yes but runs a built-in set of [read-only commands](./permissions.md#read-only-commands) without prompting.
 
 | Tool | Description | Permission required |
@@ -506,6 +507,8 @@ Read handles several file types beyond plain text:
 * **PDFs**: Claude reads short `.pdf` files whole. For PDFs longer than 10 pages, it reads in ranges with a `pages` parameter, such as `"1-5"`, up to 20 pages at a time. Page-range reads render pages with `pdftoppm` from poppler-utils, so install it with `brew install poppler` on macOS or `apt-get install poppler-utils` on Debian and Ubuntu. On Windows and other platforms, install a poppler build that puts `pdftoppm` on your `PATH`. Without it, a page-range read fails with `pdftoppm is not installed`.
 * **Jupyter notebooks**: `.ipynb` files return all cells with their outputs, including code, markdown, and visualizations. A notebook whose cells come to more than 256 KB, or more than the [token limit](#large-files), returns an error instead. Claude Code refuses to read a notebook file over 100 MB; the error tells Claude how to read a portion of the notebook instead, such as a slice of cells, with a shell command.
 
+Read refuses an image file larger than 128 MB with an error that tells Claude to resize the image or export a smaller copy, then read that copy. If Claude stops at the error instead of doing so, see [File is too large to read as an image](./errors.md#file-is-too-large-to-read-as-an-image).
+
 Read only reads files, not directories. Claude lists directory contents with a shell command such as `ls`.
 
 Read refuses a file whose extension it treats as binary, such as `.xlsx`, `.parquet`, `.heic`, or `.zip`. Claude keeps working after a refusal: the error suggests a skill for that file type if one is available, or else a shell command or script that reads the format. If you [`@`-mention](./common-workflows.md#reference-files-and-directories) a file that Read refuses, Claude receives the file's path but not its contents.
@@ -557,7 +560,7 @@ The report carries:
 
 Claude Code keeps your working directory in the local draft so it can find the transcript, and doesn't send the directory.
 
-In [organizations with Zero Data Retention](./zero-data-retention.md#features-disabled-under-zdr), and in organizations with the [HIPAA configuration](./hipaa-setup.md) applied, Claude Code leaves the tool out, as it does for `/feedback`. If a session in an organization with Zero Data Retention still offers the tool, drafts stay on your machine, and sending fails with `Feedback collection is not available for organizations with custom data retention policies.`
+In [organizations with Zero Data Retention](./zero-data-retention.md#features-disabled-under-zdr), and in organizations with the [HIPAA configuration](./hipaa-setup.md) applied, Claude Code leaves the SendFeedback tool out of your sessions. If a session in an organization with Zero Data Retention still offers the tool, drafts stay on your machine, and sending fails with `Feedback collection is not available for organizations with custom data retention policies.`
 
 ### Discard or keep a draft
 
@@ -649,6 +652,7 @@ WebSearch permission rules take no specifier. A bare `WebSearch` entry in `allow
 The search backend is not configurable. To search with a different provider, add an [MCP server](./mcp.md) that exposes a search tool.
 
 > [!NOTE]
+>
 > WebSearch is available on the Claude API, [Claude Platform on AWS](./claude-platform-on-aws.md), and Microsoft Foundry. On Google Cloud's Agent Platform it works with Opus 4, Sonnet 4, Haiku 4.5, and later models. Amazon Bedrock doesn't expose the server-side web search tool.
 
 ### Session search limit
@@ -690,6 +694,7 @@ What tools do you have access to?
 Claude gives a conversational summary. For exact MCP tool names, run `/mcp`.
 
 > [!NOTE]
+>
 > The [advisor tool](./advisor.md) is a [server tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool) that the API runs, rather than a tool that Claude Code implements. It has no name you can reference in permission rules or hook matchers.
 
 ## See also

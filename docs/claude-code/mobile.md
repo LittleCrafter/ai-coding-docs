@@ -9,22 +9,26 @@
 The Claude app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) and [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude) is a client for Claude Code sessions rather than a place where code runs. From your phone you reach [cloud sessions](#start-and-monitor-cloud-sessions) and [projects](./claude-projects.md) in the cloud, a session running on your own machine through [Remote Control](#continue-a-local-session-with-remote-control), or the Desktop app through [Dispatch](./desktop.md#sessions-from-dispatch).
 
 > [!NOTE]
+>
 > Claude Code doesn't have a separate mobile app: cloud sessions and Remote Control both live in the **Code** tab in the Claude app, and Dispatch is a task you message in the app.
 
 ## Get the app
 
-1. **Download the Claude app**
+**1. Download the Claude app**
 
-   Install the Claude app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) or [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude). On an iPad, install the same iOS app.
+Install the Claude app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) or [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude). On an iPad, install the same iOS app.
 
-   > [!TIP]
-   > Run `/mobile` in a Claude Code session to show a QR code for [claude.ai/mobile](https://claude.ai/mobile), which opens the right app store for your phone. `/ios` and `/android` do the same thing.
-2. **Sign in**
+> [!TIP]
+>
+> Run `/mobile` in a Claude Code session to show a QR code for [claude.ai/mobile](https://claude.ai/mobile), which opens the right app store for your phone. `/ios` and `/android` do the same thing.
 
-   Sign in with the same claude.ai account and organization you use for Claude Code. Cloud sessions and Remote Control require a claude.ai account, so they aren't reachable with an Anthropic Console API key or from a third-party provider such as Amazon Bedrock.
-3. **Open the Code tab**
+**2. Sign in**
 
-   Tap **Code** in the app's navigation to reach your sessions, or open [claude.ai/code/new](https://claude.ai/code/new) on your phone to start a new Code session in the app. If you don't see the Code tab, your plan or organization may not include these features; see [availability by subscription plan](./feature-availability.md#availability-by-subscription-plan).
+Sign in with the same claude.ai account and organization you use for Claude Code. Cloud sessions and Remote Control require a claude.ai account, so they aren't reachable with an Anthropic Console API key or from a third-party provider such as Amazon Bedrock.
+
+**3. Open the Code tab**
+
+Tap **Code** in the app's navigation to reach your sessions, or open [claude.ai/code/new](https://claude.ai/code/new) on your phone to start a new Code session in the app. If you don't see the Code tab, your plan or organization may not include these features; see [availability by subscription plan](./feature-availability.md#availability-by-subscription-plan).
 
 ## Work from your phone
 

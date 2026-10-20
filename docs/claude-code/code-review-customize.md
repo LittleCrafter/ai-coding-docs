@@ -14,6 +14,7 @@ You can change what [Code Review](./code-review.md) flags on your repository by 
 Add `REVIEW.md` at your repository root and merge it. Then [protect your default branch](#which-branch-review-md-is-read-from).
 
 > [!NOTE]
+>
 > To change how thorough reviews are or when they run, ask an Owner to change the [review level](./code-review-setup.md#set-the-default-review-level) or the [**Review runs** setting](./code-review-setup.md#set-when-reviews-run).
 
 ## Use CLAUDE.md for project-wide rules
@@ -42,6 +43,7 @@ your-repo/
 Before you rely on a subdirectory file, protect your default branch and check [what a review reads for your branch setup](#what-a-review-reads-for-each-branch-setup).
 
 > [!NOTE]
+>
 > The Code Review service and the local [`/code-review` command](./code-review-local.md) are two separate tools, and they read different files. The service reads both `CLAUDE.md` and `REVIEW.md`. The `/code-review` command, which you run inside a Claude Code session on your own machine, reads your `CLAUDE.md` files and not `REVIEW.md`. Put guidance you want applied in both places in `CLAUDE.md`, and keep `REVIEW.md` for rules specific to pull request review.
 
 ### Example REVIEW\.md

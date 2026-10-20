@@ -11,6 +11,7 @@ An [LLM gateway](./llm-gateway.md) is a proxy your organization runs between Cla
 This page is for developers running Claude Code through a gateway their organization operates. It covers two paths: [checking whether your administrator already configured it for you](#check-for-an-existing-configuration), and [configuring it yourself](#configure-claude-code-yourself) when they haven't.
 
 > [!NOTE]
+>
 > * To deploy a gateway for your organization, see [Roll out an LLM gateway](./llm-gateway-rollout.md)
 > * For what Claude Code sends to a gateway, see the [gateway compatibility guide](./llm-gateway-protocol.md)
 
@@ -18,18 +19,20 @@ This page is for developers running Claude Code through a gateway their organiza
 
 Administrators can distribute the gateway address and credential through [managed settings](./managed-settings.md), device management, or an [`apiKeyHelper`](#rotate-credentials-with-apikeyhelper), so Claude Code picks them up at startup with nothing for you to set. To check whether your organization already did this:
 
-1. **Start Claude Code**
+**1. Start Claude Code**
 
-   Run `claude`. If it opens to the login screen instead of a session, no gateway credential was distributed; [configure it yourself](#configure-claude-code-yourself) below.
-2. **Check the Status tab**
+Run `claude`. If it opens to the login screen instead of a session, no gateway credential was distributed; [configure it yourself](#configure-claude-code-yourself) below.
 
-   If Claude Code started a session without showing the login screen, run `/status`, which opens on the **Status** tab, and check two lines:
+**2. Check the Status tab**
 
-   * `Anthropic base URL`: this line only appears when a gateway address is set. If it isn't there, Claude Code isn't pointed at the gateway; [configure it yourself](#configure-claude-code-yourself) below.
-   * `Auth token` or `API key`: a line naming `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_API_KEY`, or an `apiKeyHelper` confirms a gateway credential is active. A `Login method` line naming a claude.ai account instead means the credential wasn't distributed; [set it yourself](#set-the-credential-variable).
-3. **Send a test message**
+If Claude Code started a session without showing the login screen, run `/status`, which opens on the **Status** tab, and check two lines:
 
-   Close the `/status` menu and send any prompt in Claude Code. A normal response from Claude, with no error, confirms the gateway connection works.
+* `Anthropic base URL`: this line only appears when a gateway address is set. If it isn't there, Claude Code isn't pointed at the gateway; [configure it yourself](#configure-claude-code-yourself) below.
+* `Auth token` or `API key`: a line naming `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_API_KEY`, or an `apiKeyHelper` confirms a gateway credential is active. A `Login method` line naming a claude.ai account instead means the credential wasn't distributed; [set it yourself](#set-the-credential-variable).
+
+**3. Send a test message**
+
+Close the `/status` menu and send any prompt in Claude Code. A normal response from Claude, with no error, confirms the gateway connection works.
 
 If both lines in the `/status` menu look right but the message to Claude fails, see the [troubleshooting table](#troubleshoot-gateway-errors).
 
@@ -96,6 +99,7 @@ To make the configuration apply everywhere Claude Code runs, including [backgrou
 * `.claude/settings.local.json` applies to one project. Claude Code adds it to your global gitignore when it saves a setting there; if you create it by hand or have Claude write it, add it to your gitignore yourself first so you don't accidentally commit your credential
 
 > [!WARNING]
+>
 > Don't put the credential in a project's `.claude/settings.json`. That file is committed and shared with everyone who clones the repository.
 
 The `env` block looks the same in either file:

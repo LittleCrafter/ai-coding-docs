@@ -7,11 +7,13 @@
 > Learn about integrating Claude Code into your development workflow with GitLab CI/CD
 
 > [!NOTE]
+>
 > Claude Code for GitLab CI/CD is currently in beta. Features and functionality may evolve as we refine the experience.
 >
 > This integration is maintained by GitLab. For support, see the following [GitLab issue](https://gitlab.com/gitlab-org/gitlab/-/issues/573776).
 
 > [!NOTE]
+>
 > This integration is built on top of the [Claude Code CLI and Agent SDK](./agent-sdk/overview.md), enabling programmatic use of Claude in your CI/CD jobs and custom automation workflows.
 
 ## Why use Claude Code with GitLab?
@@ -98,6 +100,7 @@ claude:
 After adding the job and your `ANTHROPIC_API_KEY` variable, test by running the job manually from **CI/CD** → **Pipelines**, or trigger it from an MR to let Claude propose updates in a branch and open an MR if needed.
 
 > [!NOTE]
+>
 > To run on Amazon Bedrock or Google Cloud's Agent Platform instead of the Claude API, see the [Using with Amazon Bedrock and Google Cloud](#using-with-amazon-bedrock-and-google-cloud) section below for authentication and environment setup.
 
 ### Manual setup (recommended for production)
@@ -271,6 +274,7 @@ claude-bedrock:
 ```
 
 > [!NOTE]
+>
 > Model IDs for Amazon Bedrock include region-specific prefixes (for example, `us.anthropic.claude-sonnet-4-6`). Pass the desired model via your job configuration or prompt if your workflow supports it.
 
 ### Agent Platform job example (Workload Identity Federation)
@@ -344,6 +348,7 @@ claude-vertex:
 ```
 
 > [!NOTE]
+>
 > With Workload Identity Federation, you do not need to store service account keys. Use repository-specific trust conditions and least-privilege service accounts.
 
 ## Best practices
@@ -417,6 +422,7 @@ Control Claude Code runs in your jobs with these CLI flags, GitLab keywords, and
 * Provider-specific environment: `AWS_REGION`, project/region vars for Google Cloud's Agent Platform
 
 > [!NOTE]
+>
 > Exact flags and parameters may vary by version of `@anthropic-ai/claude-code`. Run `claude --help` in your job to see supported options.
 
 ### Customizing Claude's behavior

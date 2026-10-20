@@ -68,6 +68,7 @@ The first couple of key-repeat characters type into the input during warmup and 
 Holding or tapping `Space` starts dictation only where the keypress would otherwise type into the prompt. In the [transcript viewer](./interactive-mode.md#transcript-viewer), `Space` pages through the conversation, and in [vim mode](./interactive-mode.md#vim-editor-mode) outside INSERT it is a command. A [rebound modifier combination](#rebind-the-dictation-key) like `meta+k` never types text, so it starts dictation from those places too.
 
 > [!TIP]
+>
 > To skip the warmup, switch to [tap mode](#tap-to-record-and-send) with `/voice tap`, or [rebind to a modifier combination](#rebind-the-dictation-key) like `meta+k`. Modifier combos start recording on the first keypress.
 
 Your speech appears in the prompt as you speak, dimmed until the transcript is finalized. Release `Space` to stop recording and finalize the text. The transcript is inserted at your cursor position and the cursor stays at the end of the inserted text, so you can mix typing and dictation in any order. Hold `Space` again to append another recording, or move the cursor first to insert speech elsewhere in the prompt:
@@ -104,30 +105,30 @@ Neither key does anything else in the press that cancels: `Esc` doesn't interrup
 
 Voice dictation uses the same [`language` setting](./settings-reference.md#language) that controls Claude's response language. If that setting is empty, dictation defaults to English. In the VS Code extension, if `language` is empty, dictation uses VS Code's `accessibility.voice.speechLanguage` setting before defaulting to English.
 
-**Supported dictation languages**
-
-| Language | Code |
-| :- | :- |
-| Czech | `cs` |
-| Danish | `da` |
-| Dutch | `nl` |
-| English | `en` |
-| French | `fr` |
-| German | `de` |
-| Greek | `el` |
-| Hindi | `hi` |
-| Indonesian | `id` |
-| Italian | `it` |
-| Japanese | `ja` |
-| Korean | `ko` |
-| Norwegian | `no` |
-| Polish | `pl` |
-| Portuguese | `pt` |
-| Russian | `ru` |
-| Spanish | `es` |
-| Swedish | `sv` |
-| Turkish | `tr` |
-| Ukrainian | `uk` |
+> **Supported dictation languages**
+>
+> | Language | Code |
+> | :- | :- |
+> | Czech | `cs` |
+> | Danish | `da` |
+> | Dutch | `nl` |
+> | English | `en` |
+> | French | `fr` |
+> | German | `de` |
+> | Greek | `el` |
+> | Hindi | `hi` |
+> | Indonesian | `id` |
+> | Italian | `it` |
+> | Japanese | `ja` |
+> | Korean | `ko` |
+> | Norwegian | `no` |
+> | Polish | `pl` |
+> | Portuguese | `pt` |
+> | Russian | `ru` |
+> | Spanish | `es` |
+> | Swedish | `sv` |
+> | Turkish | `tr` |
+> | Ukrainian | `uk` |
 
 Set the language in `/config` or directly in settings. You can use either the [BCP 47 language code](https://en.wikipedia.org/wiki/IETF_language_tag) or the language name:
 
@@ -187,18 +188,21 @@ Common issues when voice dictation does not activate or record:
 
 If your terminal app does not appear under System Settings → Privacy & Security → Microphone, there is no toggle you can enable. Reset the permission state for your terminal so the next `/voice` run triggers a fresh macOS permission prompt.
 
-1. **Reset the microphone permission for your terminal**
+**1. Reset the microphone permission for your terminal**
 
-   Run `tccutil reset Microphone <bundle-id>`, replacing `<bundle-id>` with your terminal's identifier: `com.apple.Terminal` for the built-in Terminal, or `com.googlecode.iterm2` for iTerm2. For other terminals, look up the identifier with `osascript -e 'id of app "AppName"'`.
+Run `tccutil reset Microphone <bundle-id>`, replacing `<bundle-id>` with your terminal's identifier: `com.apple.Terminal` for the built-in Terminal, or `com.googlecode.iterm2` for iTerm2. For other terminals, look up the identifier with `osascript -e 'id of app "AppName"'`.
 
-   > [!WARNING]
-   > You can run `tccutil reset Microphone` without a bundle ID, but it revokes microphone access from every app on your Mac, including apps like Zoom or Slack. Each app will need to re-request access on next use, so don't run it during an active call.
-2. **Quit and relaunch your terminal**
+> [!WARNING]
+>
+> You can run `tccutil reset Microphone` without a bundle ID, but it revokes microphone access from every app on your Mac, including apps like Zoom or Slack. Each app will need to re-request access on next use, so don't run it during an active call.
 
-   macOS won't re-prompt a process that is already running. Quit the terminal app with Cmd+Q, not just close its windows, then open it again.
-3. **Trigger a fresh prompt**
+**2. Quit and relaunch your terminal**
 
-   Start Claude Code and run `/voice`. macOS prompts for microphone access; allow it.
+macOS won't re-prompt a process that is already running. Quit the terminal app with Cmd+Q, not just close its windows, then open it again.
+
+**3. Trigger a fresh prompt**
+
+Start Claude Code and run `/voice`. macOS prompts for microphone access; allow it.
 
 ## See also
 

@@ -13,6 +13,7 @@ npm install @anthropic-ai/claude-agent-sdk
 ```
 
 > [!NOTE]
+>
 > The SDK bundles a native Claude Code binary for your platform as an optional dependency such as `@anthropic-ai/claude-agent-sdk-darwin-arm64`. Most installs need no separate Claude Code install. The SDK version tracks the bundled Claude Code version. SDK v0.3.191 bundles Claude Code v2.1.191, so a feature on this page that requires a Claude Code version needs the SDK release with the same patch number or later. If your package manager skips optional dependencies, the SDK throws `Native CLI binary for <platform>-<arch> not found`; set [`pathToClaudeCodeExecutable`](#options) to a separately installed `claude` binary instead.
 >
 > If your package manager doesn't apply npm's `libc` field, as Yarn 1.x doesn't, you get both the glibc and musl platform packages on Linux, roughly doubling the install size. On Agent SDK v0.2.141 or later, the SDK still launches the correct variant. To reclaim the space in a container image, delete the platform package that doesn't match the libc where your app runs; for a glibc runtime on x64, that's `rm -rf node_modules/@anthropic-ai/claude-agent-sdk-linux-x64-musl`. On a development machine the deletion is temporary, since Yarn reinstalls the package on the next dependency change.
@@ -432,6 +433,7 @@ Returns `{ sessionId }`, the new session's UUID. Pass it as [`resume`](#options)
 Resolves the effective Claude Code settings for a given directory using the same merge engine as the CLI, without spawning the Claude CLI. Use it to inspect what configuration a `query()` call would see before invoking one.
 
 > [!NOTE]
+>
 > This function is alpha and its API may change before stabilization.
 
 The snapshot differs from what a live `query()` session applies:
@@ -713,6 +715,7 @@ await q.applyFlagSettings({ model: null });
 ```
 
 > [!NOTE]
+>
 > `applyFlagSettings()` is TypeScript-only. The Python SDK does not expose an equivalent method.
 
 #### `updateSettings()`
@@ -990,9 +993,7 @@ type SDKControlReadFileResponse = {
 
 `contents` holds the file text, or base64 data when you requested `encoding: 'base64'`; the response's `encoding` field is set to `'base64'` in that case. `absPath` is the resolved absolute path. `truncated` is set when the file was longer than the `maxBytes` cap and the contents were cut at that limit.
 
-<h4 id="what-readfile-can-read">
-  What `readFile()` can read
-</h4>
+#### What `readFile()` can read
 
 `readFile()` serves a narrower set of files than the Read tool:
 
@@ -2236,7 +2237,7 @@ If your application runs prompts on its own schedule, declare each run so Claude
 
 ### Peer origin fields
 
-A `peer` origin identifies which agent sent the message: an in-process [teammate](../agent-teams.md) sending to `main` with `SendMessage`, or a [cross-session peer](../cross-session-messaging.md), another of your Claude Code sessions. Cross-session peers require Claude Code v2.1.224 or later on macOS and Linux; see [cross-session messaging availability](../cross-session-messaging.md#availability) for the native Windows requirement. A cross-session peer can run on the same machine, or on [another of your machines](../cross-session-messaging.md#message-sessions-on-other-machines) or [in the cloud](../claude-code-on-the-web.md) when its message arrives through Remote Control. The two kinds of sender fill the fields differently:
+A `peer` origin identifies which agent sent the message: an in-process [teammate](../agent-teams.md) sending to `main` with `SendMessage`, or a [cross-session peer](../cross-session-messaging.md), another of your Claude Code sessions. Cross-session peers require Claude Code v2.1.224 or later on macOS and Linux; see [cross-session messaging availability](../cross-session-messaging.md#availability) for the native Windows requirement. A cross-session peer can run on the same machine, or on [another of your machines](../cross-session-messaging.md#message-sessions-on-other-machines) when its message arrives through [Remote Control](../remote-control.md).
 
 * `from`: the teammate's name, or the sender address for a cross-session peer. For a [one-way cross-machine message](../cross-session-messaging.md#message-sessions-on-other-machines), the sender has no reply address and `from` is `"unknown"`. The value is sender-authored; `verifiedPeerPid` is the verified identity.
 * `fromMode`: the sending session's permission class, `bypass` or `prompting`, declared by a host that relays a peer message between your sessions, such as the [desktop app](../desktop.md#work-across-sessions). Claude Code reads it in the receiving session when it applies the [inbound controls](../cross-session-messaging.md#control-inbound-messages). Requires Agent SDK v0.3.234 or later.
@@ -3041,6 +3042,7 @@ type ToolInputSchemas =
 **Tool name:** `Agent`. The previous name `Task` is still accepted as an alias, and the `tools` array in the [`SDKSystemMessage`](#sdksystemmessage) init message currently lists this tool as `Task` for backward compatibility.
 
 > [!NOTE]
+>
 > The `mode` field is deprecated and ignored on Claude Code v2.1.212 or later. A subagent runs in either the parent session's permission mode or its definition's [`permissionMode`](#agentdefinition), and the [subagent inheritance rules](./permissions.md#available-modes) decide which.
 
 ```typescript theme={null}
@@ -3318,6 +3320,7 @@ type TodoWriteInput = {
 Creates and manages a structured task list for tracking progress.
 
 > [!NOTE]
+>
 > The following tools are available by default only on Claude Opus 4.7, Claude Sonnet 4.6, Claude Haiku 4.5, and earlier models. On every other model, including model IDs Claude Code doesn't recognize, they aren't available unless you opt in:
 >
 > * `TodoWrite`
@@ -4270,6 +4273,7 @@ type TodoWriteOutput = {
 Returns the previous and updated task lists.
 
 > [!NOTE]
+>
 > The following tools are available by default only on Claude Opus 4.7, Claude Sonnet 4.6, Claude Haiku 4.5, and earlier models. On every other model, including model IDs Claude Code doesn't recognize, they aren't available unless you opt in:
 >
 > * `TodoWrite`
@@ -4841,6 +4845,7 @@ type SdkBeta = "context-1m-2025-08-07";
 ```
 
 > [!WARNING]
+>
 > On the Claude API, the `context-1m-2025-08-07` beta is retired for Claude Sonnet 4.5 and Claude Sonnet 4. If you still pass it with either model, requests that exceed the standard 200K-token context window return an error, so remove it from `betas`. To run a session with a 1M-token context window, set `model` to a model that [runs with the 1M window by default](../model-config.md#extended-context), such as `claude-sonnet-5-5` or `claude-opus-5-5`. For a model that reaches 1M only through its `[1m]` variant, append the suffix to the model ID, as in `claude-opus-4-6[1m]`.
 
 ### `SlashCommand`
@@ -5179,6 +5184,7 @@ interface SpawnOptions {
 ```
 
 > [!NOTE]
+>
 > The `signal` field tells your spawn function when to tear down the process. Pass it as the `signal` option to Node's `spawn()`, or pass it to your VM or container teardown handler.
 >
 > This signal does not fire the instant [`Options.abortController`](#options) aborts. The SDK first closes the process's stdin and waits about two seconds so the CLI can shut down cleanly, then aborts this signal. To react the moment the caller aborts instead, listen on your own `Options.abortController.signal`, which your spawn function can reference from its enclosing scope.
@@ -5729,6 +5735,7 @@ type SandboxSettings = {
 | `ripgrep` | `{ command: string; args?: string[] }` | `undefined` | Custom ripgrep binary configuration for sandbox environments |
 
 > [!NOTE]
+>
 > The sandbox depends on platform support and, on Linux, tools like `bubblewrap` and `socat`. When `enabled` is `true` and the sandbox can't start, `query()` reports a `result` message with `subtype: "error_during_execution"` and the reason in `errors`. For a single message `query()` call, the SDK throws after yielding that error result, so wrap the loop in a try block to continue past it. See [Handle the result](./agent-loop.md#handle-the-result) for the error contract.
 >
 > To run unsandboxed instead, set `failIfUnavailable: false`.
@@ -5761,6 +5768,7 @@ try {
 ```
 
 > [!WARNING]
+>
 > **Unix socket security:** The `allowUnixSockets` option can grant access to system services that reach outside the sandbox. For example, allowing `/var/run/docker.sock` effectively grants full host system access through the Docker API, bypassing sandbox isolation. Only allow Unix sockets that are strictly necessary and understand the security implications of each.
 
 ### `SandboxNetworkConfig`
@@ -5794,6 +5802,7 @@ type SandboxNetworkConfig = {
 | `socksProxyPort` | `number` | `undefined` | SOCKS proxy port for network requests |
 
 > [!NOTE]
+>
 > The built-in sandbox proxy enforces `allowedDomains` based on the requested hostname and does not terminate or inspect TLS traffic, so techniques such as [domain fronting](https://en.wikipedia.org/wiki/Domain_fronting) can potentially bypass it. See [Sandboxing security limitations](../sandboxing.md#security-limitations) for details and [Secure deployment](./secure-deployment.md#traffic-forwarding) for configuring a TLS-terminating proxy.
 
 ### `SandboxFilesystemConfig`
@@ -5856,6 +5865,7 @@ for await (const message of query({
 ```
 
 > [!WARNING]
+>
 > Commands running with `dangerouslyDisableSandbox: true` have full system access. Ensure your `canUseTool` handler validates these requests carefully.
 >
 > If `permissionMode` is set to `bypassPermissions` and `allowUnsandboxedCommands` is enabled, the model can autonomously execute commands outside the sandbox without approval prompts, apart from the [actions no mode auto-approves](../permission-modes.md#actions-no-mode-auto-approves). This combination effectively allows the model to escape sandbox isolation silently.

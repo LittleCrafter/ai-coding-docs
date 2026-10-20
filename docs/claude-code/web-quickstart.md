@@ -7,6 +7,7 @@
 > Run Claude Code in the cloud from your browser or phone. Connect a GitHub repository, submit a task, and review the PR without local setup.
 
 > [!NOTE]
+>
 > Cloud sessions are available on Pro, Max, and Team plans, and for Enterprise users with premium seats or Chat + Claude Code seats.
 
 A cloud session runs Claude Code on cloud infrastructure instead of your machine, Anthropic-managed by default. This quickstart starts one from [claude.ai/code](https://claude.ai/code) in your browser. You can also start one from the Claude mobile app, the Desktop app, or your terminal with `claude --cloud`.
@@ -55,30 +56,33 @@ See the [terminal quickstart](./quickstart.md), [Desktop app](./desktop.md), or 
 Connecting GitHub is a one-time step. If you already use the GitHub CLI, you can [do this from your terminal](#connect-from-your-terminal) instead of the browser.
 
 > [!NOTE]
+>
 > On Team and Enterprise plans, the **Sign in with GitHub** step works only after an [Owner](./server-managed-settings.md#access-control) of your Claude organization turns on the GitHub connector at [**Organization settings > Connectors**](https://claude.ai/admin-settings/connectors). Until then, that step shows "GitHub access is required for Claude Code cloud sessions" instead of a sign-in button. After the connector is on, reload [claude.ai/code](https://claude.ai/code) and start again from the first step. A second toggle, [Quick setup](./claude-code-on-the-web.md#quick-setup-for-team-and-enterprise) at [**Organization settings > Claude Code**](https://claude.ai/admin-settings/claude-code), is optional: with it on, `/web-setup` works and onboarding creates the environment for members.
 
-1. **Visit claude.ai/code**
+**1. Visit claude.ai/code**
 
-   Go to [claude.ai/code](https://claude.ai/code) and sign in with your claude.ai account.
-2. **Sign in with GitHub**
+Go to [claude.ai/code](https://claude.ai/code) and sign in with your claude.ai account.
 
-   After you sign in, claude.ai/code prompts you to connect GitHub. Follow the prompt, and claude.ai/code sends you to GitHub's authorization page. Approve the authorization request, and GitHub returns you to claude.ai/code. Cloud sessions work with existing GitHub repositories. To start a new project, [create an empty repository on GitHub](https://github.com/new) first.
+**2. Sign in with GitHub**
 
-   With this connection, a session can clone any public repository, but can work in a private repository only when the Claude GitHub App is installed on it. [Install the Claude GitHub App](https://github.com/apps/claude/installations/new) on each GitHub account or organization whose private repositories you want to use. On a GitHub organization, an organization owner may need to approve the installation. Installing it also enables [Auto-fix](./claude-code-on-the-web.md#auto-fix-pull-requests), which lets Claude respond to CI failures and review comments on pull requests in those repositories.
+After you sign in, claude.ai/code prompts you to connect GitHub. Follow the prompt, and claude.ai/code sends you to GitHub's authorization page. Approve the authorization request, and GitHub returns you to claude.ai/code. Cloud sessions work with existing GitHub repositories. To start a new project, [create an empty repository on GitHub](https://github.com/new) first.
 
-   When you connect, Claude also links the GitHub accounts you own to your Claude organization, if they have the Claude GitHub App installed. On Team and Enterprise plans, admins see those accounts in the [connected GitHub accounts list](./admin-setup.md#connected-github-accounts).
+With this connection, a session can clone any public repository, but can work in a private repository only when the Claude GitHub App is installed on it. [Install the Claude GitHub App](https://github.com/apps/claude/installations/new) on each GitHub account or organization whose private repositories you want to use. On a GitHub organization, an organization owner may need to approve the installation. Installing it also enables [Auto-fix](./claude-code-on-the-web.md#auto-fix-pull-requests), which lets Claude respond to CI failures and review comments on pull requests in those repositories.
 
-   If onboarding prompts you to install the Claude GitHub App at this point and you'd rather do it later, click **Skip**.
-3. **Set up your Default environment**
+When you connect, Claude also links the GitHub accounts you own to your Claude organization, if they have the Claude GitHub App installed. On Team and Enterprise plans, admins see those accounts in the [connected GitHub accounts list](./admin-setup.md#connected-github-accounts).
 
-   A [cloud environment](./cloud-environments.md) is the saved configuration that controls what network access Claude has during sessions and what runs when a session starts. What happens after you connect GitHub depends on your plan:
+If onboarding prompts you to install the Claude GitHub App at this point and you'd rather do it later, click **Skip**.
 
-   * **Pro and Max**: onboarding creates an environment named **Default** for you.
-   * **Team and Enterprise**: onboarding shows a **Create your first cloud environment** form. Leave the prefilled name and network access unchanged and click **Create & finish** to create the **Default** environment. If an Owner has turned on [Quick setup](./claude-code-on-the-web.md#quick-setup-for-team-and-enterprise), onboarding creates **Default** for you instead.
+**3. Set up your Default environment**
 
-   **Default** uses [`Trusted` network access](./cloud-environments.md#access-levels): sessions reach [common package registries](./cloud-environments.md#default-allowed-domains) and other allowlisted domains, and nothing else through the session's network. See [Installed tools](./cloud-environments.md#installed-tools) for what's available without any configuration.
+A [cloud environment](./cloud-environments.md) is the saved configuration that controls what network access Claude has during sessions and what runs when a session starts. What happens after you connect GitHub depends on your plan:
 
-   For a first project, the **Default** environment works as is. To change its network access, add environment variables, or run a [setup script](./cloud-environments.md#setup-scripts) before sessions start, [edit it or create additional environments](./cloud-environments.md#configure-your-environment).
+* **Pro and Max**: onboarding creates an environment named **Default** for you.
+* **Team and Enterprise**: onboarding shows a **Create your first cloud environment** form. Leave the prefilled name and network access unchanged and click **Create & finish** to create the **Default** environment. If an Owner has turned on [Quick setup](./claude-code-on-the-web.md#quick-setup-for-team-and-enterprise), onboarding creates **Default** for you instead.
+
+**Default** uses [`Trusted` network access](./cloud-environments.md#access-levels): sessions reach [common package registries](./cloud-environments.md#default-allowed-domains) and other allowlisted domains, and nothing else through the session's network. See [Installed tools](./cloud-environments.md#installed-tools) for what's available without any configuration.
+
+For a first project, the **Default** environment works as is. To change its network access, add environment variables, or run a [setup script](./cloud-environments.md#setup-scripts) before sessions start, [edit it or create additional environments](./cloud-environments.md#configure-your-environment).
 
 ### Connect from your terminal
 
@@ -89,31 +93,32 @@ When you run `/web-setup`, Claude Code reads the token that `gh auth token` prin
 If you already connected GitHub in the browser, `/web-setup` warns you that continuing replaces that connection for your cloud sessions.
 
 > [!NOTE]
+>
 > Organizations with [Zero Data Retention](./zero-data-retention.md) enabled, or with the [HIPAA configuration](./hipaa-setup.md) applied, cannot use `/web-setup` or other cloud session features. Organizations that use [customer-managed encryption keys](https://platform.claude.com/docs/en/manage-claude/cmek) (CMEK) can't start cloud sessions either. If the GitHub CLI isn't installed or isn't authenticated, Claude Code opens the browser onboarding flow instead.
 
-1. **Authenticate with the GitHub CLI**
+**1. Authenticate with the GitHub CLI**
 
-   In your shell, authenticate the GitHub CLI if you haven't already:
+In your shell, authenticate the GitHub CLI if you haven't already:
 
-   ```bash theme={null}
-   gh auth login
-   ```
-2. **Sign in to Claude**
+```bash theme={null}
+gh auth login
+```
 
-   In the Claude Code CLI, run `/login` to sign in with your claude.ai account. Skip this step if you're already signed in with a claude.ai account. Authenticating with an API key doesn't count. To check, run `/status` and confirm the **Login method** row shows a claude.ai account.
-3. **Run /web-setup**
+**2. Sign in to Claude**
 
-   In the Claude Code CLI, run:
+In the Claude Code CLI, run `/login` to sign in with your claude.ai account. Skip this step if you're already signed in with a claude.ai account. Authenticating with an API key doesn't count. To check, run `/status` and confirm the **Login method** row shows a claude.ai account.
 
-   ```text theme={null}
-   /web-setup
-   ```
+**3. Run /web-setup**
 
-   Confirm the prompt to send your `gh` token to your Claude account. On success, Claude Code prints `Connected as <your-github-username>` and opens [claude.ai/code](https://claude.ai/code) in your browser. If you don't have a cloud environment yet, `/web-setup` creates one with Trusted network access and no setup script. You can [edit the environment or add variables](./cloud-environments.md#configure-your-environment) afterward. Once `/web-setup` completes, you can start cloud sessions from your terminal with [`--cloud`](./claude-code-on-the-web.md#from-terminal-to-cloud) or set up recurring tasks with [`/schedule`](./routines.md).
+In the Claude Code CLI, run:
 
-<h4 id="remove-the-web-setup-token">
-  Remove the `/web-setup` token
-</h4>
+```text theme={null}
+/web-setup
+```
+
+Confirm the prompt to send your `gh` token to your Claude account. On success, Claude Code prints `Connected as <your-github-username>` and opens [claude.ai/code](https://claude.ai/code) in your browser. If you don't have a cloud environment yet, `/web-setup` creates one with Trusted network access and no setup script. You can [edit the environment or add variables](./cloud-environments.md#configure-your-environment) afterward. Once `/web-setup` completes, you can start cloud sessions from your terminal with [`--cloud`](./claude-code-on-the-web.md#from-terminal-to-cloud) or set up recurring tasks with [`/schedule`](./routines.md).
+
+#### Remove the `/web-setup` token
 
 To remove the token from your Claude account, disconnect GitHub at [claude.ai/customize/connectors](https://claude.ai/customize/connectors). Disconnecting deletes the GitHub credentials your cloud sessions use, whether they came from the browser or from `/web-setup`, so cloud sessions lose GitHub access until you connect again. Your local `gh` stays signed in, and the token remains valid on GitHub.
 
@@ -123,29 +128,31 @@ To invalidate the token itself, revoke it on GitHub. If you signed in to `gh` th
 
 With GitHub connected and an environment created, you're ready to submit tasks.
 
-1. **Select a repository and branch**
+**1. Select a repository and branch**
 
-   From [claude.ai/code](https://claude.ai/code) or the Code tab in the Claude mobile app, click the repository selector below the input box and choose a repository for Claude to work in. You can add multiple repositories to work across them in one session.
+From [claude.ai/code](https://claude.ai/code) or the Code tab in the Claude mobile app, click the repository selector below the input box and choose a repository for Claude to work in. You can add multiple repositories to work across them in one session.
 
-   At claude.ai/code, to start Claude from a feature branch instead of the default, change the branch in the control after the repository selector.
-2. **Choose a permission mode**
+At claude.ai/code, to start Claude from a feature branch instead of the default, change the branch in the control after the repository selector.
 
-   The [permission mode control](./permission-modes.md#switch-permission-modes) shows the permission mode the session will run in:
+**2. Choose a permission mode**
 
-   * **Auto**: a classifier reviews Claude's actions instead of asking you. Appears when your organization allows auto mode and the selected model supports it
-   * **Accept edits**: Claude makes changes and pushes a branch without stopping for approval
-   * **Plan**: Claude proposes an approach and waits for you to approve it before editing files
+The [permission mode control](./permission-modes.md#switch-permission-modes) shows the permission mode the session will run in:
 
-   Cloud sessions don't offer Manual or Bypass permissions. See the [full list of permission modes](./permission-modes.md#available-modes) for what each one allows.
-3. **Describe the task and submit**
+* **Auto**: a classifier reviews Claude's actions instead of asking you. Appears when your organization allows auto mode and the selected model supports it
+* **Accept edits**: Claude makes changes and pushes a branch without stopping for approval
+* **Plan**: Claude proposes an approach and waits for you to approve it before editing files
 
-   Type a description of what you want and press Enter. Be specific:
+Cloud sessions don't offer Manual or Bypass permissions. See the [full list of permission modes](./permission-modes.md#available-modes) for what each one allows.
 
-   * Name the file or function: "Add a README with setup instructions" or "Fix the failing auth test in `tests/test_auth.py`" is better than "fix tests"
-   * Paste error output if you have it
-   * Describe the expected behavior, not just the symptom
+**3. Describe the task and submit**
 
-   Claude clones the repositories, runs your setup script if configured, and starts working. Each task gets its own session and its own branch, so you don't need to wait for one to finish before starting another.
+Type a description of what you want and press Enter. Be specific:
+
+* Name the file or function: "Add a README with setup instructions" or "Fix the failing auth test in `tests/test_auth.py`" is better than "fix tests"
+* Paste error output if you have it
+* Describe the expected behavior, not just the symptom
+
+Claude clones the repositories, runs your setup script if configured, and starts working. Each task gets its own session and its own branch, so you don't need to wait for one to finish before starting another.
 
 ## Pre-fill sessions
 
@@ -168,20 +175,23 @@ https://claude.ai/code?prompt=Fix%20the%20login%20bug&repositories=acme/webapp
 
 When Claude finishes, review the changes, leave feedback on specific lines, and keep going until the diff looks right.
 
-1. **Open the diff view**
+**1. Open the diff view**
 
-   A diff indicator shows lines added and removed across the session, for example `+42 -18`. Select it to open the diff view, with a file list on the left and changes on the right.
+A diff indicator shows lines added and removed across the session, for example `+42 -18`. Select it to open the diff view, with a file list on the left and changes on the right.
 
-   The diff compares the session's changes against its base branch by default. To compare against a different branch, select **Compare against** and pick one.
-2. **Leave inline comments**
+The diff compares the session's changes against its base branch by default. To compare against a different branch, select **Compare against** and pick one.
 
-   Select any line in the diff, type your feedback, and press Enter. Comments queue up until you send your next message, then they're bundled with it. Claude sees "at `src/auth.ts:47`, don't catch the error here" alongside your main instruction, so you don't have to describe where the problem is.
-3. **Create a pull request**
+**2. Leave inline comments**
 
-   When the diff looks right, select **Create PR** at the top of the diff view. You can open it as a full PR, a draft, or jump to GitHub's compose page with a generated title and description.
-4. **Keep iterating after the PR**
+Select any line in the diff, type your feedback, and press Enter. Comments queue up until you send your next message, then they're bundled with it. Claude sees "at `src/auth.ts:47`, don't catch the error here" alongside your main instruction, so you don't have to describe where the problem is.
 
-   The session stays live after the PR is created. Paste CI failure output or reviewer comments into the chat and ask Claude to address them. To have Claude monitor the PR automatically, see [Auto-fix pull requests](./claude-code-on-the-web.md#auto-fix-pull-requests).
+**3. Create a pull request**
+
+When the diff looks right, select **Create PR** at the top of the diff view. You can open it as a full PR, a draft, or jump to GitHub's compose page with a generated title and description.
+
+**4. Keep iterating after the PR**
+
+The session stays live after the PR is created. Paste CI failure output or reviewer comments into the chat and ask Claude to address them. To have Claude monitor the PR automatically, see [Auto-fix pull requests](./claude-code-on-the-web.md#auto-fix-pull-requests).
 
 ## Troubleshoot setup
 
@@ -207,9 +217,7 @@ If `/web-setup` responds with "Not signed in to Claude. Run /login first.", the 
 
 If `/web-setup` says your GitHub CLI token doesn't have the `workflow` scope, you can continue, but GitHub can reject some pushes made with that token, such as pushes that change GitHub Actions workflow files. To add the scope, run `gh auth refresh -s workflow` in your shell, then run `/web-setup` again.
 
-<h3 id="web-setup-shows-no-commands-match-or-unknown-command">
-  `/web-setup` shows "No commands match" or "Unknown command"
-</h3>
+### `/web-setup` shows "No commands match" or "Unknown command"
 
 `/web-setup` runs inside the Claude Code CLI, not your shell. Launch `claude` first, then type `/web-setup` at the prompt.
 

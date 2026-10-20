@@ -56,7 +56,7 @@ CLAUDE.md files can live in several locations, each with a different scope. The 
 
 | Scope | Location | Purpose | Use case examples | Shared with |
 | - | - | - | - | - |
-| **Managed policy** | • macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md`<br />• Linux and WSL: `/etc/claude-code/CLAUDE.md`<br />• Windows: `C:\Program Files\ClaudeCode\CLAUDE.md` | Organization-wide instructions managed by IT/DevOps | Company coding standards, security policies, compliance requirements | All users in organization |
+| **Managed policy** | • macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md` • Linux and WSL: `/etc/claude-code/CLAUDE.md` • Windows: `C:\Program Files\ClaudeCode\CLAUDE.md` | Organization-wide instructions managed by IT/DevOps | Company coding standards, security policies, compliance requirements | All users in organization |
 | **User instructions** | `~/.claude/CLAUDE.md` | Personal preferences for all projects | Code styling preferences, personal tooling shortcuts | Only you (all projects) |
 | **Project instructions** | `./CLAUDE.md` or `./.claude/CLAUDE.md`. See [AGENTS.md](#agents-md) for when `./AGENTS.md` loads instead of or alongside them | Team-shared instructions for the project | Project architecture, coding standards, common workflows | Team members via source control |
 | **Local instructions** | `./CLAUDE.local.md` | Personal project-specific preferences; add to `.gitignore` | Your sandbox URLs, preferred test data | Only you (current project) |
@@ -70,6 +70,7 @@ For large projects, you can break instructions into topic-specific files using [
 A project CLAUDE.md can be stored in either `./CLAUDE.md` or `./.claude/CLAUDE.md`. Create this file and add instructions that apply to anyone working on the project: build and test commands, coding standards, architectural decisions, naming conventions, and common workflows. These instructions are shared with your team through version control, so focus on project-level standards rather than personal preferences. To confirm the file loaded, run `/context` in a session and check the list under **Memory files**.
 
 > [!TIP]
+>
 > Run `/init` to generate a starting CLAUDE.md automatically. Claude analyzes your codebase and creates a file with build commands, test instructions, and project conventions it discovers. If a CLAUDE.md already exists, `/init` suggests improvements rather than overwriting it. Refine from there with instructions Claude wouldn't discover on its own.
 >
 > For an interactive multi-phase flow instead, set the `CLAUDE_CODE_NEW_INIT` environment variable to `1` before you run `/init`. Set it in your shell or in the `env` block of a settings file, as shown in [Set environment variables](./env-vars.md#set-environment-variables). With it set, `/init` asks which artifacts to set up: CLAUDE.md files, skills, and hooks. It then explores your codebase with a subagent, fills in gaps via follow-up questions, and presents a reviewable proposal before writing any files. The variable only changes how `/init` runs, so you can leave it set.
@@ -129,6 +130,7 @@ If you work across multiple git worktrees of the same repository, a gitignored `
 ```
 
 > [!WARNING]
+>
 > An import in a project-level memory file is external when its path resolves outside your working directory, like the home directory import above. The first time Claude Code encounters external imports in a project, it shows an approval dialog listing the files. If you decline, the imports stay disabled and the dialog doesn't appear again.
 >
 > Claude Code shows the dialog to protect you from files other people commit to a shared project. User-scope memory files, such as `~/.claude/CLAUDE.md` and `~/.claude/rules/`, are files you wrote yourself. Except in [Cowork](https://claude.com/product/cowork) sessions on your desktop, Claude Code loads their imports without the dialog and trusts them like the rest of your personal configuration.
@@ -166,6 +168,7 @@ This loads `CLAUDE.md`, `.claude/CLAUDE.md`, `.claude/rules/*.md`, and `CLAUDE.l
 For larger projects, you can organize instructions into multiple files using the `.claude/rules/` directory. This keeps instructions modular and easier for teams to maintain. Rules can also be [scoped to specific file paths](#path-specific-rules), so they only load into context when Claude works with matching files, reducing noise and saving context space.
 
 > [!NOTE]
+>
 > Rules load into context every session or when matching files are opened. For task-specific instructions that don't need to be in context all the time, use [skills](./skills.md) instead, which only load when you invoke them or when Claude determines they're relevant to your prompt.
 
 #### Set up rules
@@ -231,9 +234,7 @@ Claude Code uses any pattern that would exceed the budget unexpanded, and its li
 
 Glob syntax treats `[` as the start of a bracket expression such as `[abc]`. A pattern with a `[` that can't be read as a bracket expression, such as `photos [2024/**`, is invalid: it matches nothing, and the rule's other patterns keep working. To match a literal `[` in a file name, escape it as `photos \[2024/**`.
 
-<h4 id="rules-frontmatter-reference">
-  Rule frontmatter reference
-</h4>
+#### Rule frontmatter reference
 
 Configure a rule with YAML [frontmatter](./glossary.md#frontmatter) between `---` markers at the top of the file. `paths` is the only field Claude Code reads from a rule; any other field is ignored without an error. Claude Code removes the frontmatter before loading the rule into context.
 
@@ -280,14 +281,15 @@ For organizations deploying Claude Code across teams, you can centralize instruc
 
 Organizations can deploy a centrally managed CLAUDE.md that applies to all users on a machine. This file cannot be excluded by individual settings.
 
-1. **Create the file at the managed policy location**
+**1. Create the file at the managed policy location**
 
-   * macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md`
-   * Linux and WSL: `/etc/claude-code/CLAUDE.md`
-   * Windows: `C:\Program Files\ClaudeCode\CLAUDE.md`
-2. **Deploy with your configuration management system**
+* macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md`
+* Linux and WSL: `/etc/claude-code/CLAUDE.md`
+* Windows: `C:\Program Files\ClaudeCode\CLAUDE.md`
 
-   Use MDM, Group Policy, Ansible, or similar tools to distribute the file across developer machines. See [managed settings](./managed-settings.md) for other organization-wide configuration options.
+**2. Deploy with your configuration management system**
+
+Use MDM, Group Policy, Ansible, or similar tools to distribute the file across developer machines. See [managed settings](./managed-settings.md) for other organization-wide configuration options.
 
 The `claudeMd` key lets you put managed CLAUDE.md content directly inside `managed-settings.json` instead of deploying a separate file.
 
@@ -353,6 +355,7 @@ Claude Code can read [`AGENTS.md`](./glossary.md#agents-md) as your project inst
 To change the default, for example to have Claude always read both files, read only `CLAUDE.md`, or read only your organization's managed instructions, [change the **Project instructions** setting](#choose-which-instruction-files-load).
 
 > [!NOTE]
+>
 > Reading `AGENTS.md` directly requires Claude Code v2.1.277 or later. In some sessions Claude [can't read `AGENTS.md`](#when-agents-md-support-is-unavailable), so [import it from a `CLAUDE.md`](#share-one-file-with-other-coding-tools) there instead.
 
 ### When Claude Code reads AGENTS.md
@@ -370,6 +373,7 @@ When none count, here's what Claude reads and how you can tell:
 * **Not read**: `AGENTS.local.md`, `AGENTS.override.md`, or anything under a `.agents/` directory
 
 > [!NOTE]
+>
 > Because `CLAUDE.local.md` counts, adding one to keep your own uncommitted instructions in a project that relies on `AGENTS.md` stops Claude from reading `AGENTS.md` for you. To keep your `CLAUDE.local.md` and still have Claude read `AGENTS.md`, set **Project instructions** to [`claude-md-and-agents-md`](#choose-which-instruction-files-load).
 
 ### Choose which instruction files load
@@ -584,6 +588,7 @@ If the instruction is something that must run at a specific point, such as befor
 For instructions you want at the system prompt level, use [`--append-system-prompt`](./cli-reference.md#system-prompt-flags). You pass it at launch, so it's better suited to scripts and automation than interactive use. For how it behaves when you resume a conversation, see [System prompt flags in resumed conversations](./cli-reference.md#system-prompt-flags-in-resumed-conversations).
 
 > [!TIP]
+>
 > Use the [`InstructionsLoaded` hook](./hooks.md#instructionsloaded) to log which `CLAUDE.md` and rules files are loaded, when they load, and why. This is useful for debugging path-specific rules or lazy-loaded files in subdirectories.
 
 ### My AGENTS.md isn't loading

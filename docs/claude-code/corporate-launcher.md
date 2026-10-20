@@ -13,6 +13,7 @@ Some organizations require every process on a workstation to start through a man
 A launcher that wraps the `claude` command on your `PATH` can't reach the background service or the sessions it hosts, because they start from the binary's direct path without looking up `claude`.
 
 > [!NOTE]
+>
 > `CLAUDE_CODE_PROCESS_WRAPPER` requires Claude Code v2.1.208 or later. Earlier versions ignore the variable and start every process unwrapped. The equivalent [`processWrapper` setting](./settings-reference.md#processwrapper) requires v2.1.210 or later. Earlier versions ignore it as an unknown key, apply no launcher, and report no error.
 >
 > After deploying either form, use the [Verify step](#set-up-the-launcher) to confirm the running version applies it.
@@ -45,58 +46,62 @@ With a launcher configured, `ps` and Activity Monitor no longer show Claude Code
 
 ## Set up the launcher
 
-1. **Write the launcher script**
+**1. Write the launcher script**
 
-   Create an executable script at an absolute path, such as `/opt/corp/launcher`. Claude Code runs it with the full Claude Code command as its arguments, and the script must end by calling `exec "$@"` so it replaces itself with Claude Code:
+Create an executable script at an absolute path, such as `/opt/corp/launcher`. Claude Code runs it with the full Claude Code command as its arguments, and the script must end by calling `exec "$@"` so it replaces itself with Claude Code:
 
-   ```bash theme={null}
-   #!/bin/sh
-   # Your organization's setup: enter the sandbox, apply
-   # network controls, or inject credentials.
-   exec "$@"
-   ```
+```bash theme={null}
+#!/bin/sh
+# Your organization's setup: enter the sandbox, apply
+# network controls, or inject credentials.
+exec "$@"
+```
 
-   Make it executable with `chmod +x`. The setup portion is whatever your launcher must do before Claude Code runs; [the launcher contract](#the-launcher-contract) below lists the rules the script has to follow.
+Make it executable with `chmod +x`. The setup portion is whatever your launcher must do before Claude Code runs; [the launcher contract](#the-launcher-contract) below lists the rules the script has to follow.
 
-   > [!NOTE]
-   > If you previously replaced the `~/.local/bin/claude` symlink with your launcher, restore the original symlink in the same change. A replaced symlink makes the first wrapped session start the background service through both launchers at once, and it puts the installation into an externally managed state: `/doctor` reports it, auto-update leaves the file in place, and cleanup of old versions stays disabled until the installer manages that path again.
-2. **Set CLAUDE_CODE_PROCESS_WRAPPER in settings**
+> [!NOTE]
+>
+> If you previously replaced the `~/.local/bin/claude` symlink with your launcher, restore the original symlink in the same change. A replaced symlink makes the first wrapped session start the background service through both launchers at once, and it puts the installation into an externally managed state: `/doctor` reports it, auto-update leaves the file in place, and cleanup of old versions stays disabled until the installer manages that path again.
 
-   Set the variable in the `env` block of a settings file so the detached background service inherits it. A shell `export` isn't enough: the background service starts on demand, outlives your shell, and never re-reads shell profiles.
+**2. Set CLAUDE\_CODE\_PROCESS\_WRAPPER in settings**
 
-   For one machine, add it to `~/.claude/settings.json`. To deploy it to every machine in your organization, put the same block in [managed settings](./managed-settings.md):
+Set the variable in the `env` block of a settings file so the detached background service inherits it. A shell `export` isn't enough: the background service starts on demand, outlives your shell, and never re-reads shell profiles.
 
-   ```json theme={null}
-   {
-     "env": {
-       "CLAUDE_CODE_PROCESS_WRAPPER": "/opt/corp/launcher"
-     }
-   }
-   ```
+For one machine, add it to `~/.claude/settings.json`. To deploy it to every machine in your organization, put the same block in [managed settings](./managed-settings.md):
 
-   When more than one source sets the variable, the managed settings value overrides both `~/.claude/settings.json` and a value exported in the shell, so users can't point self-spawns at a different launcher.
+```json theme={null}
+{
+  "env": {
+    "CLAUDE_CODE_PROCESS_WRAPPER": "/opt/corp/launcher"
+  }
+}
+```
 
-   The [`processWrapper` setting](./settings-reference.md#processwrapper) carries the same value as a named, top-level settings key. Set it when your organization pushes settings as individual keys rather than an `env` block. The `processWrapper` setting requires Claude Code v2.1.210 or later. The following settings file sets the same launcher through the key:
+When more than one source sets the variable, the managed settings value overrides both `~/.claude/settings.json` and a value exported in the shell, so users can't point self-spawns at a different launcher.
 
-   ```json theme={null}
-   {
-     "processWrapper": "/opt/corp/launcher"
-   }
-   ```
+The [`processWrapper` setting](./settings-reference.md#processwrapper) carries the same value as a named, top-level settings key. Set it when your organization pushes settings as individual keys rather than an `env` block. The `processWrapper` setting requires Claude Code v2.1.210 or later. The following settings file sets the same launcher through the key:
 
-   `CLAUDE_CODE_PROCESS_WRAPPER` takes precedence when both are set.
+```json theme={null}
+{
+  "processWrapper": "/opt/corp/launcher"
+}
+```
 
-   Because `processWrapper` is a named setting, an organization that delivers it through [remote managed settings](./managed-settings.md#delivery-mechanisms) sees it listed on the [security approval dialog](./server-managed-settings.md#security-approval-dialogs) alongside the other settings that run administrator-supplied executables.
+`CLAUDE_CODE_PROCESS_WRAPPER` takes precedence when both are set.
 
-   Project and local settings can't configure the launcher. A file committed to a repository must not be able to put a binary in front of every Claude Code process on the machine, so Claude Code ignores `CLAUDE_CODE_PROCESS_WRAPPER` in `.claude/settings.json` or `.claude/settings.local.json` with a warning in the [debug log](./troubleshooting.md), and never reads the `processWrapper` key from those files.
-3. **Restart the background service and your sessions**
+Because `processWrapper` is a named setting, an organization that delivers it through [remote managed settings](./managed-settings.md#delivery-mechanisms) sees it listed on the [security approval dialog](./server-managed-settings.md#security-approval-dialogs) alongside the other settings that run administrator-supplied executables.
 
-   A running background service and any open `claude` sessions read the variable once at startup, so they keep launching unwrapped processes until restarted. Run `claude daemon stop --any` to stop the on-demand service. The next command that needs it, such as `claude agents`, starts a wrapped one. Then restart your open `claude` sessions.
+Project and local settings can't configure the launcher. A file committed to a repository must not be able to put a binary in front of every Claude Code process on the machine, so Claude Code ignores `CLAUDE_CODE_PROCESS_WRAPPER` in `.claude/settings.json` or `.claude/settings.local.json` with a warning in the [debug log](./troubleshooting.md), and never reads the `processWrapper` key from those files.
 
-   On machines you can't restart yourself, the first session started after the settings push retires a leftover unwrapped on-demand service automatically. A machine where no new session starts keeps its unwrapped background service until one does.
-4. **Verify**
+**3. Restart the background service and your sessions**
 
-   Run `/status` in a session: the Self-exec entry shows the resolved launch command and warns when the running background service doesn't match it. `claude daemon status` prints the same information from the shell, including after you unset the variable, when `/status` no longer shows the entry.
+A running background service and any open `claude` sessions read the variable once at startup, so they keep launching unwrapped processes until restarted. Run `claude daemon stop --any` to stop the on-demand service. The next command that needs it, such as `claude agents`, starts a wrapped one. Then restart your open `claude` sessions.
+
+On machines you can't restart yourself, the first session started after the settings push retires a leftover unwrapped on-demand service automatically. A machine where no new session starts keeps its unwrapped background service until one does.
+
+**4. Verify**
+
+Run `/status` in a session: the Self-exec entry shows the resolved launch command and warns when the running background service doesn't match it. `claude daemon status` prints the same information from the shell, including after you unset the variable, when `/status` no longer shows the entry.
 
 ## The launcher contract
 

@@ -24,6 +24,7 @@ When using the Claude Agent SDK, skills are:
 Unlike subagents, which you can define in the [`agents` option](./subagents.md#programmatic-definition-recommended), you create skills as files on disk. The SDK doesn't provide a programmatic API for registering them.
 
 > [!NOTE]
+>
 > Skills are discovered through the filesystem setting sources. With default `query()` options, the SDK loads user and project sources, so skills in `~/.claude/skills/`, `<cwd>/.claude/skills/`, and `.claude/skills/` in any parent directory of `<cwd>` up to the repository root are available. The project source also covers `<dir>/.claude/skills/` in each directory you pass through `additionalDirectories` (TypeScript) or `add_dirs` (Python), because the SDK passes those directories to Claude Code as [`--add-dir`](../skills.md#skills-from-additional-directories). If you set `settingSources` explicitly, include `'project'` to keep project and added-directory skills and `'user'` to keep your personal skills, or use the [`plugins` option](./plugins.md) to load skills from a specific path.
 
 ## Use skills with the Agent SDK
@@ -163,6 +164,7 @@ A `/<name>` that matches neither a command in the session nor a built-in Claude 
 A `/<name>` that matches a built-in Claude Code command that isn't available in the session, such as `/theme`, returns `/theme isn't available in this environment.` as the result without a model turn.
 
 > [!NOTE]
+>
 > A command can hit the `maxTurns` / `max_turns` limit like any other prompt, ending the query with an error result instead of `success`. For the error-result contract, see [Handle the result](./agent-loop.md#handle-the-result). If your command might hit the limit, wrap the loop in a `try`/`catch` in TypeScript or `try`/`except` in Python, as shown in [Single Message Input](./streaming-vs-single-mode.md#single-message-input), or set `maxTurns` high enough for the work to complete.
 
 ### Compact history with `/compact`
@@ -243,6 +245,7 @@ asyncio.run(main())
 ```
 
 > [!NOTE]
+>
 > A `compact_boundary` message only arrives when compaction ran. When a continued session has messages but nothing `/compact` can summarize, the run still ends with a `success` result rather than an error, and no `compact_boundary` message arrives. The result text then carries the reason, for example `Not enough messages to compact.` when the session holds a prompt but no reply from Claude yet. A fresh one-shot `query()` call starts with empty context, so use this pattern in a session with prior turns, for example in [streaming input mode](./streaming-vs-single-mode.md) or when resuming a session.
 
 ### Reset context with `/clear`
@@ -331,11 +334,13 @@ A successful run ends with a `success` result whose text carries the scan findin
 The skill's name also appears in the init message's `slash_commands` array.
 
 > [!NOTE]
+>
 > Claude Code includes bundled `code-review` and `verify` skills. If you name a `.claude/commands/` file after one of them, for example `.claude/commands/code-review.md`, the file's command shadows the bundled skill and `slash_commands` lists the name once.
 
 ## Pre-approve tools for skills
 
 > [!NOTE]
+>
 > In SDK sessions, you can pre-approve tools for a project or personal skill with the skill's [`allowed-tools`](../skills.md#pre-approve-tools-for-a-skill) frontmatter or with the `allowedTools` option (`allowed_tools` in Python) in your query configuration. If your organization sets [`allowManagedPermissionRulesOnly`](../settings-reference.md#allowmanagedpermissionrulesonly) in managed settings, Claude Code ignores both. Skills [synced from claude.ai](../skills.md#how-claude-code-handles-the-frontmatter-of-a-synced-skill) follow their own frontmatter rules.
 
 Skills run with the session's tools. The example below pre-approves `Read`, `Grep`, and `Glob` with `allowedTools` (`allowed_tools` in Python), so Claude can inspect files while running the [security-check skill](#create-and-dispatch-your-first-skill) without stopping for approval:

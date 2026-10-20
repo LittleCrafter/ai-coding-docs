@@ -67,6 +67,7 @@ Plugin paths can be:
 * **Absolute paths**: full file system paths (for example, `"/home/user/plugins/my-plugin"`)
 
 > [!NOTE]
+>
 > The path should point to the plugin's root directory: the parent of `skills/`, `agents/`, `hooks/`, `commands/`, or `.claude-plugin/`.
 
 ## Verifying plugin installation
@@ -172,6 +173,7 @@ asyncio.run(main())
 ```
 
 > [!NOTE]
+>
 > If you installed a plugin via the CLI (for example, `/plugin install my-plugin@marketplace`), you can still use it in the SDK by providing its installation path. Check `~/.claude/plugins/` for CLI-installed plugins.
 
 ## Complete example
@@ -275,6 +277,7 @@ my-plugin/
 ```
 
 > [!NOTE]
+>
 > The `commands/` directory holds skills as flat Markdown files. Use `skills/` for new plugins. Claude Code supports both locations.
 
 ## Multiple plugin sources
@@ -295,6 +298,7 @@ plugins: [
 ```
 
 > [!NOTE]
+>
 > The SDK doesn't expand tilde paths like `~/plugins`. If a plugin path doesn't exist, the SDK skips that plugin and the session continues, so check the `plugins` list in the init message to confirm each plugin loaded.
 
 ## Troubleshooting

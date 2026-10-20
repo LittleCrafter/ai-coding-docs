@@ -90,9 +90,7 @@ The same file with a comment above each key. Read it here; copy from the other t
 }
 ```
 
-<h2 id="a-teams-shared-settings">
-  A team's shared settings
-</h2>
+## A team's shared settings
 
 One team's shared settings, committed to the repository so everyone who clones it gets the same permissions, hooks, and plugin marketplace. Save a file like this at `.claude/settings.json` at the top of the repository. What to know before you commit one:
 
@@ -232,9 +230,7 @@ The same file with a comment above each key. Read it here; copy from the other t
 }
 ```
 
-<h2 id="an-organizations-managed-settings">
-  An organization's managed settings
-</h2>
+## An organization's managed settings
 
 A `managed-settings.json` file that shows the shape of the managed keys, with one plausible value for each. It isn't a recommended policy: pick the keys that match your own requirements and set your own values. The example sets these keys:
 

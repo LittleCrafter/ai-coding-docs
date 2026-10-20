@@ -22,8 +22,6 @@ Migrating from the OpenAI Agents SDK instead? The [OpenAI Agents SDK migration r
 
 ## Migration Steps
 
-<a id="for-typescript/javascript-projects"></a>
-
 ### Migrate a TypeScript or JavaScript project
 
 **1. Uninstall the old package:**
@@ -57,8 +55,6 @@ If `@anthropic-ai/claude-code` is still listed in your `package.json`, replace i
 **5. Review [breaking changes](#breaking-changes)**
 
 Make any code changes needed to complete the migration.
-
-<a id="for-python-projects"></a>
 
 ### Migrate a Python project
 
@@ -97,6 +93,7 @@ Make any code changes needed to complete the migration.
 ## Breaking changes
 
 > [!WARNING]
+>
 > To improve isolation and explicit configuration, Claude Agent SDK v0.1.0 introduces breaking changes for users migrating from Claude Code SDK.
 
 ### Python: ClaudeCodeOptions renamed to ClaudeAgentOptions
@@ -189,6 +186,7 @@ To run isolated from filesystem settings, pass `settingSources: []`, or `setting
 Isolation is especially important for CI/CD pipelines, deployed applications, test environments, and multi-tenant systems where local customizations should not leak in.
 
 > [!NOTE]
+>
 > Python SDK 0.1.59 and earlier treated an empty list the same as omitting the option, so upgrade before relying on `setting_sources=[]`. See [What settingSources does not control](./claude-code-features.md#what-settingsources-does-not-control) for inputs that are read even when `settingSources` is `[]`.
 
 ## Next Steps

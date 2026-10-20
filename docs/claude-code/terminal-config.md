@@ -82,12 +82,13 @@ By default Claude Code sends a desktop notification only in Ghostty, Kitty, and 
 
 The desktop notification reaches your local machine over SSH, so a remote session can still alert you. Ghostty and Kitty forward it to your OS notification center without further setup. iTerm2 requires you to enable forwarding:
 
-1. **Open iTerm2 notification settings**
+**1. Open iTerm2 notification settings**
 
-   Go to Settings → Profiles → Terminal.
-2. **Enable alerts**
+Go to Settings → Profiles → Terminal.
 
-   Check "Notification Center Alerts", then click "Filter Alerts" and enable "Send escape sequence-generated alerts".
+**2. Enable alerts**
+
+Check "Notification Center Alerts", then click "Filter Alerts" and enable "Send escape sequence-generated alerts".
 
 If notifications still do not appear, confirm that your terminal application has notification permission in your OS settings, and if you are running inside tmux, [enable passthrough](#configure-tmux).
 
@@ -176,115 +177,115 @@ Claude Code watches `~/.claude/themes/` and reloads when a file is added or chan
 
 The reference below covers the tokens you can set in `overrides`. The interactive editor in `/theme` shows the same tokens with a live preview, plus a few single-purpose accents such as onboarding screen colors that are omitted here.
 
-**Color token reference**
-
-The following example combines tokens from several of the groups below: the brand accent, the plan mode border, the diff backgrounds, and the message background.
-
-```json ~/.claude/themes/midnight.json theme={null}
-{
-  "name": "Midnight",
-  "base": "dark",
-  "overrides": {
-    "claude": "#a78bfa",
-    "planMode": "#38bdf8",
-    "diffAdded": "#14532d",
-    "diffRemoved": "#7f1d1d",
-    "userMessageBackground": "#1e1b4b"
-  }
-}
-```
-
-#### Text and accent colors
-
-Control the primary brand accent and the foreground text shades used throughout the interface.
-
-| Token | Controls |
-| :- | :- |
-| `claude` | Primary brand accent, used for the spinner and assistant label |
-| `text` | Default foreground text |
-| `inverseText` | Text drawn on top of a colored background, such as status badges |
-| `inactive` | Secondary text such as hints, timestamps, and disabled items |
-| `subtle` | Faint borders and de-emphasized secondary text |
-| `suggestion` | Autocomplete suggestions and selection highlight in pickers |
-| `permission` | Dialog borders, including permission prompts and pickers |
-| `remember` | Memory and `CLAUDE.md` indicators |
-
-#### Status colors
-
-Signal success, failure, and warning states across messages and indicators.
-
-| Token | Controls |
-| :- | :- |
-| `success` | Success messages and passing checks |
-| `error` | Error messages and failures |
-| `warning` | Warnings, caution messages, and the auto mode indicator |
-| `merged` | Merged pull request status |
-
-#### Input box and mode indicators
-
-Set the input box border color and the accent shown while a permission mode or indicator is active.
-
-| Token | Controls |
-| :- | :- |
-| `promptBorder` | Input box border |
-| `planMode` | Plan mode accent, plan messages, and plan-mode dialogs |
-| `autoAccept` | Accept-edits mode accent |
-| `bashBorder` | Input box border when entering a `!` shell command |
-| `ide` | IDE connection indicator |
-| `fastMode` | Fast mode indicator |
-| `effortUltra` | The `ultracode` tag on the input box border while [ultracode](./model-config.md#adjust-effort-level) is on. Your override of this color takes effect on Claude Code v2.1.239 or later |
-
-#### Diff rendering
-
-Color added and removed code in file edits and reviews.
-
-| Token | Controls |
-| :- | :- |
-| `diffAdded` | Background of added lines |
-| `diffRemoved` | Background of removed lines |
-| `diffAddedDimmed` | Background of added lines in the dimmed diff shown after you reject an edit |
-| `diffRemovedDimmed` | Background of removed lines in the dimmed diff shown after you reject an edit |
-| `diffAddedWord` | Word-level highlight within an added line |
-| `diffRemovedWord` | Word-level highlight within a removed line |
-
-#### Fullscreen mode
-
-Claude Code uses `userMessageBackgroundHover`, `selectionBg`, and `composerSidebarBackground` only in [fullscreen rendering mode](./fullscreen.md). It paints `userMessageBackground`, `bashMessageBackgroundColor`, and `memoryBackgroundColor` in both the default and fullscreen renderers.
-
-| Token | Controls |
-| :- | :- |
-| `userMessageBackground` | Background behind your messages in the transcript |
-| `userMessageBackgroundHover` | Background behind a message while hovered or expanded |
-| `bashMessageBackgroundColor` | Background behind `!` shell command entries in the transcript |
-| `memoryBackgroundColor` | Background behind `#` memory entries in the transcript |
-| `selectionBg` | Background of text selected with the mouse |
-| `composerSidebarBackground` | Background of the panel beside the conversation, such as the [diff panel](./fullscreen.md#watch-your-changes-in-the-diff-panel) or a [mod's pane](./plugins/mods/interface.md) |
-
-#### Usage meter and speaker labels
-
-Adjust the bar shown in the `/usage` view and the labels that distinguish your messages from Claude's.
-
-| Token | Controls |
-| :- | :- |
-| `rate_limit_fill` | Filled portion of the usage meter |
-| `rate_limit_empty` | Unfilled portion of the usage meter |
-| `briefLabelYou` | Color of the `You` label on your messages |
-| `briefLabelClaude` | Color of the `Claude` label on assistant messages |
-
-#### Shimmer variants and subagent colors
-
-Several tokens have a paired shimmer variant that supplies the lighter color used in the spinner's animated gradient. Override the shimmer alongside its base token if the animation looks mismatched.
-
-* `claude` and `claudeShimmer`
-* `warning` and `warningShimmer`
-* `permission` and `permissionShimmer`
-* `promptBorder` and `promptBorderShimmer`
-* `inactive` and `inactiveShimmer`
-* `fastMode` and `fastModeShimmer`
-
-Each [subagent](./sub-agents.md) and parallel task is shown in one of eight named colors so you can tell them apart in the transcript. The token names follow the pattern `<color>_FOR_SUBAGENTS_ONLY`, where `<color>` is `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, or `cyan`. Override these to change what each named color looks like. For example, a subagent with `color: blue` in its definition is drawn using the `blue_FOR_SUBAGENTS_ONLY` value.
-
-Claude Code renders the [`ultrathink`](./model-config.md#use-ultrathink-for-one-off-deep-reasoning) keyword in the prompt input with a seven-color rainbow gradient. The token names follow the pattern `rainbow_<color>` and `rainbow_<color>_shimmer`, where `<color>` is `red`, `orange`, `yellow`, `green`, `blue`, `indigo`, or `violet`.
+> **Color token reference**
+>
+> The following example combines tokens from several of the groups below: the brand accent, the plan mode border, the diff backgrounds, and the message background.
+>
+> ```json ~/.claude/themes/midnight.json theme={null}
+> {
+>   "name": "Midnight",
+>   "base": "dark",
+>   "overrides": {
+>     "claude": "#a78bfa",
+>     "planMode": "#38bdf8",
+>     "diffAdded": "#14532d",
+>     "diffRemoved": "#7f1d1d",
+>     "userMessageBackground": "#1e1b4b"
+>   }
+> }
+> ```
+>
+> #### Text and accent colors
+>
+> Control the primary brand accent and the foreground text shades used throughout the interface.
+>
+> | Token | Controls |
+> | :- | :- |
+> | `claude` | Primary brand accent, used for the spinner and assistant label |
+> | `text` | Default foreground text |
+> | `inverseText` | Text drawn on top of a colored background, such as status badges |
+> | `inactive` | Secondary text such as hints, timestamps, and disabled items |
+> | `subtle` | Faint borders and de-emphasized secondary text |
+> | `suggestion` | Autocomplete suggestions and selection highlight in pickers |
+> | `permission` | Dialog borders, including permission prompts and pickers |
+> | `remember` | Memory and `CLAUDE.md` indicators |
+>
+> #### Status colors
+>
+> Signal success, failure, and warning states across messages and indicators.
+>
+> | Token | Controls |
+> | :- | :- |
+> | `success` | Success messages and passing checks |
+> | `error` | Error messages and failures |
+> | `warning` | Warnings, caution messages, and the auto mode indicator |
+> | `merged` | Merged pull request status |
+>
+> #### Input box and mode indicators
+>
+> Set the input box border color and the accent shown while a permission mode or indicator is active.
+>
+> | Token | Controls |
+> | :- | :- |
+> | `promptBorder` | Input box border |
+> | `planMode` | Plan mode accent, plan messages, and plan-mode dialogs |
+> | `autoAccept` | Accept-edits mode accent |
+> | `bashBorder` | Input box border when entering a `!` shell command |
+> | `ide` | IDE connection indicator |
+> | `fastMode` | Fast mode indicator |
+> | `effortUltra` | The `ultracode` tag on the input box border while [ultracode](./model-config.md#adjust-effort-level) is on. Your override of this color takes effect on Claude Code v2.1.239 or later |
+>
+> #### Diff rendering
+>
+> Color added and removed code in file edits and reviews.
+>
+> | Token | Controls |
+> | :- | :- |
+> | `diffAdded` | Background of added lines |
+> | `diffRemoved` | Background of removed lines |
+> | `diffAddedDimmed` | Background of added lines in the dimmed diff shown after you reject an edit |
+> | `diffRemovedDimmed` | Background of removed lines in the dimmed diff shown after you reject an edit |
+> | `diffAddedWord` | Word-level highlight within an added line |
+> | `diffRemovedWord` | Word-level highlight within a removed line |
+>
+> #### Fullscreen mode
+>
+> Claude Code uses `userMessageBackgroundHover`, `selectionBg`, and `composerSidebarBackground` only in [fullscreen rendering mode](./fullscreen.md). It paints `userMessageBackground`, `bashMessageBackgroundColor`, and `memoryBackgroundColor` in both the default and fullscreen renderers.
+>
+> | Token | Controls |
+> | :- | :- |
+> | `userMessageBackground` | Background behind your messages in the transcript |
+> | `userMessageBackgroundHover` | Background behind a message while hovered or expanded |
+> | `bashMessageBackgroundColor` | Background behind `!` shell command entries in the transcript |
+> | `memoryBackgroundColor` | Background behind `#` memory entries in the transcript |
+> | `selectionBg` | Background of text selected with the mouse |
+> | `composerSidebarBackground` | Background of the panel beside the conversation, such as the [diff panel](./fullscreen.md#watch-your-changes-in-the-diff-panel) or a [mod's pane](./plugins/mods/interface.md) |
+>
+> #### Usage meter and speaker labels
+>
+> Adjust the bar shown in the `/usage` view and the labels that distinguish your messages from Claude's.
+>
+> | Token | Controls |
+> | :- | :- |
+> | `rate_limit_fill` | Filled portion of the usage meter |
+> | `rate_limit_empty` | Unfilled portion of the usage meter |
+> | `briefLabelYou` | Color of the `You` label on your messages |
+> | `briefLabelClaude` | Color of the `Claude` label on assistant messages |
+>
+> #### Shimmer variants and subagent colors
+>
+> Several tokens have a paired shimmer variant that supplies the lighter color used in the spinner's animated gradient. Override the shimmer alongside its base token if the animation looks mismatched.
+>
+> * `claude` and `claudeShimmer`
+> * `warning` and `warningShimmer`
+> * `permission` and `permissionShimmer`
+> * `promptBorder` and `promptBorderShimmer`
+> * `inactive` and `inactiveShimmer`
+> * `fastMode` and `fastModeShimmer`
+>
+> Each [subagent](./sub-agents.md) and parallel task is shown in one of eight named colors so you can tell them apart in the transcript. The token names follow the pattern `<color>_FOR_SUBAGENTS_ONLY`, where `<color>` is `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, or `cyan`. Override these to change what each named color looks like. For example, a subagent with `color: blue` in its definition is drawn using the `blue_FOR_SUBAGENTS_ONLY` value.
+>
+> Claude Code renders the [`ultrathink`](./model-config.md#use-ultrathink-for-one-off-deep-reasoning) keyword in the prompt input with a seven-color rainbow gradient. The token names follow the pattern `rainbow_<color>` and `rainbow_<color>_shimmer`, where `<color>` is `red`, `orange`, `yellow`, `green`, `blue`, `indigo`, or `violet`.
 
 ## Switch to fullscreen rendering
 
