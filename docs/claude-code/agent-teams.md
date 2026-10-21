@@ -34,7 +34,7 @@ Both agent teams and [subagents](./sub-agents.md) let you parallelize work, but 
 | | Subagents | Agent teams |
 | :- | :- | :- |
 | **Context** | Own context window; results return to the caller | Own context window; fully independent |
-| **Communication** | Return a result to the caller. Subagents that Claude named when it spawned them can also [message each other](./sub-agents.md#what-loads-at-startup) | Teammates message each other directly |
+| **Communication** | Return a result to the caller. Subagents that Claude [named](./sub-agents.md#subagent-names) when it spawned them can also [message each other](./sub-agents.md#what-loads-at-startup) | Teammates message each other directly |
 | **Coordination** | Main agent manages all work | Self-coordination through messages, plus a shared task list for [agents that have the Task tools](./tools-reference.md#task-tool-availability) |
 | **Best for** | Focused tasks where only the result matters | Complex work requiring discussion and collaboration |
 | **Token cost** | Lower: results summarized back to main context | Higher: each teammate is a separate Claude instance |
