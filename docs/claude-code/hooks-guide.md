@@ -632,7 +632,7 @@ On `PreToolUse`, you can also return `"ask"` to show the user the normal permiss
 
 For what `"allow"` does in plan mode, see [Hook approvals in plan mode](./permissions.md#hook-approvals-in-plan-mode).
 
-A fourth value, `"defer"`, is available in [non-interactive mode](./headless.md) with the `-p` flag. It exits the process with the tool call preserved so an Agent SDK wrapper can collect input and resume. See [Defer a tool call for later](./hooks.md#defer-a-tool-call-for-later) in the reference.
+A fourth value, `"defer"`, is available in [non-interactive mode](./headless.md) with the `-p` flag. Returning it ends the turn with the tool call preserved, so an Agent SDK wrapper can collect input and resume. See [Defer a tool call for later](./hooks.md#defer-a-tool-call-for-later) in the reference.
 
 A `PreModelSwitch` hook returns the same `permissionDecision` field: `"allow"` lets a model switch proceed, and `"deny"` cancels it. `"ask"` has you confirm the switch when you run `/model` in an interactive session; everywhere else, Claude Code treats `"ask"` as a refusal. See [PreModelSwitch decision control](./hooks.md#premodelswitch-decision-control).
 
