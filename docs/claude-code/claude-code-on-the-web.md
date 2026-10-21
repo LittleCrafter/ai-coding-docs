@@ -264,7 +264,7 @@ Cloud sessions support [built-in commands](./commands.md) that produce text outp
 
 * **`/model`, `/effort`, `/color`, and `/rename`**: pass the value as an argument, for example `/model sonnet`, instead of opening the terminal picker or slider. The argument forms follow each command's [availability notes](./commands.md#all-commands).
 * **`/fast`**: toggles [fast mode](./fast-mode.md#use-fast-mode-in-cloud-sessions) for the session when fast mode is [available on your account](./fast-mode.md#requirements). Requires Claude Code v2.1.271 or later in the session's environment.
-* **`/config`**: in your browser at claude.ai/code, opens the Claude Code section of your settings instead of setting a value, and text after the command, including `key=value`, is ignored. To change a setting for a cloud session, set an [environment variable](./cloud-environments.md#set-environment-variables) on the environment, or in a session with one repository, commit the key to that repository's `.claude/settings.json`. [Settings in cloud sessions](./settings.md#settings-in-cloud-sessions) lists what each session reads.
+* **`/config`**: in your browser at claude.ai/code, opens the Claude Code section of your settings instead of setting a value, and text after the command, including `key=value`, is ignored. To change a setting for a cloud session, set an [environment variable](./cloud-environments.md#set-environment-variables) on the environment. In a session with one repository outside a [project](./claude-projects.md), commit the key to that repository's `.claude/settings.json` instead. [Settings in cloud sessions](./settings.md#settings-in-cloud-sessions) lists what each session reads.
 
 For context management specifically:
 
@@ -278,7 +278,7 @@ Auto-compaction runs automatically when the context window approaches capacity. 
 
 To change the auto-compact window instead, set [`CLAUDE_CODE_AUTO_COMPACT_WINDOW`](./env-vars.md) in your environment variables, or run [`/autocompact`](./commands.md#all-commands) with a token count in a session where the variable isn't set.
 
-[Subagents](./sub-agents.md) work the same way they do locally. Claude can spawn them with the Agent tool to offload research or parallel work into a separate context window, keeping the main conversation lighter. Subagents defined in your repo's `.claude/agents/` are picked up automatically.
+[Subagents](./sub-agents.md) work the same way they do locally. Claude can spawn them with the Agent tool to offload research or parallel work into a separate context window, keeping the main conversation lighter. Outside a [project](./claude-projects.md#what-threads-pick-up-from-your-repositories)'s threads, subagents defined in your repo's `.claude/agents/` load automatically.
 
 [Agent teams](./agent-teams.md) are off by default but can be enabled by adding `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` to your [environment variables](./cloud-environments.md#set-environment-variables).
 
