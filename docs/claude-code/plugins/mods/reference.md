@@ -202,7 +202,7 @@ The mods API is the `$` argument every hook receives. Its methods are grouped in
 | Namespace | Methods |
 | :- | :- |
 | `$.plugin` | `name`, `root`: this plugin's name and directory |
-| [`$.ui`](./interface.md#pick-where-to-draw) | `resolve`, `invalidate`, `open`, `close`, `panes`, `focus`, `scroll`, `toast`, `status`, `log`, `notice`, `ask`, `copy`, `selection`, `blit` |
+| [`$.ui`](./interface.md#pick-where-to-draw) | `resolve`, `invalidate`, `open`, `close`, `panes`, `focus`, `scroll`, `toast`, `notify`, `status`, `log`, `notice`, `ask`, `copy`, `selection`, `blit` |
 | [`$.command`](./api.md#add-a-command) | `register`, `run`, `list` |
 | [`$.tool`](./api.md#add-a-tool) | `register`, `call`, `check`, `list` |
 | `$.agent` | `register`, `spawn`, `list`. `list()` returns this session's subagents and teammates, each with a `status` of `pending`, `running`, `waiting`, `idle`, `completed`, `failed`, or `killed`, where `idle` and `waiting` require Claude Code v2.1.289 or later. |
