@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.19.3",
-  "last_updated": "2026-10-19T08:11:25Z",
+  "last_updated": "2026-10-21T19:03:28Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -20,8 +20,8 @@
       "source_url": "https://opencode.ai/docs/agents",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/agents.mdx",
       "source_id": "packages/web/src/content/docs/agents.mdx",
-      "hash": "b0b93465469f6399b28ac2df8a042d3d1c2bbb90ebd0699a9452466dbc258e23",
-      "last_updated": "2026-10-19T08:11:25Z"
+      "hash": "ba94bf5c748ecae24da5cc44777b63c4e03eb92262d0ef211eabc9d66598bcbb",
+      "last_updated": "2026-10-21T19:03:28Z"
     },
     "cli": {
       "slug": "cli",
@@ -30,8 +30,8 @@
       "source_url": "https://opencode.ai/docs/cli",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/cli.mdx",
       "source_id": "packages/web/src/content/docs/cli.mdx",
-      "hash": "2af0b9082afabb6489a9c9021c4a53cba06e2532c3e698a80cbf43303bd561d9",
-      "last_updated": "2026-10-19T08:11:25Z"
+      "hash": "617c69c776a3cd32f745de8f48ce045f6c9ae16bedd5789c4f1d1d1319bf5d2c",
+      "last_updated": "2026-10-21T19:03:28Z"
     },
     "commands": {
       "slug": "commands",
@@ -335,8 +335,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-19T08:11:25Z",
-    "fetch_duration_seconds": 11.317,
+    "last_fetch_completed": "2026-10-21T19:03:28Z",
+    "fetch_duration_seconds": 11.356,
     "total_pages_discovered": 33,
     "pages_fetched_successfully": 33,
     "pages_failed": 0,

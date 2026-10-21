@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 33
 - **Version:** 1.19.3
-- **Last updated:** 2026-10-19T08:11:25Z
+- **Last updated:** 2026-10-21T19:03:28Z
 - **Official docs:** https://opencode.ai/docs
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
