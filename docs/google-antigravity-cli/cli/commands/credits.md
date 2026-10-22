@@ -1,5 +1,7 @@
 # AI credits command (/credits)
 
+Available on: Antigravity CLI
+
 View and manage your AI Premium credits interactively.
 
 ## Overview
@@ -15,7 +17,7 @@ To view your credit status, follow these steps:
 1.  Type `/credits` in the prompt box.
 2.  Press `Enter`.
 
-```
+```text
 /credits
 ```
 

@@ -1,5 +1,7 @@
 # Choose an execution mode
 
+Available on: Antigravity CLI
+
 Control whether Antigravity CLI pauses to ask before modifying files or executing commands during a session.
 
 ## Before you begin
@@ -34,7 +36,7 @@ You can switch execution modes mid-session without interrupting active tasks or 
 
 In `default` mode (`request-review`), Antigravity CLI pauses before applying any file writes to disk and renders an inline, syntax-highlighted diff preview.
 
-```
+```bash
 # Launch in default interactive review mode
 agy
 ```
@@ -53,7 +55,7 @@ When prompted with a pending file modification, you can take any of the followin
 
 When Antigravity CLI creates a brand-new file, the confirmation panel displays an addition-only diff preview with a dedicated `"Create file"` header and explicit allow/deny prompts:
 
-```
+```text
 Create file: src/utils/formatter.ts
 Allow create this file? [y/n/f]
 ```
@@ -64,7 +66,7 @@ Allow create this file? [y/n/f]
 
 Select `accept-edits` mode when you want Antigravity CLI to work in longer, uninterrupted stretches across your filesystem without pausing for each file modification.
 
-```
+```bash
 # Launch directly in accept-edits mode
 agy --mode=accept-edits
 ```
@@ -77,7 +79,7 @@ In this mode, all standard file read, creation, and replacement operations (`wri
 
 Use `plan` mode when taking on complex refactoring, multi-file architectural changes, or unfamiliar codebase investigations.
 
-```
+```bash
 # Launch directly in planning mode
 agy --mode=plan
 ```
@@ -94,7 +96,7 @@ You can set your preferred startup execution mode permanently across sessions or
 
 Open the interactive settings panel mid-session to inspect or update your default configuration:
 
-```
+```bash
 /settings
 ```
 
@@ -106,7 +108,7 @@ Navigate to **Agent Mode** using `↑`/`↓`, press `Enter` or `Space` to select
 
 Set `agentMode` directly inside your user or project configuration file:
 
-```
+```json
 {
     "agentMode": "accept-edits"
 }
@@ -118,7 +120,7 @@ The CLI loads this file from `~/.gemini/antigravity-cli/settings.json` at startu
 
 Pass the `--mode` flag to temporarily override your persistent default mode for a single terminal run:
 
-```
+```bash
 # Override settings.json to run in planning mode
 agy --mode=plan
 ```

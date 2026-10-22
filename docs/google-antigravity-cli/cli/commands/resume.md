@@ -1,5 +1,7 @@
 # Resume command (/resume)
 
+Available on: Antigravity CLI
+
 Browse, search, and resume past conversation threads, or recover your last session instantly from the command line.
 
 ## Overview
@@ -15,7 +17,7 @@ To open the **Session Picker** inside the TUI, follow these steps:
 1.  Type `/resume` (or aliases `/switch`, `/conversation`) in the prompt box.
 2.  Press Enter.
 
-```
+```text
 /resume
 ```
 
@@ -72,7 +74,7 @@ You can bypass the TUI picker and resume sessions directly when launching `agy` 
 
 To instantly resume the single most recent conversation associated with your active workspace, run the following command:
 
-```
+```bash
 agy -c
 ```
 
@@ -82,7 +84,7 @@ _(Alternative: `agy --continue`)_
 
 To load a specific conversation directly by its unique ID, run the following command:
 
-```
+```bash
 agy --conversation <conversation-id>
 ```
 
@@ -99,7 +101,7 @@ The session cache file has the following properties:
 *   **Location**: `~/.gemini/antigravity-cli/cache/last_conversations.json`
 *   **Format**: A JSON map associating absolute workspace directory paths with their most recently active conversation ID:
     
-    ```
+    ```json
     {
         "/usr/local/google/home/username/Develop/my-project": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
         "/usr/local/google/home/username/Develop/another-repo": "f9e8d7c6-b5a4-3210-fedc-ba9876543210"

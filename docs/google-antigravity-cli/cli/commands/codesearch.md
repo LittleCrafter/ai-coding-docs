@@ -1,5 +1,7 @@
 # Code search command (/codesearch)
 
+Available on: Antigravity CLI
+
 Interactively search the code in your workspace from inside the TUI, without leaving your session or interrupting the agent.
 
 ## Overview
@@ -15,7 +17,7 @@ To search your workspace from the TUI, follow these steps:
 1.  Type `/codesearch` followed by your query in the prompt box.
 2.  Press Enter.
 
-```
+```text
 /codesearch UserSession
 ```
 
@@ -43,7 +45,7 @@ By default, queries are interpreted as **regular expressions** and matching is c
 
 Add `-F` (or `--literal`) anywhere in the query to disable regular expressions and match the text literally. This is useful when your query contains regex metacharacters such as `.`, `(`, or `*`:
 
-```
+```text
 /codesearch -F map[string]*UserSession
 ```
 
@@ -51,11 +53,11 @@ Add `-F` (or `--literal`) anywhere in the query to disable regular expressions a
 
 Restrict a search to certain files with `f:` (aliases `file:` and `path:`) followed by a glob. Prefix the filter with `-` to _exclude_ matching files instead:
 
-```
+```text
 /codesearch f:store.go Session
 ```
 
-```
+```text
 /codesearch -f:*_test.go NewUserSession
 ```
 
@@ -71,7 +73,7 @@ Highlight a match with ↑ / ↓ and press Enter to open that file in the built-
 
 Inside the file viewer, the footer shows the available actions:
 
-```
+```text
 ↑/↓ scroll · pgup/pgdown page · shift+g bottom · g top · c comment · ctrl+g editor · / search
 ```
 

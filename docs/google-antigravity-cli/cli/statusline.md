@@ -1,5 +1,7 @@
 # Status line customization
 
+Available on: Antigravity CLI
+
 Define custom scripting configurations and format dynamic JSON state payloads to customize your TUI status line.
 
 Note
@@ -18,7 +20,7 @@ For advanced terminal layouts or custom status bar displays, you can route activ
 
 Add a `statusLine` configuration block to your `~/.gemini/antigravity-cli/settings.json` file:
 
-```
+```json
 {
     "statusLine": {
         "type": "command",
@@ -65,7 +67,7 @@ The JSON payload piped to your script contains the following top-level fields:
 
 Here is a sanitized, typical JSON payload piped to your status line script:
 
-```
+```json
 {
     "cwd": "/home/user/my-project",
     "session_id": "12345678-abcd-ef01-2345-6789abcdef01",
@@ -126,7 +128,7 @@ You can download a complete, layout-adaptive script from the official [statuslin
 
 Save the script to `~/.gemini/antigravity-cli/statusline.sh` and make it executable:
 
-```
+```bash
 chmod +x ~/.gemini/antigravity-cli/statusline.sh
 ```
 
