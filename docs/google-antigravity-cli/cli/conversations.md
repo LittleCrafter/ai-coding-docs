@@ -1,5 +1,7 @@
 # Managing conversations
 
+Available on: Antigravity CLI
+
 Resume prior development threads, scope active histories to local workspaces, and fork conversations to experiment with alternate architectures.
 
 ## Workspace scoping
@@ -20,7 +22,7 @@ For a complete walkthrough of the interactive picker, keyboard shortcuts, and de
 
 When engineering a complex feature, you might want to explore multiple design alternatives without losing your progress. The `/fork` command enables safe, parallel experimentation.
 
-```
+```text
 /fork
 ```
 
@@ -33,7 +35,7 @@ The `/fork` command clones your entire conversation history up to the current tu
 To fork an active conversation into a new branch, follow these steps:
 
 1.  Type `/fork` inside the prompt panel and press `Enter`.
-2.  The CLI allocates a new unique session ID and duplicates your existing workspace state and agent thread.
+2.  The CLI allocates a new unique session ID and copies the conversation history and context up to that point while keeping the existing workspace.
 3.  Your active terminal switches immediately to the new branch.
 4.  If the experiment fails, run `/resume` to restore your original, stable conversation branch.
 

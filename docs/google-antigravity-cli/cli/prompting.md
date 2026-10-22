@@ -1,12 +1,14 @@
 # Prompting and interaction
 
+Available on: Antigravity CLI
+
 Master primary interaction patterns, multiline composition workflows, session interruption controls, and terminal media pasting.
 
 ## The prompt box
 
 Antigravity CLI features a sticky prompt panel positioned at the bottom of your terminal screen. This panel handles standard user entries, multiline scripts, and direct media pasting.
 
-```
+```text
 ───────────────────────────────────────────────────────────────────────────
 > Describe your next engineering task here...
 ───────────────────────────────────────────────────────────────────────────

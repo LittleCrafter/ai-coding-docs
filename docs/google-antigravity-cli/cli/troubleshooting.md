@@ -21,7 +21,7 @@ Scan the following lookup table to identify symptoms and access immediate soluti
 
 Executing `agy` returns a shell terminal error:
 
-```
+```bash
 bash: agy: command not found
 ```
 
@@ -40,13 +40,13 @@ To add the binary directory to your path on macOS or Linux, follow these steps:
 1.  Open your shell configuration file (`~/.bashrc` or `~/.zshrc`).
 2.  Verify or append the following line at the end of the file:
     
-    ```
+    ```bash
     export PATH="~/.local/bin:$PATH"
     ```
     
 3.  Reload your profile configurations:
     
-    ```
+    ```bash
     source ~/.zshrc
     ```
     
@@ -57,7 +57,7 @@ To add the binary directory to your path on Windows, follow these steps:
 
 1.  Open a PowerShell terminal as an Administrator and execute the following command:
     
-    ```
+    ```powershell
     [System.Environment]::SetEnvironmentVariable("Path", [System.Environment]::GetEnvironmentVariable("Path", "User") + ";C:\Program Files\Google\antigravity-cli", "User")
     ```
     
@@ -71,7 +71,7 @@ To add the binary directory to your path on Windows, follow these steps:
 
 When launching, the CLI hangs, prints D-Bus warnings, or throws keyring access exceptions:
 
-```
+```text
 Error: failed to retrieve token: secret keyring is locked
 ```
 
@@ -90,14 +90,14 @@ To authorize keychain access on macOS, follow these steps:
 3.  Right-click, select **Get Info**, choose the **Access Control** tab, and verify that `agy` is on the allowed applications list.
 4.  If you’re running inside a headless SSH session on macOS, enforce an auto-lock inactivity timeout (for example, 5 minutes) and unlock the keychain interactively:
     
-    ```
+    ```bash
     security set-keychain-settings -l -u -t 300 ~/Library/Keychains/login.keychain-db
     security unlock-keychain ~/Library/Keychains/login.keychain-db
     ```
     
     When your session is finished, optionally re-lock the keychain immediately:
     
-    ```
+    ```bash
     security lock-keychain ~/Library/Keychains/login.keychain-db
     ```
     
@@ -108,7 +108,7 @@ Ensure your system keyring (such as GNOME Keyring or KWallet) is unlocked and ac
 
 If you’re running in a headless environment or over SSH, ensure that a D-Bus session is active and that your keyring daemon is running. You can typically initialize a D-Bus session by running:
 
-```
+```bash
 export $(dbus-launch)
 ```
 
@@ -122,7 +122,7 @@ If you still experience access issues, ensure your user account has the necessar
 
 Pasting screenshots or media files using `Ctrl+V` within an SSH terminal returns a failure notification:
 
-```
+```text
 Error: local pasteboard is empty or unreachable over SSH connection
 ```
 
@@ -141,7 +141,7 @@ Verify that you’re using supported terminal emulators and configurations:
     *   Select **Applications in terminal may access clipboard** (enabling OSC 52 write channels).
 3.  **Bypass multiplexers**: If running inside `tmux`, ensure your active configuration maps standard paste clips:
     
-    ```
+    ```text
     set -s set-clipboard on
     ```
     
@@ -154,7 +154,7 @@ Verify that you’re using supported terminal emulators and configurations:
 
 Launching `agy` hangs, fails to apply upgrades, or returns an advisory lock warning:
 
-```
+```text
 Warning: another background updater process is already active (update.lock)
 ```
 
@@ -168,13 +168,13 @@ Try any of the following steps to resolve the updater lock:
 
 *   **Release the advisory lock**: Purge the background lock file manually:
     
-    ```
+    ```bash
     rm -f ~/.gemini/antigravity-cli/updater/update.lock
     ```
     
 *   **Opt out or disable auto-updates**: Set the `AGY_CLI_DISABLE_AUTO_UPDATE` environment variable to `true` inside your shell profile (`~/.bashrc` or `~/.zshrc`):
     
-    ```
+    ```bash
     export AGY_CLI_DISABLE_AUTO_UPDATE=true
     ```
     
