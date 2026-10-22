@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.163.0",
-  "last_updated": "2026-10-22T02:02:21Z",
+  "last_updated": "2026-10-22T18:56:47Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "027d906b3028dcccbbba23f5a6b111598032d940074edee3c24a484e3dc9e8fb",
-      "last_updated": "2026-10-20T23:32:49Z"
+      "hash": "178df301a89b2ae69ed37693695377c782eec422cb18683624c2cff1d21fbaff",
+      "last_updated": "2026-10-22T18:56:47Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "d1ee495438b36447b0ae9eb5fe71b1170a711a0a97e95b7798726c58f798fa7c",
-      "last_updated": "2026-10-22T02:02:21Z"
+      "hash": "1bb876b64527a4e76ba3e59237770c77fa5b3b6edb755cb93c1436f5ff82a5f2",
+      "last_updated": "2026-10-22T18:56:47Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -580,8 +580,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/apps-and-connectors",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/apps-and-connectors.md",
       "source_id": "llms:enterprise/apps-and-connectors",
-      "hash": "fe17d092d1958f2f72cc29e390878db6b1f1a7addbb7c6e4128914b7be02488b",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "8e754377fc2d76290d2eebce2906a2655400c3961bee4972911d9f9466e75c0d",
+      "last_updated": "2026-10-22T18:56:47Z"
     },
     "enterprise/bedrock-through-litellm": {
       "slug": "enterprise/bedrock-through-litellm",
@@ -703,6 +703,16 @@
       "hash": "b9b976d3532d71ce81142953af20276df40091af95e1fbfb89d0187e88b591a3",
       "last_updated": "2026-10-09T17:37:12Z"
     },
+    "enterprise/education-plans": {
+      "slug": "enterprise/education-plans",
+      "title": "Understand ChatGPT education plans",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/education-plans",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/education-plans.md",
+      "source_id": "llms:enterprise/education-plans",
+      "hash": "dfb6b24cddea356cdb580ca826e15c27818b11919a82f2f1dc0f2698e32dc828",
+      "last_updated": "2026-10-22T18:56:47Z"
+    },
     "enterprise/gateway-compatibility": {
       "slug": "enterprise/gateway-compatibility",
       "title": "Gateway compatibility requirements",
@@ -740,8 +750,18 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/groups-and-provisioning",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/groups-and-provisioning.md",
       "source_id": "llms:enterprise/groups-and-provisioning",
-      "hash": "40c0bb43ffd94f776823486cea1aa6a059023e1509c258d2940458e39982880f",
-      "last_updated": "2026-10-09T17:37:12Z"
+      "hash": "f1f21f0846b963bc7d0bf031f71076ccf96d02290d16d7c308cc5c1eb3f390a2",
+      "last_updated": "2026-10-22T18:56:47Z"
+    },
+    "enterprise/higher-education-roles-and-permissions": {
+      "slug": "enterprise/higher-education-roles-and-permissions",
+      "title": "Best practices for ChatGPT Edu workspace configuration in higher education",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/higher-education-roles-and-permissions",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/higher-education-roles-and-permissions.md",
+      "source_id": "llms:enterprise/higher-education-roles-and-permissions",
+      "hash": "3edf191cbfc4021c9ed3c5436a1c5cfa19de906d68acabde6c0125d7be46a6fe",
+      "last_updated": "2026-10-22T18:56:47Z"
     },
     "enterprise/manage-app-updates": {
       "slug": "enterprise/manage-app-updates",
@@ -790,8 +810,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/roles-and-workspace-permissions",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/roles-and-workspace-permissions.md",
       "source_id": "llms:enterprise/roles-and-workspace-permissions",
-      "hash": "b140523477d0577b41b2c52c955f1f0ef076eef477fe664c2e90d5c41cca24dc",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "b0805ec6df2ffb94cee36c4bec3e09aac4447b9c23bd8a90d2146eafa25cec3d",
+      "last_updated": "2026-10-22T18:56:47Z"
     },
     "enterprise/roll-out-a-gateway": {
       "slug": "enterprise/roll-out-a-gateway",
@@ -900,8 +920,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/user-lifecycle",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/user-lifecycle.md",
       "source_id": "llms:enterprise/user-lifecycle",
-      "hash": "567ab0e879a8619bfa43de5e1e2f478f59e7bb623a7aa9f94fe2cd296a06412a",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "61e4c0211f4c391d63bd506c35f25b9137d97aab7b94a82b9906f2255119b693",
+      "last_updated": "2026-10-22T18:56:47Z"
     },
     "enterprise/windows-deployment": {
       "slug": "enterprise/windows-deployment",
@@ -1560,8 +1580,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/plugin",
       "source_md_url": "https://learn.chatgpt.com/docs/security/plugin.md",
       "source_id": "llms:security/plugin",
-      "hash": "9eba9907fd4e6def8852ba39c31e16f9e6a5f835f50b9cefac1d7149dca13119",
-      "last_updated": "2026-10-16T07:36:35Z"
+      "hash": "eaad9c4650ee4db5fdce724b9aab8dfc9b090ccb439c1a141057d3628b87ccc1",
+      "last_updated": "2026-10-22T18:56:47Z"
     },
     "security/plugin/changelog": {
       "slug": "security/plugin/changelog",
@@ -2005,10 +2025,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-22T02:02:21Z",
-    "fetch_duration_seconds": 69.757,
-    "total_pages_discovered": 200,
-    "pages_fetched_successfully": 200,
+    "last_fetch_completed": "2026-10-22T18:56:47Z",
+    "fetch_duration_seconds": 70.445,
+    "total_pages_discovered": 202,
+    "pages_fetched_successfully": 202,
     "pages_failed": 0,
     "failed_pages": []
   }

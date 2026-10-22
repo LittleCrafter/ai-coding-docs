@@ -57,6 +57,13 @@ Deploy apps and configure updates, runtime settings, remote connections, and mod
 - [Gateway compatibility](./enterprise/gateway-compatibility.md) — Check the Responses API behavior required for model requests, streaming, and tool calls.
 - [Bedrock through LiteLLM](./enterprise/bedrock-through-litellm.md) — Configure a LiteLLM gateway to route Codex model requests to Amazon Bedrock.
 
+## ChatGPT EDU
+
+Compare education plans and configure access for your institution.
+
+- [Education plans](./enterprise/education-plans.md) — Compare plans, help members get access, and manage multiple workspaces.
+- [Higher education setup](./enterprise/higher-education-roles-and-permissions.md) — Choose campus roles, compare recommended permissions, and verify access.
+
 ## ChatGPT Work
 
 Review the ChatGPT Work overview and administration reference.

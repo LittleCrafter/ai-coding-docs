@@ -22,7 +22,7 @@ Note
 
 Since Gemini CLI launched, the industry has standardized on the term **plugins**. You can manually convert your legacy Gemini extensions to native Antigravity plugins by executing the following command:
 
-```
+```bash
 agy plugin import gemini
 ```
 
@@ -30,7 +30,7 @@ This utility searches your legacy local directories, parses your extension manif
 
 ### Expected import output
 
-```
+```text
 [ok]   conductor-tools
        - skills     : skipped (none detected)
        - agents     : skipped (none detected)
@@ -83,7 +83,7 @@ When manually migrating remote WebSocket or SSE server definitions, update the U
 *   **Legacy schema keys**: `url` or `httpUrl`
 *   **Modern schema key**: `serverUrl`
 
-```
+```json
 {
     "mcpServers": {
         "remote-indexer": {

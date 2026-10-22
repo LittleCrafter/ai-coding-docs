@@ -31,6 +31,8 @@ Both agent teams and [subagents](./sub-agents.md) let you parallelize work, but 
 
 ![Diagram comparing subagent and agent team architectures. Subagents are spawned by the main agent, do work, and report results back. Agent teams coordinate through a shared task list, with teammates communicating directly with each other.](media/images/subagents-vs-agent-teams-light.png)
 
+Subagents report results back to the main agent. In agent teams, teammates share a task list, claim work, and communicate directly with each other.
+
 | | Subagents | Agent teams |
 | :- | :- | :- |
 | **Context** | Own context window; results return to the caller | Own context window; fully independent |

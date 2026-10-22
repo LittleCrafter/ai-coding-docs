@@ -22,7 +22,7 @@ You can query your credits or buy additional quota directly from the CLI:
 
 To control when and how your AI credits are used, you can toggle credit settings in your `settings.json` file:
 
-```
+```json
 {
     "useG1Credits": true
 }

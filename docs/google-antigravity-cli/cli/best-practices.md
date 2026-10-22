@@ -13,7 +13,7 @@ Before asking the agent to implement a code change, follow these steps:
 3.  Once the agent proposes code, instruct it to run the local test command to verify its work.
 4.  Watch the agent execute the command and iterate on the test outputs automatically.
 
-```
+```text
 > Implement feature X in main.py. Run npm test afterward to verify the build.
 ```
 
@@ -25,7 +25,7 @@ Autonomous local agents operate with the highest accuracy when complex changes a
 *   **Planning**: Request an implementation plan. The agent lists targeted files, required dependencies, and logic overrides in an implementation plan artifact.
 *   **Execution**: Once you approve the structured plan, direct the agent to apply the edits.
 
-```
+```text
 > Explore how our router resolves `/docs/:page`. Write down an implementation plan to add `/docs/best-practices`.
 ```
 
@@ -57,7 +57,7 @@ Tune your safety barriers in `~/.gemini/antigravity-cli/settings.json` based on 
 *   **`proceed-in-sandbox`**: Restricts all terminal executions to a secure sandbox containment ring. Safe commands execute autonomously, while risky commands prompt for reviews.
 *   **`strict`**: Always prompts for all non-read operations, providing complete line-by-line transparency.
 
-```
+```json
 {
     "toolPermission": "proceed-in-sandbox",
     "enableTerminalSandbox": true
@@ -93,7 +93,7 @@ Antigravity CLI is designed to operate seamlessly within standard shell pipeline
 
 To automate quick queries or integrate agents into Git hooks, use the one-shot prompt flag `-p`:
 
-```
+```bash
 agy -p "Review this git diff and draft a conventional commit message" --cwd $(pwd)
 ```
 

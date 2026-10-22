@@ -68,7 +68,7 @@ Here is how those parts connect, from you through the conversation to the thread
 You create and use projects at [claude.ai/code](https://claude.ai/code), in the Code tab of the desktop app, or in the Claude mobile app for [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) and [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude). In the browser and the desktop app there are two ways to start a project:
 
 * **From scratch**, when you know the stream of work you want Claude to run: open the **New project** dialog and name it. [Start a new project from scratch](#start-a-new-project-from-scratch) walks through the dialog.
-* **From a cloud session that's already doing the work**: choose **Continue as project** from that session's menu, and Claude proposes the project's setup from what the session was doing. See [Start from an existing cloud session](#start-from-an-existing-cloud-session).
+* **From a cloud session that's already doing the work**: in that session's sidebar menu, choose **Move to project**, then **Continue as new project**. Claude proposes the project's setup from what the session was doing. See [Start from an existing cloud session](#start-from-an-existing-cloud-session).
 
 Either way, [check the prerequisites](#check-the-prerequisites) first.
 
@@ -76,7 +76,7 @@ Either way, [check the prerequisites](#check-the-prerequisites) first.
 
 Before you create a project, check your plan, your GitHub setup, and what the work needs to reach:
 
-* **Plan**: you're on Pro or Max and **Projects** shows in your sidebar.
+* **Plan**: you're on Pro or Max, and **Projects** shows in your sidebar, directly or under **More**. Select **Projects** and check that it offers **New project** or **Get started**.
 * **GitHub, if the project will work on code**: your code is on github.com rather than GitHub Enterprise Server, GitLab, or Bitbucket, your connected GitHub account has push access to it, and the Claude GitHub App is installed on it. If you connected GitHub with [`/web-setup`](./web-quickstart.md#connect-from-your-terminal), that token lets your other cloud sessions reach a repository but isn't enough for a project's cloud threads, which need the Claude GitHub App. [Set up GitHub access](#set-up-github-access) has the steps.
 * **Network access, secrets, and tools**: for cloud threads, these come from the project's [cloud environment](#choose-an-environment-for-threads). The default environment already reaches [common package registries](./cloud-environments.md#default-allowed-domains), so check this only if the work needs other domains, a secret, or a tool that isn't preinstalled. If the work needs an MCP server, check that it shows as connected in your [claude.ai connectors](https://claude.ai/customize/connectors).
 
@@ -111,10 +111,12 @@ The project is now listed under **Projects** in the sidebar, and its conversatio
 
 ### Start from an existing cloud session
 
-If you already have a cloud session doing work that belongs in a project, open the session's menu in the sidebar and choose **Continue as project** or **Move to project**:
+If a cloud session you started yourself is doing work that belongs in a project, open its sidebar menu and choose **Move to project**, then pick from the submenu:
 
-* **Continue as project** creates a new project named after the session and opens it. Claude reads the session and posts **Setup recommendations** in the conversation for you to confirm. The original session stays in your session list, and if it was in the middle of a turn it keeps running, so stop it yourself if you don't want both working at once. If you use the **Set up project** banner that can appear above a cloud session's message box instead, the result is the same, except that the session's running turn stops once the project opens.
-* **Move to project** brings the session's work into an existing project. It posts a message in that project's conversation asking Claude to read the session and pick up where it left off, and new work continues in the project's own threads. The original session stays in your session list, unchanged.
+* Choose **Continue as new project** to create a new project from the session. The project opens, and Claude reads the session and posts **Setup recommendations** in the project conversation for you to confirm. The original session stays in your session list. If it was in the middle of a turn it keeps running, so stop it yourself if you don't want both working at once.
+* Choose one of your existing projects to bring the session's work into that project. That project opens, and a message sent on your behalf asks Claude to read the session and pick up where it left off. The original session stays in your session list, unchanged.
+
+A **Set up project** banner can also appear above a cloud session's message box. If you use it instead of **Continue as new project**, the result is the same, except that the session's running turn stops once the project opens.
 
 A local session doesn't have these options. To continue its work in a project, describe the work in the project conversation, or push its branch, add that repository to the project, and name the branch in the task.
 
@@ -418,7 +420,7 @@ Open **Usage** in **Project settings** to see token use by thread and by model, 
 Several Claude Code features let more than one session work at the same time, so running work in parallel is not by itself what a project is for. In a project, Claude starts and tracks the sessions instead of you, and each one starts from the same instructions. This is how each neighboring feature connects to a project:
 
 * **Claude Tag**: [Claude Tag](https://claude.com/docs/claude-tag/overview) is Claude in your team's Slack channels, on Team and Enterprise plans. Anyone in a channel can give it work, everyone in the channel sees and steers it, and it uses connections an admin set up for that channel. A project is yours alone: you're the only one who sends it work or sees its threads, it uses your own GitHub access and connectors, and it's on Pro and Max. [How Claude Tag differs from Cowork and Claude Code](https://claude.com/docs/claude-tag/concepts/how-it-works#how-claude-tag-differs-from-cowork-and-claude-code) has the side-by-side.
-* **Cloud sessions**: every thread is a [cloud session](./claude-code-on-the-web.md) unless you ask Claude to run it on your machine. Either way, Claude starts and tracks it instead of you. A cloud session you started yourself can become a project or feed one through [**Continue as project** or **Move to project**](#start-from-an-existing-cloud-session).
+* **Cloud sessions**: every thread is a [cloud session](./claude-code-on-the-web.md) unless you ask Claude to run it on your machine. Either way, Claude starts and tracks it instead of you. You can also bring the work of a cloud session you started yourself into a project: choose [**Move to project**](#start-from-an-existing-cloud-session) in that session's sidebar menu.
 * **Scheduled tasks**: when you ask for scheduled work in a project, Claude creates a [cloud scheduled task](./routines.md) that runs as threads in that project and appears on its **Scheduled tasks** tab. Scheduled tasks you create outside a project keep working on their own.
 * **Remote Control**: [Remote Control](./remote-control.md) connects claude.ai to a Claude Code session running on your machine. When you ask Claude in a project to run a thread on your computer, the project [uses Remote Control to do it](#run-a-thread-on-your-own-computer).
 * **Local sessions and agent view**: a session you start yourself in your terminal, IDE, or the desktop app's local environment can't be added to a project. [Agent view](./agent-view.md) is a screen for tracking several local sessions side by side, and you still start each one and give it its task yourself.

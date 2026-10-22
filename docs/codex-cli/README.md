@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 200
+- **Pages mirrored:** 202
 - **Version:** 0.163.0
-- **Last updated:** 2026-10-22T02:02:21Z
+- **Last updated:** 2026-10-22T18:56:47Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -171,10 +171,12 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Use API/provider credentials through a gateway | [enterprise/connect-to-a-gateway.md](./enterprise/connect-to-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway>) |
 | Manage dots permissions and capabilities | [enterprise/dots-admin-guide.md](./enterprise/dots-admin-guide.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-admin-guide>) |
 | Dynamic groups | [enterprise/dynamic-groups.md](./enterprise/dynamic-groups.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dynamic-groups>) |
+| Understand ChatGPT education plans | [enterprise/education-plans.md](./enterprise/education-plans.md) | [source](<https://learn.chatgpt.com/docs/enterprise/education-plans>) |
 | Gateway compatibility requirements | [enterprise/gateway-compatibility.md](./enterprise/gateway-compatibility.md) | [source](<https://learn.chatgpt.com/docs/enterprise/gateway-compatibility>) |
 | Governance | [enterprise/governance.md](./enterprise/governance.md) | [source](<https://learn.chatgpt.com/docs/enterprise/governance>) |
 | GPTs and Sharing | [enterprise/gpts-and-sharing.md](./enterprise/gpts-and-sharing.md) | [source](<https://learn.chatgpt.com/docs/enterprise/gpts-and-sharing>) |
 | Groups and provisioning | [enterprise/groups-and-provisioning.md](./enterprise/groups-and-provisioning.md) | [source](<https://learn.chatgpt.com/docs/enterprise/groups-and-provisioning>) |
+| Best practices for ChatGPT Edu workspace configuration in higher education | [enterprise/higher-education-roles-and-permissions.md](./enterprise/higher-education-roles-and-permissions.md) | [source](<https://learn.chatgpt.com/docs/enterprise/higher-education-roles-and-permissions>) |
 | Manage app updates | [enterprise/manage-app-updates.md](./enterprise/manage-app-updates.md) | [source](<https://learn.chatgpt.com/docs/enterprise/manage-app-updates>) |
 | Managed configuration | [enterprise/managed-configuration.md](./enterprise/managed-configuration.md) | [source](<https://learn.chatgpt.com/docs/enterprise/managed-configuration>) |
 | Plugin management | [enterprise/plugin-management.md](./enterprise/plugin-management.md) | [source](<https://learn.chatgpt.com/docs/enterprise/plugin-management>) |

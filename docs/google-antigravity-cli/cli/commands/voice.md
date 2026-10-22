@@ -1,5 +1,7 @@
 # Voice dictation (/voice)
 
+Available on: Antigravity CLI
+
 Speak your prompt instead of typing it.
 
 ## Overview
@@ -23,7 +25,7 @@ To dictate a prompt into the terminal, follow these steps:
 
 While a recording session is active, the status line below the prompt displays the elapsed recording time and available shortcut actions:
 
-```
+```text
 ● Recording 0:07  enter or f5 to insert · esc to discard
 ```
 
@@ -60,7 +62,7 @@ The Antigravity CLI must be installed on both your local machine and the remote 
 
 Start the microphone server on your local machine:
 
-```
+```bash
 agy mic-serve
 ```
 
@@ -68,7 +70,7 @@ Keep this process running while dictating. By default, `mic-serve` listens on `1
 
 To bind to a custom port if port `4713` is already occupied, specify the `--addr` flag:
 
-```
+```bash
 agy mic-serve --addr 127.0.0.1:<UNUSED_PORT>
 ```
 
@@ -80,13 +82,13 @@ Caution
 
 From your local machine, forward the local audio port to the remote machine by opening a reverse SSH tunnel:
 
-```
+```bash
 ssh -R 24713:127.0.0.1:4713 <remote-machine>
 ```
 
 The tunnel must remain active during dictation. To run the tunnel in the background without maintaining an interactive shell session, use the `-f` and `-N` flags with the `ssh` command. For example:
 
-```
+```bash
 ssh -f -N -R 24713:127.0.0.1:4713 <remote-machine>
 ```
 
@@ -94,25 +96,25 @@ ssh -f -N -R 24713:127.0.0.1:4713 <remote-machine>
 
 In your remote SSH session, launch the CLI with the `ANTIGRAVITY_MIC` environment variable set to the forwarded tunnel port. For example:
 
-```
+```bash
 ANTIGRAVITY_MIC=127.0.0.1:24713 agy
 ```
 
 If you’re using a Windows remote host with PowerShell, set the environment variable and start the CLI:
 
-```
+```powershell
 $env:ANTIGRAVITY_MIC = "127.0.0.1:24713"; agy
 ```
 
 Alternatively, if you’re using a Windows remote host with Windows Command Prompt (`cmd.exe`), run the following command:
 
-```
+```cmd
 set ANTIGRAVITY_MIC=127.0.0.1:24713 && agy
 ```
 
 In the CLI, press F5 or use `/voice`, and speak into your microphone. The local `mic-serve` process logs a confirmation when the CLI initiates an audio connection. For example:
 
-```
+```text
 Recording for 127.0.0.1:54134.
 ```
 
@@ -120,7 +122,7 @@ Recording for 127.0.0.1:54134.
 
 If no connection log appears in the `mic-serve` output when dictating, test whether the forwarded port is reachable by capturing a raw audio sample on the remote host. For example:
 
-```
+```bash
 timeout 5 nc 127.0.0.1 24713 > /tmp/mic.raw
 ```
 
