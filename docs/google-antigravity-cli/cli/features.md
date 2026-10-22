@@ -6,7 +6,7 @@
 
 When you install a plugin, the CLI stages the files in your home directory under `~/.gemini/antigravity-cli/plugins/<plugin_name>/`. The Antigravity agent automatically discovers and loads these staged customizations.
 
-```plaintext
+```
 ~/.gemini/antigravity-cli/
 ├── plugins/
 │   └── <plugin_name>/
@@ -44,7 +44,7 @@ Trigger the interactive Plugins Manager in the CLI using the `/plugin` slash com
     *   `/plugin` provides inline `install`, `uninstall`, `enable`, `disable`, and `list` subcommands without needing to open the interactive Plugins Manager panel.
     *   To install inline, run `/plugin install <plugin-name>@<marketplace-name>` (`<marketplace-name>` supports the official marketplace, `antigravity-plugins-official`) or `/plugin install <local-path>`. For example, running `/plugin install firebase@antigravity-plugins-official` outputs:
         
-        ```text
+        ```
         Successfully installed plugin "firebase" from "antigravity-plugins-official".
         ```
         
@@ -55,33 +55,33 @@ Outside an interactive TUI session, you can install and manage plugins from your
 
 *   **Install from the official marketplace**: Specify `<plugin-name>@antigravity-plugins-official` (`<marketplace-name>` only supports the official marketplace, `antigravity-plugins-official`), or pass a bare `<plugin-name>`, which defaults to `<plugin-name>@antigravity-plugins-official`:
     
-    ```bash
+    ```
     agy plugin install <plugin-name>@antigravity-plugins-official
     agy plugin install <plugin-name>
     ```
     
 *   **Install from a GitHub link**: Clone and stage a plugin directly from a GitHub repository URL:
     
-    ```bash
+    ```
     agy plugin install https://github.com/<owner>/<repo>
     ```
     
 *   **Install from a local directory**: Stage a local plugin package into your profile:
     
-    ```bash
+    ```
     agy plugin install </path/to/local/plugin>
     ```
     
 *   **List installed plugins**: Run `agy plugin list` for a human-readable summary of installed plugins and their component counts, or pass `--json` to output a JSON array with installation paths and component names:
     
-    ```bash
+    ```
     agy plugin list
     agy plugin list --json
     ```
     
 *   **Enable, disable, or uninstall plugins**:
     
-    ```bash
+    ```
     agy plugin enable <plugin-name>
     agy plugin disable <plugin-name>
     agy plugin uninstall <plugin-name>
@@ -102,7 +102,7 @@ Rather than running heavy virtual machines or containers, the CLI uses native op
 
 **Configuration** You can configure the sandbox behavior in your `settings.json` file (located at `~/.gemini/antigravity-cli/settings.json`):
 
-```json
+```
 {
     "enableTerminalSandbox": true
 }
@@ -125,30 +125,27 @@ The Antigravity CLI supports a variety of slash commands typed directly into the
 
 | Command | Category | Purpose |
 | :-- | :-- | :-- |
-| **[`/resume`](./commands/resume.md)** _(aliases `/switch`, `/conversation`)_ | Conversation | Open the conversation picker to resume or switch sessions. |
+| **[`/resume`](./commands/resume.md)** _(alias `/switch`)_ | Conversation | Open the conversation picker to resume or switch sessions. |
 | **[`/boost <task>`](https://antigravity.google/docs/boost)** | Reasoning | Multi-agent deep reasoning for complex bugs, race conditions, and algorithms. |
 | **[`/teamwork-preview <task>`](https://antigravity.google/docs/teamwork)** | Reasoning | Launch [collaborative multi-agent teams](https://antigravity.google/docs/teamwork) for long-horizon projects (paid plans). |
 | **[`/effort [level]`](./commands/effort.md)** | Configuration | Set the active model’s [reasoning effort level](./commands/effort.md) (`low` through `max`, depending on the model). |
-| **`/rewind`** _(alias `/undo`)_ | Conversation | Rewind conversation to a previous message. |
+| **`/rewind`** _(alias `/undo`)_ | Conversation | Roll back conversation history to a previous checkpoint. |
 | **`/rename <name>`** | Conversation | Rename the active conversation thread for easier tracking. |
-| **`/config`** _(alias `/settings`)_ | Configuration | Open the settings panel to configure CLI preferences and global permission modes (`request-review`, `always-proceed`, or `strict`). |
-| **[`/permissions`](./commands/permissions.md)** | Configuration | Manage tool permissions (`allow`, `deny`, and `ask` rules across project, shared, and global scopes). |
-| **`/model`** | Configuration | Set a model, or run a single prompt on another model. |
+| **[`/permissions`](./commands/permissions.md)** | Configuration | Select agent autonomy level (`request-review`, `always-proceed`, or `strict`). |
+| **`/model`** | Configuration | Select the default reasoning model (persists across sessions). |
 | **`/keybindings`** | Configuration | Open the interactive keyboard shortcut editor. |
-| **[`/statusline`](./commands/statusline.md)** | Configuration | Toggle the statusline or configure a custom statusline command. |
+| **[`/statusline`](./commands/statusline.md)** | Configuration | Customize real-time indicators displayed in the CLI status bar. |
 | **`/tasks`** | Tools & Monitoring | Monitor, view logs for, or terminate active background tasks. |
 | **[`/plugin`](https://antigravity.google/docs/plugins?tab=cli)** _(alias `/plugins`)_ | Tools & Monitoring | Open the interactive [Plugins Manager](https://antigravity.google/docs/marketplace?tab=cli) to discover, install, enable, disable, or uninstall plugins. |
-| **`/skills`** | Tools & Monitoring | List available skills or reload skills from disk (`/skills reload`). |
+| **`/skills`** | Tools & Monitoring | Browse local and global encapsulated agent workflows. |
 | **`/mcp`** | Tools & Monitoring | Open the panel to configure and manage Model Context Protocol servers. |
 | **[`/btw <query>`](./commands/btw.md)** | Utility | Ask a [side question in the background](./commands/btw.md) without interrupting the active conversation. |
-| **[`/codesearch <query>`](./commands/codesearch.md)** _(aliases `/cs`, `/search`)_ | Utility | Open the [interactive Code Search panel](./commands/codesearch.md) to search code across the workspace. |
 | **[`/context`](./commands/context.md)** | Utility | Visualize [active context window usage](./commands/context.md), category token breakdowns, and checkpoints. |
 | **`/open <path>`** | Utility | Immediately open a file in your preferred external editor. |
 | **[`/diff`](./commands/diff.md)** | Utility | Open the [interactive diff viewer](./commands/diff.md) to review changes and steer the agent. |
 | **[`/remote-control`](https://antigravity.google/docs/remote-control?tab=cli#interactive-mode)** | Utility | Turn on or off Remote Control for the active terminal session. |
 | **[`/changelog`](./commands/changelog.md)** | Utility | View [versioned CLI release notes](./commands/changelog.md) in the TUI or headless mode. |
-| **`/help`** | Utility | Show available commands and keybindings. |
-| **[`/usage`](./commands/usage.md)** _(alias `/quota`)_ | Utility | View model quota usage. |
+| **[`/usage`](./commands/usage.md)** | Utility | Display model quota usage and refresh limits. |
 | **`/logout`** | Account | Log out of your Google session and clear cached credentials. |
 
 ### Advanced customization using `settings.json`
@@ -157,7 +154,7 @@ For power users, several slash commands support deep customization using your `~
 
 *   **Fine-grained permissions**: Instead of global levels, define specific allowed or denied commands:
     
-    ```json
+    ```
     "permissions": {
       "allow": ["command(git)", "command(npm test)"],
       "deny": ["command(rm -rf)"]
@@ -192,7 +189,7 @@ Selecting a subagent from the panel opens a full-screen detail view. This view s
 
 Note
 
-**Tip**: Use the keyboard shortcut `alt+j` to jump from the main conversation directly to the detailed view of the next subagent waiting for your approval.
+**Tip**: Use the keyboard shortcut `ctrl+j` to jump from the main conversation directly to the detailed view of the next subagent waiting for your approval.
 
 2.  **Fast-path alerts**: To keep you in your flow, Antigravity CLI displays a fast-path alert directly above your prompt box when a subagent requests permission.
 

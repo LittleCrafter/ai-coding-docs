@@ -1,5 +1,7 @@
 # Reviewing artifacts
 
+Available on: Antigravity CLI
+
 Audit generated code, review implementation proposals, attach line-level feedback comments, and verify visual media assets before applying edits to your local filesystem.
 
 ## Collaboration and co-steering
@@ -19,7 +21,7 @@ The TUI partitions these assets into two interactive layers:
 
 When the agent produces or modifies files, a notification updates in your TUI status bar (`/artifact to review`). Press `ctrl+r` inside the prompt box to open the full-screen **Artifact Picker** panel.
 
-```
+```text
                                                                                                     10 artifacts · /artifact to review
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 >
@@ -45,15 +47,15 @@ Audit the file checklist using the following dedicated panel controls:
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
-| **`↑`** / **`↓`** | `nav.scroll_line` | Scrolls highlighted selections up and down through the list of entries. |
-| **`h`** / **`l`** | `nav.switch_button` | Focuses and toggles between inline row buttons: **open**, **approve**, and **reject** (Left/Right arrows also supported). |
-| **`p`** | `confirm.preview` | Toggles a **quick inline file preview**. This opens a 12-line truncated and indented code block preview directly under the selected row. |
-| **`y`** | `confirm.approve` | Instantly approves the highlighted file. The status marker updates to a green checkmark (`✓ approved`). |
-| **`n`** | `confirm.reject` | Instantly rejects the highlighted file. The status marker updates to a red cross (`✗ rejected`). |
-| **`Shift+A`** | `confirm.approve_all` | Bulk-approves all pending actionable files in one action. |
-| **`Shift+R`** | `confirm.reject_all` | Bulk-rejects all pending actionable files in one action. |
-| **`Enter`** | `nav.confirm` | Executes the active focused button. If the `open` button is focused, it launches the full-screen detail viewer. |
-| **`Esc`** | `nav.escape` | Saves your active review state, submits approvals/rejections back to the agent thread, and returns focus to the prompt box. |
+| **`↑`** / **`↓`** | `navigation.up` / `navigation.down` | Scrolls highlighted selections up and down through the list of entries. |
+| **`h`** / **`l`** | `navigation.left` / `navigation.right` | Focuses and toggles between inline row buttons: **open**, **approve**, and **reject** (Left/Right arrows also supported). |
+| **`p`** | `—` | Toggles a **quick inline file preview**. This opens a 12-line truncated and indented code block preview directly under the selected row. |
+| **`y`** | `confirm.yes` | Instantly approves the highlighted file. The status marker updates to a green checkmark (`✓ approved`). |
+| **`n`** | `confirm.no` | Instantly rejects the highlighted file. The status marker updates to a red cross (`✗ rejected`). |
+| **`Shift+A`** | `—` | Bulk-approves all pending actionable files in one action. |
+| **`Shift+R`** | `—` | Bulk-rejects all pending actionable files in one action. |
+| **`Enter`** | `cli.enter` | Executes the active focused button. If the `open` button is focused, it launches the full-screen detail viewer. |
+| **`Esc`** | `cli.escape` | Saves your active review state, submits approvals/rejections back to the agent thread, and returns focus to the prompt box. |
 
 ### Code files and visual media
 
@@ -70,7 +72,7 @@ To organize workspace assets, the picker separates files by format types:
 
 To launch a close audit of a file’s code structure or proposed logic, select `open` (or press `Enter` directly on a highlighted code row) to open the **Artifact Detail Viewer**.
 
-```
+```text
 implementation_plan.md
 >   1      Implementation Plan: Alpha-Centauri Telemetry Scaling Engine
     2

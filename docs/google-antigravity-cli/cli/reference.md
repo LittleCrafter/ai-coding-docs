@@ -16,6 +16,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **[`/btw`](./commands/btw.md) `<query>`** | Utilities | — | Ask a [side question in the background](./commands/btw.md) without interrupting the main conversation. |
 | **[`/changelog`](./commands/changelog.md)** | Utilities | — | Open the [interactive release notes viewer](./commands/changelog.md) or print CLI changes in headless mode. |
 | **`/clear`** | Utilities | `/new` | Clear the terminal and reset active conversation contexts. |
+| **[`/codesearch`](./commands/codesearch.md) `<query>`** | Utilities | `/cs`, `/search` | Open the [interactive Code Search panel](./commands/codesearch.md) to search code across the workspace. |
 | **`/config`** | Configurations | `/settings` | Open the interactive Settings Editor overlay. |
 | **[`/context`](./commands/context.md)** | Utilities | — | Open the [context usage visualization panel](./commands/context.md). |
 | **`/copy [n|btw]`** | Utilities | — | Copy the last agent response, the n-th most recent response, or the latest [`/btw`](./commands/btw.md) answer. |
@@ -72,18 +73,18 @@ These keys are active when writing instructions inside the prompt box.
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
-| **`Enter`** | `prompt.submit` | Submits your prompt or active menu selection to the agent. |
-| **`Shift+Enter`** / **`Ctrl+J`** | `prompt.newline` | Inserts a clean newline without submitting. |
-| **`Ctrl+V`** | `prompt.paste` | Pastes graphic media files or clipboard blocks into the prompt. |
-| **`Ctrl+O`** | `prompt.toggle_trajectory` | Expands or collapses detailed tool reasoning outputs. |
-| **`Ctrl+R`** | `prompt.open_review` | Opens the Artifact Review panel. |
-| **`Ctrl+G`** | `prompt.external_editor` | Launches your default `$EDITOR` shell to compose your prompt. |
-| **`Alt+J`** | `prompt.teleport_agent` | Instantly switches focus to the next subagent awaiting confirmation. |
-| **`Ctrl+K`** | `prompt.fast_approve` | Instantly approves the pending subagent action listed in the status alert. |
-| **`Ctrl+A`** | `prompt.cursor_start` | Moves the prompt insertion cursor to the beginning of the line. |
-| **`Ctrl+E`** | `prompt.cursor_end` | Moves the prompt insertion cursor to the end of the line. |
-| **`Ctrl+Z`** | `prompt.undo_text` | Reverts the last edit. |
-| **`Ctrl+Shift+Z`** | `prompt.redo_text` | Redoes the last undone text operation. |
+| **`Enter`** | `cli.enter` | Submits your prompt or active menu selection to the agent. |
+| **`Shift+Enter`** / **`Ctrl+J`** | `prompt.insert_newline` | Inserts a clean newline without submitting. |
+| **`Ctrl+V`** | `edit.paste` | Pastes graphic media files or clipboard blocks into the prompt. |
+| **`Ctrl+O`** | `view.toggle_trajectory` | Expands or collapses detailed tool reasoning outputs. |
+| **`Ctrl+R`** | `view.review_artifact` | Opens the Artifact Review panel. |
+| **`Ctrl+G`** | `edit.open_editor` | Launches your default `$EDITOR` shell to compose your prompt. |
+| **`Alt+J`** | `subagent.jump_to_waiting` | Instantly switches focus to the next subagent awaiting confirmation. |
+| **`Ctrl+K`** | `subagent.approve_fast` | Instantly approves the pending subagent action listed in the status alert. |
+| **`Ctrl+A`** | `—` | Moves the prompt insertion cursor to the beginning of the line. |
+| **`Ctrl+E`** | `—` | Moves the prompt insertion cursor to the end of the line. |
+| **`Ctrl+_`** / **`Ctrl+Shift+-`** | `edit.undo` | Reverts the last edit. |
+| **`Ctrl+Shift+Z`** | `edit.redo` | Redoes the last undone text operation. |
 | **`Ctrl+D`** | `—` | Forward delete (only when the prompt box is non-empty). |
 | **`F5`** | `voice.start_dictation` | Starts or stops [voice dictation](./commands/voice.md). |
 
@@ -94,8 +95,8 @@ These keys are active inside select panels, menus, and scrollable text boxes.
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
 | **`↑`** / **`↓`** | `navigation.up` / `navigation.down` | Scrolls highlighted selections up or down by one item. |
-| **`PgUp`** / **`Shift+↑`** | `navigation.page_up` | Scrolls the active text viewport up by one page block. |
-| **`PgDn`** / **`Shift+↓`** | `navigation.page_down` | Scrolls the active text viewport down by one page block. |
+| **`PgUp`** / **`Shift+↑`** | `navigation.page_up` / `navigation.half_page_up` | Scrolls the active text viewport up by one page block. |
+| **`PgDn`** / **`Shift+↓`** | `navigation.page_down` / `navigation.half_page_down` | Scrolls the active text viewport down by one page block. |
 | **`←`** / **`→`** | `navigation.left` / `navigation.right` | Swaps pages inside multipage structures (like the Session Picker). |
 | **`Tab`** | `navigation.tab` | Confirms the highlighted slash-command autofill option. |
 
@@ -115,7 +116,7 @@ This section lists the primary settings key names, data types, system defaults, 
 
 ### Example `settings.json`
 
-```
+```json
 {
     "colorScheme": "tokyo night",
     "altScreenMode": "always",

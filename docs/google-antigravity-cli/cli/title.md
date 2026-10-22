@@ -1,7 +1,5 @@
 # Terminal title customization
 
-Available on: Antigravity CLI
-
 Configure dynamic window titles, map custom scripting configurations, and format JSON state outputs to customize terminal headers.
 
 Note
@@ -20,7 +18,7 @@ For customized window title formatting, you can route active TUI state details i
 
 Add a `title` configuration block to your `~/.gemini/antigravity-cli/settings.json` file:
 
-```json
+```
 {
     "title": {
         "type": "command",
@@ -41,7 +39,7 @@ You can download a complete, layout-adaptive script from the official [title.sh 
 
 Save the script to `~/.gemini/antigravity-cli/title.sh` and make it executable:
 
-```bash
+```
 chmod +x ~/.gemini/antigravity-cli/title.sh
 ```
 

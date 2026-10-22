@@ -1,5 +1,7 @@
 # Headless mode
 
+Available on: Antigravity CLI
+
 Run Antigravity CLI non-interactively to script agent tasks, integrate with CI pipelines, and capture machine-readable output.
 
 Headless mode (also called print mode) sends a single prompt to the agent, streams or returns the response, and exits. Use it whenever you need the agent’s output in a program instead of a terminal UI.
@@ -8,17 +10,17 @@ Headless mode (also called print mode) sends a single prompt to the agent, strea
 
 Pass a prompt with `-p` (or its aliases `--print` and `--prompt`) to run once and exit:
 
-```
+```bash
 agy -p "In one sentence, what is a git rebase?"
 ```
 
-```
+```text
 A git rebase rewrites the commit history by transplanting a sequence of commits onto a new base commit, imposing a strictly linear progression of changes that eliminates arbitrary merge artifacts.
 ```
 
 The response goes to `stdout`. Diagnostics—errors, authentication prompts, progress, and permission notices—go to `stderr`. This split keeps the captured response clean:
 
-```
+```bash
 # Capture only the model response; diagnostics still print to the terminal.
 answer=$(agy -p "Name three popular version control systems, comma-separated.")
 ```
@@ -39,11 +41,11 @@ The `--output-format` flag controls the shape of `stdout`. It accepts three valu
 
 This is the default format. The response text goes straight to `stdout` with no wrapping:
 
-```
+```bash
 agy -p "In one sentence, what does the command git bisect do?"
 ```
 
-```
+```text
 Git bisect executes a binary search algorithm across a project's commit history to rapidly isolate the precise commit responsible for introducing a defect.
 ```
 
@@ -51,11 +53,11 @@ Git bisect executes a binary search algorithm across a project's commit history 
 
 Set `--output-format json` to get a single JSON envelope after the run completes. The CLI emits it on one line; pipe through `jq` to pretty-print:
 
-```
+```bash
 agy -p "In one sentence, what is a git rebase?" --output-format json | jq
 ```
 
-```
+```json
 {
   "conversation_id": "055a398f-db14-4c5f-abbb-1bf03f8120a7",
   "status": "SUCCESS",
@@ -90,13 +92,13 @@ The envelope contains these fields:
 
 Pass `--json-schema` to constrain the answer to a schema. The parsed object appears in `structured_output`, and `response` holds the same payload serialized as a string:
 
-```
+```bash
 agy -p "Parse the semantic version string v2.14.3 into an object with integer fields major, minor, and patch." \
   --output-format json \
   --json-schema '{"type":"object","properties":{"major":{"type":"integer"},"minor":{"type":"integer"},"patch":{"type":"integer"}},"required":["major","minor","patch"]}' | jq
 ```
 
-```
+```json
 {
   "conversation_id": "4e502687-290c-4030-b908-5ed6c68fa5dc",
   "status": "SUCCESS",
@@ -119,7 +121,7 @@ agy -p "Parse the semantic version string v2.14.3 into an object with integer fi
 
 The flag accepts a schema string, a path to a `.json` schema file, or a primitive type name (`string`, `number`, `integer`, `boolean`). Read the parsed value from `structured_output`:
 
-```
+```bash
 agy -p "Parse the semantic version string v2.14.3 into an object with integer fields major, minor, and patch." \
   --output-format json \
   --json-schema '{"type":"object","properties":{"major":{"type":"integer"},"minor":{"type":"integer"},"patch":{"type":"integer"}},"required":["major","minor","patch"]}' \
@@ -130,13 +132,13 @@ agy -p "Parse the semantic version string v2.14.3 into an object with integer fi
 
 Set `--output-format stream-json` to emit one JSON object per line (NDJSON) as the run progresses. Use this format to observe tool calls and token usage in real time.
 
-```
+```bash
 agy -p "In one sentence, what is a git rebase?" --output-format stream-json
 ```
 
 The stream begins with one `init` event, followed by any number of `step_update` events, and ends with one `result` event (the `cwd` and `tools` array are abbreviated in the following example):
 
-```
+```json
 {"event":"init","conversation_id":"c3b66b04-872b-4fbe-a3a4-058a026ef20a","init":{"cwd":"/home/user/project","tools":["ask_permission","run_command","write_to_file","..."],"permission_mode":"request-review"}}
 {"event":"step_update","step_update":{"conversation_id":"c3b66b04-872b-4fbe-a3a4-058a026ef20a","step_index":0,"state":"DONE","step_type":"user_input"}}
 {"event":"step_update","step_update":{"conversation_id":"c3b66b04-872b-4fbe-a3a4-058a026ef20a","step_index":3,"state":"DONE","step_type":"agent_response","text_delta":"Git rebase destructively rewrites a branch's commit history by systematically detaching its unique commits and sequentially reapplying them onto a new base commit.\n","duration_seconds":6.28,"usage":{"input_tokens":10302,"output_tokens":582,"thinking_tokens":551,"cache_read_tokens":8113,"total_tokens":10884}}}
@@ -184,7 +186,7 @@ Each `step_update` payload describes one step. Observed `step_type` values inclu
 
 On tool steps, `tool_info` carries the call and its result. This is a real tool step from a run that executed `echo hello_headless_demo`:
 
-```
+```json
 {"event":"step_update","step_update":{"conversation_id":"edb1c8c1-50ba-4f3f-87eb-412d0e9d47c3","step_index":4,"state":"DONE","step_type":"tool","tool_name":"run_command","duration_seconds":0.07,"tool_info":{"name":"run_command","parameters":{"CommandLine":"echo hello_headless_demo"},"output":"hello_headless_demo\r\n"}}}
 ```
 
@@ -200,24 +202,24 @@ With `--json-schema`, the schema applies to the terminal `result` event, which c
 
 Get the response text from a JSON run:
 
-```
+```bash
 agy -p "Name three popular version control systems, comma-separated." --output-format json | jq -r '.response'
 ```
 
-```
+```text
 Git, Subversion, Mercurial.
 ```
 
 Concatenate streaming text as it arrives:
 
-```
+```bash
 agy -p "Explain what a merge conflict is in two sentences." --output-format stream-json \
   | jq -j 'select(.event=="step_update") | .step_update.text_delta // empty'
 ```
 
 Read token usage from the terminal `result` event:
 
-```
+```bash
 agy -p "In one sentence, what is a git rebase?" --output-format stream-json \
   | jq 'select(.event=="result") | .result.usage'
 ```
@@ -228,7 +230,7 @@ agy -p "In one sentence, what is a git rebase?" --output-format stream-json \
 
 Headless runs are stateless by default. Resume prior context with `--continue` (`-c`) for the most recent conversation, or `--conversation` with an ID from a previous run’s `conversation_id`:
 
-```
+```bash
 # Continue the most recent conversation.
 agy -p "Now explain your previous answer in more detail" --continue
 
@@ -250,13 +252,13 @@ This approach is ideal for applications that dynamically determine the next prom
 
 Write one JSON object per line to `stdin`. The `event` key specifies the message type (matching the output stream format). A prompt is represented as a `user` event with a `message`:
 
-```
+```json
 { "event": "user", "message": { "content": "Reply with exactly the word: apple. Nothing else." } }
 ```
 
 You can pipe multiple prompts into a single session:
 
-```
+```bash
 printf '%s\n' \
   '{"event":"user","message":{"content":"Reply with exactly the word: apple. Nothing else."}}' \
   '{"event":"user","message":{"content":"What word did I ask you to reply with in my previous message? Answer with just that word."}}' \
@@ -265,7 +267,7 @@ printf '%s\n' \
 
 The `content` field accepts either a standard string or a list of text blocks. The following two formats are equivalent:
 
-```
+```json
 { "event": "user", "message": { "content": "Reply with exactly: banana" } }
 { "event": "user", "message": { "content": [{ "type": "text", "text": "Reply with exactly: banana" }] } }
 ```
@@ -282,7 +284,7 @@ The output stream works as follows:
 
 This example shows the output from the two-prompt Bash command in the previous section (with the `init` payload abbreviated):
 
-```
+```json
 {"event":"init","conversation_id":"9ec58bfd-4d67-4f5e-83a5-9d907e9c6b1f","init":{"cwd":"/home/user/project","tools":["ask_permission","run_command","write_to_file","..."],"permission_mode":"request-review"}}
 {"event":"step_update","step_update":{"conversation_id":"9ec58bfd-4d67-4f5e-83a5-9d907e9c6b1f","step_index":0,"state":"DONE","step_type":"user_input"}}
 {"event":"step_update","step_update":{"conversation_id":"9ec58bfd-4d67-4f5e-83a5-9d907e9c6b1f","step_index":2,"state":"ACTIVE","step_type":"agent_response","text_delta":"apple"}}
@@ -306,7 +308,7 @@ When parsing the result object, keep in mind that the response text applies only
 
 To filter and only view the final responses, you can pipe the output through `jq`:
 
-```
+```bash
 printf '%s\n' \
   '{"event":"user","message":{"content":"Reply with exactly: one"}}' \
   '{"event":"user","message":{"content":"Reply with exactly: two"}}' \
@@ -314,7 +316,7 @@ printf '%s\n' \
   | jq -r 'select(.event=="result") | "\(.result.num_turns): \(.result.response)"'
 ```
 
-```
+```text
 1: one
 
 2: two
@@ -328,7 +330,7 @@ Instead of passing all prompts up front, you can hold the `stdin` pipe open in a
 
 For example:
 
-```
+```python
 import json
 import subprocess
 
@@ -380,7 +382,7 @@ To prevent unpredictable behavior, the CLI validates inputs. If it encounters a 
 
 Unrecognized `event` names are safely skipped with a warning. This ensures that applications built against newer versions of the streaming protocol don’t crash when running on older CLI versions:
 
-```
+```text
 warning: ignoring unsupported stream input message event "future_thing"
 ```
 
@@ -388,7 +390,7 @@ For all other errors, the session terminates immediately. Any turns that previou
 
 Slash commands that the CLI can respond to directly (such as `/model` and `/usage`) produce a text report rather than a standard event stream. A streaming session can’t use these types of slash commands. For example:
 
-```
+```json
 { "event": "result", "result": { "conversation_id": "4fae3a70-409d-42a4-86ea-9de206a49ff4", "status": "ERROR", "response": "", "error": "/model is answered by the CLI itself and is unavailable with --input-format stream-json; run it as its own --print /model invocation", "duration_seconds": 0, "num_turns": 0, "usage": { "input_tokens": 0, "output_tokens": 0, "thinking_tokens": 0, "cache_read_tokens": 0, "total_tokens": 0 } } }
 ```
 
@@ -406,7 +408,7 @@ Slash commands that the CLI can respond to directly (such as `/model` and `/usag
 
 List the available model slugs, then pin one for the run:
 
-```
+```bash
 agy models
 ```
 
@@ -423,7 +425,7 @@ gemini-3.1-pro-high       Gemini 3.1 Pro (High)
 ...
 ```
 
-```
+```bash
 # Pin a model by slug.
 agy -p "Reverse the string antigravity." --model gemini-3.8-flash-medium
 
@@ -444,7 +446,7 @@ By default, the CLI respects the permission mode in your settings. A tool that r
 
 Grant a tool ahead of time by adding an `action(target)` rule under `permissions.allow` in `~/.gemini/antigravity-cli/settings.json`:
 
-```
+```json
 {
   "permissions": {
     "allow": [
@@ -458,7 +460,7 @@ Grant a tool ahead of time by adding an `action(target)` rule under `permissions
 
 To auto-approve every tool for a run, pass `--dangerously-skip-permissions`:
 
-```
+```bash
 agy -p "Run the test suite and report failures" --dangerously-skip-permissions
 ```
 
@@ -470,15 +472,15 @@ A successful run exits `0`. A run that fails to produce a response exits non-zer
 
 For example, pinning an unknown model exits `1` and returns an error envelope:
 
-```
+```bash
 agy -p "hi" --model does-not-exist-model --output-format json; echo "exit=$?"
 ```
 
-```
+```json
 {"conversation_id":"","status":"ERROR","response":"","error":"invalid model selection (--model \"does-not-exist-model\" --effort \"\"): model does-not-exist-model is not recognized as a known model or custom model in settings\nAvailable models:\n  Gemini 3.6 Flash (High)\n  ...","duration_seconds":0,"num_turns":0,"usage":{"input_tokens":0,"output_tokens":0,"thinking_tokens":0,"cache_read_tokens":0,"total_tokens":0}}
 ```
 
-```
+```text
 exit=1
 ```
 
@@ -496,7 +498,7 @@ The `status` field reports the terminal state of the run:
 
 By default, a run waits up to five minutes for a response. Adjust the ceiling with `--print-timeout`:
 
-```
+```bash
 agy -p "Summarize the design tradeoffs of optimistic locking." --print-timeout 15m
 ```
 
@@ -521,7 +523,7 @@ agy -p "Summarize the design tradeoffs of optimistic locking." --print-timeout 1
 
 Fail the job on error and save the response:
 
-```
+```bash
 #!/usr/bin/env bash
 set -euo pipefail
 

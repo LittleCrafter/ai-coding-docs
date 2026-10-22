@@ -1,5 +1,7 @@
 # Changelog command (/changelog)
 
+Available on: Antigravity CLI
+
 Browse versioned Antigravity CLI release notes and recent changes directly in your terminal.
 
 ## Overview
@@ -12,13 +14,13 @@ When you run `/changelog`, the CLI fetches the latest published release notes an
 
 To open the interactive changelog viewer during a CLI session, run the following command:
 
-```
+```text
 /changelog
 ```
 
 The viewer renders the release notes organized by version heading, with the most recent version first:
 
-```
+```text
 ## 1.3.2
 
 - Added `/plugin`, an interactive manager for the official Antigravity plugin
@@ -44,19 +46,19 @@ You can also run `/changelog` in headless mode (`-p` or `--print`) to output the
 
 To print the Markdown changelog to your terminal or pipe it to a pager, run the following command:
 
-```
+```bash
 agy -p "/changelog"
 ```
 
 To retrieve the changelog in structured JSON format for scripts or automation, pass `--output-format json`:
 
-```
+```bash
 agy -p "/changelog" --output-format json
 ```
 
 You can also print the release notes with the standalone `changelog` subcommand, which doesn’t require a prompt:
 
-```
+```bash
 agy changelog
 ```
 

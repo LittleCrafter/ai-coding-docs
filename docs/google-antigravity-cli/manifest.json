@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-22T01:59:38Z",
+  "last_updated": "2026-10-22T07:59:56Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -10,8 +10,8 @@
       "source_url": "https://antigravity.google/docs/cli/artifacts",
       "source_md_url": "https://antigravity.google/docs/cli/artifacts.md",
       "source_id": "cli/artifacts",
-      "hash": "f54e6e0fa68125721aa1b59970e2980d9b7126ece021028fba9881f1a51d79d8",
-      "last_updated": "2026-10-01T02:32:05Z"
+      "hash": "e552c11f8138925c84c4665d9746025f5fc44a62b883a750ae15882f9f95e295",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/best-practices": {
       "slug": "cli/best-practices",
@@ -20,8 +20,8 @@
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "db9e11f30fe2f1c44e587a59c51bf5c0a200683b890f5aaf07ef02d8afe654d6",
-      "last_updated": "2026-10-16T07:33:51Z"
+      "hash": "dd0a7d5fd4a685a1a36a353bccea69e85900ef7acda13173558213fdf3bce6df",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -40,8 +40,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/btw",
       "source_md_url": "https://antigravity.google/docs/cli/commands/btw.md",
       "source_id": "cli/commands/btw",
-      "hash": "c7d4ad63df3c19dbfa5c0492da27f63c427d270cd5d933722e06250dfcbc10f1",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "5134d9a2c8195b2dbcabc51cca32e4f5c2292317ae12b961bdbe79b66847e2ab",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/commands/changelog": {
       "slug": "cli/commands/changelog",
@@ -50,8 +50,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/changelog",
       "source_md_url": "https://antigravity.google/docs/cli/commands/changelog.md",
       "source_id": "cli/commands/changelog",
-      "hash": "db8e20bcee629619be90df89d6261e227d2e5909b51270de7e19a6bde02e8e9d",
-      "last_updated": "2026-10-16T07:33:51Z"
+      "hash": "b0212e5eeb50573a7bad74f6fbcf91e1836565307c4eb6d3616b68dee9944b70",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/commands/codesearch": {
       "slug": "cli/commands/codesearch",
@@ -70,8 +70,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/context",
       "source_md_url": "https://antigravity.google/docs/cli/commands/context.md",
       "source_id": "cli/commands/context",
-      "hash": "bce7ae6dddfd13a1b7a2ed6c83fbfa52bf44ea11dc266e58d05b5570488322f3",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "40e0b82cfcc9d7234d8e0ba1267a164b824621ebbffdb116b01df7e982e3b550",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/commands/credits": {
       "slug": "cli/commands/credits",
@@ -100,8 +100,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/effort",
       "source_md_url": "https://antigravity.google/docs/cli/commands/effort.md",
       "source_id": "cli/commands/effort",
-      "hash": "b0184ca19b54b7f7eeb899929bfb78dcdbc90a35e1c0292ea86137f9d89562d7",
-      "last_updated": "2026-10-15T13:44:13Z"
+      "hash": "7ccad9f87bfbf641135c4d37a0dd72e5a0b12f479916afdd6f615f331d59c46b",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/commands/permissions": {
       "slug": "cli/commands/permissions",
@@ -130,8 +130,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/statusline",
       "source_md_url": "https://antigravity.google/docs/cli/commands/statusline.md",
       "source_id": "cli/commands/statusline",
-      "hash": "532d903c00f74a86bad2d8b029ef9e7835a876e579e94da9f7c5199feaaaa19b",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "e2f5484f918bfbaccc73399b5f4db3315df09817418f257181f7faaff7b5190f",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/commands/title": {
       "slug": "cli/commands/title",
@@ -150,8 +150,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/usage",
       "source_md_url": "https://antigravity.google/docs/cli/commands/usage.md",
       "source_id": "cli/commands/usage",
-      "hash": "fc1e2cbf1b9f5789615fa1f445a4dd79dccf83616ec49f5d484b5652c07069fa",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "39c5ba0cd47563c11b8e4b2101d958335dfbee5f250bc79486fe480e48c417e4",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/commands/voice": {
       "slug": "cli/commands/voice",
@@ -160,8 +160,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/voice",
       "source_md_url": "https://antigravity.google/docs/cli/commands/voice.md",
       "source_id": "cli/commands/voice",
-      "hash": "bb20ec311c75b0827e2c91bcc9ac311ebeab38b7ded3d181beb3c6d62b84ec34",
-      "last_updated": "2026-10-16T07:33:51Z"
+      "hash": "f14677fd571e8f9e8cd00a60fbbd5c4dc2a833daca29a2fe20a0916824f22bfb",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/conversations": {
       "slug": "cli/conversations",
@@ -190,8 +190,8 @@
       "source_url": "https://antigravity.google/docs/cli/features",
       "source_md_url": "https://antigravity.google/docs/cli/features.md",
       "source_id": "cli/features",
-      "hash": "055db5a7c872f73070415c487b91eb498a670f59e15a5667b5fb384d2dde6d2b",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "0615d834053436d27da2b82a674629173348044e049ce7cde57dede6c51948df",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/gcli-migration": {
       "slug": "cli/gcli-migration",
@@ -210,8 +210,8 @@
       "source_url": "https://antigravity.google/docs/cli/headless",
       "source_md_url": "https://antigravity.google/docs/cli/headless.md",
       "source_id": "cli/headless",
-      "hash": "599bd9296724300353eefe947316ea537c79f5364aae2e6ec154d524dc7a3c68",
-      "last_updated": "2026-10-13T18:32:59Z"
+      "hash": "0dce68c8e1d0dfaac977b26cbcd36e3b70e5f9bf38f72c2b6f87416e3e42a073",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/modes": {
       "slug": "cli/modes",
@@ -240,8 +240,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "28c6e5fcdb9445fca4a693a74c41d0feaf072603407597363ab74e61917d0310",
-      "last_updated": "2026-10-16T18:28:19Z"
+      "hash": "ed1d6921d26d4c41b4229dd9b6e83a8196acba4b66f3a99708a08694bf5ed6db",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -260,8 +260,8 @@
       "source_url": "https://antigravity.google/docs/cli/title",
       "source_md_url": "https://antigravity.google/docs/cli/title.md",
       "source_id": "cli/title",
-      "hash": "b1a88d6eef2c204fda960f70a0d97e240ec5c65f20cbe48e7869ce5d0195f2ee",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "6d77f7397ce8e90b34483ce02c986b16b8b40095f5bb7f75251ca262383b2993",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/troubleshooting": {
       "slug": "cli/troubleshooting",
@@ -280,8 +280,8 @@
       "source_url": "https://antigravity.google/docs/cli/using",
       "source_md_url": "https://antigravity.google/docs/cli/using.md",
       "source_id": "cli/using",
-      "hash": "9af8dfd4aeb984f0d43280b17dce364a22663f9638d7e1e2d4ca7cae5ea3c57e",
-      "last_updated": "2026-10-15T23:21:13Z"
+      "hash": "6f52e02fd48c41acb8de1e888796f89c5895fdfe50fec2847011e076771a2f87",
+      "last_updated": "2026-10-22T07:59:56Z"
     },
     "cli/vim-editor-mode": {
       "slug": "cli/vim-editor-mode",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-22T01:59:38Z",
-    "fetch_duration_seconds": 9.832,
+    "last_fetch_completed": "2026-10-22T07:59:56Z",
+    "fetch_duration_seconds": 9.814,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,

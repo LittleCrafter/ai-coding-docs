@@ -1,5 +1,7 @@
 # Effort command (/effort)
 
+Available on: Antigravity CLI
+
 Adjust your active model’s reasoning effort budget to balance response speed and reasoning depth.
 
 ## Overview
@@ -26,7 +28,7 @@ The set of levels you can choose from depends on your active model. Most adjusta
 
 Run `/effort` without arguments to open the interactive **Set Effort** timeline gauge, pre-positioned on your active effort level:
 
-```
+```text
 /effort
 ```
 
@@ -44,7 +46,7 @@ Use the following keys to adjust the timeline gauge:
 
 To switch effort levels immediately without opening the interactive picker, pass the target level as an argument:
 
-```
+```text
 /effort low
 /effort medium
 /effort high
@@ -61,7 +63,7 @@ In headless mode (`-p` or `--print`), you can inspect the active model’s reaso
 
 *   **Inspect current effort**: run `agy -p "/effort"` (or add `--output-format json`) to print whether the active model’s effort is adjustable along with the current and available effort tiers:
     
-    ```
+    ```bash
     agy -p "/effort"
     agy -p "/effort" --output-format json
     ```
@@ -70,7 +72,7 @@ In headless mode (`-p` or `--print`), you can inspect the active model’s reaso
     
 *   **Override effort for one run**: pass the `--effort` flag when running a prompt from your shell:
     
-    ```
+    ```bash
     agy -p "Summarize the changes in the last commit" --effort low
     ```
     

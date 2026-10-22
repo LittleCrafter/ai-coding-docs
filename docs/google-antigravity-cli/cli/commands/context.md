@@ -1,7 +1,5 @@
 # Context command (/context)
 
-Available on: Antigravity CLI
-
 Inspect your active conversation’s token consumption and context window usage.
 
 ## Overview
@@ -12,7 +10,7 @@ The `/context` command opens the interactive **Context Usage** panel in the Anti
 
 To inspect your current context window usage, run the following command:
 
-```text
+```
 /context
 ```
 
