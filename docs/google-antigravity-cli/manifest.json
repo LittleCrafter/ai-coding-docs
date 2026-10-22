@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-22T18:54:07Z",
+  "last_updated": "2026-10-22T23:41:52Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -240,8 +240,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "ed1d6921d26d4c41b4229dd9b6e83a8196acba4b66f3a99708a08694bf5ed6db",
-      "last_updated": "2026-10-22T07:59:56Z"
+      "hash": "e828b9d2c33b2894f9b419164ab1ac53b526e5eeb5a51654e9988b855ae6816c",
+      "last_updated": "2026-10-22T23:41:52Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -280,8 +280,8 @@
       "source_url": "https://antigravity.google/docs/cli/using",
       "source_md_url": "https://antigravity.google/docs/cli/using.md",
       "source_id": "cli/using",
-      "hash": "9af8dfd4aeb984f0d43280b17dce364a22663f9638d7e1e2d4ca7cae5ea3c57e",
-      "last_updated": "2026-10-22T18:54:07Z"
+      "hash": "6f52e02fd48c41acb8de1e888796f89c5895fdfe50fec2847011e076771a2f87",
+      "last_updated": "2026-10-22T23:41:52Z"
     },
     "cli/vim-editor-mode": {
       "slug": "cli/vim-editor-mode",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-22T18:54:07Z",
-    "fetch_duration_seconds": 9.963,
+    "last_fetch_completed": "2026-10-22T23:41:52Z",
+    "fetch_duration_seconds": 9.836,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,

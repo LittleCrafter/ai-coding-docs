@@ -25,7 +25,7 @@ The following table summarizes common shortcuts and commands:
 | **Reduce noise from tool calls** | Set verbosity to **low** in `/config` to minimize outputs from numerous tool calls |
 | **Manage permissions** | Control permissions using `/config` or `/permissions` |
 | **Go back in conversation** | Use `/rewind` or `/undo` to rewind the conversation history |
-| **Fork conversation** | Use `/fork` to spin up a separate workspace and branch the conversation from an earlier point |
+| **Fork conversation** | Use `/fork` to branch the conversation at the current point while keeping the existing workspace |
 | **Clear conversation** | Use `/clear` to clear the prompt and start a new conversation session |
 | **Resume conversation** | Use `/resume` to list and resume previous conversation logs |
 | **Auto-save resume** | When you close the CLI, it automatically prints the exact command needed to resume that specific session |
