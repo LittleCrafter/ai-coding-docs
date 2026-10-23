@@ -2,7 +2,7 @@
 
 Create tools the LLM can call in opencode.
 
-Custom tools are functions you create that the LLM can call during conversations. They work alongside opencode's [built-in tools](./tools.md) like `read`, `write`, and `shell`.
+Custom tools are functions you create that the LLM can call during conversations. They work alongside opencode's [built-in tools](./tools.md) like `read`, `write`, and `bash`.
 
 ---
 
@@ -82,13 +82,13 @@ This creates two tools: `math_add` and `math_multiply`.
 
 Custom tools are keyed by tool name. If a custom tool uses the same name as a built-in tool, the custom tool takes precedence.
 
-For example, this file replaces the built-in `shell` tool:
+For example, this file replaces the built-in `bash` tool:
 
-```ts title=".opencode/tools/shell.ts"
+```ts title=".opencode/tools/bash.ts"
 import { tool } from "@opencode-ai/plugin"
 
 export default tool({
-  description: "Restricted shell wrapper",
+  description: "Restricted bash wrapper",
   args: {
     command: tool.schema.string(),
   },
