@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.164.0",
-  "last_updated": "2026-10-23T08:01:12Z",
+  "last_updated": "2026-10-23T18:48:49Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "03ff605d1e6701d27286149fcbea7f8f3abd22d4746270f95df1796d04c8659f",
-      "last_updated": "2026-10-22T23:44:33Z"
+      "hash": "09825a134418e4bb756501f6b39aeace99a046df856919e6faf4aa30181ce510",
+      "last_updated": "2026-10-23T18:48:49Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -460,8 +460,8 @@
       "source_url": "https://learn.chatgpt.com/docs/developers",
       "source_md_url": "https://learn.chatgpt.com/docs/developers.md",
       "source_id": "llms:developers",
-      "hash": "f24e293849fac5b9306dff41c7d9d649a7f3f958e542ea5c96f765263b3b1507",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "84d60e22c62bf4778a16f4f4359a1c46ad3ffe8d28eb8e84008071f61e4ce1ea",
+      "last_updated": "2026-10-23T18:48:49Z"
     },
     "dots": {
       "slug": "dots",
@@ -820,8 +820,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/roll-out-a-gateway",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/roll-out-a-gateway.md",
       "source_id": "llms:enterprise/roll-out-a-gateway",
-      "hash": "071e448a500a3c481c2afd2d0a755122dadcb53ce1421959f6788a4797a8863c",
-      "last_updated": "2026-10-14T21:03:11Z"
+      "hash": "cd24ed0b42b617e02037959ce04fa5f421bd218b6a8ad37be8eb9f5f3c9fe175",
+      "last_updated": "2026-10-23T18:48:49Z"
     },
     "enterprise/security-cookbook": {
       "slug": "enterprise/security-cookbook",
@@ -1262,6 +1262,16 @@
       "source_id": "llms:mobile",
       "hash": "2dff7df1dc3d1a277882288f2c56b4460530052de75a6e9dea1d2a9cb4c40eb1",
       "last_updated": "2026-10-06T17:29:30Z"
+    },
+    "model-catalogs": {
+      "slug": "model-catalogs",
+      "title": "Implementing model catalogs for gateways and clouds",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/model-catalogs",
+      "source_md_url": "https://learn.chatgpt.com/docs/model-catalogs.md",
+      "source_id": "llms:model-catalogs",
+      "hash": "c6cc54c862feb9adfa6978a3e55c69bf1e2f9da4592f44214ed9e8228b8a0050",
+      "last_updated": "2026-10-23T18:48:49Z"
     },
     "model-selection": {
       "slug": "model-selection",
@@ -2025,10 +2035,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-23T08:01:12Z",
-    "fetch_duration_seconds": 70.507,
-    "total_pages_discovered": 202,
-    "pages_fetched_successfully": 202,
+    "last_fetch_completed": "2026-10-23T18:48:49Z",
+    "fetch_duration_seconds": 70.815,
+    "total_pages_discovered": 203,
+    "pages_fetched_successfully": 203,
     "pages_failed": 0,
     "failed_pages": []
   }

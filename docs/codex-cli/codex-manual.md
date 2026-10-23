@@ -3732,6 +3732,8 @@ Add Codex to products, systems, and automated workflows.
 
 - [App Server](./app-server.md): Integrate with the protocol that powers Codex clients.
 
+- [Model catalogs](./model-catalogs.md): Serve current model defaults through a cloud or gateway integration.
+
 - [GitHub Action](./github-action.md): Run Codex from GitHub Actions workflows.
 
 - [Non-interactive mode](./non-interactive-mode.md): Run Codex from scripts and other automated systems.
@@ -39012,6 +39014,152 @@ on the thread.
 
 For more details, check out the [Python repo](https://github.com/openai/codex/tree/main/sdk/python).
 
+### Implementing model catalogs for gateways and clouds
+
+Source: [Implementing model catalogs for gateways and clouds](./model-catalogs.md)
+
+This page is for developers implementing the Codex Models format, which defines
+the model catalog and powers the model picker. If you build an inference
+provider, such as a gateway or cloud service, use this specification to let the
+Codex desktop app and CLI discover your models and use their instructions and
+capability settings.
+
+If you administer an enterprise and want to control the model catalog, see the
+[`model_catalog_url` configuration guidance](./enterprise/roll-out-a-gateway.md#serve-a-remote-catalog).
+
+To support the format, implement an authenticated catalog endpoint. Fetch your
+upstream provider's current defaults for the requesting Codex version, apply
+your overrides, and return the resulting catalog.
+
+Authenticated reads · `client_version`
+Model catalogs
+
+      OpenAI
+      Current model defaults
+      Instructions and settings
+
+      Cloud / upstream provider
+      Match deployed models
+      Account and region availability
+
+      Enterprise gateway
+      Read upstream catalogs
+      Filter and apply overrides
+
+      Codex app and CLI
+      Show available models
+      Use compatible settings
+
+      Enterprise / custom models
+      Optional reviewed definitions
+      Can originate outside OpenAI
+
+#### Implement the catalog endpoint
+
+The default catalog endpoint is `/models` under the provider's `base_url`.
+For example, with `base_url = "https://gateway.example.com/v1"`, Codex requests:
+
+```http
+GET /v1/models?client_version=0.162.1
+Authorization: Bearer <PROVIDER_ACCESS_TOKEN>
+```
+
+Default discovery supports command-backed authentication and Codex-backend
+authentication, such as ChatGPT. For a custom provider using API-key authentication
+without command-backed authentication, set `model_providers..model_catalog_url`
+explicitly to enable remote discovery. An API key alone doesn't trigger discovery
+at the default path.
+
+Use `model_catalog_url` to choose a full catalog URL, such as
+`https://gateway.example.com/codex/models`. It can also point to the default
+`/v1/models` endpoint. Codex uses this URL directly without appending `/models`.
+For API-key discovery, keep `features.api_key_model_discovery` enabled; it is on
+by default. Custom headers alone don't enable discovery.
+
+Codex sends the selected provider's authentication and configured headers, and
+appends `client_version` and any provider `query_params`. Host the catalog on a
+service authorized to receive those credentials.
+
+Authenticate the caller, fetch the corresponding upstream defaults, apply your
+overrides, and return the complete `ModelsResponse` JSON directly. Give every
+entry a unique, nonempty `slug`. For an explicit `model_catalog_url`, Codex rejects
+redirects and responses larger than 1 MiB. Continue enforcing model access on
+inference requests.
+
+Remove any effective `model_catalog_json` setting from clients using the endpoint:
+the local file takes precedence and prevents remote fetching.
+
+#### Match the client's schema
+
+Read the `client_version` query parameter on the catalog request. Codex sends its
+CLI version as `major.minor.patch`, with any prerelease suffix removed. For desktop
+clients, this is the bundled CLI version.
+
+Use the matching `rust-v` tag in the public Codex repository, or the
+exact source commit for a custom build. These links use `rust-v0.162.1`; select
+the revision matching your client:
+
+- Read the [`ModelsResponse` and `ModelInfo` response types](https://github.com/openai/codex/blob/rust-v0.162.1/codex-rs/protocol/src/openai_models.rs) for the schema.
+- Inspect the [bundled `models.json`](https://github.com/openai/codex/blob/rust-v0.162.1/codex-rs/models-manager/models.json) for a complete example. This is catalog data, not a JSON Schema document.
+
+The bundled file is a release snapshot. Fetch current defaults before producing
+your catalog.
+
+#### Fetch current upstream defaults
+
+Cloud providers serving OpenAI models fetch defaults from OpenAI. Gateways read
+their cloud or upstream provider's catalog so they retain the deployed model's
+settings and account and region availability. Pass the requesting Codex version
+at each step, and authenticate separately to each endpoint.
+
+To fetch defaults directly from OpenAI, call the Codex models endpoint with the
+same `client_version`. For example, with an OpenAI API key:
+
+```bash
+curl --fail --silent --show-error \
+  'https://chatgpt.com/backend-api/codex/models?client_version=0.162.1' \
+  -H "Authorization: Bearer $OPENAI_API_KEY"
+```
+
+For a ChatGPT integration, use the caller's ChatGPT access token and
+`ChatGPT-Account-ID` header when applicable. Use credentials authorized for the
+upstream endpoint; your gateway's own API key doesn't authenticate to OpenAI.
+
+Parse the full response, including its top-level `models` array. This endpoint
+returns Codex metadata such as instructions, reasoning defaults, tool settings,
+context limits, and service tiers. The public `/v1/models` endpoint doesn't
+supply this catalog.
+
+Refresh these defaults even when the Codex version hasn't changed. Keep requests
+scoped to the intended upstream identity and honor response cache controls:
+catalogs can depend on the caller's access. Keep your overrides separate so you
+can reapply them to fresh defaults.
+
+#### Apply provider overrides
+
+Change field values while preserving the version's response structure:
+
+- Filter models to those the caller can use. Map each `slug` to a supported
+  inference route, and adjust `display_name`, `description`, or `priority`.
+  For an alias without a model migration, set `upgrade` to `null`.
+- Set reasoning options, context limits, input modalities, and service tiers to
+  values your model and route support. Keep defaults within the supported
+  choices. For a route without service tiers, clear `service_tiers` and
+  `additional_speed_tiers`, and set `default_service_tier` to `null`.
+- Preserve upstream instructions and tool settings unless you have tested a
+  replacement. Metadata doesn't add model capabilities or grant inference access.
+
+For Bedrock through LiteLLM, apply the
+[required catalog edits](./enterprise/bedrock-through-litellm.md#prepare-the-client-catalog).
+Test the resulting catalog with each supported Codex version.
+
+#### Use the public Rust types
+
+Use crates from the same public Git tag or commit as the client's schema:
+
+- Use [`codex-protocol`](https://github.com/openai/codex/tree/rust-v0.162.1/codex-rs/protocol) for `codex_protocol::openai_models::{ModelsResponse, ModelInfo}`. Parse with `serde_json::from_slice::()`, edit `catalog.models`, and serialize the whole wrapper with `serde_json::to_vec()`. The wrapper handles compatibility fields for model instructions.
+- Use [`codex-models-manager::bundled_models_response()`](https://github.com/openai/codex/blob/rust-v0.162.1/codex-rs/models-manager/src/lib.rs) to load that revision's static bundled catalog as a `ModelsResponse`. It doesn't fetch current upstream defaults.
+
 ### Non-interactive mode
 
 Source: [Non-interactive mode](./non-interactive-mode.md)
@@ -47290,20 +47438,14 @@ Supply a model catalog when your gateway uses a model name Codex does not recogn
 
 Host a remote catalog with `model_providers..model_catalog_url` to update model metadata centrally, or distribute a local file with `model_catalog_json`. See the [configuration reference](./config-file/config-reference.md) for both settings.
 
-For example, to use `company-coding-model` as an alias for `gpt-6-luna`:
-
-1. Create the `company-coding-model` alias on the gateway and route it to the approved upstream `gpt-6-luna` model.
-2. Download the [Codex model catalog](https://github.com/openai/codex/blob/main/codex-rs/models-manager/models.json) for your Codex version and save a copy as `gateway-models.json`. Use this file as your starting point.
-3. Edit the `gpt-6-luna` entry in your copy: set `slug` to `company-coding-model` and check that the remaining metadata matches the upstream model and gateway capabilities. For an alias without a model migration, set `upgrade` to `null`.
-4. Keep the entries in the top-level `models` array. Include every model users need to select, then serve the file from a catalog endpoint or distribute it locally as described below.
-
-To use a catalog for a specific Codex version, check `codex --version` and select the matching `rust-v` tag. For a custom build, use its exact source commit. For a desktop deployment, match the bundled CLI version.
-
-For Bedrock through LiteLLM, apply the [required catalog edits](./enterprise/bedrock-through-litellm.md#prepare-the-client-catalog).
+Get a catalog endpoint or file compatible with your Codex version from your cloud
+or gateway provider. Make sure it includes each approved alias and its model
+metadata. For catalog implementation, see
+[Implementing model catalogs for gateways and clouds](./model-catalogs.md).
 
 #### Serve a remote catalog
 
-Serve the prepared `gateway-models.json` as the response body of an HTTPS endpoint.
+Use the HTTPS catalog endpoint supplied by your provider.
 Distribute the full endpoint URL in the selected provider's `config.toml` table:
 
 ```toml
@@ -47314,7 +47456,7 @@ web_search = "disabled"
 [model_providers.enterprise-gateway]
 name = "Organization Gateway"
 base_url = "https://gateway.example.com/v1"
-model_catalog_url = "https://gateway.example.com/codex/models.json"
+model_catalog_url = "https://gateway.example.com/codex/models"
 wire_api = "responses"
 env_key = "CODEX_GATEWAY_API_KEY"
 ```
@@ -47326,18 +47468,7 @@ default OpenAI endpoint for the current authentication mode.
 Discovery requires API-key, command-backed, or Codex-backend authentication.
 Custom headers alone don't trigger it.
 
-The catalog endpoint must:
-
-- Accept `GET` requests at the configured URL, including the `client_version`
-  query parameter Codex adds and any configured provider `query_params`.
-- Accept the selected provider's authentication and configured headers. Host
-  the catalog on a service authorized to receive those credentials.
-- Return a top-level `models` array with complete Codex model metadata matching
-  the client's version. Use the version-matched catalog prepared above, rather
-  than a list of model IDs. Give each entry a unique, nonempty `slug`.
-- Return the JSON directly without redirects and keep the response within 1 MiB.
-
-Update the catalog when your approved models change. Restart the client after
+Coordinate catalog updates with your provider when your approved models change. Restart the client after
 changing its configuration.
 
 Remove any effective `model_catalog_json` setting, including one enforced through
@@ -47345,7 +47476,7 @@ Remove any effective `model_catalog_json` setting, including one enforced throug
 
 #### Distribute a local catalog
 
-Use `model_catalog_json` to load the prepared file at startup. A local custom
+Use `model_catalog_json` to load the provider-supplied file at startup. A local custom
 catalog replaces the bundled catalog.
 
 Set the gateway alias, catalog `slug`, and Codex `model` to `company-coding-model`. Add these settings before the first TOML table in the Codex configuration you distribute, using the file's actual absolute path:

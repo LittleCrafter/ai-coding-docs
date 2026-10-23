@@ -24,10 +24,10 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **[`/diff`](./commands/diff.md)** | Utilities | — | Open the [interactive diff viewer](./commands/diff.md) to view changes, turns, and commits. |
 | **[`/effort`](./commands/effort.md) `[level]`** | Configurations | — | Set or inspect the active model’s [reasoning effort level](./commands/effort.md) (`low` through `max`, depending on the model). |
 | **`/exit`** | Core | `/quit` | Close the TUI session and restore your host shell. |
+| **`/fast`** | Configurations | — | Enable fast mode (bypass reasoning plans) for quick actions. |
 | **`/feedback`** | Utilities | — | Open the feedback submission panel. |
 | **`/fork`** | Conversations | `/branch` | Clone the current conversation thread into a new parallel session. |
 | **[`/goal`](https://antigravity.google/docs/commands/goal)** `<objective>` | Reasoning | — | Run autonomously until the [goal is verified complete](https://antigravity.google/docs/commands/goal), without intermediate pauses. |
-| **[`/grill-me`](https://antigravity.google/docs/commands/grill-me)** `[task]` | Planning | — | Have the agent [interview you](https://antigravity.google/docs/commands/grill-me) one question at a time, with a recommended answer for each, before it starts work. |
 | **`/help`** | Utilities | — | Open the help panel showing commands and shortcuts. |
 | **`/hooks`** | Tools & Tasks | — | Browse active pre-flight/post-format script hooks. |
 | **`/keybindings`** | Configurations | — | Open the interactive Keyboard Shortcut Editor. |
@@ -37,7 +37,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **`/model`** | Configurations | — | Choose your preferred reasoning model (persists across sessions). |
 | **`/open <path>`** | Utilities | — | Force the path to open inside your default system editor. |
 | **[`/permissions`](./commands/permissions.md)** | Configurations | — | Open the interactive tool permissions manager panel. |
-| **[`/plan`](https://antigravity.google/docs/plan)** `[task]` | Planning | — | Explore the codebase, clarify requirements, and draft a reviewable [Implementation Plan](https://antigravity.google/docs/implementation-plan). |
+| **`/planning`** | Configurations | — | Enable multi-turn plan generation mode for complex engineering tasks. |
 | **[`/plugin`](https://antigravity.google/docs/plugins?tab=cli)** | Tools & Tasks | `/plugins` | Open the interactive [Plugins Manager](https://antigravity.google/docs/marketplace?tab=cli) or run inline `install`, `uninstall`, `enable`, `disable`, and `list` commands. |
 | **`/rename <name>`** | Conversations | — | Rename the current session thread. |
 | **[`/remote-control`](https://antigravity.google/docs/remote-control?tab=cli#interactive-mode) \[on/off\]** | Utilities | — | Toggle Remote Control for the active terminal session. |
