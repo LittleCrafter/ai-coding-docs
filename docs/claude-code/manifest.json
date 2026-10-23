@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.309",
-  "last_updated": "2026-10-23T08:00:00Z",
+  "last_updated": "2026-10-23T13:53:16Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -640,8 +640,8 @@
       "source_url": "https://code.claude.com/docs/en/cloud-environments",
       "source_md_url": "https://code.claude.com/docs/en/cloud-environments.md",
       "source_id": "cloud-environments",
-      "hash": "a02612c9cb25b8af1da3d1dbc1c1431e9f6681186d465b6cd996921355384482",
-      "last_updated": "2026-10-22T02:01:11Z"
+      "hash": "a7ad739bc73cf0da1510344edb2d4f532ce77c83a0847374680c6db28a275d17",
+      "last_updated": "2026-10-23T13:53:16Z"
     },
     "code-review": {
       "slug": "code-review",
@@ -1730,8 +1730,8 @@
       "source_url": "https://code.claude.com/docs/en/security-guidance",
       "source_md_url": "https://code.claude.com/docs/en/security-guidance.md",
       "source_id": "security-guidance",
-      "hash": "7be268f2b6e24e6b2e8cd270fc8f0493613b2d9764f7a22217da4df775b05a4a",
-      "last_updated": "2026-10-20T18:48:36Z"
+      "hash": "a3f06f0431bf7a371c84e998e83f09d1b7f1e78844109b9b01c0e70ebf87236b",
+      "last_updated": "2026-10-23T13:53:16Z"
     },
     "self-hosted-environments": {
       "slug": "self-hosted-environments",
@@ -1750,8 +1750,8 @@
       "source_url": "https://code.claude.com/docs/en/self-hosted-environments-configuration",
       "source_md_url": "https://code.claude.com/docs/en/self-hosted-environments-configuration.md",
       "source_id": "self-hosted-environments-configuration",
-      "hash": "15eedb7cd6e1c2212cf43bac9c5d258eca2bffd6b370feba16460a26f826c56b",
-      "last_updated": "2026-10-22T18:55:36Z"
+      "hash": "f9aa3c3c12b7764f3e5f7207373443995e5f42ff179a49dbd70658f0695b2cb4",
+      "last_updated": "2026-10-23T13:53:16Z"
     },
     "self-hosted-environments-deploy": {
       "slug": "self-hosted-environments-deploy",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-23T08:00:00Z",
-    "fetch_duration_seconds": 79.295,
+    "last_fetch_completed": "2026-10-23T13:53:16Z",
+    "fetch_duration_seconds": 79.343,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

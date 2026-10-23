@@ -98,7 +98,7 @@ Plugins installed in the Antigravity App are automatically updated and shown in 
 
 The terminal sandbox is a lightweight security isolation mechanism that protects your host system from potentially destructive file manipulations or unauthorized outbound network requests when the agent executes local shell commands.
 
-Rather than running heavy virtual machines or containers, the CLI uses native operating system features (`nsjail` on Linux, `sandbox-exec` on macOS, and `AppContainer` on Windows) to enforce strict containment boundaries with zero startup overhead.
+Rather than running heavy virtual machines or containers, the CLI uses native operating system features (kernel namespaces on Linux, `sandbox-exec` on macOS, and process security environments on Windows) to enforce strict containment boundaries with zero startup overhead.
 
 **Configuration** You can configure the sandbox behavior in your `settings.json` file (located at `~/.gemini/antigravity-cli/settings.json`):
 
@@ -128,6 +128,8 @@ The Antigravity CLI supports a variety of slash commands typed directly into the
 | **[`/resume`](./commands/resume.md)** _(aliases `/switch`, `/conversation`)_ | Conversation | Open the conversation picker to resume or switch sessions. |
 | **[`/boost <task>`](https://antigravity.google/docs/boost)** | Reasoning | Multi-agent deep reasoning for complex bugs, race conditions, and algorithms. |
 | **[`/teamwork-preview <task>`](https://antigravity.google/docs/teamwork)** | Reasoning | Launch [collaborative multi-agent teams](https://antigravity.google/docs/teamwork) for long-horizon projects (paid plans). |
+| **[`/plan [task]`](https://antigravity.google/docs/plan)** | Planning | Explore the codebase, clarify requirements, and draft a reviewable [Implementation Plan](https://antigravity.google/docs/implementation-plan). |
+| **[`/grill-me [task]`](https://antigravity.google/docs/commands/grill-me)** | Planning | Have the agent [interview you](https://antigravity.google/docs/commands/grill-me) one question at a time, with a recommended answer for each, before it starts work. |
 | **[`/effort [level]`](./commands/effort.md)** | Configuration | Set the active model’s [reasoning effort level](./commands/effort.md) (`low` through `max`, depending on the model). |
 | **`/rewind`** _(alias `/undo`)_ | Conversation | Rewind conversation to a previous message. |
 | **`/rename <name>`** | Conversation | Rename the active conversation thread for easier tracking. |

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-23T07:58:28Z",
+  "last_updated": "2026-10-23T13:51:47Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -190,8 +190,8 @@
       "source_url": "https://antigravity.google/docs/cli/features",
       "source_md_url": "https://antigravity.google/docs/cli/features.md",
       "source_id": "cli/features",
-      "hash": "055db5a7c872f73070415c487b91eb498a670f59e15a5667b5fb384d2dde6d2b",
-      "last_updated": "2026-10-22T14:08:50Z"
+      "hash": "8a4f1a0ea9436b73fe51887d89062f895f45c683f67f59c15194f76e5af9e193",
+      "last_updated": "2026-10-23T13:51:47Z"
     },
     "cli/gcli-migration": {
       "slug": "cli/gcli-migration",
@@ -220,8 +220,8 @@
       "source_url": "https://antigravity.google/docs/cli/modes",
       "source_md_url": "https://antigravity.google/docs/cli/modes.md",
       "source_id": "cli/modes",
-      "hash": "2f94c20a8bf275f84902696837d0d1016d3ea8b9c11ee9b3c19519556fada749",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "67f6c694bf9c20e04066e61733630f49003c5b55c1056a4131133ce9b690fefe",
+      "last_updated": "2026-10-23T13:51:47Z"
     },
     "cli/prompting": {
       "slug": "cli/prompting",
@@ -240,8 +240,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "ed1d6921d26d4c41b4229dd9b6e83a8196acba4b66f3a99708a08694bf5ed6db",
-      "last_updated": "2026-10-23T02:03:45Z"
+      "hash": "0c3b0863651db6d37a1f2599d060db2c9e37824720a6707427d394c57b829315",
+      "last_updated": "2026-10-23T13:51:47Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -260,8 +260,8 @@
       "source_url": "https://antigravity.google/docs/cli/title",
       "source_md_url": "https://antigravity.google/docs/cli/title.md",
       "source_id": "cli/title",
-      "hash": "b1a88d6eef2c204fda960f70a0d97e240ec5c65f20cbe48e7869ce5d0195f2ee",
-      "last_updated": "2026-10-23T07:58:28Z"
+      "hash": "8d661eee8e599d2b54c7354f0ab65ce9c77780f1f087e77cdb1df33ad4e327ec",
+      "last_updated": "2026-10-23T13:51:47Z"
     },
     "cli/troubleshooting": {
       "slug": "cli/troubleshooting",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-23T07:58:28Z",
-    "fetch_duration_seconds": 9.815,
+    "last_fetch_completed": "2026-10-23T13:51:47Z",
+    "fetch_duration_seconds": 9.828,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,
