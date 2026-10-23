@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-10-23T02:06:49Z",
+  "last_updated": "2026-10-23T08:01:32Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -275,13 +275,13 @@
     },
     "news/news1226": {
       "slug": "news/news1226",
-      "title": "🚀 Introducing DeepSeek-V3",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news1226",
       "source_md_url": "https://api-docs.deepseek.com/news/news1226",
       "source_id": "news/news1226",
-      "hash": "8633fa2d9820b764648ae880c3cd79be64a4ab38efffae1642898ddccd2a4952",
-      "last_updated": "2026-10-23T02:06:49Z"
+      "hash": "d2269900c77786e82b4d71ff75a719e523f814e3eb57619070cf758279515370",
+      "last_updated": "2026-10-23T08:01:32Z"
     },
     "news/news250115": {
       "slug": "news/news250115",
@@ -305,13 +305,13 @@
     },
     "news/news250325": {
       "slug": "news/news250325",
-      "title": "DeepSeek-V3-0324 Release",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250325",
       "source_md_url": "https://api-docs.deepseek.com/news/news250325",
       "source_id": "news/news250325",
-      "hash": "4c57940939c00fd1f395eb113013e78c40b220d45557470df976fa1be4f20086",
-      "last_updated": "2026-10-22T18:57:09Z"
+      "hash": "d2269900c77786e82b4d71ff75a719e523f814e3eb57619070cf758279515370",
+      "last_updated": "2026-10-23T08:01:32Z"
     },
     "news/news250528": {
       "slug": "news/news250528",
@@ -545,8 +545,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-23T02:06:49Z",
-    "fetch_duration_seconds": 24.068,
+    "last_fetch_completed": "2026-10-23T08:01:32Z",
+    "fetch_duration_seconds": 18.82,
     "total_pages_discovered": 54,
     "pages_fetched_successfully": 54,
     "pages_failed": 0,

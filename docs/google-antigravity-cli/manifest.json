@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-23T02:03:45Z",
+  "last_updated": "2026-10-23T07:58:28Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -250,8 +250,8 @@
       "source_url": "https://antigravity.google/docs/cli/statusline",
       "source_md_url": "https://antigravity.google/docs/cli/statusline.md",
       "source_id": "cli/statusline",
-      "hash": "ab86e5a024a1408cd9a45fe0a7f83be12449499a1060afd4be51ec296e6df156",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "edd33581c82f7e9d3dee00735132a573e2dbf966363ada7f56a8ebabcdacf51c",
+      "last_updated": "2026-10-23T07:58:28Z"
     },
     "cli/title": {
       "slug": "cli/title",
@@ -260,8 +260,8 @@
       "source_url": "https://antigravity.google/docs/cli/title",
       "source_md_url": "https://antigravity.google/docs/cli/title.md",
       "source_id": "cli/title",
-      "hash": "8d661eee8e599d2b54c7354f0ab65ce9c77780f1f087e77cdb1df33ad4e327ec",
-      "last_updated": "2026-10-23T02:03:45Z"
+      "hash": "b1a88d6eef2c204fda960f70a0d97e240ec5c65f20cbe48e7869ce5d0195f2ee",
+      "last_updated": "2026-10-23T07:58:28Z"
     },
     "cli/troubleshooting": {
       "slug": "cli/troubleshooting",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-23T02:03:45Z",
-    "fetch_duration_seconds": 9.874,
+    "last_fetch_completed": "2026-10-23T07:58:28Z",
+    "fetch_duration_seconds": 9.815,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,
