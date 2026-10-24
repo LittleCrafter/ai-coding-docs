@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 54
-- **Last updated:** 2026-10-23T08:01:32Z
+- **Last updated:** 2026-10-24T19:55:20Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -12,7 +12,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Your First API Call | [index.md](./index.md) | [source](<https://api-docs.deepseek.com>) |
-| Your First API Call | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
+| Change Log | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
 
 ## api
 
