@@ -6,9 +6,9 @@ Auto-generated mirror of documentation for several AI coding tools/CLIs.
 | Source | Version | Pages | Last updated | Whats-new |
 | --- | :---: | ---: | --- | :---: |
 | [Google Antigravity CLI](./google-antigravity-cli/) | 1.2.0 | 29 | 2026-10-23T23:35:35Z | yes |
-| [Claude Code](./claude-code/) | 2.1.310 | 227 | 2026-10-24T17:42:22Z | no |
+| [Claude Code](./claude-code/) | 2.1.310 | 227 | 2026-10-25T01:51:08Z | no |
 | [Codex CLI](./codex-cli/) | 0.164.0 | 203 | 2026-10-23T18:48:49Z | no |
-| [DeepSeek API](./deepseek-api/) | — | 54 | 2026-10-24T19:55:20Z | no |
+| [DeepSeek API](./deepseek-api/) | — | 54 | 2026-10-25T01:52:42Z | no |
 | [Kimi Code](./kimi-code/) | 2.3.1 | 29 | 2026-10-23T13:54:59Z | no |
 | [OpenCode](./opencode/) | 1.19.4 | 33 | 2026-10-23T02:07:14Z | no |
 
