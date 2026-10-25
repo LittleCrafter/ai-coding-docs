@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.310",
-  "last_updated": "2026-10-25T01:51:08Z",
+  "last_updated": "2026-10-25T07:51:56Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1160,8 +1160,8 @@
       "source_url": "https://code.claude.com/docs/en/llm-gateway-protocol",
       "source_md_url": "https://code.claude.com/docs/en/llm-gateway-protocol.md",
       "source_id": "llm-gateway-protocol",
-      "hash": "ef8ad92ce96b6c320732ec10cef6101c44616c5fc7cb6c9395d7a56bd68a1494",
-      "last_updated": "2026-10-25T01:51:08Z"
+      "hash": "9b7af60f210a11db4fc8939734021ab08cb0706dc0fbb99fce844f2113f0d61e",
+      "last_updated": "2026-10-25T07:51:56Z"
     },
     "llm-gateway-rollout": {
       "slug": "llm-gateway-rollout",
@@ -1260,8 +1260,8 @@
       "source_url": "https://code.claude.com/docs/en/monitoring-usage",
       "source_md_url": "https://code.claude.com/docs/en/monitoring-usage.md",
       "source_id": "monitoring-usage",
-      "hash": "c50c99c7952c8a7660f0564a75de972c38a6423633aad5fff248bc20c7a44860",
-      "last_updated": "2026-10-24T07:39:43Z"
+      "hash": "724557e4ac516929ff398c4daa36420c59bbf170695681b999ba35321bc1905d",
+      "last_updated": "2026-10-25T07:51:56Z"
     },
     "network-config": {
       "slug": "network-config",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-25T01:51:08Z",
-    "fetch_duration_seconds": 79.282,
+    "last_fetch_completed": "2026-10-25T07:51:56Z",
+    "fetch_duration_seconds": 79.297,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,
