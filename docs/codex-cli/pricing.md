@@ -151,6 +151,7 @@ and reset times.
 | --- | :---: | :---: |
 | GPT-6 Astra | 5-45 | 5-45 |
 | GPT-6.1 Sol | 15-160 | 15-160 |
+| GPT-6.1 Terra | 35-285 | 35-285 |
 | GPT-6 Sol | 15-150 | 15-150 |
 | GPT-6 Luna | 350-3,000 | 350-3,000 |
 | Local messages and cloud chats share your plan's usage allowance. Weekly limits may also apply. |  |  |
@@ -297,6 +298,12 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         <td style="text-align:center">250 credits</td>
       </tr>
       <tr>
+        <td>GPT-6.1 Terra</td>
+        <td style="text-align:center">25 credits</td>
+        <td style="text-align:center">1.25 credits</td>
+        <td style="text-align:center">125 credits</td>
+      </tr>
+      <tr>
         <td>GPT-6 Sol</td>
         <td style="text-align:center">50 credits</td>
         <td style="text-align:center">5 credits</td>
@@ -430,6 +437,12 @@ and Edu, the model is off by default until an administrator enables it. Using
 it in ChatGPT Work or Codex also requires access to the respective surface.
 API-key access follows API model availability.
 
+[GPT-6.1 Terra](./models.md#app-gpt-61-terra) is available in Work and Codex on
+Plus, Pro, Business, Enterprise, and Edu plans. It does not support
+UAE inference residency. It isn't available in Chat. Access requires the corresponding
+surface; Enterprise access also depends on workspace availability and
+administrator controls. Overall Work and Codex plan limits are unchanged.
+
 ### Access and surfaces
 
 | Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
@@ -447,6 +460,7 @@ API-key access follows API model availability.
 | Feature | ChatGPT Plus | ChatGPT Pro | ChatGPT Business | Enterprise / Education | API Key |
 | --- | --- | --- | --- | --- | --- |
 | [GPT-6.1 Sol](./models.md#gpt-61-sol) | Yes | Yes | Yes | Yes | Yes |
+| [GPT-6.1 Terra](./models.md) | Yes | Yes | Yes | Yes | Yes |
 | [GPT-6 Sol and Luna](./models.md) | Yes | Yes | Yes | Yes | Yes |
 | [Fast mode](./agent-configuration/speed.md) | Yes | Yes | Yes | Yes | Yes |
 | [Ultrafast (Pro $500 and eligible Enterprise/Edu plans)](./agent-configuration/speed.md#ultrafast-mode) | No | Yes | No | Yes | Yes |

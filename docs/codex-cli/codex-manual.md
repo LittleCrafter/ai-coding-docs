@@ -321,6 +321,34 @@ Source: [Glossary](./glossary.md)
 
 Use this glossary as a quick reference for Codex terms across the app, CLI, IDE extension, cloud, SDK, and related integrations.
 
+### October 26–30, 2026
+
+Source: [October 26–30, 2026](./whats-new/october-26-30-2026.md)
+
+#### Use GPT-6.1 Terra for visual reasoning and computer use
+
+[GPT-6.1 Terra](./models.md#app-gpt-61-terra) is now available in ChatGPT Work
+and Codex on Plus, Pro, Business, Enterprise, and Edu plans. It's a fast,
+efficient model for professional work that combines strong image understanding
+with precise computer use.
+
+Use Terra to reason about images and screens, then take action across your
+browser, desktop, and apps. Match product photos from a supplier lookbook to
+catalog entries and update listings, or check campaign assets for cropping and text
+placement and organize the edits.
+
+Terra also writes in a clear, direct style, putting results first and explaining
+supporting details in plain language.
+
+Choose GPT-6.1 Terra from the model list in **Advanced** in the ChatGPT desktop
+app or ChatGPT Work on the web. Work also supports Terra on mobile. The model isn't available in Chat and does not support UAE inference residency. Enterprise access depends on workspace
+availability and administrator controls. Browser use and computer use each
+have setup and access requirements.
+
+See [Models](./models.md#app-gpt-61-terra), [browser use](./browser.md), and
+[computer use](./computer-use.md) to get started. Read the
+[launch announcement](https://learn.chatgpt.com/docs/changelog#codex-2026-10-26-gpt-61-terra).
+
 ### October 5–9, 2026
 
 Source: [October 5–9, 2026](./whats-new/october-5-9-2026.md)
@@ -748,6 +776,18 @@ a]:min-w-0 [&>a]:no-underline">
 Source: [What's new](./whats-new.md)
 
 For every versioned update, bug fix, and minor improvement, see the [ChatGPT and Codex changelog](https://learn.chatgpt.com/docs/changelog) and [API changelog](https://developers.openai.com/api/docs/changelog).
+
+#### [October 26–30, 2026](./whats-new/october-26-30-2026.md)
+
+#### Use GPT-6.1 Terra for visual reasoning and computer use
+
+[GPT-6.1 Terra](./models.md#app-gpt-61-terra) is now available in ChatGPT Work
+and Codex on Plus, Pro, Business, Enterprise, and Edu plans. This fast, efficient model for professional work combines
+strong image understanding with precise computer use. Match product photos to
+catalog entries, review design assets, and act on what you find across your
+browser, desktop, and apps.
+
+[Read the full update →](./whats-new/october-26-30-2026.md)
 
 #### October 12–16, 2026
 
@@ -2090,6 +2130,10 @@ and reset times.
       15-160
       15-160
 
+      GPT-6.1 Terra
+      35-285
+      35-285
+
       GPT-6 Sol
       15-150
       15-150
@@ -2234,6 +2278,11 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
         2.5 credits
         250 credits
 
+        GPT-6.1 Terra
+        25 credits
+        1.25 credits
+        125 credits
+
         GPT-6 Sol
         50 credits
         5 credits
@@ -2343,6 +2392,12 @@ In ChatGPT, GPT-6.1 Sol is available in Work and Codex, not Chat. For Enterprise
 and Edu, the model is off by default until an administrator enables it. Using
 it in ChatGPT Work or Codex also requires access to the respective surface.
 API-key access follows API model availability.
+
+[GPT-6.1 Terra](./models.md#app-gpt-61-terra) is available in Work and Codex on
+Plus, Pro, Business, Enterprise, and Edu plans. It does not support
+UAE inference residency. It isn't available in Chat. Access requires the corresponding
+surface; Enterprise access also depends on workspace availability and
+administrator controls. Overall Work and Codex plan limits are unchanged.
 
 - Feature is currently limited to only specific regions. Check the
   individual feature documentation to learn more about geographic restrictions.
@@ -3394,8 +3449,8 @@ You can increase model speed in Codex in exchange for higher usage.
 
 #### Fast mode
 
-Fast mode speeds up supported models, including GPT-6.1 Sol, GPT-6 Astra,
-GPT-6 Sol, and GPT-6 Luna, where available. For GPT-5.6, the speed increase
+Fast mode speeds up supported models, including GPT-6.1 Sol, GPT-6.1 Terra,
+GPT-6 Astra, GPT-6 Sol, and GPT-6 Luna, where available. For GPT-5.6, the speed increase
 is 1.5x.
 
 Use `/fast` in the CLI to toggle Fast mode. Use `/statusline` to show it in the
@@ -4332,6 +4387,17 @@ model version. Check the [models available in ChatGPT](./models.md) or the
 
 Choose your work and task and get a recommendation.
 
+#### When to consider GPT-6.1 Terra
+
+Try [GPT-6.1 Terra](https://developers.openai.com/api/docs/models/gpt-6.1-terra) for concise writing based on
+supplied material, computer-use tasks with a defined outcome, and scoped code
+fixes. Provide clear inputs, requirements, and a way to verify the result, such as
+checking saved records or running regression tests.
+
+Compare it with GPT-6.1 Sol on the same inputs and reasoning effort. For writing,
+judge audience fit, voice, and useful detail as well as accuracy and length. For
+computer use, check the saved result and the accuracy of the completion report.
+
 #### When to consider GPT-6.1 Sol
 
 Consider GPT-6.1 Sol for complex projects where cost matters, such as
@@ -4374,6 +4440,20 @@ Start by considering:
 
 If you can, experiment using the same inputs to compare results and keep the
 lightest setting that meets your quality bar.
+
+Choose acceptance criteria before comparing models:
+
+- **Writing:** check required facts, qualifications, audience, and voice. Review
+  both outputs before deciding whether the shorter one is more useful.
+- **Computer use:** reopen the affected record or page to verify saved changes,
+  confirm that the workflow preserved unrelated data, and compare the completion
+  report with the actual result.
+- **Code and interfaces:** run regression tests. For an interactive application,
+  also inspect the rendered result on desktop and mobile.
+
+Repeat the comparison across representative tasks. Measure completion time
+alongside quality, including time spent reviewing or repairing the result. Then
+vary reasoning effort while keeping the model and inputs fixed.
 
 ### Prompting
 
@@ -14824,31 +14904,22 @@ For lifecycle hook configuration, see [Hooks](./hooks.md).
 
 Source: [Models](./models.md)
 
-#### GPT-5.5 retirement
+Choosing a model is about finding the right balance of speed, cost, and capability
+for your task. Sometimes you need a quick first draft. Other times, a complex
+problem calls for more careful reasoning. This guide introduces our latest
+models, shows where each one shines, and helps you find a starting point for
+your work.
 
-Effective October 14, 2026, at noon PDT (19:00 UTC), GPT-5.5 retires from
-Codex for users signed in with ChatGPT. The OpenAI API and Codex sessions
-authenticated with an API key aren't affected.
-
-For Codex with ChatGPT sign-in, choose an available replacement:
-
-- On Plus, Pro, Business, Enterprise, and Edu plans, choose **GPT-6.1 Sol**
-  (`gpt-6.1-sol`) when available.
-- On Free and Go plans, choose **GPT-6 Luna** (`gpt-6-luna`) in the desktop app
-  when available.
-
-Replace `gpt-5.5` in workspace defaults, saved model settings, managed
-configurations, custom agents, scheduled tasks, and scripts that select a model.
-
-See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement)
-for administrator guidance.
+GPT-5.5 retirement: [See replacement models and migration
+steps](#gpt-55-retirement).
 
 #### Choose a model
 
 In Work or Codex in the ChatGPT desktop app, use the model and reasoning control
 beneath the composer to choose an available model and adjust its reasoning effort.
 
-Higher reasoning effort can improve results for complex tasks, but it takes
+**Reasoning effort** guides how much work the model puts into thinking through
+your request. Higher effort can improve results for complex tasks, but it takes
 longer and uses more tokens. Start with the default effort and increase it when
 the task needs deeper planning or analysis.
 
@@ -14863,7 +14934,8 @@ These recommendations apply to **ChatGPT Work** on the web. Use the
 model and reasoning control beneath the composer to choose an available model
 and adjust its reasoning effort.
 
-Higher reasoning effort can improve results for complex tasks, but it takes
+**Reasoning effort** guides how much work the model puts into thinking through
+your request. Higher effort can improve results for complex tasks, but it takes
 longer and uses more tokens. Start with the default effort and increase it when
 the task needs deeper planning or analysis.
 
@@ -14873,6 +14945,9 @@ beyond a single-agent run. It uses
 making it useful for larger tasks that can be split across subagents.
 
 #### Choose a model
+
+GPT-6.1 Terra requires Codex CLI 0.159.0 or later. To use it, run
+`codex -m gpt-6.1-terra`.
 
 In an interactive CLI session, use `/model` to switch models or adjust
 reasoning effort. You can also choose a model when you launch Codex with
@@ -14888,7 +14963,8 @@ The same option works with non-interactive runs. For example:
 codex exec -m gpt-6.1-sol "Review the current changes"
 ```
 
-Higher reasoning effort can improve results for complex tasks, but it takes
+**Reasoning effort** guides how much work the model puts into thinking through
+your request. Higher effort can improve results for complex tasks, but it takes
 longer and uses more tokens. Start with the default effort and increase it when
 the task needs deeper planning or analysis.
 
@@ -14902,7 +14978,8 @@ making it useful for larger tasks that can be split across subagents.
 Use the model switcher below the composer to choose an available model and
 reasoning effort.
 
-Higher reasoning effort can improve results for complex tasks, but it takes
+**Reasoning effort** guides how much work the model puts into thinking through
+your request. Higher effort can improve results for complex tasks, but it takes
 longer and uses more tokens. Start with the default effort and increase it when
 the task needs deeper planning or analysis.
 
@@ -14911,68 +14988,34 @@ beyond a single-agent run. It uses
 [subagents](./agent-configuration/subagents.md) to accelerate complex work,
 making it useful for larger tasks that can be split across subagents.
 
-#### Recommended models
-
-For complex coding and agentic workflows, use GPT-6.1 Sol when available to your
-account and client. Use Luna for focused, repeatable tasks. Select `gpt-6.1-sol`
-or `gpt-6-luna` in your model picker or saved configuration when available.
-
-GPT-6.1 Sol offers near-Astra performance for complex work at a lower cost
-than Astra. See [GPT-6.1 Sol](#gpt-61-sol) for its separate rollout.
-
-In ChatGPT, GPT-6.1 Sol, GPT-6 Sol, and GPT-6 Luna are available in Work and
-Codex. They aren't available in Chat.
-
-GPT-5.6 Sol, GPT-5.6 Terra, and GPT-5.6 Luna remain available during the rollout. Selecting a
-new model doesn't change workspace permissions or grant access to it.
-
-For Ultrafast mode availability and credit usage on Pro $500 and eligible
-Enterprise and Edu plans, see [Speed](./agent-configuration/speed.md#ultrafast-mode).
-
-Availability depends on the rollout, your sign-in method, and your client.
-See [pricing](./pricing.md) for plan access and usage, and
-[workspace model availability](./enterprise/workspace-model-availability.md)
-for Enterprise access.
-
-#### GPT-6.1 Sol
-
-The GPT-6.1 Sol launch rollout includes Plus, Pro, Business, Enterprise, and Edu
-in Codex in the desktop app and CLI, and ChatGPT Work on the web and mobile.
-For Enterprise and Edu, the plan keeps GPT-6.1 Sol off by default until an
-administrator enables it.
-Free and Go are not included at launch.
-
-Standard and Fast modes are available where supported. Ultrafast is available
-on Pro $500 and eligible Enterprise and Edu plans. See
-[Ultrafast mode](./agent-configuration/speed.md#ultrafast-mode) for plan and
-workspace requirements.
-
-Use `gpt-6.1-sol`. Available controls depend on your plan, client, and workspace
-settings.
-Reasoning effort ranges from Light to Ultra. Max and Ultra depend on your settings.
-
-See [pricing](./pricing.md) for credit usage and
-[model selection](https://developers.openai.com/api/docs/guides/model-selection#when-to-consider-gpt-61-sol)
-for guidance on comparing it with Astra and Luna. To see how its API
-specifications differ from the previous Sol model, [compare GPT-6.1 Sol and
-GPT-6 Sol](https://developers.openai.com/api/docs/models/compare?model=gpt-6.1-sol&model2=gpt-6-sol).
-
 In the ChatGPT desktop app and ChatGPT Work on the web, start with the default
 Power setting available to your account. Move toward **Smarter** for deeper
 reasoning or **Faster** for faster, lower-cost work. Open **Advanced** to
-choose a specific model, reasoning effort, or speed.
+choose a specific model, reasoning effort, or speed. To try GPT-6.1 Terra in
+this example, open **Advanced** and choose it from the model list.
 
 The six Power presets shown are Luna High, GPT-6 Sol Light (selected
 in this example), GPT-6 Sol Medium, Astra Light, Astra Medium, and Astra Extra
 High. Some paid plans omit Astra Extra High. Advanced controls are illustrative;
 available options and defaults vary by plan, client, workspace settings, and rollout.
 
+#### Recommended models
+
+Start with the kind of work you want to do. Astra suits the most demanding
+workflows. GPT-6.1 Sol offers near-Astra performance at a lower cost than Astra.
+GPT-6.1 Terra is a fast, efficient choice for writing, visual understanding, and
+computer use. Luna suits focused, repeatable tasks.
+
+These recommendations apply to ChatGPT Work and Codex. For Chat, see [models in ChatGPT](https://help.openai.com/en/articles/20001354-gpt-6-and-other-models-in-chatgpt) in the Help Center.
+
+For model availability, pricing, and usage limits, see [ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex) in the Help Center.
+
 #### Choosing a model
 
-Choose **Astra** when a task needs the strongest capability across steps and
-tools. **GPT-6.1 Sol** offers near-Astra performance at a lower cost
-than Astra. Use **GPT-6.1 Sol** when available to your account and client, and
-**Luna** for clear, repeatable tasks.
+Start with a task you know well and compare the result with what you need.
+Consider how long you're willing to wait, how much usage the task requires,
+and the level of detail or judgment involved. You can change models as your
+work changes.
 
 #### Where each model shines
 
@@ -14984,11 +15027,35 @@ than Astra. Use **GPT-6.1 Sol** when available to your account and client, and
 - **GPT-6.1 Sol, for repeated, long-running work.** Consider GPT-6.1 Sol for
   work across code, apps, and documents when cost matters. Keep Astra for your
   most demanding work.
+- **GPT-6.1 Terra, for everyday writing and visual work.** Choose Terra for clear
+  communication, interpreting images and screens, and completing tasks across
+  supported apps. Try it for drafting proposals, reviewing visual materials,
+  or filling out forms from source documents.
 - **Luna, for clear, repeatable tasks.** Choose Luna for specific, high-volume
   tasks when you know what a good result looks like, such as extraction,
   classification, transformation, and structured summaries.
 
+#### Try an example
+
+Use your own materials with these prompts, and tell ChatGPT what a useful
+result should include.
+
+| Model         | Task                                           | Example prompt                                                                                                                                                                        |
+| ------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Astra         | Work through a complex decision.               | "Compare these three vendor proposals against our requirements. Explain the tradeoffs, recommend an option, and list the questions we should resolve before deciding."                |
+| GPT-6.1 Sol   | Bring several sources into a working document. | "Use this project brief, meeting notes, and timeline to draft an implementation plan. Identify dependencies, flag conflicting details, and list the decisions we still need to make." |
+| GPT-6.1 Terra | Make sense of visual information.              | "Review these dashboard screenshots and summarize the main changes. Refer to the chart labels and values, and flag anything you can't read confidently."                              |
+| Luna          | Organize information into a consistent format. | "Turn these meeting notes into a table of action items, owners, and due dates. Mark any missing owner or date as unspecified."                                                        |
+
+Review the result against your source materials, especially names, numbers,
+and details taken from images. For tasks on websites or in desktop apps, check
+the [browser use](./browser.md) and [computer use](./computer-use.md) setup
+requirements first.
+
 #### Pick a reasoning effort
+
+For example, you might use a lower effort to rewrite a short email and a higher
+effort to compare several proposals with competing requirements.
 
 For GPT-6.1 Sol, start with the reasoning effort available by default in your
 client and adjust based on the task. Start with **High** for Luna or **Light**
@@ -15023,6 +15090,25 @@ to see its supported Max or Ultra options.
 If your model supports Ultra but it doesn't appear in the desktop app's model
 slider, go to **Settings** > **Configuration**, then turn on
 **Ultra in model picker slider**.
+
+#### GPT-5.5 retirement
+
+Effective October 14, 2026, at noon PDT (19:00 UTC), GPT-5.5 retires from
+Codex for users signed in with ChatGPT. The OpenAI API and Codex sessions
+authenticated with an API key aren't affected.
+
+For Codex with ChatGPT sign-in, choose an available replacement:
+
+- On Plus, Pro, Business, Enterprise, and Edu plans, choose **GPT-6.1 Sol**
+  (`gpt-6.1-sol`) when available.
+- On Free and Go plans, choose **GPT-6 Luna** (`gpt-6-luna`) in the desktop app
+  when available.
+
+Replace `gpt-5.5` in workspace defaults, saved model settings, managed
+configurations, custom agents, scheduled tasks, and scripts that select a model.
+
+See [workspace model availability](./enterprise/workspace-model-availability.md#prepare-for-the-gpt-55-retirement)
+for administrator guidance.
 
 #### Other models
 
@@ -19527,7 +19613,7 @@ Predictions use the conversation in your current thread. If context from past wo
 
 #### Availability and controls
 
-Composer predictions is currently in beta for users aged 18 and older on personal ChatGPT Pro plans in supported regions. It’s available in local and SSH threads in the Codex desktop app with GPT-6 Astra and GPT-6.1 Sol. Predictions are enabled by default for eligible users. You can turn them on or off using the **Show predictions** toggle in **Settings → General → Composer**.
+Composer predictions is currently in beta for users aged 18 and older on personal ChatGPT Pro plans in supported regions. It’s available in local and SSH threads in the Codex desktop app with GPT-6 Astra, GPT-6.1 Sol, and GPT-6.1 Terra. Predictions are enabled by default for eligible users. You can turn them on or off using the **Show predictions** toggle in **Settings → General → Composer**.
 
 Generating predictions doesn’t count toward your Codex usage limits or consume credits. When you send a message, including an accepted prediction, normal Codex usage limits and billing apply.
 
@@ -21212,7 +21298,7 @@ Worktrees require a Git repository. Make sure the project you selected lives in 
 
 3.  Submit your prompt
 
-    Submit your prompt, and Codex creates a Git worktree based on the branch you selected. By default, Codex works in a ["detached HEAD"](https://git-scm.com/docs/git-checkout#_detached_head).
+    Submit your prompt, and Codex creates a Git worktree based on the branch you selected. By default, Codex works in a [detached HEAD](https://git-scm.com/docs/git-checkout#_detached_head) state.
 
 4.  Choose where to keep working
 
@@ -21255,11 +21341,9 @@ Since Handoff uses Git operations, any files that are part of your `.gitignore` 
 
 #### Advanced details
 
-#### Codex-managed and permanent worktrees
+#### Codex-managed worktrees
 
 By default, chats use a Codex-managed worktree. These are meant to feel lightweight and disposable. A Codex-managed worktree is typically dedicated to one chat, and Codex returns that chat to the same worktree if you hand it back there later.
-
-If you want a long-lived environment, create a permanent worktree from the three-dot menu on a project in the sidebar. This creates a new permanent worktree as its own project. Permanent worktrees aren't automatically deleted, and you can start multiple chats from the same worktree.
 
 #### How Codex manages worktrees for you
 
@@ -21298,9 +21382,9 @@ If you plan on checking out the branch locally, use Handoff to move the chat int
 
 Git prevents the same branch from being checked out in more than one worktree at a time because a branch represents a single mutable reference (`refs/heads/`) whose meaning is “the current checked-out state” of a working tree.
 
-When a branch is checked out, Git treats its HEAD as owned by that worktree and expects operations like commits, resets, rebases, and merges to advance that reference in a well-defined, serialized way. Allowing multiple worktrees to simultaneously check out the same branch would create ambiguity and race conditions around which worktree’s operations update the branch reference, potentially leading to lost commits, inconsistent indexes, or unclear conflict resolution.
+When a branch is checked out, Git treats its HEAD as owned by that worktree and expects operations like `git commit`, `git reset`, `git rebase`, and `git merge` to advance that reference in a well-defined, serialized way. Allowing multiple worktrees to simultaneously check out the same branch would create ambiguity and race conditions around which worktree’s operations update the branch reference, potentially leading to lost commits, inconsistent indexes, or unclear conflict resolution.
 
-By enforcing a one-branch-per-worktree rule, Git guarantees that each branch has a single authoritative working copy, while still allowing other worktrees to safely reference the same commits via detached HEADs or separate branches.
+By enforcing a one-branch-per-worktree rule, Git guarantees that each branch has a single authoritative working copy, while still allowing other worktrees to safely reference the same commits in a detached HEAD state or on separate branches.
 
 #### Worktree cleanup
 
@@ -21312,7 +21396,8 @@ Codex tries to avoid deleting worktrees that are still important. Codex-managed 
 
 - A pinned chat is tied to it
 - The chat is still in progress
-- The worktree is a permanent worktree
+
+Permanent worktrees created in earlier versions remain available and protected from automatic cleanup. You can no longer create permanent worktrees from the project menu.
 
 Codex-managed worktrees are deleted automatically when:
 
@@ -21339,8 +21424,6 @@ Codex returns it to the same associated worktree.
 Chats can remain in your history even if the underlying worktree directory is
 deleted. For Codex-managed worktrees, Codex saves a snapshot before deleting
 the worktree and offers to restore it if you reopen the associated chat.
-Permanent worktrees are not automatically deleted when you archive their
-chats.
 
 ### Appshots
 
@@ -25777,123 +25860,6 @@ Do not put secrets, access tokens, or unnecessary personal data in tool
 results. Treat `_meta` as hidden from the model, not as a substitute for
 authorization or secure storage.
 
-#### Import skills from the MCP server
-
-Configure the MCP server to supply skills when you want to version and deploy
-their instructions and supporting files with the server. During plugin
-submission, **Scan Tools** imports a static snapshot of those skills into the
-draft.
-
-OpenAI currently supports a bounded, static subset of the
-[draft SEP-2640 Skills extension](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2640).
-This proposal is not yet part of the stable MCP specification.
-
-#### Advertise the extension
-
-Declare `io.modelcontextprotocol/skills` in the server's initialization
-capabilities:
-
-```json
-{
-  "capabilities": {
-    "extensions": {
-      "io.modelcontextprotocol/skills": {}
-    }
-  }
-}
-```
-
-The declaration must be under `capabilities.extensions`. OpenAI does not
-recognize the earlier `experimental` declaration.
-
-#### List the skills and their resources
-
-Support the paginated `skills/list` method. Each entry must include:
-
-- A `uri` that points to the skill's `SKILL.md`.
-- `frontmatter` containing every entry from the parsed `SKILL.md` front matter.
-  Include the `name` and `description` entries.
-- A complete `resources` list containing `SKILL.md` and every supporting file.
-- A SHA-256 digest for each resource in the form
-  `sha256:<64 lowercase hexadecimal characters>`.
-
-Use the `skill://` URI convention. The directory containing `SKILL.md` must
-match the skill name. For example:
-
-```json
-{
-  "skills": [
-    {
-      "uri": "skill://dice-roller/tabletop-dice/SKILL.md",
-      "frontmatter": {
-        "name": "tabletop-dice",
-        "description": "Roll one or more dice and report each result and the total."
-      },
-      "resources": [
-        {
-          "uri": "skill://dice-roller/tabletop-dice/SKILL.md",
-          "digest": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
-        },
-        {
-          "uri": "skill://dice-roller/tabletop-dice/references/notation.md",
-          "digest": "sha256:abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
-        }
-      ]
-    }
-  ],
-  "nextCursor": "optional-next-page-cursor"
-}
-```
-
-The example digests show the required format. For a text resource, hash the
-UTF-8 bytes of `content.text`. For a blob resource, base64-decode
-`content.blob`, then hash the decoded bytes.
-
-Also support `skills/get` for each listed `SKILL.md` URI. Return a `skill` object
-with the same complete entry shape as `skills/list`.
-
-Use these request parameters:
-
-- For the first `skills/list` request, accept an empty object (`{}`).
-- For each later `skills/list` request, accept the returned cursor, such as
-  `{ "cursor": "next-page-cursor" }`.
-- For `skills/get`, accept the catalog URI, such as
-  `{ "uri": "skill://dice-roller/tabletop-dice/SKILL.md" }`.
-
-#### Return every listed resource
-
-Support `resources/read` for every URI in the manifest. Return exactly one
-content item whose URI matches the request. OpenAI accepts UTF-8 text or a
-base64-encoded blob.
-
-During import, OpenAI verifies that:
-
-- OpenAI can fetch every listed resource and confirm its digest.
-- The fetched `SKILL.md` front matter exactly matches the catalog entry.
-- Resource paths are safe, unique, and free of normalization conflicts.
-- The complete skill fits the import limits.
-
-The importer accepts up to five uniquely named skills across 10 catalog pages.
-Each skill can contain up to 100 files, with these size limits:
-
-| Content                               | Limit   |
-| ------------------------------------- | ------- |
-| `SKILL.md`                            | 256 KiB |
-| Each supporting file                  | 1 MiB   |
-| All resources for one skill           | 5 MiB   |
-| Generated skill archives for one scan | 8 MiB   |
-
-The combined archive limit includes ZIP packaging overhead.
-
-If any entry fails validation or exceeds a limit, **Scan Tools** still returns
-the server's tools but does not update the draft's imported skills. Fix the
-server and scan again.
-
-Skills imported from MCP are submission-time snapshots, not live runtime
-resources. After changing a skill, run **Scan Tools** again, review the imported
-skills, and submit a new plugin version. See
-[Submit plugins](https://developers.openai.com/plugins/deploy/submission#mcp) for the complete flow.
-
 #### Authenticate and authorize requests
 
 Add authentication when a tool reads private data or takes action for a user.
@@ -26357,22 +26323,6 @@ dependencies:
 A dependency makes the required tool available; it does not replace clear
 workflow instructions. Tell the model which tools to use, in what order, and
 how to handle missing or ambiguous results.
-
-#### Import a skill from MCP
-
-You can upload a packaged skill during submission or import it from the
-plugin's MCP server. The MCP option keeps the skill's instructions and
-supporting files with the server deployment.
-
-OpenAI imports skills from MCP when you select **Scan Tools** in the plugin
-submission portal. The imported files become a snapshot in the draft; ChatGPT
-and Codex do not fetch them from your MCP server at runtime. After changing the
-skill, deploy the server and scan it again before submitting a new plugin
-version.
-
-For the capability declaration, discovery methods, resource manifest, and
-import limits, see
-[Import skills from the MCP server](https://developers.openai.com/plugins/build/mcp-server#import-skills-from-the-mcp-server).
 
 #### Test the skill
 

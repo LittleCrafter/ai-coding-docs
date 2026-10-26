@@ -33,7 +33,7 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 | [codex exec](./non-interactive-mode.md) | CLI | CLI command for running Codex non-interactively from scripts or CI. |
 | [Codex IDE extension](https://developers.openai.com/codex/ide) | IDE | Editor integration for using Codex inside IDEs like VS Code, JetBrains IDEs, Cursor, and Windsurf. |
 | [Codex SDK](./codex-sdk.md) | SDK | Programmatic interface for building Codex-powered workflows or integrations. |
-| [Codex-managed worktree](./environments/git-worktrees.md#codex-managed-and-permanent-worktrees) | Desktop app | A temporary worktree Codex creates and manages for a chat. |
+| [Codex-managed worktree](./environments/git-worktrees.md#codex-managed-worktrees) | Desktop app | A temporary worktree Codex creates and manages for a chat. |
 | [Compaction](./prompting.md#context) | Desktop app, CLI, IDE extension, Cloud | Summarizing older context so long-running work can continue. |
 | [Compliance API](./enterprise/compliance-api.md) | Enterprise | API for exporting supported ChatGPT workspace records and audit metadata. |
 | [Computer Use](./computer-use.md) | Desktop app | Desktop capability that lets ChatGPT interact with other applications through the UI. |
@@ -76,7 +76,6 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 | [Network policy](./agent-approvals-security.md#network-policy) | Desktop app, CLI, IDE extension | Domain-based allow and deny rules that constrain sandboxed outbound network traffic. |
 | [Non-interactive mode](./non-interactive-mode.md) | CLI | CLI mode for running Codex from scripts or CI. |
 | [Output schema](./non-interactive-mode.md#create-structured-outputs-with-a-schema) | CLI | JSON Schema passed to `codex exec` to constrain the final response. |
-| [Permanent worktree](./environments/git-worktrees.md#codex-managed-and-permanent-worktrees) | Desktop app | A long-lived worktree kept as its own project. |
 | [Permission profile](./permissions.md#define-and-select-a-profile) | Desktop app, CLI, IDE extension | Named least-privilege policy that combines filesystem and network rules for local command execution. |
 | [Plan](https://developers.openai.com/codex/learn/best-practices#plan-first-for-difficult-tasks) | Desktop app, CLI, IDE extension, Cloud | Codex's proposed or tracked steps for completing a task. |
 | [Plugin](./plugins.md) | Desktop app (ChatGPT Work, Codex), Web (ChatGPT Work), CLI | An installable bundle of capabilities, such as skills, connectors, and tools, distributed through the universal directory shared by ChatGPT and Codex. |
