@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.310",
-  "last_updated": "2026-10-25T17:56:04Z",
+  "last_updated": "2026-10-26T08:11:05Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -830,8 +830,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop",
       "source_md_url": "https://code.claude.com/docs/en/desktop.md",
       "source_id": "desktop",
-      "hash": "352d0d4a6be0ce61fdc594e5aa612a1120734362bd8551ba454e06b70a064a20",
-      "last_updated": "2026-10-25T17:56:04Z"
+      "hash": "536481a197f2159e79920d1e855c8fb137213c843e29f959925708c78791861a",
+      "last_updated": "2026-10-26T08:11:05Z"
     },
     "desktop-ios-simulator": {
       "slug": "desktop-ios-simulator",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-25T17:56:04Z",
-    "fetch_duration_seconds": 79.329,
+    "last_fetch_completed": "2026-10-26T08:11:05Z",
+    "fetch_duration_seconds": 79.236,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,
