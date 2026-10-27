@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-23T23:35:35Z",
+  "last_updated": "2026-10-27T02:29:54Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -60,8 +60,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/codesearch",
       "source_md_url": "https://antigravity.google/docs/cli/commands/codesearch.md",
       "source_id": "cli/commands/codesearch",
-      "hash": "0e0a6461092928c609b87830c44b911e0b926e12a111a328325ed38e637f9b11",
-      "last_updated": "2026-10-22T18:54:07Z"
+      "hash": "da5b07ce6c75e7248f4202cb71c68249d24c56e81099203b97a2fe5703d4ffce",
+      "last_updated": "2026-10-27T02:29:54Z"
     },
     "cli/commands/context": {
       "slug": "cli/commands/context",
@@ -295,11 +295,13 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-23T23:35:35Z",
-    "fetch_duration_seconds": 9.86,
+    "last_fetch_completed": "2026-10-27T02:29:54Z",
+    "fetch_duration_seconds": 9.867,
     "total_pages_discovered": 29,
-    "pages_fetched_successfully": 29,
-    "pages_failed": 0,
-    "failed_pages": []
+    "pages_fetched_successfully": 28,
+    "pages_failed": 1,
+    "failed_pages": [
+      "cli/features"
+    ]
   }
 }

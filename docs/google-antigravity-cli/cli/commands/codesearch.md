@@ -105,6 +105,6 @@ This makes Code Search a fast way to find relevant code and hand the agent targe
 
 Explore the following guides to learn more about interactive CLI workflows:
 
-*   **[CLI features](../features.md)**: Explore the rest of the interactive TUI capabilities.
+*   **[CLI features](https://antigravity.google/docs/features?tab=cli#antigravity-cli-features)**: Explore the rest of the interactive TUI capabilities.
 *   **[Prompting guide](../prompting.md)**: Learn how to direct the agent to search and edit code for you.
 *   **[Resume command (/resume)](./resume.md)**: Navigate and manage your past conversations.
