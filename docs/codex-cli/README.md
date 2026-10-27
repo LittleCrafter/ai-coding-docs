@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 204
+- **Pages mirrored:** 203
 - **Version:** 0.164.0
-- **Last updated:** 2026-10-26T21:59:15Z
+- **Last updated:** 2026-10-27T19:49:18Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -169,7 +169,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | ChatGPT Work: usage and cost | [enterprise/chatgpt-work-usage-and-cost.md](./enterprise/chatgpt-work-usage-and-cost.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-usage-and-cost>) |
 | Local computer access for Work Cloud and dots | [enterprise/cloud-local-access.md](./enterprise/cloud-local-access.md) | [source](<https://learn.chatgpt.com/docs/enterprise/cloud-local-access>) |
 | Compliance API and audit events | [enterprise/compliance-api.md](./enterprise/compliance-api.md) | [source](<https://learn.chatgpt.com/docs/enterprise/compliance-api>) |
-| Use API/provider credentials through a gateway | [enterprise/connect-to-a-gateway.md](./enterprise/connect-to-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway>) |
+| Connect to a gateway | [enterprise/connect-to-a-gateway.md](./enterprise/connect-to-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway>) |
 | Manage dots permissions and capabilities | [enterprise/dots-admin-guide.md](./enterprise/dots-admin-guide.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-admin-guide>) |
 | Dynamic groups | [enterprise/dynamic-groups.md](./enterprise/dynamic-groups.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dynamic-groups>) |
 | Understand ChatGPT education plans | [enterprise/education-plans.md](./enterprise/education-plans.md) | [source](<https://learn.chatgpt.com/docs/enterprise/education-plans>) |
@@ -187,7 +187,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Codex security cookbook | [enterprise/security-cookbook.md](./enterprise/security-cookbook.md) | [source](<https://learn.chatgpt.com/docs/enterprise/security-cookbook>) |
 | Service accounts | [enterprise/service-accounts.md](./enterprise/service-accounts.md) | [source](<https://learn.chatgpt.com/docs/enterprise/service-accounts>) |
 | Workspace connections | [enterprise/shared-connections.md](./enterprise/shared-connections.md) | [source](<https://learn.chatgpt.com/docs/enterprise/shared-connections>) |
-| Sign in with ChatGPT through a gateway | [enterprise/sign-in-with-chatgpt-through-a-gateway.md](./enterprise/sign-in-with-chatgpt-through-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/sign-in-with-chatgpt-through-a-gateway>) |
 | Sites administration | [enterprise/sites.md](./enterprise/sites.md) | [source](<https://learn.chatgpt.com/docs/enterprise/sites>) |
 | Skill controls | [enterprise/skills.md](./enterprise/skills.md) | [source](<https://learn.chatgpt.com/docs/enterprise/skills>) |
 | Set up and manage teams and Team Tasks | [enterprise/teams.md](./enterprise/teams.md) | [source](<https://learn.chatgpt.com/docs/enterprise/teams>) |

@@ -7,10 +7,11 @@ through Amazon Bedrock. In this setup, the local client sends model requests to
 Bedrock using AWS-managed authentication and access controls.
 
 This page covers direct access to Bedrock. If your organization already
-  provides a model gateway, follow [Use API/provider
-  credentials](./enterprise/connect-to-a-gateway.md). To configure a gateway
-  backed by Bedrock, see [Bedrock through
-  LiteLLM](./enterprise/bedrock-through-litellm.md).
+  provides a model gateway, follow [Connect to a gateway without ChatGPT
+  sign-in](./enterprise/connect-to-a-gateway.md). That path supports native
+  gateway OAuth with your organization's identity provider; the gateway manages
+  the Bedrock credentials. To configure a gateway backed by Bedrock, see
+  [Bedrock through LiteLLM](./enterprise/bedrock-through-litellm.md).
 
 ## How it works
 

@@ -381,8 +381,7 @@ Set `project_root_markers = []` to skip searching parent directories and treat t
 
 ### Custom model providers
 If your organization provides a model gateway, follow
-[Sign in with ChatGPT through a gateway](./enterprise/sign-in-with-chatgpt-through-a-gateway.md)
-or [Use API/provider credentials](./enterprise/connect-to-a-gateway.md)
+[Connect to a gateway](./enterprise/connect-to-a-gateway.md)
 for client setup and verification. For organization-wide deployment, see
 [Roll out a gateway](./enterprise/roll-out-a-gateway.md).
 
@@ -431,6 +430,14 @@ Add request headers when needed:
 http_headers = { "X-Example-Header" = "example-value" }
 env_http_headers = { "X-Example-Features" = "EXAMPLE_FEATURES" }
 ```
+
+For browser sign-in through your organization's identity provider, use
+[native gateway OAuth](./enterprise/connect-to-a-gateway.md#use-native-gateway-oauth).
+Configure `[model_providers.<id>.gateway_oauth]` with the authorization and token
+URLs, public client ID, and token delivery settings. This works with
+`requires_openai_auth = false`; ChatGPT sign-in, PowerShell, the Azure CLI, and
+an external credential helper aren't required. The gateway must accept the OAuth
+token in the configured cookie or custom header.
 
 Use command-backed authentication when a provider needs Codex to fetch bearer tokens from an external credential helper:
 
