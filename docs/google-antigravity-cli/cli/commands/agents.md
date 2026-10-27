@@ -89,7 +89,7 @@ Use the following controls to monitor subagent status and logs:
     *   `done`: Completed its assigned background task.
     *   `error`: Encountered a terminal failure during execution.
     *   `killed`: Terminated manually by you or the parent process.
-*   **Detail view**: Highlight a specific subagent row and press Enter to open the full-screen **Subagent Detail View**. This view displays the subagent’s complete internal thoughts, tool calls, and execution stdout. Press Esc to return to the list.
+*   **Detail view**: Highlight a specific subagent row and press Enter to open the full-screen **Subagent Detail View**. This view displays the subagent’s complete internal thoughts, tool calls, and execution stdout, and lists any pending approvals so you can approve or deny each request. Press Esc to return to the list.
 
 ### Terminating active subagents
 

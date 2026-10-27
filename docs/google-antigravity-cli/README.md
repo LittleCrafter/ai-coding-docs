@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 29
+- **Pages mirrored:** 28
 - **Version:** 1.2.0
-- **Last updated:** 2026-10-27T02:29:54Z
+- **Last updated:** 2026-10-27T08:24:33Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -16,7 +16,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | CLI best practices | [cli/best-practices.md](./cli/best-practices.md) | [source](<https://antigravity.google/docs/cli/best-practices>) |
 | Managing conversations | [cli/conversations.md](./cli/conversations.md) | [source](<https://antigravity.google/docs/cli/conversations>) |
 | CLI AI credits | [cli/credits.md](./cli/credits.md) | [source](<https://antigravity.google/docs/cli/credits>) |
-| Antigravity CLI features | [cli/features.md](./cli/features.md) | [source](<https://antigravity.google/docs/cli/features>) |
 | Migrating from Gemini CLI | [cli/gcli-migration.md](./cli/gcli-migration.md) | [source](<https://antigravity.google/docs/cli/gcli-migration>) |
 | Headless mode | [cli/headless.md](./cli/headless.md) | [source](<https://antigravity.google/docs/cli/headless>) |
 | Choose an execution mode | [cli/modes.md](./cli/modes.md) | [source](<https://antigravity.google/docs/cli/modes>) |

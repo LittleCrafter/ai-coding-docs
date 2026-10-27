@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-27T02:29:54Z",
+  "last_updated": "2026-10-27T08:24:33Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -30,8 +30,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/agents",
       "source_md_url": "https://antigravity.google/docs/cli/commands/agents.md",
       "source_id": "cli/commands/agents",
-      "hash": "dd73826d33df658786364c9214fffadfc9e9be072c725402592c96815aa9e24f",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "d84b324f3e54cd2522380900cf81202a35e3d313eb8e085210702e31f40381c9",
+      "last_updated": "2026-10-27T08:24:33Z"
     },
     "cli/commands/btw": {
       "slug": "cli/commands/btw",
@@ -183,16 +183,6 @@
       "hash": "43a6629a653410e9293c4f0b73c7af8442b0a4ed03051f0c4150ce7f3b933b9c",
       "last_updated": "2026-10-22T18:54:07Z"
     },
-    "cli/features": {
-      "slug": "cli/features",
-      "title": "Antigravity CLI features",
-      "group": "cli",
-      "source_url": "https://antigravity.google/docs/cli/features",
-      "source_md_url": "https://antigravity.google/docs/cli/features.md",
-      "source_id": "cli/features",
-      "hash": "8a4f1a0ea9436b73fe51887d89062f895f45c683f67f59c15194f76e5af9e193",
-      "last_updated": "2026-10-23T13:51:47Z"
-    },
     "cli/gcli-migration": {
       "slug": "cli/gcli-migration",
       "title": "Migrating from Gemini CLI",
@@ -240,8 +230,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "0c3b0863651db6d37a1f2599d060db2c9e37824720a6707427d394c57b829315",
-      "last_updated": "2026-10-23T23:35:35Z"
+      "hash": "0035ccacc1c0422cc6c80d7a0cb95e7743b5ae97c3636d6bd45e9acf4cf3b87a",
+      "last_updated": "2026-10-27T08:24:33Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -295,13 +285,11 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-27T02:29:54Z",
-    "fetch_duration_seconds": 9.867,
-    "total_pages_discovered": 29,
+    "last_fetch_completed": "2026-10-27T08:24:33Z",
+    "fetch_duration_seconds": 9.526,
+    "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
-    "pages_failed": 1,
-    "failed_pages": [
-      "cli/features"
-    ]
+    "pages_failed": 0,
+    "failed_pages": []
   }
 }

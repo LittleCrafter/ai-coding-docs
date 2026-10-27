@@ -34,7 +34,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **[`/learn`](https://antigravity.google/docs/commands/learn)** `[instruction]` | Tools & Tasks | — | Capture session corrections as persistent [rules or skills](https://antigravity.google/docs/commands/learn) through a reviewable proposal. |
 | **`/logout`** | Account | — | Disconnect your profile and purge authentication tokens from the secure keyring. |
 | **`/mcp`** | Tools & Tasks | — | Open the Model Context Protocol (MCP) server manager. |
-| **`/model`** | Configurations | — | Choose your preferred reasoning model (persists across sessions). |
+| **`/model`** | Configurations | — | Choose your preferred reasoning model (persists across sessions). To run a single prompt on another model without changing your default, use `/model <model> <prompt>`. |
 | **`/open <path>`** | Utilities | — | Force the path to open inside your default system editor. |
 | **[`/permissions`](./commands/permissions.md)** | Configurations | — | Open the interactive tool permissions manager panel. |
 | **[`/plan`](https://antigravity.google/docs/plan)** `[task]` | Planning | — | Explore the codebase, clarify requirements, and draft a reviewable [Implementation Plan](https://antigravity.google/docs/implementation-plan). |
@@ -44,7 +44,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **[`/resume`](./commands/resume.md)** | Conversations | `/switch`, `/conversation` | Open the [conversation picker overlay](./commands/resume.md) to select and load previous threads. |
 | **`/rewind`** | Conversations | `/undo` | Roll back your conversation history to a previous message. |
 | **[`/schedule`](https://antigravity.google/docs/commands/schedule)** `<when> <task>` | Tools & Tasks | — | Set a [one-shot timer or recurring cron schedule](https://antigravity.google/docs/commands/schedule) that wakes the agent with an instruction. |
-| **`/skills`** | Tools & Tasks | — | Browse loaded local and global Agent Skills. |
+| **`/skills`** | Tools & Tasks | — | Browse loaded local and global Agent Skills. Run `/skills reload` to reload skills from disk. |
 | **[`/statusline`](./commands/statusline.md)** | Configurations | — | Open the Status Bar customization overlay. |
 | **`/tasks`** | Tools & Tasks | — | Open the Task Manager panel to monitor background shell execution logs. |
 | **[`/teamwork-preview`](https://antigravity.google/docs/teamwork)** `<task>` | Reasoning | `/teamwork` | Launch [collaborative multi-agent teams](https://antigravity.google/docs/teamwork) for long-horizon projects (paid plans). |
