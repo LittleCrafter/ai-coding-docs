@@ -188,6 +188,9 @@ Our most efficient model for focused, high-volume tasks, including summarization
 <a id="gpt-61-sol"></a>
 <a id="gpt-6.1-sol"></a>
 
+GPT-6.1 Sol uses a default context window of 500,000 tokens in Codex and
+ChatGPT Work. See [pricing](./pricing.md) for subscription usage and credit rates.
+
 For model availability, pricing, and usage limits, see [ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex) in the Help Center.
 
 <a id="choosing-sol-terra-and-luna"></a>

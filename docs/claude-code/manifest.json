@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.312",
-  "last_updated": "2026-10-28T09:04:27Z",
+  "last_updated": "2026-10-28T17:28:33Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -420,8 +420,8 @@
       "source_url": "https://code.claude.com/docs/en/authentication",
       "source_md_url": "https://code.claude.com/docs/en/authentication.md",
       "source_id": "authentication",
-      "hash": "2fac747fa977317f15bbd91155180398d3488643b94bdc2be2fdd0030e1e94d5",
-      "last_updated": "2026-10-23T18:47:37Z"
+      "hash": "b037e09533a903e31bc98c675a33c631b82d0dbe5f4c36b5302a790d77976199",
+      "last_updated": "2026-10-28T17:28:33Z"
     },
     "auto-mode-classifier-billing": {
       "slug": "auto-mode-classifier-billing",
@@ -530,8 +530,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-apps-gateway-config",
       "source_md_url": "https://code.claude.com/docs/en/claude-apps-gateway-config.md",
       "source_id": "claude-apps-gateway-config",
-      "hash": "097754990571350d7caca704b11d3c8a1ba7a6f2f3f2b7f18f0fcf5892c5b625",
-      "last_updated": "2026-10-27T19:48:06Z"
+      "hash": "d88478091c0914f3aeeb92c002251a287cbc8b70512bea09bf48425dcbf20d2b",
+      "last_updated": "2026-10-28T17:28:33Z"
     },
     "claude-apps-gateway-deploy": {
       "slug": "claude-apps-gateway-deploy",
@@ -640,8 +640,8 @@
       "source_url": "https://code.claude.com/docs/en/cloud-environments",
       "source_md_url": "https://code.claude.com/docs/en/cloud-environments.md",
       "source_id": "cloud-environments",
-      "hash": "762444b0dff275a0a511c374b0fe37a6a4c5f7fe30486836c4cfe1a4c6c5bd5a",
-      "last_updated": "2026-10-24T17:42:22Z"
+      "hash": "f66e957509d8bd1ac0b775cd9d30a5982c97017d7fd6c51dc9f1ccc6426c13a3",
+      "last_updated": "2026-10-28T17:28:33Z"
     },
     "code-review": {
       "slug": "code-review",
@@ -910,8 +910,8 @@
       "source_url": "https://code.claude.com/docs/en/errors",
       "source_md_url": "https://code.claude.com/docs/en/errors.md",
       "source_id": "errors",
-      "hash": "2b018ba62a9b8b69bb72c8560dbf7e6af2e97b6a07fd52b87c484412bd25f5c7",
-      "last_updated": "2026-10-28T00:07:51Z"
+      "hash": "dce3d4e08054f829122e35f4d786e741c5ca32b0960f5d7e186299d622c02cbe",
+      "last_updated": "2026-10-28T17:28:33Z"
     },
     "fast-mode": {
       "slug": "fast-mode",
@@ -920,8 +920,8 @@
       "source_url": "https://code.claude.com/docs/en/fast-mode",
       "source_md_url": "https://code.claude.com/docs/en/fast-mode.md",
       "source_id": "fast-mode",
-      "hash": "fdf2897cd31aa4c282fb9885961f29586396c0aae61b0534bc82fdc3626c4e50",
-      "last_updated": "2026-10-27T19:48:06Z"
+      "hash": "3dbbceb14f3b2f909bc896ad1c2a809a60e6ff70d10d9f1049f109c726d02a62",
+      "last_updated": "2026-10-28T17:28:33Z"
     },
     "feature-availability": {
       "slug": "feature-availability",
@@ -930,8 +930,8 @@
       "source_url": "https://code.claude.com/docs/en/feature-availability",
       "source_md_url": "https://code.claude.com/docs/en/feature-availability.md",
       "source_id": "feature-availability",
-      "hash": "f747c45b3d614ab543a02c86298925ac544746c9c8feb5972dc2c5142f04ef2a",
-      "last_updated": "2026-10-23T18:47:37Z"
+      "hash": "5164b9dfded3773c2ceeb32344e6d56422111f62afce0cad2bddef456dad9369",
+      "last_updated": "2026-10-28T17:28:33Z"
     },
     "features-overview": {
       "slug": "features-overview",
@@ -1850,8 +1850,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "2b0937430f5f71fd7299eaaae5ebc0d389b8d8f6d56ffc73d6160b68d39c384c",
-      "last_updated": "2026-10-27T19:48:06Z"
+      "hash": "3e61bb59ba30495277af107905960770c81dca87a15fff7bdd04844a63e9d759",
+      "last_updated": "2026-10-28T17:28:33Z"
     },
     "setup": {
       "slug": "setup",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-28T09:04:27Z",
-    "fetch_duration_seconds": 79.195,
+    "last_fetch_completed": "2026-10-28T17:28:33Z",
+    "fetch_duration_seconds": 79.446,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

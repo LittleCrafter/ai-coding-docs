@@ -2155,6 +2155,9 @@ Usage limits are shared with other agentic features once pricing for those
 features is effective. This currently includes [ChatGPT for
 Excel](https://help.openai.com/articles/20001063) on Plus and Pro.
 
+GPT-6.1 Sol usage drawn from your subscription has no long-context surcharge
+in Codex or ChatGPT Work.
+
 Fast and Ultrafast modes use included subscription limits and paid credits
 at different rates, relative to Standard mode for the same model:
 
@@ -15014,6 +15017,9 @@ GPT-6.1 Terra is a fast, efficient choice for writing, visual understanding, and
 computer use. Luna suits focused, repeatable tasks.
 
 These recommendations apply to ChatGPT Work and Codex. For Chat, see [models in ChatGPT](https://help.openai.com/en/articles/20001354-gpt-6-and-other-models-in-chatgpt) in the Help Center.
+
+GPT-6.1 Sol uses a default context window of 500,000 tokens in Codex and
+ChatGPT Work. See [pricing](./pricing.md) for subscription usage and credit rates.
 
 For model availability, pricing, and usage limits, see [ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex) in the Help Center.
 
