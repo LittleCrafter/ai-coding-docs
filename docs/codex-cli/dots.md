@@ -54,7 +54,7 @@ Tell your dot where to send different kinds of updates. For example, ask it to k
 <a id="choose-where-o-can-reach-you"></a>
 <a id="where-to-use-o"></a>
 
-Open your dot's profile and select **Add** to connect an available contact method. See [Message your dot](./dots/channels.md) for channel details.
+Open your dot's profile and select **Add** to connect an available contact method. Texting is rolling out in beta to ChatGPT Pro users in the U.S. See how to [set up texting](./dots/channels.md#texting) with iMessage or RCS on Android. See [Message your dot](./dots/channels.md) for other ways to reach it.
 
 In Slack, you can DM your dot or mention it in a channel you’ve added it to. By default, it responds to you; you can instruct it to engage with others. Existing permissions and safeguards still apply to what it shares and does. Tell it which channels and events to watch for. Adding it to a channel alone doesn’t start monitoring. You can also message your dot in Microsoft Teams. See [Slack and Teams](./dots/channels.md#slack-and-teams).
 
@@ -265,7 +265,7 @@ You can create your dot in the ChatGPT mobile app, desktop app, or a desktop bro
 | Guide                                                | Covers                                                           |
 | ---------------------------------------------------- | ---------------------------------------------------------------- |
 | [Getting started](./dots/getting-started.md)       | Setup, your first conversation, and assigning work.              |
-| [Messaging](./dots/channels.md)                    | ChatGPT, calls, Slack, and Teams.                                |
+| [Messaging](./dots/channels.md)                    | ChatGPT, calls, texting, Slack, and Teams.                       |
 | [Tasks and memory](./dots/tasks-and-memory.md)     | Assigned work, recurring tasks, context, and proactive research. |
 | [Computers and apps](./dots/computers-and-apps.md) | Cloud work, local access, plugins, and website sign-in.          |
 | [Controls](./dots/controls.md)                     | Review activity, manage permissions, and stop work.              |

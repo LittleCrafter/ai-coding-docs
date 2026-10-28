@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.165.0",
-  "last_updated": "2026-10-28T17:29:45Z",
+  "last_updated": "2026-10-28T21:58:12Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "e535614d859cd3f8b49c2c92933559d845a4a1300384cc9f6b7cd06869c51ffb",
-      "last_updated": "2026-10-28T17:29:45Z"
+      "hash": "60bf60cec05a2887ef8be30f78665a30599c45e0e5700c3139160579db17fb4d",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -470,8 +470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots",
       "source_md_url": "https://learn.chatgpt.com/docs/dots.md",
       "source_id": "llms:dots",
-      "hash": "9194aeda17564a059fffc1da39b6dba553fd3de5e117c97fa61dc166f523b3dc",
-      "last_updated": "2026-10-20T23:32:49Z"
+      "hash": "e84cd829a61a474c79ea4d88d5184ebb6eea62b2e07733f1f6e26b04ad5066f7",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "dots/channels": {
       "slug": "dots/channels",
@@ -480,8 +480,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/channels",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/channels.md",
       "source_id": "llms:dots/channels",
-      "hash": "0eef4fd36b701bda7dbe9c52d02f1e121769eabf9fb02f1643ab048dbe48a1e8",
-      "last_updated": "2026-10-16T23:07:10Z"
+      "hash": "046bb838427ba44936bb667258de9d2142951d3606b8554ee2147927d26c41ad",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "dots/computers-and-apps": {
       "slug": "dots/computers-and-apps",
@@ -1500,8 +1500,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli.md",
       "source_id": "llms:security/cli",
-      "hash": "dd89590c918888161939c298780723bb27aac98b85dea529d9de2872cf53e51c",
-      "last_updated": "2026-10-20T02:14:38Z"
+      "hash": "79060dbfe2c50b8a834bf1183eb041f93da87d21b5e715bc7d6779b6dfc935ea",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "security/cli/bulk-scans": {
       "slug": "security/cli/bulk-scans",
@@ -1510,8 +1510,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/bulk-scans",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/bulk-scans.md",
       "source_id": "llms:security/cli/bulk-scans",
-      "hash": "b34e3f7542dd71c86e9e9a7e9c94f10b4a3af7309c6dd9e34a46e4bbea214913",
-      "last_updated": "2026-10-16T07:36:35Z"
+      "hash": "33372003fd9a984769118439381850ad3eaf3eb4bdf0312fe6098e2622009e91",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "security/cli/ci": {
       "slug": "security/cli/ci",
@@ -1560,8 +1560,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/reference",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/reference.md",
       "source_id": "llms:security/cli/reference",
-      "hash": "1c46396541458259dab6e5ca3a14d5ebe3a65fac79d938297e2afc1761c0a9ae",
-      "last_updated": "2026-10-17T07:16:19Z"
+      "hash": "7abda0c97ebf08d4ff39a3616ee5f4ede65e0f6dbcff3e47dd9e1e903fc16739",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "security/faq": {
       "slug": "security/faq",
@@ -1580,8 +1580,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/plugin",
       "source_md_url": "https://learn.chatgpt.com/docs/security/plugin.md",
       "source_id": "llms:security/plugin",
-      "hash": "eaad9c4650ee4db5fdce724b9aab8dfc9b090ccb439c1a141057d3628b87ccc1",
-      "last_updated": "2026-10-22T18:56:47Z"
+      "hash": "ce56930d97b2409c72bf7534d56f23950375a34596cc2cbb70cc25fe030cbd50",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "security/plugin/changelog": {
       "slug": "security/plugin/changelog",
@@ -1590,8 +1590,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/plugin/changelog",
       "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/changelog.md",
       "source_id": "llms:security/plugin/changelog",
-      "hash": "77de82b18d5950549847420db9a7f2c1263d6084b7993e8efd2c7a5ebab1ac5f",
-      "last_updated": "2026-10-16T07:36:35Z"
+      "hash": "901aaba37f76a9c0c9e940dc9f19b0066f1ace61b19e117eacb5e39b495a0ee4",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "security/plugin/code-changes": {
       "slug": "security/plugin/code-changes",
@@ -1610,8 +1610,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/plugin/deep-scans",
       "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/deep-scans.md",
       "source_id": "llms:security/plugin/deep-scans",
-      "hash": "05b0ce6dfce2213a920adeea1bc12d98b30e338c5e5624057d5b396e76197783",
-      "last_updated": "2026-10-16T07:36:35Z"
+      "hash": "bcd48985f3120f32d8a07025118e596ec59268075a121d7c4c68efbe44af40cb",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "security/plugin/export-findings": {
       "slug": "security/plugin/export-findings",
@@ -1690,8 +1690,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/sdk",
       "source_md_url": "https://learn.chatgpt.com/docs/security/sdk.md",
       "source_id": "llms:security/sdk",
-      "hash": "b387f973e07fc1a2e3ca8c4576cffdaea0c77bf0349b4058dd38033219adcf0a",
-      "last_updated": "2026-10-17T07:16:19Z"
+      "hash": "0db36569a9c35cce964432392c1c182a89d5505ffacbc16f944eda6a2287aa6c",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "security/security-review": {
       "slug": "security/security-review",
@@ -1950,8 +1950,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new.md",
       "source_id": "llms:whats-new",
-      "hash": "a2dcb273a2f85c2ae64e372f7e60a4c0d12a9bdbb1e71d7b9a5e5262f7d5664f",
-      "last_updated": "2026-10-26T21:59:15Z"
+      "hash": "7b253c37715e239f92dc0d333e1afd6a6533e68219bacf1d68646640af2bce26",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "whats-new/devday-2026": {
       "slug": "whats-new/devday-2026",
@@ -1962,6 +1962,16 @@
       "source_id": "llms:whats-new/devday-2026",
       "hash": "71422a05bdfd07f200d607c115ee11166d9da18bc069036893114ce0856ba446",
       "last_updated": "2026-10-20T23:32:49Z"
+    },
+    "whats-new/dots-october-28-2026": {
+      "slug": "whats-new/dots-october-28-2026",
+      "title": "Text your dot",
+      "group": "whats-new",
+      "source_url": "https://learn.chatgpt.com/docs/whats-new/dots-october-28-2026",
+      "source_md_url": "https://learn.chatgpt.com/docs/whats-new/dots-october-28-2026.md",
+      "source_id": "llms:whats-new/dots-october-28-2026",
+      "hash": "b64e7501161e8466add36a2bcf9e16a99524d5b80e37c9a46b94140291389123",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "whats-new/dots-october-9-2026": {
       "slug": "whats-new/dots-october-9-2026",
@@ -1980,8 +1990,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new/october-26-30-2026",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new/october-26-30-2026.md",
       "source_id": "llms:whats-new/october-26-30-2026",
-      "hash": "db30d5ccf870c1ac5980b8aa8e4b722fe778187922f8a9efd7ecc5a43b6eb646",
-      "last_updated": "2026-10-26T21:59:15Z"
+      "hash": "3108630ead930a9ddb5aaf9df1af4b0e460f45946a8584ae0f9de398679c2e2d",
+      "last_updated": "2026-10-28T21:58:12Z"
     },
     "whats-new/october-5-9-2026": {
       "slug": "whats-new/october-5-9-2026",
@@ -2035,10 +2045,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-28T17:29:45Z",
-    "fetch_duration_seconds": 70.849,
-    "total_pages_discovered": 203,
-    "pages_fetched_successfully": 203,
+    "last_fetch_completed": "2026-10-28T21:58:12Z",
+    "fetch_duration_seconds": 71.197,
+    "total_pages_discovered": 204,
+    "pages_fetched_successfully": 204,
     "pages_failed": 0,
     "failed_pages": []
   }

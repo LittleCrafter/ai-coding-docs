@@ -6,6 +6,12 @@ For every versioned update, bug fix, and minor improvement, see the [ChatGPT and
 
 ## [October 26–30, 2026](./whats-new/october-26-30-2026.md)
 
+### [Text your dot](./whats-new/dots-october-28-2026.md)
+
+Reach your dot through iMessage or RCS on Android for one-to-one conversations
+with text, photos, and voice messages. Texting is rolling out in beta to ChatGPT
+Pro users in the U.S.
+
 ### Use GPT-6.1 Terra for visual reasoning and computer use
 
 [GPT-6.1 Terra](./models.md#app-gpt-61-terra) is now available in ChatGPT Work

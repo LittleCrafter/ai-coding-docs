@@ -325,6 +325,12 @@ Use this glossary as a quick reference for Codex terms across the app, CLI, IDE 
 
 Source: [October 26–30, 2026](./whats-new/october-26-30-2026.md)
 
+#### [Text your dot](./whats-new/dots-october-28-2026.md)
+
+Reach your dot through iMessage or RCS on Android for one-to-one conversations
+with text, photos, and voice messages. Texting is rolling out in beta to ChatGPT
+Pro users in the U.S.
+
 #### Use GPT-6.1 Terra for visual reasoning and computer use
 
 [GPT-6.1 Terra](./models.md#app-gpt-61-terra) is now available in ChatGPT Work
@@ -495,6 +501,20 @@ what people can select on your website, attach relevant context, and provide
 controls for previewing changes before sending feedback to ChatGPT. The
 Browser Annotation API is available in supported versions of the desktop
 app's built-in browser.
+
+### Text your dot
+
+Source: [Text your dot](./whats-new/dots-october-28-2026.md)
+
+Texting is rolling out in beta to ChatGPT Pro users in the U.S. Reach your dot
+through iMessage or RCS on Android for one-to-one conversations with text,
+photos, and voice messages.
+
+Your dot uses context from your conversations to choose where to reach you. You can also ask it to use a particular channel, such as texting you when something needs your attention and keeping routine updates in ChatGPT.
+
+If your dot needs approval, it sends you a link to review the request in ChatGPT.
+
+See [texting setup and availability](./dots/channels.md#texting).
 
 ### Use ChatGPT
 
@@ -4173,7 +4193,7 @@ You reach the same dot in ChatGPT, Slack, Teams, or a call. Changing where you t
 
 Tell your dot where to send different kinds of updates. For example, ask it to keep routine progress in ChatGPT and bring decisions to you in Slack. Explain which changes need your attention, such as a deadline at risk.
 
-Open your dot's profile and select **Add** to connect an available contact method. See [Message your dot](./dots/channels.md) for channel details.
+Open your dot's profile and select **Add** to connect an available contact method. Texting is rolling out in beta to ChatGPT Pro users in the U.S. See how to [set up texting](./dots/channels.md#texting) with iMessage or RCS on Android. See [Message your dot](./dots/channels.md) for other ways to reach it.
 
 In Slack, you can DM your dot or mention it in a channel you’ve added it to. By default, it responds to you; you can instruct it to engage with others. Existing permissions and safeguards still apply to what it shares and does. Tell it which channels and events to watch for. Adding it to a channel alone doesn’t start monitoring. You can also message your dot in Microsoft Teams. See [Slack and Teams](./dots/channels.md#slack-and-teams).
 
@@ -4299,7 +4319,7 @@ You can create your dot in the ChatGPT mobile app, desktop app, or a desktop bro
 | Guide                                                | Covers                                                           |
 | ---------------------------------------------------- | ---------------------------------------------------------------- |
 | [Getting started](./dots/getting-started.md)       | Setup, your first conversation, and assigning work.              |
-| [Messaging](./dots/channels.md)                    | ChatGPT, calls, Slack, and Teams.                                |
+| [Messaging](./dots/channels.md)                    | ChatGPT, calls, texting, Slack, and Teams.                       |
 | [Tasks and memory](./dots/tasks-and-memory.md)     | Assigned work, recurring tasks, context, and proactive research. |
 | [Computers and apps](./dots/computers-and-apps.md) | Cloud work, local access, plugins, and website sign-in.          |
 | [Controls](./dots/controls.md)                     | Review activity, manage permissions, and stop work.              |
@@ -4369,7 +4389,25 @@ The action opens ChatGPT and requires authentication. If you switch accounts and
 
 #### Texting
 
-Texting is coming soon.
+Reach your dot through iMessage or RCS on Android. Texting supports one-to-one conversations. It’s rolling out in beta to ChatGPT Pro users in the U.S.
+
+Your dot can use relevant context from your conversations in ChatGPT and other connected channels, along with the plugins you’ve connected.
+
+#### Set up texting
+
+1. Open your dot’s profile in the ChatGPT mobile app, desktop app, or a desktop web browser and select **Texting**.
+2. Enter your phone number and follow the steps to verify it.
+3. Save your dot’s contact card when you receive it. Send your dot a message to start chatting.
+
+For iMessage, make sure you’re sending from the phone number you verified. On Android, enable RCS in your messaging app.
+
+You can send text, photos, and voice messages. If your dot needs approval, it sends you a link to review the request in ChatGPT.
+
+Your dot uses context from your conversations to choose where to reach you. You can also ask it to use a particular channel, such as texting you when something needs your attention and keeping routine updates in ChatGPT.
+
+Your dot can only text you, and you’re the only one who can text your dot. Setting up texting doesn’t give your dot or OpenAI access to your other text conversations.
+
+Group chats, phone calls, and FaceTime aren’t currently supported through texting. You can call your dot in ChatGPT.
 
 ### Model selection
 
@@ -5619,8 +5657,10 @@ Sign in with your ChatGPT account:
 npx @openai/codex-security login
 ```
 
-On a machine without a browser, add `--device-auth` and follow the displayed
-sign-in instructions. Use `--auth chatgpt` in the scan commands below to select
+On a machine without a browser, add `--device-auth` if your workspace allows
+it, and follow the displayed sign-in instructions. If device authentication
+is disabled, use the [SSH login instructions](https://github.com/openai/codex-security/blob/npm-v0.3.0/sdk/typescript/docs/cli.md#remote-login-with-ssh-forwarding).
+Use `--auth chatgpt` in the scan commands below to select
 that sign-in even when your environment also contains an API key.
 
 For API keys and other providers, see [Select scan
@@ -5708,6 +5748,20 @@ Keep the scan directory together when sharing or archiving it. It contains
 and supporting artifacts. See [Scan
 artifacts](./security/cli/reference.md#scan-artifacts) for the full layout.
 
+#### Export the saved threat model
+
+Standard, Deep, and Diff scans save their threat model with the results.
+Export it as Markdown without signing in or making another model call:
+
+```bash
+npx @openai/codex-security export "$SCAN_DIR" \
+  --artifact threat-model --output "$SCAN_DIR/exports/threatmodel.md"
+```
+
+If no threat model was saved, `export` returns an error. See the [export
+reference](./security/cli/reference.md#codex-security-export) to select saved
+scans and other output formats.
+
 #### Revisit a saved scan
 
 List scans for the repository:
@@ -5747,8 +5801,8 @@ feedback, see the [CLI FAQ](./security/cli/faq.md).
 
 Source: [Codex Security CLI reference](./security/cli/reference.md)
 
-Use this reference to check the supported `codex-security` commands, flags,
-output formats, and exit behavior. For a guided first scan, start with the
+Look up `codex-security` commands, flags, output formats, and exit behavior.
+For a first scan, follow the
 [CLI quickstart](./security/cli.md).
 
 The `@openai/codex-security` package is public. Scans using OpenAI inference
@@ -5756,7 +5810,9 @@ require Codex Security access. Scans use your local permissions and don't
 pause for approval. Before you start, review [Local scan
 permissions](#local-scan-permissions).
 
-Run the CLI with `npx @openai/codex-security`.
+Run the CLI with `npx @openai/codex-security`. For older installations, check
+`--version` and command-specific `--help`. The installed package also provides
+the `cs` alias.
 
 #### Command overview
 
@@ -5766,20 +5822,30 @@ usage: codex-security [--version] <command> [options]
 
 The CLI provides these commands:
 
-| Command                       | Purpose                                               |
-| ----------------------------- | ----------------------------------------------------- |
-| `codex-security scan`         | Run a Codex Security scan.                            |
-| `codex-security install-hook` | Install a Git pre-commit security scan.               |
-| `codex-security bulk-scan`    | Discover repositories and run resumable bulk scans.   |
-| `codex-security scans`        | List, inspect, compare, and retrieve saved scan logs. |
-| `codex-security findings`     | Review and update saved security findings.            |
-| `codex-security export`       | Export completed findings as CSV, JSON, or SARIF.     |
-| `codex-security publish`      | Publish completed scan findings to Linear.            |
-| `codex-security validate`     | Check one or more candidate security findings.        |
-| `codex-security patch`        | Patch one or more security issues.                    |
-| `codex-security login`        | Sign in, store credentials, or check sign-in status.  |
-| `codex-security logout`       | Remove the stored sign-in.                            |
-| `codex-security info`         | Show read-only SDK and bundled-plugin metadata.       |
+| Command                            | Purpose                                                             |
+| ---------------------------------- | ------------------------------------------------------------------- |
+| `codex-security scan`              | Run a Codex Security scan.                                          |
+| `codex-security scan import`       | [Save CSV or JSON findings as a scan](#codex-security-scan-import). |
+| `codex-security import github`     | [Read GitHub code scanning alerts](#codex-security-import-github).  |
+| `codex-security policy`            | Draft or update a repository security policy.                       |
+| `codex-security init`              | Create a YAML or JSON project configuration.                        |
+| `codex-security install-hook`      | Install a Git pre-commit security scan.                             |
+| `codex-security bulk-scan`         | Discover repositories and run resumable bulk scans.                 |
+| `codex-security scan-components`   | Run separate scans for project components.                          |
+| `codex-security scans`             | List, inspect, compare, and retrieve saved scan logs.               |
+| `codex-security findings`          | Review and update saved security findings.                          |
+| `codex-security export`            | Export findings or a retained threat model.                         |
+| `codex-security publish`           | Publish findings to Linear or a custom findings service.            |
+| `codex-security classify-severity` | Apply a severity rubric to saved findings.                          |
+| `codex-security suggest-owners`    | Suggest finding owners using CODEOWNERS and Git history.            |
+| `codex-security dedupe`            | Deduplicate saved findings.                                         |
+| `codex-security validate`          | Check one or more candidate security findings.                      |
+| `codex-security patch`             | Patch one or more security issues.                                  |
+| `codex-security verify-fix`        | Check whether reported issues are fixed.                            |
+| `codex-security feedback`          | Send feedback to OpenAI and return a feedback ID.                   |
+| `codex-security login`             | Sign in, store credentials, or check sign-in status.                |
+| `codex-security logout`            | Remove the stored sign-in.                                          |
+| `codex-security info`              | Show read-only SDK and bundled-plugin metadata.                     |
 
 The CLI also provides these integration commands:
 
@@ -5804,6 +5870,7 @@ npx @openai/codex-security scan --help
 `codex-security --version` prints the installed version and exits.
 `codex-security info --json` reports the SDK and bundled-plugin versions.
 Neither command requires Python.
+Use `codex-security --update` to update the installed CLI.
 
 #### Discover commands and connect agents
 
@@ -5827,10 +5894,10 @@ npx @openai/codex-security completions bash
 
 Replace `bash` with `zsh` or `fish` for those shells.
 
-Scan results support `--format toon|json|yaml|jsonl` and `--full-output`. This
-framework-level `--format` is separate from `--export-format`, which selects
-the format of an artifact exported from a completed scan. Global command help
-also lists `md`, but scan results don't support Markdown output.
+Scan results support `--format toon|json|yaml|jsonl` and `--full-output`.
+`--export-format` instead selects the format of an artifact exported from a
+completed scan. Global command help also lists `md`, but scan results don't
+support Markdown output.
 
 Register the CLI as an MCP server:
 
@@ -5844,8 +5911,9 @@ Sync Codex Security skills to your agents:
 npx @openai/codex-security skills add
 ```
 
-MCP exposes only the read-only `info` metadata command. Scans, exports,
-authentication, validation, and patching remain CLI-only.
+The CLI exposes only the read-only `info` metadata command through its MCP
+server. Scans, exports, publication, authentication, validation, and patching
+remain CLI-only.
 
 #### `codex-security scan`
 
@@ -5854,28 +5922,53 @@ working tree.
 
 ```text
 usage: codex-security scan [-h] [--auth {auto,chatgpt,api-key}]
+                           [--config FILE]
+                           [--cyber-access-program PROGRAM]
                            [--provider {openai,openrouter,fireworks,amazon-bedrock}]
                            [--path PATH | --diff BASE | --working-tree]
                            [--head HEAD] [--base BASE]
                            [--knowledge-base PATH] [--scan-prompt-file FILE]
+                           [--validation-prompt-file FILE]
                            [--post-scan-prompt-file FILE]
                            [--mode {standard,deep}] [--workers N]
                            [--subagents N] [--stop-after-no-new N]
                            [--max-discovery-runs N] [--max-time-hours HOURS]
                            [--model MODEL]
-                           [--effort {minimal,low,medium,high,xhigh,max}]
+                           [--effort EFFORT]
                            [--output-dir DIR]
                            [--archive-existing]
                            [--plugin-path PATH] [--python PATH]
                            [--codex KEY=VALUE] [--fail-on-severity LEVEL]
                            [--patch] [--patch-severity {critical,high,medium,low}]
                            [--create-pr]
-                           [--max-cost USD] [--dry-run] [--headless] [--verbose]
+                           [--max-cost USD] [--show-cost] [--dry-run] [--mock]
+                           [--workflow-id ID] [--safety-identifier ID]
+                           [--headless] [--verbose]
                            [--json] [--format {toon,json,yaml,jsonl}]
                            [--full-output] [repository]
 ```
 
 `repository` defaults to the current directory.
+
+#### Load project configuration
+
+Create a starter configuration and select it explicitly:
+
+```bash
+npx @openai/codex-security init codex-security.yaml
+npx @openai/codex-security scan . --config codex-security.yaml
+```
+
+`init` doesn't overwrite an existing file. Use `-c FILE` as a shorter form of
+`--config FILE`, or set `CODEX_SECURITY_PROJECT_CONFIG`. An explicit flag takes
+precedence over the environment variable. The CLI doesn't discover a project
+file automatically.
+
+Select only configuration you control. It has the same authority as CLI
+options: native Codex settings can start MCP server processes and choose model
+service destinations. Don't select a file controlled by an untrusted repository
+or pull request. In CI, keep scanner configuration outside the checkout being
+assessed. See the [project configuration guide](https://github.com/openai/codex-security/blob/main/docs/project-configuration.md) for settings and precedence.
 
 #### Select scan authentication
 
@@ -5899,6 +5992,24 @@ npx @openai/codex-security scan . --auth api-key
 
 To make stored credentials the automatic default, run
 `unset OPENAI_API_KEY CODEX_API_KEY`.
+
+Use `--auth api-key` with
+`--cyber-access-program standard|daybreak_blue|daybreak_red` to select a
+Cyber access program for OpenAI model requests. Omission preserves Codex
+defaults; `standard` explicitly selects the standard program.
+Selecting a program doesn't grant access; your API project must be approved
+for the selected program. See the [access-program guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/cli.md#select-a-cyber-access-program) for credential requirements.
+
+#### Attribute scans to end users
+
+When scanning on behalf of users, `--safety-identifier ID` accepts a stable,
+hashed identifier with API-key authentication. Use 1–64 characters without NUL
+or personal data such as email addresses.
+
+The bundled runtime doesn't yet support this option. It requires a compatible
+Codex build selected with `CODEX_CLI_PATH` and a plugin that forwards the
+identifier to workers. The SDK validates the identifier format, not runtime
+or plugin compatibility; older versions may omit it.
 
 #### Use OpenRouter or Fireworks
 
@@ -5976,8 +6087,6 @@ Set credentials and `AWS_REGION` in the same shell or CI job as the scan.
 #### Local results and access checks
 
 Saved local reports, `scans show`, and `export` work without cloud credentials.
-Uploading findings to Codex Security Cloud requires a separate ChatGPT
-sign-in and access to the destination.
 
 `info` and `scan --dry-run` don't test AWS credentials or model access. Run a
 scan to check access. For AWS authentication or access-denied errors, check
@@ -5985,9 +6094,12 @@ your credentials, region, and model permissions.
 
 #### Bedrock release status
 
-`@openai/codex-security@0.1.31` supports Amazon Bedrock scans. This version
-doesn't provide cost estimates or support `--max-cost` for the Daybreak Blue
-and Daybreak Red model IDs above.
+Starting in 0.2.0, `@openai/codex-security` supports cost estimates and `--max-cost` for
+the Daybreak Blue and Daybreak Red model IDs above. Estimates use AWS Standard
+commercial in-region prices, including the AWS fee. The cost limit uses
+`estimatedUsd`, the short-context baseline. Requests already in progress can
+put this estimate above the limit. Long-context pricing can raise the reported
+`estimatedUsdRange` above it. This limit is not a billing cap.
 
 Check your installed package and bundled Codex versions:
 
@@ -6079,9 +6191,9 @@ npx @openai/codex-security scan . \
 ```
 
 When the time limit expires, the scan stops unfinished workers, keeps completed
-scan results, and aggregates them into the final report. Check the report for
-reviewed areas and deferred work. The deadline alone doesn't determine the exit
-code; execution status and the severity policy do.
+scan results, and aggregates them into the final report. Reaching a configured
+limit with a valid finalized report isn't an execution failure. Review its
+follow-up work and coverage notes; see [Exit codes and signals](#exit-codes-and-signals).
 
 Set persistent defaults in `~/.codex/codex-security/config.toml`, or in
 `$CODEX_HOME/codex-security/config.toml` when you set `CODEX_HOME`:
@@ -6097,8 +6209,9 @@ max_time_hours = 1.5
 
 Command-line options override these defaults. `scan --workers` controls
 independent standard-scan workers within one deep scan; `bulk-scan --workers`
-controls concurrent repository scans. Set `stop_after_consecutive_errors` only
-in the TOML file; its default is `3`.
+controls concurrent repository scans. Set `stop_after_consecutive_errors` in
+the legacy TOML file or `scan.deep.stop_after_consecutive_errors` in a project
+file; its default is `3`.
 
 #### Add security context
 
@@ -6111,17 +6224,19 @@ npx @openai/codex-security scan . \
   --knowledge-base /path/to/security-policies
 ```
 
-Supported documents include `.md`, `.markdown`, `.txt`, `.pdf`, and `.docx`
-files. The CLI searches directories recursively, rejects linked input paths,
-skips linked directory entries, and keeps extracted document content
-outside the saved scan results.
+Supported documents include UTF-8 text files (including JSON and SARIF), PDF,
+and DOCX files. The CLI searches directories recursively, rejects linked input
+paths, and skips linked directory entries. It saves extracted documents in the
+private `.scan-knowledge.json` continuation file beside the scan artifacts to
+support resuming the scan. Preserve this file with the scan directory.
+Canonical reports don't include the document text.
 
 #### Add scan instructions
 
 To add scan instructions, provide a text or Markdown file with
 `--scan-prompt-file`. Use `--post-scan-prompt-file` to run follow-up
-instructions in the same authenticated session after successful scans and
-scan errors:
+instructions in the same authenticated session after scans that succeed or
+return errors:
 
 ```bash
 npx @openai/codex-security scan . \
@@ -6133,7 +6248,12 @@ For example, use the scan prompt to focus on authorization boundaries and ask
 the follow-up to write a new `post-scan-summary.md` in the scan directory.
 If the follow-up fails, the CLI reports a warning and keeps the completed scan.
 The follow-up doesn't run after cancellation or when the scan reaches its cost
-limit.
+limit. When it runs, the follow-up is outside scan cost tracking and `--max-cost`.
+
+Use `--validation-prompt-file FILE` to replace final validation with your own
+workflow in Standard and diff scans. Source review still runs. Include setup,
+authorized targets, required evidence, and cleanup. Deep scans reject custom
+validation; scans with no candidates skip it.
 
 #### Set output and policy options
 
@@ -6147,17 +6267,28 @@ machine-readable result.
 | `--fail-on-severity LEVEL` | Return exit `1` when a completed scan reports a finding at or above `critical`, `high`, `medium`, or `low`.                  |
 | `--patch`                  | Fix and verify selected findings after a complete scan.                                                                      |
 | `--patch-severity LEVEL`   | Patch findings at or above `critical`, `high`, `medium`, or `low`. Defaults to `low`.                                        |
-| `--create-pr`              | Commit verified patch files and open a GitHub pull request. Requires `--patch`.                                              |
+| `--create-pr`              | Commit verified patch files and open a draft GitHub pull request or GitLab merge request. Requires `--patch`.                |
 | `--max-cost USD`           | Stop a scan when its estimated model cost exceeds the specified USD amount.                                                  |
+| `--show-cost`              | Show estimated cost in progress and completion output.                                                                       |
+| `--mock`                   | Save synthetic Standard scan findings without calling a model.                                                               |
+| `--workflow-id ID`         | Reuse completed work in the named local findings workflow.                                                                   |
 | `--dry-run`                | Check the repository, target, knowledge base, output directory, and Codex configuration without starting a scan.             |
 | `--headless`               | Show plain-text progress instead of the interactive scan dashboard.                                                          |
-| `--verbose`                | Print redacted lifecycle, authentication, progress, and cost diagnostics to stderr.                                          |
+| `--verbose`                | Print additional lifecycle, authentication, progress, and cost diagnostics to stderr.                                        |
 | `--json`                   | Print manifest, findings, coverage, paths, and turn metadata as one JSON document.                                           |
 | `--format FORMAT`          | Print the complete scan result as `toon`, `json`, `yaml`, or `jsonl`.                                                        |
 | `--full-output`            | Print the complete result using the default structured output format.                                                        |
 
-The cost limit is an estimate, not a hard spending cap. Requests already in
-progress can finish slightly above the limit. If a deep scan reaches the limit
+Mock mode supports Standard repository, path, and diff scans. You can't combine
+it with `--dry-run`, `--patch`, Deep mode, custom validation, or post-scan prompts.
+Scan prompts and knowledge bases don't change its synthetic findings. Use a
+separate `CODEX_SECURITY_STATE_DIR` to keep mock results out of your scan history.
+
+The cost limit uses `estimatedUsd`, the short-context baseline. Requests already
+in progress can put this estimate above the limit. Long-context pricing can
+raise `estimatedUsdRange` above it. This limit is not a billing cap.
+
+If a deep scan reaches the limit
 after Codex Security aggregates completed worker results, the CLI can seal a
 completed result and report the budget warning. It returns `0`, or `1` if
 findings meet the configured severity threshold. If it can't produce a valid
@@ -6175,10 +6306,8 @@ The workbench keeps scan history in
 `CODEX_SECURITY_STATE_DIR` also moves the workbench database.
 
 The output directory must be outside the scanned directory and any enclosing
-Git worktree. A scan can replace an existing result directory with
-`--archive-existing`.
-
-To preserve earlier results before reusing an output directory:
+Git worktree. Use `--archive-existing` to preserve earlier results before reusing
+an output directory:
 
 ```bash
 npx @openai/codex-security scan . \
@@ -6210,18 +6339,28 @@ npx @openai/codex-security scan . \
 
 #### Configure the runtime
 
-Use runtime options when you need an explicit model, interpreter, plugin, or
-Codex configuration value.
+Use runtime options to select a model, interpreter, plugin, or Codex
+configuration value.
 
-| Argument                                                  | Description                                                                                              |
-| --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `--auth {auto,chatgpt,api-key}`                           | Select the scan credentials. The default is `auto`.                                                      |
-| `--provider {openai,openrouter,fireworks,amazon-bedrock}` | Select the inference provider. The default is `openai`.                                                  |
-| `--model MODEL`                                           | Select the model. The default is `gpt-5.6-sol`. Required for OpenRouter, Fireworks, and Amazon Bedrock.  |
-| `--effort {minimal,low,medium,high,xhigh,max}`            | Select the model's reasoning effort. The default is `xhigh`.                                             |
-| `--plugin-path PATH`                                      | Use a Codex Security plugin directory or ZIP to override the bundled plugin.                             |
-| `--python PATH`                                           | Select the Python interpreter for the plugin runtime.                                                    |
-| `--codex KEY=VALUE`                                       | Override an isolated Codex configuration value. Values use TOML syntax. Repeat the flag for more values. |
+| Argument                                                  | Description                                                                                                     |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `--auth {auto,chatgpt,api-key}`                           | Select the scan credentials. The default is `auto`.                                                             |
+| `--provider {openai,openrouter,fireworks,amazon-bedrock}` | Select the inference provider. The default is `openai`.                                                         |
+| `--model MODEL`                                           | Select the model. The default is `gpt-5.6-sol`. Required for OpenRouter, Fireworks, and Amazon Bedrock.         |
+| `--effort EFFORT`                                         | Select the model's reasoning effort. The default is `xhigh`; supported values depend on the model and provider. |
+| `--plugin-path PATH`                                      | Use a Codex Security plugin directory or ZIP to override the bundled plugin.                                    |
+| `--python PATH`                                           | Select the Python interpreter for the plugin runtime.                                                           |
+| `--codex KEY=VALUE`                                       | Override an isolated Codex configuration value. Values use TOML syntax. Repeat the flag for more values.        |
+
+Codex Security accepts model IDs and reasoning-effort values as strings.
+Supported combinations depend on the model, provider, Codex version, and your
+credentials.
+
+If the scan's isolated Codex configuration selects a profile, that profile's
+`model` and `model_reasoning_effort` values take precedence over `--model` and
+`--effort`. Your normal Codex configuration isn't loaded.
+Add `--dry-run --verbose` to your scan command to inspect the resolved model
+and effort before starting a scan.
 
 To select a different model and reasoning effort without writing TOML, choose a
 model your credentials can access. If you use ChatGPT sign-in, check [GPT-6.1
@@ -6238,30 +6377,161 @@ string:
 npx @openai/codex-security scan . --codex 'model="gpt-6.1-sol"'
 ```
 
-#### `codex-security install-hook`
+Model and effort values pass through to Codex unchanged. Unsupported
+combinations return Codex or provider errors without substituting another
+model or effort.
 
-Install a Git pre-commit security check for the current repository:
+#### `codex-security scan import`
+
+Save existing findings as a completed scan in local history without running
+security analysis or making model calls. Import doesn't require model
+authentication.
+
+```text
+usage: codex-security scan import (--csv FILE | --json FILE)
+                                  [--output-dir DIR] [--archive-existing]
+                                  [--dry-run] [--format json]
+```
+
+Supply exactly one input. CSV uses the Codex Security export columns. JSON
+accepts a complete `codex-security.findings` document or an object containing
+a `findings` array that matches the findings schema. Arbitrary scanner JSON
+and raw GitHub alert arrays aren't accepted as saved findings.
+
+Save this synthetic example as `findings.csv`:
+
+```csv
+occurrence_id,finding_id,title,summary,severity,confidence,status,close_reason,note,remediation,path,start_line,end_line
+occ_000000000000000000000001,csf_000000000000000000000001,Missing authorization check,The route reads a record without checking ownership,high,high,open,,,Check record ownership before returning data,src/routes.ts,18,18
+```
+
+Validate the file, then import it:
 
 ```bash
-npx @openai/codex-security install-hook
+npx @openai/codex-security scan import --csv findings.csv --dry-run --format json
+npx @openai/codex-security scan import --csv findings.csv --format json
+```
+
+The dry run reports `dryRun: true` and `findingCount: 1` without saving a scan.
+The import returns the saved scan ID and result paths. To import JSON instead:
+
+```bash
+npx @openai/codex-security scan import --json findings.json --format json
+```
+
+For this command, `--json FILE` selects the input file. Use `--format json` for
+JSON output.
+
+| Option               | Behavior                                                                        |
+| -------------------- | ------------------------------------------------------------------------------- |
+| `--csv FILE`         | Read findings in the Codex Security CSV export format.                          |
+| `--json FILE`        | Read a findings document or an object with a `findings` array.                  |
+| `--dry-run`          | Validate the input without saving a scan.                                       |
+| `--output-dir DIR`   | Choose the artifact directory. The default is persistent Codex Security state.  |
+| `--archive-existing` | Archive existing results before importing. This option requires `--output-dir`. |
+
+Use a regular input file with no symbolic links or directory junctions in its
+path. Each import preserves finding occurrences, including duplicates, and
+retains the input under `artifacts/import/`. Original identifiers are stored in
+`extensions.import`. Completion means the import finished; it doesn't mean the
+source was reviewed. `scans rerun SCAN_ID` imports the retained input again.
+
+To scan a repository named `import`, use `scan ./import`.
+
+#### `codex-security import github`
+
+Read GitHub code scanning alerts without changing GitHub or checking out code:
+
+```bash
+npx @openai/codex-security import github example/repository --format json > /path/outside/repository/alerts.json
+npx @openai/codex-security import github example/repository \
+  --github-alert 12 --github-alert 18 --format json
+```
+
+Replace `example/repository` with your repository. Authenticate with GitHub
+CLI credentials that have code-scanning read access. By default, import reads
+open alerts from the default branch, including third-party SARIF uploads.
+
+| Option                  | Behavior                                                                          |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| `--github-alert NUMBER` | Select an exact alert regardless of state; repeat for multiple alerts.            |
+| `--github-ref REF`      | Select a Git reference instead of the default branch.                             |
+| `--github-state STATE`  | List `open`, `closed`, `dismissed`, `fixed`, or `all` alerts; defaults to `open`. |
+
+Don't combine exact alert numbers with a state other than `open`. The command returns
+an array of upstream alerts, not a saved scan. From the corresponding local
+repository, run
+`codex-security validate /path/outside/repository/alerts.json` to assess them.
+Keep the full JSON without output filters or token limits when saving
+validation inputs. Use [`scan import`](#codex-security-scan-import) for
+findings already in the Codex Security schema.
+
+#### `codex-security install-hook`
+
+Install the CLI outside the repository, inspect the repository's existing
+pre-commit hook, and run the installed CLI from outside the checkout:
+
+```bash
+git -C /path/to/repository rev-parse --git-path hooks/pre-commit
+codex-security install-hook /path/to/repository
 ```
 
 The check scans staged and unstaged changes before each commit and blocks
-high-severity findings or scan errors. It respects `core.hooksPath` and does
-not replace an existing pre-commit script. Set a different severity threshold
-when needed:
+commits on high or critical findings or scan errors. Local hooks are optional;
+use a required CI check for enforcement. Leave custom, linked, or shared hooks
+and hook directories to their owner. The installer doesn't replace an unrelated
+pre-commit script. Set a different severity threshold when needed:
 
 ```bash
-npx @openai/codex-security install-hook . --fail-on-severity medium
+codex-security install-hook /path/to/repository --fail-on-severity medium
 ```
+
+#### `codex-security policy`
+
+Draft a `SECURITY.md` policy that describes project security boundaries and
+what should count as a finding:
+
+```bash
+npx @openai/codex-security policy .
+npx @openai/codex-security policy . --headless --json
+```
+
+The command saves a draft outside the repository and leaves existing files
+unchanged. Review the draft, diff, and review notes, then copy only the reviewed
+`SECURITY.md` to the displayed policy target. In headless mode, unanswered
+questions remain in the review notes. Policy generation is optional; scans
+can use an existing policy or run without one. See the [policy guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/cli.md#generate-a-security-policy) for path scopes and options.
+
+#### `codex-security scan-components`
+
+Run a separate scan for each component of one repository:
+
+```bash
+npx @openai/codex-security scan-components . \
+  --component apps/api --component apps/web \
+  --workers 4 --output-dir /path/outside/repository/components
+```
+
+Unlike `scan --path`, this command produces a scan per component, then combines
+and matches the findings. Use `--components-file FILE` for a saved plan. To
+propose a split for review before scanning:
+
+```bash
+npx @openai/codex-security scan-components . --auto --plan-only \
+  --output-dir /path/outside/repository/component-plan
+```
+
+Component scans require `--output-dir` or `output.directory` in the project
+configuration, including plan-only runs. Failed scans or matching failures
+return `2`; severity-policy violations return `1`. See the [component scan guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/cli.md#scan-project-components) for plan syntax and retries.
 
 #### `codex-security bulk-scan`
 
 Discover and scan GitHub repositories, or run a resumable scan from a
 repository CSV.
 
-For a complete guide to GitHub discovery, CSV inventories, campaign results,
-and containerized scans, see [Run bulk security
+For GitHub discovery, CSV inventories, campaign results, and containerized
+scans, see [Run bulk security
 scans](./security/cli/bulk-scans.md).
 
 ```text
@@ -6269,7 +6539,7 @@ usage: codex-security bulk-scan [input] [--output-dir DIR]
                                 [--workers N] [--mode {standard,deep}]
                                 [--provider {openai,openrouter,fireworks,amazon-bedrock}]
                                 [--model MODEL]
-                                [--effort {minimal,low,medium,high,xhigh,max}]
+                                [--effort EFFORT]
                                 [--knowledge-base PATH]
                                 [--scan-prompt-file FILE]
                                 [--post-scan-prompt-file FILE]
@@ -6309,17 +6579,18 @@ Use `--knowledge-base PATH` to share security documents across every
 repository. Use `--scan-prompt-file FILE` to add shared scan instructions; the
 CSV `prompt` column adds repository-specific instructions after that shared
 prompt. `--post-scan-prompt-file FILE` runs follow-up instructions after each
-scan, including scan errors. It doesn't run after
+scan, including scans that return errors. It doesn't run after
 cancellation or when a scan reaches its cost limit.
 
 `--workers` limits simultaneous repository scans and defaults to `4`. `--mode`
 defaults to `standard`, and `--max-attempts` defaults to `1`. Set
-`--max-attempts` to retry repository or scan errors. Completed scans aren't
-retried because of coverage gaps or severity-policy violations. Their results
-remain available.
+`--max-attempts` to retry repository or scan errors. Exclusions and follow-up
+notes don't trigger retries of completed scans. Remaining execution failures
+return `2`; completed severity-policy violations return `1`.
 
 Run the same command again to resume from an existing output directory. The CLI
-skips completed scans, including scans with coverage gaps.
+skips completed scans. Use `--recover` to retry failed or interrupted attempts
+in a matching campaign.
 
 For containerized campaigns, see [Run bulk scans in
 Docker](./security/cli/bulk-scans.md#run-bulk-scans-in-docker).
@@ -6356,15 +6627,20 @@ npx @openai/codex-security scans show SCAN_ID
 
 Add `--show-linked-findings` to include finding links from earlier scans.
 
-Rerun the scan against the current checkout using its original configuration:
+Rerun a saved scan:
 
 ```bash
 npx @openai/codex-security scans rerun SCAN_ID
 ```
 
-The rerun requires the plugin version recorded by the original scan. If the
-installed version differs, the command stops instead of running with a
-different plugin.
+A rerun creates a new scan using saved settings and authentication choice,
+the current checkout, and current context files. It doesn't reload project
+configuration files or reuse saved credentials. If the original used scan or
+custom-validation prompts, supply those files again with `--scan-prompt-file`
+and `--validation-prompt-file`.
+
+Reruns require the original scan's recorded plugin version and stop if the
+installed version differs.
 
 #### Inspect saved scan logs
 
@@ -6458,34 +6734,44 @@ doesn't suppress a rule, path, or vulnerability class.
 
 #### `codex-security export`
 
-Export CSV, JSON, or SARIF from a completed, sealed scan. Export validates the
-scan artifacts before writing output and leaves the Codex runtime and
-credentials untouched.
+Export saved findings or a threat model without starting Codex or loading
+credentials. You can export findings as CSV, JSON, or SARIF only from a
+completed, sealed scan. Threat models use Markdown.
 
 ```text
-usage: codex-security export [--export-format {csv,json,sarif}]
+usage: codex-security export [scan_dir | --scan SCAN_ID]
+                             [--artifact {findings,threat-model}]
+                             [--export-format {csv,json,sarif,md}]
                              [--output FILE|-] [--source-root PATH]
-                             [--python PATH] scan_dir
+                             [--python PATH]
 ```
 
-`scan_dir` is the completed scan directory.
+Omit `scan_dir` and `--scan` to use the current repository's latest completed
+scan. Otherwise, provide a saved result directory or select a scan by ID or
+unique prefix of at least eight characters with `--scan`. You can't combine
+these selectors.
 
-| Argument                           | Description                                                                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------------------- |
-| `--export-format {csv,json,sarif}` | Select the export format. The default is `sarif`.                                           |
-| `--output FILE\|-`                 | Write the selected format to a file or stdout. Defaults to a file in the current directory. |
-| `--source-root PATH`               | Add source-line fingerprints to SARIF using a repository checkout.                          |
-| `--python PATH`                    | Select the Python interpreter for the bundled exporter.                                     |
+| Argument                              | Description                                                                                 |
+| ------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `--artifact {findings,threat-model}`  | Select the saved artifact. The default is `findings`.                                       |
+| `--scan SCAN_ID`                      | Select a saved scan by ID or unique prefix of at least eight characters.                    |
+| `--export-format {csv,json,sarif,md}` | Select the format. Findings default to `sarif`; threat models support only `md`.            |
+| `--output FILE\|-`                    | Write the selected format to a file or stdout. Defaults to a file in the current directory. |
+| `--source-root PATH`                  | Add source-line fingerprints to SARIF using a repository checkout.                          |
+| `--python PATH`                       | Select the Python interpreter for the bundled exporter.                                     |
 
-`--source-root` works only with `--export-format sarif`. JSON preserves
+`--source-root` works only with SARIF findings exports. JSON preserves
 the sealed findings document. CSV contains portable finding columns and does
 not include local workbench triage state.
 
 Without `--output`, the CLI writes SARIF to `results.sarif`, JSON to
-`findings.json`, and CSV to `findings.csv` in the current working directory.
-Exports can contain source excerpts and vulnerability details. Run the command
-outside the repository or pass `--output` with a private path outside the
-scanned checkout.
+`findings.json`, CSV to `findings.csv`, and Markdown to `threatmodel.md` in the
+current working directory.
+Exports can contain source excerpts and vulnerability details. Pass `--output`
+with a private path outside the checkout. When running outside the repository,
+also specify a result directory or `--scan`.
+
+#### Export findings
 
 Write SARIF to a file:
 
@@ -6521,9 +6807,35 @@ npx @openai/codex-security export /path/to/scan \
   --output /path/outside/repository/exports/findings.csv
 ```
 
+#### Export a saved threat model
+
+Starting in version 0.2.0, scans save their threat models for reuse without
+another model call. Export the latest completed scan's model to stdout:
+
+```bash
+npx @openai/codex-security export --artifact threat-model --output -
+```
+
+Or select a scan and save its model to a file:
+
+```bash
+npx @openai/codex-security export --scan SCAN_ID \
+  --artifact threat-model \
+  --output /path/outside/repository/exports/threatmodel.md
+```
+
+If you select a scan by ID or directory, you can also export a saved model
+from an unfinished or failed scan. If no model was saved, the command returns
+an error. Review any provisional or recovered content identified in the
+document before reusing it.
+
+To provide the exported model as context for another scan, pass its path to
+[`--knowledge-base`](#add-security-context).
+
 #### `codex-security publish scan`
 
-Publish every finding from a completed scan to Linear:
+Publish selected findings from a completed scan to Linear or a custom findings
+service. The following options describe Linear publication:
 
 ```text
 usage: codex-security publish scan [SCAN_DIR] --to linear
@@ -6539,6 +6851,12 @@ terminal to select a completed scan from local scan history. Creating issues
 also requires the scan and its findings to exist in local scan history. A dry
 run validates the sealed artifacts without this persistence check.
 
+Use `--scan SCAN_ID` or `--scan latest` instead of a directory to select a
+saved scan. Repeat `--finding-id ID` to select a subset for Linear. Use
+`publish check SCAN_DIR` with the Linear destination options to verify artifacts
+and recorded publications. With an API key, it also checks authentication and
+destination access; connected-app access is reported as `not-checked`.
+
 | Argument                             | Description                                                                                                                                                      |
 | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--to linear`                        | Publish to Linear. This argument is required.                                                                                                                    |
@@ -6547,14 +6865,17 @@ run validates the sealed artifacts without this persistence check.
 | `--linear-api-key KEY`               | Use a Linear personal API key for direct publication. Uses `CODEX_SECURITY_LINEAR_API_KEY` when omitted.                                                         |
 | `--linear-assignee EMAIL_OR_USER_ID` | Assign created issues by email address or Linear user ID. Requires `--linear-api-key` or `CODEX_SECURITY_LINEAR_API_KEY`. Issues remain unassigned when omitted. |
 | `--dry-run`                          | Prepare issue payloads without starting Codex, contacting Linear, creating issues, or writing publication state.                                                 |
+| `--skip-existing`                    | Skip findings with a recorded successful publication for the same occurrence, Linear team, and project. Requires local history.                                  |
 | `--json`                             | Write structured publication results to stdout. Progress remains on stderr.                                                                                      |
 
 Linear issue descriptions and dry-run output can include source code snippets
 and vulnerability details. Check who can view the destination team or project
 before publishing.
 
-Each non-dry-run invocation attempts to create a new issue for every finding.
-Publishing the same scan again doesn't match, update, or reuse existing issues.
+Each non-dry-run invocation attempts to create a new issue for every selected
+finding unless `--skip-existing` finds a recorded success for that occurrence,
+team, and project. This option doesn't inspect remote issues or cover
+unrecorded or concurrent publication.
 If some findings fail, the command preserves successfully created issues and
 returns exit code `2`.
 With `--json`, review the `created` and `failed` results before retrying to
@@ -6602,9 +6923,57 @@ Command-line values override their matching environment variables. For API
 keys, prefer `CODEX_SECURITY_LINEAR_API_KEY` over `--linear-api-key` because
 command-line arguments can appear in shell history and process listings.
 
+#### Publish to a custom findings service
+
+For an existing findings service, select its URL explicitly:
+
+```bash
+npx @openai/codex-security publish scan --scan latest \
+  --to custom --findings-url http://localhost:3000
+```
+
+Publication sends the complete sealed findings and the repository target ID.
+Findings can include source excerpts, evidence, and vulnerability details. Use
+HTTPS for services outside your local machine, and add `--dry-run --json` to
+inspect the payload before sending it.
+
+The CLI doesn't send model credentials to a custom service. Handle any required
+authentication outside the CLI. See the [findings service guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/findings-service.md) for deployment and protocol details.
+
+#### Finding review commands
+
+These commands work with existing findings:
+
+| Command             | Example                                                                                | Behavior                                                                                                                                                                                    |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `classify-severity` | `codex-security classify-severity --scan latest --rubric policy.md --json`             | Apply a rubric without repeating discovery or rewriting original findings. Omit `--rubric` to inherit an existing severity without model calls. Findings without severity require a rubric. |
+| `suggest-owners`    | `codex-security suggest-owners findings.json --source-root /path/to/repository --json` | Read committed source, CODEOWNERS, blame, and Git history to suggest owners. Doesn't assign tickets.                                                                                        |
+| `dedupe`            | `codex-security dedupe --scan SCAN_ID --json`                                          | Identify duplicate findings in local SQLite. Missing or stale embeddings require an embedding API key; fresh reviews require model access.                                                  |
+| `verify-fix`        | `codex-security verify-fix --scan SCAN_ID --json`                                      | Check existing fixes in a read-only sandbox. Accepts finding IDs, descriptions, and Linear selectors.                                                                                       |
+
+`verify-fix` returns `2` if any check is inconclusive or fails. Otherwise, it
+returns `1` if any finding remains vulnerable, or `0` if all findings are fixed.
+Use each command's `--help` for selectors, model settings, and output options.
+
+#### `codex-security feedback`
+
+Send a problem description to OpenAI and receive an ID to share with support:
+
+```bash
+npx @openai/codex-security feedback SCAN_ID \
+  --reason "The scan stopped before it finished" --json
+```
+
+Without a scan ID, the command selects the most recently started scan in the
+current repository, including active or failed scans, or sends a general
+report if none exists. Reports include the description, versions, and selected
+scan/session IDs. Logs are excluded by default. Add `--include-logs` only when
+you can share the included source, prompts, findings, and tool output with
+OpenAI.
+
 #### `codex-security validate` and `codex-security patch`
 
-Check whether a candidate finding is valid:
+Assess candidate findings against the current repository's source code:
 
 ```bash
 npx @openai/codex-security validate findings.json \
@@ -6619,9 +6988,28 @@ npx @openai/codex-security patch findings.json \
 ```
 
 Each positional argument accepts literal text or a file path. These inputs use
-the current directory. Use `validate` to recheck a finding after a fix or when a
-later scan no longer reports it. Comparing scans alone doesn't prove that a fix
-worked.
+the current directory. `validate` uses a read-only sandbox to assess source
+evidence. It doesn't build the target, execute application code, run tests or
+proofs of concept, or contact services. Standard, Deep, and diff scans retain
+their own validation workflows; `patch` still fixes and verifies findings.
+
+Use `validate` to reassess a finding after a fix or when a later scan no longer
+reports it. Comparing scans alone doesn't prove that a fix worked. For runtime
+evidence, run a separate reproduction step.
+
+The command prints its assessment to stdout without saving a report. Redirect
+stdout to retain it:
+
+```bash
+npx @openai/codex-security validate findings.json > /path/outside/repository/assessment.md
+```
+
+Add `--context TEXT`, `--context-file FILE`, or repeated `--knowledge-base PATH`
+options to supply security context. For structured output, use
+`--output-schema FILE` with a self-contained JSON Schema supported by your model
+and provider. The CLI checks the generated JSON against the schema before
+writing stdout. If the output is invalid, the CLI exits with `2` and writes no
+assessment. `validate` doesn't accept `--json`.
 
 Use `--effort` to select reasoning effort for either command:
 
@@ -6653,10 +7041,10 @@ npx @openai/codex-security patch --scan latest --severity medium
 ```
 
 `--scan latest` selects the latest completed scan for the current repository.
-Saved-finding commands support `--json`; literal-text and file inputs don't.
+`patch` supports `--json` for saved findings, literal text, and file inputs.
 
-Add `--create-pr` to commit only verified patch files and open a pull request
-with the GitHub CLI:
+Add `--create-pr` to commit only verified patch files and open a draft GitHub
+pull request or GitLab merge request with the corresponding CLI:
 
 ```bash
 npx @openai/codex-security patch --scan SCAN_ID --severity high --create-pr
@@ -6733,9 +7121,6 @@ Inspect read-only SDK and bundled-plugin metadata:
 npx @openai/codex-security info --json
 ```
 
-When you expose the CLI as an MCP server, `info` is the only available command.
-Scans, exports, publication, sign-in, validation, and patching remain CLI-only.
-
 #### Read scan output
 
 By default, scans send progress, completion summaries, and errors to stderr
@@ -6756,7 +7141,7 @@ contain source code or credentials. Review them before sharing.
 
 #### Verbose diagnostics
 
-Add `--verbose` to print redacted lifecycle, authentication, progress, and cost
+Add `--verbose` to print lifecycle, authentication, progress, and cost
 diagnostics to stderr:
 
 ```bash
@@ -6765,13 +7150,17 @@ npx @openai/codex-security scan . --verbose
 
 Set `CODEX_SECURITY_LOG_LEVEL=debug` to enable the same diagnostics without the
 flag. `LOG_LEVEL=debug` also enables diagnostics when
-`CODEX_SECURITY_LOG_LEVEL` is unset.
+`CODEX_SECURITY_LOG_LEVEL` is unset or blank.
+
+Codex Security preserves diagnostic text. Diagnostics can contain source code
+or credentials, so review them before sharing.
 
 #### Completion summary
 
 A completed scan writes its open repository finding count, severity breakdown,
-elapsed time, report path, and result directory to stderr. It
-includes token usage and estimated cost when available. For example:
+elapsed time, report path, and result directory to stderr. It includes token
+usage when available and estimated cost when you set `--show-cost` or
+`--max-cost`:
 
 ```text
   REPORT    /path/to/scan/report.md
@@ -6796,6 +7185,8 @@ manifest
 repositoryFindings
 findings
 coverage
+threatModel
+threatModelPath
 scanDir
 threadId
 reportPath
@@ -6810,16 +7201,30 @@ turn
   usage
 ```
 
+`threatModel` contains the saved model as structured data or Markdown.
+`threatModelPath` points to its saved document. Either can be `null`; the model
+can still be exported if writing the document failed.
+
 When [patching](#patch-findings-after-a-scan), JSON output also includes patch
 results and any created pull request.
 
-Progress, completion summaries, archive notices, and errors remain on stderr.
-A completed scan still prints the full JSON result when a severity policy
+Progress, completion summaries, archive notices, and diagnostics remain on
+stderr. A completed scan still prints the JSON result when a severity policy
 returns exit `1`.
 
+Always check the process exit code, even when JSON parses successfully.
+Execution failures without returned scan results produce a structured error
+with `status`, `code`, and `message` when using `--json`, `--format json`, or
+`--format jsonl`. When valid scan results are retained, output can instead
+contain the normal scan result and `warnings`, such as after a target change.
+With `--json`, `--format json`, or `--format jsonl`, add `--full-output` to
+receive an `ok: false` envelope with the error under `error` and any valid
+retained sealed results under `data`. Other formats report failures only on
+stderr, even with `--full-output`. These rules also apply to `scans rerun` and
+`scans resume`.
+
 `codex-security scan --json` emits one JSON document. `codex exec --json`
-emits a JSON Lines event stream. Use the output format that matches the
-command you run.
+emits a JSON Lines event stream.
 
 #### Scan artifacts
 
@@ -6833,6 +7238,7 @@ those files haven't changed:
 ├── findings.json
 ├── coverage.json
 ├── report.md
+├── threatmodel.md          # when available
 ├── artifacts/
 └── exports/
     └── results.sarif       # when produced
@@ -6844,27 +7250,44 @@ The structured files serve different jobs:
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `scan-manifest.json`    | Scan identity, status, target, scope, producer, and sealed artifact records.                                                    |
 | `findings.json`         | Finding identifiers, severity, confidence, taxonomy, locations, evidence, validation, data flow, reachability, and remediation. |
-| `coverage.json`         | Reviewed surfaces, exclusions, deferred work, and open questions.                                                               |
+| `coverage.json`         | Recorded review scope, exclusions, deferred work, and open questions.                                                           |
 | `report.md`             | Readable scan report.                                                                                                           |
+| `threatmodel.md`        | Saved threat model, when available.                                                                                             |
 | `artifacts/`            | Supporting scan artifacts.                                                                                                      |
 | `exports/results.sarif` | SARIF generated during the scan, when present.                                                                                  |
 
-Read `scan.status` in `scan-manifest.json` for execution status: `completed`,
-`failed`, `canceled`, or `interrupted`. New results don't include
-`coverage.completeness`. Review deferred surfaces, explicit exclusions, and
-open questions in `coverage.json` to understand what the scan reviewed.
+#### Completion and review coverage
+
+A completed scan means the requested workflow finished normally. It doesn't prove that
+every file or attack path was reviewed. Read `coverage.json`, `report.md`, and
+the recorded scope in `scan-manifest.json` for exclusions, deferred work, and
+open questions. Retained input inventories describe scan inputs but don't prove
+that every listed file was reviewed.
+
+Current reports omit `coverage.completeness`. Older reports may contain
+`complete`, `partial`, or `unknown`; those legacy values no longer determine
+the command's status or exit code. Use `manifest.scan.status` and the
+[exit code](#exit-codes-and-signals) to distinguish execution failures from
+findings-policy violations.
+
+For unresolved work, inspect the available evidence with `scans show SCAN_ID`
+and `scans logs SCAN_ID`. An eligible interrupted Deep Scan can continue with
+`scans resume SCAN_ID`. To start a new review with saved settings, use
+`scans rerun SCAN_ID` when a launch recipe is available. Plugin scans may lack
+a replayable recipe; start a new scan with the intended paths and context in
+that case.
 
 #### Exit codes and signals
 
 The CLI uses these exit codes:
 
-| Exit  | Condition                                                                                                                                 |
-| ----- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `0`   | A scan or bulk campaign completed and passed its severity policy, a publication completed without failures, or another command succeeded. |
-| `1`   | A completed scan or bulk campaign reports a finding at or above the configured severity.                                                  |
-| `2`   | An input, execution, result-integrity, required-output, or export failure occurred, or a publication has one or more failed findings.     |
-| `130` | Ctrl-C interrupted a scan or publication.                                                                                                 |
-| `143` | SIGTERM terminated a scan or publication.                                                                                                 |
+| Exit  | Condition                                                                                                                                                                          |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0`   | A scan or bulk campaign completed and passed its severity policy, a publication completed without failures, or another command succeeded.                                          |
+| `1`   | A completed scan or bulk campaign reports a finding at or above the configured severity, or `verify-fix` reports a finding as still vulnerable with no inconclusive results.       |
+| `2`   | An input, execution, result-integrity, required-output, or export failure occurred, a publication has one or more failed findings, or `verify-fix` reports an inconclusive result. |
+| `130` | Ctrl-C interrupted a scan or publication.                                                                                                                                          |
+| `143` | SIGTERM terminated a scan or publication.                                                                                                                                          |
 
 Coverage gaps don't change a completed scan's exit code or bypass its severity
 policy. Exit `0` doesn't mean every file was reviewed. When you request
@@ -6875,15 +7298,12 @@ error.
 
 #### Local scan permissions
 
-CLI and SDK scans run with your local operating-system permissions. Every scan
-uses the `codex_security_scan` filesystem profile and sets `approvalPolicy` to
-`"never"`. The profile permits reading the local filesystem and writing to
-workspace roots and the selected scan state directory. Scans don't stop to
-request interactive approval.
-
-Settings supplied through CLI `--codex` or SDK `codexOverrides`, including
-`approval_policy`, `sandbox_mode`, and filesystem permissions, can't replace
-or restrict these scan controls. Host and network restrictions still apply.
+CLI and SDK scans run with your local operating-system permissions. The scan
+profile permits reading the local filesystem and writing to workspace roots.
+Execution approvals are reviewed automatically and may grant extra permissions
+for an operation. Use `--codex 'approval_policy="never"'`, or set
+`codexOverrides.approval_policy: "never"` in the SDK, to deny permission requests. Host
+and network restrictions still apply.
 
 Scan and workbench processes can inherit your environment, including unrelated
 API tokens and cloud credentials. Remove unrelated credentials before
@@ -6907,6 +7327,10 @@ Scans, bulk scans, exports, scan history, and saved findings also require
 Python 3.10 or later.
 Python 3.10 also requires `tomli`. Use `--python` with `scan`, `bulk-scan`, or
 `export`, or set `PYTHON` for any Python-backed command.
+
+To read or resume compressed Codex sessions (`.jsonl.zst`), use Node.js
+22.15.0 or later within 22.x, or Node.js 24 or 26. Plain `.jsonl` sessions work
+on all supported Node.js versions.
 
 Continue with the [CLI quickstart](./security/cli.md), [bulk-scan
 guide](./security/cli/bulk-scans.md), [CLI FAQ](./security/cli/faq.md), [CI
@@ -7175,9 +7599,7 @@ For questions about builds, validation, or result interpretation, see the
 
 Source: [Codex Security plugin changelog](./security/plugin/changelog.md)
 
-Use this changelog to see what changed in the Codex Security plugin.
-
-**Newest release notes:** `0.1.30`.
+**Newest release notes:** `0.1.32`.
 
 Check the plugin version in your current Codex environment before you use a
 feature from a newer release.
@@ -7185,6 +7607,22 @@ feature from a newer release.
 Changelog entries follow the plugin version, not the package version. CLI and
 SDK users can run `npx @openai/codex-security info --json` to check the
 package and bundled plugin versions together.
+
+For CLI and SDK changes, see the [Codex Security package releases](https://github.com/openai/codex-security/releases).
+
+#### 0.1.32
+
+#### Complete deep scans more reliably
+
+- The plugin keeps the scan identity and completion instructions with
+  aggregated results so Codex can finish the scan and generate `report.md`.
+- The plugin reads large sets of worker results in smaller pages to avoid
+  response-size errors during aggregation.
+- The plugin retries recoverable worker errors, including parsing errors,
+  before stopping the scan.
+
+See [Run a deep security scan](./security/plugin/deep-scans.md) for setup,
+results, and recovery guidance.
 
 #### 0.1.30 (September 24, 2026)
 
@@ -7751,6 +8189,34 @@ If **Security** doesn't appear in the desktop-app sidebar, confirm that
 **Codex** is selected and the plugin is enabled. Update the app and plugin if
 needed, and check whether your workspace administrator allows the plugin.
 
+#### Check versions and updates
+
+Check the [plugin changelog](./security/plugin/changelog.md) before a long
+scan. Manage your installation in **Plugins** in the desktop app or `/plugins`
+in Codex CLI. See the [plugin guide](./plugins.md) for details. After updating
+the plugin, start a new chat to load its skills and tools. In Codex CLI, enter
+`/new`.
+
+Codex and the Codex Security plugin have separate versions. In Codex CLI, check
+the host version and installed plugin versions with:
+
+```bash
+codex --version
+codex plugin list --json
+```
+
+Find Codex Security in the `installed` list. Record both versions when you
+start a scan so you can include them when reporting a failure.
+
+The standalone `@openai/codex-security` package has its own bundled plugin.
+Updating that package doesn't update the marketplace plugin used in Codex.
+For package installation and version checks, see the [CLI
+quickstart](./security/cli.md).
+
+For Amazon Bedrock, configure the Codex host using the [Codex Bedrock
+guide](./amazon-bedrock.md). The standalone package uses the separate
+[Security CLI provider settings](./security/cli/reference.md#use-amazon-bedrock).
+
 #### Run your first scan
 
 For the best scan quality, use `gpt-5.6-sol`
@@ -7857,9 +8323,13 @@ The SDK uses ECMAScript modules (ESM) and runs server-side with Node.js 24 or 26
 or Node.js 22 starting with 22.13.0. Scanning also requires Python 3.10 or later.
 Python 3.10 also requires the `tomli` package.
 
-Running scans requires Codex Security access. For general coding agents, see
-the [Codex SDK guide](./codex-sdk.md). For terminal and CI workflows, see
-the [Codex Security CLI quickstart](./security/cli.md).
+To read or resume compressed Codex sessions (`.jsonl.zst`), use Node.js
+22.15.0 or later within 22.x, or Node.js 24 or 26. Plain `.jsonl` sessions work
+on all supported Node.js versions.
+
+Scans using OpenAI inference require Codex Security access. For general coding
+agents, see the [Codex SDK guide](./codex-sdk.md). For terminal and CI
+workflows, see the [Codex Security CLI quickstart](./security/cli.md).
 
 #### Set up the SDK
 
@@ -7868,6 +8338,8 @@ Install the SDK:
 ```bash
 npm install @openai/codex-security
 ```
+
+This guide covers the released 0.3.0 SDK. Read the [0.3.0 release notes](https://github.com/openai/codex-security/releases/tag/npm-v0.3.0) for changes to scan results, validation, and resume behavior.
 
 Before starting a scan, set `OPENAI_API_KEY` or `CODEX_API_KEY`, use an
 existing file-backed Codex sign-in, or [configure another
@@ -7919,8 +8391,7 @@ node scan.mjs
 ```
 
 The example prints the report path, scan status, and finding count.
-Open the report to review the evidence. The count varies with the repository
-and scan, so don't use an expected count to check whether the integration works.
+Open the report to review the evidence.
 
 `run` validates the saved artifacts and returns a `ScanResult` when
 `result.manifest.scan.status` is `"completed"`. Check `result.coverage` for
@@ -8075,9 +8546,14 @@ const result = await security.run("/path/to/repository", {
 ```
 
 The SDK accepts files or directories and searches directories recursively.
-Supported document formats are `.md`, `.markdown`, `.txt`, `.pdf`, and `.docx`.
-The SDK rejects linked input paths, skips linked directory entries, and keeps
-extracted document content outside the saved scan results.
+Supported formats include UTF-8 text (including JSON and SARIF), PDF, and DOCX.
+The SDK rejects linked input paths and skips linked directory entries.
+
+The SDK saves extracted document text in the private `.scan-knowledge.json`
+file beside scan artifacts. Keep it with the scan directory.
+When resuming an interrupted Deep Scan,
+`codex-security scans resume` uses this saved text even if the original documents
+change or are deleted. Canonical reports don't embed the document text.
 
 #### Add scan and follow-up instructions
 
@@ -8092,26 +8568,30 @@ const result = await security.run("/path/to/repository", {
 
 If the follow-up fails, the SDK keeps the completed scan and reports the
 error through `onWarning`. It restores any completed scan artifacts that the
-follow-up changed.
+follow-up changed. The follow-up runs after scan cost tracking stops and
+is outside `maxCostUsd`.
 
 #### Set a scan budget
 
 Set `maxCostUsd` to stop a scan when its estimated model cost exceeds a limit.
-Use `onCost` to track cost as the scan runs:
+Use `onCost` to track cost as the scan runs and report `estimatedUsdRange`:
 
 ```ts
 const result = await security.run("/path/to/repository", {
   maxCostUsd: 5,
   onCost(cost) {
-    console.log(cost.estimatedUsd);
+    console.log(cost.estimatedUsdRange);
   },
 });
 
-console.log(result.cost?.estimatedUsd);
+console.log(result.cost?.estimatedUsdRange);
 ```
 
-The limit estimates spending but isn't a hard cap, so requests already in
-progress can finish slightly above it. If a deep scan reaches the limit after
+The limit uses `estimatedUsd`, the short-context baseline. Requests already
+in progress can put this estimate above the limit. Long-context pricing can
+raise `estimatedUsdRange` above it. This limit is not a billing cap.
+
+If a deep scan reaches the limit after
 Codex Security aggregates completed worker results, `run` can return a result
 with `manifest.scan.status` set to `"completed"` and report the budget warning
 through `onWarning`. Check `result.coverage` for the work left unfinished.
@@ -8135,6 +8615,8 @@ paths:
 | `turnResult`         | Turn status, response, and available usage metadata.                               |
 | `cost`               | Estimated model and token cost, or `null` when unavailable.                        |
 | `reportPath`         | The path to `report.md`.                                                           |
+| `threatModel`        | The saved threat model, or `null` when unavailable.                                |
+| `threatModelPath`    | The saved threat-model document path, or `null` when unavailable.                  |
 | `manifestPath`       | The path to `scan-manifest.json`.                                                  |
 | `findingsPath`       | The path to `findings.json`.                                                       |
 | `coveragePath`       | The path to `coverage.json`.                                                       |
@@ -8182,8 +8664,48 @@ for execution status, and review deferred surfaces, exclusions, and open
 questions in `coverage` to understand what the scan reviewed.
 
 `result.toJSON()` returns the manifest, repository and current-scan findings,
-coverage, scan and thread identifiers, `reportPath`, `artifactsDir`,
-`sarifPath`, cost, and turn metadata in one JSON-ready object.
+coverage, scan and thread identifiers, `reportPath`, `threatModel`,
+`threatModelPath`, `artifactsDir`, `sarifPath`, cost, and turn metadata in one
+JSON-ready object.
+
+#### Read saved threat models
+
+Check `threatModel` and `threatModelPath` for `null` before using them. You can
+still export a saved model if Codex Security couldn't write its Markdown file.
+Use the path returned by the export instead of assuming a filename.
+
+Starting in 0.2.0, saved models can contain Markdown (`format: "markdown"`
+and `content`) or the earlier structured format. Integrations that read
+`threatModel` must handle both. Existing models remain readable and exportable
+without migration. Policy generation now writes `threatmodel.md` instead of
+`THREAT_MODEL.md`; `SecurityPolicyDraft.threatModelPath` can also be `null`.
+
+#### Export saved artifacts
+
+Export saved results without starting Codex, loading credentials, or making a
+model call. This example exports a saved threat model to stdout. Replace
+`/path/to/scan` with a saved result directory:
+
+```ts
+import { exportArtifact } from "@openai/codex-security";
+
+await exportArtifact({
+  source: { directory: "/path/to/scan" },
+  artifact: "threat-model",
+  output: "-",
+});
+```
+
+To select a saved scan by ID, use `source: { scanId: "SCAN_ID" }` instead. Set
+`output` to a destination path to save the artifact to a file.
+
+Use `artifact: "threat-model"` to export Markdown; the export returns an error
+if no threat model was saved. For findings, use `artifact: "findings"` and choose
+`format: "csv"`, `"json"`, or `"sarif"` (the default).
+
+The result includes the output `path` and, for a threat-model file export,
+`provenance` from the same saved results. Both fields are `null` when
+`output: "-"` writes to stdout. Export requires Python 3.10 or later.
 
 #### Track or cancel a scan
 
@@ -8292,9 +8814,10 @@ a different model or reasoning effort. To use [Amazon
 Bedrock](./security/cli/reference.md#use-amazon-bedrock), set
 `model_provider` and `model` in `codexOverrides`.
 
-`codexOverrides` can't restrict the scan's filesystem access or change its
-approval policy. See [Local scan
-permissions](./security/cli/reference.md#local-scan-permissions).
+Set `codexOverrides.approval_policy` to `"never"` to deny permission requests.
+Scans otherwise use automatic approval review. See [Local scan
+permissions](./security/cli/reference.md#local-scan-permissions) for filesystem
+access and inherited credentials.
 
 For OpenRouter or Fireworks, also provide the matching API key and a complete
 provider configuration in `codexOverrides`. For example, set
@@ -9186,6 +9709,10 @@ to limit concurrency or duration.
 
 #### Review the result
 
+The scan is complete only after finalization succeeds and generates
+`report.md`. A message that aggregation finished or a `scan-manifest.json`
+file alone doesn't confirm completion.
+
 Deep scans use the same saved scan details and complete scan directory as
 standard scans. Open the completed scan in **Scans** or review its findings in
 **Findings**. The generated `report.md` links to detailed vulnerability reports
@@ -9238,6 +9765,25 @@ coverage.
 The `max_time_hours` setting requires plugin version `0.1.19` or later. See the
 [plugin changelog](./security/plugin/changelog.md) for release details.
 
+#### Handle an interruption or failure
+
+Check the saved scan's status before starting another scan. In the desktop
+app, open the scan in **Scans**. In a Codex conversation, ask Codex to check the
+existing scan.
+
+- If a wait ends while the scan is still active, return to
+  the same scan or conversation and ask Codex to continue it. A response ending
+  or a wait timing out doesn't cancel the scan.
+- If the scan reports a terminal failure or was canceled, keep the error and
+  saved scan directory. Review saved findings separately from pending
+  candidates, which haven't been confirmed. Coverage is incomplete, so an
+  empty findings list doesn't establish that the code has no vulnerabilities.
+
+When asking for help, include the Codex CLI or desktop app and plugin versions
+used for the failed run, plus the provider, model, scan status, and exact error.
+Versions checked after an update may differ. See [Check versions and
+updates](./security/plugin.md#check-versions-and-updates).
+
 ### Run bulk security scans
 
 Source: [Run bulk security scans](./security/cli/bulk-scans.md)
@@ -9247,9 +9793,10 @@ campaign. Discover repositories from your personal GitHub account or an
 organization, or provide a CSV that pins every repository to an exact Git
 revision.
 
-The `@openai/codex-security` package is public. Running scans requires Codex
-Security access. Follow the [CLI quickstart](./security/cli.md) to install
-the CLI and sign in.
+The `@openai/codex-security` package is public. Scans using OpenAI inference
+require Codex Security access. Follow the [CLI
+quickstart](./security/cli.md) to install the CLI, then [select credentials
+for your provider](./security/cli/reference.md#select-scan-authentication).
 
 #### Choose a repository source
 
@@ -9404,9 +9951,7 @@ The same options work during interactive repository discovery:
 npx @openai/codex-security bulk-scan --model gpt-6.1-sol --effort medium
 ```
 
-Available effort levels depend on the selected model. Bulk scans support
-`minimal`, `low`, `medium`, `high`, `xhigh`, and `max`; GPT-6.1 Sol requires at
-least `low`.
+Use an `--effort` value supported by your model, provider, and Codex version.
 
 To use OpenRouter or Fireworks, set `OPENROUTER_API_KEY` or `FIREWORKS_API_KEY`,
 respectively, and specify `--provider` and `--model`. For credentials and
