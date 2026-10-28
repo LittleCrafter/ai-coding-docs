@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "0.164.0",
-  "last_updated": "2026-10-27T19:49:18Z",
+  "version": "0.165.0",
+  "last_updated": "2026-10-28T00:09:02Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "9c67c93a75af6537be467c93c27c0aa642d05c2b8283820bbdb2b19bc66817e5",
-      "last_updated": "2026-10-27T19:49:18Z"
+      "hash": "35068518a0c5991b8cecff14a8f0de8f8f562ded61d3bd98aa69fc4e209bdd89",
+      "last_updated": "2026-10-28T00:09:02Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -830,8 +830,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/security-cookbook",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/security-cookbook.md",
       "source_id": "llms:enterprise/security-cookbook",
-      "hash": "330338e9e1b1e2349b45c5cf5f0bd003f311991c1bcb117cb73eda854be85f27",
-      "last_updated": "2026-10-16T23:07:10Z"
+      "hash": "5c6b105fc67535ff854a214b65a9072a8f35c48b3ef33d009eb36f0e87b0be06",
+      "last_updated": "2026-10-28T00:09:02Z"
     },
     "enterprise/service-accounts": {
       "slug": "enterprise/service-accounts",
@@ -970,8 +970,8 @@
       "source_url": "https://learn.chatgpt.com/docs/environments/cloud-environments",
       "source_md_url": "https://learn.chatgpt.com/docs/environments/cloud-environments.md",
       "source_id": "llms:environments/cloud-environments",
-      "hash": "bc0bd3bf860806e716617f3d6997cb394e67ca35b78b00b4bb202147253fd996",
-      "last_updated": "2026-10-22T02:02:21Z"
+      "hash": "76e88b020a0789f2437195520eadbf81f02a7ea47125f238d05bdca25bd6015a",
+      "last_updated": "2026-10-28T00:09:02Z"
     },
     "environments/git-worktrees": {
       "slug": "environments/git-worktrees",
@@ -2035,8 +2035,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-27T19:49:18Z",
-    "fetch_duration_seconds": 70.858,
+    "last_fetch_completed": "2026-10-28T00:09:02Z",
+    "fetch_duration_seconds": 70.837,
     "total_pages_discovered": 203,
     "pages_fetched_successfully": 203,
     "pages_failed": 0,
