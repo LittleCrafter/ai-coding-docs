@@ -6,11 +6,6 @@ For current workspace setup, permissions, and availability, see
   [Managing ChatGPT Sites for your workspace](https://help.openai.com/en/articles/20001338-managing-chatgpt-sites-for-your-workspace) 
   in the Help Center.
 
-<span
-  id="what-costs-and-limits-should-we-plan-for"
-  data-localization-body-anchor
-/>
-
 Use this guide to decide who can create, change, and use sites in your workspace, and how your organization reviews and maintains them. To build or use a site, see [Sites](../sites.md).
 
 ## Before you begin
@@ -43,11 +38,6 @@ For the builder workflow, see [Data and connections](../sites/data-and-connectio
 For hosting and processing providers, see OpenAI's [sub-processor list](https://openai.com/policies/sub-processor-list/).
 
 ## Enable sites and permissions
-
-<span
-  id="enable-sites-and-choose-sharing-permissions"
-  data-localization-body-anchor
-/>
 
 Review three levels of control: workspace permissions, the site's sharing and editing permissions, and permissions implemented by the application.
 
@@ -83,25 +73,6 @@ For example, a request tracker might let every workspace member open the site wh
 
 ## Configure connections
 
-<span
-  id="enable-tenant-access-to-connected-apps"
-  data-localization-body-anchor
-/>
-
-<span
-  id="check-tenant-access-if-plugins-are-blocked"
-  data-localization-body-anchor
-/>
-
-<span
-  id="allow-an-additional-destination-for-one-site"
-  data-localization-body-anchor
-/>
-<span
-  id="credentials-and-connected-service-access"
-  data-localization-body-anchor
-/>
-
 Creating or sharing a site does not itself authorize connected-app access. Review organization approval, plugin settings, and each visitor's connected account and permissions in the [Help Center connected-app guidance](https://help.openai.com/en/articles/20001338-managing-chatgpt-sites-for-your-workspace).
 
 Include connections in the site's review. Identify which services it uses, what information it requests, and who should authorize that access. Keep the site's audience decision separate from the connected service's permissions.
@@ -115,15 +86,6 @@ Keep connected sites private to their workspace. Before sharing a connected site
 Also check the experience when a visitor does not grant the requested connection access. Explain which features need the connection and make sure the site does not present missing data as a successful result. Follow the current Help Center guidance for supported connections and access requirements.
 
 ## Review and manage sites
-
-<span
-  id="workspace-visibility-and-audit-records"
-  data-localization-body-anchor
-/>
-<span
-  id="publishing-approval-and-network-controls"
-  data-localization-body-anchor
-/>
 
 ### Saved versions and publishing
 
@@ -182,16 +144,6 @@ To review available workspace controls or troubleshoot access, follow the [Help 
 
 ## Security and privacy
 
-<span
-  id="certifications-encryption-and-customer-managed-keys"
-  data-localization-body-anchor
-/>
-
-<span
-  id="applicable-terms-and-data-processing-agreements"
-  data-localization-body-anchor
-/>
-
 Check current [hosting, residency, and data requirements](https://help.openai.com/en/articles/20001338-managing-chatgpt-sites-for-your-workspace) against your organization's policies before choosing what information to store in a site.
 
 ### Visitor privacy and personal information
@@ -207,11 +159,6 @@ For responsibilities and privacy guidance, review these resources:
 - Review [Data-protection responsibilities](https://help.openai.com/en/articles/20001340).
 - Review [Privacy-policy guidance](https://help.openai.com/en/articles/20001341).
 
-<span
-  id="what-happens-when-a-site-is-deleted-or-an-owner-leaves"
-  data-localization-body-anchor
-/>
-
 <details>
 <summary>How should I plan an ownership handoff or site retirement?</summary>
 
@@ -219,22 +166,12 @@ Before an owner changes roles or leaves, identify who will maintain the site and
 
 </details>
 
-<span
-  id="how-long-is-site-data-retained-including-backups"
-  data-localization-body-anchor
-/>
-
 <details>
 <summary>Where can I confirm retention and deletion requirements?</summary>
 
 For retention or deletion questions, [contact OpenAI Support](https://help.openai.com/en/articles/6614161-how-can-i-contact-support).
 
 </details>
-
-<span
-  id="how-do-i-report-an-access-issue-or-incident"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>How do I report an access issue?</summary>

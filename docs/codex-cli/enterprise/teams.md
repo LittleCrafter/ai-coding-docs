@@ -10,11 +10,6 @@ Enterprise admins control who can create teams and manage Team Tasks through two
 
 For more on team membership and tasks, see [Teams in ChatGPT](https://help.openai.com/articles/20001541) and [Creating and managing team tasks in ChatGPT](https://help.openai.com/articles/20001540) in the Help Center.
 
-<span
-  id="plan-the-teams-access-and-responsibilities"
-  data-localization-body-anchor
-/>
-
 ## How teams and Team Tasks work
 
 [Workspace connections](./shared-connections.md) let Team Tasks use company-managed app accounts so each team member doesn't need to connect their own account.
@@ -46,11 +41,6 @@ See [Roles and workspace permissions](./roles-and-workspace-permissions.md#set-t
 
 - **Team owner:** After creating the team, select the available connections it needs where your permissions allow. Before scheduling a Team Task, confirm which external account each connection uses.
 
-<span
-  id="2-configure-membership-and-assign-maintainers"
-  data-localization-body-anchor
-/>
-
 ### Set up a team
 
 1. **Create the team**. In the intended workspace, open Settings &gt; Teams and select Create team. Enter a Name and optional Description, then select Create.
@@ -58,21 +48,6 @@ See [Roles and workspace permissions](./roles-and-workspace-permissions.md#set-t
 2. **Review access and invite colleagues**. Before inviting colleagues, review access to earlier runs and generated files; individual tasks and runs cannot have separate access restrictions. Select Invite, search by Name or email, and select Add member or Add members. Members can invite coworkers and remove non-owner members. Same-workspace join links do not require owner approval.
 
 3. **Add the team’s connections.** Workspace connections use centrally managed accounts; team connections share an individually connected account with the team. As team owner, choose a connection you’re allowed to use. Review its data and action permissions, and complete any required sign-in before unattended work. Team ownership doesn’t grant workspace admin permissions. See [Workspace connections](./shared-connections.md#create-a-workspace-connection) for admin setup.
-
-<span
-  id="create-and-validate-the-first-team-task"
-  data-localization-body-anchor
-/>
-
-<span
-  id="2-review-the-schedule-actions-and-audience"
-  data-localization-body-anchor
-/>
-
-<span
-  id="3-validate-access-and-the-first-result"
-  data-localization-body-anchor
-/>
 
 ### Create a Team Task
 
@@ -85,16 +60,6 @@ See [Roles and workspace permissions](./roles-and-workspace-permissions.md#set-t
 4. Review **Plugins** and **Advanced** settings, including **Model**. Choose a model available to the team; this may differ from your personal account. Select **Create**.
 
 5. Select **Run now** and inspect the result in **Previous runs**. Use **Edit** to change instructions or settings.
-
-<span
-  id="review-membership-connections-and-destinations"
-  data-localization-body-anchor
-/>
-
-<span
-  id="handle-departures-and-stop-work-when-needed"
-  data-localization-body-anchor
-/>
 
 ## Teams and Team Tasks FAQ
 

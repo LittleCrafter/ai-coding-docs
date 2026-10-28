@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.312",
-  "last_updated": "2026-10-28T00:07:51Z",
+  "last_updated": "2026-10-28T09:04:27Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1090,8 +1090,8 @@
       "source_url": "https://code.claude.com/docs/en/interactive-mode",
       "source_md_url": "https://code.claude.com/docs/en/interactive-mode.md",
       "source_id": "interactive-mode",
-      "hash": "9df0302f9d25ce6edf65c71e55f69d6bc879a489b760df5286d2d31ac35f7b82",
-      "last_updated": "2026-10-27T19:48:06Z"
+      "hash": "924d6623b32f2d81c9ec613289a0ec5198c2ad36bac65eb7c6db5e18f2609eb6",
+      "last_updated": "2026-10-28T09:04:27Z"
     },
     "jetbrains": {
       "slug": "jetbrains",
@@ -1980,8 +1980,8 @@
       "source_url": "https://code.claude.com/docs/en/vs-code",
       "source_md_url": "https://code.claude.com/docs/en/vs-code.md",
       "source_id": "vs-code",
-      "hash": "94c04778edfbdd04d54ea10fed0d5d66985fbcdd0b8ea42e0f878f4679356aa7",
-      "last_updated": "2026-10-26T21:58:03Z"
+      "hash": "cb12f390e7806d4a80dbd39eda6cbffcdcd22724cde1e9da1ee7bd857698ae54",
+      "last_updated": "2026-10-28T09:04:27Z"
     },
     "web-quickstart": {
       "slug": "web-quickstart",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-28T00:07:51Z",
-    "fetch_duration_seconds": 79.321,
+    "last_fetch_completed": "2026-10-28T09:04:27Z",
+    "fetch_duration_seconds": 79.195,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

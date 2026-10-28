@@ -55,11 +55,6 @@ To review them later, go to **Admin Console** > **Permissions** > **Workspace de
 
 Members still need to complete [Slack](../dots/channels.md#slack) and [local-computer setup](../dots/computers-and-apps.md#connect-your-computer) after you enable access. Supported app connections they've already set up may be available to their dot.
 
-<span
-  id="3-configure-approved-apps-and-actions"
-  data-localization-body-anchor
-/>
-
 ### 2. Configure app access
 
 Dots can use supported ChatGPT app connections. When setting up access, check:
@@ -69,11 +64,6 @@ Dots can use supported ChatGPT app connections. When setting up access, check:
 3. **When approval is required.** An app can be available while some actions still need approval. See [app permissions](https://help.openai.com/en/articles/20001495-managing-app-permissions-in-chatgpt) for the options.
 
 For example, permission to read a document may not include editing or sharing it. To restrict access to a particular source, check the connected account and app permissions.
-
-<span
-  id="4-choose-communication-channels-and-destinations"
-  data-localization-body-anchor
-/>
 
 ### 3. Configure communication channels
 
@@ -96,16 +86,6 @@ Turning off a dot's Slack identity doesn't remove its access through the member'
 
 Enabling the ChatGPT permission does not install an app in Slack or connect a member’s dot.
 
-<span
-  id="5-record-approval-and-oversight-responsibilities"
-  data-localization-body-anchor
-/>
-
-<span
-  id="manage-ongoing-work-and-access-changes"
-  data-localization-body-anchor
-/>
-
 ## Available admin controls
 
 | **Area**                            | **Admin capability**                                                                                                   |
@@ -117,21 +97,6 @@ Enabling the ChatGPT permission does not install an app in Slack or connect a me
 | Custom dot rules                    | When disabled, members cannot add or edit custom rules, and saved rules do not apply.                                  |
 | Models                              | Enterprise model controls and defaults do not apply to the main dot. Review delegated Work and Codex tasks separately. |
 
-<span
-  id="can-we-use-o-if-our-workspace-requires-ekm-or-zdr"
-  data-localization-body-anchor
-/>
-
-<span
-  id="does-background-work-count-toward-usage-limits"
-  data-localization-body-anchor
-/>
-
-<span
-  id="enterprise-availability-and-limitations"
-  data-localization-body-anchor
-/>
-
 ## Review availability and data requirements
 
 Before enabling dots, review current availability in [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and the workspace notices shown during setup. If your organization requires data or inference residency, Enterprise Key Management, or specific compliance coverage, confirm support for dots with your account team before enabling access.
@@ -142,22 +107,12 @@ Check requirements for the dot itself, tasks it delegates to Work or Codex, and 
 
 ### Access and eligibility
 
-<span
-  id="does-access-to-o-grant-access-to-apps-and-websites"
-  data-localization-body-anchor
-/>
-
 <details>
 <summary>Does access to dots grant access to apps and websites?</summary>
 
 No. Dots access does not grant access to apps or websites. App connections require authorization; website work uses the browser’s signed-in account.
 
 </details>
-
-<span
-  id="whose-account-does-o-use-for-connected-work"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>Whose account does a dot use for connected work?</summary>
@@ -166,22 +121,12 @@ For apps, a dot uses the connected account. For websites, it uses the account si
 
 </details>
 
-<span
-  id="can-o-use-a-local-computer-vpn-or-existing-sign-in"
-  data-localization-body-anchor
-/>
-
 <details>
 <summary>Can a dot use a local computer, VPN, or existing sign-in?</summary>
 
 A dot’s cloud computer is separate from a member’s local computer. Local work requires a connected, online computer with ChatGPT open and access enabled. Local sign-in, VPN access, and device policies do not automatically extend to the cloud computer.
 
 </details>
-
-<span
-  id="can-we-use-o-with-policies-that-target-an-operating-system"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>How do cloud policies affect local computer access?</summary>
@@ -191,11 +136,6 @@ If any cloud policy has `enforce_residency` enabled, local computer access is un
 </details>
 
 ### Actions and ongoing work
-
-<span
-  id="can-o-keep-working-when-the-user-is-away"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>Can a dot keep working when the user is away?</summary>
@@ -217,11 +157,6 @@ Microsoft Teams access is limited to an invite-only alpha.
 
 </details>
 
-<span
-  id="does-o-always-ask-before-sending-or-changing-something"
-  data-localization-body-anchor
-/>
-
 <details>
 <summary>Does a dot always ask before sending or changing something?</summary>
 
@@ -229,22 +164,12 @@ Microsoft Teams access is limited to an invite-only alpha.
 
 </details>
 
-<span
-  id="how-should-we-stop-work-or-remove-a-users-access"
-  data-localization-body-anchor
-/>
-
 <details>
 <summary>How do admins revoke dots access?</summary>
 
 See [Manage access changes](#manage-access-changes) for steps to remove access and check connected accounts, computers, and ongoing work.
 
 </details>
-
-<span
-  id="how-do-custom-rules-affect-confirmations"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>How do custom rules affect confirmations?</summary>
@@ -254,11 +179,6 @@ See [Manage access changes](#manage-access-changes) for steps to remove access a
 Custom rules don't grant tool access or override workspace permissions and built-in safety requirements. Turning them off also doesn't make the dot ask before every action. Check capability and app approval settings to control what it can do.
 
 </details>
-
-<span
-  id="what-safeguards-help-protect-work-done-by-dots"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>What safeguards help protect work done by dots?</summary>
@@ -270,11 +190,6 @@ Members can follow progress in [Activity View](../dots/controls.md#review-work),
 </details>
 
 ### Models and usage
-
-<span
-  id="do-existing-model-controls-and-defaults-apply-to-o"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>Do existing model controls and defaults apply to dots?</summary>
@@ -292,19 +207,9 @@ The daily usage endpoint `/v1/analytics/workspaces/{workspace_id}/usage` identif
 
 </details>
 
-<span
-  id="which-data-policies-should-we-review-for-o"
-  data-localization-body-anchor
-/>
-
 ### Data and compliance
 
 OpenAI does not use ChatGPT Enterprise data to improve its models by default. For OpenAI’s business data commitments, see [Enterprise privacy](https://openai.com/enterprise-privacy/).
-
-<span
-  id="what-does-o-remember-between-requests"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>What does a dot remember between requests?</summary>
@@ -316,11 +221,6 @@ Deleting a dot removes its own context. Files, Codex threads, and ChatGPT conver
 See the [dots privacy FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for what is retained and deleted, and [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) for the member’s Pause and Reset controls.
 
 </details>
-
-<span
-  id="how-can-admins-investigate-work-o-has-done"
-  data-localization-body-anchor
-/>
 
 <details>
 <summary>How can admins investigate work a dot has done?</summary>

@@ -2,31 +2,6 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-<span
-  id="does-turning-off-library-file-sharing-remove-existing-access"
-  data-localization-body-anchor
-/>
-
-<span
-  id="how-should-we-handle-malicious-incoming-content"
-  data-localization-body-anchor
-/>
-
-<span
-  id="how-can-we-reduce-data-exfiltration-risk"
-  data-localization-body-anchor
-/>
-
-<span
-  id="is-enterprise-data-used-to-train-models"
-  data-localization-body-anchor
-/>
-
-<span
-  id="what-if-information-was-shared-unintentionally"
-  data-localization-body-anchor
-/>
-
 ## What is ChatGPT Space?
 
 ChatGPT Space (formerly Library) brings together pages, slide decks, uploaded files, and shared content so people and agents can collaborate. Teams can draft documents, [edit pages](../space/pages.md#revise-the-content), [create presentations](../space/getting-started.md#create-and-refine-slides), or [ask ChatGPT for revisions](../space/agents.md#start-with-a-bounded-request).
@@ -38,11 +13,6 @@ For product guidance, see the [ChatGPT Space guide](../space.md) and [Help Cente
 Use [Share Library files and folders](https://help.openai.com/en/articles/10128477-chatgpt-enterprise-and-edu-release-notes) to manage sharing at the [workspace and role level](./roles-and-workspace-permissions.md#set-the-workspace-default-then-create-targeted-custom-roles). Disabling sharing blocks new shares and permission changes, but existing shared access remains. Users can still create and view private content.
 
 An Admin role alone does not grant [sensitive compliance access](https://help.openai.com/en/articles/20001067-data-access-for-your-managed-chatgpt-account). [Compliance API permissions](./compliance-api.md#get-started) are required to [export or delete eligible saved Library files](https://help.openai.com/en/articles/20001052-using-library-to-manage-files-in-chatgpt) through supported endpoints.
-
-<span
-  id="what-if-a-file-will-not-save-or-upload"
-  data-localization-body-anchor
-/>
 
 ## Help users create and share pages
 
