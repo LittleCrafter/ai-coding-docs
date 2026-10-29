@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "0.165.0",
-  "last_updated": "2026-10-29T17:40:33Z",
+  "version": "0.166.0",
+  "last_updated": "2026-10-29T22:06:05Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "a0842c824524a64a4bda1bb4546c8153e871d4173582652224e0e0098ccd5af6",
-      "last_updated": "2026-10-29T17:40:33Z"
+      "hash": "32dbe554b45f11b233970fb9bc0c73d32b7c06055c32f0970e04cd184342b86a",
+      "last_updated": "2026-10-29T22:06:05Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -780,8 +780,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration.md",
       "source_id": "llms:enterprise/managed-configuration",
-      "hash": "6eafbd66b06d58c2f1e893c63823ca6a176e9ae52d244ca9ba3a93318b09fa97",
-      "last_updated": "2026-10-28T09:05:38Z"
+      "hash": "e50761c0c3352f47afcc11da97667e1c456cc17b8773b51b90de59655de0fcc7",
+      "last_updated": "2026-10-29T22:06:05Z"
     },
     "enterprise/plugin-management": {
       "slug": "enterprise/plugin-management",
@@ -2045,8 +2045,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-29T17:40:33Z",
-    "fetch_duration_seconds": 72.73,
+    "last_fetch_completed": "2026-10-29T22:06:05Z",
+    "fetch_duration_seconds": 71.136,
     "total_pages_discovered": 204,
     "pages_fetched_successfully": 204,
     "pages_failed": 0,

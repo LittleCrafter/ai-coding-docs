@@ -47,7 +47,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **`/skills`** | Tools & Tasks | — | Browse loaded local and global Agent Skills. Run `/skills reload` to reload skills from disk. |
 | **[`/statusline`](./commands/statusline.md)** | Configurations | — | Open the Status Bar customization overlay. |
 | **`/tasks`** | Tools & Tasks | — | Open the Task Manager panel to monitor background shell execution logs. |
-| **[`/teamwork-preview`](https://antigravity.google/docs/teamwork)** `<task>` | Reasoning | `/teamwork` | Launch [collaborative multi-agent teams](https://antigravity.google/docs/teamwork) for long-horizon projects (paid plans). |
+| **[`/teamwork`](https://antigravity.google/docs/teamwork)** `<task>` | Reasoning | — | Launch [collaborative multi-agent teams](https://antigravity.google/docs/teamwork) for long-horizon projects (paid plans). |
 | **[`/title`](./commands/title.md) \[on/off\]** | Configurations | — | Toggle or set terminal window title updates. |
 | **[`/usage`](./commands/usage.md)** | Utilities | `/quota` | Display model quota usage. |
 | **[`/voice`](./commands/voice.md)** | Utilities | `/record` | Dictate a prompt using your microphone. |
