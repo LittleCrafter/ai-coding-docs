@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 204
 - **Version:** 0.165.0
-- **Last updated:** 2026-10-28T21:58:12Z
+- **Last updated:** 2026-10-29T17:40:33Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -180,7 +180,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Best practices for ChatGPT Edu workspace configuration in higher education | [enterprise/higher-education-roles-and-permissions.md](./enterprise/higher-education-roles-and-permissions.md) | [source](<https://learn.chatgpt.com/docs/enterprise/higher-education-roles-and-permissions>) |
 | Manage app updates | [enterprise/manage-app-updates.md](./enterprise/manage-app-updates.md) | [source](<https://learn.chatgpt.com/docs/enterprise/manage-app-updates>) |
 | Managed configuration | [enterprise/managed-configuration.md](./enterprise/managed-configuration.md) | [source](<https://learn.chatgpt.com/docs/enterprise/managed-configuration>) |
-| Plugin management | [enterprise/plugin-management.md](./enterprise/plugin-management.md) | [source](<https://learn.chatgpt.com/docs/enterprise/plugin-management>) |
+| Import and sync plugins from GitHub | [enterprise/plugin-management.md](./enterprise/plugin-management.md) | [source](<https://learn.chatgpt.com/docs/enterprise/plugin-management>) |
 | Prisma AIRS | [enterprise/prisma-airs.md](./enterprise/prisma-airs.md) | [source](<https://learn.chatgpt.com/docs/enterprise/prisma-airs>) |
 | Roles and workspace permissions | [enterprise/roles-and-workspace-permissions.md](./enterprise/roles-and-workspace-permissions.md) | [source](<https://learn.chatgpt.com/docs/enterprise/roles-and-workspace-permissions>) |
 | Roll out a gateway | [enterprise/roll-out-a-gateway.md](./enterprise/roll-out-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/roll-out-a-gateway>) |

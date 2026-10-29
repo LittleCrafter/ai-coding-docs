@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.165.0",
-  "last_updated": "2026-10-28T21:58:12Z",
+  "last_updated": "2026-10-29T17:40:33Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "c3cc4e74da160e59c0cd4122f30ee6b18645bee3bdf3016948e9c44495f53e51",
-      "last_updated": "2026-10-27T19:49:18Z"
+      "hash": "8e13212d20ceee0212eb61fbdcea57bfe1f55b03a1428019e04d6575f06c61bd",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -180,8 +180,8 @@
       "source_url": "https://learn.chatgpt.com/docs/build-plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/build-plugins.md",
       "source_id": "llms:build-plugins",
-      "hash": "b8e4b017c2acfabbab781926fc0be80fd9df4ef65b2a801ab82f8da2f286b996",
-      "last_updated": "2026-10-15T23:24:00Z"
+      "hash": "89d2599135afb976d14e51d2f216f7a538d3be9a2091f2f0a6bb19cedfcca5a8",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "build-skills": {
       "slug": "build-skills",
@@ -200,8 +200,8 @@
       "source_url": "https://learn.chatgpt.com/docs/chrome-extension",
       "source_md_url": "https://learn.chatgpt.com/docs/chrome-extension.md",
       "source_id": "llms:chrome-extension",
-      "hash": "47a821c6341a82d0a1f6f40aee3a8b6421745426b97bd90cec519a8face3ce56",
-      "last_updated": "2026-09-23T23:17:14Z"
+      "hash": "334aadc24d1f170505e586dbc2ee291643f4ec1c80285db170fd5e76987bdae3",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "cli-customization": {
       "slug": "cli-customization",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "60bf60cec05a2887ef8be30f78665a30599c45e0e5700c3139160579db17fb4d",
-      "last_updated": "2026-10-28T21:58:12Z"
+      "hash": "a0842c824524a64a4bda1bb4546c8153e871d4173582652224e0e0098ccd5af6",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -580,8 +580,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/apps-and-connectors",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/apps-and-connectors.md",
       "source_id": "llms:enterprise/apps-and-connectors",
-      "hash": "8e754377fc2d76290d2eebce2906a2655400c3961bee4972911d9f9466e75c0d",
-      "last_updated": "2026-10-22T18:56:47Z"
+      "hash": "08a78c0748ef592b53fa974d06c2a05f0df69114663eb12938470a7710912dcf",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "enterprise/bedrock-through-litellm": {
       "slug": "enterprise/bedrock-through-litellm",
@@ -785,13 +785,13 @@
     },
     "enterprise/plugin-management": {
       "slug": "enterprise/plugin-management",
-      "title": "Plugin management",
+      "title": "Import and sync plugins from GitHub",
       "group": "enterprise",
       "source_url": "https://learn.chatgpt.com/docs/enterprise/plugin-management",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/plugin-management.md",
       "source_id": "llms:enterprise/plugin-management",
-      "hash": "2330c6840ac61b0aae305e2629283cc486614e5ab6412a045adc0c7b528a11c6",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "f53d3d16620269b7e7cad796a6ff4dacb897c7d0edfb56253b4485e5fdafcfdf",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "enterprise/prisma-airs": {
       "slug": "enterprise/prisma-airs",
@@ -920,8 +920,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/windows-deployment",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/windows-deployment.md",
       "source_id": "llms:enterprise/windows-deployment",
-      "hash": "bad60111bb665fdb23128e11591717929c12326098ec546906edaf1540e26aaa",
-      "last_updated": "2026-10-16T23:07:10Z"
+      "hash": "94fe3b0ee7df43ed2b34bda92b5ffb5e1466bcaa254f0860c7e1ae9d0b58917e",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "enterprise/work-admin-faq": {
       "slug": "enterprise/work-admin-faq",
@@ -1370,8 +1370,8 @@
       "source_url": "https://learn.chatgpt.com/docs/plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/plugins.md",
       "source_id": "llms:plugins",
-      "hash": "3d348249e48eecb5e71f3b9279852577c629709adbc3ee6d1757097bf66f5c57",
-      "last_updated": "2026-10-15T23:24:00Z"
+      "hash": "8533685600f31bd5fc9ce2bd058394a69e15f1f6beeb874c890258d799c2b704",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "pricing": {
       "slug": "pricing",
@@ -1540,8 +1540,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/ci/gitlab",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/ci/gitlab.md",
       "source_id": "llms:security/cli/ci/gitlab",
-      "hash": "3a6dca100744a9a5d77ea20cddcdafbcac76c960d7e75b2ab6dbca20ac084a26",
-      "last_updated": "2026-10-20T02:14:38Z"
+      "hash": "c5f9b89c005e3e7888236bee5906dc5aaa85b2399b7a1cf9cb70dfe9124be327",
+      "last_updated": "2026-10-29T17:40:33Z"
     },
     "security/cli/faq": {
       "slug": "security/cli/faq",
@@ -2045,8 +2045,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-28T21:58:12Z",
-    "fetch_duration_seconds": 71.197,
+    "last_fetch_completed": "2026-10-29T17:40:33Z",
+    "fetch_duration_seconds": 72.73,
     "total_pages_discovered": 204,
     "pages_fetched_successfully": 204,
     "pages_failed": 0,

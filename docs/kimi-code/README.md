@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 29
+- **Pages mirrored:** 30
 - **Version:** 2.4.0
-- **Last updated:** 2026-10-29T09:16:29Z
+- **Last updated:** 2026-10-29T17:41:08Z
 - **Official docs:** https://moonshotai.github.io/kimi-code/en
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -45,6 +45,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Interaction and input | [guides/interaction.md](./guides/interaction.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/interaction.html>) |
 | Migrating from kimi-cli | [guides/migration.md](./guides/migration.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/migration.html>) |
 | Remote Control | [guides/remote-control.md](./guides/remote-control.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/remote-control.html>) |
+| Remote environments | [guides/remote-environment.md](./guides/remote-environment.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/remote-environment.html>) |
 | Sessions and context | [guides/sessions.md](./guides/sessions.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/sessions.html>) |
 | Tower multi-agent collaboration | [guides/tower.md](./guides/tower.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/tower.html>) |
 | Common use cases | [guides/use-cases.md](./guides/use-cases.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/use-cases.html>) |

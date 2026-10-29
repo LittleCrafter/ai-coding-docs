@@ -84,7 +84,7 @@ Manage GPT sharing and ownership.
 Control plugin installation, bundled skills, connector-backed capabilities, and connected-service access.
 
 - [Plugin controls](./enterprise/apps-and-connectors.md) — Manage plugin availability, connector access and actions, and source-system permissions.
-- [Plugin management](./enterprise/plugin-management.md) — Import and sync workspace plugins from GitHub.
+- [Import and sync plugins from GitHub](./enterprise/plugin-management.md) — Import and sync workspace plugins from GitHub.
 - [Skill controls](./enterprise/skills.md) — Compare ChatGPT workspace, local filesystem, and plugin skill controls.
 - [Migrate custom GPTs to plugins](./migrate-custom-gpts.md) — Plan your workspace transition, migrate individual GPTs or eligible batches, and test and share replacement plugins.
 

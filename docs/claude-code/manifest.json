@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.312",
-  "last_updated": "2026-10-29T09:14:30Z",
+  "last_updated": "2026-10-29T17:39:19Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1490,8 +1490,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins/mods/api",
       "source_md_url": "https://code.claude.com/docs/en/plugins/mods/api.md",
       "source_id": "plugins/mods/api",
-      "hash": "22f65826477f6148930d6bac59c9f2e5ff2effadf7e4f53b9326309ecaeb252b",
-      "last_updated": "2026-10-25T17:56:04Z"
+      "hash": "6b125c4bfc154487f551e8e0e1920d981f17a3ddbc3d05d17ffde3d1d09de9be",
+      "last_updated": "2026-10-29T17:39:19Z"
     },
     "plugins/mods/create": {
       "slug": "plugins/mods/create",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-29T09:14:30Z",
-    "fetch_duration_seconds": 79.164,
+    "last_fetch_completed": "2026-10-29T17:39:19Z",
+    "fetch_duration_seconds": 79.182,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

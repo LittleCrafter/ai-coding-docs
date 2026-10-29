@@ -27,7 +27,7 @@ After typing the full command name, press `Enter` to execute. If the `/`-prefixe
 
 | Command | Alias | Description | Always available |
 | --- | --- | --- | --- |
-| `/new` | `/clear` | Start a fresh session, discarding the current context | No |
+| `/new` | `/clear` | Start a fresh session in the current environment, discarding the conversation | No |
 | `/sessions` | `/resume` | Browse historical sessions and switch to / restore one | No |
 | `/tasks` | `/task` | Browse the background task list | Yes |
 | `/fork` | — | Fork a new session from the current one, preserving the full conversation history; you stay in the current session | No |

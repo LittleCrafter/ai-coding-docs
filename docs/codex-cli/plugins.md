@@ -117,7 +117,7 @@ The Plugins Directory organizes plugins into tabs:
 Use the separate **Installed** row to review plugins you already installed.
 
 Workspace admins can import and sync a GitHub marketplace for their team. See
-[Plugin management](./enterprise/plugin-management.md) for setup and access
+[Import and sync plugins from GitHub](./enterprise/plugin-management.md) for setup and access
 requirements.
 
 <a id="app-install-and-use-a-plugin"></a>
