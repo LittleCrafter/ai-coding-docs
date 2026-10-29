@@ -6,13 +6,13 @@ Browse, search, and resume past conversation threads, or recover your last sessi
 
 ## Overview
 
-Antigravity CLI allows you to maintain multiple ongoing development threads. The `/resume` command opens an interactive **Session Picker** TUI panel to browse and load your history. You can also resume sessions directly from your host terminal using command-line flags.
+Antigravity CLI allows you to maintain multiple ongoing development threads. The `/resume` command opens an interactive conversation picker TUI panel to browse and load your history. You can also resume sessions directly from your host terminal using command-line flags.
 
 * * *
 
-## Interactive session picker
+## Interactive conversation picker
 
-To open the **Session Picker** inside the TUI, follow these steps:
+To open the conversation picker inside the TUI, follow these steps:
 
 1.  Type `/resume` (or aliases `/switch`, `/conversation`) in the prompt box.
 2.  Press Enter.
@@ -23,46 +23,54 @@ To open the **Session Picker** inside the TUI, follow these steps:
 
 ### Navigating and searching conversations
 
-The **Session Picker** displays a list of past conversations sorted by recency (newest first). Use the following controls to interact with the list:
+The conversation picker displays a list of past conversations sorted by recency (newest first). Use the following controls to interact with the list:
 
-*   **Search**: Start typing to instantly filter conversations by their title, preview text, or unique ID.
+*   **Search**: Start typing to instantly filter conversations by their title, the first line of the first prompt, or conversation ID.
 *   **Navigate**: Use ↑/↓ to scroll through the filtered list.
 *   **Page**: Use ←/→ to page backward and forward through older history blocks.
 *   **Select**: Highlight your target session and press Enter to load it.
-*   **Exit**: Press Esc to close the picker and return to the active prompt.
+*   **Exit**: Press Esc to clear the search. If the search is empty, Esc closes the picker and returns you to the prompt.
 
-![Navigating Conversations](../../assets/image/docs/cli/resume-navigate.png)
+The keyboard hints at the bottom of the picker show the available keys:
+
+![The CLI tab of the conversation picker listing five past conversations, each with its step count and when it was last updated. The cursor is on the second conversation, and the keyboard hints show Navigate, Page, Select, Rename (F2), Delete (F4), Switch Tab, and Go back or Clear search.](../../assets/image/docs/cli/resume-navigate.png)
 
 ### Renaming a conversation
 
 To keep your history organized, you can rename conversations directly within the picker:
 
 1.  Use ↑/↓ to highlight the conversation you want to rename.
-2.  Press F2. An input field opens at the bottom of the panel, prefilled with the current title.
+2.  Press F2. The title becomes an editable field, prefilled with the current title.
 3.  Type the new name and press Enter to save, or Esc to cancel.
 
-![Renaming a Conversation](../../assets/image/docs/cli/resume-rename.png)
+In the following example, the title of the second conversation is replaced with `Integration test setup`:
+
+![The conversation picker after pressing F2 on the second conversation. Its title is an editable field that now reads Integration test setup, with the text cursor at the end.](../../assets/image/docs/cli/resume-rename.png)
 
 ### Deleting a conversation
 
 To clean up obsolete threads, follow these steps:
 
 1.  Highlight the target conversation in the list.
-2.  Press Ctrl + Delete. A confirmation prompt appears.
+2.  Press F4. A `[Delete? (y/n)]` confirmation prompt appears next to the title.
 3.  Press Enter (or Y) to confirm deletion, or Esc (or N) to cancel.
 
-![Deleting a Conversation](../../assets/image/docs/cli/resume-delete.png)
+For example, pressing F4 on the oldest conversation shows this prompt:
+
+![The conversation picker after pressing F4 on the last conversation, API Route Discovery, which shows the Delete? (y/n) confirmation prompt next to its title.](../../assets/image/docs/cli/resume-delete.png)
 
 ### Importing from the Antigravity App
 
 You can import and resume active threads initiated in the Antigravity App:
 
-1.  With the **Session Picker** open, press Tab to switch from the **CLI** tab to the **Antigravity** tab.
+1.  With the conversation picker open, press Tab to switch from the **CLI** tab to the **Other** tab.
 2.  Highlight the desktop conversation you want to import.
-3.  Press Enter. A confirmation prompt `[Import this? (y/n)]` appears.
+3.  Press Enter. A confirmation prompt `[Import this conversation? (y/n)]` appears.
 4.  Press Enter (or Y) to confirm. The CLI clones the history, context, and tool trajectories into your terminal session.
 
-![Importing from the Antigravity App](../../assets/image/docs/cli/resume-antigravity.png)
+The **Other** tab lists the conversations that you started in the Antigravity App:
+
+![The Other tab of the conversation picker listing two conversations that were started in the Antigravity App. The selected conversation, Free Plan API Rate Limit, shows the Import this conversation? (y/n) prompt.](../../assets/image/docs/cli/resume-antigravity.png)
 
 * * *
 

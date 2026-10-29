@@ -35,7 +35,7 @@ Give local agents high-fidelity indicators to narrow down reasoning boundaries a
 
 ### Target file autocompletion
 
-Type `@` within your prompt box to trigger the **Interactive Path Suggestion** overlay. Highlighting and selecting a path imports the absolute workspace file path directly into your prompt. This helps the agent target its code searches.
+Type `@` in the prompt box to open path suggestions, and then select a file or directory to add it to your prompt. The agent receives the full path, so it knows exactly which file or directory you mean. For details, see [Mentions and quoting](https://antigravity.google/docs/at-mentions?tab=cli).
 
 ### Attaching visual evidence
 

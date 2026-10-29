@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-27T08:24:33Z",
+  "last_updated": "2026-10-29T09:13:03Z",
   "files": {
     "cli/artifacts": {
       "slug": "cli/artifacts",
@@ -20,8 +20,8 @@
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "dd0a7d5fd4a685a1a36a353bccea69e85900ef7acda13173558213fdf3bce6df",
-      "last_updated": "2026-10-22T18:54:07Z"
+      "hash": "2e296b2e959cb25b1aee19bdc667a1fbbd5c4a32ca74bce07d51646379c0e721",
+      "last_updated": "2026-10-29T09:13:03Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -90,8 +90,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/diff",
       "source_md_url": "https://antigravity.google/docs/cli/commands/diff.md",
       "source_id": "cli/commands/diff",
-      "hash": "d4d4dd18ed87b1fc6ef614988c5293ebf3e65827784a28b98b2bbf48d75fad19",
-      "last_updated": "2026-10-22T14:08:50Z"
+      "hash": "68e8816d1527ded7e1562b56ad881cfe106bb5cc5f6abc1103671cf8f2039689",
+      "last_updated": "2026-10-29T09:13:03Z"
     },
     "cli/commands/effort": {
       "slug": "cli/commands/effort",
@@ -120,8 +120,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/resume",
       "source_md_url": "https://antigravity.google/docs/cli/commands/resume.md",
       "source_id": "cli/commands/resume",
-      "hash": "3c5b0cbb085c86c88b46f13120d1894a7ff5c19554726b5a99fb33faa52c658c",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "f0b6c10a1c0ebba17b9b337f381ac8ea59e5474c9f2a56102faa28266e10a001",
+      "last_updated": "2026-10-29T09:13:03Z"
     },
     "cli/commands/statusline": {
       "slug": "cli/commands/statusline",
@@ -220,8 +220,8 @@
       "source_url": "https://antigravity.google/docs/cli/prompting",
       "source_md_url": "https://antigravity.google/docs/cli/prompting.md",
       "source_id": "cli/prompting",
-      "hash": "f0c268d68340965691f1cd6e4dd72b905b9e8bffcdcd8557a5d05fb3293ceb70",
-      "last_updated": "2026-10-22T14:08:50Z"
+      "hash": "5beb2e5b2a405a938711eac6e7baac5a64b91841ac2c709e87bc2cbcb4089358",
+      "last_updated": "2026-10-29T09:13:03Z"
     },
     "cli/reference": {
       "slug": "cli/reference",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-27T08:24:33Z",
-    "fetch_duration_seconds": 9.526,
+    "last_fetch_completed": "2026-10-29T09:13:03Z",
+    "fetch_duration_seconds": 9.518,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,

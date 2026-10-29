@@ -47,6 +47,10 @@ To draft or edit extensive prompt structures in your primary development editor,
 3.  Draft your multi-line instruction inside the temporary editor buffer.
 4.  Save and exit the editor. The CLI automatically imports the edited buffer directly back into the terminal prompt.
 
+## Mentioning files and subagents
+
+Type `@` in the prompt box to add a file or directory to your prompt, or start your prompt with `@` and a subagent’s name to send that subagent a message directly. For details, see [Mentions and quoting](https://antigravity.google/docs/at-mentions?tab=cli).
+
 ## Attaching media
 
 Antigravity CLI supports pasting rich media formats directly from your system clipboard. Press `ctrl+v` (or native terminal paste) inside the prompt panel to attach screenshot mockups or video recordings.

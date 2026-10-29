@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.312",
-  "last_updated": "2026-10-28T21:56:59Z",
+  "last_updated": "2026-10-29T09:14:30Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -590,8 +590,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-directory",
       "source_md_url": "https://code.claude.com/docs/en/claude-directory.md",
       "source_id": "claude-directory",
-      "hash": "cff57d17260dfa4d534f10a957de9917a89404c24c9e8a7db8d2bc88707a75cf",
-      "last_updated": "2026-10-26T21:58:03Z"
+      "hash": "a63249a82acb6bf9400441b34b12cc2f4b690fa633c6c34655902fb6884bae01",
+      "last_updated": "2026-10-29T09:14:30Z"
     },
     "claude-platform-on-aws": {
       "slug": "claude-platform-on-aws",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-28T21:56:59Z",
-    "fetch_duration_seconds": 80.404,
+    "last_fetch_completed": "2026-10-29T09:14:30Z",
+    "fetch_duration_seconds": 79.164,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

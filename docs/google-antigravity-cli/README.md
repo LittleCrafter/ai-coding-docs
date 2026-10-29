@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 28
 - **Version:** 1.2.0
-- **Last updated:** 2026-10-27T08:24:33Z
+- **Last updated:** 2026-10-29T09:13:03Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
