@@ -1,5 +1,9 @@
 # Delete File
 
+Copy MarkdownCopy Markdown
+
+[Open Markdown](<https://api-docs.deepseek.com/api/delete-file.md> "Open Markdown in a new tab")
+
 ```
 DELETE /files/:file_id
 ```
@@ -36,23 +40,13 @@ The ID of the deleted file.
 
 **object** stringrequired
 
-**Possible values:** [`file`]
+**Possible values:** `file`
 
 The object type, which is always `file`.
 
 **deleted** booleanrequired
 
 Whether the file was successfully deleted.
-
-**Example (from schema)**
-
-```json
-{
-  "id": "string",
-  "object": "file",
-  "deleted": true
-}
-```
 
 **Example**
 

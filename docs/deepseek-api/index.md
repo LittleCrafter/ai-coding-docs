@@ -26,6 +26,8 @@ Once you have obtained an API key, you can access the DeepSeek model using the f
 
 For examples using the Anthropic API format, please refer to [Anthropic API](<./guides/anthropic_api.md>).
 
+Before running these examples, set the `DEEPSEEK_API_KEY` environment variable in your terminal to your API key.
+
 **curl**
 
 ```bash

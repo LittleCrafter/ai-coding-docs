@@ -1,5 +1,9 @@
 # Chat Completions API
 
+Copy MarkdownCopy Markdown
+
+[Open Markdown](<https://api-docs.deepseek.com/api/create-chat-completion.md> "Open Markdown in a new tab")
+
 ```
 POST /chat/completions
 ```
@@ -28,7 +32,7 @@ object[]
 
 required
 
-**Possible values:** `>= 1`
+**Minimum items:** `1`
 
 A list of messages comprising the conversation so far.
 
@@ -44,7 +48,7 @@ The contents of the system message.
 
 **role** stringrequired
 
-**Possible values:** [`system`]
+**Possible values:** `system`
 
 The role of the messages author, in this case `system`.
 
@@ -68,6 +72,8 @@ string
 
 **Array of content parts**
 
+**Minimum items:** `1`
+
   * Array [
 
 oneOf
@@ -76,7 +82,7 @@ oneOf
 
 **type** stringrequired
 
-**Possible values:** [`text`]
+**Possible values:** `text`
 
 The type of the content part, in this case `text`.
 
@@ -88,7 +94,7 @@ The text content.
 
 **type** stringrequired
 
-**Possible values:** [`image_url`]
+**Possible values:** `image_url`
 
 The type of the content part, in this case `image_url`.
 
@@ -108,15 +114,17 @@ Either an `http(s)` URL of the image (max 8192 characters) or a base64-encoded d
 
 **detail** string
 
-**Possible values:** [`low`, `high`, `original`, `auto`]
+**Possible values:** `low`, `high`, `original`, `auto`
 
 Controls how the image is processed. `low` downsamples the image to 512x512 (faster, cheaper). `high`, `original`, and `auto` keep the original image.
 
 **File content part**
 
+Exactly one of `file_id` and `file_data` is required: passing neither returns a `400` error ("file must have a file_id or file_data"); passing both returns a `400` error ("file cannot have both file_id and file_data").
+
 **type** stringrequired
 
-**Possible values:** [`file`]
+**Possible values:** `file`
 
 The type of the content part, in this case `file`.
 
@@ -136,7 +144,7 @@ An optional filename. Only valid together with `file_data`.
 
 **role** stringrequired
 
-**Possible values:** [`user`]
+**Possible values:** `user`
 
 The role of the messages author, in this case `user`.
 
@@ -152,7 +160,7 @@ The contents of the assistant message.
 
 **role** stringrequired
 
-**Possible values:** [`assistant`]
+**Possible values:** `assistant`
 
 The role of the messages author, in this case `assistant`.
 
@@ -172,7 +180,7 @@ An optional name for the participant. Provides the model information to differen
 
 **role** stringrequired
 
-**Possible values:** [`tool`]
+**Possible values:** `tool`
 
 The role of the messages author, in this case `tool`.
 
@@ -190,6 +198,8 @@ string
 
 **Array of content parts**
 
+**Minimum items:** `1`
+
   * Array [
 
 oneOf
@@ -198,7 +208,7 @@ oneOf
 
 **type** stringrequired
 
-**Possible values:** [`text`]
+**Possible values:** `text`
 
 The type of the content part, in this case `text`.
 
@@ -210,7 +220,7 @@ The text content.
 
 **type** stringrequired
 
-**Possible values:** [`image_url`]
+**Possible values:** `image_url`
 
 The type of the content part, in this case `image_url`.
 
@@ -230,15 +240,17 @@ Either an `http(s)` URL of the image (max 8192 characters) or a base64-encoded d
 
 **detail** string
 
-**Possible values:** [`low`, `high`, `original`, `auto`]
+**Possible values:** `low`, `high`, `original`, `auto`
 
 Controls how the image is processed. `low` downsamples the image to 512x512 (faster, cheaper). `high`, `original`, and `auto` keep the original image.
 
 **File content part**
 
+Exactly one of `file_id` and `file_data` is required: passing neither returns a `400` error ("file must have a file_id or file_data"); passing both returns a `400` error ("file cannot have both file_id and file_data").
+
 **type** stringrequired
 
-**Possible values:** [`file`]
+**Possible values:** `file`
 
 The type of the content part, in this case `file`.
 
@@ -264,7 +276,7 @@ Tool call that this message is responding to.
 
 **model** stringrequired
 
-**Possible values:** [`deepseek-flash`, `deepseek-v4-pro`]
+**Possible values:** `deepseek-flash`, `deepseek-v4-pro`
 
 ID of the model to use. Use `deepseek-flash` or `deepseek-v4-pro`.
 
@@ -278,19 +290,17 @@ object
 
 nullable
 
-Controls the switch between thinking and non-thinking mode.
+Controls the switch between thinking and non-thinking mode. When `thinking` is omitted or `null`, the mode follows `reasoning_effort`; if `reasoning_effort` is also omitted, thinking is enabled. When this object is provided, `type` is required and takes precedence over `reasoning_effort` for selecting the mode.
 
-**type** string
+**type** stringrequired
 
-**Possible values:** [`enabled`, `disabled`]
-
-**Default value:** `enabled`
+**Possible values:** `enabled`, `disabled`
 
 If set to `enabled`, then use thinking mode. If set to `disabled`, then use non-thinking model.
 
 **reasoning_effort** string
 
-**Possible values:** [`none`, `low`, `high`, `max`]
+**Possible values:** `none`, `low`, `high`, `max`
 
 Controls the thinking mode toggle and the thinking effort. `none` disables thinking mode; `low` / `high` / `max` enable thinking mode. The default effort is `high`. For compatibility with existing software, `minimal` is accepted and mapped to `low`, and `medium` / `xhigh` are accepted and mapped to `high`.
 
@@ -312,21 +322,21 @@ object
 
 nullable
 
-An object specifying the format that the model must output. Setting to { "type": "json_object" } enables JSON Output, which guarantees the message the model generates is valid JSON.
+An object specifying the format that the model must output. If omitted or `null`, plain text is used. When this object is provided, `type` is required. Setting to { "type": "json_object" } enables JSON Output, which guarantees the message the model generates is valid JSON.
 
-**Important:** When using JSON Output, you must also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly "stuck" request. Also note that the message content may be partially cut off if finish_reason="length", which indicates the generation exceeded max_tokens or the conversation exceeded the max context length.
+**Important:** When using JSON Output, you must also instruct the model to produce JSON yourself via a system or user message. If the model's output cannot be recognized as JSON, the API replaces the non-JSON content with spaces (`U+0020`). As a result, the message content may contain only spaces (appearing empty), even when `finish_reason` is `stop`. Also note that the message content may be partially cut off if finish_reason="length", which indicates the generation exceeded max_tokens or the conversation exceeded the max context length.
 
-**type** string
+**type** stringrequired
 
-**Possible values:** [`text`, `json_object`]
-
-**Default value:** `text`
+**Possible values:** `text`, `json_object`
 
 Must be one of `text` or `json_object`.
 
 **stop** string | string[]
 
 nullable
+
+**Default value:** `null`
 
 Up to 16 sequences where the API will stop generating further tokens.
 
@@ -338,6 +348,10 @@ string
 
 **Stop sequence list**
 
+**Minimum items:** `1`
+
+**Maximum items:** `16`
+
   * Array [
 
 string
@@ -345,6 +359,8 @@ string
   * ]
 
 **stream** booleannullable
+
+**Default value:** `false`
 
 If set, partial message deltas will be sent. Tokens will be sent as data-only server-sent events (SSE) as they become available, with the stream terminated by a `data: [DONE]` message.
 
@@ -358,6 +374,8 @@ object
 
 nullable
 
+**Default value:** `null`
+
 Options for streaming response. Must be set together with `stream: true`; if `stream` is not set to `true`, the API returns a `400` error.
 
 **include_usage** boolean
@@ -368,7 +386,7 @@ Either way, the last chunk before the `data: [DONE]` message carries the token u
 
 **temperature** numbernullable
 
-**Possible values:** `<= 2`
+**Possible values:** `>= 0` and `<= 2`
 
 **Default value:** `1`
 
@@ -378,13 +396,14 @@ We generally recommend altering this or `top_p` but not both. Has no effect in t
 
 **top_p** numbernullable
 
-**Possible values:** `<= 1`
-
-**Default value:** `1`
+**Possible values:** `> 0` and `<= 1`
 
 An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
 
-The value must be greater than 0 and at most 1. We generally recommend altering this or `temperature` but not both. It only takes effect in thinking mode, where the effective range is 0.95–1.0: values below 0.95 are treated as 0.95. In non-thinking mode it is fixed at 1.0 and the value you pass is ignored.
+The value must be greater than 0 and at most 1. We generally recommend altering this or `temperature` but not both. The effective value depends on the model and mode:
+
+    * `deepseek-flash`: In thinking mode, the default is 1.0 and values below 0.95 are treated as 0.95. In non-thinking mode, it is fixed at 1.0 and the value you pass is ignored.
+    * `deepseek-v4-pro`: In thinking mode, it is fixed at 0.95 when tool calling is enabled, or 1.0 otherwise; the value you pass is ignored. Setting `tool_choice` to `none` disables tool calling even when `tools` is provided. In non-thinking mode, the value you pass is used, with a default of 1.0.
 
 **
 
@@ -402,7 +421,7 @@ A list of tools the model may call. Currently, only functions are supported as a
 
 **type** stringrequired
 
-**Possible values:** [`function`]
+**Possible values:** `function`
 
 The type of the tool. Currently, only `function` is supported.
 
@@ -436,17 +455,13 @@ The parameters the functions accepts, described as a JSON Schema object. See the
 
 Omitting `parameters` defines a function with an empty parameter list.
 
-**property name*** any
-
-The parameters the functions accepts, described as a JSON Schema object. See the [Tool Calls Guide](<../guides/tool_calls.md>) for examples, and the [JSON Schema reference](<https://json-schema.org/understanding-json-schema/>) for documentation about the format.
-
-Omitting `parameters` defines a function with an empty parameter list.
+**property name*** anynullable
 
 **strict** boolean
 
 **Default value:** `false`
 
-If set to true, the API will use strict-mode for the tool calls to ensure the output always complies with the function's JSON schema. This is a Beta feature, for more details please refer to [Tool Calls Guide](<../guides/tool_calls.md>)
+If set to `true`, the API will use strict-mode for the tool calls to ensure the output always complies with the function's JSON schema. This is a Beta feature, for more details please refer to [Tool Calls Guide](<../guides/tool_calls.md>)
 
   * ]
 
@@ -474,13 +489,15 @@ oneOf
 
 string
 
-**Possible values:** [`none`, `auto`, `required`]
+**Possible values:** `none`, `auto`, `required`
 
 **ChatCompletionNamedToolChoice**
 
+Specifies a tool the model should use. Use to force the model to call a specific function.
+
 **type** stringrequired
 
-**Possible values:** [`function`]
+**Possible values:** `function`
 
 The type of the tool. Currently, only `function` is supported.
 
@@ -500,28 +517,32 @@ The name of the function to call.
 
 **logprobs** booleannullable
 
-Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`.
+**Default value:** `false`
+
+Whether to return log probabilities of the output tokens or not. If `true`, returns the log probabilities of each output token returned in the `content` of `message`.
 
 **top_logprobs** integernullable
 
-**Possible values:** `<= 20`
+**Possible values:** `>= 0` and `<= 20`
+
+**Default value:** `null`
 
 An integer between 0 and 20 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.
 
 **user_id** nullable
 
-A custom user_id. Allowed character set is [a-zA-Z0-9\\-_], with a maximum length of 512. Do not include user privacy information in the user_id.
+A custom user_id. We recommend using only ASCII letters, digits, underscores (`_`), and hyphens (`-`). The UTF-8 encoded value must not exceed 512 bytes. Do not include user privacy information in the user_id.
 
     * user_id can be used to distinguish user identities on your side to help us with content safety review.
     * user_id can be used for KVCache isolation for privacy management.
     * user_id can be used for scheduling isolation of users on your business side.
     * For more details on the user_id parameter, please refer to [Rate Limit & Isolation](<../quick_start/rate_limit.md>)
 
-**frequency_penalty** deprecated
+**frequency_penalty** nullabledeprecated
 
 This parameter is no longer supported. It will not take effect if you pass it to the API.
 
-**presence_penalty** deprecated
+**presence_penalty** nullabledeprecated
 
 This parameter is no longer supported. It will not take effect if you pass it to the API.
 
@@ -561,7 +582,7 @@ A list of chat completion choices.
 
 **finish_reason** stringrequired
 
-**Possible values:** [`stop`, `length`, `content_filter`, `tool_calls`, `insufficient_system_resource`, `aborted`]
+**Possible values:** `stop`, `length`, `content_filter`, `tool_calls`, `insufficient_system_resource`, `aborted`
 
 The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence, `length` if the maximum number of tokens specified in the request was reached, `content_filter` if content was omitted due to a flag from our content filters, `tool_calls` if the model called a tool, `insufficient_system_resource` if the request is interrupted due to insufficient resource of the inference system, or `aborted` if the generation was interrupted.
 
@@ -607,7 +628,7 @@ The ID of the tool call.
 
 **type** stringrequired
 
-**Possible values:** [`function`]
+**Possible values:** `function`
 
 The type of the tool. Currently, only `function` is supported.
 
@@ -635,7 +656,7 @@ The arguments to call the function with, as generated by the model in JSON forma
 
 **role** stringrequired
 
-**Possible values:** [`assistant`]
+**Possible values:** `assistant`
 
 The role of the author of this message.
 
@@ -783,7 +804,7 @@ This fingerprint represents the backend configuration that the model runs with.
 
 **object** stringrequired
 
-**Possible values:** [`chat.completion`]
+**Possible values:** `chat.completion`
 
 The object type, which is always `chat.completion`.
 
@@ -847,120 +868,36 @@ Breakdown of tokens used in a completion.
 
 Tokens generated by the model for reasoning.
 
-**Example (from schema)**
-
-```json
-{
-  "id": "string",
-  "choices": [
-    {
-      "finish_reason": "stop",
-      "index": 0,
-      "message": {
-        "content": "string",
-        "reasoning_content": "string",
-        "tool_calls": [
-          {
-            "id": "string",
-            "type": "function",
-            "function": {
-              "name": "string",
-              "arguments": "string"
-            }
-          }
-        ],
-        "role": "assistant"
-      },
-      "logprobs": {
-        "content": [
-          {
-            "token": "string",
-            "logprob": 0,
-            "bytes": [
-              0
-            ],
-            "top_logprobs": [
-              {
-                "token": "string",
-                "logprob": 0,
-                "bytes": [
-                  0
-                ]
-              }
-            ]
-          }
-        ],
-        "reasoning_content": [
-          {
-            "token": "string",
-            "logprob": 0,
-            "bytes": [
-              0
-            ],
-            "top_logprobs": [
-              {
-                "token": "string",
-                "logprob": 0,
-                "bytes": [
-                  0
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
-  "created": 0,
-  "model": "string",
-  "system_fingerprint": "string",
-  "object": "chat.completion",
-  "usage": {
-    "completion_tokens": 0,
-    "prompt_tokens": 0,
-    "prompt_tokens_details": {
-      "cached_tokens": 0
-    },
-    "prompt_cache_hit_tokens": 0,
-    "prompt_cache_miss_tokens": 0,
-    "total_tokens": 0,
-    "completion_tokens_details": {
-      "reasoning_tokens": 0
-    }
-  }
-}
-```
-
 **Example**
 
 ```json
 {
-  "id": "930c60df-bf64-41c9-a88e-3ec75f81e00e",
+  "id": "88beaa90-17fd-45fc-939c-2ef75e2d913c",
+  "object": "chat.completion",
+  "created": 1793084842,
+  "model": "deepseek-flash",
   "choices": [
     {
-      "finish_reason": "stop",
       "index": 0,
       "message": {
-        "content": "Hello! How can I help you today?",
-        "role": "assistant"
+        "role": "assistant",
+        "content": "Hello! 👋 How can I help you today?"
       },
-      "logprobs": null
+      "logprobs": null,
+      "finish_reason": "stop"
     }
   ],
-  "created": 1705651092,
-  "model": "deepseek-flash",
-  "object": "chat.completion",
-  "system_fingerprint": "fp_7a09fdf9c2",
   "usage": {
-    "completion_tokens": 10,
-    "prompt_tokens": 16,
-    "total_tokens": 26,
+    "prompt_tokens": 7,
+    "completion_tokens": 11,
+    "total_tokens": 18,
     "prompt_tokens_details": {
       "cached_tokens": 0
     },
     "prompt_cache_hit_tokens": 0,
-    "prompt_cache_miss_tokens": 16
-  }
+    "prompt_cache_miss_tokens": 7
+  },
+  "system_fingerprint": "e72d3c7f663d3e1383b00b3884cb4501"
 }
 ```
 
@@ -977,6 +914,8 @@ OK, returns a streamed sequence of `chat completion chunk` objects
 Schema
 
 **
+
+Represents a streamed chunk of a chat completion response returned by model, based on the provided input.
 
   * Array [
 
@@ -1020,7 +959,7 @@ For thinking mode only. The reasoning contents of the assistant message, before 
 
 **role** string
 
-**Possible values:** [`assistant`]
+**Possible values:** `assistant`
 
 The role of the author of this message.
 
@@ -1044,7 +983,7 @@ The ID of the tool call.
 
 **type** string
 
-**Possible values:** [`function`]
+**Possible values:** `function`
 
 The type of the tool. Currently, only `function` is supported.
 
@@ -1194,7 +1133,7 @@ A list of integers representing the UTF-8 bytes representation of the token. Use
 
 **finish_reason** stringnullablerequired
 
-**Possible values:** [`stop`, `length`, `content_filter`, `tool_calls`, `insufficient_system_resource`, `aborted`]
+**Possible values:** `stop`, `length`, `content_filter`, `tool_calls`, `insufficient_system_resource`, `aborted`
 
 The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence, `length` if the maximum number of tokens specified in the request was reached, `content_filter` if content was omitted due to a flag from our content filters, `tool_calls` if the model called a tool, `insufficient_system_resource` if the request is interrupted due to insufficient resource of the inference system, or `aborted` if the generation was interrupted.
 
@@ -1218,110 +1157,38 @@ This fingerprint represents the backend configuration that the model runs with.
 
 **object** stringrequired
 
-**Possible values:** [`chat.completion.chunk`]
+**Possible values:** `chat.completion.chunk`
 
 The object type, which is always `chat.completion.chunk`.
 
   * ]
 
-**Example (from schema)**
-
-```json
-[
-  {
-    "id": "string",
-    "choices": [
-      {
-        "delta": {
-          "content": "string",
-          "reasoning_content": "string",
-          "role": "assistant",
-          "tool_calls": [
-            {
-              "index": 0,
-              "id": "string",
-              "type": "function",
-              "function": {
-                "name": "string",
-                "arguments": "string"
-              }
-            }
-          ]
-        },
-        "logprobs": {
-          "content": [
-            {
-              "token": "string",
-              "logprob": 0,
-              "bytes": [
-                0
-              ],
-              "top_logprobs": [
-                {
-                  "token": "string",
-                  "logprob": 0,
-                  "bytes": [
-                    0
-                  ]
-                }
-              ]
-            }
-          ],
-          "reasoning_content": [
-            {
-              "token": "string",
-              "logprob": 0,
-              "bytes": [
-                0
-              ],
-              "top_logprobs": [
-                {
-                  "token": "string",
-                  "logprob": 0,
-                  "bytes": [
-                    0
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "finish_reason": "stop",
-        "index": 0
-      }
-    ],
-    "created": 0,
-    "model": "string",
-    "system_fingerprint": "string",
-    "object": "chat.completion.chunk"
-  }
-]
-```
-
 **Example**
 
 ```shell
-data: {"id": "1f633d8bfc032625086f14113c411638", "choices": [{"index": 0, "delta": {"content": "", "role": "assistant"}, "finish_reason": null, "logprobs": null}], "created": 1718345013, "model": "deepseek-flash", "system_fingerprint": "fp_a49d71b8a1", "object": "chat.completion.chunk"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": "Hello", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": "!", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":"!"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": " How", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":" 👋"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": " can", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":" How"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": " I", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":" can"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": " assist", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":" I"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": " you", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":" help"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": " today", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":" you"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": "?", "role": "assistant"}, "finish_reason": null, "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1"}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":" today"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-data: {"choices": [{"delta": {"content": "", "role": null}, "finish_reason": "stop", "index": 0, "logprobs": null}], "created": 1718345013, "id": "1f633d8bfc032625086f14113c411638", "model": "deepseek-flash", "object": "chat.completion.chunk", "system_fingerprint": "fp_a49d71b8a1", "usage": {"completion_tokens": 9, "prompt_tokens": 17, "total_tokens": 26, "prompt_tokens_details": {"cached_tokens": 0}, "prompt_cache_hit_tokens": 0, "prompt_cache_miss_tokens": 17}}
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":"?"},"logprobs":null,"finish_reason":null}],"usage":null}
+
+data: {"id":"071f229d-daa0-4557-a580-106a22e8df73","object":"chat.completion.chunk","created":1793084907,"model":"deepseek-flash","system_fingerprint":"e72d3c7f663d3e1383b00b3884cb4501","choices":[{"index":0,"delta":{"content":""},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":7,"completion_tokens":11,"total_tokens":18,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":7}}
 
 data: [DONE]
 ```

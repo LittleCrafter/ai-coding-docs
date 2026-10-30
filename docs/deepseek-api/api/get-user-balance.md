@@ -1,5 +1,9 @@
 # Get User Balance
 
+Copy MarkdownCopy Markdown
+
+[Open Markdown](<https://api-docs.deepseek.com/api/get-user-balance.md> "Open Markdown in a new tab")
+
 ```
 GET /user/balance
 ```
@@ -38,7 +42,7 @@ object[]
 
 **currency** string
 
-**Possible values:** [`CNY`, `USD`]
+**Possible values:** `CNY`, `USD`
 
 The currency of the balance.
 
@@ -55,22 +59,6 @@ The total not expired granted balance.
 The total topped-up balance.
 
   * ]
-
-**Example (from schema)**
-
-```json
-{
-  "is_available": true,
-  "balance_infos": [
-    {
-      "currency": "CNY",
-      "total_balance": "110.00",
-      "granted_balance": "10.00",
-      "topped_up_balance": "100.00"
-    }
-  ]
-}
-```
 
 **Example**
 

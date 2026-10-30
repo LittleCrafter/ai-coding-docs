@@ -1,5 +1,9 @@
 # Lists Models
 
+Copy MarkdownCopy Markdown
+
+[Open Markdown](<https://api-docs.deepseek.com/api/list-models.md> "Open Markdown in a new tab")
+
 ```
 GET /models
 ```
@@ -24,7 +28,7 @@ Schema
 
 **object** stringrequired
 
-**Possible values:** [`list`]
+**Possible values:** `list`
 
 The object type, which is always `list`.
 
@@ -40,6 +44,8 @@ required
 
 The list of model objects.
 
+Describes a DeepSeek model offering that can be used with the API. Besides the identifier fields, each model carries machine-readable metadata about its capabilities and limits; a metadata field may be omitted when the information is not available for that model.
+
   * Array [
 
 **id** stringrequired
@@ -48,7 +54,7 @@ The model identifier, which can be referenced in the API endpoints.
 
 **object** stringrequired
 
-**Possible values:** [`model`]
+**Possible values:** `model`
 
 The object type, which is always "model".
 
@@ -70,13 +76,13 @@ The maximum number of output tokens the server allows in a single response, i.e.
 
 **input_modalities** string[]
 
-**Possible values:** [`text`, `image`]
+**Possible values:** `text`, `image`
 
 The input types the model accepts.
 
 **output_modalities** string[]
 
-**Possible values:** [`text`]
+**Possible values:** `text`
 
 The media types the model can generate.
 
@@ -120,7 +126,7 @@ Capabilities that apply when the model is used through the [Anthropic Messages A
 
 **system_prompt_update** stringrequired
 
-**Possible values:** [`leading-only`, `in-history`]
+**Possible values:** `leading-only`, `in-history`
 
 How the model picks up an updated system prompt during a conversation.
 
@@ -128,41 +134,6 @@ How the model picks up an updated system prompt during a conversation.
     * `in-history`: a `system` message may be appended to the conversation history. The latest `system` message in the history provides the complete effective system prompt and replaces all earlier ones.
 
   * ]
-
-**Example (from schema)**
-
-```json
-{
-  "object": "list",
-  "data": [
-    {
-      "id": "string",
-      "object": "model",
-      "owned_by": "string",
-      "name": "string",
-      "context_window": 0,
-      "max_output_tokens": 0,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "effort": {
-        "supported_levels": [
-          "string"
-        ],
-        "default_level": "string"
-      },
-      "api_capabilities": {
-        "anthropic_messages": {
-          "system_prompt_update": "leading-only"
-        }
-      }
-    }
-  ]
-}
-```
 
 **Example**
 

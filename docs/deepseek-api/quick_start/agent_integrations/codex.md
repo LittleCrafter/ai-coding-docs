@@ -243,7 +243,7 @@ web_search = "live"
 
  
 
-Restart Codex after saving the change. DeepSeek executes the searches on the server, and the requests are billed at [Search API pricing](<https://api-docs.deepseek.com/guides/search#billing>).
+Restart Codex after saving the change. DeepSeek executes the searches on the server, and the requests are billed at [Search API pricing](<../../guides/search.md#billing>).
 
 ## 2\. Get Started
 

@@ -2,8 +2,8 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 54
-- **Last updated:** 2026-10-29T22:06:25Z
+- **Pages mirrored:** 57
+- **Last updated:** 2026-10-30T11:45:47Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -12,7 +12,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Your First API Call | [index.md](./index.md) | [source](<https://api-docs.deepseek.com>) |
-| Your First API Call | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
+| Change Log | [updates.md](./updates.md) | [source](<https://api-docs.deepseek.com/updates>) |
 
 ## api
 
@@ -21,6 +21,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Chat Completions API | [api/create-chat-completion.md](./api/create-chat-completion.md) | [source](<https://api-docs.deepseek.com/api/create-chat-completion>) |
 | FIM Completion API (Beta) | [api/create-completion.md](./api/create-completion.md) | [source](<https://api-docs.deepseek.com/api/create-completion>) |
 | Upload File | [api/create-file.md](./api/create-file.md) | [source](<https://api-docs.deepseek.com/api/create-file>) |
+| Messages API | [api/create-message.md](./api/create-message.md) | [source](<https://api-docs.deepseek.com/api/create-message>) |
 | Responses API | [api/create-response.md](./api/create-response.md) | [source](<https://api-docs.deepseek.com/api/create-response>) |
 | Delete File | [api/delete-file.md](./api/delete-file.md) | [source](<https://api-docs.deepseek.com/api/delete-file>) |
 | Fetch | [api/fetch.md](./api/fetch.md) | [source](<https://api-docs.deepseek.com/api/fetch>) |
@@ -28,6 +29,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | List Files | [api/list-files.md](./api/list-files.md) | [source](<https://api-docs.deepseek.com/api/list-files>) |
 | Lists Models | [api/list-models.md](./api/list-models.md) | [source](<https://api-docs.deepseek.com/api/list-models>) |
 | Retrieve File | [api/retrieve-file.md](./api/retrieve-file.md) | [source](<https://api-docs.deepseek.com/api/retrieve-file>) |
+| Search | [api/search.md](./api/search.md) | [source](<https://api-docs.deepseek.com/api/search>) |
 
 ## guides
 
@@ -41,6 +43,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Context Caching | [guides/kv_cache.md](./guides/kv_cache.md) | [source](<https://api-docs.deepseek.com/guides/kv_cache>) |
 | Multi-round Conversation | [guides/multi_round_chat.md](./guides/multi_round_chat.md) | [source](<https://api-docs.deepseek.com/guides/multi_round_chat>) |
 | Using the Responses API | [guides/responses_api.md](./guides/responses_api.md) | [source](<https://api-docs.deepseek.com/guides/responses_api>) |
+| Search &amp; Fetch | [guides/search.md](./guides/search.md) | [source](<https://api-docs.deepseek.com/guides/search>) |
 | Thinking Mode | [guides/thinking_mode.md](./guides/thinking_mode.md) | [source](<https://api-docs.deepseek.com/guides/thinking_mode>) |
 | Tool Calls | [guides/tool_calls.md](./guides/tool_calls.md) | [source](<https://api-docs.deepseek.com/guides/tool_calls>) |
 | Vision | [guides/vision.md](./guides/vision.md) | [source](<https://api-docs.deepseek.com/guides/vision>) |
@@ -54,17 +57,17 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DeepSeek-V2.5: A New Open-Source Model Combining General and Coding Capabilities | [news/news0905.md](./news/news0905.md) | [source](<https://api-docs.deepseek.com/news/news0905>) |
 | 🚀 DeepSeek-R1-Lite-Preview is now live: unleashing supercharged reasoning power! | [news/news1120.md](./news/news1120.md) | [source](<https://api-docs.deepseek.com/news/news1120>) |
 | 🚀 DeepSeek V2.5: The Grand Finale 🎉 | [news/news1210.md](./news/news1210.md) | [source](<https://api-docs.deepseek.com/news/news1210>) |
-| Your First API Call | [news/news1226.md](./news/news1226.md) | [source](<https://api-docs.deepseek.com/news/news1226>) |
+| 🚀 Introducing DeepSeek-V3 | [news/news1226.md](./news/news1226.md) | [source](<https://api-docs.deepseek.com/news/news1226>) |
 | Introducing DeepSeek App | [news/news250115.md](./news/news250115.md) | [source](<https://api-docs.deepseek.com/news/news250115>) |
 | Your First API Call | [news/news250120.md](./news/news250120.md) | [source](<https://api-docs.deepseek.com/news/news250120>) |
-| Your First API Call | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
+| DeepSeek-V3-0324 Release | [news/news250325.md](./news/news250325.md) | [source](<https://api-docs.deepseek.com/news/news250325>) |
 | DeepSeek-R1-0528 Release | [news/news250528.md](./news/news250528.md) | [source](<https://api-docs.deepseek.com/news/news250528>) |
 | DeepSeek-V3.1 Release | [news/news250821.md](./news/news250821.md) | [source](<https://api-docs.deepseek.com/news/news250821>) |
 | DeepSeek-V3.1-Terminus | [news/news250922.md](./news/news250922.md) | [source](<https://api-docs.deepseek.com/news/news250922>) |
 | Introducing DeepSeek-V3.2-Exp | [news/news250929.md](./news/news250929.md) | [source](<https://api-docs.deepseek.com/news/news250929>) |
 | DeepSeek-V3.2 Release | [news/news251201.md](./news/news251201.md) | [source](<https://api-docs.deepseek.com/news/news251201>) |
 | DeepSeek V4 Preview Release | [news/news260424.md](./news/news260424.md) | [source](<https://api-docs.deepseek.com/news/news260424>) |
-| Your First API Call | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
+| DeepSeek-V4-Pro GA Release | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
 | DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live | [news/news260821.md](./news/news260821.md) | [source](<https://api-docs.deepseek.com/news/news260821>) |
 | DeepSeek-V4.1-Flash: Smarter, Faster, More Efficient | [news/news260910.md](./news/news260910.md) | [source](<https://api-docs.deepseek.com/news/news260910>) |
 | DeepSeek-V4.1-Flash-1017: Wish-Driven Programming Made Real | [news/news261017.md](./news/news261017.md) | [source](<https://api-docs.deepseek.com/news/news261017>) |
@@ -82,6 +85,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Integrate with Reasonix | [quick_start/agent_integrations/reasonix.md](./quick_start/agent_integrations/reasonix.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/reasonix>) |
 | Integrate with WorkBuddy/CodeBuddy | [quick_start/agent_integrations/workbuddy.md](./quick_start/agent_integrations/workbuddy.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/workbuddy>) |
 | Error Codes | [quick_start/error_codes.md](./quick_start/error_codes.md) | [source](<https://api-docs.deepseek.com/quick_start/error_codes>) |
-| Your First API Call | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
+| Models &amp; Pricing | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
 | Rate Limit &amp; Isolation | [quick_start/rate_limit.md](./quick_start/rate_limit.md) | [source](<https://api-docs.deepseek.com/quick_start/rate_limit>) |
 | Token &amp; Token Usage | [quick_start/token_usage.md](./quick_start/token_usage.md) | [source](<https://api-docs.deepseek.com/quick_start/token_usage>) |
