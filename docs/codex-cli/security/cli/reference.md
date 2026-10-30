@@ -936,13 +936,14 @@ doesn't suppress a rule, path, or vulnerability class.
 ## `codex-security export`
 
 Export saved findings or a threat model without starting Codex or loading
-credentials. You can export findings as CSV, JSON, or SARIF only from a
-completed, sealed scan. Threat models use Markdown.
+credentials. You can export findings as CSV, JSON, SARIF, or a ServiceNow AVIT
+CSV only from a completed, sealed scan. Threat models use Markdown.
 
 ```text
 usage: codex-security export [scan_dir | --scan SCAN_ID]
                              [--artifact {findings,threat-model}]
-                             [--export-format {csv,json,sarif,md}]
+                             [--export-format {csv,json,sarif,md,servicenow-avit}]
+                             [--avit-template FILE]
                              [--output FILE|-] [--source-root PATH]
                              [--python PATH]
 ```
@@ -952,22 +953,24 @@ scan. Otherwise, provide a saved result directory or select a scan by ID or
 unique prefix of at least eight characters with `--scan`. You can't combine
 these selectors.
 
-| Argument                              | Description                                                                                 |
-| ------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `--artifact {findings,threat-model}`  | Select the saved artifact. The default is `findings`.                                       |
-| `--scan SCAN_ID`                      | Select a saved scan by ID or unique prefix of at least eight characters.                    |
-| `--export-format {csv,json,sarif,md}` | Select the format. Findings default to `sarif`; threat models support only `md`.            |
-| `--output FILE\|-`                    | Write the selected format to a file or stdout. Defaults to a file in the current directory. |
-| `--source-root PATH`                  | Add source-line fingerprints to SARIF using a repository checkout.                          |
-| `--python PATH`                       | Select the Python interpreter for the bundled exporter.                                     |
+| Argument                             | Description                                                                                                              |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `--artifact {findings,threat-model}` | Select the saved artifact. The default is `findings`.                                                                    |
+| `--scan SCAN_ID`                     | Select a saved scan by ID, unique prefix of at least eight characters, or `latest`.                                      |
+| `--export-format FORMAT`             | Select `csv`, `json`, `sarif`, `md`, or `servicenow-avit`. Findings default to `sarif`; threat models support only `md`. |
+| `--avit-template FILE`               | Supply the CSV template that `servicenow-avit` requires. Only this format accepts it.                                    |
+| `--output FILE\|-`                   | Write the selected format to a file or stdout. Defaults to a file in the current directory.                              |
+| `--source-root PATH`                 | Add source-line fingerprints to SARIF using a repository checkout.                                                       |
+| `--python PATH`                      | Select the Python interpreter for the bundled exporter.                                                                  |
 
 `--source-root` works only with SARIF findings exports. JSON preserves
 the sealed findings document. CSV contains portable finding columns and does
 not include local workbench triage state.
 
 Without `--output`, the CLI writes SARIF to `results.sarif`, JSON to
-`findings.json`, CSV to `findings.csv`, and Markdown to `threatmodel.md` in the
-current working directory.
+`findings.json`, CSV to `findings.csv`, ServiceNow AVIT CSV to
+`servicenow-avit.csv`, and Markdown to `threatmodel.md` in the current working
+directory.
 Exports can contain source excerpts and vulnerability details. Pass `--output`
 with a private path outside the checkout. When running outside the repository,
 also specify a result directory or `--scan`.
@@ -1007,6 +1010,34 @@ npx @openai/codex-security export /path/to/scan \
   --export-format csv \
   --output /path/outside/repository/exports/findings.csv
 ```
+
+### Export findings for ServiceNow
+
+ServiceNow requires the **Ethical Hacker** role (`sn_vul.app_pen_tester`).
+Open **All** > **Manual AVIT Ingestion** > **Upload File UI** and download the
+CSV template. Keep the original headers and exactly one data row.
+Use the exact ServiceNow application name. Fill in the purpose, sensitive data
+types, compliance programs, technology stack, application team, and URLs to test.
+Set **Requested by**, **Assigned to**, and **Assignment group**. Leave the
+finding fields blank. Save the template as `app.csv` in a private directory
+outside the scanned repository. Reuse it for scans of the same application.
+
+From the scanned repository, export the latest findings with that template.
+Keep the output in the private directory as well:
+
+```bash
+npx @openai/codex-security export --scan latest \
+  --export-format servicenow-avit \
+  --avit-template /path/outside/repository/exports/app.csv \
+  --output /path/outside/repository/exports/findings-avit.csv
+```
+
+The CLI writes one row per finding and fills **Steps to reproduce** from the
+recorded attack path when available. Review those steps and fill in any blanks
+in the exported CSV. Return to **Upload File UI**, select **Import File**,
+upload the CSV, and select **Submit**. Each upload creates a new penetration
+test form for the application.
+See the [ServiceNow upload instructions](https://www.servicenow.com/docs/r/security-management/application-vulnerability-response/ingest-vulnerabilities-manually-avr.html).
 
 ### Export a saved threat model
 
