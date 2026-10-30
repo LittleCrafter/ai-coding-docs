@@ -1469,7 +1469,7 @@ Note: Rename `experimental_instructions_file` to `model_instructions_file`. Code
 `requirements.toml` is an admin-enforced configuration file that constrains security-sensitive settings users can't override. For details, locations, and examples, see [Admin-enforced requirements](./enterprise/managed-configuration.md#admin-enforced-requirements-requirementstoml).
 
 For ChatGPT Business and Enterprise users, Codex can also apply cloud-fetched
-requirements. See the security page for precedence details.
+requirements. See the security page for precedence details. To serve CLI policy from your own HTTPS endpoint, see [Self-host Codex configuration for your team](./enterprise/configuration-server.md).
 
 Use `[features]` in `requirements.toml` to pin runtime feature flags by the same
 canonical keys that `config.toml` uses. Requirements can also include documented
@@ -1511,6 +1511,15 @@ from either one wins.
 
 | Key | Type | Description |
 | --- | --- | --- |
+| `config_server` | `table` | Enroll Codex with a configuration server. Set this in local administrator-controlled requirements. |
+| `config_server.base_url` | `string (HTTPS URL)` | Base URL of the configuration server enrolled by the administrator. Codex appends /codex/config/bundle to this URL. |
+| `config_server.oauth` | `table` | Optional company sign-in settings. Omit this table to fetch the bundle without credentials. |
+| `config_server.oauth.authorization_url` | `string (HTTPS URL)` | Authorization endpoint for company browser sign-in. Required when OAuth is configured. |
+| `config_server.oauth.token_url` | `string (HTTPS URL)` | Token endpoint for company sign-in and refresh. Required when OAuth is configured. |
+| `config_server.oauth.client_id` | `string` | Public OAuth client ID registered for Codex. Required when OAuth is configured. |
+| `config_server.oauth.scopes` | `array<string>` | Optional OAuth permissions to request from the identity provider. |
+| `config_server.oauth.resource` | `string` | Optional OAuth resource identifier required by the identity provider. |
+| `config_server.oauth.redirect_port` | `number` | Optional port for the browser callback on 127.0.0.1. By default, Codex chooses an available port. |
 | `sqlite_home` | `string (path)` | Enforce the directory where Codex stores SQLite-backed runtime state. |
 | `log_dir` | `string (path)` | Enforce the directory where Codex writes local log files. |
 | `model_catalog_json` | `string (path)` | Enforce the JSON model catalog Codex uses at startup. |

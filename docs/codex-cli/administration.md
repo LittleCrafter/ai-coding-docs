@@ -46,6 +46,7 @@ Deploy apps and configure updates, runtime settings, remote connections, and mod
 - [Windows app and CLI deployment](./enterprise/windows-deployment.md) — Deploy the Windows app and Codex CLI on managed Windows devices.
 - [Manage app updates](./enterprise/manage-app-updates.md) — Control desktop app updates and deploy approved versions through your device management platform.
 - [Managed configuration](./enterprise/managed-configuration.md) — Review the global baseline in Agent Security, policy precedence for this feature, and supported runtime requirements.
+- [Self-host Codex configuration for your team](./enterprise/configuration-server.md) — Serve Codex defaults and required settings from your own HTTPS endpoint.
 - [Codex security cookbook](./enterprise/security-cookbook.md) — Configure and verify enterprise security controls, then combine them for common security goals.
 - [Remote connections](./remote-connections.md) — Start and control work on connected computers.
 - [Workspace model availability](./enterprise/workspace-model-availability.md) — Separate model access for ChatGPT, Codex in the ChatGPT desktop app, Codex CLI, the IDE extension, Codex cloud, and the Platform API.

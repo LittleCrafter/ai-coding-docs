@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 204
+- **Pages mirrored:** 205
 - **Version:** 0.166.0
-- **Last updated:** 2026-10-30T17:19:11Z
+- **Last updated:** 2026-10-30T21:45:15Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -169,6 +169,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | ChatGPT Work: usage and cost | [enterprise/chatgpt-work-usage-and-cost.md](./enterprise/chatgpt-work-usage-and-cost.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-usage-and-cost>) |
 | Local computer access for Work Cloud and dots | [enterprise/cloud-local-access.md](./enterprise/cloud-local-access.md) | [source](<https://learn.chatgpt.com/docs/enterprise/cloud-local-access>) |
 | Compliance API and audit events | [enterprise/compliance-api.md](./enterprise/compliance-api.md) | [source](<https://learn.chatgpt.com/docs/enterprise/compliance-api>) |
+| Self-host Codex configuration for your team | [enterprise/configuration-server.md](./enterprise/configuration-server.md) | [source](<https://learn.chatgpt.com/docs/enterprise/configuration-server>) |
 | Connect to a gateway | [enterprise/connect-to-a-gateway.md](./enterprise/connect-to-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway>) |
 | Manage dots permissions and capabilities | [enterprise/dots-admin-guide.md](./enterprise/dots-admin-guide.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-admin-guide>) |
 | Dynamic groups | [enterprise/dynamic-groups.md](./enterprise/dynamic-groups.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dynamic-groups>) |

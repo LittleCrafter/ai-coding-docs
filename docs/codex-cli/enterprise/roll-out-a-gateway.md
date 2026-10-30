@@ -230,6 +230,8 @@ For a short-lived static test key, remove the auth block and put `env_key = "COD
 
 ### Distribute defaults and requirements
 
+If your users don't sign in to Codex with ChatGPT, you can [distribute team settings from your own server](./configuration-server.md). Codex fetches those settings independently of how you route model requests.
+
 Use [Configuration precedence](../config-file/config-basic.md#configuration-precedence)
 to choose where to distribute defaults. For enforced settings and macOS MDM
 payloads, see [Managed configuration](./managed-configuration.md#admin-enforced-requirements-requirementstoml).
