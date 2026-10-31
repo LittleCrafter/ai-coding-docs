@@ -56,7 +56,7 @@ While global shared skills remain in your user home directory, the target folder
 
 | Configuration | Gemini CLI | Antigravity CLI |
 | :-- | :-- | :-- |
-| **Global shared path** | `~/.gemini/skills/` | `~/.gemini/antigravity-cli/skills/` |
+| **Global shared path** | `~/.gemini/skills/` | `~/.gemini/skills/` or `~/.gemini/antigravity-cli/skills/` |
 | **Workspace project path** | `.gemini/skills/` | `.agents/skills/` |
 
 Note
