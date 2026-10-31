@@ -144,7 +144,7 @@ Add sidebar apps, conversation panels, file viewers and editors, and forms to Ch
 
 #### MCP Events
 
-Let users ask ChatGPT to monitor updates from your MCP server and act when matching events arrive. ChatGPT requires MCP 2.0 and supports webhook delivery from the draft MCP Events specification.
+Let users ask ChatGPT to monitor updates from your MCP server and act when matching events arrive. ChatGPT supports webhook delivery from the draft MCP Events specification.
 
 [Build event subscriptions](https://developers.openai.com/plugins/build/mcp-events)
 
@@ -491,7 +491,7 @@ Composer mentions are available only in the desktop app. Free and Go web extensi
 updates from your server and act when matching events arrive. For example,
 a user can ask ChatGPT to summarize new messages or respond to document feedback.
 
-This integration requires MCP 2.0. ChatGPT supports webhook delivery from
+ChatGPT supports webhook delivery from
 the draft MCP Events specification; polling and streaming aren't supported.
 
 #### Customize website annotations
@@ -897,7 +897,7 @@ Add sidebar apps, panels, editors, and forms to ChatGPT. Composer mentions requi
 
 #### MCP Events
 
-Let users ask ChatGPT to act on updates from your MCP server. Requires MCP 2.0 and webhook delivery.
+Let users ask ChatGPT to act on updates from your MCP server. ChatGPT supports webhook delivery.
 
 [Build event subscriptions](https://developers.openai.com/plugins/build/mcp-events)
 
@@ -994,7 +994,7 @@ Add [ChatGPT sign-in and eligible plan usage](https://developers.openai.com/siwc
 
 #### Respond to MCP events
 
-Build [webhook subscriptions](https://developers.openai.com/plugins/build/mcp-events) so users can ask ChatGPT to act on updates from your MCP server. Requires MCP 2.0.
+Build [webhook subscriptions](https://developers.openai.com/plugins/build/mcp-events) so users can ask ChatGPT to act on updates from your MCP server.
 
 #### Customize website annotations
 
@@ -29339,7 +29339,7 @@ MCP Events lets ChatGPT subscribe to updates from your MCP server, such as new m
 
 MCP Events is available in Work chats on ChatGPT web, in Work chats in the desktop app with **Cloud** selected, and with [dots](./dots.md). Workspace controls for plugins and event-triggered tasks apply.
 
-MCP Events in ChatGPT requires MCP 2.0 (protocol version `2026-07-28`). Configure your server in your plugin and provide persistent subscription storage and outbound HTTPS access to callback URLs.
+ChatGPT supports MCP Events over Streamable HTTP using `initialize`, or over MCP 2.0 HTTP (protocol version `2026-07-28`). Configure your server in your plugin and provide persistent subscription storage and outbound HTTPS access to callback URLs.
 
 ChatGPT supports webhook delivery and callback verification from the [draft MCP Events specification](https://github.com/modelcontextprotocol/experimental-ext-triggers-events/blob/main/docs/design-sketch-proposal.md). Polling, streaming, and the draft’s `gap` and `terminated` control notifications are not supported by this integration.
 
@@ -29353,7 +29353,27 @@ ChatGPT supports webhook delivery and callback verification from the [draft MCP 
 
 #### Advertise event support
 
-Event discovery starts with your server’s capabilities. Add `events` to the capabilities returned by its `server/discover` response:
+Event discovery starts with your server’s capabilities. For MCP versions that use initialization, add `events` to the capabilities returned by the `initialize` response:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "protocolVersion": "2025-03-26",
+    "capabilities": {
+      "tools": {},
+      "events": {}
+    },
+    "serverInfo": {
+      "name": "example-server",
+      "version": "1.0.0"
+    }
+  }
+}
+```
+
+For MCP 2.0 (protocol version `2026-07-28`), add `events` to the capabilities returned by the `server/discover` response:
 
 ```json
 {
@@ -29612,7 +29632,7 @@ Make unsubscribe idempotent and authorize it against the connected account.
 
 With the event methods and webhook delivery in place, connect your MCP server to ChatGPT through a plugin and test the full subscription lifecycle:
 
-1. Confirm your server receives `server/discover` and `events/list`, and returns the expected event definitions.
+1. Confirm your server advertises `events` through `initialize` or `server/discover`, then receives `events/list` and returns the expected event definitions.
 2. Verify that your events appear on your plugin page alongside your tools. Rescan your MCP server whenever you change its tools or events.
 
    **_Plugin events._** _Discovered events appear alongside tools on the plugin page._

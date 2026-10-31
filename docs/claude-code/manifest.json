@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.314",
-  "last_updated": "2026-10-30T21:44:03Z",
+  "version": "2.1.316",
+  "last_updated": "2026-10-31T02:50:22Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -470,8 +470,8 @@
       "source_url": "https://code.claude.com/docs/en/changelog",
       "source_md_url": "https://code.claude.com/docs/en/changelog.md",
       "source_id": "changelog",
-      "hash": "8d2c2e96a2eb2aa57cafd3c2f726ec151185b485530b51ec4355e0945c69fbc9",
-      "last_updated": "2026-10-30T03:03:34Z"
+      "hash": "ec19d4b5c059d33f730995355a02b6e18ccd2cf4abcce0e77d875f8c5ed988ad",
+      "last_updated": "2026-10-31T02:50:22Z"
     },
     "channels": {
       "slug": "channels",
@@ -830,8 +830,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop",
       "source_md_url": "https://code.claude.com/docs/en/desktop.md",
       "source_id": "desktop",
-      "hash": "9b3269d46f57b86db6b03abe652f458c9c4ab298bc3b4e5b8ddbeca0614637e3",
-      "last_updated": "2026-10-30T21:44:03Z"
+      "hash": "0b9c66683c20346bccce5edf45162f1945d19b7db29ee115626819e17dfdfe67",
+      "last_updated": "2026-10-31T02:50:22Z"
     },
     "desktop-ios-simulator": {
       "slug": "desktop-ios-simulator",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-30T21:44:03Z",
-    "fetch_duration_seconds": 79.22,
+    "last_fetch_completed": "2026-10-31T02:50:22Z",
+    "fetch_duration_seconds": 79.183,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

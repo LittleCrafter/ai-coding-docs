@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.166.0",
-  "last_updated": "2026-10-30T21:45:15Z",
+  "last_updated": "2026-10-31T02:51:34Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "5a5efb106e4d81f71e74399ad68c58b87026b56c1c703c3f35764e2e6f17803a",
-      "last_updated": "2026-10-30T21:45:15Z"
+      "hash": "7c475b34203391cfb9d33717709fdaf99c3ef0174e057badd7cf6ee65cbc98b0",
+      "last_updated": "2026-10-31T02:51:34Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -1960,8 +1960,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new.md",
       "source_id": "llms:whats-new",
-      "hash": "7b253c37715e239f92dc0d333e1afd6a6533e68219bacf1d68646640af2bce26",
-      "last_updated": "2026-10-28T21:58:12Z"
+      "hash": "3dd1ee4bd7150884dfe126a8f91133a80a6cb1a1c8b6335654543dfa52bf5b60",
+      "last_updated": "2026-10-31T02:51:34Z"
     },
     "whats-new/devday-2026": {
       "slug": "whats-new/devday-2026",
@@ -1970,8 +1970,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new/devday-2026",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new/devday-2026.md",
       "source_id": "llms:whats-new/devday-2026",
-      "hash": "71422a05bdfd07f200d607c115ee11166d9da18bc069036893114ce0856ba446",
-      "last_updated": "2026-10-20T23:32:49Z"
+      "hash": "120c9a4d0a17d8fd1bea4ea5c17262884311622cfad5a632e5cdcc6c3444c730",
+      "last_updated": "2026-10-31T02:51:34Z"
     },
     "whats-new/dots-october-28-2026": {
       "slug": "whats-new/dots-october-28-2026",
@@ -2020,8 +2020,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new/september-28-october-2-2026",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new/september-28-october-2-2026.md",
       "source_id": "llms:whats-new/september-28-october-2-2026",
-      "hash": "2b41feba664018115ed30bd796fb3777feb52508e4c1afc75bcc802542289b66",
-      "last_updated": "2026-09-29T21:35:57Z"
+      "hash": "fec6b6f2727c64405c0f2fb2eea3ae1486b77f6d48b5c57fa15a7c01d8fc6dea",
+      "last_updated": "2026-10-31T02:51:34Z"
     },
     "windows/windows-app": {
       "slug": "windows/windows-app",
@@ -2055,8 +2055,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-30T21:45:15Z",
-    "fetch_duration_seconds": 71.495,
+    "last_fetch_completed": "2026-10-31T02:51:34Z",
+    "fetch_duration_seconds": 71.497,
     "total_pages_discovered": 205,
     "pages_fetched_successfully": 205,
     "pages_failed": 0,
