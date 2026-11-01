@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-01T17:19:08Z",
+  "last_updated": "2026-11-01T21:26:37Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -535,13 +535,13 @@
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
-      "title": "Models & Pricing",
+      "title": "Your First API Call",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "b4e95d593c492757f6b43bb298731c65a021af2cf209da7d48737e6e7b89d117",
-      "last_updated": "2026-10-30T11:45:47Z"
+      "hash": "60b10d0ab8dfea7bd8d4585ab1248408dcbf41a2eb94ab1b7001277c990ddfb9",
+      "last_updated": "2026-11-01T21:26:37Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -575,8 +575,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-01T17:19:08Z",
-    "fetch_duration_seconds": 20.943,
+    "last_fetch_completed": "2026-11-01T21:26:37Z",
+    "fetch_duration_seconds": 20.526,
     "total_pages_discovered": 57,
     "pages_fetched_successfully": 57,
     "pages_failed": 0,
