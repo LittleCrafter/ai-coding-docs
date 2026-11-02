@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.166.0",
-  "last_updated": "2026-10-31T02:51:34Z",
+  "last_updated": "2026-11-02T10:09:06Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -50,8 +50,8 @@
       "source_url": "https://learn.chatgpt.com/docs/agent-configuration/rules",
       "source_md_url": "https://learn.chatgpt.com/docs/agent-configuration/rules.md",
       "source_id": "llms:agent-configuration/rules",
-      "hash": "6ef19acca3bd46a4812c7e179495cbc22733e6f79facd462da52212138241d6f",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "4643bfbc09263f1ddd2361fe5026213b28ea77bab2c2b101b25468ce37d73632",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "agent-configuration/speed": {
       "slug": "agent-configuration/speed",
@@ -100,8 +100,8 @@
       "source_url": "https://learn.chatgpt.com/docs/annotations-extensibility",
       "source_md_url": "https://learn.chatgpt.com/docs/annotations-extensibility.md",
       "source_id": "llms:annotations-extensibility",
-      "hash": "af42436f0101f43bfc41a612676f4d7a7fd012e83674eb1b27dd1a85fdea6cd9",
-      "last_updated": "2026-10-08T12:19:54Z"
+      "hash": "72bd216af51ec353a3df5f1d35df68b1d2415f54b74043f8857602da77c2aa94",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "app": {
       "slug": "app",
@@ -120,8 +120,8 @@
       "source_url": "https://learn.chatgpt.com/docs/app-server",
       "source_md_url": "https://learn.chatgpt.com/docs/app-server.md",
       "source_id": "llms:app-server",
-      "hash": "bd44d745df1f76e0d4ff70588c8b4853c4b170d0fa23dfc22c39b9bc17ac08c2",
-      "last_updated": "2026-10-14T00:02:15Z"
+      "hash": "e079e0af8245bbcdf123a3f0de30a8848e210cbf62fa0ac85b48963be49370ac",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "appshots": {
       "slug": "appshots",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "7c475b34203391cfb9d33717709fdaf99c3ef0174e057badd7cf6ee65cbc98b0",
-      "last_updated": "2026-10-31T02:51:34Z"
+      "hash": "6e89cca970817f0933231eba36f28a65013ba5f65ad2d18cdc38794ce0b9befb",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -260,8 +260,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-sdk",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-sdk.md",
       "source_id": "llms:codex-sdk",
-      "hash": "c535fbecf1725460f9bf3c771f70e6dbd6ed62314a0d54fd1f7fc1a5d8bbee9a",
-      "last_updated": "2026-10-14T00:02:15Z"
+      "hash": "0fea82f30a2bde287710325891dfcbf30c2b9f8dabbfa0d5812fccc3fa4cddc1",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "codex/cli": {
       "slug": "codex/cli",
@@ -300,8 +300,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/config.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
       "source_id": "docs/config.md",
-      "hash": "1d834c6e40cf87ec8efdbf96b7415dc6938ba3cd780ac11c92da95d46cadd95e",
-      "last_updated": "2026-10-30T21:45:15Z"
+      "hash": "9e37def9c7ee4401e175c376e0426e70683b61e7e59d643db325282f633bb552",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "config-file/config-advanced": {
       "slug": "config-file/config-advanced",
@@ -310,8 +310,8 @@
       "source_url": "https://learn.chatgpt.com/docs/config-file/config-advanced",
       "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-advanced.md",
       "source_id": "llms:config-file/config-advanced",
-      "hash": "aefa7295cbe3e9d0e8c148eb697d292ad128defe1a32645a22622fd98040c742",
-      "last_updated": "2026-10-27T19:49:18Z"
+      "hash": "ed7c59d77858326b4fb1fac3cbff2487efdd48aaaaaf36fae621cb01679585b0",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "config-file/config-basic": {
       "slug": "config-file/config-basic",
@@ -430,8 +430,8 @@
       "source_url": "https://learn.chatgpt.com/docs/cyber-safety/recommended-configuration",
       "source_md_url": "https://learn.chatgpt.com/docs/cyber-safety/recommended-configuration.md",
       "source_id": "llms:cyber-safety/recommended-configuration",
-      "hash": "140e67b88a0b68c317d1e0111131babc591180b711d097153d30634e465894ca",
-      "last_updated": "2026-09-10T23:15:02Z"
+      "hash": "16758d71863552724649896336d561c5b08bbce0813afbe2c3969ceb7801dbb3",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "developer-commands": {
       "slug": "developer-commands",
@@ -990,8 +990,8 @@
       "source_url": "https://learn.chatgpt.com/docs/environments/git-worktrees",
       "source_md_url": "https://learn.chatgpt.com/docs/environments/git-worktrees.md",
       "source_id": "llms:environments/git-worktrees",
-      "hash": "03891e49d37a5961a941e3a63c40fa16ec7200c6fe3b89b846365c5a04e08716",
-      "last_updated": "2026-10-26T21:59:15Z"
+      "hash": "b8bb6e8b08c6c0cbc72969459c421f061ab9e122601b51f67652e3e32d525fbd",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "environments/local-environment": {
       "slug": "environments/local-environment",
@@ -1030,8 +1030,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/execpolicy.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/execpolicy.md",
       "source_id": "docs/execpolicy.md",
-      "hash": "24cd483823b3e6bd29bb992a64723f4f40fefaf633efac1b63dc83da2a76c1f0",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "cd095d573ae1bd781b62bc849ef1c68176f9bf8d3b4941142ae756e1e8d73730",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "extend/mcp": {
       "slug": "extend/mcp",
@@ -1610,8 +1610,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/plugin/code-changes",
       "source_md_url": "https://learn.chatgpt.com/docs/security/plugin/code-changes.md",
       "source_id": "llms:security/plugin/code-changes",
-      "hash": "623e08784af34016de5a74558b00157d1a5eb53f1dca589791b65a6cf1367d3e",
-      "last_updated": "2026-10-16T07:36:35Z"
+      "hash": "c09dc38e03cef9307d39bf5640e316c3c34ff51e493958b2700aa2d295ca53f5",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "security/plugin/deep-scans": {
       "slug": "security/plugin/deep-scans",
@@ -1700,8 +1700,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/sdk",
       "source_md_url": "https://learn.chatgpt.com/docs/security/sdk.md",
       "source_id": "llms:security/sdk",
-      "hash": "d68e4e2c85f8616ea8dfb295b0ba8aca0121e93f6205710e9b26a9b9286ededd",
-      "last_updated": "2026-10-30T21:45:15Z"
+      "hash": "bbb0cb23bdaa1a31284d3cbe346db8a2d449d388ba79b084858cc9d76470449d",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "security/security-review": {
       "slug": "security/security-review",
@@ -1950,8 +1950,8 @@
       "source_url": "https://learn.chatgpt.com/docs/webmcp",
       "source_md_url": "https://learn.chatgpt.com/docs/webmcp.md",
       "source_id": "llms:webmcp",
-      "hash": "42b37ce9e4e695d313fa8878cafcd155a4240b9345f8159bfe905cd851649e58",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "dfe8f3d2632b95333abd5453978b840b22fc456108a71e5f1a0cb834f0fcac18",
+      "last_updated": "2026-11-02T10:09:06Z"
     },
     "whats-new": {
       "slug": "whats-new",
@@ -2055,8 +2055,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-31T02:51:34Z",
-    "fetch_duration_seconds": 71.497,
+    "last_fetch_completed": "2026-11-02T10:09:06Z",
+    "fetch_duration_seconds": 71.487,
     "total_pages_discovered": 205,
     "pages_fetched_successfully": 205,
     "pages_failed": 0,

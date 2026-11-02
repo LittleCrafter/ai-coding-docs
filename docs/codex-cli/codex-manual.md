@@ -8403,22 +8403,26 @@ Scan processes can inherit your environment, so remove unrelated credentials
 before you start. See [Local scan
 permissions](./security/cli/reference.md#local-scan-permissions).
 
-Save this example as `scan.mjs`. Replace the paths, run a standard repository
-scan, and close the client when the work completes. Pass `outputDir` to choose a private
+Save this example as `scan.mjs`. Pass the paths to the repository and results directory as command-line arguments. Run a standard repository scan and close the client
+when the work completes. Pass `outputDir` to choose a private
 results directory outside the enclosing Git worktree.
 
 If you omit `outputDir`, Codex Security saves results in its own persistent
 state directory. Results can include source excerpts and vulnerability
 details. Set who can read them and how long to keep them.
 
-```ts
+```typescript
 import { CodexSecurity } from "@openai/codex-security";
 
+const [repository, outputDir] = process.argv.slice(2);
+if (!repository || !outputDir) {
+  throw new Error("Usage: node scan.mjs <repository> <results-directory>");
+}
 const security = new CodexSecurity();
 
 try {
-  const result = await security.run("/path/to/repository", {
-    outputDir: "/path/outside/repository/results",
+  const result = await security.run(repository, {
+    outputDir,
   });
 
   console.log(result.reportPath);
@@ -8432,7 +8436,7 @@ try {
 Run it with Node.js:
 
 ```bash
-node scan.mjs
+node scan.mjs /path/to/repository /path/outside/repository/results
 ```
 
 The example prints the report path, scan status, and finding count.
@@ -8451,13 +8455,18 @@ In later examples, reuse the open `security` client and keep `close()` in
 #### Check inputs with preflight
 
 Use `preflight` to check a repository, target, mode, knowledge-base documents,
-output location, and Codex configuration before starting a scan:
+output location, and Codex configuration before starting a scan. This example
+reads `security.md` from the repository root:
 
-```ts
-const plan = await security.preflight("/path/to/repository", {
+```typescript
+import { join } from "node:path";
+
+const knowledgeBase = join(repository, "security.md");
+
+const plan = await security.preflight(repository, {
   target: ["services/billing", "packages/auth"],
-  knowledgeBasePaths: ["/path/to/architecture.md"],
-  outputDir: "/path/outside/repository/results",
+  knowledgeBasePaths: [knowledgeBase],
+  outputDir: outputDir,
 });
 
 console.log(plan.repository);
@@ -8473,9 +8482,9 @@ that the scan can authenticate or start.
 To preview archival for an existing result directory, set
 `archiveExisting: true`:
 
-```ts
-const plan = await security.preflight("/path/to/repository", {
-  outputDir: "/path/outside/repository/results",
+```typescript
+const plan = await security.preflight(repository, {
+  outputDir: outputDir,
   archiveExisting: true,
 });
 
@@ -8486,9 +8495,9 @@ The returned `archiveDir` previews the archive naming. The final path can
 differ because `run` generates its own unique destination. Capture the actual
 archive path with `onOutputArchived`:
 
-```ts
-await security.run("/path/to/repository", {
-  outputDir: "/path/outside/repository/results",
+```typescript
+await security.run(repository, {
+  outputDir: outputDir,
   archiveExisting: true,
   onOutputArchived(archiveDir) {
     console.log("Archived results:", archiveDir);
@@ -8508,8 +8517,8 @@ The default target is the complete repository.
 
 Pass an array of paths inside the repository:
 
-```ts
-const result = await security.run("/path/to/repository", {
+```typescript
+const result = await security.run(repository, {
   target: ["services/billing", "packages/auth"],
 });
 ```
@@ -8522,15 +8531,15 @@ repository and removes duplicates.
 Use `DiffTarget.refs` to scan committed changes between two locally available
 Git revisions:
 
-```ts
+```typescript
 import { DiffTarget } from "@openai/codex-security";
 
 const target = DiffTarget.refs({
-  base: "origin/main",
+  base: "HEAD~1",
   head: "HEAD",
 });
 
-const result = await security.run("/path/to/repository", { target });
+const result = await security.run(repository, { target });
 ```
 
 The head defaults to `HEAD`. Pass the Git worktree root as the repository and
@@ -8541,9 +8550,10 @@ check out the requested head before scanning.
 Use `DiffTarget.workingTree` to scan staged and unstaged changes against a base
 revision:
 
-```ts
+```typescript
+import { DiffTarget } from "@openai/codex-security";
 const target = DiffTarget.workingTree({ base: "HEAD" });
-const result = await security.run("/path/to/repository", { target });
+const result = await security.run(repository, { target });
 ```
 
 The base defaults to `HEAD`. Fetch the selected revisions before starting a
@@ -8553,8 +8563,8 @@ diff or working-tree scan.
 
 Set `mode: "deep"` for a repository or path scan that needs broader review:
 
-```ts
-const result = await security.run("/path/to/repository", {
+```typescript
+const result = await security.run(repository, {
   target: ["services/billing"],
   mode: "deep",
   workers: 2,
@@ -8582,12 +8592,13 @@ validation and post-scan instructions run outside that allowance.
 Pass architecture documents, threat models, or security policies through
 `knowledgeBasePaths`:
 
-```ts
-const result = await security.run("/path/to/repository", {
-  knowledgeBasePaths: [
-    "/path/to/architecture.md",
-    "/path/to/security-policies",
-  ],
+```typescript
+import { join } from "node:path";
+
+const knowledgeBase = join(repository, "security.md");
+
+const result = await security.run(repository, {
+  knowledgeBasePaths: [knowledgeBase],
 });
 ```
 
@@ -8605,8 +8616,8 @@ change or are deleted. Canonical reports don't embed the document text.
 
 Use `scanPrompt` to focus the scan and `postScanPrompt` to request a follow-up:
 
-```ts
-const result = await security.run("/path/to/repository", {
+```typescript
+const result = await security.run(repository, {
   scanPrompt: "Focus on tenant isolation and authorization checks.",
   postScanPrompt: "Write confirmed findings to post-scan-summary.md.",
 });
@@ -8621,13 +8632,21 @@ is outside `maxCostUsd`.
 
 Pass `validationPrompt` to check candidate findings with your own test
 procedure. For example, point the prompt at a script you control outside the
-checkout and run it against your local test server:
+checkout and run it against your local test server. Pass the validation script
+and server URL after the repository and results directory arguments:
 
-```ts
-const result = await security.run("/path/to/repository", {
-  validationPrompt:
-    "Run /path/to/security-tests/validate.sh against http://localhost:3000 and report which findings reproduce.",
+```typescript
+const [validationScript, validationUrl] = process.argv.slice(4);
+if (!validationScript || !validationUrl)
+  throw new Error("Pass a validation script path and service URL.");
+const result = await security.run(repository, {
+  outputDir,
+  validationPrompt: `Run ${validationScript} against ${validationUrl} and report which findings reproduce.`,
 });
+```
+
+```bash
+node scan.mjs /path/to/repository /path/outside/repository/results /path/to/validate.sh http://localhost:3000
 ```
 
 Use `validationPrompt` with standard repository, path, committed-diff, or
@@ -8640,8 +8659,8 @@ reject custom validation.
 Set `maxCostUsd` to stop a scan when its estimated model cost exceeds a limit.
 Use `onCost` to track cost as the scan runs and report `estimatedUsdRange`:
 
-```ts
-const result = await security.run("/path/to/repository", {
+```typescript
+const result = await security.run(repository, {
   maxCostUsd: 5,
   onCost(cost) {
     console.log(cost.estimatedUsdRange);
@@ -8669,15 +8688,15 @@ Use `runComponentScans` to scan services or packages in parallel and combine
 their findings. Give each component a name and one or more repository-relative
 paths. Choose a new or empty output directory outside the enclosing Git worktree.
 
-```ts
+```typescript
 import { runComponentScans } from "@openai/codex-security";
 
 const result = await runComponentScans({
-  repository: "/path/to/project",
-  outputDir: "/path/outside/project/component-results",
+  repository: repository,
+  outputDir: outputDir,
   components: [
-    { name: "API", paths: ["apps/api", "packages/auth"] },
-    { name: "Web", paths: ["apps/web"] },
+    { name: "API", paths: ["services/api", "packages/auth"] },
+    { name: "Web", paths: ["services/billing"] },
   ],
   workers: 2,
   onProgress: ({ name, status }) => console.log(name, status),
@@ -8692,10 +8711,12 @@ To let Codex propose components, pass `auto: true` instead of `components`.
 Add `planOnly: true` to save the plan in `components.json` without running any
 scans:
 
-```ts
+```typescript
+import { runComponentScans } from "@openai/codex-security";
+
 const plan = await runComponentScans({
-  repository: "/path/to/project",
-  outputDir: "/path/outside/project/component-plan",
+  repository: repository,
+  outputDir: outputDir,
   auto: true,
   planOnly: true,
 });
@@ -8738,7 +8759,7 @@ the installed plugin version differs.
 
 Read the severity and first source location for each finding:
 
-```ts
+```typescript
 for (const finding of result.findings.findings) {
   const location = finding.locations[0];
   if (location === undefined) continue;
@@ -8757,7 +8778,7 @@ Findings can include optional `codeEvidence`, `rootCause`, `validation`,
 For repository-wide findings, `confirmedInLatestScan` distinguishes findings
 seen in the latest scan from earlier findings that remain open:
 
-```ts
+```typescript
 for (const finding of result.repositoryFindings ?? []) {
   console.log(finding.title, finding.confirmedInLatestScan);
 }
@@ -8775,14 +8796,21 @@ Use the path returned by the export instead of assuming a filename.
 #### Export saved artifacts
 
 Export saved results without starting Codex, loading credentials, or making a
-model call. This example exports a saved threat model to stdout. Replace
-`/path/to/scan` with a saved result directory:
+model call. This example exports a saved threat model to stdout. Pass an existing
+scan results directory as the first command-line argument:
 
-```ts
+```typescript
 import { exportArtifact } from "@openai/codex-security";
 
+const directory = process.argv[2];
+if (!directory) {
+  throw new Error(
+    "Pass an existing scan results directory as the first argument."
+  );
+}
+
 await exportArtifact({
-  source: { directory: "/path/to/scan" },
+  source: { directory },
   artifact: "threat-model",
   output: "-",
 });
@@ -8805,12 +8833,12 @@ Use `validate` to check a finding from another tool or workflow against the
 source. It doesn't start a new scan, run the application, or execute its tests.
 Run a separate reproduction if you need runtime evidence.
 
-```ts
+```typescript
 const validation = await security.validate({
-  repositoryPath: "/path/to/repository",
+  repositoryPath: repository,
   finding: {
     title: "Possible SQL injection",
-    location: "src/query.ts:42",
+    location: "src/index.js:1",
   },
 });
 
@@ -8830,9 +8858,9 @@ Save that string if you need a report file.
 Pass `ScanOptions` callbacks to report scan startup, worker progress, and
 connection retries:
 
-```ts
-const result = await security.run("/path/to/repository", {
-  outputDir: "/path/outside/repository/results",
+```typescript
+const result = await security.run(repository, {
+  outputDir: outputDir,
   onScanStarted() {
     console.log("Scan started");
   },
@@ -8860,12 +8888,12 @@ Pass an `AbortSignal` from your request or job controller to cancel a scan.
 If the scan is still running after 30 minutes, this example interrupts it and
 prints the directory containing any saved output:
 
-```ts
+```typescript
 import { ScanInterruptedError } from "@openai/codex-security";
 
 try {
-  await security.run("/path/to/repository", {
-    outputDir: "/path/outside/repository/results",
+  await security.run(repository, {
+    outputDir: outputDir,
     signal: AbortSignal.timeout(30 * 60 * 1000),
   });
 } catch (error) {
@@ -8913,8 +8941,8 @@ Codex setting. Choose a [model](./models.md) available to your account:
 
 ```typescript
 const security = new CodexSecurity({
-  pluginPath: "/path/to/codex-security-plugin",
-  pythonPath: "/path/to/python",
+  // To override the bundled plugin, add pluginPath: "/path/to/plugin".
+  pythonPath: "python3",
   codexOverrides: {
     model: "gpt-6.1-sol",
     model_reasoning_effort: "medium",
@@ -8922,7 +8950,8 @@ const security = new CodexSecurity({
 });
 ```
 
-`pluginPath` accepts a plugin directory or ZIP. `pythonPath` selects the
+Set `pluginPath` to a plugin directory or ZIP to override the bundled plugin.
+`pythonPath` selects the
 plugin interpreter. `codexOverrides` merges supported values into the isolated
 Codex configuration. To use [Amazon
 Bedrock](./security/cli/reference.md#use-amazon-bedrock), set
@@ -8937,7 +8966,7 @@ For OpenRouter or Fireworks, also provide the matching API key and a complete
 provider configuration in `codexOverrides`. Set `OPENROUTER_API_KEY`
 and pass an available OpenRouter model ID to this TypeScript function:
 
-```ts
+```typescript
 function createOpenRouterClient(model: string) {
   return new CodexSecurity({
     codexOverrides: {
@@ -8979,8 +9008,8 @@ for CI and server-side automation.
 When both an API key and a stored sign-in are available, the SDK uses the API
 key by default. To use your ChatGPT sign-in instead, select it for the scan:
 
-```ts
-const result = await security.run("/path/to/repository", {
+```typescript
+const result = await security.run(repository, {
   auth: "chatgpt",
 });
 ```
@@ -9545,7 +9574,7 @@ steps:
 For Azure Repos, configure a **Build validation** branch policy to run the
 pipeline on pull requests.
 
-```groovy
+```groovy snippet=configuration reason="Jenkins pipeline configuration for the documented CI integration"
 pipeline {
   agent { label 'linux' }
   stages {
@@ -12931,7 +12960,7 @@ For automatic review to run, keep all three controls in place:
 
 Requests to a target on the network allowlist stay inside the network boundary and don't automatically trigger Auto-review. To review a sensitive command even when its destination is on the allowlist, create an explicit [command rule](./agent-configuration/rules.md) under `~/.codex/rules/`:
 
-```python
+```python snippet=configuration reason="Starlark policy configuration interpreted by Codex"
 prefix_rule(
     pattern = ["curl"],
     decision = "prompt",
@@ -14810,22 +14839,37 @@ Example `notify.py` (truncated) that reacts to `agent-turn-complete`:
 
 ```python
 #!/usr/bin/env python3
-import json, subprocess, sys
+import argparse
+import json
+import subprocess
+import sys
+
 
 def main() -> int:
-    notification = json.loads(sys.argv[1])
+    parser = argparse.ArgumentParser(
+        description="Show a Codex turn-completion notification on macOS."
+    )
+    parser.add_argument("notification", type=json.loads, help="Codex notification JSON")
+    notification = parser.parse_args().notification
     if notification.get("type") != "agent-turn-complete":
         return 0
     title = f"Codex: {notification.get('last-assistant-message', 'Turn Complete!')}"
     message = " ".join(notification.get("input-messages", []))
-    subprocess.check_output([
-        "terminal-notifier",
-        "-title", title,
-        "-message", message,
-        "-group", "codex-" + notification.get("thread-id", ""),
-        "-activate", "com.googlecode.iterm2",
-    ])
+    subprocess.check_output(
+        [
+            "terminal-notifier",
+            "-title",
+            title,
+            "-message",
+            message,
+            "-group",
+            "codex-" + notification.get("thread-id", ""),
+            "-activate",
+            "com.googlecode.iterm2",
+        ]
+    )
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
@@ -16704,7 +16748,7 @@ prefer_mxc = true
 
 # url = "https://github-mcp.example.com/mcp" # required
 
-# bearer_token_env_var = "GITHUB_TOKEN" # optional; Authorization: Bearer
+# bearer_token_env_var = "GITHUB_TOKEN" # optional; Authorization: Bearer <token>
 
 # http_headers = { "X-Example" = "value" } # optional static headers
 
@@ -16726,7 +16770,7 @@ prefer_mxc = true
 
 # client_id = "my-pre-registered-client" # OAuth client registered with the provider
 
-# client_secret = "" # optional confidential client secret; stored in config
+# client_secret = "<client-secret>" # optional confidential client secret; stored in config
 
 # callback_url = "http://127.0.0.1/callback" # saved registered callback for this client
 
@@ -16758,7 +16802,7 @@ prefer_mxc = true
 
 # model_provider = "amazon-bedrock"
 
-# model = ""
+# model = "<bedrock-model-id>"
 
 # [model_providers.amazon-bedrock.aws]
 
@@ -22044,7 +22088,7 @@ Codex skips source symlinks and won't overwrite files that already exist in the 
 
 Suppose Codex finishes some work on a worktree and you choose to create a `feature/a` branch on it using **Create branch here**. Now, you want to try it on your local checkout. If you tried to check out the branch, you would get the following error:
 
-```
+```text
 fatal: 'feature/a' is already used by worktree at '<WORKTREE_PATH>'
 ```
 
@@ -24164,15 +24208,15 @@ Examples include:
 
 Feature-detect each extension and provide a fallback when practical:
 
-```js
+```typescript
 const openai = typeof window !== "undefined" ? window.openai : undefined;
 
 if (openai?.requestModal) {
   await openai.requestModal({
-    /* ... */
+    template: "ui://widget/details.html",
   });
 } else {
-  // Fallback behavior for hosts without this extension.
+  document.body.textContent = "This host does not support modals.";
 }
 ```
 
@@ -24286,9 +24330,11 @@ Best practices:
 
 Example (decoupled dice tools):
 
-```ts
+```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod/v3";
+import { build } from "esbuild";
+import { fileURLToPath } from "node:url";
 
 const TEMPLATE_URI = "ui://widget/dice.html";
 
@@ -24297,75 +24343,19 @@ const server = new McpServer(
   { capabilities: { tools: {} } }
 );
 
-// The widget only renders the latest tool result.
-// Re-roll calls the data tool directly to avoid remounting the widget.
-const widgetHtml = `
-  <div style="font-family: system-ui; padding: 8px;">
-    <div style="font-size: 20px; margin-bottom: 6px;">
-      Result: <span id="out">—</span>
-    </div>
-    <button id="reroll">Re-roll</button>
-  </div>
-
-  <script>
-    const outputEl = document.getElementById("out");
-    const rerollButton = document.getElementById("reroll");
-    const pendingRequests = new Map();
-    let nextRequestId = 1;
-    let latestToolInput;
-    let latestToolOutput;
-
-    function render(result) {
-      outputEl.textContent = String(result?.value ?? "—");
-    }
-
-    function request(method, params) {
-      const id = nextRequestId++;
-      window.parent.postMessage({ jsonrpc: "2.0", id, method, params }, "*");
-      return new Promise((resolve, reject) => {
-        pendingRequests.set(id, { resolve, reject });
-      });
-    }
-
-    window.addEventListener(
-      "message",
-      (event) => {
-        if (event.source !== window.parent) return;
-        const message = event.data;
-        if (!message || message.jsonrpc !== "2.0") return;
-
-        if (message.id !== undefined && pendingRequests.has(message.id)) {
-          const pending = pendingRequests.get(message.id);
-          pendingRequests.delete(message.id);
-          if (message.error) pending.reject(message.error);
-          else pending.resolve(message.result);
-          return;
-        }
-
-        if (message.method === "ui/notifications/tool-input") {
-          latestToolInput = message.params;
-        }
-
-        if (message.method === "ui/notifications/tool-result") {
-          latestToolOutput = message.params?.structuredContent;
-          render(latestToolOutput);
-        }
-      },
-      { passive: true }
-    );
-
-    rerollButton.onclick = async () => {
-      const sides = latestToolOutput?.sides ?? latestToolInput?.sides ?? 6;
-      const next = await request("tools/call", {
-        name: "roll_dice",
-        arguments: { sides },
-      });
-      if (next?.structuredContent) {
-        render(next.structuredContent);
-      }
-    };
-  </script>
-`.trim();
+// Bundle the same browser source that is type-checked and tested directly.
+const widgetBundle = await build({
+  entryPoints: [fileURLToPath(new URL("./dice-widget.ts", import.meta.url))],
+  bundle: true,
+  format: "esm",
+  platform: "browser",
+  write: false,
+});
+const widgetScript = widgetBundle.outputFiles[0].text.replace(
+  /<\/script/gi,
+  "<\\/script"
+);
+const widgetHtml = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Dice widget</title><body><script type="module">${widgetScript}</script></body></html>`;
 
 server.registerResource("dice-widget", TEMPLATE_URI, {}, async () => ({
   contents: [
@@ -24438,6 +24428,63 @@ server.registerTool(
 export default server;
 ```
 
+Install `esbuild` with the server dependencies, then save this browser code as
+`dice-widget.ts` beside the server file:
+
+```typescript
+import { App } from "@modelcontextprotocol/ext-apps";
+
+const container = document.createElement("div");
+container.style.cssText = "font-family: system-ui; padding: 8px;";
+const resultLine = document.createElement("div");
+resultLine.style.cssText = "font-size: 20px; margin-bottom: 6px;";
+const output = document.createElement("span");
+output.id = "out";
+output.textContent = "—";
+resultLine.append("Result: ", output);
+const rerollButton = document.createElement("button");
+rerollButton.id = "reroll";
+rerollButton.textContent = "Re-roll";
+rerollButton.disabled = true;
+container.append(resultLine, rerollButton);
+document.body.append(container);
+
+const app = new App({ name: "Dice widget", version: "1.0.0" });
+let latestInput: Record<string, unknown> = {};
+let latestOutput: Record<string, unknown> = {};
+
+function render(result: Record<string, unknown>) {
+  latestOutput = result;
+  output.textContent = String(result.value ?? "—");
+}
+
+app.ontoolinput = ({ arguments: input }) => {
+  latestInput = input ?? {};
+};
+app.ontoolresult = (result) => {
+  render(result.structuredContent ?? {});
+};
+
+// Call the data tool without remounting the widget.
+rerollButton.onclick = async () => {
+  const candidate = latestOutput.sides ?? latestInput.sides;
+  const sides =
+    typeof candidate === "number" &&
+    Number.isInteger(candidate) &&
+    candidate >= 2
+      ? candidate
+      : 6;
+  const next = await app.callServerTool({
+    name: "roll_dice",
+    arguments: { sides },
+  });
+  if (next.structuredContent) render(next.structuredContent);
+};
+
+await app.connect();
+rerollButton.disabled = false;
+```
+
 #### Manage state
 
 UI from an MCP server works with three kinds of state:
@@ -24501,12 +24548,16 @@ there is nothing to `await`.
 ```tsx
 import { useState } from "react";
 
-export function TaskList({ tasks }) {
+export function TaskList({
+  tasks,
+}: {
+  tasks: { id: string; title: string }[];
+}) {
   const [state, setState] = useState(
     window.openai?.widgetState ?? { selectedId: null }
   );
 
-  function selectTask(selectedId) {
+  function selectTask(selectedId: string) {
     const nextState = { ...state, selectedId };
     setState(nextState);
     window.openai?.setWidgetState?.(nextState);
@@ -24542,13 +24593,15 @@ For UI that works with images, use the structured widget-state shape:
 - `imageIds`: File IDs the model should receive on later turns.
 
 ```tsx
+const selectedFiles = await window.openai.selectFiles();
+
 window.openai.setWidgetState({
   modelContent: "Review the currently selected images.",
   privateContent: {
     currentView: "image-viewer",
     filters: ["crop", "sharpen"],
   },
-  imageIds: ["file_123", "file_456"],
+  imageIds: selectedFiles.map((file) => file.fileId),
 });
 ```
 
@@ -24581,7 +24634,7 @@ it’s time to scaffold your component project.
 
 As best practice, keep the component code separate from your server logic. A common layout is:
 
-```
+```text
 plugin-ui/
   server/            # MCP server (Python or Node)
   web/               # Component bundle source
@@ -24596,7 +24649,7 @@ Create the project and install dependencies (Node 18+ recommended):
 ```bash
 cd plugin-ui/web
 npm init -y
-npm install react@^18 react-dom@^18
+npm install react@^19 react-dom@^19
 npm install -D typescript esbuild
 ```
 
@@ -24632,6 +24685,8 @@ Each example shows how to bundle assets, wire host APIs, and structure state for
 A small helper to subscribe to `ui/notifications/tool-result`:
 
 ```tsx
+import { useEffect, useState } from "react";
+
 type ToolResult = { structuredContent?: unknown } | null;
 
 export function useToolResult() {
@@ -24659,17 +24714,15 @@ Render from `toolResult?.structuredContent`, and treat it as untrusted input.
 #### Widget localization
 
 The host mirrors the locale to `document.documentElement.lang`. Use that locale
-to load translations and format dates/numbers. A common pattern with
-`react-intl`:
+to load translations and format dates/numbers. Run `npm install react-intl`
+in the `web/` directory before using this example:
 
 ```tsx
-import { IntlProvider } from "react-intl";
-import en from "./locales/en-US.json";
-import es from "./locales/es-ES.json";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 const messages: Record<string, Record<string, string>> = {
-  "en-US": en,
-  "es-ES": es,
+  "en-US": { greeting: "Hello" },
+  "es-ES": { greeting: "Hola" },
 };
 
 export function PluginUI() {
@@ -24679,7 +24732,7 @@ export function PluginUI() {
       locale={locale}
       messages={messages[locale] ?? messages["en-US"]}
     >
-      {/* Render UI with <FormattedMessage> or useIntl() */}
+      <FormattedMessage id="greeting" defaultMessage="Hello" />
     </IntlProvider>
   );
 }
@@ -24693,7 +24746,7 @@ Once you finish writing your React component, you can build it into a single Jav
 // package.json
 {
   "scripts": {
-    "build": "esbuild src/component.tsx --bundle --format=esm --outfile=dist/component.js"
+    "build": "esbuild src/component.tsx --bundle --format=esm --jsx=automatic --outfile=dist/component.js"
   }
 }
 ```
@@ -24707,7 +24760,7 @@ Expose the component as an MCP resource with the MCP Apps UI MIME type
 `@modelcontextprotocol/ext-apps/server`, prefer `RESOURCE_MIME_TYPE` instead of
 embedding the string:
 
-```ts
+```typescript
 import {
   registerAppResource,
   RESOURCE_MIME_TYPE,
@@ -25038,8 +25091,12 @@ Run the script after both elements exist:
 ```
 
 ```javascript
-const summary = document.getElementById("delivery-summary");
-const button = document.getElementById("discuss-delivery");
+const summary = /** @type {HTMLElement} */ (
+  document.getElementById("delivery-summary")
+);
+const button = /** @type {HTMLButtonElement} */ (
+  document.getElementById("discuss-delivery")
+);
 
 button.hidden = typeof document.oai?.annotation?.request !== "function";
 
@@ -25103,8 +25160,12 @@ an `oai-annotation-container-text` attribute:
 Run this script after both elements exist:
 
 ```javascript
-const passage = document.getElementById("draft-passage");
-const button = document.getElementById("discuss-passage");
+const passage = /** @type {HTMLElement} */ (
+  document.getElementById("draft-passage")
+);
+const button = /** @type {HTMLButtonElement} */ (
+  document.getElementById("discuss-passage")
+);
 
 button.hidden = typeof document.oai?.annotation?.request !== "function";
 
@@ -25192,9 +25253,12 @@ the cards directly; selection attributes aren't required:
 Run this script after creating the preview:
 
 ```javascript
-const preview = document.getElementById("component-preview");
+const preview = /** @type {HTMLElement} */ (
+  document.getElementById("component-preview")
+);
 const annotation = document.oai?.annotation;
 
+/** @param {CustomEvent<{ callback: string; value: number | string }>} event */
 function previewSpacing(event) {
   const { callback, value } = event.detail;
   if (callback === "setCardPadding") {
@@ -25202,6 +25266,7 @@ function previewSpacing(event) {
   }
 }
 
+/** @type {{ dispose(): void } | undefined} */
 let registration;
 if (typeof annotation?.registerControls === "function") {
   preview.addEventListener("oaiannotationcontrolchange", previewSpacing);
@@ -25258,7 +25323,9 @@ selection attributes or metadata. Run the script after the paragraph exists:
 ```
 
 ```javascript
-const draft = document.getElementById("email-draft");
+const draft = /** @type {HTMLElement} */ (
+  document.getElementById("email-draft")
+);
 const registration = document.oai?.annotation?.registerControls?.({
   targets: draft,
   controlsHeading: "Email options",
@@ -25441,8 +25508,12 @@ and a stable object ID. Put the script after the canvas:
 ```
 
 ```javascript
-const canvas = document.getElementById("revenue-canvas");
-const context = canvas.getContext("2d");
+const canvas = /** @type {HTMLCanvasElement} */ (
+  document.getElementById("revenue-canvas")
+);
+const context = /** @type {CanvasRenderingContext2D} */ (
+  canvas.getContext("2d")
+);
 const bar = { x: 40, y: 60, width: 320, height: 100 };
 
 context.fillStyle = "#2563eb";
@@ -25535,6 +25606,7 @@ For the canvas above, define this function and add
 `renderSelection: renderRevenueSelection` to the `registerSurface()` options:
 
 ```javascript
+/** @param {{ hoveredId: string | null; selectedId: string | null }} selection */
 function renderRevenueSelection({ hoveredId, selectedId }) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "#2563eb";
@@ -25585,17 +25657,21 @@ then run the script after it exists:
 ```
 
 ```javascript
-const button = document.getElementById("toggle-annotations");
+const button = /** @type {HTMLButtonElement} */ (
+  document.getElementById("toggle-annotations")
+);
 const annotation = document.oai?.annotation;
 
+/** @param {boolean} active */
 function renderMode(active) {
   button.textContent = active
     ? "Exit annotation mode"
     : "Enter annotation mode";
 }
 
+/** @param {CustomEvent<{ active: boolean }>} event */
 const onModeChange = (event) => renderMode(event.detail.active);
-const onClick = () => annotation.toggle(!annotation.isActive());
+const onClick = () => annotation?.toggle(!annotation.isActive());
 
 if (
   typeof annotation?.toggle === "function" &&
@@ -26236,62 +26312,68 @@ Triggering the tool-level OAuth flow requires both metadata (`securitySchemes` a
 
    Example (public + optional auth)—TypeScript SDK
 
-   ```ts
+   ```typescript
    import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
    import { z } from "zod";
-
-   declare const server: McpServer;
-
-   server.registerTool(
-     "search",
-     {
-       title: "Public Search",
-       description: "Search public documents.",
-       inputSchema: {
-         q: z.string(),
-       },
-       outputSchema: {},
-       securitySchemes: [
-         { type: "noauth" },
-         { type: "oauth2", scopes: ["search.read"] },
-       ],
-     },
-     async ({ q }) => {
-       return {
-         content: [{ type: "text", text: `Results for ${q}` }],
-         structuredContent: {},
-       };
-     }
-   );
    ```
+
+const server = new McpServer({ name: "auth-example", version: "1.0.0" });
+
+server.registerTool(
+"search",
+{
+title: "Public Search",
+description: "Search public documents.",
+inputSchema: {
+q: z.string(),
+},
+outputSchema: {},
+\_meta: {
+securitySchemes: [
+{ type: "noauth" },
+{ type: "oauth2", scopes: ["search.read"] },
+],
+},
+},
+async ({ q }) => {
+return {
+content: [{ type: "text", text: `Results for ${q}` }],
+structuredContent: {},
+};
+}
+);
+
+````
 
    Example (auth required)—TypeScript SDK
 
-   ```ts
-   import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-   import { z } from "zod";
+   ```typescript
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
 
-   declare const server: McpServer;
+const server = new McpServer({ name: "auth-example", version: "1.0.0" });
 
-   server.registerTool(
-     "create_doc",
-     {
-       title: "Create Document",
-       description: "Make a new doc in your account.",
-       inputSchema: {
-         title: z.string(),
-       },
-       outputSchema: {},
-       securitySchemes: [{ type: "oauth2", scopes: ["docs.write"] }],
-     },
-     async ({ title }) => {
-       return {
-         content: [{ type: "text", text: `Created doc: ${title}` }],
-         structuredContent: {},
-       };
-     }
-   );
-   ```
+server.registerTool(
+  "create_doc",
+  {
+    title: "Create Document",
+    description: "Make a new doc in your account.",
+    inputSchema: {
+      title: z.string(),
+    },
+    outputSchema: {},
+    _meta: {
+      securitySchemes: [{ type: "oauth2", scopes: ["docs.write"] }],
+    },
+  },
+  async ({ title }) => {
+    return {
+      content: [{ type: "text", text: `Created doc: ${title}` }],
+      structuredContent: {},
+    };
+  }
+);
+````
 
 3. **Check tokens inside the tool handler and emit `_meta["mcp/www_authenticate"]`** when you want ChatGPT to trigger the authentication UI. Inspect the token and verify issuer, audience, expiry, and scopes. If no valid token is present, return an error result that includes `_meta["mcp/www_authenticate"]` and make sure the value contains both an `error` and `error_description` parameter. This `WWW-Authenticate` payload is what actually triggers the tool-level OAuth UI once steps 1 and 2 are in place. When a challenge prompts reauthorization, your provider can [preserve the user's existing login context](#preserve-login-context-during-reauthorization) during that flow.
 
@@ -26469,7 +26551,7 @@ pip install mcp
 
 Create an MCP server with a stable name and version:
 
-```ts
+```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 const server = new McpServer({
@@ -26488,7 +26570,7 @@ required tool sequences or shared rate limits. Keep the most important details
 in the first 512 characters. Do not repeat every tool description or try to
 change the model's personality.
 
-```ts
+```typescript
 const server = new McpServer(
   { name: "acme-projects", version: "1.0.0" },
   {
@@ -26517,7 +26599,16 @@ The model uses this metadata to decide whether and how to call the tool. Treat
 names, descriptions, schemas, and annotations as part of the plugin's
 user-facing behavior.
 
-```ts
+```typescript
+// Local example data; replace this with your application data.
+const projects = [
+  { id: "project-1", name: "Website", status: "active" },
+  { id: "project-2", name: "Launch", status: "archived" },
+];
+async function listProjects({ status }: { status?: string }) {
+  return projects.filter((project) => !status || project.status === status);
+}
+
 import { z } from "zod";
 
 server.registerTool(
@@ -28082,7 +28173,7 @@ url = "https://developers.openai.com/mcp"
 
     To have Codex reliably use the MCP server, add this snippet to your `AGENTS.md`:
 
-```
+```text
 Always use the OpenAI developer documentation MCP server if you need to work with the OpenAI API, plugins, ChatGPT, Codex,… without me having to explicitly ask.
 ```
 
@@ -28107,7 +28198,7 @@ Always use the OpenAI developer documentation MCP server if you need to work wit
 
     To have VS Code reliably use the MCP server, add this snippet to your `AGENTS.md`:
 
-```
+```text
 Always use the OpenAI developer documentation MCP server if you need to work with the OpenAI API, plugins, ChatGPT, Codex,… without me having to explicitly ask.
 ```
 
@@ -28135,7 +28226,7 @@ Always use the OpenAI developer documentation MCP server if you need to work wit
 
     To have Cursor reliably use the MCP server, add this snippet to your `AGENTS.md`:
 
-```
+```text
 Always use the OpenAI developer documentation MCP server if you need to work with the OpenAI API, plugins, ChatGPT, Codex,… without me having to explicitly ask.
 ```
 
@@ -29566,6 +29657,35 @@ npm install standardwebhooks
 
 Pass a `webhookFetch` function with the same interface as `fetch` that validates callback addresses on each connection and blocks redirects.
 
+```javascript
+import { Webhook } from "standardwebhooks";
+
+export async function sendEvent(subscription, event, webhookFetch) {
+  const body = JSON.stringify(event);
+  if (Buffer.byteLength(body, "utf8") > 256 * 1024) {
+    throw new Error("Event payload exceeds 256 KiB");
+  }
+
+  const signedAt = new Date();
+  const signer = new Webhook(subscription.secret);
+  const response = await webhookFetch(subscription.url, {
+    method: "POST",
+    redirect: "error",
+    signal: AbortSignal.timeout(10_000),
+    headers: {
+      "Content-Type": "application/json",
+      "webhook-id": event.eventId,
+      "webhook-timestamp": String(Math.floor(signedAt.getTime() / 1000)),
+      "webhook-signature": signer.sign(event.eventId, signedAt, body),
+      "X-MCP-Subscription-Id": subscription.id,
+    },
+    body,
+  });
+
+  return { accepted: response.ok, status: response.status };
+}
+```
+
 Set `subscription.url` and `subscription.secret` from the subscription request’s `delivery` object.
 
 #### Handle delivery responses
@@ -29740,7 +29860,7 @@ This file will contain the web component that will be rendered in the ChatGPT in
 Add the following content:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -30072,7 +30192,7 @@ Register a resource for your component bundle and the tools the model can call (
 
 Create a file named `server.js` and paste the following example that uses the Node SDK:
 
-```js
+```javascript
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 import {
@@ -32576,7 +32696,7 @@ to receive that input and read the resource with the app SDK.
 
 Extend standard MCP forms with richer components native to ChatGPT.
 
-```ts
+```typescript
 import type {
   OpenAIForm,
   OpenAIFormOption,
@@ -33591,14 +33711,25 @@ so views remain testable. This example helper listens for host
 `openai:set_globals` events and lets React components subscribe to a single
 global value:
 
-```ts
+```typescript
+import { useSyncExternalStore } from "react";
+
+type WebplusGlobals = {
+  widgetState: { selectedId?: string | null; [key: string]: unknown } | null;
+  toolInput: Record<string, unknown>;
+  toolOutput: Record<string, unknown> | null;
+  theme: "light" | "dark";
+};
+const SET_GLOBALS_EVENT_TYPE = "openai:set_globals";
+
 export function useOpenAiGlobal<K extends keyof WebplusGlobals>(
   key: K
 ): WebplusGlobals[K] {
   return useSyncExternalStore(
     (onChange) => {
-      const handleSetGlobal = (event: SetGlobalsEvent) => {
-        const value = event.detail.globals[key];
+      const handleSetGlobal = (event: Event) => {
+        if (!(event instanceof CustomEvent)) return;
+        const value = event.detail?.globals?.[key];
         if (value === undefined) {
           return;
         }
@@ -33614,7 +33745,11 @@ export function useOpenAiGlobal<K extends keyof WebplusGlobals>(
         window.removeEventListener(SET_GLOBALS_EVENT_TYPE, handleSetGlobal);
       };
     },
-    () => window.openai[key]
+    () => {
+      const globals = (window as Window & { openai?: WebplusGlobals }).openai;
+      if (!globals) throw new Error("This hook requires a ChatGPT app host.");
+      return globals[key];
+    }
   );
 }
 ```
@@ -33641,7 +33776,7 @@ URI of another UI template registered by the same MCP server, or omit
 
 ```tsx
 await window.openai.requestModal({
-  template: "ui://widget/checkout.html",
+  template: "ui://widget/details.html",
 });
 ```
 
@@ -33779,6 +33914,23 @@ navigation controls in sync with your UI.
 Router setup with React Router's `BrowserRouter`:
 
 ```tsx
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
+function PizzaListPlugin() {
+  const { placeId } = useParams();
+  return (
+    <main>
+      <Link to="/place/pizzeria">Example Pizzeria</Link>
+      <p>{placeId ?? "Choose a place"}</p>
+    </main>
+  );
+}
+
 export default function PizzaListRouter() {
   return (
     <BrowserRouter>
@@ -33794,15 +33946,30 @@ export default function PizzaListRouter() {
 
 Programmatic navigation:
 
-```ts
-const navigate = useNavigate();
+```typescript
+import { createElement } from "react";
+import { BrowserRouter, useNavigate } from "react-router-dom";
+function NavigationExample() {
+  const navigate = useNavigate();
 
-function openDetails(placeId: string) {
-  navigate(`place/${placeId}`, { replace: false });
-}
+  function openDetails(placeId: string) {
+    navigate(`place/${placeId}`, { replace: false });
+  }
 
-function closeDetails() {
-  navigate("..", { replace: true });
+  function closeDetails() {
+    navigate("..", { replace: true });
+  }
+
+  return createElement(
+    "div",
+    null,
+    createElement(
+      "button",
+      { onClick: () => openDetails("pizzeria") },
+      "Open details"
+    ),
+    createElement("button", { onClick: closeDetails }, "Close details")
+  );
 }
 ```
 
@@ -33835,7 +34002,24 @@ OpenAI-specific metadata for compatibility and optional extensions.
 
 Example:
 
-```ts
+```typescript
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+const server = new McpServer({ name: "docs-example", version: "1.0.0" });
+
+// Local example data; replace this with your application data.
+async function performSearch(query: string) {
+  const documents = [
+    {
+      id: "intro",
+      title: "Introduction to Acme",
+      url: "https://example.com/intro",
+    },
+  ];
+  return documents.filter((document) =>
+    document.title.toLowerCase().includes(query.toLowerCase())
+  );
+}
+
 import { registerAppTool } from "@modelcontextprotocol/ext-apps/server";
 import { z } from "zod";
 
@@ -33855,10 +34039,6 @@ registerAppTool(
         })
       ),
     },
-    securitySchemes: [
-      { type: "noauth" },
-      { type: "oauth2", scopes: ["search.read"] },
-    ],
     _meta: {
       securitySchemes: [
         { type: "noauth" },
@@ -33901,7 +34081,15 @@ user; servers must still enforce their own authorization logic.
 
 Example:
 
-```ts
+```typescript
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+const server = new McpServer({ name: "docs-example", version: "1.0.0" });
+
+// Local example data; replace this with your application data.
+async function fetchSavedRecipes() {
+  return [{ id: "pasta", title: "Tomato pasta" }];
+}
+
 import { z } from "zod";
 
 server.registerTool(
@@ -33921,6 +34109,7 @@ server.registerTool(
     annotations: { readOnlyHint: true },
   },
   async () => ({
+    content: [],
     structuredContent: { recipes: await fetchSavedRecipes() },
   })
 );
@@ -34003,7 +34192,19 @@ Host-provided tool result metadata:
 
 Example:
 
-```ts
+```typescript
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+const server = new McpServer({ name: "docs-example", version: "1.0.0" });
+
+// Local example data; replace this with your application data.
+function generateZooAnimals(count: number) {
+  return Array.from({ length: count }, (_, index) => ({
+    id: `animal-${index + 1}`,
+    name: `Penguin ${index + 1}`,
+    species: "Penguin",
+  }));
+}
+
 import { registerAppTool } from "@modelcontextprotocol/ext-apps/server";
 import { z } from "zod";
 
@@ -34063,7 +34264,22 @@ Operation-phase `_meta["openai/userAgent"]` and `_meta["openai/userLocation"]` a
 
 Example:
 
-```ts
+```typescript
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+const server = new McpServer({ name: "docs-example", version: "1.0.0" });
+
+// Local example data; replace this with your application data.
+async function findNearbyCafes(city: unknown) {
+  return city === "San Francisco"
+    ? [{ name: "Example Cafe", address: "123 Example Street, San Francisco" }]
+    : [];
+}
+
+function formatIntro(locale: unknown, city: unknown) {
+  const location = typeof city === "string" ? city : "your area";
+  return locale === "es" ? `Cafés en ${location}` : `Cafes in ${location}`;
+}
+
 import { z } from "zod";
 
 server.registerTool(
@@ -34082,7 +34298,13 @@ server.registerTool(
   },
   async (_args, { _meta }) => {
     const locale = _meta?.["openai/locale"] ?? "en";
-    const location = _meta?.["openai/userLocation"]?.city;
+    const userLocation = _meta?.["openai/userLocation"];
+    const location =
+      typeof userLocation === "object" &&
+      userLocation !== null &&
+      "city" in userLocation
+        ? userLocation.city
+        : undefined;
     const cafes = await findNearbyCafes(location);
 
     return {
@@ -34821,7 +35043,7 @@ These local `.rules` instructions apply to Codex; don't assume Local computer ac
 1. Create a `.rules` file under a `rules/` folder next to an active config layer (for example, `~/.codex/rules/default.rules`).
 2. Add a rule. This example prompts before allowing `gh pr view` to run outside the sandbox.
 
-   ```python
+   ```python snippet=configuration reason="Starlark policy configuration interpreted by Codex"
    # Prompt before running commands with the prefix `gh pr view` outside the sandbox.
    prefix_rule(
        # The prefix to match.
@@ -35079,7 +35301,7 @@ You can also write the code yourself. In your page's JavaScript module, check
 for browser support and register a tool. This read-only example returns the
 current page's title:
 
-```javascript
+```typescript
 if (typeof document.modelContext?.registerTool === "function") {
   await document.modelContext.registerTool({
     name: "get_page_title",
@@ -37169,7 +37391,7 @@ Example (Node.js / TypeScript):
 
 ```ts
 import { spawn } from "node:child_process";
-
+import readline from "node:readline";
 const proc = spawn("codex", ["app-server"], {
   stdio: ["pipe", "pipe", "inherit"],
 });
@@ -37181,6 +37403,24 @@ let threadId: string | null = null;
 rl.on("line", (line) => {
   const msg = JSON.parse(line) as any;
   console.log("server:", msg);
+  if (msg.id === 0 && msg.result) {
+    send({ method: "initialized", params: {} });
+    send({
+      method: "thread/start",
+      id: 1,
+      params: { model: "gpt-6.1-sol" },
+    });
+  }
+  if (msg.method === "turn/completed") {
+    proc.stdin.end();
+    rl.close();
+  }
+  if (msg.error) {
+    console.error(msg.error);
+    process.exitCode = 1;
+    proc.stdin.end();
+    rl.close();
+  }
   if (msg.id === 1 && msg.result?.thread?.id && !threadId) {
     threadId = msg.result.thread.id;
     send({
@@ -37204,8 +37444,11 @@ send({
     },
   },
 });
-send({ method: "initialized", params: {} });
-send({ method: "thread/start", id: 1, params: { model: "gpt-6.1-sol" } });
+proc.on("error", (error) => {
+  console.error(error);
+  process.exitCode = 1;
+  rl.close();
+});
 ```
 
 #### Core primitives
@@ -38553,7 +38796,7 @@ If you omit the `skill` item, the model will still parse the `$` marker and try 
 
 Example:
 
-```
+```text
 $skill-creator Add a new skill for triaging flaky CI and include step-by-step usage.
 ```
 
@@ -39576,7 +39819,7 @@ npm install @openai/codex-sdk
 
 Start a thread with Codex and run it with your prompt.
 
-```ts
+```typescript
 import { Codex } from "@openai/codex-sdk";
 
 const codex = new Codex();
@@ -39590,7 +39833,7 @@ console.log(result.finalResponse);
 
 Call `run()` again to continue on the same thread, or resume a past thread by providing a thread ID.
 
-```ts
+```typescript
 // running the same thread
 const result = await thread.run("Implement the plan");
 
@@ -39598,7 +39841,7 @@ console.log(result.finalResponse);
 
 // resuming past thread
 
-const threadId = "<thread-id>";
+const threadId = thread.id!;
 const thread2 = codex.resumeThread(threadId);
 const result2 = await thread2.run("Pick up where you left off");
 
@@ -39611,7 +39854,7 @@ Pass `config` to set structured Codex configuration. For keys that can't be
 expressed as dotted paths, use `configOverrides` to pass raw TOML strings as
 separate `--config` arguments:
 
-```ts
+```typescript
 const codex = new Codex({
   config: { default_permissions: "audit" },
   configOverrides: [
@@ -39653,6 +39896,7 @@ use your configured default. See [GPT-6.1 Sol availability by plan](./models.md#
 
 ```python
 from openai_codex import Codex, Sandbox
+
 with Codex() as codex:
     thread = codex.thread_start(
         model="gpt-6.1-sol",
@@ -39667,11 +39911,15 @@ Use `AsyncCodex` when your application is already asynchronous:
 ```python
 import asyncio
 from openai_codex import AsyncCodex
+
+
 async def main() -> None:
     async with AsyncCodex() as codex:
         thread = await codex.thread_start(model="gpt-6.1-sol")
         result = await thread.run("Implement the plan")
         print(result.final_response)
+
+
 asyncio.run(main())
 ```
 

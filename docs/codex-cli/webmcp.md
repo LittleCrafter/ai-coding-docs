@@ -141,7 +141,7 @@ You can also write the code yourself. In your page's JavaScript module, check
 for browser support and register a tool. This read-only example returns the
 current page's title:
 
-```javascript
+```typescript
 if (typeof document.modelContext?.registerTool === "function") {
   await document.modelContext.registerTool({
     name: "get_page_title",

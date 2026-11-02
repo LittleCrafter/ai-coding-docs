@@ -37,8 +37,8 @@ npm install @openai/codex-sdk
 
 Start a thread with Codex and run it with your prompt.
 
-```ts
-
+```typescript
+import { Codex } from "@openai/codex-sdk";
 
 const codex = new Codex();
 const thread = codex.startThread();
@@ -51,7 +51,7 @@ console.log(result.finalResponse);
 
 Call `run()` again to continue on the same thread, or resume a past thread by providing a thread ID.
 
-```ts
+```typescript
 // running the same thread
 const result = await thread.run("Implement the plan");
 
@@ -59,7 +59,7 @@ console.log(result.finalResponse);
 
 // resuming past thread
 
-const threadId = "<thread-id>";
+const threadId = thread.id!;
 const thread2 = codex.resumeThread(threadId);
 const result2 = await thread2.run("Pick up where you left off");
 
@@ -72,7 +72,7 @@ Pass `config` to set structured Codex configuration. For keys that can't be
 expressed as dotted paths, use `configOverrides` to pass raw TOML strings as
 separate `--config` arguments:
 
-```ts
+```typescript
 const codex = new Codex({
   config: { default_permissions: "audit" },
   configOverrides: [
@@ -114,6 +114,7 @@ use your configured default. See [GPT-6.1 Sol availability by plan](./models.md#
 
 ```python
 from openai_codex import Codex, Sandbox
+
 with Codex() as codex:
     thread = codex.thread_start(
         model="gpt-6.1-sol",
@@ -128,11 +129,15 @@ Use `AsyncCodex` when your application is already asynchronous:
 ```python
 import asyncio
 from openai_codex import AsyncCodex
+
+
 async def main() -> None:
     async with AsyncCodex() as codex:
         thread = await codex.thread_start(model="gpt-6.1-sol")
         result = await thread.run("Implement the plan")
         print(result.final_response)
+
+
 asyncio.run(main())
 ```
 
