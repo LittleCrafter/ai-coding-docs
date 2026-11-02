@@ -182,21 +182,21 @@ codex -c log_dir=./.codex-log
 Use the `[features]` table in `config.toml` to toggle optional and experimental capabilities.
 
 #### Common feature flags
-| Key                  | Default | Maturity     | Description                                                                              |
-| -------------------- | :-----: | ------------ | ---------------------------------------------------------------------------------------- |
-| `apps`               |  true   | Stable       | Enable app (connector) integrations                                                      |
-| `goals`              |  true   | Stable       | Enable persisted goals and automatic continuation                                        |
-| `hooks`              |  true   | Stable       | Enable lifecycle hooks from `hooks.json` or inline `[hooks]`. See [Hooks](./hooks.md). |
-| `fast_mode`          |  true   | Stable       | Enable Fast mode selection and the `service_tier = "fast"` path                          |
-| `memories`           |  false  | Experimental | Enable [Memories](./customization/memories.md)                                         |
-| `multi_agent`        |  true   | Stable       | Enable subagent collaboration tools                                                      |
-| `remote_plugin`      |  true   | Stable       | Enable the remote plugin catalog                                                         |
-| `shell_snapshot`     |  true   | Stable       | Snapshot your shell environment to speed up repeated commands                            |
-| `shell_tool`         |  true   | Stable       | Enable command execution tools                                                           |
-| `unified_exec`       |  true   | Stable       | Enable resumable command execution; only managed requirements can disable it             |
-| `web_search`         |  true   | Deprecated   | Legacy toggle; prefer the top-level `web_search` setting                                 |
-| `web_search_cached`  |  false  | Deprecated   | Legacy toggle that maps to `web_search = "cached"` when unset                            |
-| `web_search_request` |  false  | Deprecated   | Legacy toggle that maps to `web_search = "live"` when unset                              |
+| Key                  | Default | Maturity   | Description                                                                              |
+| -------------------- | :-----: | ---------- | ---------------------------------------------------------------------------------------- |
+| `apps`               |  true   | Stable     | Enable app (connector) integrations                                                      |
+| `goals`              |  true   | Stable     | Enable persisted goals and automatic continuation                                        |
+| `hooks`              |  true   | Stable     | Enable lifecycle hooks from `hooks.json` or inline `[hooks]`. See [Hooks](./hooks.md). |
+| `fast_mode`          |  true   | Stable     | Enable Fast mode selection and the `service_tier = "fast"` path                          |
+| `memories`           |  false  | Stable     | Enable [Memories](./customization/memories.md)                                         |
+| `multi_agent`        |  true   | Stable     | Enable subagent collaboration tools                                                      |
+| `remote_plugin`      |  true   | Stable     | Enable the remote plugin catalog                                                         |
+| `shell_snapshot`     |  true   | Stable     | Snapshot your shell environment to speed up repeated commands                            |
+| `shell_tool`         |  true   | Stable     | Enable command execution tools                                                           |
+| `unified_exec`       |  true   | Stable     | Enable resumable command execution; only managed requirements can disable it             |
+| `web_search`         |  true   | Deprecated | Legacy toggle; prefer the top-level `web_search` setting                                 |
+| `web_search_cached`  |  false  | Deprecated | Legacy toggle that maps to `web_search = "cached"` when unset                            |
+| `web_search_request` |  false  | Deprecated | Legacy toggle that maps to `web_search = "live"` when unset                              |
 
 This table lists common user-facing flags, not every internal or
   under-development feature. The Maturity column uses labels such as
@@ -385,7 +385,7 @@ If your organization provides a model gateway, follow
 for client setup and verification. For organization-wide deployment, see
 [Roll out a gateway](./enterprise/roll-out-a-gateway.md).
 
-A model provider defines how Codex connects to a model (base URL, wire API, authentication, and optional HTTP headers). Custom providers can't reuse the reserved built-in provider IDs: `openai`, `ollama`, and `lmstudio`.
+A model provider defines how Codex connects to a model (base URL, wire API, authentication, and optional HTTP headers). Choose a unique ID for custom providers. Codex reserves `openai`, `ollama`, `lmstudio`, `amazon-bedrock`, `amazon-bedrock-runtime`, and `gcp` for its built-in providers.
 
 Define more providers and point `model_provider` at them:
 
@@ -457,9 +457,9 @@ refresh_interval_ms = 300000
 The auth command receives no `stdin` and must print the token to stdout. Codex trims surrounding whitespace, treats an empty token as an error, and refreshes proactively at `refresh_interval_ms`; set `refresh_interval_ms = 0` to refresh only after an authentication retry. Don't combine `[model_providers.<id>.auth]` with `env_key`, `experimental_bearer_token`, or `requires_openai_auth`.
 
 #### Amazon Bedrock provider
-Codex includes a built-in `amazon-bedrock` model provider. Set it directly as
-`model_provider`; unlike custom providers, this built-in provider supports only
-the nested AWS profile and region overrides.
+Set `model_provider` to `amazon-bedrock` for the Bedrock Mantle endpoint or
+`amazon-bedrock-runtime` for the Runtime endpoint. To select the AWS credentials
+and region for Mantle, configure its `aws` table.
 
 ```toml
 model_provider = "amazon-bedrock"
@@ -476,6 +476,33 @@ If you omit `profile`, Codex uses the standard AWS credential chain. Set
 For the full setup flow, authentication options, supported models, and feature
 availability, see [Use ChatGPT Work and Codex with Amazon
 Bedrock](./amazon-bedrock.md).
+
+#### Google Cloud Vertex AI provider
+To use a model your project can access on Vertex AI, set the built-in provider in `config.toml`.
+
+```toml
+model_provider = "gcp"
+
+[model_providers.gcp]
+project_id = "my-project"
+location = "global"
+```
+
+If you omit `project_id` or `location`, Codex reads `GOOGLE_CLOUD_PROJECT` or
+`GOOGLE_CLOUD_LOCATION`, respectively. The location defaults to `global`.
+
+To use default authentication, install the Google Cloud CLI on the machine
+running Codex. To sign in locally, run `gcloud auth application-default login`.
+Codex runs `gcloud auth application-default print-access-token` to obtain
+access tokens.
+
+To use a specific ADC file, set `credential_file` to its absolute path under
+`[model_providers.gcp]`. Codex sets `GOOGLE_APPLICATION_CREDENTIALS` to that
+path for the authentication command.
+
+If your deployment uses a different endpoint, token command, or static
+headers, configure `base_url`, `auth`, or `http_headers` under
+`[model_providers.gcp]`.
 
 ### OSS mode (local providers)
 Codex can run against a local "open source" provider such as Ollama or LM
@@ -515,10 +542,9 @@ base_url = "https://us.api.openai.com/v1" # Replace 'us' with domain prefix
 
 ### Model reasoning, verbosity, and limits
 ```toml
-model_reasoning_summary = "none"          # Disable summaries
-model_verbosity = "low"                   # Shorten responses
-model_supports_reasoning_summaries = true # Force reasoning
-model_context_window = 128000             # Context window size
+model_reasoning_summary = "none" # Disable summaries
+model_verbosity = "low"          # Shorten responses
+model_context_window = 128000    # Context window size
 ```
 
 `model_verbosity` applies only to providers using the Responses API. Chat Completions providers will ignore the setting.
@@ -641,6 +667,9 @@ exporter = "none"         # set to otlp-http or otlp-grpc to send events
 log_user_prompt = false   # redact user prompts unless explicitly enabled
 ```
 
+Administrators can enforce the exporters and individual logging settings in
+[`requirements.toml`](./enterprise/managed-configuration.md#enforce-opentelemetry-settings).
+
 Choose an exporter:
 
 ```toml
@@ -670,6 +699,8 @@ Codex emits structured log events for runs and tool usage. Representative event 
 - `codex.sse_event` (stream event kind, success/failure, duration, plus token counts on `response.completed`)
 - `codex.websocket_request` and `codex.websocket_event` (request duration plus per-message kind/success/error)
 - `codex.user_prompt` (length; content redacted unless explicitly enabled)
+- `codex.agent_response` (final answers from the main agent and spawned subagents when `otel.log_agent_responses = true`)
+- `codex.guardian_assessment` (completed automatic approval reviews when `otel.log_guardian_assessments = true`)
 - `codex.tool_decision` (approved/denied and whether the decision came from config vs user)
 - `codex.tool_result` (duration, success, output snippet)
 
@@ -696,14 +727,14 @@ For more security and privacy guidance around telemetry, see [Security](./agent-
 #### Metrics
 By default, Codex periodically sends a small amount of anonymous usage and health data back to OpenAI. This helps detect when Codex isn't working correctly and shows what features and configuration options are being used, so the Codex team can focus on what matters most. These metrics don't contain any personally identifiable information (PII). Metrics collection is independent of OTel log/trace export.
 
-To disable analytics and metrics collection in Codex CLI, set the analytics flag in your config:
+To disable analytics and the built-in `statsig` metrics exporter, set the analytics flag in your config:
 
 ```toml
 [analytics]
 enabled = false
 ```
 
-This also disables custom OTLP metrics exporters in Codex CLI.
+To disable a custom OTLP metrics exporter as well, set `otel.metrics_exporter = "none"`.
 
 Each metric includes its own fields plus the default context fields below.
 
@@ -1170,6 +1201,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `model_context_window` | `number` | Context window tokens available to the active model. |
 | `model_auto_compact_token_limit` | `number` | Token threshold that triggers automatic history compaction (unset uses model defaults). |
 | `model_auto_compact_token_limit_scope` | `total \| body_after_prefix` | Controls whether the auto-compaction threshold counts the full active context (`total`, the default) or only growth after the carried compaction-window prefix (`body_after_prefix`). |
+| `model_post_turn_compact_threshold_percent` | `integer (0–100)` | Compact history after a final response when active context reaches this percentage of the usable context window. Omit or set to `0` to disable turn-end compaction. The usual auto-compaction limits still apply. |
 | `model_catalog_json` | `string (path)` | Optional path to a JSON model catalog loaded on startup. A selected `$CODEX_HOME/profile-name.config.toml` profile file can override this per profile. |
 | `oss_provider` | `lmstudio \| ollama` | Default local provider used when running with `--oss` (defaults to prompting if unset). |
 | `approval_policy` | `on-request \| never \| { granular = { sandbox_approval = bool, rules = bool, mcp_elicitations = bool, request_permissions = bool, skill_approval = bool } }` | Controls when Codex pauses for approval before executing commands. You can also use `approval_policy = { granular = { ... } }` to allow or auto-reject specific prompt categories while keeping other prompts interactive. `untrusted` is unsupported, and `on-failure` is deprecated; use `on-request` for interactive runs or `never` for non-interactive runs. |
@@ -1182,6 +1214,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `auto_review.policy` | `string` | Local Markdown policy instructions for automatic review. Managed `guardian_policy_config` takes precedence. Blank values are ignored. |
 | `auto_review.extra_policy` | `string` | Additional local Markdown policy for automatic review, included alongside the main policy. Managed `guardian_extra_policy` takes precedence. Blank values are ignored. |
 | `allow_login_shell` | `boolean` | Allow shell-based tools to use login-shell semantics. Defaults to `true`; when `false`, `login = true` requests are rejected and omitted `login` defaults to non-login shells. |
+| `allow_symlinked_codex_home` | `boolean` | On macOS, allow writable sandbox roots at or under `$CODEX_HOME` to follow symlinks. Codex reads this only from the execution host's `$CODEX_HOME/config.toml` at startup. Enabling it trusts targets outside that directory and targets that change between commands. It grants no additional writable roots. Defaults to `false`. |
 | `sandbox_mode` | `read-only \| workspace-write \| danger-full-access` | Sandbox policy for filesystem and network access during command execution. |
 | `sandbox_workspace_write.writable_roots` | `array<string>` | Additional writable roots when `sandbox_mode = "workspace-write"`. |
 | `sandbox_workspace_write.network_access` | `boolean` | Allow outbound network access inside the workspace-write sandbox. |
@@ -1199,7 +1232,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `notify` | `array<string>` | Command invoked for notifications; receives a JSON payload from Codex. |
 | `check_for_update_on_startup` | `boolean` | Check for Codex updates on startup (set to false only when updates are centrally managed). |
 | `feedback.enabled` | `boolean` | Enable feedback submission via `/feedback` across local clients (default: true). |
-| `analytics.enabled` | `boolean` | Enable or disable analytics for this machine/profile. In Codex CLI, `false` also disables custom OTLP metrics exporters. When unset, the client default applies. |
+| `analytics.enabled` | `boolean` | Enable or disable analytics for this machine or profile. Setting this to `false` disables the built-in Statsig metrics exporter. Explicit OTLP metrics exporters remain active. When unset, the client default applies. |
 | `instructions` | `string` | Reserved for future use; prefer `model_instructions_file` or `AGENTS.md`. |
 | `developer_instructions` | `string` | Additional developer instructions injected into the session (optional). |
 | `log_dir` | `string (path)` | Directory where Codex writes log files; defaults to `$CODEX_HOME/log`. Setting this explicitly also enables the opt-in plaintext TUI log, `codex-tui.log`, in that directory. |
@@ -1209,9 +1242,12 @@ Set `model` to one available to your signed-in account or workspace. See
 | `personality` | `none \| friendly \| pragmatic` | Deprecated compatibility setting. `friendly` and `pragmatic` no longer select a style. `none` omits the built-in Personality section from model instructions; explicit instruction overrides are unchanged. |
 | `service_tier` | `string` | Preferred service tier for new turns. Use `fast` or another tier advertised by the active model; `fast` maps to the request value `priority`. |
 | `experimental_compact_prompt_file` | `string (path)` | Load the compaction prompt override from a file (experimental). |
+| `skills.bundled.enabled` | `boolean` | Load the system skills bundled with Codex. Defaults to `true`. Set to `false` in a trusted project configuration to disable bundled skills for that project. |
+| `skills.include_instructions` | `boolean` | Include the automatic skills instructions in the model context. Defaults to `true`. |
 | `skills.max_context_tokens` | `integer (positive)` | Token budget for the available-skills catalog. Defaults to 2% of the model's context window. Explicit values are capped at `10000` tokens. |
-| `skills.config` | `array<object>` | Per-skill enablement overrides stored in config.toml. |
-| `skills.config.<index>.path` | `string (path)` | Path to a skill folder containing `SKILL.md`. |
+| `skills.config` | `array<object>` | Enable or disable skills by name or path. If several rules match a skill, the last one wins. |
+| `skills.config.<index>.path` | `string (path)` | Absolute path to one `SKILL.md` file. |
+| `skills.config.<index>.name` | `string` | Match every skill with this exact name. Specify either `name` or `path` for each entry. |
 | `skills.config.<index>.enabled` | `boolean` | Enable or disable the referenced skill. |
 | `apps.<id>.enabled` | `boolean` | Enable or disable a specific app/connector by id (default: true). |
 | `apps._default.enabled` | `boolean` | Default app enabled state for all apps unless overridden per app. |
@@ -1224,6 +1260,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `apps.<id>.default_tools_enabled` | `boolean` | Default enabled state for tools in this app unless a per-tool override exists. |
 | `apps.<id>.approvals_reviewer` | `user \| auto_review` | Reviewer for this app's tool approval prompts. Overrides `apps._default.approvals_reviewer`. |
 | `apps.<id>.default_tools_approval_mode` | `auto \| prompt \| writes \| approve` | Default approval behavior for tools in this app unless a per-tool override exists. |
+| `apps.<id>.omit_tools_from` | `array<string>` | Omit this app's tools from the `direct`, `deferred`, or `code_mode` surfaces. App and MCP server omissions apply together. |
 | `apps.<id>.tools.<tool>.enabled` | `boolean` | Per-tool enabled override for an app tool (for example `repos/list`). |
 | `apps.<id>.tools.<tool>.approval_mode` | `auto \| prompt \| writes \| approve` | Per-tool approval behavior override for a single app tool. |
 | `tool_suggest.discoverables` | `array<table>` | Allow tool suggestions for additional discoverable connectors or plugins. Each entry uses `type = "connector"` or `"plugin"` and an `id`. |
@@ -1234,13 +1271,13 @@ Set `model` to one available to your signed-in account or workspace. See
 | `features.code_mode.excluded_tool_namespaces` | `array<string>` | Tool namespaces code mode excludes from nested code-mode tool guidance and executor exposure. |
 | `features.code_mode.direct_only_tool_namespaces` | `array<string>` | Tool namespaces code mode can use only through direct tool calls. |
 | `features.context_management.experimental_mode` | `boolean` | Experimental context-management setting. The feature is not currently available. |
-| `features.rollout_budget.enabled` | `boolean` | Enable rollout budget tracking. This feature is under development and off by default. When enabled, `features.rollout_budget.limit_tokens` is required. |
+| `features.rollout_budget.enabled` | `boolean` | Enable rollout budget tracking. This feature is under development and off by default. When enabled, set both `limit_tokens` and `reminder_at_remaining_tokens`. |
 | `features.rollout_budget.limit_tokens` | `integer` | Positive token limit for rollout budget tracking. Required when rollout budget is enabled. |
-| `features.rollout_budget.reminder_interval_tokens` | `integer` | Positive token interval between rollout budget reminders. Defaults to 10% of `limit_tokens`, with a minimum of 1 token. |
+| `features.rollout_budget.reminder_at_remaining_tokens` | `array<integer>` | Send a reminder as the remaining weighted token budget crosses each threshold. Supply the list when rollout budget tracking is enabled. Each value must be positive and below `limit_tokens`. |
 | `features.rollout_budget.sampling_token_weight` | `number` | Finite non-negative multiplier for sampled tokens in rollout budget accounting. Defaults to `1.0`. |
 | `features.rollout_budget.prefill_token_weight` | `number` | Finite non-negative multiplier for prefill tokens in rollout budget accounting. Defaults to `1.0`. |
 | `hooks` | `table` | Lifecycle hooks configured inline in `config.toml`. Uses the same event schema as `hooks.json`; see the Hooks guide for examples and supported events. |
-| `hooks.<Event>` | `array<table>` | Matcher groups for hook events such as `PreToolUse`, `PermissionRequest`, `PostToolUse`, `PreCompact`, `PostCompact`, `SessionStart`, `SessionEnd`, `SubagentStart`, `SubagentStop`, `UserPromptSubmit`, `Stop`, or `Interrupt`. |
+| `hooks.<Event>` | `array<table>` | Matcher groups for hook events such as `PreModelRequest`, `PostModelRequest`, `PreToolUse`, `PermissionRequest`, `PostToolUse`, `PreCompact`, `PostCompact`, `SessionStart`, `SessionEnd`, `SubagentStart`, `SubagentStop`, `UserPromptSubmit`, `Stop`, or `Interrupt`. |
 | `hooks.<Event>[].hooks` | `array<table>` | Hook handlers for a matcher group. Command and MCP tool hooks are supported while prompt and agent hook handlers are parsed but skipped. |
 | `hooks.<Event>[].hooks[].async` | `boolean` | Run a command hook in the background without delaying the triggering operation. Defaults to `false`; `SessionEnd` always runs synchronously. See [Run hooks in the background](./hooks.md#run-hooks-in-the-background). |
 | `hooks.<Event>[].hooks[].additionalContextLimit` | `integer` | Approximate per-handler token threshold for saving oversized `additionalContext` to disk and showing the model a shorter preview. Defaults to `2500`; `0` passes the full context directly to the model. See [Large hook output](./hooks.md#large-hook-output). |
@@ -1263,18 +1300,22 @@ Set `model` to one available to your signed-in account or workspace. See
 | `mcp_servers.<id>.http_headers_helper` | `string (command)` | Local command that prints a JSON object of HTTP header names and values. Supported only for locally connected HTTP MCP servers. Explicit bearer tokens and OAuth credentials take precedence over helper-provided Authorization headers. |
 | `mcp_servers.<id>.env_http_headers` | `map<string,string>` | HTTP headers populated from environment variables for an MCP HTTP server. |
 | `mcp_servers.<id>.enabled` | `boolean` | Disable an MCP server without removing its configuration. |
-| `mcp_servers.<id>.required` | `boolean` | When true, fail startup/resume if this enabled MCP server cannot initialize. |
+| `mcp_servers.<id>.required` | `boolean` | Require this enabled server to be ready at startup. With `startup_readiness = "catalog"`, a valid cached catalog can satisfy that requirement. |
+| `mcp_servers.<id>.startup_readiness` | `connection \| catalog` | Use a live connection to establish startup readiness (`connection`, the default), or let a valid cached tool catalog satisfy startup while the connection opens (`catalog`). Calling a tool still requires a live connection. |
 | `mcp_servers.<id>.startup_timeout_sec` | `number` | Override the default 10s startup timeout for an MCP server. |
 | `mcp_servers.<id>.startup_timeout_ms` | `number` | Alias for `startup_timeout_sec` in milliseconds. |
 | `mcp_servers.<id>.tool_timeout_sec` | `number` | Override the default 60s per-tool timeout for an MCP server. |
 | `mcp_servers.<id>.enabled_tools` | `array<string>` | Allow list of tool names exposed by the MCP server. |
 | `mcp_servers.<id>.disabled_tools` | `array<string>` | Deny list applied after `enabled_tools` for the MCP server. |
+| `mcp_servers.<id>.supports_parallel_tool_calls` | `boolean` | Mark every tool on this server as safe to run in parallel. Enable only when the server can handle concurrent calls to all its tools. Defaults to `false`. |
+| `mcp_servers.<id>.tool_input_schema_max_bytes` | `integer (positive)` | Compact each ordinary MCP tool's input schema when it exceeds this many UTF-8 bytes. The default is 5,000 bytes. Code Mode also uses an explicit value when rendering tool input types. |
+| `mcp_servers.<id>.omit_tools_from` | `array<string>` | Omit this server’s tools from selected model-facing surfaces. Choose `direct` (initial tools), `deferred` (tool search), or `code_mode` (Code Mode scripts). Use `disabled_tools` to block a tool. An empty list clears inherited omissions. |
 | `mcp_servers.<id>.default_tools_approval_mode` | `auto \| prompt \| writes \| approve` | Default approval behavior for MCP tools on this server unless a per-tool override exists. |
 | `mcp_servers.<id>.tools.<tool>.approval_mode` | `auto \| prompt \| writes \| approve` | Per-tool approval behavior override for one MCP tool on this server. |
 | `mcp_servers.<id>.tools.<tool>.output_token_limit` | `integer (positive)` | Token budget for one MCP tool's output, before the standard 20% serialization allowance. Overrides the model's default output truncation budget for that tool. |
-| `mcp_servers.<id>.scopes` | `array<string>` | OAuth scopes to request when authenticating to that MCP server. |
+| `mcp_servers.<id>.scopes` | `array<string>` | OAuth scopes to request at login. If omitted, Codex uses the initial authentication challenge's scopes, falling back to the protected resource's metadata. |
 | `mcp_servers.<id>.oauth_resource` | `string` | Optional RFC 8707 OAuth resource parameter to include during MCP login. |
-| `mcp_servers.<id>.experimental_environment` | `local \| remote` | Experimental placement for an MCP server. `remote` starts stdio servers through a remote executor environment; streamable HTTP remote placement is not implemented. |
+| `mcp_servers.<id>.environment_id` | `string` | Execution environment for the MCP server. Defaults to `local`. Use the ID of a configured executor to run a stdio server or connect to a streamable HTTP server there. |
 | `agents` | `table` | Multi-agent settings and custom role declarations. Scalar setting names are reserved and can't be used as custom role names. |
 | `agents.enabled` | `boolean` | Enable or disable multi-agent tools (default: true). |
 | `agents.max_concurrent_threads_per_session` | `number` | Maximum number of spawned-agent threads that can be open concurrently, excluding the primary thread. When unset, Codex chooses the default. |
@@ -1284,6 +1325,8 @@ Set `model` to one available to your signed-in account or workspace. See
 | `agents.interrupt_message` | `boolean` | Record a model-visible message when an agent turn is interrupted (default: true). |
 | `agents.<name>.description` | `string` | Role guidance shown to Codex when choosing and spawning that agent type. |
 | `agents.<name>.config_file` | `string (path)` | Path to a TOML config layer for that role; relative paths resolve from the config file that declares the role. |
+| `memories.version` | `v1 \| v2` | Select the local memory store. With memories enabled, Codex defaults to `v2` for a fresh home and `v1` if `$CODEX_HOME/memories/` exists. Explicitly setting `dual_write = false` keeps the default at `v1`. |
+| `memories.dual_write` | `boolean` | With `v1` selected, set to `true` to generate both stores while continuing to read `v1`. With `v2` selected, Codex writes only `v2`. |
 | `memories.generate_memories` | `boolean` | When `false`, newly created threads are not stored as memory-generation inputs. Defaults to `true`. |
 | `memories.use_memories` | `boolean` | When `false`, Codex skips injecting existing memories into future sessions. Defaults to `true`. |
 | `memories.disable_on_external_context` | `boolean` | When `true`, threads that use external context such as MCP tool calls, web search, or tool search are kept out of memory generation. Defaults to `false`. Legacy alias: `memories.no_memories_if_mcp_or_web_search`. |
@@ -1295,14 +1338,17 @@ Set `model` to one available to your signed-in account or workspace. See
 | `memories.min_rate_limit_remaining_percent` | `number` | Minimum remaining percentage required in Codex rate-limit windows before memory generation starts. Defaults to `25` and is clamped to `0`-`100`. |
 | `memories.extract_model` | `string` | Optional model override for per-thread memory extraction. |
 | `memories.consolidation_model` | `string` | Optional model override for global memory consolidation. |
+| `memories.consolidation_service_tier` | `string` | Service tier for global memory consolidation. Defaults to `default` (Standard). |
 | `features.prefer_mxc` | `boolean` | Prefer MXC for local Windows execution when native capabilities and policy allow it; otherwise retain the configured legacy sandbox and setup. Disabled by default in the standalone CLI; the desktop app can enable it through rollout configuration. Command failures don't trigger fallback. |
 | `features.unified_exec` | `boolean` | Use resumable command execution (stable; enabled on all platforms). User opt-outs are ignored. Managed requirements can disable resumable processes and `write_stdin`, leaving one-shot `exec_command` available. |
+| `features.view_image` | `boolean` | Enable the built-in `view_image` tool for opening local images. Defaults to `true`. |
 | `features.shell_snapshot` | `boolean` | Snapshot shell environment to speed up repeated commands (stable; on by default). |
 | `features.multi_agent` | `boolean` | Enable multi-agent collaboration tools (`spawn_agent`, `send_input`, `resume_agent`, `wait_agent`, and `close_agent`) (stable; on by default). |
 | `features.goals` | `boolean` | Enable persisted goals and automatic continuation (stable; on by default). |
+| `goals.max_goal_token_budget` | `integer (positive)` | Set the default token budget for new goals and the largest budget a goal can request. Omit to leave goals without a configured limit. |
 | `features.remote_plugin` | `boolean` | Enable the remote plugin catalog (stable; on by default). |
 | `features.personality` | `boolean` | Removed feature flag. Accepted for compatibility and ignored. |
-| `features.network_proxy` | `boolean \| table` | Start the network proxy for sandboxed commands (experimental; off by default). Required to enforce permission-profile domain rules unless enabled administrator-managed `experimental_network` requirements start the proxy. Use a table when setting feature-level policy options such as `domains`. Does not filter web search, apps, MCP, or other hosted tools. |
+| `features.network_proxy` | `boolean \| table` | Start the network proxy for sandboxed commands (experimental; off by default). Required to enforce permission-profile domain rules unless enabled administrator-managed `network_proxy` requirements start the proxy. Use a table when setting feature-level policy options such as `domains`. Does not filter web search, apps, MCP, or other hosted tools. |
 | `features.network_proxy.enabled` | `boolean` | Start the sandboxed-command network proxy when command network access is enabled. Defaults to `false`; permission-profile domain rules are not enforced while the proxy is off. |
 | `features.network_proxy.domains` | `map<string, allow \| deny>` | Domain policy for sandboxed networking. Unset by default, which means no external destinations are allowed until you add `allow` rules. Supports exact hosts, `*.example.com` for subdomains only, `**.example.com` for apex plus subdomains, and global `*` allow rules. Prefer scoped rules because `*` broadly opens public outbound access. Add `deny` rules for blocked destinations; `deny` wins on conflicts. |
 | `features.network_proxy.unix_sockets` | `map<string, allow \| deny>` | Unix socket policy for sandboxed networking. Unset by default; add `allow` entries for permitted sockets. |
@@ -1349,13 +1395,16 @@ Set `model` to one available to your signed-in account or workspace. See
 | `model_providers.<id>.auth.timeout_ms` | `number` | Maximum token command runtime in milliseconds (default: 5000). |
 | `model_providers.<id>.auth.refresh_interval_ms` | `number` | How often Codex proactively refreshes the token in milliseconds (default: 300000). Set to `0` to refresh only after an authentication retry. |
 | `model_providers.<id>.auth.cwd` | `string (path)` | Working directory for the token command. |
+| `model_providers.gcp.base_url` | `string` | Override the built-in Google Cloud Vertex AI endpoint. Otherwise, Codex builds it from the project ID and location. |
+| `model_providers.gcp.project_id` | `string` | Google Cloud project ID for the Vertex AI endpoint. Takes precedence over `GOOGLE_CLOUD_PROJECT`. |
+| `model_providers.gcp.location` | `string` | Google Cloud location for the Vertex AI endpoint. Takes precedence over `GOOGLE_CLOUD_LOCATION`. Defaults to `global`. |
+| `model_providers.gcp.credential_file` | `string (absolute path)` | Path to a Google Application Default Credentials (ADC) file. Overrides `GOOGLE_APPLICATION_CREDENTIALS` only for the provider’s authentication command. |
 | `model_providers.amazon-bedrock.aws.profile` | `string` | AWS profile name used by the built-in `amazon-bedrock` provider. |
 | `model_providers.amazon-bedrock.aws.region` | `string` | AWS region used by the built-in `amazon-bedrock` provider. |
 | `model_reasoning_effort` | `string` | Reasoning effort advertised by the selected model, such as `low`, `medium`, `high`, `xhigh`, `max`, or `ultra`. Available levels depend on the model and client. |
 | `plan_mode_reasoning_effort` | `string` | Plan-mode-specific reasoning override using a level supported by the selected model. When unset, Plan mode uses its built-in preset default. |
 | `model_reasoning_summary` | `auto \| concise \| detailed \| none` | Select reasoning summary detail or disable summaries entirely. |
 | `model_verbosity` | `low \| medium \| high` | Optional GPT-5 Responses API verbosity override; when unset, the selected model/preset default is used. |
-| `model_supports_reasoning_summaries` | `boolean` | Force Codex to send or not send reasoning metadata. |
 | `shell_environment_policy.inherit` | `all \| core \| none` | Baseline environment inheritance when spawning subprocesses. |
 | `shell_environment_policy.ignore_default_excludes` | `boolean` | Keep variables containing KEY, SECRET, or TOKEN before other filters run (default: true). Set to false to apply automatic secret-name exclusions. |
 | `shell_environment_policy.filters` | `map<string, include \| exclude>` | Canonical case-insensitive environment-variable pattern filters. Include entries create an allowlist and can't restore excluded values. Explicit `set` values apply after exclusions. Don't combine filters with legacy `exclude` or `include_only` arrays in the same layer. |
@@ -1368,14 +1417,20 @@ Set `model` to one available to your signed-in account or workspace. See
 | `project_doc_fallback_filenames` | `array<string>` | Additional filenames to try when `AGENTS.md` is missing. |
 | `history.persistence` | `save-all \| none` | Control whether Codex saves session transcripts to history.jsonl. |
 | `tool_output_token_limit` | `number` | Token budget for storing individual tool/function outputs in history. |
+| `thread_unload_delay_secs` | `integer (nonnegative)` | Seconds the app server waits before unloading an inactive thread with no subscribers. Set to `0` to unload it as soon as it meets both conditions. Defaults to `60` seconds. |
 | `background_terminal_max_timeout` | `number` | Maximum poll window in milliseconds for empty `write_stdin` polls (background terminal polling). Default: `300000` (5 minutes). Replaces the older `background_terminal_timeout` key. |
 | `history.max_bytes` | `number` | If set, caps the history file size in bytes by dropping oldest entries. |
 | `file_opener` | `vscode \| vscode-insiders \| windsurf \| cursor \| none` | URI scheme used to open citations from Codex output (default: `vscode`). |
 | `otel.environment` | `string` | Environment tag applied to emitted OpenTelemetry events (default: `dev`). |
 | `otel.exporter` | `none \| otlp-http \| otlp-grpc` | Select the OpenTelemetry exporter and provide any endpoint metadata. |
 | `otel.trace_exporter` | `none \| otlp-http \| otlp-grpc` | Select the OpenTelemetry trace exporter and provide any endpoint metadata. |
-| `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Select the OpenTelemetry metrics exporter (defaults to `statsig`). In Codex CLI, `analytics.enabled = false` disables this exporter, including custom OTLP exporters. Set to `none` to disable metrics export independently. |
+| `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Select the OpenTelemetry metrics exporter. The default, `statsig`, follows `analytics.enabled`. Explicit OTLP exporters work independently of that setting. Set to `none` to disable metrics export. |
 | `otel.log_user_prompt` | `boolean` | Opt in to exporting raw user prompts with OpenTelemetry logs. |
+| `otel.log_agent_responses` | `boolean` | Export final response text from the main agent and spawned subagents to the configured OTLP log exporter. Defaults to `false`. Response text can contain sensitive data and is capped at 64 KiB per response. |
+| `otel.log_guardian_assessments` | `boolean` | Export completed automatic approval reviews to the configured OTLP log exporter. Defaults to `false`. Review rationales can contain sensitive data and are capped at 64 KiB each. |
+| `otel.span_attributes` | `map<string,string>` | Add string attributes to every exported trace span. |
+| `otel.tracestate` | `map<string,map<string,string>>` | Set fields on W3C tracestate members when propagating trace context. Each member maps field names to string values. |
+| `otel.tool_result.max_bytes` | `integer (nonnegative)` | Maximum number of UTF-8 bytes from each tool result to include in logs, before the truncation notice. Defaults to `2048`. This setting affects only logged output. |
 | `otel.exporter.<id>.endpoint` | `string` | Exporter endpoint for OTEL logs. |
 | `otel.exporter.<id>.protocol` | `binary \| json` | Protocol used by the OTLP/HTTP exporter. |
 | `otel.exporter.<id>.headers` | `map<string,string>` | Static headers included with OTEL exporter requests. |
@@ -1417,17 +1472,19 @@ Set `model` to one available to your signed-in account or workspace. See
 | `marketplaces.<name>.source` | `string` | Git repository location or local marketplace root directory. Use an absolute path for a local source; the directory contains .agents/plugins/marketplace.json. |
 | `marketplaces.<name>.ref` | `string` | Optional Git branch, tag, or commit for the marketplace. |
 | `marketplaces.<name>.sparse_paths` | `array<string>` | Optional sparse checkout paths for a Git marketplace. Include the marketplace catalog and any local plugin directories it references. |
+| `plugins._default.enabled` | `boolean` | Set the default activation state for installed plugins. An explicit `plugins.<plugin>.enabled` overrides this default for plugins their source enables. Omit the table to keep the source or account activation settings. |
 | `plugins.<plugin>.enabled` | `boolean` | Enable or disable a local-marketplace plugin using a `plugin-name@marketplace-name` key. Read from the effective merged config; trusted-project settings can override user, cloud-managed, and system defaults. Marketplace refresh can install or refresh configured plugins even when disabled. This does not override workspace-managed enabled states. |
 | `plugins.<plugin>.mcp_servers.<server>.enabled` | `boolean` | Enable or disable an MCP server bundled by an installed plugin without changing the plugin manifest. |
 | `plugins.<plugin>.mcp_servers.<server>.default_tools_approval_mode` | `auto \| prompt \| writes \| approve` | Default approval behavior for tools on a plugin-provided MCP server. |
 | `plugins.<plugin>.mcp_servers.<server>.enabled_tools` | `array<string>` | Allow list of tools exposed from a plugin-provided MCP server. |
 | `plugins.<plugin>.mcp_servers.<server>.disabled_tools` | `array<string>` | Deny list applied after `enabled_tools` for a plugin-provided MCP server. |
 | `plugins.<plugin>.mcp_servers.<server>.tools.<tool>.approval_mode` | `auto \| prompt \| writes \| approve` | Per-tool approval behavior override for a plugin-provided MCP tool. |
+| `tui.presets.<digit>.input` | `string` | Save a prompt or slash command in one of the ten slots (`0`–`9`) shown by `/presets`. Use up to 8,000 UTF-8 bytes of nonempty text. Shell commands beginning with `!` are unsupported. |
+| `tui.presets.<digit>.label` | `string` | Optional name for the preset in the picker and shortcut hints. |
 | `tui.model_availability_nux.<model>` | `integer` | Internal startup-tooltip state keyed by model slug. |
 | `hide_agent_reasoning` | `boolean` | Suppress reasoning events in both the TUI and `codex exec` output. |
 | `show_raw_agent_reasoning` | `boolean` | Surface raw reasoning content when the active model emits it. |
 | `disable_paste_burst` | `boolean` | Legacy fallback for `tui.disable_paste_burst`. Prefer the setting under `[tui]`. |
-| `windows_wsl_setup_acknowledged` | `boolean` | Track Windows onboarding acknowledgement (Windows only). |
 | `chatgpt_base_url` | `string` | Override the base URL used during the ChatGPT login flow. |
 | `cli_auth_credentials_store` | `file \| keyring \| auto \| ephemeral` | Control where the CLI stores cached credentials. |
 | `mcp_oauth_credentials_store` | `auto \| file \| keyring` | Preferred store for MCP OAuth credentials. |
@@ -1435,7 +1492,6 @@ Set `model` to one available to your signed-in account or workspace. See
 | `mcp_oauth_callback_url` | `string` | Optional base callback URL for MCP OAuth login, such as a devbox ingress URL. Newly added pre-registered clients use this URL unchanged when the authorization server supports issuer identification; existing clients without a saved callback append a server-specific callback ID. Without issuer support, any pre-registered MCP server whose configured callback lacks the required ID falls back to this URL with the ID appended. Callback URL ports don't select the listener port. |
 | `experimental_use_unified_exec_tool` | `boolean` | Legacy name for enabling unified exec; prefer `[features].unified_exec` or `codex --enable unified_exec`. |
 | `tools.web_search` | `boolean \| { context_size = "low\|medium\|high", allowed_domains = [string], location = { country, region, city, timezone } }` | Optional web search tool configuration. The object form can set search context size, allowed search domains, and approximate user location. These search-domain filters are separate from sandboxed-command network domain rules and do not restrict connectors or MCP servers. |
-| `tools.view_image` | `boolean` | Enable the local-image attachment tool `view_image`. |
 | `web_search` | `disabled \| cached \| indexed \| live` | Web search mode (default: `"cached"`; cached uses an OpenAI-maintained index without external web access; indexed permits external access only when gated by the search index; if you use `--yolo` or another full access sandbox setting, it defaults to `"live"`). Use `"live"` for unrestricted live retrieval, or `"disabled"` to remove the tool. |
 | `default_permissions` | `string` | Name of the default permissions profile to apply to sandboxed tool calls. Built-ins are `:read-only`, `:workspace`, and `:danger-full-access`; custom profile names require matching `[permissions.<name>]` tables. Don't combine with `sandbox_mode` or `[sandbox_workspace_write]`. |
 | `permissions.<name>.description` | `string` | Human-readable description for this named profile. A profile does not inherit its parent's description through `extends`. |
@@ -1536,10 +1592,14 @@ from either one wins.
 | `config_server.oauth.resource` | `string` | Optional OAuth resource identifier required by the identity provider. |
 | `config_server.oauth.redirect_port` | `number` | Optional port for the browser callback on 127.0.0.1. By default, Codex chooses an available port. |
 | `sqlite_home` | `string (path)` | Enforce the directory where Codex stores SQLite-backed runtime state. |
+| `unsafe_enforce_sqlite_journal_mode` | `boolean` | On Linux, set to `true` to migrate existing SQLite databases on NFS from WAL to DELETE journaling before opening them for writes. Defaults to `false`. The mount must support POSIX locks across hosts. Keep every other SQLite client that uses the databases stopped on every host until migration succeeds. Replacements preserve file mode bits but belong to the user running the migration and do not copy the original owner, group, or extended ACLs. |
 | `log_dir` | `string (path)` | Enforce the directory where Codex writes local log files. |
 | `model_catalog_json` | `string (path)` | Enforce the JSON model catalog Codex uses at startup. |
 | `check_for_update_on_startup` | `boolean` | Enforce whether Codex checks for updates when it starts. |
 | `allow_login_shell` | `boolean` | Enforce whether shell tools can start a login shell. |
+| `config_server` | `table` | Enroll Codex with a configuration server through local managed requirements. Codex retrieves its policy bundle from this server. A cloud policy cannot configure its own server. |
+| `config_server.base_url` | `string` | Required HTTPS base URL. Codex appends `/codex/config/bundle`. Omit credentials, query parameters, and fragments from the base URL. |
+| `config_server.oauth` | `table` | OAuth settings for configuration server sign-in. Requires `authorization_url`, `token_url`, and a nonempty `client_id`. Optional fields are `device_authorization_url`, `resource`, `scopes` (defaults to an empty list), and `redirect_port` (nonzero). All endpoint URLs must use HTTPS. |
 | `allowed_login_methods` | `array<string>` | Allow `chatgpt`, `api`, or both. If omitted, this setting doesn't restrict login methods. If set, the list must contain at least one method. `api` permits API authentication, including Amazon Bedrock. Set through the local system requirements file or macOS MDM. Cloud-managed values are ignored. |
 | `allowed_chatgpt_workspaces` | `array<string>` | Restrict ChatGPT login, including Codex access tokens, to the listed workspace IDs. An empty list disables ChatGPT login; API authentication remains available when permitted. Set through the local system requirements file or macOS MDM; cloud-managed values are ignored. |
 | `cli_auth_credentials_store` | `file \| keyring \| auto \| ephemeral` | Enforce the CLI credential store before authentication loads. `file` uses `CODEX_HOME/auth.json`; `keyring` requires the OS credential store; `auto` falls back to a file if the credential store is unavailable; `ephemeral` keeps credentials in memory for the current process. Set through the local system requirements file or macOS MDM; cloud-managed values are ignored. |
@@ -1572,6 +1632,7 @@ from either one wins.
 | `windows` | `table` | Native Windows sandbox requirements. |
 | `windows.allowed_sandbox_implementations` | `array<string>` | Allowed legacy native Windows sandbox implementations (`elevated` and `unelevated`). The list must not be empty. When both are allowed and no mode is selected, Codex prefers `elevated`. This list does not restrict the `mxc` sandbox when it is available. |
 | `windows.allow_mxc` | `boolean` | Set to `false` to prohibit both explicit MXC selection and automatic selection through `features.prefer_mxc`. Omitting this requirement or setting it to `true` permits MXC but doesn't enable it or require it. Legacy implementation restrictions still apply to fallback. |
+| `windows.require_mxc` | `boolean` | On Windows, set to `true` to reject any effective sandbox implementation other than MXC. Select MXC separately. If Codex cannot use it, configuration fails instead of falling back to a legacy sandbox. |
 | `remote_sandbox_config` | `array<table>` | Host-specific sandbox requirements. The first entry whose `hostname_patterns` match the resolved host name overrides top-level `allowed_sandbox_modes` for that requirements source. Host-specific entries currently override sandbox modes only. |
 | `remote_sandbox_config[].hostname_patterns` | `array<string>` | Case-insensitive host name patterns. Supports `*` for any sequence of characters and `?` for one character. |
 | `remote_sandbox_config[].allowed_sandbox_modes` | `array<string>` | Allowed sandbox modes to apply when this host-specific entry matches. |
@@ -1584,15 +1645,20 @@ from either one wins.
 | `features` | `table` | Pinned feature values. Use canonical names from `config.toml` for runtime features; documented app-only requirement keys are also supported here. |
 | `features.<name>` | `boolean` | Require a documented runtime or app feature to stay enabled or disabled. |
 | `features.apps` | `boolean` | Pin Apps integration availability on or off for managed users. |
+| `features.api_key_cyber_access_programs` | `boolean` | Allow Codex to send an explicitly selected cyber access program with requests to the built-in OpenAI provider when using API key authentication. The account and model must already have access to the program. |
 | `features.in_app_updates` | `boolean` | Set to `false` in `requirements.toml` to disable in-app updates. Updates remain enabled by default when this requirement is omitted. |
 | `features.in_app_browser` | `boolean` | Set to `false` in `requirements.toml` to disable the built-in browser pane that users open and control directly. |
+| `features.browser_annotation_api` | `boolean` | Set to `false` to block website-provided annotation customizations in the built-in browser. Users can still annotate pages themselves. Set to `true` to allow customizations when the app and account support them. |
 | `features.in_app_chat` | `boolean` | Set to `false` to hide ChatGPT and ChatGPT Work conversation screens and related cloud automation UI in the ChatGPT desktop app. This setting does not block ChatGPT Voice or stop existing cloud tasks. Setting it to `true` does not bypass account, workspace-permission, or rollout checks. |
 | `features.in_app_dictation` | `boolean` | Set to `false` to disable in-app dictation in the desktop app. Setting it to `true` does not bypass other availability checks. |
+| `features.in_app_voice` | `boolean` | Set to `false` to disable real-time Codex voice in the desktop app. Use `features.in_app_dictation` to manage dictation separately. |
 | `features.in_app_local_automation` | `boolean` | Set to `false` to disable local scheduled tasks in the desktop app. Setting it to `true` does not bypass other availability checks. |
 | `features.browser_use` | `boolean` | Set to `false` in `requirements.toml` to disable agent-driven Browser Use. |
 | `features.browser_use_external` | `boolean` | Set to `false` in `requirements.toml` to prevent Codex from operating supported browsers through the ChatGPT browser extension, including existing tabs and signed-in sessions. |
 | `features.browser_use_full_cdp_access` | `boolean` | Set to `false` in `requirements.toml` to disable full Chrome DevTools Protocol access in the local runtime, including Browser Developer mode, and prevent the ChatGPT desktop app from enabling the corresponding setting. If omitted, normal product availability applies. |
-| `features.fast_mode` | `boolean` | Pin the canonical `fast_mode` feature on or off for managed users. |
+| `features.fast_mode` | `boolean` | Allow or block Fast mode for managed users. Older app servers also use this setting to control Ultrafast mode. |
+| `features.ultrafast_mode` | `boolean` | Allow or block Ultrafast mode for managed users. On app servers that support independent speed settings, this applies even when Fast mode is disabled. Availability depends on the model and account. |
+| `features.standalone_web_search` | `boolean` | Experimental. Set to `true` to keep the desktop app's native web search configuration when hosted search through MCP would otherwise be available. |
 | `features.guardian_approval` | `boolean` | Pin Guardian approval availability on or off for managed users. |
 | `features.memories` | `boolean` | Pin Memories availability on or off for managed users. |
 | `features.multi_agent` | `boolean` | Pin multi-agent availability on or off for managed users. |
@@ -1604,7 +1670,11 @@ from either one wins.
 | `in_app_browser` | `table` | Requirements for the built-in browser pane. These settings do not control agent-driven Browser Use. |
 | `in_app_browser.allow_external_browser_settings_import` | `boolean` | Set to `false` to prevent users from importing settings or browsing data from an external browser into the built-in browser. Setting it to `true` or omitting it leaves the import available when other product checks allow it. This is a managed-only setting with no `config.toml` override. |
 | `browser_use` | `table` | Managed requirements for agent-driven Browser Use. |
-| `browser_use.allow_webmcp` | `boolean` | Set to `true` to opt the desktop app's built-in browser into site tools (WebMCP). Setting it to `false` or omitting it leaves normal feature availability checks in place; `false` does not enforce a block. User preferences and site permissions still apply. |
+| `browser_use.extension` | `table` | Managed settings for Browser Use in supported Chromium browser extensions. |
+| `browser_use.extension.request_headers` | `array<table>` | Add up to 16 HTTP headers to requests from agent-controlled tabs in supported Chromium extensions. Use an empty list to send no managed headers. |
+| `browser_use.extension.request_headers[].name` | `string` | Header name. Reserved names, including `Authorization` and `Cookie`, are prohibited. Names and values support `{{session_id}}` as their only substitution. |
+| `browser_use.extension.request_headers[].value` | `string` | Header value to send with matching browser requests. |
+| `browser_use.allow_webmcp` | `boolean` | Allow site tools (WebMCP) through workspace policy on eligible managed plans. Both `true` and an unset value allow access through this policy. Setting `false` turns off this path. Users can still have access through their account rollout. Browser settings and site permissions apply. |
 | `browser_use.allow_history_access` | `boolean` | Set to `false` to prevent Browser Use from reading browser history. Setting it to `true` or omitting it leaves normal history settings and availability checks in place. |
 | `browser_use.disable_auto_review` | `boolean` | Set to `true` to skip automatic review for Browser Use and ask the user for approval instead. Setting it to `false` or omitting it leaves automatic review available when other settings allow it. |
 | `browser_use.allow_global_persistent_approval` | `boolean` | Set to `false` to prevent Browser Use from creating or honoring `Always allow` approvals that cover every site, such as allowing downloads from any site. Existing saved approvals are ignored, not deleted. Setting it to `true` or omitting it does not create an approval. |
@@ -1641,29 +1711,45 @@ from either one wins.
 | `computer_use.windows.exes[].binary_name` | `string` | Optional `OriginalFilename` from the executable's signed version information. Matching is case-insensitive. If a matching publisher and product rule requires this value but the executable does not provide it, Computer Use blocks the executable. |
 | `computer_use.windows.exes[].access` | `allow \| deny` | Required access decision for matching executables. `deny` blocks access. `allow` overrides only this policy source's default and still requires any other policy source and the normal approval flow to allow the app. |
 | `application` | `table` | Managed desktop application requirements. |
+| `application.storage` | `table` | Pin storage locations for newly created work on desktop builds that support managed storage. Each path independently overrides the local preference. Storage settings do not restrict filesystem access. |
+| `application.storage.default_project_parent` | `string (absolute path)` | Parent directory for new local projects created with Start from scratch. |
+| `application.storage.projectless_workspace_root` | `string (absolute path)` | Root directory for new chats created without a project. |
 | `application.network` | `table` | Destination restrictions for desktop app network requests, separate from command networking and browser origin rules. This doesn't impose destination restrictions on native modules or spawned processes. |
 | `application.network.enabled` | `boolean` | Defaults to true when the table is present. When true, external desktop app requests require an explicitly allowed domain. An empty domain map allows no external destinations. An absent application network policy or false value doesn't restrict destinations through this policy. |
 | `application.network.domains` | `table<allow \| deny>` | Exact domain rules for desktop app requests. Enabled policies allow HTTPS and WSS requests only to explicitly allowed domains; subdomains aren't implicitly allowed. |
 | `application.network.domains.<domain>` | `allow \| deny` | Allow or deny an exact domain. Use domain names without URL schemes, ports, or wildcards. |
-| `experimental_network` | `table` | Administrator-managed network requirements for sandboxed local commands, enforced from `requirements.toml`. When enabled, these requirements can start the command network proxy without `features.network_proxy`. Browser tools separately check managed network denies and exclusive allowlists. These requirements do not route browser traffic through the proxy or control web search, apps, MCP servers, native-app traffic, or other capability-specific traffic. On supported managed Codex Cloud paths, these requirements constrain command networking alongside separate Cloud environment internet settings. Approved full sandbox escalation can bypass the command proxy where policy permits it. Work Cloud does not inherit these requirements. |
-| `experimental_network.enabled` | `boolean` | Enable sandboxed networking requirements. This does not grant network access when the active sandbox keeps command networking off. |
-| `experimental_network.http_port` | `integer` | Loopback HTTP listener port to use for `[experimental_network]` requirements. |
-| `experimental_network.socks_port` | `integer` | Loopback SOCKS5 listener port to use for `[experimental_network]` requirements. |
-| `experimental_network.allow_upstream_proxy` | `boolean` | Allow sandboxed networking to chain through an upstream proxy from the environment. |
-| `experimental_network.dangerously_allow_non_loopback_proxy` | `boolean` | Permit non-loopback listener addresses for `[experimental_network]` requirements. Enabling it can expose listeners beyond localhost. |
-| `experimental_network.dangerously_allow_all_unix_sockets` | `boolean` | Permit arbitrary Unix socket destinations instead of allowlist-only access. Use only in tightly controlled environments. |
-| `experimental_network.domains` | `map<string, allow \| deny>` | Map-shaped administrator domain policy for sandboxed networking. Supports exact hosts, `*.example.com` for subdomains only, `**.example.com` for apex plus subdomains, and global `*` allow rules. Prefer scoped rules because `*` broadly opens public outbound access. Environment rules can replace the same Global domain key within a policy. Higher-priority values replace the same key, while other inherited keys remain. After composition, a different matching `deny`, including an inherited wildcard, still blocks a request. Empty environment maps do not clear Global rules. Verify executor support. Do not combine this with `experimental_network.allowed_domains` or `experimental_network.denied_domains`. |
-| `experimental_network.domains.<pattern>` | `allow \| deny` | Allow or deny sandboxed network access for the matching domain pattern. A deny rule wins when several patterns match. |
-| `experimental_network.allowed_domains` | `array<string>` | Administrator allow rules for sandboxed-command networking while the managed network proxy is enabled. These rules do not apply to web search, apps, or MCP servers. Do not combine this with `experimental_network.domains`. |
-| `experimental_network.denied_domains` | `array<string>` | List-shaped administrator deny rules for sandboxed networking. Do not combine this with `experimental_network.domains`. |
-| `experimental_network.managed_allowed_domains_only` | `boolean` | When networking requirements are enabled and this is true, ordinary user configuration and per-domain approvals cannot expand the managed proxy allowlist. With no effective configured or inherited Allow entries, ordinary managed commands have no allowed destinations. A deny-only policy does not allow the rest of the internet. This does not cover every tool or approved full sandbox escalation. |
-| `experimental_network.unix_sockets` | `map<string, allow \| deny>` | Administrator-managed Unix socket allowlist for sandboxed networking on macOS. Paths must be absolute. |
-| `experimental_network.unix_sockets.<path>` | `allow \| deny` | On macOS, `allow` adds an absolute Unix socket path to the allowlist; `deny` leaves it out. A `deny` entry cannot block a socket when allow-all Unix sockets is enabled. |
-| `experimental_network.allow_local_binding` | `boolean` | Permit broader local/private-network access for sandboxed networking. On the supported Codex Cloud proxy path, an explicit false can prevent upstream-proxy access even if a domain is allowed. It defaults to true only if no applicable requirement, selected network profile, or proxy feature setting provides a value. Inherited false remains explicit. A supported higher-priority Cloud override can change it without broadening Global for Local or adding domain Allow entries. Verify executor support. Do not apply this Cloud default to Local. |
+| `otel` | `table` | Enforce the specified OpenTelemetry settings. Each exporter replaces the entire corresponding exporter definition. Span attributes and tracestate fields override only matching entries. |
+| `otel.environment` | `string` | Enforce the environment label on telemetry. |
+| `otel.exporter` | `none \| otlp-http \| otlp-grpc` | Enforce the log exporter, including its endpoint, headers, and TLS settings. |
+| `otel.trace_exporter` | `none \| otlp-http \| otlp-grpc` | Enforce the trace exporter, including its endpoint, headers, and TLS settings. |
+| `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Enforce the metrics exporter. The Statsig exporter follows `analytics.enabled`. Explicit OTLP metrics exporters run independently of that setting. |
+| `otel.log_user_prompt` | `boolean` | Control whether exported logs include user prompt text. |
+| `otel.log_agent_responses` | `boolean` | Control whether OTLP logs include final response text from the main agent and spawned subagents. |
+| `otel.log_guardian_assessments` | `boolean` | Control whether OTLP logs include completed automatic approval assessments and their rationales. |
+| `otel.tool_result` | `table` | Enforce the tool-result log settings as a unit. An empty table enforces the default byte limit. |
+| `otel.tool_result.max_bytes` | `integer (nonnegative)` | Maximum UTF-8 bytes of tool-result text before the truncation notice in logs. Defaults to `2048` when the managed table is present. |
+| `otel.span_attributes` | `map<string,string>` | Enforce individual string attributes on exported spans. Higher-priority requirements win for the same attribute. |
+| `otel.tracestate` | `map<string,map<string,string>>` | Enforce individual fields within W3C tracestate members. Higher-priority requirements win for the same member and field. |
+| `network_proxy` | `table` | Administrator-managed network requirements for sandboxed local commands. Codex 0.166.0 accepts `[network_proxy]` and its alias `[experimental_network]`. Use one name per requirements layer. Keep the alias in published policies until every client and policy validator supports the new name. When enabled, these requirements can start the command network proxy without `features.network_proxy`. Browser tools separately check managed network denies and exclusive allowlists. These requirements do not route browser traffic through the proxy or control web search, apps, MCP servers, native-app traffic, or other capability-specific traffic. On supported managed Codex Cloud paths, these requirements constrain command networking alongside separate Cloud environment internet settings. Approved full sandbox escalation can bypass the command proxy where policy permits it. Work Cloud does not inherit these requirements. |
+| `network_proxy.enabled` | `boolean` | Enable sandboxed networking requirements. This does not grant network access when the active sandbox keeps command networking off. |
+| `network_proxy.http_port` | `integer` | Loopback HTTP listener port to use for `[network_proxy]` requirements. |
+| `network_proxy.socks_port` | `integer` | Loopback SOCKS5 listener port to use for `[network_proxy]` requirements. |
+| `network_proxy.allow_upstream_proxy` | `boolean` | Allow sandboxed networking to chain through an upstream proxy from the environment. |
+| `network_proxy.dangerously_allow_non_loopback_proxy` | `boolean` | Permit non-loopback listener addresses for `[network_proxy]` requirements. Enabling it can expose listeners beyond localhost. |
+| `network_proxy.dangerously_allow_all_unix_sockets` | `boolean` | Permit arbitrary Unix socket destinations instead of allowlist-only access. Use only in tightly controlled environments. |
+| `network_proxy.domains` | `map<string, allow \| deny>` | Map-shaped administrator domain policy for sandboxed networking. Supports exact hosts, `*.example.com` for subdomains only, `**.example.com` for apex plus subdomains, and global `*` allow rules. Prefer scoped rules because `*` broadly opens public outbound access. Environment rules can replace the same Global domain key within a policy. Higher-priority values replace the same key, while other inherited keys remain. After composition, a different matching `deny`, including an inherited wildcard, still blocks a request. Empty environment maps do not clear Global rules. Verify executor support. Do not combine this with `network_proxy.allowed_domains` or `network_proxy.denied_domains`. |
+| `network_proxy.domains.<pattern>` | `allow \| deny` | Allow or deny sandboxed network access for the matching domain pattern. A deny rule wins when several patterns match. |
+| `network_proxy.review_domains` | `array<string>` | Route matching hosts through network approval even if an allow rule matches. An explicit deny takes precedence. Approved requests still undergo DNS and private-address checks. Defaults to an empty list. |
+| `network_proxy.allowed_domains` | `array<string>` | Administrator allow rules for sandboxed-command networking while the managed network proxy is enabled. These rules do not apply to web search, apps, or MCP servers. Do not combine this with `network_proxy.domains`. |
+| `network_proxy.denied_domains` | `array<string>` | List-shaped administrator deny rules for sandboxed networking. Do not combine this with `network_proxy.domains`. |
+| `network_proxy.managed_allowed_domains_only` | `boolean` | When networking requirements are enabled and this is true, ordinary user configuration and per-domain approvals cannot expand the managed proxy allowlist. With no effective configured or inherited Allow entries, ordinary managed commands have no allowed destinations. A deny-only policy does not allow the rest of the internet. This does not cover every tool or approved full sandbox escalation. |
+| `network_proxy.unix_sockets` | `map<string, allow \| deny>` | Administrator-managed Unix socket allowlist for sandboxed networking on macOS. Paths must be absolute. |
+| `network_proxy.unix_sockets.<path>` | `allow \| deny` | On macOS, `allow` adds an absolute Unix socket path to the allowlist; `deny` leaves it out. A `deny` entry cannot block a socket when allow-all Unix sockets is enabled. |
+| `network_proxy.allow_local_binding` | `boolean` | Permit broader local/private-network access for sandboxed networking. On the supported Codex Cloud proxy path, an explicit false can prevent upstream-proxy access even if a domain is allowed. It defaults to true only if no applicable requirement, selected network profile, or proxy feature setting provides a value. Inherited false remains explicit. A supported higher-priority Cloud override can change it without broadening Global for Local or adding domain Allow entries. Verify executor support. Do not apply this Cloud default to Local. |
 | `hooks` | `table` | Admin-enforced managed lifecycle hooks. Requires a managed hook directory and uses the same event schema as inline `[hooks]` in `config.toml`. |
 | `hooks.managed_dir` | `string (absolute path)` | Directory containing managed hook scripts on macOS and Linux. Codex validates that it is absolute and exists before loading managed hooks. |
 | `hooks.windows_managed_dir` | `string (absolute path)` | Directory containing managed hook scripts on Windows. Codex validates that it is absolute and exists before loading managed hooks. |
-| `hooks.<Event>` | `array<table>` | Matcher groups for a hook event such as `PreToolUse`, `PermissionRequest`, `PostToolUse`, `PreCompact`, `PostCompact`, `SessionStart`, `SessionEnd`, `SubagentStart`, `SubagentStop`, `UserPromptSubmit`, or `Stop`. |
+| `hooks.<Event>` | `array<table>` | Matcher groups for a hook event such as `PreModelRequest`, `PostModelRequest`, `PreToolUse`, `PermissionRequest`, `PostToolUse`, `PreCompact`, `PostCompact`, `SessionStart`, `SessionEnd`, `SubagentStart`, `SubagentStop`, `UserPromptSubmit`, or `Stop`. |
 | `hooks.<Event>[].hooks` | `array<table>` | Hook handlers for a matcher group. Command and MCP tool hooks are supported while prompt and agent hook handlers are parsed but skipped. |
 | `hooks.<Event>[].hooks[].async` | `boolean` | Run a command hook in the background without delaying the triggering operation. Defaults to `false`; `SessionEnd` always runs synchronously. See [Run hooks in the background](./hooks.md#run-hooks-in-the-background). |
 | `hooks.<Event>[].hooks[].additionalContextLimit` | `integer` | Approximate per-handler token threshold for saving oversized `additionalContext` to disk and showing the model a shorter preview. Defaults to `2500`; `0` passes the full context directly to the model. See [Large hook output](./hooks.md#large-hook-output). |

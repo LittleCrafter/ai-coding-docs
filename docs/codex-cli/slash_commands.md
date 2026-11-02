@@ -49,8 +49,13 @@ codex queue --thread <SESSION_ID> --message "Run the remaining checks"
 ```
 
 `--thread` accepts a UUID or exact session name. Use a UUID when sessions
-share the same name. The command also accepts `--remote` and
-`--remote-auth-token-env`; image attachments aren't supported.
+share the same name. Queued messages use the session's model. The command
+accepts text only.
+
+Add `--resume` to queue the message and then resume the session if it isn't
+already loaded. Resuming requires a running local daemon or a server selected
+with `--remote`. Use `--remote-auth-token-env` if the server requires a token.
+If Codex can't resume the session, it prints a warning and still exits successfully.
 
 ### `codex app-server`
 
@@ -58,10 +63,9 @@ Launch the Codex app server locally. This is primarily for development and debug
 
 `codex app-server --listen stdio://` keeps the default JSONL-over-stdio behavior, and `codex app-server --stdio` is an alias for that transport. `--listen ws://IP:PORT` enables WebSocket transport for app-server clients. The server accepts `ws://` listen URLs; use TLS termination or a secure proxy when clients connect with `wss://`. Use `--listen unix://` to accept WebSocket handshakes on Codex's default Unix socket, or `--listen unix:///absolute/path.sock` to choose a socket path. If you generate schemas for client bindings, add `--experimental` to include gated fields and methods.
 
-Add `--code-mode-host wss://code-mode.example.com/host` to connect app-server to
-a remote Code Mode host instead of starting a local host. This outbound
-connection is separate from `--listen` and shared by every thread in the
-app-server process. Use `ws://` only for a localhost or SSH-forwarded host.
+Use `--code-mode-host https://code-mode.example.com` to connect all threads in
+the app-server process to a remote Code Mode host over gRPC. `--listen`
+controls how clients connect to the app server.
 
 ### `codex remote-control`
 
@@ -127,6 +131,9 @@ another. Use `--title` only with `--commit`.
 Archive or restore a saved interactive session by session ID or session name.
 Use these commands when you want to clean up the session picker without deleting
 the transcript. Session IDs take precedence over session names.
+
+When you archive or restore a session, Codex also tries to archive or restore
+the subagent sessions it spawned, including their descendants.
 
 ```bash
 codex archive <SESSION>
@@ -271,7 +278,7 @@ override takes precedence over `tui.resume_cwd`.
 
 ### `codex fork`
 
-Fork a previous interactive session into a new chat. By default, `codex fork` opens the session picker; add `--last` to fork your most recent session instead.
+Fork a previous interactive session into a new chat. By default, `codex fork` opens the session picker. Use `--last` to fork the most recent session in the current directory. Use `--last --all` to fork the most recent session across all directories.
 
 When the current and saved session directories differ, `codex fork` uses the
 same working-directory prompt and `tui.resume_cwd` setting as `codex resume`.
@@ -292,6 +299,12 @@ Use the sandbox helper to run a command under the same policies Codex uses inter
 
 #### Windows
 
+Before removing the legacy Windows sandbox, stop the apps that use it. If the
+sandbox provisioning service is installed, stop it too. Then run
+`codex sandbox uninstall` as an administrator.
+The command removes machine-wide sandbox accounts and network rules. It keeps
+your Codex home, including sandbox directories and filesystem permissions.
+
 ### `codex update`
 
 Check for and apply a Codex CLI update when the installed release supports self-update. Debug builds print a message telling you to install a release build instead.
@@ -307,7 +320,7 @@ Check for and apply a Codex CLI update when the installed release supports self-
 - Type `@` to search for a file in the workspace and add its path to the prompt.
 - Press <kbd>Up</kbd> or <kbd>Down</kbd> to restore draft history.
 - Press <kbd>Ctrl</kbd>+<kbd>R</kbd> to search prompt history, then press <kbd>Enter</kbd> to use a match or <kbd>Escape</kbd> to cancel.
-- Press <kbd>Ctrl</kbd>+<kbd>O</kbd> or run `/copy` to copy the latest completed Codex output.
+- Press <kbd>Ctrl</kbd>+<kbd>&nbsp;O&nbsp;</kbd> to copy the latest completed response. Run `/copy` to choose what to copy.
 - Prefix a line with `!` to run a local shell command under the current approval and sandbox settings.
 - Press <kbd>Tab</kbd> while Codex is working to queue a follow-up prompt, slash command, or shell command for the next turn.
 - Press <kbd>Enter</kbd> while Codex is working to inject new instructions into the current turn.
@@ -346,6 +359,7 @@ completion still works before you queue the command.
 | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | [`/permissions`](#update-permissions-with-permissions)                                      | Set what Codex can do without asking first.                     | Relax or tighten approval requirements mid-session, such as switching between Auto and Read Only.          |
 | [`/ide`](#include-ide-context-with-ide)                                                     | Include open files, current selection, and other IDE context.   | Pull editor context into the next prompt without re-explaining what's open in your IDE.                    |
+| [`/config`](#change-terminal-preferences-with-config)                                       | Search and change terminal preferences.                         | Adjust the theme, notifications, keyboard shortcuts, or text selection.                                    |
 | [`/keymap`](#remap-tui-shortcuts-with-keymap)                                               | Remap TUI keyboard shortcuts.                                   | Inspect and persist custom shortcut bindings in `config.toml`.                                             |
 | [`/vim`](#toggle-vim-mode-with-vim)                                                         | Toggle Vim mode for the composer.                               | Switch between Vim normal/insert behavior and the default composer editing mode.                           |
 | [`/setup-default-sandbox`](#set-up-the-elevated-windows-sandbox-with-setup-default-sandbox) | Set up the elevated agent sandbox (Windows only).               | Replace the degraded Windows sandbox after Codex offers the elevated setup.                                |
@@ -359,7 +373,7 @@ completion still works before you queue the command.
 | [`/archive`](#archive-the-current-session-with-archive)                                     | Archive the current session.                                    | Remove the current session from active session lists without deleting its transcript.                      |
 | [`/delete`](#delete-the-current-session-with-delete)                                        | Permanently delete the current session.                         | Remove the transcript and descendant sessions when archiving isn't enough.                                 |
 | [`/compact`](#keep-transcripts-lean-with-compact)                                           | Summarize the visible chat to free tokens.                      | Use after long runs so Codex retains key points without blowing the context window.                        |
-| [`/copy`](#copy-the-latest-response-with-copy)                                              | Copy the latest completed Codex output.                         | Grab the latest finished response or plan text without manually selecting it. You can also press `Ctrl+O`. |
+| [`/copy`](#copy-the-latest-response-with-copy)                                              | Copy a response, code block, or quote.                          | Use <kbd>Ctrl</kbd>+<kbd>&nbsp;O&nbsp;</kbd> to copy the latest completed response without using the menu. |
 | [`/diff`](#review-changes-with-diff)                                                        | Show the Git diff, including files Git isn't tracking yet.      | Review Codex's edits before you commit or run tests.                                                       |
 | [`/exit`](#exit-the-cli-with-quit-or-exit)                                                  | Exit the CLI (same as `/quit`).                                 | Alternative spelling; both commands exit the session.                                                      |
 | [`/experimental`](#toggle-experimental-features-with-experimental)                          | Toggle experimental features.                                   | Enable options such as Network proxy or Prevent sleep while running.                                       |
@@ -373,7 +387,10 @@ completion still works before you queue the command.
 | [`/mcp`](#list-mcp-tools-with-mcp)                                                          | List configured Model Context Protocol (MCP) tools.             | Check which external tools Codex can call during the session; add `verbose` for server details.            |
 | [`/mention`](#highlight-files-with-mention)                                                 | Attach a file to the chat.                                      | Point Codex at specific files or folders you want it to inspect next.                                      |
 | [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Use `gpt-6-luna` or `gpt-6.1-sol` if shown.            |
+| [`/presets`](#reuse-prompts-and-commands-with-presets)                                      | Save and run prompts or slash commands.                         | Recall a command or prompt you use frequently.                                                             |
 | [`/fast`](#toggle-fast-mode-with-fast)                                                      | Toggle a Fast service tier when the model catalog exposes one.  | Turn the current model's Fast tier on or off and persist the selection.                                    |
+| [`/daybreak`](#toggle-daybreak)                                                             | Toggle Daybreak when your account and model are eligible.       | Use an approved cyber access program for a chat.                                                           |
+| [`/voice`](#talk-to-codex-with-voice)                                                       | Start or stop a voice conversation when available.              | Speak to Codex in a terminal build that supports voice.                                                    |
 | [`/plan`](#switch-to-plan-mode-with-plan)                                                   | Switch to plan mode and optionally send a prompt.               | Ask Codex to propose an execution plan before implementation work starts.                                  |
 | [`/goal`](#set-or-view-a-task-goal-with-goal)                                               | Set, edit, pause, resume, view, or clear a task goal.           | Give Codex a persistent target to track while a larger task runs.                                          |
 | [`/ps`](#check-background-terminals-with-ps)                                                | Show background terminals and their recent output.              | Check long-running commands without leaving the main transcript.                                           |
@@ -412,6 +429,10 @@ denied.
 ## Control your session with slash commands
 
 The following workflows keep your session on track without restarting Codex.
+
+### Change terminal preferences with `/config`
+
+Type `/config` to open terminal preferences. Browse settings by group or press <kbd>&nbsp;/&nbsp;</kbd> to search. Codex saves your changes automatically.
 
 ### Choose the terminal mode with `/tui`
 
@@ -465,8 +486,10 @@ task is running.
 
 Expected: Codex offers to install the latest public stable release or use the
 current CLI build for the local background server. Confirming an update exits
-Codex and may interrupt active work. For a remote connection, manage the server
-on its host.
+Codex and may interrupt active work. To restart a managed local server, choose
+**Restart background server** and confirm. Codex reconnects automatically. The restart may
+interrupt active or queued work in other chats. For a remote connection, manage
+the server on its host.
 
 ### Inspect warnings with `/warnings`
 
@@ -485,6 +508,18 @@ Sol isn't listed, choose another model. See [GPT-6.1 Sol availability by plan](.
 
 Expected: Codex confirms the new model in the transcript. Run `/status` to verify the change.
 
+To change settings for the current session directly, use
+`/model [model] [--reasoning=<level>] [--speed=<tier>]`. For example,
+`/model --reasoning=high` keeps the current model and sets its reasoning effort
+to high if the model supports it.
+
+### Reuse prompts and commands with `/presets`
+
+Type `/presets` and press <kbd>&nbsp;n&nbsp;</kbd> to save a prompt or slash command in a
+numbered slot. Press <kbd>&nbsp;s&nbsp;</kbd> to create a preset from your current model,
+permissions, terminal title, or status line. To run a saved preset, open
+`/presets` and press its number.
+
 ### Toggle Fast mode with `/fast`
 
 1. Type `/fast` to turn the current model's Fast service tier on.
@@ -495,6 +530,18 @@ you can also show a Fast mode status-line item with `/statusline`.
 
 Fast tier commands are catalog-driven. If the current model doesn't advertise a
 Fast tier, Codex won't show `/fast`.
+
+### Toggle Daybreak
+
+If you use the OpenAI provider and your account and model have [Daybreak access](./cyber-safety.md), use `/daybreak` to turn Daybreak on or off. Codex applies the selection to the current
+chat and saves it as the default for future chats.
+
+### Talk to Codex with `/voice`
+
+When your CLI build and session support voice, use `/voice` or <kbd>F8</kbd> to
+start or stop a voice conversation. Use `/voice mute` to turn your microphone on or off
+and `/voice stop` to end the conversation. Use `/voice settings` to choose a
+voice for future conversations.
 
 ### Switch to plan mode with `/plan`
 
@@ -563,12 +610,9 @@ that skill's instructions.
 2. Choose **Claude Code** or **Cursor**.
 3. Select the setup, project files, or recent chats you want to migrate.
 
-Expected: Codex opens the external-agent import picker and imports the selected
-supported artifacts into Codex configuration and local files. Session discovery
-includes up to 50 chats from the last 30 days.
-
-Run `/import` from a local TUI session. It's unavailable while a task is running,
-in remote sessions, and while connected to the local app-server daemon.
+Codex looks for up to 50 chats from the last 30 days. When connected to a local
+daemon or remote server, Codex reads and imports files on the machine running
+the daemon or server. Wait until the current task finishes before starting an import.
 
 For the desktop app workflow and supported artifact types, see [Import from
 another agent](./import.md).
@@ -621,8 +665,11 @@ returns to the command center. Without a shared server, Codex exits.
    permission profiles are active, the picker also shows configured custom
    profiles and their descriptions.
 
-Expected: Codex announces the updated policy. Future actions respect the
-updated approval mode until you change it again.
+To select a profile by ID for this session, use
+`/permissions <profile-id> [--approval-policy=<policy>] [--reviewer=user|auto_review]`.
+For example, `/permissions :workspace --approval-policy=on-request --reviewer=user`
+selects workspace access and sends approval requests to you when permitted by
+your configuration.
 
 ### Include IDE context with `/ide`
 
@@ -654,16 +701,12 @@ corresponding automatic approval preset.
 
 ### Copy the latest response with `/copy`
 
-1. Type `/copy` and press Enter.
+In scrollback mode, type `/copy` and choose the whole response, a code block,
+or a quote from the latest completed response. In fullscreen mode, select a
+block in the transcript. Press <kbd>Enter</kbd> to copy your selection.
 
-Expected: Codex copies the latest completed Codex output to your clipboard.
-
-If a turn is still running, `/copy` uses the latest completed output instead of
-the in-progress response. The command is unavailable before the first completed
-Codex output and immediately after a rollback.
-
-You can also press <kbd>Ctrl</kbd>+<kbd>O</kbd> from the main TUI to copy the
-latest completed response without opening the slash command menu.
+After `/status`, use `/copy` to copy the full status or an individual field.
+To copy the latest completed response directly, press <kbd>Ctrl</kbd>+<kbd>&nbsp;O&nbsp;</kbd>.
 
 ### Toggle raw scrollback with `/raw`
 
@@ -701,7 +744,7 @@ shows a sign-in requirement.
 
 Expected: Codex prints layer diagnostics plus policy details such as
 `allowed_approval_policies`, `allowed_sandbox_modes`, `mcp_servers`, `rules`,
-and `experimental_network` when configured.
+and `network_proxy` when configured.
 
 Use this output to debug why an effective setting differs from `config.toml`.
 
@@ -717,6 +760,10 @@ Available status-line items include model, model+reasoning, context stats, rate
 limits, git branch, token counters, session id, current directory/project root,
 and Codex version.
 
+To set the footer for this session only, list the items in display order. For
+example, `/statusline model project-name` shows the model before the project name. Use `/statusline --clear` to hide
+all items for the session.
+
 ### Configure terminal title items with `/title`
 
 1. Type `/title`.
@@ -727,6 +774,10 @@ Expected: The terminal window or tab title updates immediately and persists to
 
 Available title items include app name, project, spinner, status, thread, git
 branch, model, and task progress.
+
+To set the title for this session only, list the items in display order. For
+example, `/title project-name model` shows the project name before the model. Use `/title --clear` to clear the title items for
+the session.
 
 ### Choose a syntax theme with `/theme`
 
@@ -826,7 +877,10 @@ Expected: Codex updates the saved chat name without changing its transcript.
 ### Resume a saved chat with `/resume`
 
 1. Type `/resume` and press Enter.
-2. Choose the session you want from the saved-session picker.
+2. Choose a search scope in the picker. `Cwd` shows chats from the current
+   directory. `Repo`, when available, includes the corresponding directory in
+   linked local worktrees. `All` searches across directories.
+3. Select the chat you want to resume.
 
 Expected: Codex reloads the selected chat's transcript so you can pick
 up where you left off, keeping the original history intact.

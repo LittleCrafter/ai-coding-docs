@@ -35,7 +35,7 @@ The CLI provides these commands:
 | `codex-security scans`             | List, inspect, compare, and retrieve saved scan logs.               |
 | `codex-security findings`          | Review and update saved security findings.                          |
 | `codex-security export`            | Export findings or a retained threat model.                         |
-| `codex-security publish`           | Publish findings to Linear or a custom findings service.            |
+| `codex-security publish`           | Check or publish a saved scan, or import external findings.         |
 | `codex-security classify-severity` | Apply a severity rubric to saved findings.                          |
 | `codex-security suggest-owners`    | Suggest finding owners using CODEOWNERS and Git history.            |
 | `codex-security dedupe`            | Deduplicate saved findings.                                         |
@@ -674,7 +674,8 @@ repository, run
 `codex-security validate /path/outside/repository/alerts.json` to assess them.
 Keep the full JSON without output filters or token limits when saving
 validation inputs. Use [`scan import`](#codex-security-scan-import) for
-findings already in the Codex Security schema.
+findings already in the Codex Security schema. To import Dependabot alerts, use
+[`publish findings`](#codex-security-publish-findings).
 
 ## `codex-security install-hook`
 
@@ -1207,6 +1208,44 @@ inspect the payload before sending it.
 The CLI doesn't send model credentials to a custom service. Handle any required
 authentication outside the CLI. See the [findings service guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/findings-service.md) for deployment and protocol details.
 
+## `codex-security publish findings`
+
+Use `--to local` to save imported findings on your machine. With `--to cloud`,
+even a preview contacts the service. It needs a file-backed ChatGPT login and
+an authorized repository ID or URL with an existing Cloud environment. A Cloud
+import can return a partial result if the service rejects individual records.
+See the [GitHub import guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/cli.md#import-github-findings-locally-or-to-cloud) for both workflows.
+
+To import Dependabot alerts for a local checkout, you need a saved export from
+the same GitHub repository. Follow the [Dependabot export guide](https://github.com/openai/codex-security/blob/main/docs/scanner-imports/github-dependabot.md) to save all pages outside the checkout using a token with read access to Dependabot alerts.
+
+Append `echo "$out/dependabot.jsonl"` to the export script before running it.
+In a new shell, use the path it printed to preview the file. Replace `./project` and `OWNER/REPO` with your checkout and repository.
+If the checkout has network remotes, one must match the alert repository.
+Otherwise, verify that the export belongs to the checkout.
+
+```bash
+export CODEX_SECURITY_ENABLE_EXTERNAL_IMPORTS=1
+npx @openai/codex-security publish findings /path/to/dependabot.jsonl \
+  --to local --repository ./project --provider github \
+  --source-key github.com/OWNER/REPO/dependabot --dry-run --format json
+```
+
+Check the destination and exclusions in the preview. A dry run exits with `0`
+even if it lists excluded alerts. To save the accepted alerts, rerun without
+`--dry-run` and confirm, or replace `--dry-run` with `--yes`. If the import
+excludes any alerts, it saves the accepted ones and exits with `1`. Read the
+stored alerts in the same shell.
+
+```bash
+npx @openai/codex-security findings imported ./project --format json
+```
+
+Imported alerts start with the assessment status `not_assessed`. With the same
+source key, a later import updates the stored records for alerts in the file.
+Omitted alerts keep their last imported state. Alerts that share an advisory remain
+separate records.
+
 ## Finding review commands
 
 These commands work with existing findings:
@@ -1521,13 +1560,13 @@ that case.
 
 The CLI uses these exit codes:
 
-| Exit  | Condition                                                                                                                                                                          |
-| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0`   | A scan or bulk campaign completed and passed its severity policy, a publication completed without failures, or another command succeeded.                                          |
-| `1`   | A completed scan or bulk campaign reports a finding at or above the configured severity, or `verify-fix` reports a finding as still vulnerable with no inconclusive results.       |
-| `2`   | An input, execution, result-integrity, required-output, or export failure occurred, a publication has one or more failed findings, or `verify-fix` reports an inconclusive result. |
-| `130` | Ctrl-C interrupted a scan or publication.                                                                                                                                          |
-| `143` | SIGTERM terminated a scan or publication.                                                                                                                                          |
+| Exit  | Condition                                                                                                                                                                                                   |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0`   | A scan or bulk campaign completed and passed its severity policy, a publication completed without failures, or another command succeeded.                                                                   |
+| `1`   | A scan or bulk campaign meets its severity threshold, `verify-fix` reports an unfixed finding with no inconclusive results, or a confirmed import excludes local records or returns a partial Cloud result. |
+| `2`   | An input, execution, result-integrity, required-output, or export failure occurred, `publish scan` has one or more failed findings, or `verify-fix` reports an inconclusive result.                         |
+| `130` | Ctrl-C interrupted a scan or publication.                                                                                                                                                                   |
+| `143` | SIGTERM terminated a scan or publication.                                                                                                                                                                   |
 
 Coverage gaps don't change a completed scan's exit code or bypass its severity
 policy. Exit `0` doesn't mean every file was reviewed. When you request

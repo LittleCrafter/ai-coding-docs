@@ -66,6 +66,10 @@ const result2 = await thread2.run("Pick up where you left off");
 console.log(result2.finalResponse);
 ```
 
+To identify threads created by your integration, set `threadSource` when you create a thread.
+For example, `codex.startThread({ threadSource: "ci" })` labels the thread
+as `ci`. Resuming a thread preserves its original source.
+
 ### Configuration overrides
 
 Pass `config` to set structured Codex configuration. For keys that can't be
@@ -140,6 +144,35 @@ async def main() -> None:
 
 asyncio.run(main())
 ```
+
+### Pass content from another system
+
+When a tool, application, or another agent supplies content, pass an
+`ExternalMessage` as the entire input to `thread.run()` or `thread.turn()`.
+For example, `ExternalMessage(tool_name="issue_tracker", content=issue_body)`
+identifies the tool that supplied an issue description. Codex treats the
+description as tool output, at a lower priority than user and developer instructions. The message
+can start a turn or join an active regular turn.
+
+### Resume a thread without loading its history
+
+Pass `include_turns=False` to `codex.thread_resume()` or `codex.thread_fork()`
+to skip loading old turns into the response. The model still has the thread's
+context. To retrieve the history later, call `thread.read(include_turns=True)`.
+
+With Codex CLI 0.166.0 or later, use the thread's saved model provider to resume it. If you switch providers, call `codex.thread_fork(thread_id)` to
+continue from the same history on the new provider.
+
+### Set the service tier for one turn
+
+To choose the service tier for a single new turn, pass `turn_service_tier` to
+`run()` or `turn()`. For example, `turn_service_tier="default"` uses standard
+speed for that turn. To change the tier for this and later turns, pass
+`service_tier`. Joining an active turn leaves its tier unchanged.
+
+If you supply your own Codex executable, `ExternalMessage`, explicit
+`include_turns` on resume or fork, and `turn_service_tier` require Codex CLI
+0.151.0 or later.
 
 ### Sandbox presets
 
