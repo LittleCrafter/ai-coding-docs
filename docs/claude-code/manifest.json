@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.317",
-  "last_updated": "2026-11-03T10:10:45Z",
+  "last_updated": "2026-11-03T18:42:57Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1860,8 +1860,8 @@
       "source_url": "https://code.claude.com/docs/en/setup",
       "source_md_url": "https://code.claude.com/docs/en/setup.md",
       "source_id": "setup",
-      "hash": "652872f26cfd711c4f92351b1ef8338d3f0b6140024c246c42edcbcbdfea172d",
-      "last_updated": "2026-11-01T17:17:33Z"
+      "hash": "4c3cd110ffc0f00002b70a42ab0b6dc82f193cce52c9666c1184b33d98cd1471",
+      "last_updated": "2026-11-03T18:42:57Z"
     },
     "skills": {
       "slug": "skills",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-03T10:10:45Z",
-    "fetch_duration_seconds": 79.191,
+    "last_fetch_completed": "2026-11-03T18:42:57Z",
+    "fetch_duration_seconds": 79.186,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

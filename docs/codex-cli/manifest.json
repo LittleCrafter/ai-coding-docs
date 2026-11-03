@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.166.0",
-  "last_updated": "2026-11-03T02:44:03Z",
+  "last_updated": "2026-11-03T18:44:10Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "619d4d0146d46e71d4941565662fce2dcea844388c4247bcfd2c09b26b149d91",
-      "last_updated": "2026-11-03T02:44:03Z"
+      "hash": "09ee4351c300088c978176ca0fa918d2b287adf10547061d95c8c5f888ae108d",
+      "last_updated": "2026-11-03T18:44:10Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -930,8 +930,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/windows-deployment",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/windows-deployment.md",
       "source_id": "llms:enterprise/windows-deployment",
-      "hash": "94fe3b0ee7df43ed2b34bda92b5ffb5e1466bcaa254f0860c7e1ae9d0b58917e",
-      "last_updated": "2026-10-29T17:40:33Z"
+      "hash": "f331775de1b426aa854b5d01b0510289e83048ed40d2a584d93f5cafd8671bc4",
+      "last_updated": "2026-11-03T18:44:10Z"
     },
     "enterprise/work-admin-faq": {
       "slug": "enterprise/work-admin-faq",
@@ -2065,8 +2065,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-03T02:44:03Z",
-    "fetch_duration_seconds": 71.916,
+    "last_fetch_completed": "2026-11-03T18:44:10Z",
+    "fetch_duration_seconds": 71.85,
     "total_pages_discovered": 206,
     "pages_fetched_successfully": 206,
     "pages_failed": 0,
