@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.166.0",
-  "last_updated": "2026-11-02T20:56:40Z",
+  "last_updated": "2026-11-03T02:44:03Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "ee175e7bc31cb692ddd4e17225841ab8d7a6bdda977da9260c0f3bfdcfd28c8f",
-      "last_updated": "2026-10-30T21:45:15Z"
+      "hash": "9193d8e41a8755c6276da3f1e37f11ae295db2b2b17c1708b8dd495b9b34a380",
+      "last_updated": "2026-11-03T02:44:03Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "173b77ee55dd1f9301d694b440c19ed1448f767b674f02e064db510f6291645e",
-      "last_updated": "2026-11-02T20:56:40Z"
+      "hash": "619d4d0146d46e71d4941565662fce2dcea844388c4247bcfd2c09b26b149d91",
+      "last_updated": "2026-11-03T02:44:03Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -350,8 +350,8 @@
       "source_url": "https://learn.chatgpt.com/docs/config-file/environment-variables",
       "source_md_url": "https://learn.chatgpt.com/docs/config-file/environment-variables.md",
       "source_id": "llms:config-file/environment-variables",
-      "hash": "6b06606ce0d4818e1d30b1a254f4031fdc13f0e5436827792aa6a3dc61d17ac1",
-      "last_updated": "2026-09-18T17:57:41Z"
+      "hash": "c2fbc884f3075892ba8f266f3567b71a0a88b4fe15eed58c8fb5f21182700c35",
+      "last_updated": "2026-11-03T02:44:03Z"
     },
     "configuration": {
       "slug": "configuration",
@@ -1013,6 +1013,16 @@
       "hash": "c09d12e3dc6b0f682823677801931b3c98a816f71b9e503b5c6fe8481105ea9f",
       "last_updated": "2026-10-02T21:30:19Z"
     },
+    "environments/network-file-systems": {
+      "slug": "environments/network-file-systems",
+      "title": "Run Codex with an NFS home directory",
+      "group": "environments",
+      "source_url": "https://learn.chatgpt.com/docs/environments/network-file-systems",
+      "source_md_url": "https://learn.chatgpt.com/docs/environments/network-file-systems.md",
+      "source_id": "llms:environments/network-file-systems",
+      "hash": "89ebb8b167c20a8ffd627d7e068c9dc534e670421b9ba17b98a36ee44541fee5",
+      "last_updated": "2026-11-03T02:44:03Z"
+    },
     "example-config": {
       "slug": "example-config",
       "title": "Sample Configuration",
@@ -1300,8 +1310,8 @@
       "source_url": "https://learn.chatgpt.com/docs/non-interactive-mode",
       "source_md_url": "https://learn.chatgpt.com/docs/non-interactive-mode.md",
       "source_id": "llms:non-interactive-mode",
-      "hash": "416849c0c65494a4affbdbd9468139637742483d9d47701d57bd7a2ede9acdf1",
-      "last_updated": "2026-10-14T00:02:15Z"
+      "hash": "6e28a477e5c41ef8d145ef6d265a4f4cc70c70ddf9d9789ab7d0563af72d0711",
+      "last_updated": "2026-11-03T02:44:03Z"
     },
     "notifications": {
       "slug": "notifications",
@@ -2055,10 +2065,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-02T20:56:40Z",
-    "fetch_duration_seconds": 71.476,
-    "total_pages_discovered": 205,
-    "pages_fetched_successfully": 205,
+    "last_fetch_completed": "2026-11-03T02:44:03Z",
+    "fetch_duration_seconds": 71.916,
+    "total_pages_discovered": 206,
+    "pages_fetched_successfully": 206,
     "pages_failed": 0,
     "failed_pages": []
   }

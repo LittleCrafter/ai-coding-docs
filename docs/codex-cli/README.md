@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 205
+- **Pages mirrored:** 206
 - **Version:** 0.166.0
-- **Last updated:** 2026-11-02T20:56:40Z
+- **Last updated:** 2026-11-03T02:44:03Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -208,6 +208,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Worktrees | [environments/git-worktrees.md](./environments/git-worktrees.md) | [source](<https://learn.chatgpt.com/docs/environments/git-worktrees>) |
 | Local environments | [environments/local-environment.md](./environments/local-environment.md) | [source](<https://learn.chatgpt.com/docs/environments/local-environment>) |
 | Codex environments | [environments/modes.md](./environments/modes.md) | [source](<https://learn.chatgpt.com/docs/environments/modes>) |
+| Run Codex with an NFS home directory | [environments/network-file-systems.md](./environments/network-file-systems.md) | [source](<https://learn.chatgpt.com/docs/environments/network-file-systems>) |
 
 ## extend
 
