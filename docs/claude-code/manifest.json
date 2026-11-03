@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.317",
-  "last_updated": "2026-11-03T02:42:50Z",
+  "last_updated": "2026-11-03T10:10:45Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1100,8 +1100,8 @@
       "source_url": "https://code.claude.com/docs/en/jetbrains",
       "source_md_url": "https://code.claude.com/docs/en/jetbrains.md",
       "source_id": "jetbrains",
-      "hash": "1af2bb66618140841118e0cff7149bcf6223d1c003a6fbc1f934ff1377f9a1da",
-      "last_updated": "2026-10-30T21:44:03Z"
+      "hash": "488a0cba98c2e6dfcd168cbe39bff43c5e374e02b1889ec708a712ec38992a01",
+      "last_updated": "2026-11-03T10:10:45Z"
     },
     "keybindings": {
       "slug": "keybindings",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-03T02:42:50Z",
-    "fetch_duration_seconds": 79.216,
+    "last_fetch_completed": "2026-11-03T10:10:45Z",
+    "fetch_duration_seconds": 79.191,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,
