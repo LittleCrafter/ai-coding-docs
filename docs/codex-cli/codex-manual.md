@@ -4169,7 +4169,9 @@ Source: [Meet dots](./dots.md)
 
 Your dot is an always-on agent that keeps work moving across your tools and projects. You can keep talking to it while it works, and it reaches out with results or decisions that need you.
 
-Powered by GPT-6 Astra, your dot lives in the cloud and has its own computer and browser. You can reach it and it can keep working even when your computer is off. It can research, analyze data, prepare documents, and build software, using relevant context from past conversations and your preferences.
+We’re expanding the family of frontier models that power dots to include GPT-6.1 Terra. Your dot can draw on different models for different parts of its work. GPT-6.1 Terra builds on the GPT-6 series’ alignment improvements and uses safeguards developed for GPT-6 Astra.
+
+Your dot lives in the cloud and has its own computer and browser. You can reach it and it can keep working even when your computer is off. It can research, analyze data, prepare documents, and build software, using relevant context from past conversations and your preferences.
 
 **Dots are rolling out gradually to eligible accounts.** See [availability and access](#access) for plan, region, and workspace requirements.
 
@@ -8867,17 +8869,9 @@ The result includes the output `path` and, for a threat-model file export,
 `provenance` from the same saved results. Both fields are `null` when
 `output: "-"` writes to stdout. Export requires Python 3.10 or later.
 
-For ServiceNow Manual AVIT Ingestion, [prepare the application template](./security/cli/reference.md#export-findings-for-servicenow) and pass its path as `avitTemplate`.
-
-```ts
-await exportArtifact({
-  source: { directory: "/path/to/scan" },
-  artifact: "findings",
-  format: "servicenow-avit",
-  avitTemplate: "/path/outside/repository/exports/app.csv",
-  output: "/path/outside/repository/exports/findings-avit.csv",
-});
-```
+For ServiceNow Manual AVIT Ingestion, set `artifact: "findings"` and
+`format: "servicenow-avit"`. [Prepare the application template](./security/cli/reference.md#export-findings-for-servicenow)
+and pass its path as `avitTemplate`. Set `output` to the destination CSV path.
 
 #### Validate an existing finding
 
@@ -11959,9 +11953,9 @@ At a high level, Auto-review is designed to block actions such as:
 - destructive actions with significant risk of irreversible damage
 
 The exact policy lives in the open-source Codex repository:
-[policy_template.md](https://github.com/openai/codex/blob/main/codex-rs/core/src/guardian/policy_template.md)
+[policy_template.md](https://github.com/openai/codex/blob/main/codex-rs/prompts/templates/guardian/policy_template.md)
 and
-[policy.md](https://github.com/openai/codex/blob/main/codex-rs/core/src/guardian/policy.md).
+[policy.md](https://github.com/openai/codex/blob/main/codex-rs/prompts/templates/guardian/policy.md).
 That policy can be customized per enterprise with `guardian_policy_config` or
 per user with local [`[auto_review].policy`](./config-file/config-advanced.md#approval-policies-and-sandbox-modes).
 
@@ -12017,7 +12011,7 @@ For setup details, see
 [Managed configuration](./enterprise/managed-configuration.md#configure-automatic-review-policy).
 
 The default reviewer policy is in the open-source Codex repository:
-[core/src/guardian/policy.md](https://github.com/openai/codex/blob/main/codex-rs/core/src/guardian/policy.md).
+[prompts/templates/guardian/policy.md](https://github.com/openai/codex/blob/main/codex-rs/prompts/templates/guardian/policy.md).
 Enterprises can replace its tenant-specific section with
 `guardian_policy_config` in managed requirements. Individual users can also set
 a local
@@ -32415,8 +32409,8 @@ and Claude-compatible manifests, but new packages should use this format.
 #### Add OpenAI-specific metadata
 
 Add `extensions.com.openai` to root `plugin.json` for presentation, existing
-registered MCP server mappings, and lifecycle hooks. Keep portable identity and
-metadata, such as `name`, `version`, and `description`, at the root.
+registered MCP server mappings, lifecycle hooks, and onboarding. Keep portable
+identity and metadata, such as `name`, `version`, and `description`, at the root.
 
 For example:
 
@@ -32430,6 +32424,7 @@ For example:
     "com.openai": {
       "apps": "./.app.json",
       "hooks": "./hooks/hooks.json",
+      "onboardingSkill": "./skills/setup/SKILL.md",
       "interface": {
         "displayName": "My Plugin",
         "shortDescription": "Reusable skills and MCP servers",
@@ -32462,40 +32457,14 @@ canonical in either case.
 
 #### Add an onboarding skill
 
-Give users a setup workflow to run after installing your plugin by declaring an
-onboarding skill. When users run setup, it invokes the skill in a new
+Set optional `extensions.com.openai.onboardingSkill` to a packaged `SKILL.md`
+path relative to the plugin root, as shown above. Write the skill using the
+[skills guide](https://developers.openai.com/plugins/build/skills). For the Codex compatibility format, put
+the same field in `.codex-plugin/plugin.json`.
+
+When users run setup after installation, it invokes the skill in a new
 conversation, or in the existing conversation if they installed the plugin
-during that conversation.
-
-Add the setup skill to your package at `skills/setup/SKILL.md`. Write its
-instructions using the [skills guide](https://developers.openai.com/plugins/build/skills), then set
-`extensions.com.openai.onboardingSkill` in your manifest:
-
-```json
-{
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "my-plugin",
-  "version": "0.1.0",
-  "description": "Reusable skills with a guided setup workflow",
-  "extensions": {
-    "com.openai": {
-      "onboardingSkill": "./skills/setup/SKILL.md"
-    }
-  }
-}
-```
-
-The field is optional. Its path is relative to the plugin root and must point
-to a skill included in the package. For the Codex compatibility format, put
-the same `extensions.com.openai.onboardingSkill` field in
-`.codex-plugin/plugin.json`; the path still resolves from the plugin root.
-
-Keep the skill focused on the setup your plugin needs, such as helping users
-choose a workspace or configure preferences. After installing a test package,
-run setup and verify that it invokes the packaged skill. Test both a fresh
-conversation and installation during an existing conversation.
-
-For the protocol definition, see the [plugin onboarding specification](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#plugin-onboarding).
+there.
 
 #### Manifest fields
 
@@ -52611,7 +52580,10 @@ Codex allows you to configure the provider by setting `model_provider` in `~/.co
 Choose the provider for the Amazon Bedrock endpoint you want to use: Bedrock
 Runtime for cross-Region inference (CRIS), or Bedrock Mantle for in-Region inference.
 
-Use Bedrock Runtime for new configurations:
+Use Bedrock Runtime for new configurations. For Daybreak Blue and Daybreak Red,
+follow [Daybreak model setup](#daybreak-blue-and-daybreak-red) to use Mantle.
+
+For Runtime:
 
 ```toml
 model_provider = "amazon-bedrock-runtime"
@@ -52808,6 +52780,42 @@ Supported models and model IDs:
 
 GPT-6 Sol and Luna are available through Mantle in `us-east-1` (N. Virginia).
 Model availability varies by AWS Region. See AWS [Regional availability by models](https://docs.aws.amazon.com/bedrock/latest/userguide/models-region-compatibility.html#model-regions-openai) before selecting a provider and a model. For GPT-6 Astra, refer to the [Bedrock model page for GPT-6 Astra](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-6-astra.html).
+
+#### Daybreak Blue and Daybreak Red
+
+Approved customers can use the following Daybreak models through Mantle in
+`us-east-2` (Ohio):
+
+- Daybreak Blue: `openai.gpt-daybreak-blue-5.6-sol`
+- Daybreak Red: `openai.gpt-5.6-cyber`
+
+**Note:** On [OpenAI-hosted services](https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview), you can select Daybreak separately from the model.
+On Bedrock, the model IDs above enable Daybreak behavior by default, with no extra
+Daybreak setting.
+
+These models support in-Region inference through `amazon-bedrock`. They don't
+support Runtime or Geo and Global cross-Region inference. Use the exact model
+IDs above without a `us.` or `global.` prefix. See the AWS model cards for [Daybreak Blue](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-daybreak-blue-56-sol.html) and [Daybreak Red](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-56-cyber.html).
+
+Request access through the [enterprise Daybreak application](https://openai.com/form/enterprise-trusted-access-for-cyber/) or your OpenAI account team. After approval,
+work with your AWS account team to provision the model on Amazon Bedrock.
+GPT-5.6-Cyber requires separate model-specific approval beyond Daybreak Red.
+Confirm the [Daybreak access requirements](https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview) with your OpenAI account team.
+
+After provisioning, select Daybreak Blue explicitly in `~/.codex/config.toml`:
+
+```toml
+model_provider = "amazon-bedrock"
+model = "openai.gpt-daybreak-blue-5.6-sol"
+
+[model_providers.amazon-bedrock.aws]
+region = "us-east-2"
+```
+
+For approved Daybreak Red access to GPT-5.6-Cyber, replace the model ID with
+`openai.gpt-5.6-cyber` and keep the same provider and Region. Keep your
+[AWS authentication](#authentication-options) configured, then
+[verify the selected provider and model](#verify-setup).
 
 #### Feature availability
 

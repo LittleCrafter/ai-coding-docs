@@ -1,8 +1,18 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-10-31T08:58:32Z",
+  "last_updated": "2026-11-04T00:56:54Z",
   "files": {
+    "cli/acp": {
+      "slug": "cli/acp",
+      "title": "Agent Client Protocol (ACP)",
+      "group": "cli",
+      "source_url": "https://antigravity.google/docs/cli/acp",
+      "source_md_url": "https://antigravity.google/docs/cli/acp.md",
+      "source_id": "cli/acp",
+      "hash": "727a4abfa33d3590234256aefc6c76836d208ddc12c6b7ea26597ef89f91b54e",
+      "last_updated": "2026-11-04T00:56:54Z"
+    },
     "cli/artifacts": {
       "slug": "cli/artifacts",
       "title": "Reviewing artifacts",
@@ -20,8 +30,8 @@
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "2e296b2e959cb25b1aee19bdc667a1fbbd5c4a32ca74bce07d51646379c0e721",
-      "last_updated": "2026-10-29T09:13:03Z"
+      "hash": "f9b349e40e97c67c5d2639b040557d0f032ebb011cf06c610ec6f912febe4984",
+      "last_updated": "2026-11-04T00:56:54Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -155,13 +165,13 @@
     },
     "cli/commands/voice": {
       "slug": "cli/commands/voice",
-      "title": "Voice dictation (/voice)",
+      "title": "Voice mode and dictation (/voice)",
       "group": "cli/commands",
       "source_url": "https://antigravity.google/docs/cli/commands/voice",
       "source_md_url": "https://antigravity.google/docs/cli/commands/voice.md",
       "source_id": "cli/commands/voice",
-      "hash": "f14677fd571e8f9e8cd00a60fbbd5c4dc2a833daca29a2fe20a0916824f22bfb",
-      "last_updated": "2026-10-22T18:54:07Z"
+      "hash": "c1df92aff799de39dd7b75fb825135f248e15ac06828321d0df70a0d689b37d1",
+      "last_updated": "2026-11-04T00:56:54Z"
     },
     "cli/conversations": {
       "slug": "cli/conversations",
@@ -180,8 +190,8 @@
       "source_url": "https://antigravity.google/docs/cli/credits",
       "source_md_url": "https://antigravity.google/docs/cli/credits.md",
       "source_id": "cli/credits",
-      "hash": "43a6629a653410e9293c4f0b73c7af8442b0a4ed03051f0c4150ce7f3b933b9c",
-      "last_updated": "2026-10-22T18:54:07Z"
+      "hash": "65a21565a298d1a38fdca624b42d9b93a1b44416ac0d3ceea177564dca2896a0",
+      "last_updated": "2026-11-04T00:56:54Z"
     },
     "cli/gcli-migration": {
       "slug": "cli/gcli-migration",
@@ -200,8 +210,8 @@
       "source_url": "https://antigravity.google/docs/cli/headless",
       "source_md_url": "https://antigravity.google/docs/cli/headless.md",
       "source_id": "cli/headless",
-      "hash": "0dce68c8e1d0dfaac977b26cbcd36e3b70e5f9bf38f72c2b6f87416e3e42a073",
-      "last_updated": "2026-10-22T07:59:56Z"
+      "hash": "5feb43f8899c8279b103662293e7d4bc85f8a8050ee80269b480aa737d4c2832",
+      "last_updated": "2026-11-04T00:56:54Z"
     },
     "cli/modes": {
       "slug": "cli/modes",
@@ -210,8 +220,8 @@
       "source_url": "https://antigravity.google/docs/cli/modes",
       "source_md_url": "https://antigravity.google/docs/cli/modes.md",
       "source_id": "cli/modes",
-      "hash": "67f6c694bf9c20e04066e61733630f49003c5b55c1056a4131133ce9b690fefe",
-      "last_updated": "2026-10-23T13:51:47Z"
+      "hash": "b3bfe53e7567695b6600bdf4d38b75865a03dcbe5be3de8085f9bdf7593b51c7",
+      "last_updated": "2026-11-04T00:56:54Z"
     },
     "cli/prompting": {
       "slug": "cli/prompting",
@@ -230,8 +240,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "ac3649238a6bdc6d9bbc796dfe842015ff99a3d73ba767f4a97244c043a3265a",
-      "last_updated": "2026-10-29T22:03:25Z"
+      "hash": "ce40504c3633a1458e53b72935d4547157e47fdda82cb144ef67227980f23a7e",
+      "last_updated": "2026-11-04T00:56:54Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -285,10 +295,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-10-31T08:58:32Z",
-    "fetch_duration_seconds": 9.506,
-    "total_pages_discovered": 28,
-    "pages_fetched_successfully": 28,
+    "last_fetch_completed": "2026-11-04T00:56:54Z",
+    "fetch_duration_seconds": 9.859,
+    "total_pages_discovered": 29,
+    "pages_fetched_successfully": 29,
     "pages_failed": 0,
     "failed_pages": []
   }

@@ -30,7 +30,7 @@ To control when and how your AI credits are used, you can toggle credit settings
 
 You can also configure this option interactively in the CLI:
 
-*   **Use AI credits option**: Run `/config` or `/settings` to open the CLI settings panel. Set the **Use G1 Credits** field to **on** to allow the CLI to use your personal credits when plan quotas are exhausted, or set it to **off** to restrict fallback billing. To learn more, refer to the **[Plans](https://antigravity.google/docs/plans#overages)** overages section.
+*   **Use AI credits option**: Run `/config` or `/settings` to open the CLI settings panel. Set the **Use AI Credits** field to **on** to allow the CLI to use your personal credits when plan quotas are exhausted, or set it to **off** to restrict fallback billing. To learn more, refer to the **[Plans](https://antigravity.google/docs/plans#overages)** overages section.
 
 ## See also
 

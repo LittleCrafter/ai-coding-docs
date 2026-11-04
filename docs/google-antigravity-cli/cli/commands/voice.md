@@ -1,12 +1,17 @@
-# Voice dictation (/voice)
+# Voice mode and dictation (/voice)
 
 Available on: Antigravity CLI
 
-Speak your prompt instead of typing it.
+Talk with the agent out loud, or speak your prompt instead of typing it.
 
 ## Overview
 
-The `/voice` command (alias `/record`) records audio from your microphone and streams real-time transcripts directly into the prompt box as you speak. You can also start dictation at any time using the F5 key.
+The `/voice` command uses your microphone in two ways:
+
+*   **Voice mode**: `/voice live`, or F6, starts a spoken, two-way conversation with the agent. The agent answers out loud while its work appears in the conversation. To learn more, see [Voice mode](https://antigravity.google/docs/voice-mode).
+*   **Voice dictation**: `/voice dictate`, `/record`, or F5 records audio from your microphone and streams real-time transcripts directly into the prompt box as you speak.
+
+To choose what `/voice` on its own starts, go to `/settings` > **Voice Mode**.
 
 Voice dictation writes text into the prompt box; it doesn’t automatically submit your prompt. When you stop recording, the transcript remains in the prompt box as if you had typed it, allowing you to edit, expand, and submit the text when you’re ready.
 
@@ -18,7 +23,7 @@ Caution
 
 To dictate a prompt into the terminal, follow these steps:
 
-1.  Press F5, or type `/voice` in the prompt box and press Enter.
+1.  Press F5, or type `/voice dictate` or `/record` in the prompt box and press Enter.
 2.  Wait for the status line below the prompt to transition from **Connecting…** to **Recording**.
 3.  Speak clearly into your microphone. Interim text appears in the prompt box and updates as the transcription service processes audio.
 4.  Press Enter (or F5) to stop recording and retain the transcript in the prompt box.
@@ -66,7 +71,7 @@ Start the microphone server on your local machine:
 agy mic-serve
 ```
 
-Keep this process running while dictating. By default, `mic-serve` listens on `127.0.0.1:4713` and streams audio from your default input device to connected clients. You can run it inside a background job, a `tmux` pane, or a separate terminal window.
+Keep this process running while you use voice mode or dictation. In voice mode, `mic-serve` also plays the agent’s voice on your local machine. By default, `mic-serve` listens on `127.0.0.1:4713` and streams audio from your default input device to connected clients. You can run it inside a background job, a `tmux` pane, or a separate terminal window.
 
 To bind to a custom port if port `4713` is already occupied, specify the `--addr` flag:
 

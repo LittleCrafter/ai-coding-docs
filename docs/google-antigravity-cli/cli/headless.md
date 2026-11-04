@@ -442,7 +442,7 @@ Unlike the interactive UI, headless mode doesn’t silently fall back when `--mo
 
 There is no interactive prompt in headless mode, so tools that would normally ask for confirmation are handled by policy.
 
-By default, the CLI respects the permission mode in your settings. A tool that requires approval it can’t obtain is soft-denied: the run continues, exits `0`, and prints a notice to `stderr` naming the tool and how to allow it. Reading and writing files inside your active workspace is auto-allowed; actions such as shell commands default to **Ask** and are soft-denied in headless mode unless you grant them.
+By default, the CLI respects the execution and permission modes in your settings. When `auto` mode is active (the default where the terminal sandbox is available on personal accounts), workspace file edits and sandboxed or safe, reversible commands run automatically, while risky or irreversible actions still require approval. Outside `auto` mode, actions such as shell commands default to **Ask**. Any tool action that requires approval it can’t obtain in headless mode is soft-denied: the run continues, exits `0`, and prints a notice to `stderr` naming the tool and how to allow it.
 
 Grant a tool ahead of time by adding an `action(target)` rule under `permissions.allow` in `~/.gemini/antigravity-cli/settings.json`:
 
@@ -496,7 +496,7 @@ The `status` field reports the terminal state of the run:
 | `WAITING` | The run ended while waiting on input |
 | `RUNNING` | The run did not reach a terminal state |
 
-By default, a run waits up to five minutes for a response. Adjust the ceiling with `--print-timeout`:
+By default, a run has no time limit and waits until the turn completes. Set a limit with `--print-timeout`:
 
 ```bash
 agy -p "Summarize the design tradeoffs of optimistic locking." --print-timeout 15m
@@ -516,7 +516,7 @@ agy -p "Summarize the design tradeoffs of optimistic locking." --print-timeout 1
 | `--continue`, `-c` | `false` | Continue the most recent conversation |
 | `--conversation` | — | Resume a conversation by ID |
 | `--dangerously-skip-permissions` | `false` | Auto-approve all tool permission requests |
-| `--print-timeout` | `5m` | Maximum time to wait for a response |
+| `--print-timeout` | `0s` | Maximum time to wait for a response (`0s` means no limit) |
 | `--sandbox` | `false` | Run with terminal sandbox restrictions enabled |
 
 ## Example: run the agent in CI

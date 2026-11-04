@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 28
+- **Pages mirrored:** 29
 - **Version:** 1.2.0
-- **Last updated:** 2026-10-31T08:58:32Z
+- **Last updated:** 2026-11-04T00:56:54Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -12,6 +12,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 | Page | Local | Source |
 | --- | --- | --- |
+| Agent Client Protocol (ACP) | [cli/acp.md](./cli/acp.md) | [source](<https://antigravity.google/docs/cli/acp>) |
 | Reviewing artifacts | [cli/artifacts.md](./cli/artifacts.md) | [source](<https://antigravity.google/docs/cli/artifacts>) |
 | CLI best practices | [cli/best-practices.md](./cli/best-practices.md) | [source](<https://antigravity.google/docs/cli/best-practices>) |
 | Managing conversations | [cli/conversations.md](./cli/conversations.md) | [source](<https://antigravity.google/docs/cli/conversations>) |
@@ -44,4 +45,4 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Status line command (/statusline) | [cli/commands/statusline.md](./cli/commands/statusline.md) | [source](<https://antigravity.google/docs/cli/commands/statusline>) |
 | Window title command (/title) | [cli/commands/title.md](./cli/commands/title.md) | [source](<https://antigravity.google/docs/cli/commands/title>) |
 | Model quotas (/usage) | [cli/commands/usage.md](./cli/commands/usage.md) | [source](<https://antigravity.google/docs/cli/commands/usage>) |
-| Voice dictation (/voice) | [cli/commands/voice.md](./cli/commands/voice.md) | [source](<https://antigravity.google/docs/cli/commands/voice>) |
+| Voice mode and dictation (/voice) | [cli/commands/voice.md](./cli/commands/voice.md) | [source](<https://antigravity.google/docs/cli/commands/voice>) |
