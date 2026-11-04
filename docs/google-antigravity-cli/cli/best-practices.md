@@ -51,7 +51,7 @@ Create a `GEMINI.md` or `AGENTS.md` file at your workspace root to outline speci
 
 ### Establish structured permissions
 
-By default (where the [terminal sandbox](https://antigravity.google/docs/sandbox) is available on personal accounts), Antigravity CLI starts in [`auto` mode](./modes.md), which runs shell commands inside the sandbox and automatically evaluates commands that need to run outside it. Outside `auto` mode—or when you want stricter controls—tune `toolPermission` in `~/.gemini/antigravity-cli/settings.json` based on your project risk level:
+For fewer prompts, switch to [`auto` mode](./modes.md), which runs shell commands inside the [terminal sandbox](https://antigravity.google/docs/sandbox) and automatically evaluates commands that need to run outside it. Otherwise, tune `toolPermission` in `~/.gemini/antigravity-cli/settings.json` based on your project risk level:
 
 *   **`request-review`** (default `toolPermission` value): Outside `auto` mode, prompts you before executing any write operations, Bash commands, or remote network calls.
 *   **`proceed-in-sandbox`**: Outside `auto` mode, restricts terminal executions to the sandbox containment ring so sandboxed commands run autonomously while commands outside the sandbox prompt for review.

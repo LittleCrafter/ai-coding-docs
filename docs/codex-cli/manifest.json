@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.166.0",
-  "last_updated": "2026-11-04T00:59:39Z",
+  "last_updated": "2026-11-04T18:57:12Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "bcc8f7c0f862e5474e2882ae341a434c0bfb5ed93068aeccbc3e42544f79de44",
-      "last_updated": "2026-11-04T00:59:39Z"
+      "hash": "84728a22fe4f0d133cf410555bff50141d303a6ee4293df3263db30de3a03880",
+      "last_updated": "2026-11-04T18:57:12Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -290,8 +290,8 @@
       "source_url": "https://learn.chatgpt.com/docs/computer-use",
       "source_md_url": "https://learn.chatgpt.com/docs/computer-use.md",
       "source_id": "llms:computer-use",
-      "hash": "79786b97a1d8d26f5a5d91dafd6dc118b728faef7510a0488f73681d502f8457",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "dcc315b38c46347a60cb520e0d8369dca75eb2831bb577eb0e6ef8e71b4563b3",
+      "last_updated": "2026-11-04T18:57:12Z"
     },
     "config": {
       "slug": "config",
@@ -1710,8 +1710,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/sdk",
       "source_md_url": "https://learn.chatgpt.com/docs/security/sdk.md",
       "source_id": "llms:security/sdk",
-      "hash": "d6a04ea384abf6a4194c5a04116f0fa344d320608dd952e467d3419df799f23c",
-      "last_updated": "2026-11-04T00:59:39Z"
+      "hash": "b78b9f8b8482a6ccef3c2a40d2048046d138bd35f1ec031181afee999845335e",
+      "last_updated": "2026-11-04T18:57:12Z"
     },
     "security/security-review": {
       "slug": "security/security-review",
@@ -2065,8 +2065,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-04T00:59:39Z",
-    "fetch_duration_seconds": 71.872,
+    "last_fetch_completed": "2026-11-04T18:57:12Z",
+    "fetch_duration_seconds": 71.852,
     "total_pages_discovered": 206,
     "pages_fetched_successfully": 206,
     "pages_failed": 0,

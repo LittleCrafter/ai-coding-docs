@@ -250,7 +250,7 @@ Fetch| Per 1,000 successful requests| $0.75
   
 A request is billable only when it returns HTTP 200 and produces a result (Search must return a non-empty `results` array, and Fetch must return page content). Failed requests, empty search results, and timeouts are not billed. `count` only controls how many results are returned and does not affect the per-request price.
 
-Note: when you use the DeepSeek API through DeepSeek Harness, Claude Code, or Codex, server-side tool calls already hit the Search and Fetch APIs. These calls are currently free of charge; per-request billing starts at 00:00 Beijing time on November 1, 2026.
+Search and Fetch calls triggered by server-side tools when using the DeepSeek API through DeepSeek Harness, Claude Code, or Codex are also billed per successful request.
 
 * * *
 

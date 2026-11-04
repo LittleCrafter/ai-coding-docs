@@ -17,8 +17,8 @@ Each execution mode makes a different tradeoff between conversational autonomy a
 
 | Mode | Behavior | Best for |
 | :-- | :-- | :-- |
-| `auto` _(default)_ | Automatically approves workspace file edits, runs terminal commands in the sandbox by default, and automatically evaluates commands outside the sandbox so safe, reversible commands run without prompting. Default mode where available (`v1.3.5+` on macOS and Linux and `v1.4.4+` on Windows; requires the terminal sandbox and a personal account). | Everyday development and autonomous workflows where safe edits and commands proceed without interruption while irreversible actions still prompt for confirmation. |
-| `default` | Pauses for interactive diff review before modifying or creating files, and asks before running terminal commands (default when `auto` mode isn’t available). | Reviewing sensitive code changes line-by-line and careful refactoring. |
+| `default` _(default)_ | Pauses for interactive diff review before modifying or creating files, and asks before running terminal commands. | Standard development, reviewing sensitive code changes, and careful refactoring. |
+| `auto` | Automatically approves workspace file edits, runs terminal commands in the sandbox by default, and automatically evaluates commands outside the sandbox so safe, reversible commands run without prompting. Available in `v1.3.5+` on macOS and Linux and `v1.4.4+` on Windows; requires the terminal sandbox and a personal account. | Autonomous workflows where safe edits and commands proceed without interruption while irreversible actions still prompt for confirmation. |
 | `accept-edits` | Automatically approves file creations and edits inside your workspace, but still asks before running terminal commands. | Iterating on trusted code when you still want to approve every shell command manually. |
 | `plan` | Prepends the `/plan` instruction prefix to analyze and outline steps before writing code. | Exploring unfamiliar architecture or designing complex multi-step features. |
 
@@ -39,7 +39,7 @@ When Antigravity CLI pauses for a pending file edit confirmation in `default` mo
 
 ## Review modifications in default mode
 
-In `default` mode (`request-review`), Antigravity CLI pauses before applying any file writes to disk and renders an inline, syntax-highlighted diff preview. Switch to `default` mode during a session with Shift + Tab (until the mode indicator in the status bar clears), or set **Agent Mode** to `default` in `/config`. Where `auto` mode isn’t available, `agy` starts in `default` mode automatically.
+In `default` mode (`request-review`), Antigravity CLI pauses before applying any file writes to disk and renders an inline, syntax-highlighted diff preview. `agy` starts in `default` mode unless you set another mode with `agentMode` or `--mode`. To return to it during a session, press Shift + Tab until the mode indicator in the status bar clears, or set **Agent Mode** to `default` in `/config`.
 
 The following example shows a pending file edit, with the diff and the prompt to accept or reject it:
 
@@ -89,15 +89,14 @@ When `accept-edits` mode is active, the bottom-right status bar shows `accept-ed
 
 ## Automatically evaluate commands with auto mode
 
-`auto` mode is the default startup mode where available, extending `accept-edits` to terminal command execution so routine development tasks proceed without manual confirmation prompts.
+`auto` mode extends `accept-edits` to terminal command execution so routine development tasks proceed without manual confirmation prompts.
 
 Note
 
-`auto` mode is the default in Antigravity CLI `v1.3.5+` on macOS and Linux and `v1.4.4+` on Windows when the terminal sandbox is available. It isn’t currently available for business or enterprise accounts, including [Antigravity in Gemini Enterprise](https://antigravity.google/docs/enterprise). If `auto` mode isn’t available for your account or platform, the CLI starts in `default` mode, and `auto` doesn’t appear in Shift + Tab cycling or `/config`.
+`auto` mode is available in Antigravity CLI `v1.3.5+` on macOS and Linux and `v1.4.4+` on Windows when the terminal sandbox is available. It isn’t currently available for business or enterprise accounts, including [Antigravity in Gemini Enterprise](https://antigravity.google/docs/enterprise). If `auto` mode isn’t available for your account or platform, the CLI starts in `default` mode, and `auto` doesn’t appear in Shift + Tab cycling or `/config`.
 
 ```bash
-# Launch in auto mode (the default where available, or pass --mode=auto to override settings.json)
-agy
+# Launch directly in auto mode
 agy --mode=auto
 ```
 
@@ -162,7 +161,7 @@ To inspect or update your default mode mid-session:
 
 ### Setting `agentMode` in `settings.json`
 
-Set `agentMode` directly inside your user or project configuration file (`"auto"` is the default where available; set `"accept-edits"`, `"plan"`, or `""` for `default` mode):
+Set `agentMode` directly inside your user or project configuration file (`"accept-edits"`, `"auto"`, or `"plan"`, or omit/`""` for `default`):
 
 ```json
 {

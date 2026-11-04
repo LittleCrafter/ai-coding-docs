@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-11-04T00:56:54Z",
+  "last_updated": "2026-11-04T18:54:31Z",
   "files": {
     "cli/acp": {
       "slug": "cli/acp",
@@ -30,8 +30,8 @@
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "f9b349e40e97c67c5d2639b040557d0f032ebb011cf06c610ec6f912febe4984",
-      "last_updated": "2026-11-04T00:56:54Z"
+      "hash": "adb3059cd864a817f5aecd6ff2e030207b9a3caf195eb18bf1e0f912401a6460",
+      "last_updated": "2026-11-04T18:54:31Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -210,8 +210,8 @@
       "source_url": "https://antigravity.google/docs/cli/headless",
       "source_md_url": "https://antigravity.google/docs/cli/headless.md",
       "source_id": "cli/headless",
-      "hash": "5feb43f8899c8279b103662293e7d4bc85f8a8050ee80269b480aa737d4c2832",
-      "last_updated": "2026-11-04T00:56:54Z"
+      "hash": "0a46452869c782b85b4e191282ec6af1604142e7543840d74d884f08b5a604c4",
+      "last_updated": "2026-11-04T18:54:31Z"
     },
     "cli/modes": {
       "slug": "cli/modes",
@@ -220,8 +220,8 @@
       "source_url": "https://antigravity.google/docs/cli/modes",
       "source_md_url": "https://antigravity.google/docs/cli/modes.md",
       "source_id": "cli/modes",
-      "hash": "b3bfe53e7567695b6600bdf4d38b75865a03dcbe5be3de8085f9bdf7593b51c7",
-      "last_updated": "2026-11-04T00:56:54Z"
+      "hash": "ca87d903104e4243ce920dfde262e252ae44de7adeebee73c65b59958197c44c",
+      "last_updated": "2026-11-04T18:54:31Z"
     },
     "cli/prompting": {
       "slug": "cli/prompting",
@@ -240,8 +240,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "ce40504c3633a1458e53b72935d4547157e47fdda82cb144ef67227980f23a7e",
-      "last_updated": "2026-11-04T00:56:54Z"
+      "hash": "a319b75cc66aa3b3e341ad2331315c4d3e819925a934a051cbd8b2b86e02749c",
+      "last_updated": "2026-11-04T18:54:31Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-04T00:56:54Z",
-    "fetch_duration_seconds": 9.859,
+    "last_fetch_completed": "2026-11-04T18:54:31Z",
+    "fetch_duration_seconds": 9.864,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,

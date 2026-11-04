@@ -117,7 +117,7 @@ Pass startup flags when launching `agy` to configure the session or run non-inte
 
 | Flag | Default | Description |
 | :-- | :-- | :-- |
-| **`--mode`** | `""` | Set the agent [execution mode](./modes.md) for this session: `accept-edits`, `auto` (default where available; `v1.3.5+` on macOS and Linux, `v1.4.4+` on Windows; requires the terminal sandbox; not available for business or enterprise accounts), or `plan`. |
+| **`--mode`** | `""` | Set the agent [execution mode](./modes.md) for this session: `accept-edits`, `auto` (`v1.3.5+` on macOS and Linux, `v1.4.4+` on Windows; requires the terminal sandbox; not available for business or enterprise accounts), or `plan`. |
 | **`--model`** | — | Select the model for the current CLI session (refer to `agy models`). |
 | **`--effort`** | — | Set the [reasoning effort](./commands/effort.md) for the current CLI session (`low` through `max`, depending on the model). |
 | **`--agent`** | — | Select the agent for the current CLI session (refer to `agy agents`). |
@@ -134,6 +134,7 @@ Pass startup flags when launching `agy` to configure the session or run non-inte
 | **`--sandbox`** | `false` | Run in a terminal sandbox with OS containment restrictions enabled (in `v1.4.4+`, no effect if the sandbox isn’t available on your machine). |
 | **`--dangerously-skip-permissions`** | `false` | Auto-approve all tool permission requests without prompting. |
 | **`--remote-control`** | `false` | Create a [Remote Control](https://antigravity.google/docs/remote-control?tab=cli) connection for the CLI session on startup. |
+| **`--remote-agent`** | `false` | Run the session’s conversations on [Remote Agents](https://antigravity.google/docs/remote-agents?tab=cli). With `--project`, they open in the remote project with that name or ID; otherwise, they open in this machine’s default remote project. |
 | **`--project`** | — | Project ID or project name for the current CLI session. |
 | **`--new-project`** | `false` | Create a new project for this session. |
 | **`--log-file`** | — | Override the CLI log file path. |
@@ -159,7 +160,7 @@ To get autocomplete and validation in editors such as VS Code, add `"$schema": "
 
 | Option Key Name | Value Type | System Default | Parameter Characteristics & Options |
 | :-- | :-- | :-- | :-- |
-| **`agentMode`** | string | `"auto"` (where available; otherwise `""`) | Default startup [execution mode](./modes.md): `"auto"` (default where available; `v1.3.5+` on macOS and Linux, `v1.4.4+` on Windows; requires the terminal sandbox; auto-approves edits, runs commands in the terminal sandbox by default, and automatically checks any command that needs to run outside the sandbox so safe, reversible commands run without prompting while irreversible actions still prompt; not available for business or enterprise accounts), `""` (standard `default` mode; used when `"auto"` isn’t available), `"accept-edits"` (auto-approve workspace file edits), or `"plan"` (research and outline steps before writing code). Can be overridden per session with `--mode`. |
+| **`agentMode`** | string | `""` (default mode) | Default startup [execution mode](./modes.md): `""` (standard `default` mode), `"accept-edits"` (auto-approve workspace file edits), `"auto"` (`v1.3.5+` on macOS and Linux, `v1.4.4+` on Windows; requires the terminal sandbox; auto-approves edits, runs commands in the terminal sandbox by default, and automatically checks any command that needs to run outside the sandbox so safe, reversible commands run without prompting while irreversible actions still prompt; not available for business or enterprise accounts), or `"plan"` (research and outline steps before writing code). Can be overridden per session with `--mode`. |
 | **`colorScheme`** | string | `"terminal"` | Color theme: `"light"`, `"solarized light"`, `"colorblind-friendly light"`, `"dark"`, `"solarized dark"`, `"colorblind-friendly dark"`, `"tokyo night"`, or `"terminal"` (inherits native shell colors). |
 | **`altScreenMode`** | string | `"default"` | Screen buffer usage: `"default"` (renders the conversation inline and opens full-screen views in the alternate screen), `"always"` (runs the whole TUI in the alternate screen), or `"never"` (never uses the alternate screen; available only in `settings.json`). |
 | **`toolPermission`** | string | `"request-review"` | Global safety presets: `"request-review"` (prompts for write, bash, web, and MCP tools unless an allow rule covers them), `"proceed-in-sandbox"` (runs terminal commands without prompting when the sandbox is on and the command runs inside it; in `v1.4.4+`, behaves like `"request-review"` if the sandbox isn’t available), `"always-proceed"` (runs commands, web requests, and MCP tools without prompting unless an ask or deny rule matches), or `"strict"` (prompts before every tool action, including file reads, even if an allow rule matches). Deny rules apply in every mode. |

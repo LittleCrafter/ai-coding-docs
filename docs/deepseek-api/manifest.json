@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-03T18:44:32Z",
+  "last_updated": "2026-11-04T18:57:38Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -210,8 +210,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/search",
       "source_md_url": "https://api-docs.deepseek.com/guides/search",
       "source_id": "guides/search",
-      "hash": "07ac6a843379f79677727778c71d7c6acdd72d0efcb86e157b6fec163b2f8c3f",
-      "last_updated": "2026-10-30T11:45:47Z"
+      "hash": "180bfd3b9769a4a0689e88ab89d9415a91086c93d5130150aa36aac919393f7f",
+      "last_updated": "2026-11-04T18:57:38Z"
     },
     "guides/thinking_mode": {
       "slug": "guides/thinking_mode",
@@ -325,13 +325,13 @@
     },
     "news/news250120": {
       "slug": "news/news250120",
-      "title": "DeepSeek-R1 Release",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250120",
       "source_md_url": "https://api-docs.deepseek.com/news/news250120",
       "source_id": "news/news250120",
-      "hash": "d2da0d63560b82a4a5dbd55e0e37d87a97d958bfb7746e365f95e49bc97ff18a",
-      "last_updated": "2026-11-03T18:44:32Z"
+      "hash": "797f9be82834a62714dc4cf6bc451539ab173bb5992f0644ea2991c0ce0b840c",
+      "last_updated": "2026-11-04T18:57:38Z"
     },
     "news/news250325": {
       "slug": "news/news250325",
@@ -540,8 +540,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "b4e95d593c492757f6b43bb298731c65a021af2cf209da7d48737e6e7b89d117",
-      "last_updated": "2026-11-02T02:52:59Z"
+      "hash": "4d910548c1b46ac9edd6edd0443f62992ea54063f023cfddd1a57a50c026ab51",
+      "last_updated": "2026-11-04T18:57:38Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -575,8 +575,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-03T18:44:32Z",
-    "fetch_duration_seconds": 20.817,
+    "last_fetch_completed": "2026-11-04T18:57:38Z",
+    "fetch_duration_seconds": 25.376,
     "total_pages_discovered": 57,
     "pages_fetched_successfully": 57,
     "pages_failed": 0,
