@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.166.0",
-  "last_updated": "2026-11-04T18:57:12Z",
+  "last_updated": "2026-11-05T01:09:43Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "9193d8e41a8755c6276da3f1e37f11ae295db2b2b17c1708b8dd495b9b34a380",
-      "last_updated": "2026-11-03T02:44:03Z"
+      "hash": "56db5a1353f7e32dd82f71f655c17d4e9e24dac44389f3cd5dbfd7969f085303",
+      "last_updated": "2026-11-05T01:09:43Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "84728a22fe4f0d133cf410555bff50141d303a6ee4293df3263db30de3a03880",
-      "last_updated": "2026-11-04T18:57:12Z"
+      "hash": "916d80ba1b4f7aa640e14a57cc54b4d7d2c5136455b6fa4ba6acaf0bfd620354",
+      "last_updated": "2026-11-05T01:09:43Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -470,8 +470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots",
       "source_md_url": "https://learn.chatgpt.com/docs/dots.md",
       "source_id": "llms:dots",
-      "hash": "10796cf2c87db7296f33d70fa055a090012236ec0174d4e8dd39a83115bec2d9",
-      "last_updated": "2026-11-04T00:59:39Z"
+      "hash": "1ca0570e49a4ae3ced28974af2ada1c83944d825552e8a4368e872e78e9c1f2e",
+      "last_updated": "2026-11-05T01:09:43Z"
     },
     "dots/channels": {
       "slug": "dots/channels",
@@ -510,8 +510,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/getting-started",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/getting-started.md",
       "source_id": "llms:dots/getting-started",
-      "hash": "9051962eafde5f42f32cac9bdab6d37c47d04974e236191196d6c9d76634ead9",
-      "last_updated": "2026-10-09T21:56:38Z"
+      "hash": "3457b7be3310b08b580b491b617f2e0305c142f7708c015e10bf7b0b60ca11a5",
+      "last_updated": "2026-11-05T01:09:43Z"
     },
     "dots/tasks-and-memory": {
       "slug": "dots/tasks-and-memory",
@@ -700,8 +700,18 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/dots-admin-guide",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/dots-admin-guide.md",
       "source_id": "llms:enterprise/dots-admin-guide",
-      "hash": "47d20de3bdf789e2e703f99fb8946026371d15446f069c0bc3f3f8d1ac4f9d5c",
-      "last_updated": "2026-10-28T09:05:38Z"
+      "hash": "8490f8ab781f3a9e03f3fe1283d727d644cfbce7514996adb680a8a0f97f337f",
+      "last_updated": "2026-11-05T01:09:43Z"
+    },
+    "enterprise/dots-security": {
+      "slug": "enterprise/dots-security",
+      "title": "Safety and security in dots",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/dots-security",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/dots-security.md",
+      "source_id": "llms:enterprise/dots-security",
+      "hash": "871f591efa5f8955a5cdce680ca17b79bd1b52f66ec5df796233e12bfc6e02ac",
+      "last_updated": "2026-11-05T01:09:43Z"
     },
     "enterprise/dynamic-groups": {
       "slug": "enterprise/dynamic-groups",
@@ -1710,8 +1720,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/sdk",
       "source_md_url": "https://learn.chatgpt.com/docs/security/sdk.md",
       "source_id": "llms:security/sdk",
-      "hash": "b78b9f8b8482a6ccef3c2a40d2048046d138bd35f1ec031181afee999845335e",
-      "last_updated": "2026-11-04T18:57:12Z"
+      "hash": "52461e74e50852cd49ff63611ac166f30443b304202ee30f16bd4e7b07b4c008",
+      "last_updated": "2026-11-05T01:09:43Z"
     },
     "security/security-review": {
       "slug": "security/security-review",
@@ -2062,13 +2072,23 @@
       "source_id": "llms:windows/wsl",
       "hash": "aa9c4ebfddf3691149fcce8e8789d4250f65d585895cd6ed015036863cf2b476",
       "last_updated": "2026-10-09T00:45:22Z"
+    },
+    "working-with-agents": {
+      "slug": "working-with-agents",
+      "title": "Working with agents",
+      "group": "root",
+      "source_url": "https://learn.chatgpt.com/docs/working-with-agents",
+      "source_md_url": "https://learn.chatgpt.com/docs/working-with-agents.md",
+      "source_id": "llms:working-with-agents",
+      "hash": "9a6490e58b08d570ad8e3838b50499b1331ae3efbc72e20476434d13432afd84",
+      "last_updated": "2026-11-05T01:09:43Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-04T18:57:12Z",
-    "fetch_duration_seconds": 71.852,
-    "total_pages_discovered": 206,
-    "pages_fetched_successfully": 206,
+    "last_fetch_completed": "2026-11-05T01:09:43Z",
+    "fetch_duration_seconds": 74.086,
+    "total_pages_discovered": 208,
+    "pages_fetched_successfully": 208,
     "pages_failed": 0,
     "failed_pages": []
   }

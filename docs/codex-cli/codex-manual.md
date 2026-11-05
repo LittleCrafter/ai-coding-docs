@@ -4043,6 +4043,8 @@ Start with work you want your dot to keep track of, rather than treating each co
 
 Review the result and correct missing details. Your dot can delegate parts of a request to ChatGPT Work or Codex. In the desktop app, open your dot’s profile and select [Activity](./dots/controls.md#review-work) to inspect delegated work and requests for input.
 
+For a guided walkthrough of sharing context, setting expectations, and giving feedback, see [Personalize your dot](https://developers.openai.com/training/walkthroughs/personalize-your-dot).
+
 #### Keep the work moving
 
 Your dot can decide when to follow up and use background agents to work on several things at once. Keep talking to it to add context, change priorities, or make a decision. You don’t need to restart the work in a new conversation.
@@ -4168,6 +4170,8 @@ or is ready for review.
 Source: [Meet dots](./dots.md)
 
 Your dot is an always-on agent that keeps work moving across your tools and projects. You can keep talking to it while it works, and it reaches out with results or decisions that need you.
+
+New to delegating work to an agent? Start with [Working with agents](./working-with-agents.md).
 
 We’re expanding the family of frontier models that power dots to include GPT-6.1 Terra. Your dot can draw on different models for different parts of its work. GPT-6.1 Terra builds on the GPT-6 series’ alignment improvements and uses safeguards developed for GPT-6 Astra.
 
@@ -5301,6 +5305,126 @@ is subject to the permissions and approvals that apply to that work.
 
 Assigned recurring tasks can include actions you've authorized. Their
 permissions and schedule are separate from proactive research.
+
+### Working with agents
+
+Source: [Working with agents](./working-with-agents.md)
+
+An agent is an AI system that can work through a task on your behalf. You describe what you want to achieve. It can then choose next steps, use available tools, and adjust its approach based on what it finds.
+
+If you're used to chatting with AI, you may guide the work one exchange at a time. With an agent, you can hand over a goal and let it carry out several steps between your messages. You still guide the work through conversation, review its progress, and make decisions when it needs your input.
+
+Agents bring together three elements: a **model** to interpret the task and plan next steps, **tools** to gather information or take action, and **guardrails and human oversight** to set boundaries and guide the work.
+
+This guide explains how agents work and how to guide them while staying in control. You'll learn how to set clear goals and boundaries, review progress, and decide when to step in.
+
+Think about handing a piece of work to a teammate. A useful handoff explains the outcome, shares the context, and makes clear which decisions they can make and when to check back. Those same habits help with an agent.
+
+That can take some getting used to. As you delegate more of the execution, your expertise helps you choose worthwhile work, identify missing context, and recognize a good result. Setting the brief, judging the output, and guiding revisions become central parts of working with AI.
+
+The teammate analogy describes a way to delegate. An agent does not share a colleague's lived experience of your organization or responsibility for the outcome. You may need to explain context that a colleague would already know. You remain responsible for deciding whether the work is ready to use.
+
+#### Chat and agents
+
+The main shift is how much of the next-step planning you delegate.
+
+| What changes      | Chat with AI                                              | Delegate to an agent                                                   |
+| ----------------- | --------------------------------------------------------- | ---------------------------------------------------------------------- |
+| How you start     | Ask a question or work through an idea together.          | Describe the outcome, relevant context, and boundaries.                |
+| What happens next | You usually guide the next exchange with another message. | The agent can choose and carry out several steps toward the goal.      |
+| What you receive  | A response you can use, question, or refine.              | Work to review, along with results, questions, or blockers.            |
+| Your role         | Shape the conversation and check the response.            | Set direction, review progress, and decide what to do with the result. |
+
+Chat and agents overlap. Chat can use tools, and you can steer an agent through conversation. These are patterns of working with AI, rather than separate interfaces.
+
+#### OpenAI products with agentic capabilities
+
+You'll find these capabilities in several OpenAI products and features. They differ in the work they support, the tools they can use, and whether you're delegating a single assignment or setting up ongoing work.
+
+| Product or feature                                                             | Work it can take on                                                                                                                         | Your focus                                                                         |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [ChatGPT Work](./get-started-with-work.md)                                   | Tasks with several steps across files, sources, and tools, producing deliverables you can review and refine.                                | Define the finished result, permitted actions, and review points.                  |
+| [dots](./dots.md)                                                            | Ongoing personal assistance across tools and projects, bringing back results and decisions that need you. Rolling out to eligible accounts. | Set priorities, useful updates, boundaries, and stopping conditions.               |
+| [Codex Cloud](./cloud.md)                                                    | Software work that involves inspecting code, making changes, and running commands or tests in a cloud environment.                          | Explain the intended behavior, inspect changes, and verify the checks.             |
+| [OpenAI developer tools](https://developers.openai.com/api/docs/guides/agents) | Custom agents built with OpenAI's APIs and Agents SDK, configured for an application's tools and workflow.                                  | Design permissions, evaluation, monitoring, and human review into the application. |
+
+These experiences overlap: research can be part of a larger assignment, and an ongoing agent can coordinate individual tasks. Availability and supported actions depend on your plan, region, workspace settings, and connected tools. Use the linked product guidance to check what applies to you.
+
+#### Decide when to delegate
+
+An agent can be useful when reaching your goal takes several steps and the next step depends on what it finds. A focused chat may be enough when you want a quick response or want to develop something together one exchange at a time. A predefined workflow can suit stable, repeatable steps; an agent can help when the path needs adjustment.
+
+Before delegating, ask:
+
+- Can I describe the outcome and what "done" means?
+- Can the agent access the information and tools it needs?
+- Can I evaluate the result and recover if something goes wrong?
+
+Start with a manageable assignment. If you cannot yet judge the result, narrow the scope or involve someone who can. A task may be technically possible for an agent but still require enough supervision that a simpler approach is more useful.
+
+Agents may take longer and cost more. Planning, using
+tools, checking results, and trying another approach can take longer than a
+quick chat. Depending on the product and plan, that work can also consume
+more of your usage allowance or incur additional charges. Check
+[usage and pricing](./pricing.md) before starting substantial
+or recurring work.
+
+Define how deep the work should go, which sources matter, and when to stop. Model choice and task complexity also affect time and resource use. An instruction to limit effort helps define the scope; it does not replace a product's usage or spending controls.
+
+Judge the value of the whole task: the quality of the result, the time you spend briefing the agent and reviewing its work, the wait, any corrections, and the cost. A slower result may still save hands-on time. More time or spending does not, by itself, guarantee a better result.
+
+#### Give the agent a clear assignment
+
+A good brief gives the agent a basis for making useful choices. Explain the outcome, why it matters, and the context that changes how the work should be done. Make the boundaries as clear as the goal.
+
+| Part of the brief | What to make clear                                                                                                |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Task              | What should the agent accomplish, for whom, and what is in or out of scope?                                       |
+| Context           | Which sources, facts, priorities, and constraints should guide it? What should it do when information is missing? |
+| Actions           | What may it do independently, what needs approval, and when should it pause or stop?                              |
+| Output            | What should it deliver, in what format and to what destination, and how will you judge quality and completeness?  |
+
+Show an example of what "done" looks like. Share a brief, report, or other result you would be happy to use, and explain what makes it useful: its structure, level of detail, or how it supports a decision. For example: "Use the attached brief as a model. I need a one-page comparison of three options, with a recommendation and links to the sources. Flag unanswered questions and save it as a draft for my review."
+
+Choose the amount of independence to fit the task. You might ask for a plan before execution, a draft before changes to another system, or a check-in when the scope changes. State who will review the result and who can resolve decisions. Revisit those boundaries when the sources, tools, or consequences change.
+
+Instructions communicate intent; permissions control access. Use the [permission controls](./permission-modes.md) available in your product as well as stating boundaries in the brief.
+
+#### Review and guide the work
+
+Review is part of the work. Inspect the visible steps, sources, tool actions, and results. Check the output against the brief: is it complete, are important claims supported, and did the requested actions actually happen? Fluent writing or a confident summary is not enough to establish that a task succeeded.
+
+Match the depth of review to the consequences. Give closer attention to work that affects other people, changes shared information, or is difficult to undo. When something is wrong, explain the issue and the standard the revision needs to meet.
+
+1.
+
+Continue
+
+The result meets the brief, important details are supported, and the next step is within the agreed boundaries.
+
+2.
+
+Redirect
+
+Name the issue and give a focused correction. Explain what needs revision, expansion, or refinement.
+
+3.
+
+Pause and decide
+
+Resolve missing access, an open decision, or an action requiring approval before work continues.
+
+Use the relevant controls to interrupt or stop work when needed. Changing an instruction does not undo an action already completed. If an agent reports updating another system, inspect the saved result there.
+
+#### Reuse what works
+
+Save useful briefs, corrections, and a review checklist. For the next task, update the inputs, constraints, and success criteria. Keep track of what required intervention: missing context, unclear instructions, unavailable tools, or an error in the result. Those patterns can tell you what to change before delegating similar work again.
+
+Expand the scope as you gather evidence of reliable performance on comparable tasks. A strong first result does not establish reliability across every kind of work. Reuse a proven approach while continuing to check the parts that matter.
+
+If you want work to continue over time, define when it should run, what deserves an update, and when it should stop. Review whether that work still serves its purpose, and pause or retire it when it no longer does. Use the guidance for [long-running work](./long-running-work.md) and [tasks and memory](./dots/tasks-and-memory.md) to configure the behavior available to you.
+
+#### Keep learning
 
 ## Approvals, Sandboxing, and Security
 
@@ -8871,7 +8995,7 @@ The result includes the output `path` and, for a threat-model file export,
 
 For ServiceNow Manual AVIT Ingestion, set `artifact: "findings"` and
 `format: "servicenow-avit"`. [Prepare the application template](./security/cli/reference.md#export-findings-for-servicenow)
-and pass its path as `avitTemplate`. Set `output` to the destination CSV path
+and pass its path as `avitTemplate`. Set `output` to a private destination CSV path
 outside the repository. Use `source.directory` to select the existing scan
 results directory.
 
@@ -47004,20 +47128,24 @@ saved content.
 
 Source: [Manage dots permissions and capabilities](./enterprise/dots-admin-guide.md)
 
-A dot is a personal agent in ChatGPT that can take on ongoing work, use connected apps, and delegate tasks to Work or Codex. You choose who can use dots and which capabilities they can access. Members connect their accounts and tell their dots what to work on.
+A dot is a personal agent in ChatGPT that can take on ongoing work, use connected apps, and delegate tasks to Work or Codex. You choose who can use dots, configure their capabilities, and manage personal dots across your workspace. Members connect their accounts and tell their dots what to work on.
 
-For detailed settings, see [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces). The [privacy, security, and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) covers data handling and approvals.
+**[dots security guide](./enterprise/dots-security.md)**
+
+Use the dots security guide for a detailed review with your security team. This admin guide covers workspace setup, access, and day-to-day management.
+
+For current availability, supported plans, and workspace settings, see [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces).
 
 #### Find what you need
 
-| If you need to…                                    | Start here                                                                                   |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Give a group access                                | [Set up dots for work](#set-up-dots-for-work)                                                |
-| Choose which data and tools a dot can use          | [App access](#2-configure-app-access) and [computer capabilities](#available-admin-controls) |
-| Set up Slack                                       | [Slack connections and dot identities](#3-configure-communication-channels)                  |
-| Understand background work and approvals           | [Actions and ongoing work](#actions-and-ongoing-work)                                        |
-| Track usage or investigate an action               | [Models and usage](#models-and-usage) and [Data and compliance](#data-and-compliance)        |
-| Remove access when someone changes roles or leaves | [Manage access changes](#manage-access-changes)                                              |
+| If you need to…                                    | Start here                                                                                                                        |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Give a group access                                | [Set up dots for work](#set-up-dots-for-work)                                                                                     |
+| Choose which data and tools a dot can use          | [App access](#2-configure-app-access) and [computer capabilities](#available-admin-controls)                                      |
+| Set up Slack                                       | [Slack connections and dot identities](#3-configure-communication-channels)                                                       |
+| Find, pause, resume, or delete a personal dot      | [Manage dots in your workspace](#manage-dots-in-your-workspace)                                                                   |
+| Track adoption or investigate an action            | [Monitor usage](#monitor-usage) and [Review admin activity and compliance records](#review-admin-activity-and-compliance-records) |
+| Remove access when someone changes roles or leaves | [Manage access changes](#manage-access-changes)                                                                                   |
 
 #### Set up dots for work
 
@@ -47039,7 +47167,7 @@ For role creation, assignment, and access checks, see the [role-based access con
 
 1. Open **Admin Console** > **Permissions**.
 
-2. Under Permissions &gt; Workspace default &gt; Workspace capabilities, enable Use dots (Beta) if it should be available by default; otherwise grant access through a custom role.
+2. Under Permissions &gt; Workspace default &gt; Workspace capabilities, enable **Use dots** if it should be available by default; otherwise grant access through a custom role.
 
 3. Set Slack participation and custom dot rules. Local computer access requires a separate admin opt-in; review [local computer access setup](./enterprise/cloud-local-access.md#enable-local-computer-access) before enabling it.
 
@@ -47057,13 +47185,15 @@ Members still need to complete [Slack](./dots/channels.md#slack) and [local-comp
 
 #### 2. Configure app access
 
-Dots can use supported ChatGPT app connections. When setting up access, check:
+A personal dot can use its owner's existing ChatGPT app connections. Through each connection, it can read or change only what the connected account permits and the workspace allows. When setting up access, check:
 
 1. **Which apps members can use.** Set available apps and allowed actions in [Plugin controls](./enterprise/apps-and-connectors.md).
 2. **What the connected account can access.** Check the account's permissions in the source app. Enabling dots doesn't give it access to every shared drive, channel, or document.
-3. **When approval is required.** An app can be available while some actions still need approval. See [app permissions](https://help.openai.com/en/articles/20001495-managing-app-permissions-in-chatgpt) for the options.
+3. **When approval is required.** Check the connected app's approval setting for the specific action, such as sending a message. Enabling the app alone does not authorize a send. See [app permissions](https://help.openai.com/en/articles/20001495-managing-app-permissions-in-chatgpt) for the options.
 
 For example, permission to read a document may not include editing or sharing it. To restrict access to a particular source, check the connected account and app permissions.
+
+For Auto-review and the difference between authorizing a draft and authorizing a send, see [approvals and unattended work](./enterprise/dots-security.md#set-rules-for-approvals-and-unattended-work).
 
 #### 3. Configure communication channels
 
@@ -47086,6 +47216,17 @@ Turning off a dot's Slack identity doesn't remove its access through the member'
 
 Enabling the ChatGPT permission does not install an app in Slack or connect a member’s dot.
 
+#### Verify an approved workflow
+
+After configuring access, test the workflow with the member, connected accounts, and computer environment intended for the work. Use disposable documents and test recipients.
+
+1. **Check effective permissions.** Review workspace defaults and every assigned role. Confirm which apps, cloud capabilities, and local connections the workflow needs.
+2. **Prepare a draft from an allowed source.** Check the source, connected identity, and output. If the workflow uses both a signed-in website and an app connection, check both accounts.
+3. **Test approval behavior.** Use a harmless action and test recipient. Record the instruction, any approval request, and the final state in the receiving service. A written policy alone does not create a product-enforced restriction.
+4. **Review available records.** Check activity and compliance records to confirm which parts of the test you can reconstruct. Document any missing records.
+
+Compare the result with the requirements approved by your security team. Resolve any gaps in required restrictions or records before using the workflow with affected data.
+
 #### Available admin controls
 
 | **Area**                            | **Admin capability**                                                                                                   |
@@ -47097,99 +47238,66 @@ Enabling the ChatGPT permission does not install an app in Slack or connect a me
 | Custom dot rules                    | When disabled, members cannot add or edit custom rules, and saved rules do not apply.                                  |
 | Models                              | Enterprise model controls and defaults do not apply to the main dot. Review delegated Work and Codex tasks separately. |
 
+For cloud-browser site rules and controls still in development, see [browser, network, and device access](./enterprise/dots-security.md#review-browser-network-and-device-access). For connected computers and delegated tasks, see [controls by work environment](./enterprise/dots-security.md#controls-by-work-environment).
+
 #### Review availability and data requirements
 
-Before enabling dots, review current availability in [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and the workspace notices shown during setup. If your organization requires data or inference residency, Enterprise Key Management, or specific compliance coverage, confirm support for dots with your account team before enabling access.
+Before enabling dots, review current availability in [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and the workspace notices shown during setup. Review the security guide's [eligibility and data requirements](./enterprise/dots-security.md#confirm-eligibility-and-data-requirements) for regional, residency, Enterprise Key Management, and HIPAA coverage. Confirm that your workspace configuration, any applicable business associate agreement (BAA), and the intended workflow meet your organization's requirements before enabling access.
 
 Check requirements for the dot itself, tasks it delegates to Work or Codex, and any connected computer. For cloud browser, network, and computer use, see [cloud security](./enterprise/chatgpt-work-cloud-security.md). For work on employee devices, see [local computer access](./enterprise/cloud-local-access.md).
 
-#### Dots FAQ
+#### Manage dots in your workspace
 
-#### Access and eligibility
+Open **Admin Console** > **Dots** to see the personal dots created in your workspace. Use the inventory to find a dot and review its owner and status, then open its details to manage it.
 
-#### Does access to dots grant access to apps and websites?
+#### Review a dot's details
 
-No. Dots access does not grant access to apps or websites. App connections require authorization; website work uses the browser’s signed-in account.
+The details include the member who created the dot, its active or paused status, its identity, and its Slack or Microsoft Teams connection status. The identity is the dot's service account, or its dot ID when a service account isn't available. Connection status shows whether a messaging service is connected; the [messaging permission](#3-configure-communication-channels) controls who can set up that connection.
 
-#### Whose account does a dot use for connected work?
+#### Pause and resume a dot
 
-For apps, a dot uses the connected account. For websites, it uses the account signed in to the cloud browser. Check the permissions for each account. See [Managing app accounts](https://help.openai.com/en/articles/20001494-connecting-and-managing-app-accounts-in-chatgpt).
+Pause a dot from Admin Console when you need to stop it temporarily. An admin pause prevents the member from resuming the dot. Check the inventory to confirm that its status is paused.
 
-#### Can a dot use a local computer, VPN, or existing sign-in?
+Resuming a dot restores its previous user state. A dot that was active becomes active again; a dot that the member had already paused stays paused. Billing stops during the admin pause and resumes if the dot returns to an active state.
 
-A dot’s cloud computer is separate from a member’s local computer. Local work requires a connected, online computer with ChatGPT open and access enabled. Local sign-in, VPN access, and device policies do not automatically extend to the cloud computer.
+#### Delete a dot
 
-#### How do cloud policies affect local computer access?
+Delete a dot from Admin Console when it should be removed from the workspace. After deletion completes, it no longer appears in the inventory and billing is paused. Deletion removes the dot's context; it does not preserve the dot for later resumption.
 
-If any cloud policy has `enforce_residency` enabled, local computer access is unavailable for dots. Work Cloud remains available. See the [local-access safeguard](./enterprise/cloud-local-access.md#check-data-handling-and-the-local-access-safeguard) for the policy requirements.
+Files, Codex threads, and ChatGPT conversations the dot created are stored separately and aren't deleted with it. Review and delete those items in their respective locations when needed. Use pause when you want to preserve the dot and resume it later.
 
-#### Actions and ongoing work
+#### Revoke and restore access
 
-#### Can a dot keep working when the user is away?
+To remove a member's permission to use dots, review the workspace default and every role assigned directly or through groups. Remove every applicable **Use dots** grant. Turning off one role's permission does not remove access if another role still grants it.
 
-Yes. Members can assign [ongoing responsibilities](./dots/tasks-and-memory.md#assigned-work). Workspace permissions and approval rules still apply. Local work requires the computer to stay online with ChatGPT open and access enabled.
+| Change                               | What happens to the dot                                                                                                                              | What to check                                                                       |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Revoke the member's dots permission  | The dot is hidden from the member, paused, and shown as disabled in the inventory. Billing stops. The dot cannot resume while permission is revoked. | Check the member's effective permissions and the dot's inventory status.            |
+| Restore the member's dots permission | The dot returns to its previous user state. If it was active, it becomes active again and billing resumes.                                           | Check the restored permission and whether the dot is active or remains user-paused. |
 
-[Proactive research](./dots/tasks-and-memory.md#proactive-research) uses restricted tools to read connected apps. It cannot send messages, change content, or control a browser or computer. To act on what it finds, the dot needs the user's authorization and the required permissions and approvals.
+For offboarding, also review the connections and delegated work in [Manage access changes](#manage-access-changes).
 
-#### Who can message a dot or see its results?
+#### Monitor usage
 
-Only the owner can direct their dot through a Slack direct message or supported channel mention. Messages from other people do not start work.
+Workspace analytics includes enabled-dot counts and total active users of dots. Enabled dots are dots that are not paused. Use these measures together to understand how many dots are enabled and how many people are using them.
 
-A dot may use other participants' messages as context when its owner brings it into a Slack thread. Anyone with access to the conversation can see its posts. Information from another channel doesn't give the dot permission to share it with a new audience. Check recipients before posting work content.
+For daily reporting by member or workspace, use the [Analytics API](./enterprise/analytics-api.md). The daily usage endpoint `/v1/analytics/workspaces/{workspace_id}/usage` identifies dots with `client_id = DOTS`.
 
-Microsoft Teams access is limited to an invite-only alpha.
+Tasks a dot starts or manages in Work or Codex count toward those products' usage limits and appear in their reporting. Include those tasks when reviewing usage. See [Work usage and cost](./enterprise/chatgpt-work-usage-and-cost.md) for the available controls, and check the current terms for your plan when setting budgets.
 
-#### Does a dot always ask before sending or changing something?
+#### Review admin activity and compliance records
 
-[Auto-review](./dots/controls.md#how-action-review-works) checks proposed actions against the user's instructions, custom rules, and safety requirements. Asking a dot to draft a message doesn't give it permission to send it. See [app permissions](https://help.openai.com/en/articles/20001495-managing-app-permissions-in-chatgpt) for approval options.
+Audit logs capture admin actions on dots, including pause, resume, delete, manage, and saved-tier changes. Use these records to review changes made by administrators.
 
-#### How do admins revoke dots access?
+To investigate work a dot has done, use the [Compliance API](./enterprise/compliance-api.md#confirm-the-administration-boundaries). Supported dots records include user prompts and responses, supported tool-call events, and connected-app MCP calls and results. Dots-attributed records use `client_id = DOTS`; the agent object includes the dot ID, name, and type when available.
 
-See [Manage access changes](#manage-access-changes) for steps to remove access and check connected accounts, computers, and ongoing work.
+Workspace owners or admins can select their workspace in Admin Console, then open **Credentials** > **Admin keys** and create a key with the appropriate available permissions: `enterprise.analytics.usage.read` for unified usage reporting, or `CODEX_LOG` access for dots compliance records. Only workspace owners can grant broad compliance or **Conversation messages** access where supported. Use the [Admin API reference](https://chatgpt.com/public/admin/api-reference) to list and download compliance JSONL files and select records with `client_id = DOTS`.
 
-#### How do custom rules affect confirmations?
+#### Check records for an investigation
 
-[Custom dot rules](./dots/controls.md#set-custom-rules) guide when a dot acts or asks for confirmation. If you turn them off, members can't add or edit rules, and saved rules won't apply. The dot still follows default rules and the user's instructions.
+Compare a harmless test action with the available export records. Check whether they identify the user, dot, initiating request, tool, applicable approval, and result. Record missing fields and events. A requested tool call does not establish that an action completed; use the receiving service's records to confirm the outcome.
 
-Custom rules don't grant tool access or override workspace permissions and built-in safety requirements. Turning them off also doesn't make the dot ask before every action. Check capability and app approval settings to control what it can do.
-
-#### What safeguards help protect work done by dots?
-
-Built-in safeguards help defend against malicious instructions and can pause or stop work when monitoring detects a safety concern.
-
-Members can follow progress in [Activity View](./dots/controls.md#review-work), redirect work, and check results before using them.
-
-#### Models and usage
-
-#### Do existing model controls and defaults apply to dots?
-
-Enterprise model controls and defaults do not apply to the main dot. Tasks it delegates to Work or Codex follow those products' permissions and controls. Check dots permissions and the settings for Work and Codex when configuring access.
-
-#### How should admins monitor adoption and usage?
-
-Use the [Analytics API](./enterprise/analytics-api.md) to see who is using dots. Tasks a dot starts or manages in Work or Codex count toward those products' usage limits and appear in their reporting. Include those tasks when reviewing usage, and check current plan terms when setting budgets. See [Work usage and cost](./enterprise/chatgpt-work-usage-and-cost.md) for the available controls.
-
-The daily usage endpoint `/v1/analytics/workspaces/{workspace_id}/usage` identifies dots with `client_id = DOTS` and supports per-user or workspace-level reporting.
-
-#### Data and compliance
-
-OpenAI does not use ChatGPT Enterprise data to improve its models by default. For OpenAI’s business data commitments, see [Enterprise privacy](https://openai.com/enterprise-privacy/).
-
-#### What does a dot remember between requests?
-
-A dot keeps its own context, separate from ChatGPT Memory. Turning off ChatGPT Memory stops memory sharing with the dot, but doesn't erase information it already has. Disconnecting a plugin stops future access through that connection; it doesn't remove information the dot has retained.
-
-Deleting a dot removes its own context. Files, Codex threads, and ChatGPT conversations it created are stored separately and aren't all deleted with it. Follow the deletion steps for each location.
-
-See the [dots privacy FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for what is retained and deleted, and [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) for the member’s Pause and Reset controls.
-
-#### How can admins investigate work a dot has done?
-
-Members can follow their dot's work in Activity View. Admins can use [Compliance API](./enterprise/compliance-api.md#confirm-the-administration-boundaries) records to investigate user messages and dots' replies. Check which records are available before relying on exports for an audit, DLP, legal hold, or e-discovery.
-
-Supported dots records are available through the Compliance Logs Platform, including user prompts and responses, supported tool-call events, and connected-app MCP calls and results. Records identify the user and workspace; dots-attributed records use `client_id = DOTS`, and the agent object includes the dot ID, name, and type when available.
-
-Workspace owners or admins can select their workspace in Admin Console, then open **Credentials > Admin keys** and create a key with the appropriate available permissions: `enterprise.analytics.usage.read` for unified usage reporting, or `CODEX_LOG` access for dots compliance records. Only workspace owners can grant broad compliance or **Conversation messages** access where supported. Use the [Admin API reference](https://chatgpt.com/public/admin/api-reference) to list and download compliance JSONL files and select records with `client_id = DOTS`.
+Protect downloaded records according to the sensitivity of the messages and connected data they contain.
 
 #### Manage access changes
 
@@ -47197,14 +47305,20 @@ When someone changes roles or leaves, check their dot's permissions, connections
 
 1. **Remove dots access.** Check the workspace default and every role assigned directly or through groups. Remove each permission that grants access; any remaining grant can keep it enabled.
 2. **Check connected accounts and devices.** Review plugin authorizations, website sessions, local computer access, and the dot's Slack identity. Each has its own settings.
-3. **Decide what happens to ongoing work.** Check active tasks, recurring schedules, and tasks delegated to Work or Codex. Decide what should stop and who should take over any remaining responsibilities.
+3. **Decide what happens to ongoing work.** Review the [pause and deletion controls](#manage-dots-in-your-workspace), then check active tasks, recurring schedules, and tasks delegated to Work or Codex separately. Decide what should stop and who should take over any remaining responsibilities.
 4. **Delete data where needed.** Access changes and deletion are separate steps. Follow the deletion process for the dot's context and any files or tasks stored elsewhere.
 
 For adding and removing workspace members, see [User lifecycle management](./enterprise/user-lifecycle.md). For dots access removal, see [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces).
 
+#### Record access-removal results
+
+After completing the access-change checklist, record which permissions, app authorizations, website sessions, computer connections, and messaging identities were removed. Check active work and schedules separately, including work delegated to Work or Codex. Record any work that remains active and its responsible owner.
+
+Removing access does not reverse actions already completed in another service. Check the receiving service when an action needs to be undone.
+
 #### Respond to an unexpected action
 
-Ask the member to pause their dot and review the affected task. Save the task link and available activity records, check the app or computer permissions involved, and follow your organization's incident process. Whether you can undo an action depends on the action and the service. See the [privacy and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for how to report an issue.
+Pause the dot from Admin Console, confirm its paused status in the inventory, and ask the member to review the affected task. Save the task link and available activity records, check the app or computer permissions involved, and follow your organization's incident process. Whether you can undo an action depends on the action and the service.
 
 #### Help members work well with dots
 
@@ -49619,6 +49733,341 @@ To migrate safely, complete these steps in order:
 - [Plugins](./plugins.md)
 - [Managed configuration](./enterprise/managed-configuration.md)
 
+### Safety and security in dots
+
+Source: [Safety and security in dots](./enterprise/dots-security.md)
+
+A dot is a personal agent that can keep working between conversations. Admins use role-based access control (RBAC) to choose who can use dots. A personal dot uses the app connections its owner has authorized, within the app and action limits set by the workspace. The owner specifies what the dot may do.
+
+What a dot can do depends on the employee’s permissions, the actions the workspace allows, and where the dot performs the task.
+
+#### Security overview
+
+A personal dot can work on its owner’s behalf between conversations. For example, an employee can ask it to follow a project and prepare a brief as updates come in. The dot works from its own cloud computer and can delegate tasks to Work or Codex. In a connected app, it inherits the permissions of the account its owner authorized. Workspace admins can further limit which apps and actions it can use.
+
+A project document can supply facts for the brief, but OpenAI trains the models behind dots to resist any hidden instructions in the project document or similar kinds of [prompt injection](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs). Auto-review checks consequential actions before they run, and safety monitoring can pause or stop work if it detects potentially harmful behavior.
+
+- **Cloud computer.** Admins control browser access, network access for code, and desktop interaction separately. When browsing is enabled, a dot can visit public sites or use a website with the permissions of the account signed in there. The owner can [view the cloud computer or take over](./dots/computers-and-apps.md).
+
+- **Action review.** Before sharing the brief, [Auto-review](https://openai.com/index/how-we-build-safety-security-and-privacy-into-dots/) checks what would be shared, who would receive it, and whether the owner’s instructions, Custom Rules, and safety requirements allow it. It can block the action or require confirmation. The dot cannot turn off a required check.
+
+- **Connected computers and Codex Cloud.** Work that a dot runs on a connected computer follows the applicable local [Agent Security policy](./enterprise/agent-security.md). If the dot delegates a task to Codex Cloud, that task follows the Codex Cloud policy and the permissions of its selected environment.
+
+- **Owner oversight.** In [Activity View](./dots/controls.md), owners can inspect ongoing and delegated tasks, correct an instruction, or ask the dot to stop.
+
+- Enterprise data is not used to train models by default. Dot context, files, delegated tasks, and audit records have different retention and deletion boundaries; verify the requirements for each copy.
+
+- **Audit records.** Admins can use [available compliance records](./enterprise/compliance-api.md) to investigate dot activity and check the connected service’s own records to verify what changed.
+
+**A familiar cloud environment**
+
+Dots build on the same cloud computer infrastructure as ChatGPT Work and follow your workspace’s applicable privacy and security protections. Dots can preserve cloud computer snapshots across sessions, so work can continue without starting from scratch. If your organization has already reviewed Work Cloud, you can use that review as a starting point for evaluating dots. For details about the cloud environment, see [ChatGPT Work cloud security](./enterprise/chatgpt-work-cloud-security.md).
+
+**Choose which cloud capabilities to enable**
+
+Dots can provide value even if you turn off access to the cloud browser, cloud computer desktop, and internet access for code and shell commands. Members can still use their dots to draft content, organize information, and work with connected apps that your workspace permits. You can enable the cloud capabilities that fit your organization’s needs. These settings also apply to Work Cloud, so changing them can affect both dots and Work tasks.
+
+**Understand proactive research**
+
+Proactive research is one way dots differ from a typical user-directed ChatGPT Work task. A dot can look for useful information in permitted connected apps without waiting for a new request from its user. For example, it might review connected information for an update relevant to ongoing work.
+
+During proactive research, a dot can read permitted information and save private notes. Its research tools can’t directly send messages to other people, change content through connected apps, or control a browser or computer. Other dot activities, such as tasks a user explicitly schedules, follow their applicable permissions and action rules.
+
+We’re developing additional rules in Agent Security so admins can choose which sites a dot’s cloud browser can visit.
+
+#### How dots protect workspace data
+
+- **Model safeguards help dots follow the owner’s instructions.** OpenAI trains models in the GPT-6 family to refuse harmful requests and resist malicious instructions hidden in emails, files, or web pages. For example, an email asking a dot to forward a private file does not authorize the dot to send it. That authority comes from the owner or an automation the owner authorized. [GPT-6 model safeguards](https://deploymentsafety.openai.com/gpt-6-october/prompt-injection)
+
+- **Auto-review checks certain actions before they run.** Before a dot sends an email, for example, Auto-review checks the recipient and message against the owner’s instructions, Custom Rules, and safety requirements. It can block the send. The dot cannot turn off this review. Some default action and confirmation rules can be customized, but owner approval cannot override built-in safety requirements. [How Auto-review works](https://openai.com/index/how-we-build-safety-security-and-privacy-into-dots/)
+
+- **Safety monitoring can interrupt work in progress.** As a dot plans and acts, monitoring looks for potentially harmful behavior, such as attempts to bypass a safeguard or act outside the owner’s instructions. If it detects a concern, it can pause or stop the task. A pause can surface a warning for the owner to review. [Built-in safeguards](https://openai.com/index/introducing-dots/)
+
+- **Admins control plugin access and cloud browser access separately.** Admins choose which plugins and actions are available and whether dots can use the cloud browser. A read-only plugin limits what a dot can do through that plugin. If cloud browser use is enabled, the dot may still be able to make changes through an account signed in on the website. [Workspace controls](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces)
+
+- **Owners can review and redirect work.** In Activity View, owners can inspect a delegated task, add context, change direction, or ask the dot to stop. Timing matters when information is shared. If the dot has already posted in Slack, people in the channel may already have read the message. [Activity View and completed actions](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs)
+
+> **What to review before rolling out dots**
+>
+> Decide which employees should have access to dots. A personal dot uses its owner’s existing app connections. Check what each connected account lets the owner read or change and which actions the workspace allows through that connection. If dots can use the cloud browser or delegate work to a connected computer, check what the signed-in account or local device permits there.
+
+#### How OpenAI evaluates model safeguards
+
+A dot may read an email, act on the owner’s behalf, and report what it did. Model safeguards help at each step. OpenAI tests whether a model ignores malicious instructions embedded in content it reads, respects an Auto-review denial, and tells the owner when something prevented it from finishing. The following results come from the October 26 GPT-6.1 Terra system-card addendum.
+
+**Indirect prompt injection.** An email might tell a dot to forward a private file. The owner asked for a summary, so the model should ignore the forwarding instruction and continue summarizing. Figure 3 tests that distinction across untrusted content.
+
+**Respecting Auto-review.** When an action requires Auto-review, a separate reviewer checks what the dot proposes to do, what data or people it would affect, and whether the owner’s instructions, Custom Rules, and safety requirements allow it. For example, before a dot shares a file in a Slack channel, the reviewer checks what would be shared, where it would go, and whether the owner authorized sharing it there. A request to summarize the file does not authorize posting it. Destructive actions, such as permanently deleting data, may also require the owner’s approval. The dot cannot turn off required checks, and owner approval cannot override core safety requirements. Figure 5 shows how models responded to a denial in a simulated Codex task.
+
+At maximum reasoning effort, GPT-6.1 Terra made no observed attempts to bypass a denial. GPT-6 Luna tried in 0.3% of samples. None of its attempts succeeded.
+
+**Disclosing blockers.** When a model cannot finish a task, the owner needs to know what remains undone. Figure 8 measures how often models failed to report a blocker accurately in their final answer on coding tasks chosen to make that failure more likely.
+
+GPT-6.1 Terra failed to report a blocker accurately in 8.47% of these cases, down from 28.99% for GPT-5.6 Terra and close to GPT-6 Sol (8.05%) and GPT-6 Luna (8.36%).
+
+These evaluations give an indication of what to expect from the GPT-6 family on similar tasks. Compared with the GPT-5.6 models tested, GPT-6 models more often resisted malicious instructions and accurately reported when they could not finish a task. In the simulated Codex evaluation, no GPT-6 model tested successfully bypassed an Auto-review denial.
+
+#### Confirm eligibility and data requirements
+
+| **Category**                                                                                                                                                               | **Eligibility and data requirements**                                                                                                                                                                                                                   |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Data and inference residency**                                                                                                                                           | Data storage residency in Australia, Canada, Europe (EEA and Switzerland), India, Japan, Singapore, South Korea, the UK, and the US is supported. UAE is not included.                                                                                  |
+| Dots inference residency is supported for the US and Europe but not UAE. Inference residency covers model inference, not every processing step or third-party integration. |
+| **Enterprise Key Management (EKM)**                                                                                                                                        | Enterprise Key Management (EKM) supported for eligible workspaces. Customer-managed keys protect supported customer content at rest and allow customers to rotate or revoke their keys. Identify which data your agreement requires the key to protect. |
+| **HIPAA**                                                                                                                                                                  | HIPAA supported for eligible workspaces. Confirm that your business associate agreement (BAA) and configuration cover the intended workflow.                                                                                                            |
+| **Zero data retention**                                                                                                                                                    | Neither dots nor Work with local computer access provides strict zero data retention.                                                                                                                                                                   |
+| **FedRAMP**                                                                                                                                                                | Dots are unavailable in FedRAMP workspaces.                                                                                                                                                                                                             |
+
+#### Manage who can use and direct a dot
+
+- **Workspace access:** During the admin preview, access to dots is off by default. To enable it for a group, grant Use dots on the group’s custom role.
+
+_Example settings; toggle positions and available channels may vary by workspace._
+
+- **Dot ownership:** Only the owner can direct their personal dot. Messages from other people, including Slack mentions, do not start work or give them control over the dot.
+
+- **Connection permissions:** A personal dot uses its owner’s existing plugin connections. Through each plugin, the dot can only access data and take actions that the connected account, the plugin permissions, and the workspace settings allow. See the [dots privacy and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs).
+
+- **Automations:** An owner can use an automation to approve an action in advance by specifying what the dot may do and when. For example, the owner might ask the dot to post a project update in the team’s Slack channel every Friday. The dot is designed to stay within that authorization and follow the usual permissions and safety checks.
+
+#### Where a dot works and which controls apply
+
+Auto-review coverage across browser, desktop, and delegated actions remains under review.
+
+A dot coordinates work in the cloud. For example, if you ask it to summarize a report saved on your connected laptop, the command that reads the file runs on your laptop. Agent Security’s local policies govern which files that command can read.
+
+To make local work available, an admin enables Allow local computer access for dots. Each employee then chooses whether to connect their computer in ChatGPT.
+
+A dot can [delegate tasks in parallel](./dots/tasks-and-memory.md#assigned-work) while the owner continues the conversation. It can start a Work or Codex thread on the owner’s behalf. When local access is enabled and the owner connects a computer, a task can use files or tools on that computer. For repository work, the dot can also start a Codex Cloud thread in an available cloud coding environment, without using the owner’s computer. Open the task in Activity View to see where it runs. See [Connect computers and apps to your dot](./dots/computers-and-apps.md).
+
+#### Controls by work environment
+
+Start with where the dot takes an action and which account it uses. For example, a rule that limits file changes on an employee’s laptop applies there. The dot’s own cloud files follow separate controls. If an action must be blocked everywhere, check every enabled way the dot could take it. Some actions also require owner approval.
+
+| **Environment**                                                                                                                                                                                                                                                                                                                          | **Which controls apply**                                                                                                                                                                                                                                                                                           | **Admin settings and member actions**                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Main dot conversation**                                                                                                                                                                                                                                                                                                                | Workspace roles determine who can use dots and set custom rules. The owner directs the dot in this conversation. Enterprise model controls and defaults do not apply to the main dot conversation.                                                                                                                 | **Admin.** In [Admin Console → Permissions](./enterprise/dots-admin-guide.md#set-up-dots-for-work), set Use dots and Use custom rules for dots in the workspace default or a custom role. For managed approvals and web search, use [Agent Security → Global](./enterprise/agent-security.md). Check app permissions in Plugin controls.                                                                                                                                                                    |
+| **Member.** Tell the dot what you want it to do. If your workspace enables custom rules, you can set a standing instruction such as “Ask me before changing a shared file.”                                                                                                                                                              |
+| **Plugins (connected apps)**                                                                                                                                                                                                                                                                                                             | A personal dot uses its owner’s authorized app connection. What it can read or change through that connection depends on the owner’s access in the app, the permissions granted to the plugin, and the actions the workspace allows.                                                                               | **Admin.** In [Plugin controls](./enterprise/dots-admin-guide.md#2-configure-app-access), set available apps and allowed actions. In the source service, check the connected account’s permissions and authorized scope.                                                                                                                                                                                                                                                                                      |
+| **Member.** Connect a plugin your workspace admin allows.                                                                                                                                                                                                                                                                                |
+| **Dot’s cloud computer**                                                                                                                                                                                                                                                                                                                 | Cloud computer settings govern browsing, network access for code and shell commands, and computer use. The dot can create, edit, or delete its own cloud files. Websites use the account signed in to the cloud browser. The employee’s laptop sign-ins, VPN, and device policies do not automatically carry over. | **Admin.** In Admin Console → Permissions, select the workspace default or role. Under Workspace capabilities → [Let agents use cloud computers](./enterprise/dots-admin-guide.md#set-up-dots-for-work), set Use a browser, Allow network access (code and shell), and Allow computer use. Set Use password manager separately under Workspace capabilities. Agent Security site rules would let admins allow or block domains in the dot’s cloud browser and choose which sites permit uploads or downloads. |
+| **Member.** Open the cloud computer from your dot’s profile to see what it’s doing. Select Take over to do a step yourself, then Return control when you want the dot to continue. If a site asks you to sign in, use the [private form](./dots/computers-and-apps.md#sign-in-to-a-website) or take over the cloud browser to sign in. |
+| **Delegated Work or Codex task**                                                                                                                                                                                                                                                                                                         | When a dot starts a separate Work or Codex thread, that product’s model controls govern which models the task can use. The task follows the Agent Security requirements and other controls that apply where it runs.                                                                                               | **Admin.** Check access to Work or Codex in Admin Console → Permissions and review the model controls for that product. For a connected computer, check Agent Security → Global and any Local overrides. For Work Cloud, review cloud-computer capabilities. For Codex Cloud, check [Agent Security → Codex Cloud](./enterprise/agent-security.md) and [Settings → Codex Cloud → Environments](./environments/cloud-environments.md).                                                                       |
+| **Member.** Open the delegated thread in Activity View. Check where it runs, review its sources and results, and add missing context there.                                                                                                                                                                                              |
+| **Connected employee computer**                                                                                                                                                                                                                                                                                                          | The workspace must allow local computer access for dots, and the employee must connect the computer. Commands on it follow applicable Agent Security and device policies. The dot can use permitted local files, tools, and apps while the cloud continues to coordinate the task and can process its context.     | **Admin.** In Admin Console → Permissions → Use dots, enable [Allow local computer access](./enterprise/cloud-local-access.md#enable-local-computer-access). Connected computers inherit applicable Agent Security → Global settings. Within the same policy, use Local to override supported settings when the computer needs different filesystem or network restrictions. Device permissions also apply to desktop apps and screen access.                                                                 |
+| **Member.** On that computer, open the dot’s profile in the ChatGPT app. Under [Computers → Your computer](./dots/computers-and-apps.md#connect-your-computer), select Allow access and confirm. Keep the computer online with ChatGPT open.                                                                                           |
+
+#### How managed policies apply
+
+- **Global policy:** In [Agent Security](./enterprise/agent-security.md) → Global, check managed approval requirements and whether web search is allowed for the workflow.
+
+- **Execution overrides:** For a command on an employee laptop, check Agent Security → Local for filesystem and network restrictions. For a delegated Codex Cloud command, check Agent Security → Codex Cloud and the selected environment’s network settings.
+
+- **Separate controls:** For the dot’s cloud computer and Work Cloud, check browser access, code and shell network access, and computer use separately. For a delegated Codex Cloud task, inspect the selected Codex environment.
+
+#### Control connected apps and credentials
+
+| **Access path**                                                                                                                     | **What to check**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | **What the control covers**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Plugins (connected apps)**                                                                                                        | In Plugin controls, review which apps and actions members can use. In the source service, check which account authorized the connection. For an email send, verify that the action is enabled and that the account can send to the intended recipient.                                                                                                                                                                                                                                                                                                                                                                                                                                            | The dot can use an existing connection only for actions allowed by the workspace and permitted for the connected account. To end access through that connection, revoke the app authorization in the source service. This stops new requests through the connection. The dot may still have information it retrieved earlier. App access is shared with other ChatGPT experiences. See the [dots privacy and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) and [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces). |
+| **Browser sign-ins**                                                                                                                | Identify the account signed in to the website.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Before granting access to sensitive data, verify the source-system permissions for both the app connection and the website account. | For example, a plugin may allow the dot to read a document while the website account can also edit it. Check the website account’s role before allowing that browser workflow.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Website credentials**                                                                                                             | For website sign-in, use the private sign-in form or take over the browser. For supported sign-ins, OpenAI sends the password directly from the private form to the cloud browser without exposing it to the model. App tools can authenticate through backend credential handling, and browser automation can use a signed-in session. The cloud browser stores its own session cookies separately from the member’s device. Code on the dot’s computer can read an app token or browser cookie if its value is exposed to that code; do not assume the session or token is isolated from code running there. Plugin credentials and values used only in browser sessions do not appear in logs. | A new sign-in with a saved password requires confirmation. Once signed in, the dot can use the website with that account’s permissions. To end access, an admin can revoke the website session in the source service where supported. A member can also sign out in the cloud browser or clear the site’s cookies in Settings → Cloud browser → Browser data. See [Connect computers and apps to your dot](./dots/computers-and-apps.md).                                                                                                                                                                                           |
+| **Codex Cloud secrets**                                                                                                             | For a delegated Codex Cloud task, use the documented environment secret controls. Network secrets pass a placeholder to programs and substitute the credential for allowed HTTPS destinations. Direct environment variables are visible to programs.                                                                                                                                                                                                                                                                                                                                                                                                                                              | These controls apply to Codex Cloud. See [Codex Cloud environments](./environments/cloud-environments.md) for secret configuration.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+
+#### Set rules for approvals and unattended work
+
+Proactive research is background work a dot does between requests to find updates relevant to its owner’s work. This research is read-only. The dot can read information its owner has permission to access through connected apps and keep private notes about what it finds. Its research tools cannot send messages, edit shared content, or control a browser or computer. To send a finding to Slack, the dot needs the owner’s authorization for the send and its audience. Auto-review checks the proposed send.
+
+When authorizing a recurring task, name the action, recipients, trigger, and schedule. Permission to draft a customer email covers the draft. Sending it requires authorization. See the [dots privacy and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for action approvals.
+
+| **Mechanism**                                                                                                                                                                                                                                                                                                                      | **What it does**                                                                                                                                                                                                                                                           | **Conditions and limits**                                                                                                                                                                                                                             |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Action approval**                                                                                                                                                                                                                                                                                                                | An owner can authorize “Email the weekly project update to the project leads every Friday.” That instruction covers the named recipients and schedule.                                                                                                                     | A new approval will be needed for changes that fall outside that scope, including changes to the audience, content, or timing.                                                                                                                        |
+| [**Auto-review**](./sandboxing/auto-review.md)                                                                                                                                                                                                                                                                                   | [Auto-review](./sandboxing/auto-review.md) checks tool calls labeled “write” before they run. For example, before sending an email, it checks who will receive it and what the message contains against the owner’s instructions, Custom Rules, and safety requirements. | [Auto-review](./sandboxing/auto-review.md) can block a send or prompt the owner to clarify the recipient or approve the action. Approval cannot override a required safety check. Computer Use asks separately for permission to use a desktop app. |
+| **Custom Rules**                                                                                                                                                                                                                                                                                                                   | An owner can set a rule to ask before sending an email. The rule can add that approval step. It cannot grant a send permission the connected account lacks or override a required safety check.                                                                            | Disabling custom rules does not force every action to ask for approval.                                                                                                                                                                               |
+| Distinguish member-editable rules from enterprise requirements in [Agent Security](./enterprise/agent-security.md) and from the permissions enforced by the connected service. See [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces) for custom-rule settings. |
+
+- **Delegated work on a local computer.** The delegated thread uses the member’s connected computer. When Computer Use is enabled and the app is approved, selecting “Always allow” lets ChatGPT use the app without asking for access again.
+
+#### Example: Sending the same external email through three routes
+
+- Suppose the owner authorizes a dot to email the approved project update to Lee at the customer every Friday, with no attachments. Compare that send with adding a new recipient. A new recipient needs fresh authorization. If company policy prohibits the recipient, even the owner’s approval cannot authorize delivery.
+
+| **Route**                            | **Technically blocked**                                                                                        | **Fresh approval**                                                                                                                 | **Standing authorization**                                                                                                                            |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Email plugin**                     | The send action is disabled, or the connected account lacks send permission.                                   | Adding a recipient needs a new decision. An app policy that asks before writes also requires approval for the original send.       | The Friday send can proceed if the action is enabled, the account can send, and applicable checks allow it.                                           |
+| **Cloud browser in web-based email** | The workspace disables cloud browser access, or the mail service rejects delivery for the signed-in account.   | A new recipient needs approval to send. Confirming a saved login approves sign-in only. A prompt at the Send button is unverified. | An active session can be reused. The Friday instruction covers the original message. Verify whether web-based email can send it unattended.           |
+| **Approved desktop mail app**        | A managed Computer Use policy denies the app, or the mail service rejects delivery for the account in the app. | A new recipient needs approval even if the app is already open. Whether Computer Use prompts at Send is unverified.                | Always allow lets the dot reopen the app. The Friday send still needs its own standing instruction. Verify unattended delivery in the delegated task. |
+
+- **Enterprise requirement across all routes**. If your organization prohibits external delivery, enforce that restriction for every sending account in the mail service or disable each route that can send. If a person must approve every external email, verify that each enabled route pauses before delivery, including when a browser session or desktop approval is already active. A member’s custom rule or a successful plugin test alone does not establish that coverage.
+
+- **Verification**. Use the same test mailbox and disposable message on each route. Try a prohibited recipient, a new but permitted recipient, and the authorized Friday send. Record which control acted, whether a person approved the send, and whether the mail service accepted or rejected it. Verify per-send behavior for each enabled browser and desktop route before approving the workflow.
+
+- See [App permissions](https://help.openai.com/en/articles/20001495-managing-app-permissions-in-chatgpt), [Cloud browser sessions](./dots/computers-and-apps.md), [Computer Use approvals](./computer-use.md), and [Agent Security](./enterprise/agent-security.md).
+
+#### Review browser, network, and device access
+
+_Example cloud computer settings; toggle positions illustrate one workspace configuration._
+
+#### Dot’s cloud computer
+
+- **Cloud capabilities:** Use a browser controls access to the dot’s cloud browser. Allow network access (code and shell) controls internet access for commands. Allow computer use controls interaction with desktop apps. Site rules in Agent Security would let admins allow or block domains in the dot’s cloud browser and set upload and download permissions by site. Within an allowed site, the dot’s access also depends on the account signed in there.
+
+- **Password manager:** Review password-manager access separately. Cloud browser, network, and computer-use controls can apply to dots even when ChatGPT Work is disabled. See [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces) for capability settings.
+
+- **Local protections:** A dot’s cloud browser has its own session. Signing in to an internal site on a laptop or connecting the laptop to a VPN does not give the cloud browser that session or network route.
+
+- **Network rules:** For example, blocking a hostname for terminal commands on a laptop restricts that command path. Test the cloud browser, plugins, and web search separately if they could reach the same destination. See [Connect computers and apps to your dot](./dots/computers-and-apps.md). Disabling code and shell internet access does not, by itself, disable the cloud browser or connected apps.
+
+#### How sign-in works in the cloud browser
+
+The cloud browser is optional in dots. Admins can disable it by turning off “Use a browser.”
+
+For a website protected by corporate SSO, the employee signs in from the dot’s cloud browser. When the dot offers a private sign-in form, check the site address and enter your credentials and any requested verification code there. The form sends them directly to the cloud browser, outside the model’s view.
+
+If the form can’t complete a sign-in step, select **Open computer**, then **Take over**. Complete the corporate SSO and multi-factor authentication (MFA) prompts yourself. Once the app opens, select **Return control** so the dot can continue with your signed-in account. If the site asks you to verify again, complete the new prompt before the dot continues.
+
+Taking over gives you control of the cloud browser. If corporate SSO requires a company-managed device or a connection through your corporate VPN, the cloud browser cannot use your laptop’s device status or VPN connection to meet that requirement. Keep the policy in place. If an approved plugin supports the task, use it with a connected account authorized for that action. If the task is only available on the website, complete it on a device and network that meet the policy.
+
+The cloud browser keeps its own cookies, separate from the browser on your device. This includes authorization tokens to retain signed-in states for saved sessions, as applicable. To sign out of a site and end that saved session, clear the site’s cookies in Settings → Cloud browser → Browser data.
+
+#### Connected employee computer
+
+- **Connection requirements:** An admin must allow local access, and the member must connect the computer. Keep it online with ChatGPT open for local work. Taking it offline leaves the connection in place.
+
+- **Messaging channels:** A member can send a request from another device through a messaging channel. The dot can then start a new thread with the member’s connected computer attached, if it’s available
+
+- **Device permissions:** Camera, microphone, and screen access also depend on the connected computer and the permissions granted to the ChatGPT app in device settings. See the [dots privacy and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for device permissions.
+
+#### Review memory, retention, and deletion
+
+- **Retained context:** A dot can save information it reads through an authorized app connection, such as a team decision shared in a Slack thread. Disconnecting the app stops future reads through that connection. Information the dot already saved may remain in its memory.
+
+- **Model training:** Enterprise data is not used for model training by default. Human review may occur in limited circumstances, including safety-related cases, even when model improvement is turned off. See the [dots privacy and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs).
+
+- **Encryption:** OpenAI encrypts data at rest using AES-256 and data in transit using TLS 1.2 or later between your organization and OpenAI, and between OpenAI and its service providers.
+
+- **Retention:** Use the table below to find the retention period and deletion steps for each copy. See the [dots privacy and safety FAQ](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for memory and deletion.
+
+- **Dot context:** Removing workspace access preserves the dot’s data. Deleting the dot also deletes its retained context, including private research notes and background research thread history, within 30 days. Dot-owned backups are also deleted within 30 days. Separately stored ChatGPT conversations and Codex threads, files in Space, projects, connected storage or the user’s computer, and information added to ChatGPT Memory based on dot conversations are not deleted with the dot. Their owners must manage those copies separately.
+
+- **ChatGPT Memory:** Dot conversations can contribute to ChatGPT Memory. Manage shared information in ChatGPT Memory settings. When removing information, check both saved memories and chat history. Deleting only a conversation can leave a saved memory in place. See [Memory in ChatGPT](https://help.openai.com/en/articles/8590148-memory-in-chatgpt).
+
+#### Data retention by category
+
+| **Data category**                                      | **Retention policy**                                                                                                                                                                                                                                                                                                                | **Who starts deletion and how**                                                                                                                                                                                                                                                                                                                                                       | **Deadline, remaining copies and exceptions**                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dot chats, native subagent history and scheduled tasks | The main dot keeps its own history, configuration and schedules for its lifetime.                                                                                                                                                                                                                                                   | The member uses Reset to delete their dot, including its conversations, saved memories and schedules. Removing workspace access preserves the dot’s data. A workspace admin can also delete a dot, including when its owner is unavailable.                                                                                                                                           | Dot-owned chats, native subagent history, and scheduled tasks are deleted within 30 days of dot deletion.                                                                                                                                                                                                                                                                                                                                                   |
+| Dot memory, profile and private research notes         | The dot keeps its own context for its lifetime, independently of ChatGPT Memory settings. Background research can save private notes from connected sources.                                                                                                                                                                        | Members cannot remove a specific dot memory or source-derived research note while keeping the dot. To remove the dot’s context, the member can delete the dot.                                                                                                                                                                                                                        | Revoking source access stops future access but can leave a derived note intact. Deleting the dot removes its private research notes and dot-owned backups within 30 days.                                                                                                                                                                                                                                                                                   |
+| Background research threads                            | Background research threads retain the research context associated with the dot for its lifetime.                                                                                                                                                                                                                                   | Deleting the dot also deletes its background research threads and their retained context.                                                                                                                                                                                                                                                                                             | Background research thread history and its dot-owned copies are deleted within 30 days of dot deletion.                                                                                                                                                                                                                                                                                                                                                     |
+| ChatGPT Memory                                         | ChatGPT manages memories contributed by dot conversations separately from the dot’s own memory.                                                                                                                                                                                                                                     | The member removes the saved memory in ChatGPT and deletes any chats that contain it. Turning off sharing leaves context already received by the dot in place.                                                                                                                                                                                                                        | Deleting the dot leaves separately saved ChatGPT memories in place. OpenAI may retain a [log of a deleted saved memory](https://help.openai.com/en/articles/8590148-memory-in-chatgpt) for up to 30 days for safety and debugging.                                                                                                                                                                                                                          |
+| Space files                                            | Saved files follow the Enterprise workspace retention policy. Opening, downloading or reattaching an existing Space file [does not restart its retention period](https://help.openai.com/en/articles/20001052-using-library-to-manage-files-in-chatgpt).                                                                            | The member deletes the file in Space. Compliance admins can delete it through the Space API. The file can also expire under workspace policy.                                                                                                                                                                                                                                         | The Space file survives dot deletion. After Space deletion, permanent removal is scheduled within 30 days, with exceptions for data already de-identified and disassociated, or retained for security or legal obligations. See Backups below.                                                                                                                                                                                                              |
+| Cached files and Outputs                               | The dot chat can keep a separate copy of a Space file. Space’s retention and deletion controls apply to the Space copy.                                                                                                                                                                                                             | Deleting the Space file, even from Trash, does not trigger deletion of the dot-chat cache. No separate self-service removal procedure is confirmed.                                                                                                                                                                                                                                   | A file may remain listed in Outputs after the Space copy is deleted. The dot-owned cached copy is deleted within 30 days of dot deletion. A separate way to clear the listing remains unconfirmed.                                                                                                                                                                                                                                                          |
+| Cloud computer files and browser state                 | The dot’s cloud disk can retain files and browser state. Snapshot expiry depends on workspace configuration.                                                                                                                                                                                                                        | Deleting a dot deletes its cloud browser and computer.                                                                                                                                                                                                                                                                                                                                | The dot’s cloud-computer data, disk, browser state, snapshots, and backups are deleted within 30 days of dot deletion. Copies saved elsewhere follow their destination’s policy.                                                                                                                                                                                                                                                                            |
+| VM snapshots                                           | For eligible workspaces with data residency, Enterprise Key Management (EKM), or both, the enabled control wipes snapshots on a five-day cycle, with a seven-day maximum.                                                                                                                                                           | The platform expires snapshots automatically. Deleting the dot separately starts the cloud-computer deletion process.                                                                                                                                                                                                                                                                 | For workspaces without data residency or EKM, there is no maximum age for an active dot’s snapshots. They may remain for as long as the dot exists, and customers cannot currently request an early purge. Snapshots are deleted within 30 days after the dot is deleted.                                                                                                                                                                                   |
+| Backups                                                | Space backups have a separate documented window. Dot-owned backups are deleted within 30 days of dot deletion.                                                                                                                                                                                                                      | When a Space file is deleted, expires or becomes inactive, the active Compliance API stops returning it. The platform manages backup expiry.                                                                                                                                                                                                                                          | A Space backup may remain for up to 30 additional days, or longer for security or legal obligations. Dot-owned backups are deleted within 30 days of dot deletion.                                                                                                                                                                                                                                                                                          |
+| Delegated Work and Codex threads                       | Hosted [Work](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention) and [Codex](./auth.md#openai-authentication) threads follow the workspace’s retention policy. [Device-only records](./enterprise/chatgpt-work-local-security.md#data-handling-and-retention) follow local storage and backup policies. | The workspace policy governs when hosted threads expire. For Codex Cloud, see the [workspace retention guidance](./auth.md#openai-authentication). Deleting a dot leaves its delegated Codex and Work threads intact.                                                                                                                                                               | When a Codex chat is deleted in the desktop app, OpenAI schedules it for permanent deletion from its systems within 30 days, subject to [published exceptions](https://help.openai.com/en/articles/20001333-archiving-and-deleting-codex-chats-in-the-chatgpt-app). Work Cloud schedules deleted chats for permanent deletion within 30 days, subject to [published exceptions](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention). |
+| Files and pages in Spaces                              | Space pages persist until someone deletes them; the workspace chat retention period does not expire them. Eligible files saved in Space follow workspace file retention.                                                                                                                                                            | A page’s [creator or owner](https://help.openai.com/en/articles/20001544-chatgpt-space-sharing-data-and-controls) can move it and its subpages to Trash. Delete separately saved attachments in their own location. Members can delete their own saved Space files. Compliance admins with the [required API permissions](./enterprise/chatgpt-space.md) can delete eligible files. | Space purges a page on permanent deletion or after 30 days in Trash. Pages trashed before the October 1 rollout require manual deletion. Deleting the page leaves separately stored attachments in place.                                                                                                                                                                                                                                                   |
+| Local files and connected-app copies                   | The device or connected service governs files, messages and exports stored there.                                                                                                                                                                                                                                                   | A person with delete permission removes the item in the source app or on the device. The organization manages any separately retained copies.                                                                                                                                                                                                                                         | These copies survive dot deletion. The destination’s retention period, backup rules and any holds determine when deletion finishes.                                                                                                                                                                                                                                                                                                                         |
+| Compliance logs and customer exports                   | The [Compliance Logs Platform](https://help.openai.com/en/articles/9261474-openai-compliance-platform-for-enterprise-and-edu-customers) retains each event for 30 days from creation. Downloaded copies follow the receiving system’s policy.                                                                                       | Platform expiry is automatic. Your organization manages deletion of downloaded copies in its own system.                                                                                                                                                                                                                                                                              | Dot deletion neither erases emitted events nor restarts their clock. An organization cannot use the Compliance API to erase OpenAI’s internal audit or security logs.                                                                                                                                                                                                                                                                                       |
+
+#### Access changes and deletion actions
+
+| **Action or data category**             | **What happens**                                                                                                                                                           | **What the admin should do**                                                                                                                   |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Disconnect an app**                   | Stops new access through that connection. The dot keeps its existing context.                                                                                              | Review retained context and other copies separately.                                                                                           |
+| **Turn off ChatGPT Memory**             | Stops memory sharing with dots. Any context the dot already received remains.                                                                                              | To remove context the dot already received, review the dot’s deletion options.                                                                 |
+| **Individual dot memories**             | Individual dot memories cannot be deleted. To delete the dot’s entire context, the member or admin can delete the dot. ChatGPT memories are managed separately in ChatGPT. | For dot-owned context, the member or admin can delete the whole dot. Manage separately saved ChatGPT memories in ChatGPT.                      |
+| **Reset/delete the dot**                | Reset removes the dot, its conversations, dot-owned memories, and scheduled tasks.                                                                                         | Review the [deletion notice](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and preserve required evidence first. |
+| **Files and delegated records**         | Spaces files, local/external files, Codex threads, and separate ChatGPT conversations follow the retention policy of the app or workspace where they’re stored.            | Complete deletion in each storage location.                                                                                                    |
+| **Cloud state, snapshots, and backups** | Automatic snapshot expiry, cloud-computer deletion and Space backup retention each have a separate clock.                                                                  | Use the deadlines above for each copy. Dot-owned backups are deleted within 30 days of dot deletion.                                           |
+
+- **Data categories:** For an erasure request about a Slack message, locate the source message, any private note that quotes or summarizes it, and any report saved from it. Check the deletion path for each copy.
+
+- **Revoked source access:** Changing source-system permissions restricts future access through that source; it does not prove that retained context was deleted.
+
+- **Privacy requests:** Include customer and non-user information when reviewing discovery, correction, and erasure needs.
+
+#### Review messaging and audience boundaries
+
+- **Slack identities:** During offboarding, check both the dot’s Slack identity and the owner’s Slack plugin connection. ChatGPT and enabled messaging channels reach the same dot. Their conversations are separate, but [saved notes and context](./dots/tasks-and-memory.md#context-and-memory) can inform work across channels.
+
+- **Slack setup:** Check the workspace communication permission and any required Slack app approval. The member must then complete the setup. See [Manage dots permissions and capabilities](./enterprise/dots-admin-guide.md) for Slack setup.
+
+- **Audience visibility:** Anyone with access to the conversation can read the dot’s posts. Use internal Slack channels for dot-assisted work. We recommend using your dot only in channels where everyone is part of your organization. That excludes Slack Connect channels shared with customers or partners. **Sharing restrictions:** As an example, if a dot can read a private HR document, posting its salary figures in a project channel would expose them to everyone who can read that channel. Before approving a post, specify what the dot may share and confirm that everyone in the channel is authorized to see it.
+
+#### Collect audit evidence and protect exports
+
+#### Choose the report for your task
+
+- **Investigations and reporting:** Use [compliance records](./enterprise/compliance-api.md) for investigations and [Analytics API](./enterprise/analytics-api.md) data for adoption reporting.
+
+- **Usage metrics:** Usage counts do not show who authorized an action or whether it succeeded.
+
+#### Trace an action
+
+1. **Find the action.** Find the member’s prompt and the dot’s reply, then check the tool or plugin event. For a Slack send, compare the plugin result with the message in the destination channel.
+
+1. **Match the records.** Use the user and workspace identifiers to locate records. Dots-attributed records use `client_id = DOTS` and include dot metadata where available. Use the receiving service’s log to check the outcome.
+
+1. **Trace delegated work.** For delegated work, look for the parent thread and task IDs. Record any missing or redacted fields that prevent you from tracing the action.
+
+1. **Check the destination.** A tool record can identify a requested command or browser action. To verify the destination actually reached, compare it with a proxy or gateway log for that path, if available. A local OpenTelemetry collector covers supported local execution events. Cloud orchestration falls outside that collector. See [Manage dots permissions and capabilities](./enterprise/dots-admin-guide.md) for supported records.
+
+#### Read today’s Compliance API records
+
+| **Activity**              | **What to look for**            | **What the record tells you**                                                                                       |
+| ------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Cloud browser or computer | TOOL_CALL_SUGGESTED             | Identifies the tool the dot tried. Even with status=completed, the detailed output may be missing.                  |
+| Connected app (plugin)    | APP_MCP_CALL and APP_MCP_RESULT | The call names the tool. The result reports success or an error and can include an output preview or error details. |
+
+Compliance API exports include user prompts, dot replies, tool-call requests and responses, and background activity. To investigate an action, correlate the available records and check the connected service to verify external effects. Some links and outcomes may not be present in the export.
+
+**More detailed audit logs for cloud activity.** We’re working on more detailed Compliance API records for dots and other agents that run in the cloud. Our goal is to help security teams follow the steps an agent took during a task, including which tools and connected apps it called and when an action went through automated review. We’re also exploring ways to show what those tools returned and which sites the cloud browser visited.
+
+#### Retain and protect exports
+
+- **Retention period:** The [Compliance Logs Platform](https://help.openai.com/en/articles/9261474-openai-compliance-platform-for-enterprise-and-edu-customers) retains records for 30 days. Export the records you need continuously if you must retain them longer.
+
+- **Export access:** Restrict who can read the export and use its keys. An export can contain an employee’s message or a preview of a plugin result. Apply your retention, e-discovery, and legal-hold rules to the records your system actually receives. Confirm separately whether a hold covers original chats, files, or dot notes.
+
+- **Log permissions:** Broad compliance access and conversation-message permissions require a workspace owner’s grant. An owner or admin can grant supported narrower log permissions.
+
+#### Stop work, revoke access, and manage departures
+
+Use this procedure when the employee who owns a personal dot (the dot owner) has left or cannot help. A ChatGPT workspace owner or workspace admin acts from their own account. If activity continues or you cannot verify that sensitive work has stopped, [open an OpenAI Support case](https://help.openai.com/en/articles/6614161-how-can-i-contact-support) immediately while you take the steps below.
+
+- **Remove workspace access if the employee has left.** A workspace owner or workspace admin can remove a manually managed member. For a directory-managed member, have your identity administrator [remove the workspace assignment](https://help.openai.com/en/articles/10011769-scim-provisioning-and-management) and verify after sync that the employee is no longer an active member. Workspace access ends when membership is removed. Verify dot containment separately: running work can complete after dot revocation, and the effect of member removal on each active and delegated task requires confirmation.
+
+- **Revoke dots access if the employee needs to keep workspace access.** A workspace owner can review [Use dots (Beta)](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces) in Workspace settings → Permissions &amp; roles. Check the workspace default, directly assigned roles, and group roles. Any remaining grant can keep dots enabled. Check who else depends on a shared grant before changing it.
+
+- **Find the employee’s agents in the Admin console.** Workspace admins, including owners, can view a user’s agents and pause or delete a dot.
+
+- **Pause the dot.** This prevents it from starting new work, including its own scheduled runs. If the dot already started a task in a separate Work or Codex thread, that task can keep running. To stop it, cancel that task separately. Check any independent schedules the dot created as well.
+
+- **Resume the dot.** Only an admin can resume a dot paused by an admin. After it resumes, previous sessions respond to messages again; delegated work is unaffected.
+
+- **Revoke dots access.** Currently running work can complete, new messages do not trigger model actions, and schedules are paused. Verify the effects of removing workspace membership separately.
+
+- **Delete the dot.** Deletion is unrecoverable, so preserve required evidence first. Deleting a dot deletes its cloud browser and computer, but does not remove user-level plugins.
+
+- **Revoke connected accounts and sessions.** Have the relevant service administrators revoke app authorizations and, where supported, terminate website sessions used by the dot’s cloud browser. For Slack, check both the dot’s own identity and the employee’s [connected Slack account](./enterprise/dots-admin-guide.md). Have the device administrator restrict access to any connected computer and check for local work already running. Verify each revocation in the service that issued it.
+
+- **Verify activity.** Running-work state can be checked in the Compliance API with a reported 30-minute p95. Scheduled-work state can be checked 30 minutes after the next scheduled run. These are reporting timings, not immediate-stop guarantees. Check the receiving service for completed actions.
+
+- **Contact support.** Open the chat bubble at help.openai.com from your own account. Support can guide a user or admin through stopping a dot; it cannot directly take actions affecting dots in the customer’s workspace. Provide the workspace ID, employee email, available dot or task identifiers, actions taken, timestamps with time zone, and last observed activity.
+
+#### Related resources
+
+- Review the [dots privacy, security, and safety FAQs](https://help.openai.com/en/articles/20001529-dots-privacy-security-and-safety-faqs) for access, approvals, memory, and deletion.
+- See [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces) for current settings and permissions.
+- See [Manage dots permissions and capabilities](./enterprise/dots-admin-guide.md) for configuration, usage, and compliance guidance.
+- See [Local computer access for Work Cloud and dots](./enterprise/cloud-local-access.md) for eligibility and safeguards for local access.
+- See [ChatGPT Work cloud security](./enterprise/chatgpt-work-cloud-security.md) for controls for delegated Work tasks.
+- See [Agent Security](./enterprise/agent-security.md) for policy requirements and execution settings.
+- See [Compliance API and audit events](./enterprise/compliance-api.md) for access to compliance records and exports.
+
 ### Self-host Codex configuration for your team
 
 Source: [Self-host Codex configuration for your team](./enterprise/configuration-server.md)
@@ -51825,6 +52274,8 @@ Review workspace security policies, governance, and audit controls.
 - [Governance](./enterprise/governance.md): Choose the right analytics, spend, and audit surface for each question.
 
 - [Agent security](./enterprise/agent-security.md): Manage the Global policy baseline and supported Local and Codex Cloud environment settings.
+
+- [Safety and security in dots](./enterprise/dots-security.md): Review dots security controls, data handling, and audit and offboarding considerations.
 
 - [Prisma AIRS](./enterprise/prisma-airs.md): Apply workspace-wide security policies to Codex prompts.
 

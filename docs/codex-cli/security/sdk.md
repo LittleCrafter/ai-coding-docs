@@ -468,7 +468,7 @@ The result includes the output `path` and, for a threat-model file export,
 
 For ServiceNow Manual AVIT Ingestion, set `artifact: "findings"` and
 `format: "servicenow-avit"`. [Prepare the application template](./cli/reference.md#export-findings-for-servicenow)
-and pass its path as `avitTemplate`. Set `output` to the destination CSV path
+and pass its path as `avitTemplate`. Set `output` to a private destination CSV path
 outside the repository. Use `source.directory` to select the existing scan
 results directory.
 

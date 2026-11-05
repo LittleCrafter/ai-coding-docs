@@ -104,6 +104,7 @@ Review workspace security policies, governance, and audit controls.
 
 - [Governance](./enterprise/governance.md) — Choose the right analytics, spend, and audit surface for each question.
 - [Agent security](./enterprise/agent-security.md) — Manage the Global policy baseline and supported Local and Codex Cloud environment settings.
+- [Safety and security in dots](./enterprise/dots-security.md) — Review dots security controls, data handling, and audit and offboarding considerations.
 - [Prisma AIRS](./enterprise/prisma-airs.md) — Apply workspace-wide security policies to Codex prompts.
 - [HIPAA configuration](https://developers.openai.com/codex/hipaa-configuration) — Configure local runtime safeguards for workflows that may handle protected health information.
 - [Compliance API and audit events](./enterprise/compliance-api.md) — Export activity records for audit and investigation workflows.

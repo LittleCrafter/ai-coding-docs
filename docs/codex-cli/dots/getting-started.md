@@ -56,6 +56,8 @@ Start with work you want your dot to keep track of, rather than treating each co
 
 Review the result and correct missing details. Your dot can delegate parts of a request to ChatGPT Work or Codex. In the desktop app, open your dot’s profile and select [Activity](./controls.md#review-work) to inspect delegated work and requests for input.
 
+For a guided walkthrough of sharing context, setting expectations, and giving feedback, see [Personalize your dot](https://developers.openai.com/training/walkthroughs/personalize-your-dot).
+
 <a id="set-up-a-follow-up"></a>
 
 ## Keep the work moving

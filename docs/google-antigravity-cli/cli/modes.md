@@ -93,7 +93,7 @@ When `accept-edits` mode is active, the bottom-right status bar shows `accept-ed
 
 Note
 
-`auto` mode is available in Antigravity CLI `v1.3.5+` on macOS and Linux and `v1.4.4+` on Windows when the terminal sandbox is available. It isn’t currently available for business or enterprise accounts, including [Antigravity in Gemini Enterprise](https://antigravity.google/docs/enterprise). If `auto` mode isn’t available for your account or platform, the CLI starts in `default` mode, and `auto` doesn’t appear in Shift + Tab cycling or `/config`.
+`auto` mode is available in Antigravity CLI `v1.3.5+` on macOS and Linux and `v1.4.4+` on Windows when the terminal sandbox is available. It isn’t currently available for business or enterprise accounts, including [Antigravity in Gemini Enterprise](https://antigravity.google/docs/enterprise). If `auto` mode isn’t available for your account or platform, `auto` doesn’t appear in Shift + Tab cycling or `/config`, and setting `"agentMode": "auto"` or passing `--mode=auto` runs the CLI in `default` mode.
 
 ```bash
 # Launch directly in auto mode

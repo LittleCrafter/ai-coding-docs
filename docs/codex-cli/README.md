@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 206
+- **Pages mirrored:** 208
 - **Version:** 0.166.0
-- **Last updated:** 2026-11-04T18:57:12Z
+- **Last updated:** 2026-11-05T01:09:43Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -93,6 +93,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Web search | [web-search.md](./web-search.md) | [source](<https://learn.chatgpt.com/docs/web-search>) |
 | Site tools | [webmcp.md](./webmcp.md) | [source](<https://learn.chatgpt.com/docs/webmcp>) |
 | What's new | [whats-new.md](./whats-new.md) | [source](<https://learn.chatgpt.com/docs/whats-new>) |
+| Working with agents | [working-with-agents.md](./working-with-agents.md) | [source](<https://learn.chatgpt.com/docs/working-with-agents>) |
 
 ## agent-configuration
 
@@ -172,6 +173,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Self-host Codex configuration for your team | [enterprise/configuration-server.md](./enterprise/configuration-server.md) | [source](<https://learn.chatgpt.com/docs/enterprise/configuration-server>) |
 | Connect to a gateway | [enterprise/connect-to-a-gateway.md](./enterprise/connect-to-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway>) |
 | Manage dots permissions and capabilities | [enterprise/dots-admin-guide.md](./enterprise/dots-admin-guide.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-admin-guide>) |
+| Safety and security in dots | [enterprise/dots-security.md](./enterprise/dots-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-security>) |
 | Dynamic groups | [enterprise/dynamic-groups.md](./enterprise/dynamic-groups.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dynamic-groups>) |
 | Understand ChatGPT education plans | [enterprise/education-plans.md](./enterprise/education-plans.md) | [source](<https://learn.chatgpt.com/docs/enterprise/education-plans>) |
 | Gateway compatibility requirements | [enterprise/gateway-compatibility.md](./enterprise/gateway-compatibility.md) | [source](<https://learn.chatgpt.com/docs/enterprise/gateway-compatibility>) |
