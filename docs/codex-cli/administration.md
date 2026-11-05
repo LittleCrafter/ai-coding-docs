@@ -4,9 +4,9 @@
 
 Set access and policy boundaries for ChatGPT, Codex developer tools, APIs, plugins, and connected systems.
 
-Start with workspace identity and access. Then configure local runtime policy for supported capabilities in the ChatGPT desktop app, Codex CLI, and IDE extension; Codex cloud eligibility; Platform API access; plugins and connectors; and permissions in connected systems.
+Start with the rollout guide, then set up identity and access. Use Configuration for app installation, updates, and workspace policies. Use Advanced deployment for Amazon Bedrock, Bedrock in GovCloud, or an organization gateway. Browse the sections for feature controls, usage, and security.
 
-> **Recommended:** [Explore authentication](./auth.md)
+> **Recommended:** [Start your rollout](./enterprise/admin-setup.md)
 
 ## Getting started
 
@@ -39,9 +39,9 @@ Manage sign-in, provisioning, roles, and credentials.
 - [Personal access tokens](./enterprise/access-tokens.md) — Create and manage tokens for programmatic access.
 - [Service accounts](./enterprise/service-accounts.md) — Create and manage workspace identities for automated workflows.
 
-## Deployment and configuration
+## Configuration
 
-Deploy apps and configure updates, runtime settings, remote connections, and model access.
+Manage app installation, updates, runtime settings, remote connections, and workspace model availability.
 
 - [Windows app and CLI deployment](./enterprise/windows-deployment.md) — Deploy the Windows app and Codex CLI on managed Windows devices.
 - [Run Codex with an NFS home directory](./environments/network-file-systems.md) — Migrate a shared Linux home, verify cross-host resume, or keep independent jobs on local scratch.
@@ -51,12 +51,15 @@ Deploy apps and configure updates, runtime settings, remote connections, and mod
 - [Codex security cookbook](./enterprise/security-cookbook.md) — Configure and verify enterprise security controls, then combine them for common security goals.
 - [Remote connections](./remote-connections.md) — Start and control work on connected computers.
 - [Workspace model availability](./enterprise/workspace-model-availability.md) — Separate model access for ChatGPT, Codex in the ChatGPT desktop app, Codex CLI, the IDE extension, Codex cloud, and the Platform API.
+
+## Advanced deployment
+
+Connect directly to Amazon Bedrock, configure Bedrock in GovCloud, or deploy an organizational gateway that routes requests to your inference provider.
+
 - [Amazon Bedrock](./amazon-bedrock.md) — Configure supported local clients to use models available through Bedrock.
-- [Bedrock GovCloud configuration](https://developers.openai.com/codex/enterprise/govcloud-configuration) — Configure local Codex workflows with Amazon Bedrock in AWS GovCloud.
+- [GovCloud deployment](https://developers.openai.com/codex/enterprise/govcloud-configuration) — Configure local Codex workflows with Amazon Bedrock in AWS GovCloud.
 - [Connect to a gateway](./enterprise/connect-to-a-gateway.md) — Connect to your organization's model gateway with or without ChatGPT sign-in.
 - [Roll out a gateway](./enterprise/roll-out-a-gateway.md) — Configure model routes, issue credentials, and deploy Codex through your organization’s gateway.
-- [Gateway compatibility](./enterprise/gateway-compatibility.md) — Check the Responses API behavior required for model requests, streaming, and tool calls.
-- [Bedrock through LiteLLM](./enterprise/bedrock-through-litellm.md) — Configure a LiteLLM gateway to route Codex model requests to Amazon Bedrock.
 
 ## ChatGPT EDU
 

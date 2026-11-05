@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.166.0",
-  "last_updated": "2026-11-05T01:09:43Z",
+  "last_updated": "2026-11-05T19:08:38Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "56db5a1353f7e32dd82f71f655c17d4e9e24dac44389f3cd5dbfd7969f085303",
-      "last_updated": "2026-11-05T01:09:43Z"
+      "hash": "174bebbbc4df8d717cbd68f2bb3e57a491a58140b21367aec0920511159e3891",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -90,8 +90,8 @@
       "source_url": "https://learn.chatgpt.com/docs/amazon-bedrock",
       "source_md_url": "https://learn.chatgpt.com/docs/amazon-bedrock.md",
       "source_id": "llms:amazon-bedrock",
-      "hash": "2bb641485726380ab950dc40b8394014eef57c9ce6ebfd11425f39b18ac932de",
-      "last_updated": "2026-11-04T00:59:39Z"
+      "hash": "02af4879a391f81bb09c1cc0d609b797b6bb50a5346bdb1ea6159665e900a1d6",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "annotations-extensibility": {
       "slug": "annotations-extensibility",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "916d80ba1b4f7aa640e14a57cc54b4d7d2c5136455b6fa4ba6acaf0bfd620354",
-      "last_updated": "2026-11-05T01:09:43Z"
+      "hash": "6934198135678e9adf929a3f58fe46334cd5562598aee3e63d5b2337347a8d1e",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -460,8 +460,8 @@
       "source_url": "https://learn.chatgpt.com/docs/developers",
       "source_md_url": "https://learn.chatgpt.com/docs/developers.md",
       "source_id": "llms:developers",
-      "hash": "84d60e22c62bf4778a16f4f4359a1c46ad3ffe8d28eb8e84008071f61e4ce1ea",
-      "last_updated": "2026-10-23T18:48:49Z"
+      "hash": "f24e293849fac5b9306dff41c7d9d649a7f3f958e542ea5c96f765263b3b1507",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "dots": {
       "slug": "dots",
@@ -470,8 +470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots",
       "source_md_url": "https://learn.chatgpt.com/docs/dots.md",
       "source_id": "llms:dots",
-      "hash": "1ca0570e49a4ae3ced28974af2ada1c83944d825552e8a4368e872e78e9c1f2e",
-      "last_updated": "2026-11-05T01:09:43Z"
+      "hash": "8b89e4cbe073d6a7d4fd9852d0cfb97be5fe5ee126b1cb255c161cfa29020a30",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "dots/channels": {
       "slug": "dots/channels",
@@ -480,8 +480,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/channels",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/channels.md",
       "source_id": "llms:dots/channels",
-      "hash": "046bb838427ba44936bb667258de9d2142951d3606b8554ee2147927d26c41ad",
-      "last_updated": "2026-10-28T21:58:12Z"
+      "hash": "2a1f32b1f9d71bc79072e2d0b22388c938b863735262afd8f1752335f87fea2e",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "dots/computers-and-apps": {
       "slug": "dots/computers-and-apps",
@@ -490,8 +490,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/computers-and-apps",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/computers-and-apps.md",
       "source_id": "llms:dots/computers-and-apps",
-      "hash": "46395a608ec78d274455385a7d86233860dacb24fc3b13f19b51d4d6b4ad9420",
-      "last_updated": "2026-09-29T17:06:26Z"
+      "hash": "66fbf9fb22fbee2cdaee9990af3a04c28eb2b1ec65f527afa0680cd92c240c26",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "dots/controls": {
       "slug": "dots/controls",
@@ -582,16 +582,6 @@
       "source_id": "llms:enterprise/apps-and-connectors",
       "hash": "08a78c0748ef592b53fa974d06c2a05f0df69114663eb12938470a7710912dcf",
       "last_updated": "2026-10-29T17:40:33Z"
-    },
-    "enterprise/bedrock-through-litellm": {
-      "slug": "enterprise/bedrock-through-litellm",
-      "title": "Bedrock through LiteLLM",
-      "group": "enterprise",
-      "source_url": "https://learn.chatgpt.com/docs/enterprise/bedrock-through-litellm",
-      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/bedrock-through-litellm.md",
-      "source_id": "llms:enterprise/bedrock-through-litellm",
-      "hash": "78c721c8ba016e747d932103889e8ba2fd9065db6f3168b49a5a3cc544f4887d",
-      "last_updated": "2026-10-27T19:49:18Z"
     },
     "enterprise/chatgpt-slack-and-teams": {
       "slug": "enterprise/chatgpt-slack-and-teams",
@@ -690,8 +680,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway.md",
       "source_id": "llms:enterprise/connect-to-a-gateway",
-      "hash": "8a55f6ee39d82beb9a0aac8d5d1ac26de328cb4b2c61f4e698f68f25c350fb85",
-      "last_updated": "2026-10-27T19:49:18Z"
+      "hash": "bc099c00b1a9b35f2c9a66cf20bdd65ee88d7b0aaab6e52ec0a3433dcdc085df",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "enterprise/dots-admin-guide": {
       "slug": "enterprise/dots-admin-guide",
@@ -700,8 +690,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/dots-admin-guide",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/dots-admin-guide.md",
       "source_id": "llms:enterprise/dots-admin-guide",
-      "hash": "8490f8ab781f3a9e03f3fe1283d727d644cfbce7514996adb680a8a0f97f337f",
-      "last_updated": "2026-11-05T01:09:43Z"
+      "hash": "b19a6749e4f9d9ae75b97d9d36e428c87981db2f6d51ab3a2ffd2bba72ca18d4",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "enterprise/dots-security": {
       "slug": "enterprise/dots-security",
@@ -840,8 +830,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/roll-out-a-gateway",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/roll-out-a-gateway.md",
       "source_id": "llms:enterprise/roll-out-a-gateway",
-      "hash": "d5168e19a9f73f7134f82496c325ef17829ef90d5ca838ff15bc1d5d5a021247",
-      "last_updated": "2026-10-30T21:45:15Z"
+      "hash": "b62d1b4e9091eb9fccd5183abe4bc82a87ec5e4e9e22f037a8e38a4ac7d657d2",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "enterprise/security-cookbook": {
       "slug": "enterprise/security-cookbook",
@@ -1282,16 +1272,6 @@
       "source_id": "llms:mobile",
       "hash": "2dff7df1dc3d1a277882288f2c56b4460530052de75a6e9dea1d2a9cb4c40eb1",
       "last_updated": "2026-10-06T17:29:30Z"
-    },
-    "model-catalogs": {
-      "slug": "model-catalogs",
-      "title": "Implementing model catalogs for gateways and clouds",
-      "group": "root",
-      "source_url": "https://learn.chatgpt.com/docs/model-catalogs",
-      "source_md_url": "https://learn.chatgpt.com/docs/model-catalogs.md",
-      "source_id": "llms:model-catalogs",
-      "hash": "c6cc54c862feb9adfa6978a3e55c69bf1e2f9da4592f44214ed9e8228b8a0050",
-      "last_updated": "2026-10-23T18:48:49Z"
     },
     "model-selection": {
       "slug": "model-selection",
@@ -1980,8 +1960,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new.md",
       "source_id": "llms:whats-new",
-      "hash": "3dd1ee4bd7150884dfe126a8f91133a80a6cb1a1c8b6335654543dfa52bf5b60",
-      "last_updated": "2026-10-31T02:51:34Z"
+      "hash": "c3680f7af0a2388c652f8803b5edf74fcf933cabaf97ebc6b20180e1bb6c1ecf",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "whats-new/devday-2026": {
       "slug": "whats-new/devday-2026",
@@ -2012,6 +1992,16 @@
       "source_id": "llms:whats-new/dots-october-9-2026",
       "hash": "7d03fd67715ec106e36adc2948a2f93c5a481b0b7a45abf40b6729ab3afe4aa3",
       "last_updated": "2026-10-10T02:52:20Z"
+    },
+    "whats-new/november-2-6-2026": {
+      "slug": "whats-new/november-2-6-2026",
+      "title": "November 2–6, 2026",
+      "group": "whats-new",
+      "source_url": "https://learn.chatgpt.com/docs/whats-new/november-2-6-2026",
+      "source_md_url": "https://learn.chatgpt.com/docs/whats-new/november-2-6-2026.md",
+      "source_id": "llms:whats-new/november-2-6-2026",
+      "hash": "7d593905875d1b886703a1e3bca9eef9e7c422f1e6e74a246ab266e2989bb15d",
+      "last_updated": "2026-11-05T19:08:38Z"
     },
     "whats-new/october-26-30-2026": {
       "slug": "whats-new/october-26-30-2026",
@@ -2085,10 +2075,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-05T01:09:43Z",
-    "fetch_duration_seconds": 74.086,
-    "total_pages_discovered": 208,
-    "pages_fetched_successfully": 208,
+    "last_fetch_completed": "2026-11-05T19:08:38Z",
+    "fetch_duration_seconds": 72.228,
+    "total_pages_discovered": 207,
+    "pages_fetched_successfully": 207,
     "pages_failed": 0,
     "failed_pages": []
   }

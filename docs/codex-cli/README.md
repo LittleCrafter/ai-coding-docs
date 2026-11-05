@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 208
+- **Pages mirrored:** 207
 - **Version:** 0.166.0
-- **Last updated:** 2026-11-05T01:09:43Z
+- **Last updated:** 2026-11-05T19:08:38Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -62,7 +62,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Codex MCP server removal | [mcp-server.md](./mcp-server.md) | [source](<https://learn.chatgpt.com/docs/mcp-server>) |
 | Moving your custom GPT workflows to plugins | [migrate-custom-gpts.md](./migrate-custom-gpts.md) | [source](<https://learn.chatgpt.com/docs/migrate-custom-gpts>) |
 | Codex on mobile | [mobile.md](./mobile.md) | [source](<https://learn.chatgpt.com/docs/mobile>) |
-| Implementing model catalogs for gateways and clouds | [model-catalogs.md](./model-catalogs.md) | [source](<https://learn.chatgpt.com/docs/model-catalogs>) |
 | Model selection | [model-selection.md](./model-selection.md) | [source](<https://learn.chatgpt.com/docs/model-selection>) |
 | Models | [models.md](./models.md) | [source](<https://learn.chatgpt.com/docs/models>) |
 | Non-interactive mode | [non-interactive-mode.md](./non-interactive-mode.md) | [source](<https://learn.chatgpt.com/docs/non-interactive-mode>) |
@@ -161,7 +160,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Agent Security | [enterprise/agent-security.md](./enterprise/agent-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/agent-security>) |
 | Analytics API | [enterprise/analytics-api.md](./enterprise/analytics-api.md) | [source](<https://learn.chatgpt.com/docs/enterprise/analytics-api>) |
 | Plugin controls | [enterprise/apps-and-connectors.md](./enterprise/apps-and-connectors.md) | [source](<https://learn.chatgpt.com/docs/enterprise/apps-and-connectors>) |
-| Bedrock through LiteLLM | [enterprise/bedrock-through-litellm.md](./enterprise/bedrock-through-litellm.md) | [source](<https://learn.chatgpt.com/docs/enterprise/bedrock-through-litellm>) |
 | Set up and manage @ChatGPT in Slack and Microsoft Teams | [enterprise/chatgpt-slack-and-teams.md](./enterprise/chatgpt-slack-and-teams.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-slack-and-teams>) |
 | Manage ChatGPT Space, pages, and slides | [enterprise/chatgpt-space.md](./enterprise/chatgpt-space.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-space>) |
 | ChatGPT Work cloud security | [enterprise/chatgpt-work-cloud-security.md](./enterprise/chatgpt-work-cloud-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/chatgpt-work-cloud-security>) |
@@ -309,6 +307,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DevDay 2026 | [whats-new/devday-2026.md](./whats-new/devday-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/devday-2026>) |
 | Text your dot | [whats-new/dots-october-28-2026.md](./whats-new/dots-october-28-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/dots-october-28-2026>) |
 | Create your dot in the ChatGPT mobile app | [whats-new/dots-october-9-2026.md](./whats-new/dots-october-9-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/dots-october-9-2026>) |
+| November 2–6, 2026 | [whats-new/november-2-6-2026.md](./whats-new/november-2-6-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/november-2-6-2026>) |
 | October 26–30, 2026 | [whats-new/october-26-30-2026.md](./whats-new/october-26-30-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/october-26-30-2026>) |
 | October 5–9, 2026 | [whats-new/october-5-9-2026.md](./whats-new/october-5-9-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/october-5-9-2026>) |
 | September 28–October 2, 2026 | [whats-new/september-28-october-2-2026.md](./whats-new/september-28-october-2-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/september-28-october-2-2026>) |
