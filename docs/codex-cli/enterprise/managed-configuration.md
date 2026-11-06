@@ -158,7 +158,7 @@ See [how Agent Security applies to Work Cloud](./agent-security.md#how-agent-sec
 
 > Illustration: Agent Security site-rule editor with site access, transfers, debugging, and approval controls.
 
-Disabling automatic review for browser actions sends those actions to the user for
+Disabling Auto-review for browser actions sends those actions to the user for
 approval instead. It doesn't disable model safety monitoring.
 
 When several origin patterns match, the most restrictive value wins for each
@@ -240,7 +240,7 @@ persistent_approval = false
 access_approval_lifetime = "turn"
 ```
 
-To disable automatic review for browser actions, set
+To disable Auto-review for browser actions, set
 `browser_use.disable_auto_review = true`, or set `auto_review = "deny"` on an
 origin policy to restrict it for that origin.
 
@@ -400,7 +400,7 @@ Use this section to set approval behavior, permission boundaries, and starting d
 
 ### Admin-enforced requirements (requirements.toml)
 
-Requirements constrain security-sensitive settings (approval policy, approvals reviewer, automatic review policy, sandbox mode, permission profiles, web search mode, managed hooks, which MCP servers users can enable, and which plugin marketplace sources they can use). When resolving configuration (for example from `config.toml`, [profile files](../config-file/config-advanced.md#profiles), or CLI config overrides), if a value conflicts with an enforced rule, the local client falls back to a compatible value and notifies the user. If you configure an `mcp_servers` allowlist, the client enables an MCP server only when both its name and identity match an approved entry; otherwise, the client disables it.
+Requirements constrain security-sensitive settings (approval policy, approvals reviewer, Auto-review policy, sandbox mode, permission profiles, web search mode, managed hooks, which MCP servers users can enable, and which plugin marketplace sources they can use). When resolving configuration (for example from `config.toml`, [profile files](../config-file/config-advanced.md#profiles), or CLI config overrides), if a value conflicts with an enforced rule, the local client falls back to a compatible value and notifies the user. If you configure an `mcp_servers` allowlist, the client enables an MCP server only when both its name and identity match an approved entry; otherwise, the client disables it.
 
 Requirements can also constrain [feature flags](../config-file/config-basic.md#feature-flags) via the `[features]` table in `requirements.toml`. Note that features aren't always security-sensitive, but enterprises can pin values if desired. Omitted keys remain unconstrained.
 
@@ -500,38 +500,35 @@ overrides that policy. See
 [Migrate from the retired `untrusted` approval policy](../agent-approvals-security.md#migrate-from-the-retired-untrusted-approval-policy)
 for examples and security tradeoffs.
 
-### Configure automatic review policy
+<span
+  id="configure-automatic-review-policy"
+  className="block scroll-mt-[110px]"
+/>
 
-To make automatic review the default, use **Global** > **Defaults** > **Command execution** > **Approval reviewer**. A default lets users choose
-another permitted reviewer. To require automatic review or supply your
-organization's review instructions, use **Edit as TOML** and edit Global
-`requirements.toml` instead. These requirements are separate from the browser's
-automatic-review controls.
+### Configure Auto-review policy
 
-Use `allowed_approvals_reviewers` to require or allow automatic review. Set it
-to `["auto_review"]` to require automatic review, or include `"user"` when users
-can choose manual approval.
+To make Auto-review the default, select **Global** > **Defaults** > **Command execution** > **Approval reviewer**. Users can still choose another permitted
+reviewer. To require Auto-review or supply organization-wide rules, select
+**Edit as TOML** and edit Global `requirements.toml`. Browser actions have
+separate Auto-review controls.
 
-Set `guardian_policy_config` to replace the tenant-specific section of the
-automatic review policy. The local runtime still uses the built-in reviewer
-template and output contract. Managed `guardian_policy_config` takes precedence
-over local `[auto_review].policy`.
+The following example requires Auto-review for eligible approval requests and
+adds an organization-specific rule to the active policy. To also allow manual
+approval, include `"user"` in `allowed_approvals_reviewers`.
 
 ```toml
 allowed_approval_policies = ["on-request"]
 allowed_approvals_reviewers = ["auto_review"]
 
-guardian_policy_config = """
-## Environment Profile
-- Trusted internal destinations include github.com/my-org, artifacts.example.com,
-  and internal CI systems.
-
-## Tenant Risk Taxonomy and Allow/Deny Rules
-- Treat uploads to unapproved third-party file-sharing services as high risk.
-- Deny actions that expose credentials or private source code to untrusted
-  destinations.
+guardian_extra_policy = """
+Deny uploads of build artifacts to destinations outside artifacts.example.com.
 """
 ```
+
+To replace the entire policy, use `guardian_policy_config`. See
+[Auto-review configuration](../sandboxing/auto-review.md#configuration) for
+the default policy, how to prepare a replacement, and which managed settings
+take precedence over local ones.
 
 ### Control available permission profiles
 
@@ -910,18 +907,13 @@ Use the controls for each surface:
 - Use the managed `mcp_servers` approved list to restrict MCP servers.
 - Use feature requirements such as `browser_use`, `in_app_browser`, and
   `computer_use` to restrict browser and computer-use capabilities.
-- For supported managed Codex Cloud commands, configure Agent Security requirements and the Cloud environment internet settings separately.
+- For supported managed Codex Cloud commands, check the environment's internet settings as well as Agent Security. The environment can still block an allowed domain.
 
-A command domain allowlist does not replace these capability-specific
-controls.
+Test ordinary commands and any permitted full sandbox escalation separately. An approved full sandbox escalation can bypass the managed command proxy. See [Network isolation](../agent-approvals-security.md#network-isolation).
 
-On supported managed Codex Cloud execution paths, Agent Security requirements constrain command networking. Codex Cloud environment internet settings apply separately. An allowed domain in Agent Security does not override a restriction in the Cloud environment's internet settings. These command-network controls do not, by themselves, disable hosted web search, apps, or MCP. ChatGPT Work Cloud has separate capability permissions and does not inherit these Agent Security requirements.
+> **No effective allowed destinations:** With both **Managed networking** and **Only allow domains added by admins** enabled, ordinary managed commands need an explicit or inherited Allow entry. Check the [effective allowed destinations](./agent-security.md#no-effective-allowed-destinations) before saving.
 
-A managed command allowlist applies to commands using the managed proxy. Where policy permits full sandbox escalation and it is approved, that execution can bypass the command proxy. A narrow network grant is different from full sandbox escalation. Configure enforced approval and sandbox requirements for the intended boundary, and test both ordinary and escalated commands.
-
-> **No effective allowed destinations:** When **Managed networking** and **Only allow domains added by admins** are On, ordinary managed commands need effective allowed destinations. If no Allow entries are configured or inherited, those commands have no allowed destinations. A deny-only policy does not implicitly allow the rest of the internet. Add required Allow entries and check inherited rules before saving. This restriction applies to the managed command proxy, not every tool or approved full sandbox escalation.
-
-> **Codex Cloud local/private connectivity:** An explicit Off value for local/private connectivity can prevent Codex Cloud from reaching its upstream proxy, even when the destination domain is allowed. Check the final `allow_local_binding` value and identify which policy or setting supplies it. On the supported Cloud proxy path, this defaults to true only when no applicable requirement, selected network profile, or proxy feature setting supplies a value. An inherited false still counts as an explicit setting. Where supported, set a higher-priority Cloud override to change this value for Codex Cloud without changing the Global value used by Local. This does not add domain Allow entries. Verify executor support before relying on the override. Do not apply this Cloud default to Local.
+> **Codex Cloud local/private connectivity:** Check the effective `allow_local_binding` value if a Cloud command cannot reach an allowed domain. An inherited Off value can block the upstream proxy. See [Codex Cloud local/private connectivity](./agent-security.md#codex-cloud-localprivate-connectivity) for the Cloud-specific default and overrides.
 
 When environment requirements are empty, Global requirements apply. **Managed networking** set to
 **Off** is separate from the Cloud environment's Internet access setting. See
@@ -1086,55 +1078,9 @@ add plugins to the IDE extension.
 
 ### Enforce managed hooks from requirements
 
-Managed hooks run administrator-defined actions at supported task or tool
-events. Use **Edit as TOML** in Agent security to configure them in Global
-`requirements.toml`; the settings controls don't include a dedicated hook editor. The execution paths below determine which hook types can run.
+In Agent security, open **Global** > **Requirements** > **Edit as TOML**. For Work with local computer access and dots, configure supported `mcp_tool` handlers in Global `requirements.toml`. Before rollout, test the callback connection and what happens when the callback times out. See [Hooks with cloud orchestration](../hooks.md#hooks-with-cloud-orchestration) for supported events and failure behavior.
 
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
-
-Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail. The following script and directory examples retain their Codex scope.
-
-Admins can also define managed lifecycle hooks directly in `requirements.toml`.
-Use `[hooks]` for the hook configuration itself, and point `managed_dir` at the
-directory where your MDM or endpoint-management tooling installs the referenced
-scripts.
-
-To enforce managed hooks even for users who turned hooks off locally, pin
-`[features].hooks = true` alongside `[hooks]`. To skip user, project, session,
-and plugin hooks while still allowing managed hooks, set
-`allow_managed_hooks_only = true`.
-
-```toml
-allow_managed_hooks_only = true
-
-[features]
-hooks = true
-
-[hooks]
-managed_dir = "/enterprise/hooks"
-windows_managed_dir = 'C:\enterprise\hooks'
-
-[[hooks.PreToolUse]]
-matcher = "^Bash$"
-
-[[hooks.PreToolUse.hooks]]
-type = "command"
-command = "python3 /enterprise/hooks/pre_tool_use_policy.py"
-command_windows = 'py -3 C:\enterprise\hooks\pre_tool_use_policy.py'
-timeout = 30
-statusMessage = "Checking managed Bash command"
-```
-
-Notes:
-
-- The local runtime enforces the hook configuration from `requirements.toml`,
-  but it doesn't distribute the scripts in `managed_dir`.
-- Deliver those scripts with your MDM or device-management solution.
-- Managed hook commands should reference absolute script paths under the
-  configured managed directory.
-- `allow_managed_hooks_only = true` skips hooks from user, project, session, and
-  plugin sources, but still loads hooks from `requirements.toml` and other
-  managed config layers.
+For local Codex, distribute hook scripts through your device-management tool. To enforce them even if a user disables hooks, pin `[features].hooks = true` in `requirements.toml`. See the [managed hook configuration example](../hooks.md#managed-hooks-in-local-codex) for script paths and how to allow only managed hooks.
 
 ## Understand policy scope and precedence
 
@@ -1160,7 +1106,7 @@ Policy migration does not grant local computer access for Work or dots. Reviewin
 
 Environment overrides vary supported settings within a policy. Within a given policy, the order from highest to lowest is OS-specific environment override → all-OS environment override → Global. A higher-priority policy still wins over a lower-priority policy, even when the lower-priority policy is more specific. Some requirements have field-specific merge rules. Confirm which override editors and fields are available for your workspace.
 
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows. Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail. See the [Configuration Reference](../config-file/config-reference.md).
+Before enabling local access for a workflow that uses hooks, [check which hooks run with cloud orchestration](../hooks.md#hooks-with-cloud-orchestration).
 
 ### Locations and precedence
 

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.5.2",
-  "last_updated": "2026-11-06T10:02:04Z",
+  "last_updated": "2026-11-06T18:36:03Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -50,8 +50,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/providers.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/providers.md",
       "source_id": "docs/en/configuration/providers.md",
-      "hash": "a6f4110b5641d95379d4ea711f57f88ae5add77636e64dc43375431507c2157e",
-      "last_updated": "2026-10-21T14:14:03Z"
+      "hash": "3dbbd48b23abea285e93c8455b029c5a044ebfcd4adef64a8fa26154b57ef95d",
+      "last_updated": "2026-11-06T18:36:03Z"
     },
     "customization/agents": {
       "slug": "customization/agents",
@@ -305,8 +305,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-06T10:02:04Z",
-    "fetch_duration_seconds": 10.26,
+    "last_fetch_completed": "2026-11-06T18:36:03Z",
+    "fetch_duration_seconds": 10.578,
     "total_pages_discovered": 30,
     "pages_fetched_successfully": 30,
     "pages_failed": 0,

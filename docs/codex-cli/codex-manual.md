@@ -3380,9 +3380,9 @@ Restore archived chats from **Settings > Data Controls > Archived chats**.
 
 #### Use local projects for folders and codebases
 
-When sync is on, the cloud coordinates new tasks using Local computer access with Work Cloud, and you can continue them across supported desktop, mobile, and web experiences. For enterprises, the in-app Local/Cloud toggle and its default remain unchanged at launch. Existing tasks, including those in projects, stay local only or in the cloud without access to local files. Start a new task to use this feature.
-
-If your computer is unavailable when a new turn starts, an existing eligible task using Local computer access with Work Cloud can continue in a cloud container. The container can't access the computer's files or tools or enforce its enterprise execution requirements. Work can't switch from local to cloud execution during a turn.
+To use an approved project folder while you [continue Work across devices](./get-started-with-work.md#continue-work-across-devices),
+start a new cloud task after your workspace enables local computer access.
+Keep the computer that holds the folder online and connected.
 
 Conversation sync and project-file access are separate:
 
@@ -3909,19 +3909,31 @@ review.
 
 #### Continue Work across devices
 
-When your workspace enables sync, tasks using Local computer access with Work Cloud use cloud coordination. For enterprises, the in-app Local/Cloud toggle and its default remain unchanged at launch. You can continue an eligible conversation across desktop, mobile, and web. Work can still use approved local resources through a connected computer.
+If your workspace gives you Work Cloud and local computer access, sign in with
+ChatGPT using the same account and workspace on each device. In the desktop app,
+select **Cloud** in the composer and start a new Work task. You can continue
+that conversation on desktop, mobile, or web.
+Enterprise workspaces keep their existing Local/Cloud selector and default.
 
-For example, start a task with an approved folder on your laptop, then review results or send follow-up instructions from your phone. Keep the laptop online for steps that need its files or tools.
+For example, start a task with an approved folder on your laptop, then review the
+results from your phone. The cloud coordinates the task. Keep the laptop online
+and connected for steps that need its files or tools.
 
-Start a new task after enabling sync. Existing tasks, including those in projects, stay local only or in the cloud without access to local files.
+- **Older tasks:** Tasks created before your workspace enabled local computer
+  access keep their original mode, including tasks in projects.
+- **Computer offline:** If the computer is unavailable at the start of a new turn,
+  an eligible task can continue in a cloud container. The container cannot use
+  the computer's files or tools or enforce its local execution requirements.
+  A running turn cannot switch from local to cloud execution.
+- **Access turned off:** Turning off local computer access interrupts running
+  turns. If you still have Work access, send a new message in the existing cloud
+  conversation to continue without local files.
 
-If your computer is unavailable when a new turn starts, an existing eligible task using Local computer access with Work Cloud can continue in a cloud container. The container cannot access that computer's files or tools or enforce its enterprise execution requirements. Work can't switch from local to cloud execution during a turn.
+Without local computer access for Work Cloud, choose **Local** for tasks that need
+your computer. Choose **Cloud** for tasks that can run without it, such as a
+scheduled website check.
 
-Without Local computer access with Work Cloud, use the desktop composer's local and cloud options. Choose local Work for resources on your computer, or cloud Work for tasks that don't depend on it. Cloud is useful for scheduled tasks that research or check websites because your computer doesn't need to be awake.
-
-Turning off Local computer access with Work Cloud interrupts running turns. Send a new message in an existing cloud conversation to continue in Work Cloud without access to local files.
-
-Workspace admins can review [policy requirements and setup steps](./enterprise/cloud-local-access.md#how-to-set-up-local-computer-access) before enabling sync.
+Workspace owners can follow the [setup and policy checks](./enterprise/cloud-local-access.md#how-to-set-up-local-computer-access).
 
 Here are three common use cases you can get started with:
 
@@ -11841,10 +11853,10 @@ By default, approval requests route to you:
 approvals_reviewer = "user"
 ```
 
-Automatic approval reviews apply when approvals are interactive, such as
+Auto-review applies when approvals are interactive, such as
 `approval_policy = "on-request"` or a granular approval policy. Set
 `approvals_reviewer = "auto_review"` to route eligible approval requests
-through a reviewer agent before Codex runs the request:
+through a reviewer agent before Codex runs the action.
 
 ```toml
 approval_policy = "on-request"
@@ -11856,9 +11868,9 @@ and failure behavior, see
 [Auto-review](./sandboxing/auto-review.md).
 
 The reviewer evaluates only actions that already need approval, such as sandbox
-escalations, blocked network requests, `request_permissions` prompts, or
-side-effecting app and MCP tool calls. Actions that stay inside the sandbox
-continue without an extra review step.
+escalations, network requests that require approval, `request_permissions`
+prompts, or app and MCP tool calls that need approval. A command rule can
+also require review inside the sandbox.
 
 The reviewer policy checks for data exfiltration, credential probing, persistent
 security weakening, and destructive actions. Low-risk and medium-risk actions
@@ -11867,19 +11879,15 @@ High-risk actions require enough user authorization and no matching deny rule.
 Prompt-build, review-session, and parse failures fail closed. Timeouts are
 surfaced separately, but the action still does not run.
 
-The [default reviewer policy](https://github.com/openai/codex/blob/main/codex-rs/core/src/guardian/policy.md)
-is in the open-source Codex repository. Enterprises can replace its
-tenant-specific section with `guardian_policy_config` in managed requirements.
-Local `[auto_review].policy` text is also supported, but managed requirements
-take precedence. For setup details, see
-[Managed configuration](./enterprise/managed-configuration.md#configure-automatic-review-policy).
+To add rules or replace the policy locally or across an organization, see
+[Auto-review configuration](./sandboxing/auto-review.md#configuration).
 
-In the ChatGPT desktop app, these reviews appear as automatic review items with a status
+In the ChatGPT desktop app, these reviews appear as Auto-review items with a status
 such as Reviewing, Approved, Denied, Aborted, or Timed out. They can also
 include a risk level and user-authorization assessment for the reviewed
 request.
 
-Automatic review uses extra model calls, so it can add to Codex usage. Admins
+Auto-review uses extra model calls, so it can add to Codex usage. Admins
 can constrain it with `allowed_approvals_reviewers`.
 
 #### Common sandbox and approval combinations
@@ -12080,10 +12088,9 @@ Enterprise admins can configure Codex security settings for their workspace in [
 
 Source: [Auto-review](./sandboxing/auto-review.md)
 
-Auto-review replaces manual approval at the sandbox boundary with a separate
-reviewer agent. The main Codex agent still runs inside the same sandbox, with
-the same approval policy and the same network and filesystem limits. The
-difference is who reviews eligible escalation requests.
+Auto-review sends eligible approval requests to a separate reviewer agent.
+Your sandbox, command rules, and tool settings determine which actions need
+approval. The reviewer decides whether those actions can proceed.
 
 Auto-review only applies when approvals are interactive. In practice, that
 means `approval_policy = "on-request"` or a granular approval policy that
@@ -12103,7 +12110,7 @@ warning recommends **Approve for me** instead and links to
 [reviewer-policy configuration](#configuration). The warning doesn't restore
 the sandbox boundary or override organization policy.
 
-#### Select automatic review
+#### Select Auto-review
 
 In the desktop app, choose **Approve for me** from the permissions control
 below the composer. Check that it's selected for the current chat. See
@@ -12112,15 +12119,14 @@ below the composer. Check that it's selected for the current chat. See
 For the CLI or a local Codex configuration, set
 `approvals_reviewer = "auto_review"` with an eligible interactive approval
 policy, such as `approval_policy = "on-request"`. Changing the approval policy
-alone doesn't select the reviewer. Managed requirements take precedence over
-local settings; see [Managed configuration](./enterprise/managed-configuration.md#configure-automatic-review-policy).
+alone doesn't select the reviewer. Administrators can
+[require Auto-review](./enterprise/managed-configuration.md#configure-auto-review-policy)
+for their organization.
 
-#### How auto-review works
+#### How Auto-review works
 
-At a high level, the flow is:
-
-1. The main agent works inside `read-only` or `workspace-write`.
-2. When it needs to cross the sandbox boundary, it requests approval.
+1. The main agent proposes an action, such as running a command.
+2. If the action needs approval, Codex creates a request.
 3. If `approvals_reviewer = "auto_review"`, Codex routes that approval request
    to a separate reviewer agent instead of stopping for a person.
 4. The reviewer decides whether the action should run and returns a rationale.
@@ -12128,29 +12134,26 @@ At a high level, the flow is:
    agent is instructed to find a materially safer path or stop and ask the
    user.
 
-Auto-review is a reviewer swap, not a permission grant. It does not expand
-`writable_roots`, enable network access, or weaken protected paths. It only
-changes how Codex handles actions that already need approval.
-
 #### When it triggers
 
 Auto-review evaluates approval requests that would otherwise pause for a human.
 These include:
 
 - Shell or exec tool calls that request escalated sandbox permissions.
-- Network requests blocked by the current sandbox or policy.
+- Commands that match a [command rule](./agent-configuration/rules.md) with
+  `decision = "prompt"`, including commands inside the sandbox.
+- Network requests to destinations that require approval. An explicit network
+  deny rule blocks the request.
 - File edits outside the allowed writable roots.
 - MCP or app tool calls that require approval based on their tool annotations
   or configured approval mode.
 
-Auto-review does not run for routine actions already allowed inside the
-sandbox. If a command can run under the active `sandbox_mode`, or a tool call
-stays within the allowed policy, the main agent continues without review.
+Actions that already have permission to run proceed without review.
 
-Computer Use is a separate case. App approvals for Computer Use still surface
-directly to the user, so Auto-review does not replace those app-level prompts.
+Computer Use app-level access prompts go directly to the user. Eligible
+Computer Use tool calls can separately trigger Auto-review.
 
-#### What auto-review blocks
+#### What Auto-review blocks
 
 At a high level, Auto-review is designed to block actions such as:
 
@@ -12159,22 +12162,17 @@ At a high level, Auto-review is designed to block actions such as:
 - broad or persistent security weakening
 - destructive actions with significant risk of irreversible damage
 
-The exact policy lives in the open-source Codex repository:
-[policy_template.md](https://github.com/openai/codex/blob/main/codex-rs/prompts/templates/guardian/policy_template.md)
-and
-[policy.md](https://github.com/openai/codex/blob/main/codex-rs/prompts/templates/guardian/policy.md).
-That policy can be customized per enterprise with `guardian_policy_config` or
-per user with local [`[auto_review].policy`](./config-file/config-advanced.md#approval-policies-and-sandbox-modes).
+See [Configuration](#configuration) for the default rules and how to customize them.
 
 #### What the reviewer sees
 
-The reviewer is itself a Codex agent with a narrower job than the main agent:
-decide whether a specific boundary-crossing action should run.
+The reviewer evaluates the specific action that triggered the approval request.
 
 The reviewer sees a compact transcript plus the exact approval request. That
 typically includes user messages, surfaced assistant updates, relevant tool
 calls and tool outputs, and the action now being proposed for approval. It can
-also perform read-only checks to gather missing context, but it does so rarely.
+also perform read-only checks, such as inspecting a directory before approving
+its deletion.
 
 Hidden assistant reasoning is not included. Auto-review sees retained
 chat items and tool evidence, not private chain-of-thought.
@@ -12189,14 +12187,12 @@ the review rationale to the main agent and adds a stronger instruction:
 - Continue only with a materially safer alternative.
 - Otherwise, stop and ask the user.
 
-Codex also applies a rejection circuit breaker per turn. In the current
-open-source implementation, Auto-review interrupts the turn after `3`
-consecutive denials or `10` denials within a rolling window of the last `50`
-reviews in the same turn.
+For most models, the Codex CLI interrupts the turn after 3 consecutive denials
+or 10 denials in the last 50 reviews in that turn. For models designated for
+cybersecurity, the CLI interrupts the turn on the first denial.
 
-Any non-denial resets the consecutive-denial counter. When the breaker trips,
-Codex emits a warning and aborts the current turn with an interrupt rather than
-letting the agent loop on more escalation attempts.
+Any other review outcome resets the consecutive-denial count. When Codex
+reaches a denial limit, it displays a warning and stops the turn.
 
 Timeouts are surfaced separately from explicit denials, and the main agent is
 informed that a timeout alone is not proof that the action is unsafe.
@@ -12214,45 +12210,42 @@ denial.
 
 #### Configuration
 
-For setup details, see
-[Managed configuration](./enterprise/managed-configuration.md#configure-automatic-review-policy).
+The [reviewer template](https://github.com/openai/codex/blob/rust-v0.167.0/codex-rs/prompts/templates/guardian/policy_template.md)
+tells the reviewer how to assess an action. Codex inserts the security policy
+into that template and specifies the response format separately. The CLI uses
+the reviewer model's default policy when available. Otherwise, it uses the
+[bundled policy (`policy.md`)](https://github.com/openai/codex/blob/rust-v0.167.0/codex-rs/prompts/templates/guardian/policy.md).
 
-The default reviewer policy is in the open-source Codex repository:
-[prompts/templates/guardian/policy.md](https://github.com/openai/codex/blob/main/codex-rs/prompts/templates/guardian/policy.md).
-Enterprises can replace its tenant-specific section with
-`guardian_policy_config` in managed requirements. Individual users can also set
-a local
-[`[auto_review].policy`](./config-file/config-advanced.md#approval-policies-and-sandbox-modes)
-in their `config.toml`, but managed requirements take precedence:
+**To add rules**, set `extra_policy` under `[auto_review]` in local
+`config.toml`, or set the top-level `guardian_extra_policy` in managed
+`requirements.toml`. Codex applies these rules alongside the active policy.
 
-```toml
-[auto_review]
-policy = """
-YOUR POLICY GOES HERE
-"""
-```
+**To replace the policy**, copy the complete policy you want to adapt. If you
+use the bundled default, copy the full contents of `policy.md`. Edit the rules
+you want to change, then put the full text in local `[auto_review].policy` or
+managed `guardian_policy_config`. Omitted rules drop out of the replacement.
+Codex still uses the reviewer's template and response format.
 
-To customize the policy, copy the whole default policy wording first, then
-iterate based on your individual risk profile.
+Codex resolves the two settings independently and ignores blank values.
+Managed `guardian_policy_config` takes precedence over local `[auto_review].policy`.
+Managed `guardian_extra_policy` takes precedence over local `[auto_review].extra_policy`.
+For example, if your organization sets only a replacement policy, your local
+`extra_policy` still adds rules to it.
+
+For organization-wide setup, see
+[Configure Auto-review policy](./enterprise/managed-configuration.md#configure-auto-review-policy).
 
 #### Configure an authorized cybersecurity engagement
 
-For authorized security work, combine automatic review with a written
+For authorized security work, combine Auto-review with a written
 engagement scope and a least-privilege [permission profile](./permissions.md).
 Use an approved lab target, document the actions and engagement window, and
 keep production systems, unrelated hosts, credentials, and persistent changes
 out of scope unless explicitly authorized.
 
-Both `[auto_review].policy` and `guardian_policy_config` replace your current
-reviewer policy. They don't merge with policies bundled with your model or
-managed by your organization. The built-in review instructions and response
-format still apply. Before using either example, copy the complete current
-policy, keep every existing rule, and add the rules for your approved work.
-Replace the uppercase placeholder with that complete policy. If you can't
-access the current policy, don't override it.
-
-The following local `config.toml` template enables review and adds scoped
-conditions after the existing reviewer policy:
+This local `config.toml` example enables Auto-review and adds engagement
+rules to the active policy. Replace the example target and actions with your
+approved scope.
 
 ```toml
 approval_policy = "on-request"
@@ -12260,9 +12253,7 @@ approvals_reviewer = "auto_review"
 default_permissions = ":workspace"
 
 [auto_review]
-policy = """
-PASTE THE COMPLETE ACTIVE REVIEWER POLICY HERE BEFORE USING THIS EXAMPLE.
-
+extra_policy = """
 ## Environment Profile
 - Authorized target: lab.example.com.
 - Approved actions: inspect the target, reproduce authorized vulnerabilities,
@@ -12278,31 +12269,16 @@ PASTE THE COMPLETE ACTIVE REVIEWER POLICY HERE BEFORE USING THIS EXAMPLE.
 """
 ```
 
-Replace the example target and allowed actions with the actual approved scope.
-Enforce target restrictions with independent filesystem and network rules;
-reviewer instructions don't replace those boundaries.
-
-Organizations can enforce the same conditions in managed `requirements.toml`:
+Enforce target restrictions with independent filesystem and network rules.
+For an organization, put the same engagement rules in the top-level
+`guardian_extra_policy` in managed `requirements.toml`. The following
+requirements select Auto-review and restrict the available permission profiles.
 
 ```toml
 allowed_approval_policies = ["on-request"]
 allowed_approvals_reviewers = ["auto_review"]
 allowed_sandbox_modes = ["read-only", "workspace-write"]
 default_permissions = ":workspace"
-
-guardian_policy_config = """
-PASTE THE COMPLETE ACTIVE REVIEWER POLICY HERE BEFORE USING THIS EXAMPLE.
-
-## Environment Profile
-- Authorized target: lab.example.com.
-
-## Tenant Risk Taxonomy and Allow/Deny Rules
-- Allow only approved actions against the documented engagement target.
-- Deny out-of-scope hosts, production access, credential theft, persistence,
-  data exfiltration, destructive operations, and attempts to bypass policy.
-- Deny ambiguous or high-impact actions until a human explicitly approves the
-  exact target, action, and side effects.
-"""
 
 [allowed_permission_profiles]
 ":read-only" = true
@@ -12314,8 +12290,7 @@ PASTE THE COMPLETE ACTIVE REVIEWER POLICY HERE BEFORE USING THIS EXAMPLE.
 `allowed_sandbox_modes` also prevents full access in deployments that still use
 legacy `sandbox_mode`.
 
-Managed `guardian_policy_config` takes precedence over a user's local
-`[auto_review].policy`. Keep `approval_policy = "on-request"` or another
+Keep `approval_policy = "on-request"` or another
 eligible interactive approval policy and keep an enforceable sandbox boundary.
 With `approval_policy = "never"`, `:danger-full-access`, or `--yolo`, an action
 can avoid creating the boundary-crossing approval request that review requires.
@@ -12327,8 +12302,7 @@ when actions inside the sandbox must still reach the reviewer.
 
 See [Models and Trusted Access](./cyber-safety.md) and [recommended
 configuration](./cyber-safety/recommended-configuration.md) for model access,
-engagement setup, and custom agent workflows. See [Managed configuration](./enterprise/managed-configuration.md#configure-automatic-review-policy)
-for enterprise precedence and supported client versions. For custom API or
+engagement setup, and custom agent workflows. For custom API or
 Agents SDK harnesses, use [Guardrails and human review](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals#review-cybersecurity-actions-before-execution).
 
 #### Reduce review volume without weakening security
@@ -12345,7 +12319,8 @@ In practice, the highest-leverage changes are:
 - Add narrowly scoped [prefix rules](./agent-configuration/rules.md). Prefer precise command
   prefixes such as `["cargo", "test"]` or `["pnpm", "run", "lint"]` over broad
   patterns such as `["python"]` or `["curl"]`. Broad rules often erase the
-  boundary Auto-review is meant to guard.
+  boundary Auto-review is meant to guard. For cybersecurity models, the CLI
+  ignores `allow` prefix rules and honors `prompt` and `forbidden` rules.
 
 Auto-review session transcripts are retained under `~/.codex/sessions` by
 default, so you can ask Codex to analyze past traffic there before changing
@@ -13189,21 +13164,21 @@ Keep reusable API keys, cloud credentials, passwords, and service-account tokens
 
 Provide only the data required for the approved task. Remove unnecessary sensitive information, block access to cloud metadata and credential endpoints, and treat model-generated files as untrusted.
 
-Avoid `:danger-full-access` and `--yolo` for cybersecurity workflows. Full Access removes the enforceable sandbox boundary that automatic review depends on. Managed organizations can exclude `:danger-full-access` and `--yolo`, limit allowed approval policies, and require automatic review through [enterprise-managed configuration](./enterprise/managed-configuration.md#configure-automatic-review-policy).
+Avoid `:danger-full-access` and `--yolo` for cybersecurity workflows. Full Access removes the enforceable sandbox boundary that Auto-review depends on. Managed organizations can exclude `:danger-full-access` and `--yolo`, limit allowed approval policies, and require Auto-review through [enterprise-managed configuration](./enterprise/managed-configuration.md#configure-auto-review-policy).
 
 Before enabling **Full Access** for an approved security model, the ChatGPT desktop app shows a model-specific warning about dangerous actions. The warning recommends **Approve for me** instead and links to [reviewer-policy configuration](./sandboxing/auto-review.md#configuration). The warning doesn't restore the sandbox boundary or override organization policy.
 
-Guardrails add policy-based review to a controlled cybersecurity workflow. They don't replace environment isolation, least-privilege permissions, clearly defined boundaries, monitoring, or human oversight.
+Use Auto-review alongside environment isolation, least-privilege permissions, a documented engagement scope, monitoring, and human oversight.
 
 #### Review sensitive Codex actions
 
-[Auto-review](./sandboxing/auto-review.md) routes eligible sandbox-boundary approval requests to a separate reviewer before the proposed action runs. The reviewer considers the proposed action, bounded task context, and applicable policy, then allows or denies the request. Organizations can customize that policy for their approved targets, prohibited actions, and required human-review conditions.
+[Auto-review](./sandboxing/auto-review.md) routes eligible approval requests to a separate reviewer before the proposed action runs. The reviewer considers the action, task context, and applicable policy. Organizations can [add rules to the active policy](./sandboxing/auto-review.md#configuration) for approved targets, prohibited actions, and required human approvals.
 
 Require explicit human approval for actions that affect production, external systems, sensitive data, privilege escalation, persistent access, or irreversible changes. Treat instructions embedded in websites, repositories, documents, and tool outputs as untrusted; they can't expand the authorized scope or override access controls.
 
 In the ChatGPT desktop app, selecting an approved Daybreak model automatically switches the permissions control to **Approve for me** when that mode is available for your account and allowed by organization policy. This also applies when you use the desktop app's `/model` command. If that mode isn't available, the current permission mode stays unchanged. Model selection never overrides managed organization requirements.
 
-For automatic review to run, keep all three controls in place:
+For Auto-review to run, keep all three controls in place:
 
 1. Use an interactive approval policy such as `approval_policy = "on-request"`.
 2. Set `approvals_reviewer = "auto_review"`.
@@ -13221,7 +13196,7 @@ prefix_rule(
 
 Restart Codex after adding the rule. With `approvals_reviewer = "auto_review"`, matching commands go to the reviewer before execution. Add corresponding prompt rules for every sensitive command, or use `approval_mode = "prompt"` for individual [MCP tools](./extend/mcp.md). Actions that require a person's decision still need explicit human approval.
 
-Auto-review doesn't inspect routine actions that are already permitted inside the sandbox. With `approval_policy = "never"` or Full Access, a sensitive action might not create a reviewable approval request. Automatic review can make mistakes and doesn't replace isolation, clearly defined boundaries, monitoring, or explicit human oversight.
+Auto-review evaluates actions that require approval. With `approval_policy = "never"` or Full Access, a sensitive action might proceed without an approval request. Use independent access controls and monitoring throughout the engagement.
 
 For a scoped policy and organization-wide enforcement, see [Configure an authorized cybersecurity workflow](./sandboxing/auto-review.md#configure-an-authorized-cybersecurity-engagement).
 
@@ -13235,7 +13210,7 @@ Keep policy enforcement, credential brokers, review systems, and emergency shutd
 
 If you build with the Responses API, the Agents SDK, or another harness, add review at the tool-execution boundary. Check sensitive proposed actions against the approved systems, actions, and time limits before execution, route ambiguous or high-risk actions to a person, enforce independent filesystem and network restrictions, keep audit logs, and fail closed if the reviewer or policy is unavailable.
 
-Codex Auto-review doesn't automatically protect custom tools or external harnesses. Use [Guardrails and human review](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals#review-cybersecurity-actions-before-execution) for the Agents SDK pattern and the [open-source reviewer policy](https://github.com/openai/codex/blob/main/codex-rs/core/src/guardian/policy.md) as a reference.
+Codex Auto-review doesn't automatically protect custom tools or external harnesses. Use [Guardrails and human review](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals#review-cybersecurity-actions-before-execution) for the Agents SDK pattern and the [open-source reviewer policy](https://github.com/openai/codex/blob/rust-v0.167.0/codex-rs/prompts/templates/guardian/policy.md) as a reference.
 
 Codex product-side sandboxing and review are separate from [API cybersecurity checks](https://developers.openai.com/api/docs/guides/safety-checks/cybersecurity). API safeguards can return `cyber_policy` errors, and per-user `safety_identifier` values can help limit the impact of a safeguard action.
 
@@ -13785,8 +13760,8 @@ Set `model` to one available to your signed-in account or workspace. See
 | `apps..open_world_enabled`                                    | `boolean`                                                                                                                                                     |         | Allow or block tools in this app that advertise `open_world_hint = true`.                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `apps..tools..approval_mode`                                  | `auto \| prompt \| writes \| approve`                                                                                                                         |         | Per-tool approval behavior override for a single app tool.                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `apps..tools..enabled`                                        | `boolean`                                                                                                                                                     |         | Per-tool enabled override for an app tool (for example `repos/list`).                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `auto_review.extra_policy`                                    | `string`                                                                                                                                                      |         | Additional local Markdown policy for automatic review, included alongside the main policy. Managed `guardian_extra_policy` takes precedence. Blank values are ignored.                                                                                                                                                                                                                                                                                                                      |
-| `auto_review.policy`                                          | `string`                                                                                                                                                      |         | Local Markdown policy instructions for automatic review. Managed `guardian_policy_config` takes precedence. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                       |
+| `auto_review.extra_policy`                                    | `string`                                                                                                                                                      |         | Markdown rules that Auto-review applies alongside the active policy. Managed `guardian_extra_policy` takes precedence. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                            |
+| `auto_review.policy`                                          | `string`                                                                                                                                                      |         | Markdown text that replaces the default Auto-review policy. Managed `guardian_policy_config` takes precedence. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                    |
 | `background_terminal_max_timeout`                             | `number`                                                                                                                                                      |         | Maximum poll window in milliseconds for empty `write_stdin` polls (background terminal polling). Default: `300000` (5 minutes). Replaces the older `background_terminal_timeout` key.                                                                                                                                                                                                                                                                                                       |
 | `browser_use.allow_history_access`                            | `boolean`                                                                                                                                                     |         | Set to `false` to restrict browser-history access. Managed requirements can enforce this restriction.                                                                                                                                                                                                                                                                                                                                                                                       |
 | `browser_use.default_origin_policy`                           | `table`                                                                                                                                                       |         | Fallback browser-origin restrictions. Supports `access`, `uploads`, `downloads`, and `full_cdp_access`, each set to `allow` or `deny`.                                                                                                                                                                                                                                                                                                                                                      |
@@ -14255,8 +14230,8 @@ from either one wins.
 | `features.workspace_dependencies`                            | `boolean`                                   |         | Pin bundled workspace-dependency runtime availability on or off for managed users.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `feedback`                                                   | `table`                                     |         | Managed feedback settings.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `feedback.enabled`                                           | `boolean`                                   |         | Enforce whether users can submit feedback across Codex clients.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `guardian_extra_policy`                                      | `string`                                    |         | Additional managed Markdown policy for automatic review, included alongside the main policy. This takes precedence over local `[auto_review].extra_policy`. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `guardian_policy_config`                                     | `string`                                    |         | Managed Markdown policy instructions for automatic review. This takes precedence over local `[auto_review].policy`. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `guardian_extra_policy`                                      | `string`                                    |         | Managed Markdown rules that Auto-review applies alongside the active policy. This takes precedence over local `[auto_review].extra_policy`. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `guardian_policy_config`                                     | `string`                                    |         | Managed Markdown text that replaces the default Auto-review policy. This takes precedence over local `[auto_review].policy`. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `hooks`                                                      | `table`                                     |         | Admin-enforced managed lifecycle hooks. Requires a managed hook directory and uses the same event schema as inline `[hooks]` in `config.toml`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `hooks.`                                                     | `array`                                     |         | Matcher groups for a hook event such as `PreModelRequest`, `PostModelRequest`, `PreToolUse`, `PermissionRequest`, `PostToolUse`, `PreCompact`, `PostCompact`, `SessionStart`, `SessionEnd`, `SubagentStart`, `SubagentStop`, `UserPromptSubmit`, or `Stop`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `hooks.[].hooks`                                             | `array`                                     |         | Hook handlers for a matcher group. Command and MCP tool hooks are supported while prompt and agent hook handlers are parsed but skipped.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -14814,15 +14789,12 @@ For beta permission profiles that configure filesystem and network access togeth
 You can also use a granular approval policy (`approval_policy = { granular = { ... } }`) to allow or auto-reject individual prompt categories. This is useful when you want normal interactive approvals for some cases but want others, such as `request_permissions` or skill-script prompts, to fail closed automatically.
 
 Set `approvals_reviewer = "auto_review"` to route eligible interactive approval
-requests through automatic review. This changes the reviewer, not the sandbox
-boundary.
-
-Use `[auto_review].policy` for local reviewer policy instructions. Managed
-`guardian_policy_config` takes precedence.
+requests through Auto-review. To add rules or replace the reviewer policy, see
+[Auto-review configuration](./sandboxing/auto-review.md#configuration).
 
 ```toml
 approval_policy = "on-request"  # Other options: never or { granular = { ... } }
-approvals_reviewer = "user"     # Or "auto_review" for automatic review
+approvals_reviewer = "user"     # Or "auto_review" for Auto-review
 sandbox_mode = "workspace-write"
 allow_login_shell = false       # Optional hardening: disallow login shells for shell tools
 
@@ -14840,11 +14812,6 @@ exclude_tmpdir_env_var = false  # Allow $TMPDIR
 exclude_slash_tmp = false       # Allow /tmp
 writable_roots = ["/Users/YOU/.pyenv/shims"]
 network_access = false          # Opt in to outbound network
-
-[auto_review]
-policy = """
-Use your organization's automatic review policy.
-"""
 ```
 
 #### Named permission profiles
@@ -20199,9 +20166,7 @@ Environments run behind an HTTP/HTTPS network proxy for security and abuse preve
 
 #### Agent Security command-network requirements
 
-On supported managed Codex Cloud execution paths, Agent Security requirements constrain command networking. Codex Cloud environment internet settings apply separately. An allowed domain in Agent Security does not override a restriction in the Cloud environment's internet settings. These command-network controls do not, by themselves, disable hosted web search, apps, or MCP. ChatGPT Work Cloud has separate capability permissions and does not inherit these Agent Security requirements.
-
-A managed command allowlist applies to commands using the managed proxy. Where policy permits full sandbox escalation and it is approved, that execution can bypass the command proxy. A narrow network grant is different from full sandbox escalation. Configure enforced approval and sandbox requirements for the intended boundary, and test both ordinary and escalated commands. See [Managed configuration](./enterprise/managed-configuration.md#configure-network-access-requirements) for inheritance and proxy limits.
+If your workspace manages command networking through Agent Security, check the environment's internet settings as well as the managed policy. See [Network isolation](./agent-approvals-security.md#network-isolation) for how the controls apply to commands.
 
 ### Codex Cloud (Legacy): internet access
 
@@ -20349,6 +20314,10 @@ ubuntu.com
 visualstudio.com
 yarnpkg.com
 ```
+
+#### Agent Security command-network requirements
+
+When Agent Security also manages command networking, check its policy if the environment allows a destination but a command cannot reach it. For proxy coverage and the effect of an approved full sandbox escalation, see [Network isolation](./agent-approvals-security.md#network-isolation).
 
 ### Codex environments
 
@@ -21099,13 +21068,10 @@ permissions, plugins, Computer Use, browser setup, and local tools.
 
 #### Local computer access with Work Cloud and Remote connections
 
-When your workspace enables Local computer access with Work Cloud, eligible ChatGPT Work conversations can continue across desktop, mobile, and web. OpenAI's cloud coordinates the task, and an online, connected computer can execute steps that need its local resources.
-
-Use the Local computer access with Work Cloud guidance for conversations using this feature. The remote access and SSH instructions below apply to the existing supported host-connection workflows. The setup required to view a conversation using this feature may differ from the setup for a Codex host connection.
-
-Local computer access with Work Cloud applies only to tasks created after you enable sync. Existing tasks, including tasks in projects, keep their original mode: locally only, or in the cloud without access to local files. Start a new task to use this feature.
-
-If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn. This feature does not change how Codex on mobile connects to a host.
+To continue a Work conversation on desktop, mobile, or web, follow
+[Continue Work across devices](./get-started-with-work.md#continue-work-across-devices). Work Cloud can use approved local
+resources through a connected computer. The instructions below cover connecting
+to a desktop host from Codex or opening a project on an SSH host.
 
 #### What you can do remotely
 
@@ -22077,19 +22043,25 @@ a chat, it reappears in its original sidebar location.
 
 #### A Work conversation does not appear on another device
 
-- Confirm that you are signed in with ChatGPT to the same account and workspace on each device.
-- Ask your workspace owner to check that Work Cloud and **Allow local computer access** are enabled. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots.
-- Check when the task was created. Sync applies to new tasks created after it is enabled. Existing tasks, including tasks in projects, are not migrated and keep their original local-only or cloud-without-local-files behavior.
-
-For enterprises, the in-app Local/Cloud toggle and its default remain unchanged at launch. A particular toggle or default mode does not by itself confirm whether a conversation can sync. Keep Codex history separate when looking for a Work conversation. See [Local computer access for Work Cloud and dots](./enterprise/cloud-local-access.md) for setup and the [Work admin FAQ](./enterprise/work-admin-faq.md) for common questions.
+- Sign in with ChatGPT to the same account and workspace on each device, and look
+  in Work history. Codex has a separate history.
+- Ask your workspace owner to verify Work Cloud and **Allow local computer
+  access** in [workspace permissions](./enterprise/cloud-local-access.md#how-to-set-up-local-computer-access). A cloud policy with
+  `enforce_residency` blocks local computer access.
+- If the task predates local computer access, select **Cloud** in the desktop
+  composer and [start a new Work task](./get-started-with-work.md#continue-work-across-devices).
 
 #### A synced task cannot use the computer's files or tools
 
-Keep the computer online and connected. If it's unavailable when a new turn starts, an eligible synced task can continue in a cloud container without access to the computer's files or tools. A running turn doesn't automatically move from the computer to the cloud.
+Open the ChatGPT desktop app on the computer that holds the files, sign in to
+the same workspace, and keep it online and connected. If you started a turn
+while the computer was offline, it may be running in a cloud container without
+access to those files.
 
 #### A turn stopped after Local computer access with Work Cloud was turned off
 
-Turning off Local computer access with Work Cloud interrupts running turns. If you still have Work access, send a new message to start another turn. In an existing cloud conversation, that turn automatically uses Work Cloud without access to local files.
+If you still have Work access, send a new message in the existing cloud
+conversation. The new turn can use Work Cloud, but it cannot use local files.
 
 #### Automated policy updates are missing
 
@@ -23846,7 +23818,9 @@ External invitations let you share a site with named viewers without making it p
 
 External invitations are rolling out to sites users on Plus, Pro, Business,
 and Enterprise plans. If the invitation option is missing, check the selected
-account, site ownership, workspace permissions, and rollout availability.
+account, site ownership, and rollout availability. In Enterprise and Business
+workspaces, ask your admin to check the [workspace settings for
+Sites](./enterprise/sites.md#workspace-admin-controls).
 
 1. Open a site you own and select **Share**.
 2. To keep the site private, set **Who has access** to **Only those invited**.
@@ -23860,8 +23834,6 @@ account, site ownership, workspace permissions, and rollout availability.
 External viewers can open and use the site. They don't become workspace
 members or site editors, and can't edit or publish the site. The invitation
 grants access to this site; review its content and connected data before sharing.
-
-In Enterprise, admins manage **Allow members to invite external visitors to sites** under **Workspace settings > Permissions & roles**. This permission is separate from permission to publish sites publicly. Business workspaces don't have a separate external-invitation toggle; sites must be enabled and the feature must be available to the account.
 
 To remove a viewer, open the site's sharing controls and remove their access.
 Also check the remaining audience settings: removing one invitation doesn't
@@ -29100,16 +29072,19 @@ deprecated alias. Admins can force hooks off the same way in
 
 #### Managed hooks from `requirements.toml`
 
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
+Choose hooks for the environment that coordinates the task.
 
-Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail.
+#### Hooks with cloud orchestration
 
-The Codex instructions in this section still apply to supported Codex workflows. Before enabling Local computer access with Work Cloud, review any compatibility warning in the sync setting and **Agent Security**. See [Managed configuration](./enterprise/managed-configuration.md).
+In workspaces with managed policy and remote hooks enabled, Work Cloud with local computer access and dots can call an MCP service at supported task and tool events. These calls use the `mcp_tool` handlers your workspace admin configures in [Agent Security](./enterprise/agent-security.md#hooks-in-local-computer-access-with-work-cloud). Work Cloud without local computer access and personal accounts do not use these enterprise hooks.
 
-In Codex, enterprise-managed requirements can define hooks inline under `[hooks]`.
-The command-hook example below applies only to Codex.
-This is useful when admins want to enforce the hook configuration while
-delivering the actual scripts through MDM or another device-management system.
+Cloud orchestration supports only Global MCP hooks, even when a tool runs on a connected computer. It does not support command, prompt, or agent handlers, hooks from local configuration, plugins, or local directories, environment-scoped hooks, or `SessionEnd` MCP hooks. Local-only Work and Codex threads continue to support their existing hooks when both orchestration and execution are local.
+
+A supported hook can block an action by returning an explicit denial. A `PreToolUse` error, timeout, or malformed response can let the tool run. MCP hooks provide only part of the audit trail. For rollout checks and audit coverage, see [Check hooks and network compatibility](./enterprise/cloud-local-access.md#check-hooks-and-network-compatibility).
+
+#### Managed hooks in local Codex
+
+Define local Codex hooks under `[hooks]` in `requirements.toml`.
 To enforce managed hooks even for users who disabled hooks locally, pin
 `[features].hooks = true` in `requirements.toml` alongside `[hooks]`. To ignore
 user, project, session, and plugin hooks while still allowing administrator
@@ -41432,13 +41407,9 @@ Use the policy API to manage Global settings. To manage Local or Codex Cloud set
 
 Check compatibility before enabling sync:
 
-Network policy. Where environment overrides are available, test the `experimental_network` exceptions documented in [Managed configuration](./enterprise/managed-configuration.md). A global restriction can remain in force despite an environment allow.
+- **Network policy.** Test [network policy precedence and runtime limits](./enterprise/managed-configuration.md#network-policy-precedence-and-runtime-limits) if you use environment overrides. A Global restriction can remain in force despite an environment allow.
 
-- **Enterprise hooks.** Where enabled for your workspace, Local computer access with Work Cloud supports admin-defined MCP hooks that run on the cloud coordinator (orchestrator) for supported lifecycle and tool events. Command hooks and hooks from local configuration or plugins are not supported with cloud orchestration, even when tools execute locally.
-
-- **Unsupported hooks.** Command hooks and hooks from local configuration or plugins are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
-
-- **Auditing.** Before relying on these hooks, test the callback connection, confirm the events it receives, and check how failures affect the task. MCP hooks do not provide a complete Compliance API audit trail.
+- **Enterprise hooks.** If your rollout depends on hooks, check [which handlers run with cloud orchestration](./hooks.md#hooks-with-cloud-orchestration). Test the events and failure cases you rely on before enabling access. Review [audit coverage](./enterprise/compliance-api.md#audit-records-for-local-computer-access-with-work-cloud) separately.
 
 - Data requirements. Local computer access with Work Cloud does not provide strict zero data retention. Data residency and inference residency cover only eligible content and supported workloads, regions, and configurations. Enterprise Key Management (EKM) covers supported stored content in eligible workspaces. Work is not supported with UAE inference residency. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots. If your organization requires ZDR, do not enable this feature.
 
@@ -41585,7 +41556,11 @@ Protect the integration boundary:
 
 #### Step 8: Verify and maintain the rollout
 
-After enabling Local computer access with Work Cloud, create a new task and continue the conversation from another supported device. Existing tasks are not migrated and keep their original local-only or cloud-only behavior. Keep the computer online for steps that need its files or tools. Test an action the policy should allow and an action it should block, checking the applicable approvals, filesystem, and network restrictions separately for local and cloud execution. Also test starting a new turn while the local computer is unavailable. An eligible task can continue in a cloud container without access to that computer's local files or tools. A task cannot switch from local execution to the cloud during a turn.
+Have a pilot user [start a new Work task and continue it on another device](./get-started-with-work.md#continue-work-across-devices).
+With the computer connected, check approvals, filesystem access, and network
+restrictions using an allowed action and a blocked action. Disconnect the
+computer and start another turn. Verify that the cloud container cannot access
+local files and that its own execution requirements apply.
 
 Record the effective settings and the result of each test. If a restriction does not work as expected, resolve the issue before users rely on it. Follow the documented behavior for disabling sync. Treat access removal, task interruption, and data retention as separate actions.
 
@@ -41610,7 +41585,9 @@ scope and administrator guidance when those signals change.
 
 #### If you need to turn Local computer access with Work Cloud off
 
-Turning off Local computer access with Work Cloud interrupts currently running turns. Users can start a new turn in an existing cloud conversation. That turn automatically uses Work Cloud without access to local files. Tell users to start a new turn after the interruption and explain that local files will no longer be available to the cloud thread.
+Tell affected users that disabling **Allow local computer access** interrupts
+running turns. Members who retain Work access can send a new message in an
+existing cloud conversation to continue without local files.
 
 ### Agent Security
 
@@ -41667,9 +41644,7 @@ Configure these controls in Global. For Work with local access and dots, support
 
 #### Hooks in Local computer access with Work Cloud
 
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
-
-Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail.
+In **Global**, use **Edit as TOML** to configure `mcp_tool` handlers for Work with local computer access and dots. Test callback failures as well as explicit denials before relying on a hook to block a tool. See [Hooks with cloud orchestration](./hooks.md#hooks-with-cloud-orchestration) for supported handlers and events.
 
 Global also contains desktop and client settings. Some of these settings apply only to the desktop app. Configuring a setting in Global does not mean it applies everywhere. See the Configuration Reference for each field's supported use.
 
@@ -41691,9 +41666,7 @@ These fields control how work runs on a computer or in a cloud container. Set sh
 
 The table shows which field groups support environment overrides. Supported options within each group can vary by platform, and some requirements combine across policies instead of replacing one another. See the Configuration Reference for supported values and Managed configuration for network exceptions.
 
-On supported managed Codex Cloud execution paths, Agent Security requirements constrain command networking. Codex Cloud environment internet settings apply separately. An allowed domain in Agent Security does not override a restriction in the Cloud environment's internet settings. These command-network controls do not, by themselves, disable hosted web search, apps, or MCP. ChatGPT Work Cloud has separate capability permissions and does not inherit these Agent Security requirements.
-
-A managed command allowlist applies to commands using the managed proxy. Where policy permits full sandbox escalation and it is approved, that execution can bypass the command proxy. A narrow network grant is different from full sandbox escalation. Configure enforced approval and sandbox requirements for the intended boundary, and test both ordinary and escalated commands.
+On supported managed Codex Cloud execution paths, allowing a domain in Agent Security cannot override an environment restriction. An approved full sandbox escalation can bypass the managed command proxy. See [Network isolation](./agent-approvals-security.md#network-isolation) for what the proxy covers.
 
 #### Configure networking in the UI
 
@@ -42214,9 +42187,9 @@ plan, workspace settings, source permissions, and surface.
 
 #### What does Local computer access with Work Cloud enable?
 
-Eligible members can continue a Work conversation across desktop, mobile, and web. Tasks using Local computer access with Work Cloud use cloud coordination. For enterprises, the in-app Local/Cloud toggle and its default remain unchanged at launch. Individual steps can still execute in the cloud or use approved resources on a connected computer.
-
-For example, a person can start work with an approved local folder on a laptop, then give follow-up instructions from their phone. Steps that need the laptop still require it to be online and connected.
+Members can continue an eligible cloud conversation across devices and use
+approved files or tools on a connected computer. For member instructions, see
+[Continue Work across devices](./get-started-with-work.md#continue-work-across-devices).
 
 #### How do we enable it?
 
@@ -42246,9 +42219,7 @@ Use the policy API to manage Global settings. To manage Local or Codex Cloud set
 
 #### Which hooks are supported in Local computer access with Work Cloud?
 
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
-
-Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail.
+With managed policy and remote hooks enabled, Work with local computer access and dots support Global MCP hooks. A command hook configured on the connected computer runs only in a supported local-only workflow. See [Hooks with cloud orchestration](./hooks.md#hooks-with-cloud-orchestration) for supported handlers, events, and failure behavior.
 
 #### Which policy takes priority?
 
@@ -42266,17 +42237,20 @@ Keep orchestrator controls, including approvals and web search, in Global. Use t
 
 #### What happens if the local computer is unavailable?
 
-Keep the computer online and connected for steps that need its local files or tools. If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn.
+An eligible new turn can run in a cloud container with its own execution
+requirements. Local files, tools, and device policy are unavailable there. See
+[what members experience when their computer is offline](./get-started-with-work.md#continue-work-across-devices).
 
 #### What happens if an admin turns Local computer access with Work Cloud off?
 
-Turning off sync interrupts any currently running turn. Users can send a new message to start a new turn in an existing cloud conversation. That turn automatically uses Work Cloud without access to local files.
-
-Turning off sync does not change data-retention or deletion policies.
+Disabling access interrupts running turns. Follow the
+[rollout guide's rollback instructions](./enterprise/admin-setup.md#if-you-need-to-turn-local-computer-access-off) to help members continue.
+Conversation retention and deletion policies still apply.
 
 #### What happens to existing chats and tasks in projects when sync is turned on?
 
-Local computer access with Work Cloud applies only to tasks created after you enable sync. Existing tasks, including tasks in projects, keep their original mode: locally only, or in the cloud without access to local files. Start a new task to use this feature.
+Existing tasks keep their original mode. Ask members to
+[start a new cloud task](./get-started-with-work.md#continue-work-across-devices) to use local computer access.
 
 #### Does this change Codex?
 
@@ -42751,11 +42725,10 @@ and connected integration. For the broader execution model, see the
 
 #### Where cloud tasks run
 
-For new tasks created after you enable Local computer access with Work Cloud, OpenAI's cloud coordinates the task while individual steps can execute in the cloud or on an approved, connected computer. This feature applies only to tasks created after you enable sync. Existing tasks, including tasks in projects, keep their original mode: locally only, or in the cloud without access to local files. Start a new task to use this feature.
-
-If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn.
-
-A step that needs a computer's local files or tools requires that computer to be online and connected. Workspace permissions, supported policy, and the user's existing access continue to apply.
+With local computer access enabled, Work Cloud can call approved tools on an
+online, connected computer. If a new turn uses a cloud container while the
+computer is offline, the container uses its own execution requirements and
+cannot reach the computer's files or tools. See [Continue Work across devices](./get-started-with-work.md#continue-work-across-devices).
 
 The user's device sits within the organization's own IT-managed trust boundary, outside OpenAI-operated systems. Cloud execution remains in the OpenAI-managed environment. A synced task can separately use approved local tools through a connected computer, subject to its permissions.
 
@@ -42929,8 +42902,6 @@ Review each control in the context where it applies:
 
 Keep orchestrator controls, including approvals and web search, in Global. Use the dedicated Allowed approval policies and Allowed web search modes controls where available, and TOML for other supported fields. See the [Configuration Reference](./config-file/config-reference.md) for the field list and execution scope.
 
-Turning off Local computer access with Work Cloud interrupts currently running turns. Users can start a new turn in an existing cloud conversation. That turn automatically uses Work Cloud without access to local files.
-
 Review the controls that apply to each part of a cloud task:
 
 - **Work Cloud and Work Local:** Where independent controls are available, manage cloud and local Work as distinct controls in **Admin Console** > **Permissions**. In other workspaces, local Work can share a control with Codex Local.
@@ -43008,9 +42979,9 @@ Local capabilities depend on the supported desktop app, operating system, worksp
 
 Local execution accesses approved resources through the desktop app on the user's computer. With Local computer access with Work Cloud enabled, OpenAI's cloud coordinates the task and calls the connected computer when a step needs local execution. The computer must be online and connected for those steps.
 
-Local computer access with Work Cloud applies only to tasks created after you enable sync. Existing tasks, including tasks in projects, keep their original mode: locally only, or in the cloud without access to local files. Start a new task to use this feature.
-
-If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn.
+Device requirements apply to local execution. If a new turn runs in a cloud
+container while the computer is offline, the container uses its own policies
+and cannot reach local files or tools. See [Continue Work across devices](./get-started-with-work.md#continue-work-across-devices).
 
 Local files can remain on the device, but relevant file excerpts, prompts, screenshots, browser content, or tool results may be sent to OpenAI services to complete a task. Local execution does not mean offline or device-only model inference.
 
@@ -43084,9 +43055,7 @@ Before enabling sync, review these requirements:
 
 - **Policies delivered only through MDM. MDM delivers policy to devices. Create an Agent Security baseline for supported local execution requirements before enabling sync.**
 
-- **Enterprise hooks.** Where enabled for your workspace, Local computer access with Work Cloud supports admin-defined MCP hooks that run on the cloud coordinator (orchestrator) for supported lifecycle and tool events. Command hooks and hooks from local configuration or plugins are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
-
-- **Auditing.** Before relying on these hooks, test the callback connection, confirm the events it receives, and check how failures affect the task. MCP hooks do not provide a complete Compliance API audit trail.
+- **Enterprise hooks.** If a local-only workflow depends on scripts or plugin hooks, check [which hooks the cloud orchestrator supports](./hooks.md#hooks-with-cloud-orchestration) before enabling local computer access. Test the required events and review [audit coverage](./enterprise/compliance-api.md#audit-records-for-local-computer-access-with-work-cloud).
 
 Review the Work controls available in **Workspace settings** > **Permissions & roles**. Whether local and hosted Work appear as distinct permissions depends on the workspace configuration and rollout. For more guidance, see the [Work administrator FAQ](./enterprise/work-admin-faq.md).
 
@@ -43097,8 +43066,6 @@ Workspace permissions determine who can use Work. Administrators can also restri
 Enforced requirements cannot be overridden by individual users. Managed defaults, by contrast, establish initial settings that users may be able to change. Neither replaces workspace roles or operating-system permissions.
 
 For local clients that use the existing local configuration path, managed requirements load during configuration loading. A background refresh can prepare cloud requirements for a later load, and macOS MDM changes are read at the next client launch. Restart and verify the applicable local client after a local policy change.
-
-Turning off Local computer access with Work Cloud interrupts currently running turns. Users can start a new turn in an existing cloud conversation. That turn automatically uses Work Cloud without access to local files.
 
 This local loading behavior does not establish when a cloud policy change takes effect in a running task using Local computer access with Work Cloud. Verify the task's effective controls before relying on the update.
 
@@ -43182,7 +43149,9 @@ ChatGPT Business or Enterprise agreement. The capabilities and controls
 available to each experience depend on whether a task runs locally or in the
 cloud, its available tools, and applicable workspace policies.
 
-ChatGPT Work can complete multi-step tasks using the files, applications, and tools available to an authorized workspace member. With sync enabled, members can continue eligible conversations across desktop, mobile, and web. For enterprises, the in-app Local/Cloud toggle and its default remain unchanged at launch. OpenAI's cloud coordinates the task, while individual steps can run in a cloud environment or on an approved, connected computer.
+ChatGPT Work can complete multi-step tasks using a member's authorized files,
+applications, and tools. With local computer access enabled, the cloud can
+coordinate a task that uses approved tools on a connected computer.
 
 > **Update the desktop app.** Users must update to the latest version of the ChatGPT desktop app for Local computer access with Work Cloud to take effect after it is enabled for their workspace.
 
@@ -43213,7 +43182,8 @@ Local execution does not mean that the conversation or task context stays only o
 
 #### Cloud Work
 
-Cloud execution runs supported steps on OpenAI-managed infrastructure. If the computer is unavailable when a new turn starts, an existing eligible task using local computer access with Work Cloud can continue in a cloud container. The cloud container cannot access files or tools on the unavailable computer. It also does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn.
+Cloud steps run on OpenAI-managed infrastructure with their own execution
+requirements. Local requirements apply only to steps on the connected computer.
 
 A cloud execution environment does not automatically inherit a computer's files, applications, browser sessions, or network access. A task using Local computer access with Work Cloud can separately use approved local tools through an online, connected computer. Uploads, project sources, and authorized connected apps remain distinct ways to supply information.
 
@@ -43221,7 +43191,8 @@ When [Library](https://help.openai.com/en/articles/20001052-file-storage-and-lib
 
 See [Code and shell sandboxing](./sandboxing.md), [Creating and editing documents, spreadsheets, and presentations](https://help.openai.com/en/articles/20001278-creating-and-editing-documents-spreadsheets-and-presentations-with-chatgpt-work), and [File storage and Library in ChatGPT](https://help.openai.com/en/articles/20001052-library-for-chatgpt).
 
-Local computer access with Work Cloud applies only to tasks created after you enable sync. Existing tasks, including tasks in projects, keep their original mode: locally only, or in the cloud without access to local files. Start a new task to use this feature.
+For task eligibility and the experience on each device, see
+[Continue Work across devices](./get-started-with-work.md#continue-work-across-devices).
 
 #### Enable and govern Local computer access with Work Cloud
 
@@ -43233,13 +43204,11 @@ Review these policy boundaries before enabling sync:
 
 - **Local execution.** MDM and legacy managed-device requirements rank above Agent Security. The device's system requirements file ranks below Agent Security.
 
-- **Enterprise hooks.** Where enabled for your workspace, Local computer access with Work Cloud supports admin-defined MCP hooks that run on the cloud coordinator (orchestrator) for supported lifecycle and tool events. Command hooks and hooks from local configuration or plugins are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
-
-- **Logging and auditing.** Before relying on these hooks, test the callback connection, confirm the events it receives, and check how failures affect the task. MCP hooks do not provide a complete Compliance API audit trail.
+- **Enterprise hooks.** Check [which hooks run with cloud orchestration](./hooks.md#hooks-with-cloud-orchestration). Before rollout, verify callback delivery, failure behavior, and [audit coverage](./enterprise/cloud-local-access.md#check-hooks-and-network-compatibility) for the events your workspace relies on.
 
 Keep orchestrator controls, including approvals and web search, in Global. Use the dedicated Allowed approval policies and Allowed web search modes controls where available, and TOML for other supported fields. See the [Configuration Reference](./config-file/config-reference.md) for the field list and execution scope.
 
-Turning off Local computer access with Work Cloud interrupts currently running turns. Users can start a new turn in an existing cloud conversation. That turn automatically uses Work Cloud without access to local files.
+Before disabling access, review [what to tell affected users](./enterprise/admin-setup.md#if-you-need-to-turn-local-computer-access-off).
 
 Local computer access with Work Cloud does not change Codex configuration behavior or combine Work history with Codex history. See [Managed configuration](./enterprise/managed-configuration.md) and the [Work admin FAQ](./enterprise/work-admin-faq.md).
 
@@ -46434,11 +46403,9 @@ Enabling local computer access in these features helps teams continue work acros
 
 #### Work
 
-- **Continue one Work conversation across devices.** Start on a computer, then review results or give follow-up instructions from the web or mobile app. Tasks using local computer access with Work Cloud use cloud coordination.
-
-- **Use approved resources on your computer.** A task using this feature can use permitted local files and tools through a connected computer while you follow along from another device. Keep that computer online and connected for steps that need it.
-
-- **Manage local execution requirements centrally.** Set supported enterprise requirements in Agent Security for local execution. Review Work Cloud policies separately for cloud execution.
+Members can [continue Work across devices](./get-started-with-work.md#continue-work-across-devices) and use approved local
+resources through a connected computer. Administrators can manage local
+execution requirements in Agent Security and review cloud execution separately.
 
 #### Dots
 
@@ -46452,14 +46419,14 @@ Enabling local computer access in these features helps teams continue work acros
 
 A task has two parts: coordination and execution. Coordination decides which steps to take and keeps the conversation moving. Execution is the work performed by a tool, such as running a shell command. This feature moves coordination into OpenAI’s cloud. It does not move every tool or file off the computer.
 
-| **Area**                                                           | **Before you enable this feature**                                                     | **After you enable this feature**                                                                                                                                                                                                                                                               |
-| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Continuing a local Work conversation                               | Members choose a local or cloud Work thread, where available.                          | When members select Cloud, eligible new conversations use cloud coordination and can continue across devices. When members select Local, both coordination and execution continue to happen locally. For enterprises, the in-app Local/Cloud toggle and its default remain unchanged at launch. |
-| Task coordination                                                  | The existing local or cloud workflow applies.                                          | OpenAI’s cloud coordinates the Work task.                                                                                                                                                                                                                                                       |
-| Steps that need the user’s computer                                | Local Work can use the computer’s tools and files. Cloud Work cannot use the computer. | The computer still provides those tools and files and must be online and connected.                                                                                                                                                                                                             |
-| [Enterprise requirements](./enterprise/managed-configuration.md) | Existing local requirements and precedence apply to local Work.                        | Local execution requirements govern the connected computer. Supported Global policy applies to cloud orchestration when managed policy is enabled; Work cloud containers use their own execution configuration and requirements.                                                                |
-| Local execution controls                                           | Supported device and operating-system controls apply.                                  | For local execution, MDM and legacy managed-device requirements rank above Agent Security. The system requirements file ranks below it.                                                                                                                                                         |
-| Codex                                                              | Existing Codex behavior applies.                                                       | Codex behavior and conversation history remain separate.                                                                                                                                                                                                                                        |
+| **Area**                                                           | **Before you enable this feature**                                                     | **After you enable this feature**                                                                                                                                                                                                |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Continuing a local Work conversation                               | Members choose a local or cloud Work thread, where available.                          | When members select Cloud, eligible new conversations use cloud coordination and can continue across devices. When members select Local, both coordination and execution continue to happen locally.                             |
+| Task coordination                                                  | The existing local or cloud workflow applies.                                          | OpenAI’s cloud coordinates the Work task.                                                                                                                                                                                        |
+| Steps that need the user’s computer                                | Local Work can use the computer’s tools and files. Cloud Work cannot use the computer. | The computer still provides those tools and files and must be online and connected.                                                                                                                                              |
+| [Enterprise requirements](./enterprise/managed-configuration.md) | Existing local requirements and precedence apply to local Work.                        | Local execution requirements govern the connected computer. Supported Global policy applies to cloud orchestration when managed policy is enabled; Work cloud containers use their own execution configuration and requirements. |
+| Local execution controls                                           | Supported device and operating-system controls apply.                                  | For local execution, MDM and legacy managed-device requirements rank above Agent Security. The system requirements file ranks below it.                                                                                          |
+| Codex                                                              | Existing Codex behavior applies.                                                       | Codex behavior and conversation history remain separate.                                                                                                                                                                         |
 
 #### How to set up local computer access
 
@@ -46531,13 +46498,9 @@ Review retention, deletion, and audit coverage for the actual data and tools inv
 
 #### Check hooks and network compatibility
 
-- **Supported enterprise hooks:** When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks. The cloud orchestrator calls your connected MCP service at supported task and tool events. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access does not use these hooks; these enterprise hooks are not available for personal accounts.
+- **Hook compatibility:** Before enabling local access, review any compatibility warnings in the workspace setting and Agent Security. Compare the hooks your workflow needs with the [hooks supported with cloud orchestration](./hooks.md#hooks-with-cloud-orchestration). If you depend on a local command or plugin hook, keep that workflow local-only.
 
-- **Work Cloud and dots with local access:** Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when the task executes tools on your computer. If your workflow depends on one of these hooks, continue using a local-only workflow that supports it until you have reviewed an alternative.
-
-- **Local-only threads in Work and Codex:** When both orchestration and execution are local, existing supported hooks continue to work. Admins can still configure supported managed hooks in Agent Security for this workflow.
-
-- **Failure and audit coverage:** Test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. Hooks do not provide a complete [Compliance API](./enterprise/compliance-api.md#audit-records-for-local-computer-access-with-work-cloud) audit trail or cover every internal subagent path.
+- **Failure and audit coverage:** Test the callback connection, required events, and tool behavior after a callback error or timeout. A failed `PreToolUse` hook can let the tool run. Hooks do not cover every internal subagent path. Review the [available audit records](./enterprise/compliance-api.md#audit-records-for-local-computer-access-with-work-cloud) separately.
 
 - **Network and app controls:** Verify the field, delivery path, and execution surface in the [Configuration Reference](./config-file/config-reference.md). App- or device-enforced controls may still apply when the cloud orchestrator does not consume a setting. Managed HTTP/SOCKS listener ports and non-loopback proxy listeners are unsupported by the cloud runtime; socket-rule support depends on the execution path. Review [Network policy precedence and runtime limits](./enterprise/managed-configuration.md#network-policy-precedence-and-runtime-limits), then test allowed and blocked actions and required connectivity.
 
@@ -46589,17 +46552,11 @@ For both Work and dots, local steps require the relevant computer to be online a
 
 #### Work
 
-- **Eligible tasks.** Eligible new tasks started in the ChatGPT desktop app with **Cloud** selected can use that computer’s local executor while it is connected and local access is enabled.
-
-- **Sign-in.** Use Sign in with ChatGPT in the intended workspace. API keys and Codex access tokens do not enable local computer access with Work Cloud.
-
-- **Computer unavailable.** If the computer is unavailable when a new turn begins, an existing eligible task can continue in a cloud container without that computer’s local files or tools. The container does not enforce enterprise requirements from local execution. A task cannot switch from local execution to the cloud during a turn.
-
-- **Access turned off.** Turning off local computer access with Work Cloud interrupts currently running turns. Users can start a new turn in an existing cloud conversation; it uses Work Cloud without access to local files.
-
-- **Existing chats and projects.** Tasks created before this feature is enabled keep their original mode: locally only, or in the cloud without local file access. Start a new task after enabling the feature to use local computer access with Work Cloud.
-
-- **Local/Cloud setting.** For enterprises, the in-app Local/Cloud toggle and its default remain unchanged at launch. Eligible tasks with **Cloud** selected use cloud coordination and the connected computer for local steps.
+Members must sign in with ChatGPT to the intended workspace. API keys and Codex
+access tokens cannot enable this feature. Share [Continue Work across devices](./get-started-with-work.md#continue-work-across-devices)
+for instructions on starting an eligible task and continuing when the computer
+is offline. Before disabling the feature, review the
+[rollback instructions](./enterprise/admin-setup.md#if-you-need-to-turn-local-computer-access-off).
 
 #### Dots
 
@@ -47217,7 +47174,7 @@ See [how Agent Security applies to Work Cloud](./enterprise/agent-security.md#ho
 
 {/_ vale Microsoft.Auto = YES _/}
 
-Disabling automatic review for browser actions sends those actions to the user for
+Disabling Auto-review for browser actions sends those actions to the user for
 approval instead. It doesn't disable model safety monitoring.
 
 When several origin patterns match, the most restrictive value wins for each
@@ -47297,7 +47254,7 @@ persistent_approval = false
 access_approval_lifetime = "turn"
 ```
 
-To disable automatic review for browser actions, set
+To disable Auto-review for browser actions, set
 `browser_use.disable_auto_review = true`, or set `auto_review = "deny"` on an
 origin policy to restrict it for that origin.
 
@@ -47455,7 +47412,7 @@ Use this section to set approval behavior, permission boundaries, and starting d
 
 #### Admin-enforced requirements (requirements.toml)
 
-Requirements constrain security-sensitive settings (approval policy, approvals reviewer, automatic review policy, sandbox mode, permission profiles, web search mode, managed hooks, which MCP servers users can enable, and which plugin marketplace sources they can use). When resolving configuration (for example from `config.toml`, [profile files](./config-file/config-advanced.md#profiles), or CLI config overrides), if a value conflicts with an enforced rule, the local client falls back to a compatible value and notifies the user. If you configure an `mcp_servers` allowlist, the client enables an MCP server only when both its name and identity match an approved entry; otherwise, the client disables it.
+Requirements constrain security-sensitive settings (approval policy, approvals reviewer, Auto-review policy, sandbox mode, permission profiles, web search mode, managed hooks, which MCP servers users can enable, and which plugin marketplace sources they can use). When resolving configuration (for example from `config.toml`, [profile files](./config-file/config-advanced.md#profiles), or CLI config overrides), if a value conflicts with an enforced rule, the local client falls back to a compatible value and notifies the user. If you configure an `mcp_servers` allowlist, the client enables an MCP server only when both its name and identity match an approved entry; otherwise, the client disables it.
 
 Requirements can also constrain [feature flags](./config-file/config-basic.md#feature-flags) via the `[features]` table in `requirements.toml`. Note that features aren't always security-sensitive, but enterprises can pin values if desired. Omitted keys remain unconstrained.
 
@@ -47555,38 +47512,30 @@ overrides that policy. See
 [Migrate from the retired `untrusted` approval policy](./agent-approvals-security.md#migrate-from-the-retired-untrusted-approval-policy)
 for examples and security tradeoffs.
 
-#### Configure automatic review policy
+#### Configure Auto-review policy
 
-To make automatic review the default, use **Global** > **Defaults** > **Command execution** > **Approval reviewer**. A default lets users choose
-another permitted reviewer. To require automatic review or supply your
-organization's review instructions, use **Edit as TOML** and edit Global
-`requirements.toml` instead. These requirements are separate from the browser's
-automatic-review controls.
+To make Auto-review the default, select **Global** > **Defaults** > **Command execution** > **Approval reviewer**. Users can still choose another permitted
+reviewer. To require Auto-review or supply organization-wide rules, select
+**Edit as TOML** and edit Global `requirements.toml`. Browser actions have
+separate Auto-review controls.
 
-Use `allowed_approvals_reviewers` to require or allow automatic review. Set it
-to `["auto_review"]` to require automatic review, or include `"user"` when users
-can choose manual approval.
-
-Set `guardian_policy_config` to replace the tenant-specific section of the
-automatic review policy. The local runtime still uses the built-in reviewer
-template and output contract. Managed `guardian_policy_config` takes precedence
-over local `[auto_review].policy`.
+The following example requires Auto-review for eligible approval requests and
+adds an organization-specific rule to the active policy. To also allow manual
+approval, include `"user"` in `allowed_approvals_reviewers`.
 
 ```toml
 allowed_approval_policies = ["on-request"]
 allowed_approvals_reviewers = ["auto_review"]
 
-guardian_policy_config = """
-## Environment Profile
-- Trusted internal destinations include github.com/my-org, artifacts.example.com,
-  and internal CI systems.
-
-## Tenant Risk Taxonomy and Allow/Deny Rules
-- Treat uploads to unapproved third-party file-sharing services as high risk.
-- Deny actions that expose credentials or private source code to untrusted
-  destinations.
+guardian_extra_policy = """
+Deny uploads of build artifacts to destinations outside artifacts.example.com.
 """
 ```
+
+To replace the entire policy, use `guardian_policy_config`. See
+[Auto-review configuration](./sandboxing/auto-review.md#configuration) for
+the default policy, how to prepare a replacement, and which managed settings
+take precedence over local ones.
 
 #### Control available permission profiles
 
@@ -47969,18 +47918,13 @@ Use the controls for each surface:
 - Use the managed `mcp_servers` approved list to restrict MCP servers.
 - Use feature requirements such as `browser_use`, `in_app_browser`, and
   `computer_use` to restrict browser and computer-use capabilities.
-- For supported managed Codex Cloud commands, configure Agent Security requirements and the Cloud environment internet settings separately.
+- For supported managed Codex Cloud commands, check the environment's internet settings as well as Agent Security. The environment can still block an allowed domain.
 
-A command domain allowlist does not replace these capability-specific
-controls.
+Test ordinary commands and any permitted full sandbox escalation separately. An approved full sandbox escalation can bypass the managed command proxy. See [Network isolation](./agent-approvals-security.md#network-isolation).
 
-On supported managed Codex Cloud execution paths, Agent Security requirements constrain command networking. Codex Cloud environment internet settings apply separately. An allowed domain in Agent Security does not override a restriction in the Cloud environment's internet settings. These command-network controls do not, by themselves, disable hosted web search, apps, or MCP. ChatGPT Work Cloud has separate capability permissions and does not inherit these Agent Security requirements.
+> **No effective allowed destinations:** With both **Managed networking** and **Only allow domains added by admins** enabled, ordinary managed commands need an explicit or inherited Allow entry. Check the [effective allowed destinations](./enterprise/agent-security.md#no-effective-allowed-destinations) before saving.
 
-A managed command allowlist applies to commands using the managed proxy. Where policy permits full sandbox escalation and it is approved, that execution can bypass the command proxy. A narrow network grant is different from full sandbox escalation. Configure enforced approval and sandbox requirements for the intended boundary, and test both ordinary and escalated commands.
-
-> **No effective allowed destinations:** When **Managed networking** and **Only allow domains added by admins** are On, ordinary managed commands need effective allowed destinations. If no Allow entries are configured or inherited, those commands have no allowed destinations. A deny-only policy does not implicitly allow the rest of the internet. Add required Allow entries and check inherited rules before saving. This restriction applies to the managed command proxy, not every tool or approved full sandbox escalation.
-
-> **Codex Cloud local/private connectivity:** An explicit Off value for local/private connectivity can prevent Codex Cloud from reaching its upstream proxy, even when the destination domain is allowed. Check the final `allow_local_binding` value and identify which policy or setting supplies it. On the supported Cloud proxy path, this defaults to true only when no applicable requirement, selected network profile, or proxy feature setting supplies a value. An inherited false still counts as an explicit setting. Where supported, set a higher-priority Cloud override to change this value for Codex Cloud without changing the Global value used by Local. This does not add domain Allow entries. Verify executor support before relying on the override. Do not apply this Cloud default to Local.
+> **Codex Cloud local/private connectivity:** Check the effective `allow_local_binding` value if a Cloud command cannot reach an allowed domain. An inherited Off value can block the upstream proxy. See [Codex Cloud local/private connectivity](./enterprise/agent-security.md#codex-cloud-localprivate-connectivity) for the Cloud-specific default and overrides.
 
 When environment requirements are empty, Global requirements apply. **Managed networking** set to
 **Off** is separate from the Cloud environment's Internet access setting. See
@@ -48145,55 +48089,9 @@ add plugins to the IDE extension.
 
 #### Enforce managed hooks from requirements
 
-Managed hooks run administrator-defined actions at supported task or tool
-events. Use **Edit as TOML** in Agent security to configure them in Global
-`requirements.toml`; the settings controls don't include a dedicated hook editor. The execution paths below determine which hook types can run.
+In Agent security, open **Global** > **Requirements** > **Edit as TOML**. For Work with local computer access and dots, configure supported `mcp_tool` handlers in Global `requirements.toml`. Before rollout, test the callback connection and what happens when the callback times out. See [Hooks with cloud orchestration](./hooks.md#hooks-with-cloud-orchestration) for supported events and failure behavior.
 
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows.
-
-Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail. The following script and directory examples retain their Codex scope.
-
-Admins can also define managed lifecycle hooks directly in `requirements.toml`.
-Use `[hooks]` for the hook configuration itself, and point `managed_dir` at the
-directory where your MDM or endpoint-management tooling installs the referenced
-scripts.
-
-To enforce managed hooks even for users who turned hooks off locally, pin
-`[features].hooks = true` alongside `[hooks]`. To skip user, project, session,
-and plugin hooks while still allowing managed hooks, set
-`allow_managed_hooks_only = true`.
-
-```toml
-allow_managed_hooks_only = true
-
-[features]
-hooks = true
-
-[hooks]
-managed_dir = "/enterprise/hooks"
-windows_managed_dir = 'C:\enterprise\hooks'
-
-[[hooks.PreToolUse]]
-matcher = "^Bash$"
-
-[[hooks.PreToolUse.hooks]]
-type = "command"
-command = "python3 /enterprise/hooks/pre_tool_use_policy.py"
-command_windows = 'py -3 C:\enterprise\hooks\pre_tool_use_policy.py'
-timeout = 30
-statusMessage = "Checking managed Bash command"
-```
-
-Notes:
-
-- The local runtime enforces the hook configuration from `requirements.toml`,
-  but it doesn't distribute the scripts in `managed_dir`.
-- Deliver those scripts with your MDM or device-management solution.
-- Managed hook commands should reference absolute script paths under the
-  configured managed directory.
-- `allow_managed_hooks_only = true` skips hooks from user, project, session, and
-  plugin sources, but still loads hooks from `requirements.toml` and other
-  managed config layers.
+For local Codex, distribute hook scripts through your device-management tool. To enforce them even if a user disables hooks, pin `[features].hooks = true` in `requirements.toml`. See the [managed hook configuration example](./hooks.md#managed-hooks-in-local-codex) for script paths and how to allow only managed hooks.
 
 #### Understand policy scope and precedence
 
@@ -48217,7 +48115,7 @@ Policy migration does not grant local computer access for Work or dots. Reviewin
 
 Environment overrides vary supported settings within a policy. Within a given policy, the order from highest to lowest is OS-specific environment override → all-OS environment override → Global. A higher-priority policy still wins over a lower-priority policy, even when the lower-priority policy is more specific. Some requirements have field-specific merge rules. Confirm which override editors and fields are available for your workspace.
 
-When managed policy and remote hooks are enabled, Work Cloud with local access and dots use admin-managed remote MCP hooks on the cloud orchestrator. Configure `mcp_tool` handlers in Global `requirements.toml`. Work Cloud without local access and personal accounts do not use these enterprise hooks. Command/shell, prompt, and agent handlers; hooks from local configuration, plugins, or local directories; environment-scoped hooks; and `SessionEnd` MCP hooks are not supported with cloud orchestration, even when tools execute locally. When both orchestration and execution are local, existing supported hooks continue to work in local-only Work and Codex threads. Admins can still configure supported managed hooks in Agent Security for those workflows. Before relying on these hooks, test callback connectivity, required events, and failure behavior. An explicit supported denial can block an action, but a `PreToolUse` callback error, timeout, or malformed response can fail the hook without blocking the tool. MCP hooks do not provide a complete Compliance API audit trail. See the [Configuration Reference](./config-file/config-reference.md).
+Before enabling local access for a workflow that uses hooks, [check which hooks run with cloud orchestration](./hooks.md#hooks-with-cloud-orchestration).
 
 #### Locations and precedence
 
@@ -49089,9 +48987,12 @@ Set and verify access:
 
 - Test access with a member who has the intended permissions.
 
-Tasks using Local computer access with Work Cloud use cloud coordination and can still run local steps through a connected computer. For enterprises, the in-app Local/Cloud toggle and its default remain unchanged at launch. The sync permission does not grant a seat, connected-app access, operating-system permissions, or unrestricted device access. Local Codex permissions and behavior remain separate. See [Managed configuration](./enterprise/managed-configuration.md) for policy scope and the [Work admin FAQ](./enterprise/work-admin-faq.md) for compatibility requirements.
-
-Turning off Local computer access with Work Cloud interrupts currently running turns. Users can start a new turn in an existing cloud conversation. That turn automatically uses Work Cloud without access to local files. Turning off sync does not by itself remove the member's workspace access.
+Review seats, connected-app access, operating-system permissions, and Codex
+Local access separately. Members can keep workspace access after you turn off
+local computer access. For the effect on running tasks, see the
+[rollout guide](./enterprise/admin-setup.md#if-you-need-to-turn-local-computer-access-off). For policy scope and compatibility requirements,
+see [Managed configuration](./enterprise/managed-configuration.md) and the
+[Work admin FAQ](./enterprise/work-admin-faq.md).
 
 #### Control Computer History access
 
@@ -50562,7 +50463,7 @@ Start with a specific use case. For example, an onboarding site that displays ap
 
 #### How sites work
 
-A site can contain pages, application code, and visitor information. Review what it publishes and collects before sharing it. For the building and publishing workflow, see [Creating and managing ChatGPT Sites](https://help.openai.com/en/articles/20001339).
+A site can contain pages, application code, and visitor information. Review what it publishes and collects before sharing it. For the builder's workflow, see [Create a site](./sites/creating-a-site.md#get-started-with-sites).
 
 #### What you can build
 
@@ -50584,25 +50485,23 @@ Review three levels of control: workspace permissions, the site's sharing and ed
 
 #### Workspace admin controls
 
-Workspace permissions govern who can create and publish sites. Review public publishing and external invitations separately: allowing a named external viewer and making a site available to anyone on the internet are different decisions.
+Workspace permissions govern who can create and publish sites. Public publishing is off by default in Enterprise. To let members invite named external visitors, enable **Allow members to invite external visitors to sites** under **Workspace settings > Permissions & roles**. You can allow these invitations while keeping public publishing off.
+
+In Business workspaces, external invitations are available when sites are enabled and the account has access to the feature. Business has no separate external-invitation setting.
 
 For configuration steps and current role permissions, follow the [workspace administration guidance](https://help.openai.com/en/articles/20001338-managing-chatgpt-sites-for-your-workspace).
 
 #### Site owner and collaborator controls
 
-Use the site's sharing controls to decide who can view it and who can help maintain it.
+The site owner chooses visitors and editors within the limits you set for the workspace.
 
 #### Audience and sharing
 
-A site's audience controls who can open it. Choose an audience that matches the information and activities the site provides. Review the full set of access grants when narrowing access. Removing an individual invitation may still leave access through a group, workspace-wide sharing, or public publishing.
-
-Check the site from the intended visitor experience after changing access. For the sharing workflow, see [Publishing and sharing](./sites/publishing-and-sharing.md).
+When reviewing a site's audience, check individual invitations, group access, workspace-wide sharing, and public access. More than one of these methods can give the same person access. Owners can [choose who can visit](./sites/publishing-and-sharing.md#choose-who-can-visit) or [invite external visitors](./sites/publishing-and-sharing.md#invite-people-outside-your-workspace).
 
 #### Editors and collaboration
 
-Owners can invite eligible workspace members as editors. Owners publish first; editors can publish later updates. Owners manage access and owner-only settings.
-
-Agree on how editors request and record review before publishing changes. An editor can publish later versions without a separate owner-approval step, so an organization's review process must account for who has edit access.
+Review who has edit access. After the owner publishes for the first time, editors can publish updates without separate owner approval. Agree on how they should request and record any review your organization requires. For editor permissions and invitations, see [Collaborate on a site](./sites/publishing-and-sharing.md#collaborate-on-a-site).
 
 #### Application permissions
 
@@ -50616,47 +50515,32 @@ Creating or sharing a site does not itself authorize connected-app access. Revie
 
 Include connections in the site's review. Identify which services it uses, what information it requests, and who should authorize that access. Keep the site's audience decision separate from the connected service's permissions.
 
-Keep credentials out of prompts, attachments, and visible site content. For questions about network access, contact your workspace admin.
+Keep credentials out of prompts, attachments, and visible site content.
 
 #### Verify the visitor experience
 
 Keep connected sites private to their workspace. Before sharing a connected site more widely within that workspace, test with another eligible workspace member who uses their own connected account. Confirm that the site shows information appropriate to that person's existing permissions.
 
-Also check the experience when a visitor does not grant the requested connection access. Explain which features need the connection and make sure the site does not present missing data as a successful result. Follow the current Help Center guidance for supported connections and access requirements.
+Also test what the site shows when a visitor declines access. It should identify which features need the connection and distinguish unavailable data from a successful result. For the visitor steps, see [Let visitors choose their connections](./sites/data-and-connections.md#let-visitors-choose-their-connections).
 
 #### Review and manage sites
 
 #### Saved versions and publishing
 
-Editing and saving a version are separate from publishing it. Review the updated preview, then publish when it's ready for visitors. Sending editing instructions does not immediately change the published site.
-
-Use this workflow for the first publication and later updates:
-
-1. Describe the change and review the saved version.
-2. Check the content, audience, application permissions, and connections affected by the change.
-3. Complete your organization's review, then have the owner or an eligible editor publish the version. The owner must complete the first publication.
-4. Open the published site as an intended visitor and confirm that the expected content and behavior are available.
-
-The review step is a recommended organizational process. It does not add a product approval gate.
+Decide who should review a saved version before it goes live. Your organization sets this review process. An owner or eligible editor can publish without a separate approval in Sites. For the publishing steps, see [Publish an update](./sites/publishing-and-sharing.md#publish-an-update).
 
 #### Shared responsibilities
 
-Successful generation or publication does not establish that a site meets your organization's requirements. Assign responsibility for reviewing the content, access rules, generated application code, and connected services. Use reviewers with the appropriate expertise for the site's data and use case.
+Assign reviewers for the site's content, access rules, generated code, and connected services. Choose people who know the data and the intended use.
 
 #### Review before publishing
 
-Review the intended audience, generated code, visitor submissions, and connections before publishing. Test the experience for intended and unintended visitors. Repeat the review after material changes.
+Ask the site owner to [review the site before sharing](./sites/publishing-and-sharing.md#review-before-you-share). Have your reviewers run these checks before the first publication and after material changes.
 
-For example, a team dashboard can look correct for its creator while exposing an uploaded customer list to a broader audience than intended. A request form can collect the right fields while allowing one visitor to read another visitor's submission. Review both what appears on the page and how the application handles data and actions.
-
-Before publishing, check:
-
-- **Content:** Review generated text, images, links, uploaded files, and example data for accuracy and appropriate sharing.
-- **Audience:** Confirm who should be able to open the site, including external viewers and public visitors where applicable.
-- **Records and actions:** Verify that visitors can read and change only the information they have permission to access.
-- **Forms and submissions:** Decide what to collect, where it goes, who can see it, and how visitors can ask questions about it.
-- **Connections and credentials:** Review the services used, requested access, and any information exposed in pages, downloads, or error messages.
-- **Visitor experience:** Use separate visitor accounts to check the expected paths and denied-access cases.
+- Verify that the intended audience can open the site and that excluded visitors cannot.
+- Test record access with separate accounts. For example, if a form collects private requests, check whether one visitor can read or change another visitor's submission.
+- Check what forms collect, where submissions go, who can see them, and how visitors can ask questions about their data.
+- Check which services the site connects to, what access it requests, and whether pages, downloads, or error messages disclose sensitive information.
 
 #### Ongoing maintenance
 
@@ -51230,7 +51114,8 @@ token permissions and rotation steps, see
 
 If the member used Local computer access with Work Cloud, include the **Allow local computer access** permission and connected computers in the offboarding review. Check workspace and role assignments as well as access in each connected system.
 
-Turning off Local computer access with Work Cloud interrupts running turns. Users who retain access can start another turn in an existing cloud conversation, which then uses Work Cloud without access to local files. This is distinct from removing workspace membership, revoking credentials, or deleting stored data.
+Disabling local computer access [interrupts running Work turns](./enterprise/admin-setup.md#if-you-need-to-turn-local-computer-access-off).
+Review workspace membership, connected credentials, and stored data separately.
 
 Review three separate outcomes after revocation:
 

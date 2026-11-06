@@ -149,6 +149,4 @@ yarnpkg.com
 
 ## Agent Security command-network requirements
 
-On supported managed Codex Cloud execution paths, Agent Security requirements constrain command networking. Codex Cloud environment internet settings apply separately. An allowed domain in Agent Security does not override a restriction in the Cloud environment's internet settings. These command-network controls do not, by themselves, disable hosted web search, apps, or MCP. ChatGPT Work Cloud has separate capability permissions and does not inherit these Agent Security requirements.
-
-A managed command allowlist applies to commands using the managed proxy. Where policy permits full sandbox escalation and it is approved, that execution can bypass the command proxy. A narrow network grant is different from full sandbox escalation. Configure enforced approval and sandbox requirements for the intended boundary, and test both ordinary and escalated commands. See [Managed configuration](../enterprise/managed-configuration.md#configure-network-access-requirements) for inheritance and proxy limits.
+When Agent Security also manages command networking, check its policy if the environment allows a destination but a command cannot reach it. For proxy coverage and the effect of an approved full sandbox escalation, see [Network isolation](../agent-approvals-security.md#network-isolation).

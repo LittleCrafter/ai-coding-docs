@@ -374,7 +374,7 @@ Use the `model` config to override the model for this agent. Useful for using di
 }
 ```
 
-The model ID in your OpenCode config uses the format `provider/model-id`. For example, if you're using [OpenCode Models](https://opencode.ai/v2/docs/console/), you would use `opencode/gpt-6.1-sol` for GPT-6.1 Sol.
+The model ID in your OpenCode config uses the format `provider/model-id`. For example, if you're using [OpenCode Models](https://opencode.ai/docs/console), you would use `opencode/gpt-6.1-sol` for GPT-6.1 Sol.
 
 ---
 
