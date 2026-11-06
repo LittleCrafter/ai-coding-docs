@@ -6,11 +6,16 @@ As the gateway administrator, configure the model routes and authorize a pilot u
 authentication. To combine gateway authentication with ChatGPT workspace sign-in, see
 [Sign in with ChatGPT through a gateway](./connect-to-a-gateway.md#enable-chatgpt-sign-in-recommended).
 
+<a id="connect-to-an-existing-gateway"></a>
+
 To configure Codex on your own machine with values you were given, see
   [Configure the
   provider](./connect-to-a-gateway.md#configure-the-provider).
   Before choosing or rolling out a gateway, review the [gateway compatibility
   requirements](./gateway-compatibility.md).
+
+<a id="prepare-a-gateway"></a>
+<a id="before-you-deploy"></a>
 
 ## Prerequisites
 
@@ -40,7 +45,11 @@ Before connecting Codex, verify that the gateway product preserves these require
 
 A health endpoint, `/v1/models`, Chat Completions response, or one plain-text reply does not qualify the gateway. See [Gateway compatibility requirements](./gateway-compatibility.md) for the detailed contract.
 
+<a id="architecture"></a>
+
 Need an implementation starting point? The [Codex deployment guidance repository](https://github.com/openai-on-aws/guidance-codex/tree/adbc00f353effbf0252e667ba41eb89c99324c8f) includes worked setups for different LLM gateway products. Use it as a reference after confirming your gateway meets the requirements above.
+
+<a id="deployment-checkpoints"></a>
 
 ## Roll out the gateway
 
@@ -52,6 +61,9 @@ To move from a deployed gateway to a verified developer experience, complete the
 4. [Distribute the configuration](#distribute-the-configuration).
 5. [Verify from a developer machine](#verify-and-operate-the-rollout).
 
+<a id="choose-the-bedrock-route"></a>
+<a id="configure-a-runtime-model-route"></a>
+
 ## Choose model names and routes
 
 Set Codex's `model` to the gateway's model name. Configure the gateway to route that name to the approved upstream model.
@@ -61,6 +73,7 @@ Set Codex's `model` to the gateway's model name. Configure the gateway to route 
 | A [built-in model name](./gateway-compatibility.md#recognized-model-names) included in your Codex version | Set `model` in `config.toml` to this exact name.                                              |
 | A custom alias, such as `company-coding-model`                                                                         | Supply a remote or local catalog containing the alias and the corresponding model's metadata. |
 
+<a id="prepare-the-client-catalog"></a>
 <a id="supply-metadata-for-a-custom-alias"></a>
 
 ### Use a model catalog for custom names
@@ -130,6 +143,7 @@ model supports the required request and tool behavior.
 Model routing and tool authorization are separate parts of the rollout. Configure
 MCP connections, plugin distribution, and their policies separately.
 
+<a id="issue-a-test-credential"></a>
 <a id="issue-developer-credentials"></a>
 
 ## Choose authentication
@@ -168,6 +182,7 @@ on the gateway.
    and test token retrieval and refresh before distribution.
 5. Tell developers how to renew their credentials and whom to contact for help.
 
+<a id="verify-responses-support"></a>
 <a id="test-the-client-and-gateway"></a>
 
 ## Test Codex through the gateway
@@ -308,6 +323,7 @@ Include your tested instructions for existing conversations if this rollout chan
 
 Manual setup is not an enforcement channel. Project-local `.codex/config.toml` cannot override sensitive provider or authentication routing keys.
 
+<a id="verify-the-user-connection"></a>
 <a id="verify-and-operate-the-rollout"></a>
 
 ## Verify from a developer machine
@@ -321,6 +337,8 @@ To confirm that the distributed settings reached a developer machine:
    developer's request.
 
 Expand access after the pilot passes on the clients and authentication combinations you support. Keep the tested configuration and results with your rollout instructions so you can repeat the checks after client, gateway, or policy updates.
+
+<a id="troubleshoot-the-connection"></a>
 
 ### Troubleshoot rollout failures
 

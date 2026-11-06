@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.5.1",
-  "last_updated": "2026-11-05T19:09:22Z",
+  "version": "2.5.2",
+  "last_updated": "2026-11-06T10:02:04Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -270,8 +270,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/server-api.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/server-api.md",
       "source_id": "docs/en/reference/server-api.md",
-      "hash": "906f877c4e3d5f6e8ae7493d1b15592935992dda8a46f76a4a57784a5d8ec01c",
-      "last_updated": "2026-11-05T10:00:12Z"
+      "hash": "1f736f27fbd7da76b19ef7dfa468165714ffc48b905a4025ef71737c913ac621",
+      "last_updated": "2026-11-06T10:02:04Z"
     },
     "reference/slash-commands": {
       "slug": "reference/slash-commands",
@@ -300,13 +300,13 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/release-notes/changelog.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/release-notes/changelog.md",
       "source_id": "docs/en/release-notes/changelog.md",
-      "hash": "7105a79aed4d95de4b480507cf3ae6da162ca2fd083dbe094ef56895edc39419",
-      "last_updated": "2026-11-05T19:09:22Z"
+      "hash": "d74d3d78b41faf3e13d951b18119221341122bb55ae1701b0860e895bebc38c9",
+      "last_updated": "2026-11-06T10:02:04Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-05T19:09:22Z",
-    "fetch_duration_seconds": 10.311,
+    "last_fetch_completed": "2026-11-06T10:02:04Z",
+    "fetch_duration_seconds": 10.26,
     "total_pages_discovered": 30,
     "pages_fetched_successfully": 30,
     "pages_failed": 0,
