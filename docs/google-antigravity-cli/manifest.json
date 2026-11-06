@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-11-05T01:06:57Z",
+  "last_updated": "2026-11-06T01:11:00Z",
   "files": {
     "cli/acp": {
       "slug": "cli/acp",
@@ -120,8 +120,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/permissions",
       "source_md_url": "https://antigravity.google/docs/cli/commands/permissions.md",
       "source_id": "cli/commands/permissions",
-      "hash": "2118a6d268fd11636ce8c8310faff4d55a93253033c9b2c1353a15e993b93921",
-      "last_updated": "2026-10-22T18:54:07Z"
+      "hash": "b25c2641c65413fa7e7564bdb70bc373d0037ceda222398f0b95d52d1a1a07d9",
+      "last_updated": "2026-11-06T01:11:00Z"
     },
     "cli/commands/resume": {
       "slug": "cli/commands/resume",
@@ -160,8 +160,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/usage",
       "source_md_url": "https://antigravity.google/docs/cli/commands/usage.md",
       "source_id": "cli/commands/usage",
-      "hash": "fc1e2cbf1b9f5789615fa1f445a4dd79dccf83616ec49f5d484b5652c07069fa",
-      "last_updated": "2026-10-22T14:08:50Z"
+      "hash": "d54c6fb57583190b41da629d2c53445ec209de310433d13413ec2504222ec310",
+      "last_updated": "2026-11-06T01:11:00Z"
     },
     "cli/commands/voice": {
       "slug": "cli/commands/voice",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-05T01:06:57Z",
-    "fetch_duration_seconds": 9.863,
+    "last_fetch_completed": "2026-11-06T01:11:00Z",
+    "fetch_duration_seconds": 9.866,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,

@@ -8702,13 +8702,17 @@ differ because `run` generates its own unique destination. Capture the actual
 archive path with `onOutputArchived`:
 
 ```typescript
-await security.run(repository, {
-  outputDir: outputDir,
-  archiveExisting: true,
-  onOutputArchived(archiveDir) {
-    console.log("Archived results:", archiveDir);
-  },
-});
+try {
+  await security.run(repository, {
+    outputDir: outputDir,
+    archiveExisting: true,
+    onOutputArchived(archiveDir) {
+      console.log("Archived results:", archiveDir);
+    },
+  });
+} finally {
+  await security.close();
+}
 ```
 
 The scan archives the earlier results and starts with an empty output
@@ -8724,9 +8728,13 @@ The default target is the complete repository.
 Pass an array of paths inside the repository:
 
 ```typescript
-const result = await security.run(repository, {
-  target: ["services/billing", "packages/auth"],
-});
+try {
+  const result = await security.run(repository, {
+    target: ["services/billing", "packages/auth"],
+  });
+} finally {
+  await security.close();
+}
 ```
 
 Paths can identify files or directories. The SDK resolves each path inside the
@@ -8745,7 +8753,11 @@ const target = DiffTarget.refs({
   head: "HEAD",
 });
 
-const result = await security.run(repository, { target });
+try {
+  const result = await security.run(repository, { target });
+} finally {
+  await security.close();
+}
 ```
 
 The head defaults to `HEAD`. Pass the Git worktree root as the repository and
@@ -8759,7 +8771,11 @@ revision:
 ```typescript
 import { DiffTarget } from "@openai/codex-security";
 const target = DiffTarget.workingTree({ base: "HEAD" });
-const result = await security.run(repository, { target });
+try {
+  const result = await security.run(repository, { target });
+} finally {
+  await security.close();
+}
 ```
 
 The base defaults to `HEAD`. Fetch the selected revisions before starting a
@@ -8770,15 +8786,19 @@ diff or working-tree scan.
 Set `mode: "deep"` for a repository or path scan that needs broader review:
 
 ```typescript
-const result = await security.run(repository, {
-  target: ["services/billing"],
-  mode: "deep",
-  workers: 2,
-  subagents: 0,
-  stopAfterNoNew: 3,
-  maxDiscoveryRuns: 10,
-  maxTimeMinutes: 90,
-});
+try {
+  const result = await security.run(repository, {
+    target: ["services/billing"],
+    mode: "deep",
+    workers: 2,
+    subagents: 0,
+    stopAfterNoNew: 3,
+    maxDiscoveryRuns: 10,
+    maxTimeMinutes: 90,
+  });
+} finally {
+  await security.close();
+}
 ```
 
 Deep mode supports repository and path targets. Use standard mode for diff and
@@ -8803,9 +8823,13 @@ import { join } from "node:path";
 
 const knowledgeBase = join(repository, "security.md");
 
-const result = await security.run(repository, {
-  knowledgeBasePaths: [knowledgeBase],
-});
+try {
+  const result = await security.run(repository, {
+    knowledgeBasePaths: [knowledgeBase],
+  });
+} finally {
+  await security.close();
+}
 ```
 
 The SDK accepts files or directories and searches directories recursively.
@@ -8823,10 +8847,14 @@ change or are deleted. Canonical reports don't embed the document text.
 Use `scanPrompt` to focus the scan and `postScanPrompt` to request a follow-up:
 
 ```typescript
-const result = await security.run(repository, {
-  scanPrompt: "Focus on tenant isolation and authorization checks.",
-  postScanPrompt: "Write confirmed findings to post-scan-summary.md.",
-});
+try {
+  const result = await security.run(repository, {
+    scanPrompt: "Focus on tenant isolation and authorization checks.",
+    postScanPrompt: "Write confirmed findings to post-scan-summary.md.",
+  });
+} finally {
+  await security.close();
+}
 ```
 
 If the follow-up fails, the SDK keeps the completed scan and reports the
@@ -8866,14 +8894,18 @@ Set `maxCostUsd` to stop a scan when its estimated model cost exceeds a limit.
 Use `onCost` to track cost as the scan runs and report `estimatedUsdRange`:
 
 ```typescript
-const result = await security.run(repository, {
-  maxCostUsd: 5,
-  onCost(cost) {
-    console.log(cost.estimatedUsdRange);
-  },
-});
+try {
+  const result = await security.run(repository, {
+    maxCostUsd: 5,
+    onCost(cost) {
+      console.log(cost.estimatedUsdRange);
+    },
+  });
 
-console.log(result.cost?.estimatedUsdRange);
+  console.log(result.cost?.estimatedUsdRange);
+} finally {
+  await security.close();
+}
 ```
 
 The limit uses `estimatedUsd`, the short-context baseline. Requests already
@@ -8909,6 +8941,9 @@ const result = await runComponentScans({
 });
 
 console.log(result.reportPath);
+if (result.failed > 0) {
+  throw new Error(`${result.failed} component scans failed.`);
+}
 ```
 
 Set `workers` to control how many components run at once. The default is four.
@@ -9071,29 +9106,33 @@ Pass `ScanOptions` callbacks to report scan startup, worker progress, and
 connection retries:
 
 ```typescript
-const result = await security.run(repository, {
-  outputDir: outputDir,
-  onScanStarted() {
-    console.log("Scan started");
-  },
-  onProgress(progress) {
-    console.log(progress.phase, progress.filesCompleted, progress.filesTotal);
-  },
-  onWorkerStatus(status) {
-    console.log(status.kind, status);
-  },
-  onSessionEvent(session) {
-    console.log(session.threadId, session.worker, session.event["type"]);
-  },
-  onReconnect(attempt, maxAttempts) {
-    console.log(`Reconnect attempt ${attempt} of ${maxAttempts}`);
-  },
-  onObserverError(observer, error) {
-    console.error(`${observer} failed`, error);
-  },
-});
+try {
+  const result = await security.run(repository, {
+    outputDir: outputDir,
+    onScanStarted() {
+      console.log("Scan started");
+    },
+    onProgress(progress) {
+      console.log(progress.phase, progress.filesCompleted, progress.filesTotal);
+    },
+    onWorkerStatus(status) {
+      console.log(status.kind, status);
+    },
+    onSessionEvent(session) {
+      console.log(session.threadId, session.worker, session.event["type"]);
+    },
+    onReconnect(attempt, maxAttempts) {
+      console.log(`Reconnect attempt ${attempt} of ${maxAttempts}`);
+    },
+    onObserverError(observer, error) {
+      console.error(`${observer} failed`, error);
+    },
+  });
 
-console.log(result.reportPath);
+  console.log(result.reportPath);
+} finally {
+  await security.close();
+}
 ```
 
 Pass an `AbortSignal` from your request or job controller to cancel a scan.
@@ -9114,6 +9153,8 @@ try {
   } else {
     throw error;
   }
+} finally {
+  await security.close();
 }
 ```
 
@@ -25560,6 +25601,7 @@ The optional second argument supports these fields:
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `mode`                | Use `"advanced"` to open advanced controls for an element, or `"default"` to use the default editor behavior. Defaults to `"default"`. Custom controls can still open with `"default"`; see [Editor defaults](#choose-the-editors-default-mode). Text ranges support only `"default"`. |
 | `enterAnnotationMode` | Set to `true` to enter Annotation mode and remain in it after canceling or sending the annotation.                                                                                                                                                                                     |
+| `omitScreenshot`      | Set to `true` to omit the automatic screenshot for this annotation. Defaults to `false`, which preserves normal screenshot behavior. Applies to element and text-range requests.                                                                                                       |
 | `metadata`            | Valid, nonempty metadata replaces the target's HTML metadata for this request. This option is ignored for text ranges and when the target element is inside a shadow DOM.                                                                                                              |
 | `initialComment`      | Supplies an editable comment, up to 240 UTF-16 code units.                                                                                                                                                                                                                             |
 
@@ -26859,7 +26901,7 @@ Gather likely requests from:
 - User interviews, support requests, search queries, and feature requests.
 - Common terms people use for your product, data, and workflows.
 - Existing workarounds that require copying data between tools.
-- The plugin name, listing, screenshots, and starter prompts.
+- The plugin name, listing, and starter prompts.
 
 Include direct requests that name your plugin and indirect requests that state
 the goal. For example, a project-management plugin might need to handle both
@@ -32609,8 +32651,7 @@ For example:
         ],
         "brandColor": "#10A37F",
         "composerIcon": "./assets/icon.png",
-        "logo": "./assets/logo.png",
-        "screenshots": ["./assets/screenshot-1.png"]
+        "logo": "./assets/logo.png"
       }
     }
   }
@@ -32644,7 +32685,7 @@ for manifest examples, supported fields, requirements, and import behavior.
 - Keep portable `plugin.json`, `mcp.json`, and `skills/` at the plugin root.
 - Keep paths in `extensions.com.openai` or a compatibility manifest relative to
   the plugin root and start them with `./`.
-- Store visual assets such as `composerIcon`, `logo`, and `screenshots` under
+- Store visual assets such as `composerIcon` and `logo` under
   `./assets/` when possible.
 - Use the OpenAI extension's `apps` field only for registered MCP server mappings in
   `.app.json`.
@@ -33241,7 +33282,7 @@ Plugins should be stable, responsive, and complete. Trial or demo plugins will n
 
 #### Plugin name, description, and prompts
 
-Plugin names and descriptions must be clear, accurate, and straightforward. Screenshots are no longer shown in the Directory, instead provide example Prompts that help users get started with your plugin.
+Plugin names and descriptions must be clear, accurate, and straightforward. Provide example prompts that help users get started with your plugin.
 
 - **Names:** Avoid overly generic names, especially single-word dictionary terms that aren’t explicitly tied to your brand. Do not append “MCP,” “MCP Server,” or “Plugin” to a company or product name.
 - **Subtitles and descriptions:** Describe the plugin’s functionality without comparing it with other products, disparaging alternatives, or making unverifiable claims. Do not advertise pricing, subscriptions, free trials, discounts, or promotions.
@@ -33548,9 +33589,6 @@ For a remote MCP plugin, final submission also requires:
 - Explicit `readOnlyHint`, `openWorldHint`, and `destructiveHint` values and a
   justification for each value on every MCP tool.
 - Reviewer-ready demo credentials when the server uses OAuth.
-- Screenshots only when the MCP server provides custom UI. If you add
-  screenshots, provide one PNG or JPEG image for every starter prompt. Each
-  screenshot must be exactly 706 pixels wide and 400–860 pixels tall.
 
 #### Final metadata errors
 
@@ -33586,7 +33624,6 @@ These errors apply to remote MCP submissions.
 | `scan_required`                     | MCP tools must have a successful, current scan of the production MCP server.                                                                                                      |
 | `domain_verification_required`      | The exact verification token must be hosted at the generated `/.well-known/openai-apps-challenge` URL on the MCP host or an allowed parent host, and **Verify Domain** must pass. |
 | `frame_domain_explanation_required` | Every external frame domain reported by the MCP tool scan must have an explanation of why the UI needs it and what content it provides.                                           |
-| `screenshots_not_allowed`           | Screenshots are allowed only when the current MCP tool scan reports a UI output template.                                                                                         |
 
 #### Archive errors
 
@@ -33597,16 +33634,15 @@ The portal's **Skills only** path accepts skill ZIP packages and
 plugins don't need to include skills. Errors block the upload; warnings require
 confirmation.
 
-| Name                                | Requirement                                                                                                                                                                                                                                                                                 |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugin_name_mismatch`              | The package name in an update must match the existing plugin name.                                                                                                                                                                                                                          |
-| `plugin_version_unchanged`          | A new release must use a different manifest `version`; reusing the published version requires confirmation.                                                                                                                                                                                 |
-| `mcp_configuration_excluded`        | MCP configuration is excluded unless your organization is approved for [local MCP submissions](https://developers.openai.com/plugins/deploy/desktop-only). For a local MCP plugin, ask your OpenAI representative to confirm the submitting organization is allowlisted. Submit remote MCP servers through **With MCP**. |
-| `app_configuration_excluded`        | ZIP uploads must not include `apps` or `.app.json`. Submit remote MCP servers through **With MCP**; for local MCP servers, follow the [desktop-only submission instructions](https://developers.openai.com/plugins/deploy/desktop-only).                                                                                 |
-| `screenshot_configuration_excluded` | Skills-only ZIP uploads must not include `interface.screenshots`; screenshots require **With MCP** and custom UI.                                                                                                                                                                           |
-| `claude_format_normalized`          | `.claude-plugin/plugin.json` is converted to `.codex-plugin/plugin.json`, with missing interface defaults and normalized text fields added by the portal.                                                                                                                                   |
-| `manifest_normalized`               | The portal saves the normalized manifest as `.codex-plugin/plugin.json`; changed fields require confirmation.                                                                                                                                                                               |
-| `developer_name_defaulted`          | The listing’s developer name is set automatically from your selected verified developer identity, regardless of the name in your ZIP.                                                                                                                                                       |
+| Name                         | Requirement                                                                                                                                                                                                                                                                                 |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugin_name_mismatch`       | The package name in an update must match the existing plugin name.                                                                                                                                                                                                                          |
+| `plugin_version_unchanged`   | A new release must use a different manifest `version`; reusing the published version requires confirmation.                                                                                                                                                                                 |
+| `mcp_configuration_excluded` | MCP configuration is excluded unless your organization is approved for [local MCP submissions](https://developers.openai.com/plugins/deploy/desktop-only). For a local MCP plugin, ask your OpenAI representative to confirm the submitting organization is allowlisted. Submit remote MCP servers through **With MCP**. |
+| `app_configuration_excluded` | ZIP uploads must not include `apps` or `.app.json`. Submit remote MCP servers through **With MCP**; for local MCP servers, follow the [desktop-only submission instructions](https://developers.openai.com/plugins/deploy/desktop-only).                                                                                 |
+| `claude_format_normalized`   | `.claude-plugin/plugin.json` is converted to `.codex-plugin/plugin.json`, with missing interface defaults and normalized text fields added by the portal.                                                                                                                                   |
+| `manifest_normalized`        | The portal saves the normalized manifest as `.codex-plugin/plugin.json`; changed fields require confirmation.                                                                                                                                                                               |
+| `developer_name_defaulted`   | The listing’s developer name is set automatically from your selected verified developer identity, regardless of the name in your ZIP.                                                                                                                                                       |
 
 #### ZIP structure and limit errors
 
@@ -33904,8 +33940,7 @@ interface:
 #### Image errors
 
 Directory branding images must use a supported file type and meet the size and
-dimension limits below. These rules apply to packaged branding assets;
-starter-prompt screenshots use the separate portal limits listed above.
+dimension limits below. These rules apply to packaged branding assets.
 
 | Name                                      | Requirement                                                                |
 | ----------------------------------------- | -------------------------------------------------------------------------- |
@@ -34874,7 +34909,7 @@ for review from the [plugin submission portal](https://platform.openai.com/plugi
 In the plugin submission portal:
 
 1. Add your MCP server details (as well as OAuth credentials if OAuth is selected), and then select **Scan Tools**.
-2. Complete the required fields in the submission form and check all confirmation boxes. You will need to provide the plugin name, logo, description, company and privacy policy URLs, MCP and tool information, test prompts and responses, and localization information. If the plugin has UI, you may also provide optional screenshots. Don't provide screenshots when the plugin has no UI.
+2. Complete the required fields in the submission form and check all confirmation boxes. You will need to provide the plugin name, logo, description, company and privacy policy URLs, MCP and tool information, test prompts and responses, and localization information.
 3. Select **Submit for review**.
 
 #### Metadata stored during tool scanning
@@ -36349,7 +36384,7 @@ These examples describe the same illustrative notes plugin in each format. Copy 
 Include the files referenced by the manifest:
 
 - `skills/get-started/SKILL.md`, with valid name and description fields in the YAML header.
-- The four icon files and screenshot under `assets/`.
+- The four icon files under `assets/`.
 - Exactly one remote MCP server named notes, configured in `mcp.json` for Agent Plugins or `.mcp.json` for Codex, using the matching configuration that follows.
 
 Use your own accessible demo and review attachment URLs. The example.com links show the expected shape and aren’t working submission materials. If your plugin contains only skills, omit review and the MCP configuration, and omit `mcpServers` from the Codex manifest.
@@ -36422,8 +36457,7 @@ Save this complete manifest as plugin.json at the plugin root:
         "composerIcon": "./assets/icon.png",
         "composerIconDark": "./assets/icon-dark.png",
         "logo": "./assets/logo.png",
-        "logoDark": "./assets/logo-dark.png",
-        "screenshots": ["./assets/screenshot.png"]
+        "logoDark": "./assets/logo-dark.png"
       },
       "onboardingSkill": "./skills/get-started/SKILL.md",
       "review": {
@@ -36543,8 +36577,7 @@ Save this complete manifest as .codex-plugin/plugin.json. The presentation field
     "composerIcon": "./assets/icon.png",
     "composerIconDark": "./assets/icon-dark.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png",
-    "screenshots": ["./assets/screenshot.png"]
+    "logoDark": "./assets/logo-dark.png"
   },
   "extensions": {
     "com.openai": {
@@ -36693,13 +36726,12 @@ Put the following fields in `extensions.com.openai.interface` for Agent Plugins 
 | `composerIconDark`  | Optional                                                 | String                     | Optional relative path to its dark-theme variant.                                                                                        |
 | `logo`              | Required for Codex; primary icon required for submission | String                     | Relative path to the primary listing icon.                                                                                               |
 | `logoDark`          | Optional                                                 | String                     | Optional relative path to its dark-theme variant.                                                                                        |
-| `screenshots`       | Optional                                                 | Array of strings           | Optional relative paths to screenshots.                                                                                                  |
 
 For an attached MCP app that needs public review, all four listing URLs are required: `websiteURL`, `supportURL`, `privacyPolicyURL`, and `termsOfServiceURL`. Use HTTPS URLs without embedded credentials. Skills-only metadata validation doesn’t require all four URLs. The package’s `homepage` and `author.url` don’t fill these listing fields automatically.
 
-#### Icons and screenshots
+#### Icons
 
-Include `logo` and `composerIcon` in packages you prepare for distribution. Codex package validation requires both; you can upload a portable package without them, but the dashboard requires a primary app icon before submission. Dark variants and screenshots are optional. To resolve an “App icon required” warning, add `logo` and its image file, or provide the icon in the dashboard.
+Include `logo` and `composerIcon` in packages you prepare for distribution. Codex package validation requires both; you can upload a portable package without them, but the dashboard requires a primary app icon before submission. Dark variants are optional. To resolve an “App icon required” warning, add `logo` and its image file, or provide the icon in the dashboard.
 
 Use ./-prefixed paths relative to the plugin root and include every referenced file. Supported image formats are PNG, JPEG, WebP, and SVG, at most 5 MiB each. Icons and logos must be square and at least 48 by 48 pixels. Raster images can be at most 4096 pixels in either dimension. For SVG icons, provide square numeric dimensions or a square `viewBox` of at least 48 by 48.
 
@@ -37855,6 +37887,10 @@ rl.on("line", (line) => {
     });
   }
   if (msg.method === "turn/completed") {
+    if (msg.params?.turn?.status !== "completed") {
+      console.error(msg.params?.turn?.error ?? "The turn did not complete.");
+      process.exitCode = 1;
+    }
     proc.stdin.end();
     rl.close();
   }
@@ -37891,6 +37927,9 @@ proc.on("error", (error) => {
   console.error(error);
   process.exitCode = 1;
   rl.close();
+});
+proc.on("exit", (code) => {
+  if (code !== 0) process.exitCode = code ?? 1;
 });
 ```
 
@@ -40317,7 +40356,9 @@ console.log(result.finalResponse);
 // resuming past thread
 
 const threadId = thread.id!;
-const thread2 = codex.resumeThread(threadId);
+const thread2 = codex.resumeThread(threadId, {
+  sandboxMode: "workspace-write",
+});
 const result2 = await thread2.run("Pick up where you left off");
 
 console.log(result2.finalResponse);

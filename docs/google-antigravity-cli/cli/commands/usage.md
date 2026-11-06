@@ -10,7 +10,7 @@ Antigravity CLI provides the `/usage` command (alias `/quota`) to help you monit
 
 ## Viewing your usage
 
-To open the **Model Quotas** panel, follow these steps:
+To open the **Models & Quota** panel, follow these steps:
 
 1.  Type `/usage` (or `/quota`) in the prompt box.
 2.  Press Enter.
@@ -19,13 +19,13 @@ To open the **Model Quotas** panel, follow these steps:
 /usage
 ```
 
-![Quota & Credits TUI](../../assets/image/docs/cli/usage-tui.png)
+![Models & Quota panel](../../assets/image/docs/cli/usage-tui.png)
 
 ### Interactive panel features
 
 The panel displays the following details:
 
-*   **Model quotas**: A breakdown of your usage limits and remaining requests/tokens for each supported model (such as Gemini 3.5 Flash and Gemini 3.1 Pro).
+*   **Model quotas**: Your remaining quota for each model group, such as Gemini models (Gemini Flash and Gemini Pro) and Claude and GPT models. The models in a group share a weekly limit and a five-hour limit.
 *   **Active refresh**: The CLI automatically triggers a fresh check of your quotas on disk and from the backend service when you open this panel.
 
 ### Navigation controls

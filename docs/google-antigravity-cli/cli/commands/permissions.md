@@ -55,11 +55,11 @@ Here is how to view, add, edit, and delete rules live in the TUI.
 
 ### Selecting a scope and viewing rules
 
-When you run `/permissions`, you first open the **Scope Picker**. Select **Global** to manage your global rules:
+When you run `/permissions`, you first open the **Scope Picker**, with **Project** highlighted:
 
-![Selecting Global Scope](../../assets/image/docs/cli/permissions-scope.png)
+![The Scope Picker with the Project scope highlighted](../../assets/image/docs/cli/permissions-scope.png)
 
-Press Enter to open the **Rule Viewer** for the selected scope. You can use ←/→ to switch between the **allow**, **deny**, and **ask** tabs:
+Use ↑/↓ to select **Global** to manage your global rules, then press Enter to open the **Rule Viewer** for the selected scope. You can use ←/→ to switch between the **allow**, **deny**, and **ask** tabs:
 
 ![Global Rule Viewer](../../assets/image/docs/cli/permissions-viewer.png)
 
