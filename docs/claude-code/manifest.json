@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.319",
-  "last_updated": "2026-11-07T09:20:39Z",
+  "last_updated": "2026-11-07T21:08:06Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1060,8 +1060,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks",
       "source_md_url": "https://code.claude.com/docs/en/hooks.md",
       "source_id": "hooks",
-      "hash": "23a9c4b2258ec7a117be4b3f6a2c956ee44f79bf4db31853edbf5d9bc8efc0de",
-      "last_updated": "2026-11-07T00:28:09Z"
+      "hash": "6a9d555408c0f26c44760c6135624473042da18d42cf77022f8e486886ce3624",
+      "last_updated": "2026-11-07T21:08:06Z"
     },
     "hooks-guide": {
       "slug": "hooks-guide",
@@ -1070,8 +1070,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks-guide",
       "source_md_url": "https://code.claude.com/docs/en/hooks-guide.md",
       "source_id": "hooks-guide",
-      "hash": "a137a70720739938d89001a688a3e33f4516374dac8a1c2afbece1df61d37fb3",
-      "last_updated": "2026-11-06T10:00:11Z"
+      "hash": "662e38ddd6af0fcc78f93ab64ecbbb8669a3827528f2a7dac60a73dcf1dc1aee",
+      "last_updated": "2026-11-07T21:08:06Z"
     },
     "how-claude-code-works": {
       "slug": "how-claude-code-works",
@@ -1200,8 +1200,8 @@
       "source_url": "https://code.claude.com/docs/en/mcp",
       "source_md_url": "https://code.claude.com/docs/en/mcp.md",
       "source_id": "mcp",
-      "hash": "6ffdadb194bdceb4676f0bf6e52637942e1558916afbf4636fb3ef79b4e0e16a",
-      "last_updated": "2026-11-07T00:28:09Z"
+      "hash": "08a59d3eeeb80da9f94a4f79f1f1179b5cd165c464e7805f8fdc8843ab9c6db7",
+      "last_updated": "2026-11-07T21:08:06Z"
     },
     "mcp-quickstart": {
       "slug": "mcp-quickstart",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-07T09:20:39Z",
-    "fetch_duration_seconds": 79.167,
+    "last_fetch_completed": "2026-11-07T21:08:06Z",
+    "fetch_duration_seconds": 79.182,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,
