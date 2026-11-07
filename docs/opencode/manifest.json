@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.19.5",
-  "last_updated": "2026-11-06T18:36:16Z",
+  "last_updated": "2026-11-07T09:22:38Z",
   "files": {
     "acp": {
       "slug": "acp",
@@ -310,8 +310,8 @@
       "source_url": "https://opencode.ai/docs/tui",
       "source_md_url": "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs/tui.mdx",
       "source_id": "packages/web/src/content/docs/tui.mdx",
-      "hash": "1ee6f9a3c1ac5152945f0b22eb943ff474ed587e3ce8d9f9eb6478b47c20684a",
-      "last_updated": "2026-10-23T02:07:14Z"
+      "hash": "c51e2d4690d249f14f0c07f9111fe1abb7f13ae15f4dde12feef1b0984eacfef",
+      "last_updated": "2026-11-07T09:22:38Z"
     },
     "web": {
       "slug": "web",
@@ -335,8 +335,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-06T18:36:16Z",
-    "fetch_duration_seconds": 11.342,
+    "last_fetch_completed": "2026-11-07T09:22:38Z",
+    "fetch_duration_seconds": 11.288,
     "total_pages_discovered": 33,
     "pages_fetched_successfully": 33,
     "pages_failed": 0,

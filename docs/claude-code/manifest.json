@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.319",
-  "last_updated": "2026-11-07T00:28:09Z",
+  "last_updated": "2026-11-07T09:20:39Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1700,8 +1700,8 @@
       "source_url": "https://code.claude.com/docs/en/sandboxing",
       "source_md_url": "https://code.claude.com/docs/en/sandboxing.md",
       "source_id": "sandboxing",
-      "hash": "6e1c321f48933ba638084de9533f72d007dc919240aed4195e07664bd2f8b3d7",
-      "last_updated": "2026-11-04T00:58:26Z"
+      "hash": "5052f33f5c9ad369712da4a21e794f9e7b5fc87b9123deb9cb7e4919245e3bca",
+      "last_updated": "2026-11-07T09:20:39Z"
     },
     "scheduled-tasks": {
       "slug": "scheduled-tasks",
@@ -2275,8 +2275,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-07T00:28:09Z",
-    "fetch_duration_seconds": 79.232,
+    "last_fetch_completed": "2026-11-07T09:20:39Z",
+    "fetch_duration_seconds": 79.167,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,
