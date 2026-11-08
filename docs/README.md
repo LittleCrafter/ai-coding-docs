@@ -8,7 +8,7 @@ Auto-generated mirror of documentation for several AI coding tools/CLIs.
 | [Google Antigravity CLI](./google-antigravity-cli/) | 1.2.0 | 29 | 2026-11-06T01:11:00Z | yes |
 | [Claude Code](./claude-code/) | 2.1.319 | 227 | 2026-11-07T21:08:06Z | no |
 | [Codex CLI](./codex-cli/) | 0.167.0 | 207 | 2026-11-06T18:35:30Z | no |
-| [DeepSeek API](./deepseek-api/) | — | 57 | 2026-11-07T09:22:14Z | no |
+| [DeepSeek API](./deepseek-api/) | — | 57 | 2026-11-08T02:50:09Z | no |
 | [Kimi Code](./kimi-code/) | 2.5.2 | 30 | 2026-11-06T18:36:03Z | no |
 | [OpenCode](./opencode/) | 1.19.5 | 33 | 2026-11-07T09:22:38Z | no |
 
