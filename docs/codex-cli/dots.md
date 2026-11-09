@@ -111,7 +111,7 @@ Your dot has its own computer and browser in the cloud for research, files, and 
   }}
 />
 
-Connect your computer once through your dot’s profile to make its local files, code, and apps available for your dot’s work. You can connect only one personal computer at a time. The connection stays in place between tasks. Your computer must be online with the ChatGPT app open for your dot to use it. This permission is separate from connecting your computer to Codex or enabling Work Sync.
+Connect your computer once through your dot’s profile to make its local files, code, and apps available for your dot’s work. You can [connect more than one computer](./dots/computers-and-apps.md#connect-your-computer) and tell your dot which one to use for a task. The connection stays in place between tasks. Your computer must be online with the ChatGPT app open for your dot to use it. This permission is separate from connecting your computer to Codex or enabling Work Sync.
 
 Your dot can use supported [plugins](./plugins.md) installed and enabled for your account, with their connected accounts and existing permissions. For example, use Gmail to find relevant email, Google Drive to work with documents, and GitHub to investigate code and prepare changes. Each plugin must be connected and permitted to perform the actions you request. Local skills require a connected computer. Connecting a messaging channel doesn’t automatically grant access to your apps or computer.
 

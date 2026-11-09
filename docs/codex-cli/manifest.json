@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.167.0",
-  "last_updated": "2026-11-09T14:28:25Z",
+  "last_updated": "2026-11-09T23:39:36Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "38542c00b672db084e43755ff9eadcb55e8a1706b579f234e4ca7a14beb8c267",
-      "last_updated": "2026-11-09T14:28:25Z"
+      "hash": "b494154dc65c31a60efb3b82c0494ad16f31374c560656e1fd8a3bc558c4f2c3",
+      "last_updated": "2026-11-09T23:39:36Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -470,8 +470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots",
       "source_md_url": "https://learn.chatgpt.com/docs/dots.md",
       "source_id": "llms:dots",
-      "hash": "8b89e4cbe073d6a7d4fd9852d0cfb97be5fe5ee126b1cb255c161cfa29020a30",
-      "last_updated": "2026-11-05T19:08:38Z"
+      "hash": "555aa0fc8e89c6f1b8b7fa15e9fdc220fa12cc8f60c29bcd86d9ef0abd760290",
+      "last_updated": "2026-11-09T23:39:36Z"
     },
     "dots/channels": {
       "slug": "dots/channels",
@@ -490,8 +490,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/computers-and-apps",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/computers-and-apps.md",
       "source_id": "llms:dots/computers-and-apps",
-      "hash": "66fbf9fb22fbee2cdaee9990af3a04c28eb2b1ec65f527afa0680cd92c240c26",
-      "last_updated": "2026-11-05T19:08:38Z"
+      "hash": "3777c097e62791fd3d3635459aa6572b6774e5f50003a472990b4946f1bf4588",
+      "last_updated": "2026-11-09T23:39:36Z"
     },
     "dots/controls": {
       "slug": "dots/controls",
@@ -960,8 +960,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/workspace-model-availability",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/workspace-model-availability.md",
       "source_id": "llms:enterprise/workspace-model-availability",
-      "hash": "27c918c78dc630a3dbb0d21d2476200c693fcfc9308eb43e602f481253f654f1",
-      "last_updated": "2026-10-14T21:03:11Z"
+      "hash": "1a7813403a360d9b33ecec64bd188ab620f877d8c227b3eaae54bd84c98db321",
+      "last_updated": "2026-11-09T23:39:36Z"
     },
     "environments/cloud-environment": {
       "slug": "environments/cloud-environment",
@@ -2075,8 +2075,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-09T14:28:25Z",
-    "fetch_duration_seconds": 72.193,
+    "last_fetch_completed": "2026-11-09T23:39:36Z",
+    "fetch_duration_seconds": 72.203,
     "total_pages_discovered": 207,
     "pages_fetched_successfully": 207,
     "pages_failed": 0,

@@ -3640,16 +3640,18 @@ A saved login and an active website session are different. Your dot can continue
 using a valid session without signing in again. Reusing a saved login to sign in
 requires your confirmation.
 
-#### Connect your computer
+#### Connect your computers
 
 Connect your computer once to make its local files, code, and apps available
 for your dot’s work:
 
 1. Open your dot's profile in the ChatGPT app on that computer.
-2. Under **Computers**, find **Your computer** and select **Allow access**.
+2. Under **Computers**, find the computer you’re using and select **Allow**.
 3. Review the confirmation and select **Allow access** to connect it.
 
-You can connect only one personal computer at a time. Your dot’s cloud computer stays connected. Access to your computer applies
+To connect another computer, repeat these steps in the ChatGPT app on that computer. Ask your dot to start a separate thread on each computer for independent tasks. Each thread uses one computer at a time.
+
+Your dot’s cloud computer stays connected. Access to your computer applies
 wherever you message the same dot, including from your phone.
 
 Your dot can create local Work or Codex tasks and continue existing local Codex
@@ -4267,7 +4269,7 @@ It can also research connected information and keep private notes to identify us
 
 Your dot has its own computer and browser in the cloud for research, files, and running software. Cloud work can continue while your devices are off. When you need to inspect the browser or do a step yourself, open its computer and select **Take over**. Select **Return control** when you’re ready for your dot to continue. See [computers and apps](./dots/computers-and-apps.md) for connection details.
 
-Connect your computer once through your dot’s profile to make its local files, code, and apps available for your dot’s work. You can connect only one personal computer at a time. The connection stays in place between tasks. Your computer must be online with the ChatGPT app open for your dot to use it. This permission is separate from connecting your computer to Codex or enabling Work Sync.
+Connect your computer once through your dot’s profile to make its local files, code, and apps available for your dot’s work. You can [connect more than one computer](./dots/computers-and-apps.md#connect-your-computer) and tell your dot which one to use for a task. The connection stays in place between tasks. Your computer must be online with the ChatGPT app open for your dot to use it. This permission is separate from connecting your computer to Codex or enabling Work Sync.
 
 Your dot can use supported [plugins](./plugins.md) installed and enabled for your account, with their connected accounts and existing permissions. For example, use Gmail to find relevant email, Google Drive to work with documents, and GitHub to investigate code and prepare changes. Each plugin must be connected and permitted to perform the actions you request. Local skills require a connected computer. Connecting a messaging channel doesn’t automatically grant access to your apps or computer.
 
@@ -51837,6 +51839,32 @@ enforced `features.fast_mode` setting in
 [`requirements.toml`](./config-file/config-reference.md#requirementstoml).
 This setting can pin Fast mode on or off for managed local Codex clients; it
 isn't a starting default and can't override workspace or product availability.
+
+#### Set reasoning and speed limits
+
+For ChatGPT Work and Codex, Enterprise admins can set a maximum reasoning
+level and speed for each supported model. A starting default chooses where a
+member begins. A maximum limits the reasoning levels and speeds the member
+can select without requiring you to disable access to that model.
+
+Choose limits for the workspace or a custom role based on the work those
+members need to do. For example, you might keep a model available for everyday
+work with lower limits and allow a research role to use higher settings.
+Reasoning level and speed affect consumption. For current availability and
+usage guidance, see [ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex).
+
+To configure the limits:
+
+1. Open **Admin Console** > **Workspace settings** > **Models**.
+2. Select the workspace default or the custom role you want to configure.
+3. Select the gear next to a supported model and set its maximum reasoning
+   level and speed.
+
+After configuring the limits, reopen the settings to verify the saved values.
+Check the experience with an affected member on a supported client, including
+which model, reasoning, and speed options are available. If the result differs
+from the intended configuration, confirm the member's assigned roles and the
+client's support for these controls before making further changes.
 
 #### Save Preview and Launch access
 
