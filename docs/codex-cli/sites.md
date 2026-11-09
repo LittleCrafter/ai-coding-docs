@@ -235,25 +235,20 @@ Estimates assume a full month of storage. Select **This Site has a database** to
 
 ## Next up
 
-  [Create a site
+  [Create a site](./sites/creating-a-site.md)
 
-        <TextPrompt />
+Describe, build, and refine a website in ChatGPT or Codex.
 
-      Describe, build, and refine a website in ChatGPT or Codex.](./sites/creating-a-site.md)
-  [Data and connections
+  [Data and connections](./sites/data-and-connections.md)
 
-        <Mcp />
+Choose storage, add sign-in, and connect apps to your site.
 
-      Choose storage, add sign-in, and connect apps to your site.](./sites/data-and-connections.md)
-  [Publish and share
+  [Publish and share](./sites/publishing-and-sharing.md)
 
-        <Globe />
+Review your site, choose its audience, and collaborate with editors.
 
-      Review your site, choose its audience, and collaborate with editors.](./sites/publishing-and-sharing.md)
-  [Manage a site
+  [Manage a site](./sites/managing-a-site.md)
 
-        <Folder />
-
-      Review analytics, change domains and settings, and manage site versions.](./sites/managing-a-site.md)
+Review analytics, change domains and settings, and manage site versions.
 
 <SitesReferenceNavigation />

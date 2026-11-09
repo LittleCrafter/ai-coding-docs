@@ -273,15 +273,14 @@ Legal, financial, medical, security, and other high-stakes decisions require
 
 ## Next steps
 
-a]:min-w-0 [&>a]:no-underline">
-  [Open the quickstart
+  [Open the quickstart](./quickstart.md)
 
-      Start using ChatGPT with a guided first task.](./quickstart.md)
+Start using ChatGPT with a guided first task.
 
-[Learn about prompting
+[Learn about prompting](./prompting.md)
 
-    Write useful prompts for questions, finished work, and coding tasks.](./prompting.md)
+Write useful prompts for questions, finished work, and coding tasks.
 
-  [Personalize ChatGPT
+  [Personalize ChatGPT](./personalize.md)
 
-      Set preferences and carry useful context across chats.](./personalize.md)
+Set preferences and carry useful context across chats.

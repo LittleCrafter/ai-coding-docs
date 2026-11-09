@@ -66,9 +66,9 @@ To build a useful skill:
 
 For more details on building skills, see our dedicated guide below.
 
-[Build skills
+[Build skills](./build-skills.md)
 
-    Create, test, and share reusable skills with ChatGPT and Codex.](./build-skills.md)
+Create, test, and share reusable skills with ChatGPT and Codex.
 
 ## Use plugins for tools and shared workflows
 

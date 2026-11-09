@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.167.0",
-  "last_updated": "2026-11-06T18:35:30Z",
+  "last_updated": "2026-11-09T03:08:28Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -1170,8 +1170,8 @@
       "source_url": "https://learn.chatgpt.com/docs/image-generation",
       "source_md_url": "https://learn.chatgpt.com/docs/image-generation.md",
       "source_id": "llms:image-generation",
-      "hash": "936cbafa62fb9623a71d5fb3b80f62cd94b74411d682354ab9b51fcc2b0e4349",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "cdac3ddc9a0b9b18d3f83832a9fbac89ad6b6ea7be68bae5c5c90a4c762b1da4",
+      "last_updated": "2026-11-09T03:08:28Z"
     },
     "image-inputs": {
       "slug": "image-inputs",
@@ -1260,8 +1260,8 @@
       "source_url": "https://learn.chatgpt.com/docs/migrate-custom-gpts",
       "source_md_url": "https://learn.chatgpt.com/docs/migrate-custom-gpts.md",
       "source_id": "llms:migrate-custom-gpts",
-      "hash": "4538fb11b18789d493b54f9b2db7fcdd91758a25f0ad062953c34cc0b226e9f2",
-      "last_updated": "2026-10-15T23:24:00Z"
+      "hash": "c3e34e6f99868dda659b56f12ecb33e9d96e65ffd2ff129e25dd4f7e9dd63da3",
+      "last_updated": "2026-11-09T03:08:28Z"
     },
     "mobile": {
       "slug": "mobile",
@@ -1410,8 +1410,8 @@
       "source_url": "https://learn.chatgpt.com/docs/prompting",
       "source_md_url": "https://learn.chatgpt.com/docs/prompting.md",
       "source_id": "llms:prompting",
-      "hash": "e59e3ffc99ef4e8662560bd2f55a3711be0e1fa762a294a6cea7867d90485702",
-      "last_updated": "2026-10-07T18:01:59Z"
+      "hash": "e1c0f3c5d414b7b56dce443f49792e70b31159116539fa3cc65985c37cf44622",
+      "last_updated": "2026-11-09T03:08:28Z"
     },
     "quickstart": {
       "slug": "quickstart",
@@ -1420,8 +1420,8 @@
       "source_url": "https://learn.chatgpt.com/docs/quickstart",
       "source_md_url": "https://learn.chatgpt.com/docs/quickstart.md",
       "source_id": "llms:quickstart",
-      "hash": "7badebf971d867a0290985d4c07a0f4a94a956a0eaf37178e02d9ccd7720a4d9",
-      "last_updated": "2026-10-02T21:30:19Z"
+      "hash": "92d25136f241a355ef3811c83e8a8b37840516e1bcbb2a020b29941286af2e9e",
+      "last_updated": "2026-11-09T03:08:28Z"
     },
     "reference/commands": {
       "slug": "reference/commands",
@@ -1590,8 +1590,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/plugin",
       "source_md_url": "https://learn.chatgpt.com/docs/security/plugin.md",
       "source_id": "llms:security/plugin",
-      "hash": "ce56930d97b2409c72bf7534d56f23950375a34596cc2cbb70cc25fe030cbd50",
-      "last_updated": "2026-10-28T21:58:12Z"
+      "hash": "0880ad0ce6c971acc2177ffeb3a70f0f858d48130205fee7c0d14bedabba4a1f",
+      "last_updated": "2026-11-09T03:08:28Z"
     },
     "security/plugin/changelog": {
       "slug": "security/plugin/changelog",
@@ -1750,8 +1750,8 @@
       "source_url": "https://learn.chatgpt.com/docs/sites",
       "source_md_url": "https://learn.chatgpt.com/docs/sites.md",
       "source_id": "llms:sites",
-      "hash": "36094d15a3a54364b905992fed599aa6d854d30a6a1018d54d45dbe0328341d7",
-      "last_updated": "2026-10-30T03:04:46Z"
+      "hash": "cfef038080f988560370a04bef57091b57030a827d0a71981e720d4d5da22f66",
+      "last_updated": "2026-11-09T03:08:28Z"
     },
     "sites/creating-a-site": {
       "slug": "sites/creating-a-site",
@@ -1800,8 +1800,8 @@
       "source_url": "https://learn.chatgpt.com/docs/skills-and-plugins",
       "source_md_url": "https://learn.chatgpt.com/docs/skills-and-plugins.md",
       "source_id": "llms:skills-and-plugins",
-      "hash": "2196d056b58ed9afc091bc494d8b577cdf705559d1884a461afe60c8728020cf",
-      "last_updated": "2026-09-25T14:15:21Z"
+      "hash": "12705eadf5a0ff1f451671aea41a3856a73b35838e4423b36af505a999d30b24",
+      "last_updated": "2026-11-09T03:08:28Z"
     },
     "slash_commands": {
       "slug": "slash_commands",
@@ -1910,8 +1910,8 @@
       "source_url": "https://learn.chatgpt.com/docs/use-chatgpt",
       "source_md_url": "https://learn.chatgpt.com/docs/use-chatgpt.md",
       "source_id": "llms:use-chatgpt",
-      "hash": "dfba9fb604f6143e79462dc92ca9b70f08788531f76b8b138c245c453497a758",
-      "last_updated": "2026-09-11T00:28:16Z"
+      "hash": "4b1cab46bf944eb1bcffd19148e283caa8e586f46fa333a16a832fbd9addf33a",
+      "last_updated": "2026-11-09T03:08:28Z"
     },
     "visualizations": {
       "slug": "visualizations",
@@ -2075,8 +2075,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-06T18:35:30Z",
-    "fetch_duration_seconds": 73.185,
+    "last_fetch_completed": "2026-11-09T03:08:28Z",
+    "fetch_duration_seconds": 72.264,
     "total_pages_discovered": 207,
     "pages_fetched_successfully": 207,
     "pages_failed": 0,

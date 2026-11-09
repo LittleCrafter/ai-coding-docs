@@ -177,9 +177,9 @@ the asset in a design tool when needed.
 - [Work with files](./artifacts-viewer.md)
 - [Creating images with ChatGPT](https://openai.com/academy/image-generation/)
 
-[Image generation gallery
+[Image generation gallery](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
 
-    Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
+Explore more image generation prompts and results.
 
 **Surface: Web**
 
@@ -188,15 +188,15 @@ the asset in a design tool when needed.
 - [Work with files](./artifacts-viewer.md)
 - [Creating images with ChatGPT](https://openai.com/academy/image-generation/)
 
-[Image generation gallery
+[Image generation gallery](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
 
-    Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
+Explore more image generation prompts and results.
 
 - [Codex pricing](./pricing.md#image-generation-usage-limits)
 - [Image inputs](./image-inputs.md)
 - [Image generation API guide](https://developers.openai.com/api/docs/guides/image-generation)
 - [Work with files](./artifacts-viewer.md)
 
-[Image generation gallery
+[Image generation gallery](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
 
-    Explore more image generation prompts and results.](https://developers.openai.com/api/docs/guides/image-generation?gallery=open)
+Explore more image generation prompts and results.
