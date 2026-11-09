@@ -31650,6 +31650,11 @@ It includes:
   get guided local `OPENAI_API_KEY` setup in Claude Code and Cursor.
 - **Agents SDK:** build and deploy OpenAI Agents SDK apps from an idea, a repo,
   or a prior Codex task.
+- **API migration:** when your installation includes the migration skill, migrate
+  existing LLM apps and agents to OpenAI or improve their Responses API
+  integration through changes designed to preserve behavior and improve
+  performance and efficiency. Apply agreed changes incrementally without
+  requiring a full rewrite.
 - **Troubleshooting:** identify common OpenAI API failures and route
   you to the right next step.
 
@@ -31757,6 +31762,14 @@ The plugin is useful when you want your coding agent to:
 - build an app or agent that uses the OpenAI API
 - set up OpenAI API access for the app you are building
 - diagnose common OpenAI API errors and explain the next step.
+
+#### Migrate an existing app
+
+When the migration skill is installed, try:
+
+```text
+Migrate this app to use OpenAI Responses API best practices.
+```
 
 #### Sample prompts
 
