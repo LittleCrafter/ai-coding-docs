@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 227
+- **Pages mirrored:** 202
 - **Version:** 2.1.322
-- **Last updated:** 2026-11-10T13:50:44Z
+- **Last updated:** 2026-11-10T21:04:53Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -149,7 +149,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Voice dictation | [voice-dictation.md](./voice-dictation.md) | [source](<https://code.claude.com/docs/en/voice-dictation>) |
 | Use Claude Code in VS Code | [vs-code.md](./vs-code.md) | [source](<https://code.claude.com/docs/en/vs-code>) |
 | Get started with Claude Code in the cloud | [web-quickstart.md](./web-quickstart.md) | [source](<https://code.claude.com/docs/en/web-quickstart>) |
-| What's new | [whats-new.md](./whats-new.md) | [source](<https://code.claude.com/docs/en/whats-new>) |
 | Orchestrate subagents at scale with dynamic workflows | [workflows.md](./workflows.md) | [source](<https://code.claude.com/docs/en/workflows>) |
 | Run parallel sessions with worktrees | [worktrees.md](./worktrees.md) | [source](<https://code.claude.com/docs/en/worktrees>) |
 | Zero data retention | [zero-data-retention.md](./zero-data-retention.md) | [source](<https://code.claude.com/docs/en/zero-data-retention>) |
@@ -225,32 +224,3 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Recommend plugins for your org | [plugins/relevance.md](./plugins/relevance.md) | [source](<https://code.claude.com/docs/en/plugins/relevance>) |
 | Plugin security and trust | [plugins/security.md](./plugins/security.md) | [source](<https://code.claude.com/docs/en/plugins/security>) |
 | Troubleshoot plugins | [plugins/troubleshooting.md](./plugins/troubleshooting.md) | [source](<https://code.claude.com/docs/en/plugins/troubleshooting>) |
-
-## whats-new
-
-| Page | Local | Source |
-| --- | --- | --- |
-| Week 13 · March 23–27, 2026 | [whats-new/2026-w13.md](./whats-new/2026-w13.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w13>) |
-| Week 14 · March 30 – April 3, 2026 | [whats-new/2026-w14.md](./whats-new/2026-w14.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w14>) |
-| Week 15 · April 6–10, 2026 | [whats-new/2026-w15.md](./whats-new/2026-w15.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w15>) |
-| Week 16 · April 13–17, 2026 | [whats-new/2026-w16.md](./whats-new/2026-w16.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w16>) |
-| Week 17 · April 20–24, 2026 | [whats-new/2026-w17.md](./whats-new/2026-w17.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w17>) |
-| Week 18 · April 27 – May 1, 2026 | [whats-new/2026-w18.md](./whats-new/2026-w18.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w18>) |
-| Week 19 · May 4–8, 2026 | [whats-new/2026-w19.md](./whats-new/2026-w19.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w19>) |
-| Week 20 · May 11–15, 2026 | [whats-new/2026-w20.md](./whats-new/2026-w20.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w20>) |
-| Week 21 · May 18–22, 2026 | [whats-new/2026-w21.md](./whats-new/2026-w21.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w21>) |
-| Week 22 · May 25–29, 2026 | [whats-new/2026-w22.md](./whats-new/2026-w22.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w22>) |
-| Week 23 · June 1–5, 2026 | [whats-new/2026-w23.md](./whats-new/2026-w23.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w23>) |
-| Week 24 · June 8–12, 2026 | [whats-new/2026-w24.md](./whats-new/2026-w24.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w24>) |
-| Week 25 · June 15–19, 2026 | [whats-new/2026-w25.md](./whats-new/2026-w25.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w25>) |
-| Week 26 · June 22–26, 2026 | [whats-new/2026-w26.md](./whats-new/2026-w26.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w26>) |
-| Week 27 · June 29 – July 3, 2026 | [whats-new/2026-w27.md](./whats-new/2026-w27.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w27>) |
-| Week 28 · July 6–10, 2026 | [whats-new/2026-w28.md](./whats-new/2026-w28.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w28>) |
-| Week 29 · July 13–17, 2026 | [whats-new/2026-w29.md](./whats-new/2026-w29.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w29>) |
-| Week 30 · July 20–24, 2026 | [whats-new/2026-w30.md](./whats-new/2026-w30.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w30>) |
-| Week 32 · August 3–7, 2026 | [whats-new/2026-w32.md](./whats-new/2026-w32.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w32>) |
-| Week 33 · August 10–14, 2026 | [whats-new/2026-w33.md](./whats-new/2026-w33.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w33>) |
-| Week 34 · August 17–21, 2026 | [whats-new/2026-w34.md](./whats-new/2026-w34.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w34>) |
-| Week 35 · August 24–28, 2026 | [whats-new/2026-w35.md](./whats-new/2026-w35.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w35>) |
-| Week 36 · August 31 – September 4, 2026 | [whats-new/2026-w36.md](./whats-new/2026-w36.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w36>) |
-| Week 37 · September 7–11, 2026 | [whats-new/2026-w37.md](./whats-new/2026-w37.md) | [source](<https://code.claude.com/docs/en/whats-new/2026-w37>) |

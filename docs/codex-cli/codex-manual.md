@@ -2472,13 +2472,12 @@ the option that fits your work.
 
 If you're a developer and want to use Codex in your terminal or code editor,
 try [Codex CLI](./codex/cli.md) or the [Codex IDE extension](./codex/ide.md). For remote
-coding work, create a reusable [Codex Cloud
-environment](./environments/cloud-environments.md) on the web or in the
-desktop app. In a new task, choose **Work in** > **Cloud**, open **Select
-environment**, then select **Create environment**. Codex inspects your
-repositories and helps prepare and test the setup before you publish it.
-You can then start and continue cloud tasks on the web, on mobile, or in the
-desktop app. On mobile, open **Codex** and select the published environment.
+work, choose **Work in** > **Cloud** on the web or in the desktop app, or
+open **Codex** on mobile. If the default environment is available, select
+it and submit a task without choosing a repository. You can also select a
+published environment. To prepare repositories and tools for future tasks,
+[create and publish a reusable environment](./environments/cloud-environments.md#create-and-publish-an-environment)
+on the web or in the desktop app.
 
 #### Setup
 
@@ -17633,8 +17632,8 @@ everyday preferences.
 Source: [Sign in with ChatGPT](./sign-in-with-chatgpt.md)
 
 Sign in with ChatGPT lets you sign in to participating apps and sites with your
-ChatGPT account. In supported apps, eligible ChatGPT Plus and Pro subscribers can
-also choose to use their ChatGPT plan for AI requests.
+ChatGPT account. In supported apps, eligible ChatGPT Go, Plus, Pro, and Business
+subscribers can also choose to use their ChatGPT plan for AI requests.
 
 Signing in and using your plan are separate permissions. You review what an app
 can access before you connect it.
@@ -17651,7 +17650,7 @@ Apps with ChatGPT plan usage:
 
         [Dactyl](https://dactyl.dev/)
 
-        [Devin](https://app.devin.ai/login)
+        [Devin*](https://app.devin.ai/login)
 
         [Hermes Agent](https://portal.nousresearch.com/login)
 
@@ -17742,9 +17741,33 @@ Settings > Security and login > Sign in with ChatGPT**, select the app, and sele
 
 For help with Sign in with ChatGPT, visit the [OpenAI Help Center](https://help.openai.com/en/articles/20001542).
 
+#### Admin Controls for Business Admins
+
+Business admins have granular control over which apps their teams can use and how
+much of each member's subscription allowance those apps can consume. Set up access
+and usage controls in two steps.
+
+#### Step 1: Enable ChatGPT plan usage
+
+Go to [admin.openai.com](https://admin.openai.com), then open **Tenant settings > External access**.
+Select an app and set **Use ChatGPT plan** to **Allowed**. Repeat for each app you
+want your team to use.
+
+#### Step 2: Set workspace usage limits, if needed
+
+Go to [admin.openai.com](https://admin.openai.com), select your workspace, and open **Usage limits**.
+Under **ChatGPT plan**, find **Usage in other services** and select **Edit**.
+Set the percentage of each member's included
+allowance that approved services can use, select **Apply**, then **Save changes**.
+
+Business users can also set their own app limits in **Settings > Usage** or turn
+off ChatGPT plan usage for apps they've connected and used.
+
 #### For developers
 
 To add Sign in with ChatGPT to your app, start with the [Sign in with ChatGPT developer documentation](https://developers.openai.com/siwc).
+
+\* Devin does not support ChatGPT plan usage for ChatGPT Business plans.
 
 ## CLI, IDE, App, and Cloud Behavior
 
@@ -18383,6 +18406,23 @@ uploads, downloads, and developer access. See
 
 Treat page content as untrusted context. Review the site and proposed action
 before sharing sensitive information or allowing ChatGPT to act.
+
+#### Inspect a web app in Codex Cloud
+
+When a [Codex Cloud](./cloud.md) task has browser access, Codex can use a
+browser inside the cloud task to inspect your web app, reproduce a bug, or
+verify a fix. Give Codex the command to start the app in the task, the port,
+and the behavior you want it to check.
+
+For example, ask Codex to open your app's settings page, change and save a
+preference, and reload the page to check whether the change persists. Ask it
+to report what happened and include a screenshot if it helps show the result.
+
+Install the app's dependencies when you [prepare the Cloud environment](./environments/cloud-environments.md).
+If the page needs an external service, check the environment's network settings
+or use local test data.
+
+#### Use the desktop browser
 
 The built-in browser in the ChatGPT desktop app gives you and ChatGPT a shared
 view of websites and local web apps inside a chat. Use it to preview a page,
@@ -19305,10 +19345,10 @@ Codex Cloud runs coding tasks in the cloud, so work can continue while your
 computer is asleep. Use it on the web, on mobile, or in the desktop app to edit
 code, run commands, and review results.
 
-A **cloud environment** is the reusable setup that tasks use: repositories,
-dependencies, tools, and access settings. Codex inspects your repositories,
-prepares the setup, and tests it with you. Each new task gets its own isolated
-workspace from the published environment.
+Each cloud task runs in its own workspace. If the default environment is
+available, you can start without choosing a repository. To reuse a setup across
+tasks, select [**Create environment**](#create-and-publish-an-environment), choose the repositories, dependencies,
+tools, and access settings your tasks need, then publish the environment.
 
 For an introduction, see the [Codex Cloud overview](./cloud.md).
 
@@ -19319,23 +19359,39 @@ environments for these workflows.
 
 #### Start a task in Codex Cloud
 
-On the web or in the [desktop app](./app.md), choose **Work in** > **Cloud**
-and select a published environment. On mobile, open **Codex** and select a
-published environment. Describe what you want Codex to do and send the request.
-If you need a new setup, [create an environment](#create-and-publish-an-environment)
+On the web or in the [desktop app](./app.md), choose **Work in** > **Cloud**.
+On mobile, open **Codex**. If the default environment appears in the picker,
+select it and describe your task.
+
+- **Without a project**, you can start without a repository. For example, ask
+  Codex to write and test a script using sample data. If the task later needs
+  existing code, tell Codex which repository to clone.
+- **From a project in the desktop app**, the default environment can
+  automatically use repositories associated with that project when they are
+  hosted on GitHub.com and you have connected your GitHub account. This
+  automatic project setup doesn't include GitLab repositories.
+
+Adding a repository to a running task is separate from this automatic project
+setup. You can ask Codex to clone a repository the environment can access,
+including when you start the task on mobile. To check out a GitLab.com repository through
+the repository picker, [create a reusable environment](#create-and-publish-an-environment)
 on the web or in the desktop app.
 
-Enterprise admins can [review workspace access](./enterprise/admin-setup.md#step-5-configure-codex-cloud)
-before rolling out Codex Cloud.
+To use a setup you've already prepared or one shared with you, select the
+published environment instead. In Enterprise workspaces, use a published
+environment you have access to. Admins can [review workspace access](./enterprise/admin-setup.md#step-5-configure-codex-cloud).
 
 #### Create and publish an environment
 
-Create new environments on the web or in the [desktop app](./app.md).
+Create a reusable environment on the web or in the [desktop app](./app.md)
+when you want to reuse repositories, tools, or access settings across tasks.
 Sign in with your ChatGPT account:
 
 1. In a new task, choose **Work in** > **Cloud**, open **Select environment**,
    and select **Create environment**.
-2. Select the GitHub repositories to check out. Connect GitHub if prompted.
+2. Select the repositories to check out. Connect GitHub if prompted. If
+   GitLab is available in the repository picker, select your GitLab.com
+   connection and search for the repository.
 3. Select **Get started**. Codex inspects the repositories, installs dependencies
    and tools, and tests the workflow.
 4. Supply missing access or information when asked. You can also request
@@ -19365,7 +19421,7 @@ Codex can record the tested setup in two fields:
 
 #### Reuse and update saved state
 
-- **New task:** starts from the published environment's prepared filesystem.
+- **New task in a published environment:** starts from the environment's prepared filesystem.
 - **Existing task:** continues with its own saved files, including uncommitted
   changes and installed tools.
 - **Repository refresh:** runs automatically in the background, preserving
@@ -19623,8 +19679,8 @@ applies to the operations and clients listed here.
 
 #### Run and return to a task
 
-Select a published environment and describe your goal. Codex uses its
-repositories and tools to edit files, run commands, and check its work.
+Describe your goal in the chat. Codex can edit files, run commands, and
+check its work.
 Review changes and test results before committing or opening a pull request.
 
 #### Continue on web or mobile
@@ -19633,8 +19689,7 @@ On the web, choose **Work in** > **Cloud** and select an environment. On mobile,
 open **Codex** and choose an available environment. Create new environments
 on the web or in the desktop app.
 
-Reopen the same task to continue its work across devices. A new task starts
-separate work from the published setup. Tasks in Codex Cloud can keep working while
+Reopen the same task to continue its work across devices. Each new task starts in its own workspace. Tasks in Codex Cloud can keep working while
 your computer is asleep.
 
 #### Start tasks from Slack or Microsoft Teams
@@ -19679,8 +19734,8 @@ OpenAI account team for available configurations and pricing.
 The following capabilities aren't currently supported in cloud environments
 and are on our roadmap:
 
-- Computer and browser use
-- GitLab and self-hosted GitHub Enterprise Server
+- Computer use
+- Self-hosted GitHub Enterprise Server
 
 Skills stored in your repository are available in cloud tasks. Personal skills
 from your local computer aren't synced to cloud environments.
@@ -20330,31 +20385,39 @@ When starting a Codex chat, choose where it runs:
 
 - **Local**: work directly in your current project directory.
 - **Worktree**: isolate changes in a Git worktree. [Learn more](./environments/git-worktrees.md).
-- **Cloud**: start a remote task in its own workspace from a published,
-  reusable environment. See [Cloud environments](./environments/cloud-environments.md)
-  to prepare and publish the repositories, dependencies, and tools your tasks need.
+- **Cloud**: run a remote task in its own workspace. See [Cloud environments](./environments/cloud-environments.md)
+  for help choosing an environment.
 
 Both **Local** and **Worktree** chats run on your computer.
 Use **Work in** to choose **This computer** or **Cloud**. For a local Git project,
 the separate **Worktree** control lets you isolate changes from your current checkout.
 
-A cloud task requires a published environment you can access. If none is available,
-create one on the web or in the desktop app, or ask a workspace admin for access
-to a shared environment. Selecting an environment is separate from creating or
-publishing it. Shared access lets you use the environment; it doesn't grant
+If the default environment is available, select it to start without choosing a
+repository. You can also select a published environment. In Enterprise
+workspaces, choose a published environment or ask an admin for access to a
+shared one. Shared access lets you use the environment; it doesn't grant
 permission to edit it.
 
 You can also start and continue cloud tasks on the web or on mobile. On mobile,
-open **Codex** and select a published environment.
+open **Codex** and choose an available environment.
 
 To create an environment, start a new task on the web or in the desktop app.
 Choose **Work in** > **Cloud**, open **Select environment**, then select
 **Create environment**. Codex inspects your selected repositories and helps
 prepare and test their setup before you publish it.
 
-Each Cloud task has its own working files. File changes in a task don't update
-the reusable environment. To change the starting point for future tasks, update
-and republish the environment's setup.
+In the desktop app, the default environment can automatically use a project's
+repositories when they are hosted on GitHub.com and you have connected your
+GitHub account. This automatic project setup doesn't include GitLab repositories.
+Adding a repository to a running task, including on mobile, is separate from
+this automatic project setup. See [Cloud environments](./environments/cloud-environments.md#start-a-task-in-codex-cloud).
+
+Each Cloud task has its own working files. In the desktop app, when you add a repository
+to a task running in the default environment, that change applies to the current
+task. To reuse a setup across tasks, create a reusable environment. File changes
+in a task don't update a published environment. To change its starting point for
+future tasks, update and republish the environment's setup if you have permission
+to edit it.
 
 A cloud task uses the files and services available in its cloud environment.
 Your computer's local files, running processes, browser sign-ins, and VPN access
@@ -24573,7 +24636,7 @@ Use Codex from your terminal and scripts.
 
 Source: [Codex Cloud](./cloud.md)
 
-Run coding tasks in the cloud, review results, and get started with Codex Cloud.
+A published environment lets you reuse the same setup across tasks.
 
 ### Codex IDE extension
 
@@ -35289,9 +35352,14 @@ Use Codex code review to get another high-signal review pass on GitLab merge
 requests. Codex reviews the merge request diff, follows your repository
 guidance, and posts a standard GitLab code review focused on serious issues.
 
-GitLab support is in beta and is available on all ChatGPT plans. The Codex
-integration runs in Codex cloud. GitHub-style repository controls in the
+The GitLab code review integration is in beta and is available on all ChatGPT
+plans. It runs in Codex cloud. GitHub-style repository controls in the
 desktop app, such as **Create pull request**, aren't included in this beta.
+
+If GitLab appears in the repository picker when you
+[create a Cloud environment](./environments/cloud-environments.md), select a
+GitLab.com project your connected account can access. Use the webhook setup
+below for tasks and reviews triggered from GitLab.
 
 #### Before you start
 
@@ -49826,7 +49894,7 @@ The cloud browser keeps its own cookies, separate from the browser on your devic
 | VM snapshots                                           | For eligible workspaces with data residency, Enterprise Key Management (EKM), or both, the enabled control wipes snapshots on a five-day cycle, with a seven-day maximum.                                                                                                                                                           | The platform expires snapshots automatically. Deleting the dot separately starts the cloud-computer deletion process.                                                                                                                                                                                                                                                                 | For workspaces without data residency or EKM, there is no maximum age for an active dot’s snapshots. They may remain for as long as the dot exists, and customers cannot currently request an early purge. Snapshots are deleted within 30 days after the dot is deleted.                                                                                                                                                                                   |
 | Backups                                                | Space backups have a separate documented window. Dot-owned backups are deleted within 30 days of dot deletion.                                                                                                                                                                                                                      | When a Space file is deleted, expires or becomes inactive, the active Compliance API stops returning it. The platform manages backup expiry.                                                                                                                                                                                                                                          | A Space backup may remain for up to 30 additional days, or longer for security or legal obligations. Dot-owned backups are deleted within 30 days of dot deletion.                                                                                                                                                                                                                                                                                          |
 | Delegated Work and Codex threads                       | Hosted [Work](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention) and [Codex](./auth.md#openai-authentication) threads follow the workspace’s retention policy. [Device-only records](./enterprise/chatgpt-work-local-security.md#data-handling-and-retention) follow local storage and backup policies. | The workspace policy governs when hosted threads expire. For Codex Cloud, see the [workspace retention guidance](./auth.md#openai-authentication). Deleting a dot leaves its delegated Codex and Work threads intact.                                                                                                                                                               | When a Codex chat is deleted in the desktop app, OpenAI schedules it for permanent deletion from its systems within 30 days, subject to [published exceptions](https://help.openai.com/en/articles/20001333-archiving-and-deleting-codex-chats-in-the-chatgpt-app). Work Cloud schedules deleted chats for permanent deletion within 30 days, subject to [published exceptions](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention). |
-| Files and pages in Spaces                              | Space pages persist until someone deletes them; the workspace chat retention period does not expire them. Eligible files saved in Space follow workspace file retention.                                                                                                                                                            | A page’s [creator or owner](https://help.openai.com/en/articles/20001544-chatgpt-space-sharing-data-and-controls) can move it and its subpages to Trash. Delete separately saved attachments in their own location. Members can delete their own saved Space files. Compliance admins with the [required API permissions](./enterprise/chatgpt-space.md) can delete eligible files. | Space purges a page on permanent deletion or after 30 days in Trash. Pages trashed before the October 1 rollout require manual deletion. Deleting the page leaves separately stored attachments in place.                                                                                                                                                                                                                                                   |
+| Pages in Spaces                                        | Space pages persist until someone deletes them; the workspace chat retention period does not expire them.                                                                                                                                                                                                                           | A page’s [creator or owner](https://help.openai.com/en/articles/20001544-chatgpt-space-sharing-data-and-controls) can move it and its subpages to Trash. Delete separately saved attachments in their own location. Members can delete their own saved Space files. Compliance admins with the [required API permissions](./enterprise/chatgpt-space.md) can delete eligible files. | Space purges a page on permanent deletion or after 30 days in Trash. Pages trashed before the October 1 rollout require manual deletion. Deleting the page leaves separately stored attachments in place.                                                                                                                                                                                                                                                   |
 | Local files and connected-app copies                   | The device or connected service governs files, messages and exports stored there.                                                                                                                                                                                                                                                   | A person with delete permission removes the item in the source app or on the device. The organization manages any separately retained copies.                                                                                                                                                                                                                                         | These copies survive dot deletion. The destination’s retention period, backup rules and any holds determine when deletion finishes.                                                                                                                                                                                                                                                                                                                         |
 | Compliance logs and customer exports                   | The [Compliance Logs Platform](https://help.openai.com/en/articles/9261474-openai-compliance-platform-for-enterprise-and-edu-customers) retains each event for 30 days from creation. Downloaded copies follow the receiving system’s policy.                                                                                       | Platform expiry is automatic. Your organization manages deletion of downloaded copies in its own system.                                                                                                                                                                                                                                                                              | Dot deletion neither erases emitted events nor restarts their clock. An organization cannot use the Compliance API to erase OpenAI’s internal audit or security logs.                                                                                                                                                                                                                                                                                       |
 
