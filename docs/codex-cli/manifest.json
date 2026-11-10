@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.167.0",
-  "last_updated": "2026-11-09T23:39:36Z",
+  "last_updated": "2026-11-10T04:52:27Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "b494154dc65c31a60efb3b82c0494ad16f31374c560656e1fd8a3bc558c4f2c3",
-      "last_updated": "2026-11-09T23:39:36Z"
+      "hash": "b2e817f93d8112111c08da8eb4b7920e04ca25b86e3255b2e43f863e52950eb3",
+      "last_updated": "2026-11-10T04:52:27Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -1750,8 +1750,8 @@
       "source_url": "https://learn.chatgpt.com/docs/sites",
       "source_md_url": "https://learn.chatgpt.com/docs/sites.md",
       "source_id": "llms:sites",
-      "hash": "cfef038080f988560370a04bef57091b57030a827d0a71981e720d4d5da22f66",
-      "last_updated": "2026-11-09T03:08:28Z"
+      "hash": "3e5c2cdf5d939cdf1e58e658a303be5138b932534f2babbc14a6af5c1cec4587",
+      "last_updated": "2026-11-10T04:52:27Z"
     },
     "sites/creating-a-site": {
       "slug": "sites/creating-a-site",
@@ -2075,8 +2075,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-09T23:39:36Z",
-    "fetch_duration_seconds": 72.203,
+    "last_fetch_completed": "2026-11-10T04:52:27Z",
+    "fetch_duration_seconds": 72.185,
     "total_pages_discovered": 207,
     "pages_fetched_successfully": 207,
     "pages_failed": 0,
