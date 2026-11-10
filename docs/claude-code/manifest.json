@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.322",
-  "last_updated": "2026-11-10T04:51:14Z",
+  "last_updated": "2026-11-10T13:50:44Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -110,8 +110,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/hooks",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/hooks.md",
       "source_id": "agent-sdk/hooks",
-      "hash": "ba09f63dbb2d125d50d6c49c5f3b0711164a5b23e66e4b193dac576bca5992cb",
-      "last_updated": "2026-11-06T10:00:11Z"
+      "hash": "f2121f6f769a47484d0e675c013908d99aa08381c1d641e4361de30ff57b4fa7",
+      "last_updated": "2026-11-10T13:50:44Z"
     },
     "agent-sdk/hosting": {
       "slug": "agent-sdk/hosting",
@@ -910,8 +910,8 @@
       "source_url": "https://code.claude.com/docs/en/errors",
       "source_md_url": "https://code.claude.com/docs/en/errors.md",
       "source_id": "errors",
-      "hash": "a1f7917c618818b9229590cbe45b19ad249740b463f5c64d34ec92bb1c7b47ba",
-      "last_updated": "2026-11-09T23:38:23Z"
+      "hash": "eb86027b6c29f84713c86d4eaea816f71edb8c59be950a339845a19cb43afe19",
+      "last_updated": "2026-11-10T13:50:44Z"
     },
     "fast-mode": {
       "slug": "fast-mode",
@@ -1060,8 +1060,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks",
       "source_md_url": "https://code.claude.com/docs/en/hooks.md",
       "source_id": "hooks",
-      "hash": "e951546447a4bfa3c15a92902a4e62af9ef22b37d5e689b121821b8bfdc108e4",
-      "last_updated": "2026-11-10T04:51:14Z"
+      "hash": "f8e0af8c9a6e1d6f4310b66993b1eaed99144dbcb50e91c065c7b98d8bf4f561",
+      "last_updated": "2026-11-10T13:50:44Z"
     },
     "hooks-guide": {
       "slug": "hooks-guide",
@@ -2250,8 +2250,8 @@
       "source_url": "https://code.claude.com/docs/en/workflows",
       "source_md_url": "https://code.claude.com/docs/en/workflows.md",
       "source_id": "workflows",
-      "hash": "b940968734f59d5e7f3b58c9513d1b90c69c9a429436eadf6b9d1d95873bf4c5",
-      "last_updated": "2026-10-27T19:48:06Z"
+      "hash": "5b262faf3ba1bb40315a27d560371bed5b4969b7ad6855bbcecf284487a49b54",
+      "last_updated": "2026-11-10T13:50:44Z"
     },
     "worktrees": {
       "slug": "worktrees",
@@ -2270,13 +2270,13 @@
       "source_url": "https://code.claude.com/docs/en/zero-data-retention",
       "source_md_url": "https://code.claude.com/docs/en/zero-data-retention.md",
       "source_id": "zero-data-retention",
-      "hash": "3e201f9929d89530fed35f717403614a3d7bf8346838d50b14f0cb9cebd3d6ea",
-      "last_updated": "2026-11-09T23:38:23Z"
+      "hash": "76ce1148782ed8400e1b1db3aefd8fb3e6c25964b2a9df1f46628c6c3ccecd18",
+      "last_updated": "2026-11-10T13:50:44Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-10T04:51:14Z",
-    "fetch_duration_seconds": 79.186,
+    "last_fetch_completed": "2026-11-10T13:50:44Z",
+    "fetch_duration_seconds": 79.192,
     "total_pages_discovered": 227,
     "pages_fetched_successfully": 227,
     "pages_failed": 0,

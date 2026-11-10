@@ -3,8 +3,8 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 30
-- **Version:** 2.5.2
-- **Last updated:** 2026-11-09T14:29:16Z
+- **Version:** 2.5.3
+- **Last updated:** 2026-11-10T13:52:57Z
 - **Official docs:** https://moonshotai.github.io/kimi-code/en
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 

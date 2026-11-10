@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-10T04:53:06Z",
+  "last_updated": "2026-11-10T13:52:45Z",
   "files": {
     "api/create-chat-completion": {
       "slug": "api/create-chat-completion",
@@ -200,8 +200,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/responses_api",
       "source_md_url": "https://api-docs.deepseek.com/guides/responses_api",
       "source_id": "guides/responses_api",
-      "hash": "a34669cdaadd0502cb56db6ab047f23eb335bfaf58a28a746d6d8f978543ae7c",
-      "last_updated": "2026-10-30T11:45:47Z"
+      "hash": "114ee3cb544e9b18a9508f5a5a47d86396c7cd6c811e66ab1d23bfaa2562c81e",
+      "last_updated": "2026-11-10T13:52:45Z"
     },
     "guides/search": {
       "slug": "guides/search",
@@ -210,8 +210,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/search",
       "source_md_url": "https://api-docs.deepseek.com/guides/search",
       "source_id": "guides/search",
-      "hash": "180bfd3b9769a4a0689e88ab89d9415a91086c93d5130150aa36aac919393f7f",
-      "last_updated": "2026-11-04T18:57:38Z"
+      "hash": "615aaee7ddd7297d7754bc54abc20ab1a3fdae27094a5a159e336370b10e9930",
+      "last_updated": "2026-11-10T13:52:45Z"
     },
     "guides/thinking_mode": {
       "slug": "guides/thinking_mode",
@@ -305,13 +305,13 @@
     },
     "news/news1226": {
       "slug": "news/news1226",
-      "title": "Your First API Call",
+      "title": "🚀 Introducing DeepSeek-V3",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news1226",
       "source_md_url": "https://api-docs.deepseek.com/news/news1226",
       "source_id": "news/news1226",
-      "hash": "797f9be82834a62714dc4cf6bc451539ab173bb5992f0644ea2991c0ce0b840c",
-      "last_updated": "2026-11-08T09:39:33Z"
+      "hash": "8633fa2d9820b764648ae880c3cd79be64a4ab38efffae1642898ddccd2a4952",
+      "last_updated": "2026-11-10T13:52:45Z"
     },
     "news/news250115": {
       "slug": "news/news250115",
@@ -345,13 +345,13 @@
     },
     "news/news250528": {
       "slug": "news/news250528",
-      "title": "Your First API Call",
+      "title": "DeepSeek-R1-0528 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news250528",
       "source_md_url": "https://api-docs.deepseek.com/news/news250528",
       "source_id": "news/news250528",
-      "hash": "797f9be82834a62714dc4cf6bc451539ab173bb5992f0644ea2991c0ce0b840c",
-      "last_updated": "2026-11-09T23:39:57Z"
+      "hash": "8e339f5bbb74f72bcff5266df92718d10f0ece58a8abd859995dcf793ea40357",
+      "last_updated": "2026-11-10T13:52:45Z"
     },
     "news/news250821": {
       "slug": "news/news250821",
@@ -460,8 +460,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/codex",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/codex",
       "source_id": "quick_start/agent_integrations/codex",
-      "hash": "0833dcd8ad75388683df19b891ad1044fb5b7b476c57f8feb79dfa1cefb52752",
-      "last_updated": "2026-10-30T11:45:47Z"
+      "hash": "50ced0c1e09001da01310a86e7e6b5afc5df80ffc202271bcea6d90345e02fff",
+      "last_updated": "2026-11-10T13:52:45Z"
     },
     "quick_start/agent_integrations/hermes": {
       "slug": "quick_start/agent_integrations/hermes",
@@ -535,13 +535,13 @@
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
-      "title": "Your First API Call",
+      "title": "Models & Pricing",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "60b10d0ab8dfea7bd8d4585ab1248408dcbf41a2eb94ab1b7001277c990ddfb9",
-      "last_updated": "2026-11-10T04:53:06Z"
+      "hash": "4d910548c1b46ac9edd6edd0443f62992ea54063f023cfddd1a57a50c026ab51",
+      "last_updated": "2026-11-10T13:52:45Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -575,8 +575,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-10T04:53:06Z",
-    "fetch_duration_seconds": 37.717,
+    "last_fetch_completed": "2026-11-10T13:52:45Z",
+    "fetch_duration_seconds": 47.244,
     "total_pages_discovered": 57,
     "pages_fetched_successfully": 57,
     "pages_failed": 0,

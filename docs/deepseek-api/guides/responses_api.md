@@ -177,6 +177,8 @@ Type| Support Status
 `web_search`| Supported with `deepseek-v4-pro`. The API runs the search on the server, adds the results to the context, and continues the response. Ignored with `deepseek-flash`  
 `file_search` / `code_interpreter` / `computer_use` / `mcp` / other built-in tools| Ignored  
   
+The `web_search` tool above runs on the server through the Responses API. Codex's Alpha Search uses a standalone search endpoint and supports both `deepseek-flash` and `deepseek-v4-pro`; the model restriction above does not apply to it. See [Integrate with Codex](<../quick_start/agent_integrations/codex.md>) for setup instructions.
+
 ### Response Fields
 
 The response object is compatible with the OpenAI Responses API `response` structure. Fields that depend on unsupported capabilities always take fixed values (e.g. `store: false`, `previous_response_id: null`, `parallel_tool_calls: true`).
