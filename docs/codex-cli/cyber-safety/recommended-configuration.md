@@ -93,7 +93,7 @@ Use Auto-review alongside environment isolation, least-privilege permissions, a 
 
 ## Review sensitive Codex actions
 
-[Auto-review](../sandboxing/auto-review.md) routes eligible approval requests to a separate reviewer before the proposed action runs. The reviewer considers the action, task context, and applicable policy. Organizations can [add rules to the active policy](../sandboxing/auto-review.md#configuration) for approved targets, prohibited actions, and required human approvals.
+[Auto-review](../sandboxing/auto-review.md) routes eligible approval requests to a separate reviewer before the proposed action runs. The reviewer considers the action, task context, and applicable policy. Organizations can [replace the reviewer policy](../sandboxing/auto-review.md#configuration) with one that specifies approved targets, prohibited actions, and required human approvals.
 
 Require explicit human approval for actions that affect production, external systems, sensitive data, privilege escalation, persistent access, or irreversible changes. Treat instructions embedded in websites, repositories, documents, and tool outputs as untrusted; they can't expand the authorized scope or override access controls.
 

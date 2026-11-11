@@ -563,7 +563,7 @@ For beta permission profiles that configure filesystem and network access togeth
 You can also use a granular approval policy (`approval_policy = { granular = { ... } }`) to allow or auto-reject individual prompt categories. This is useful when you want normal interactive approvals for some cases but want others, such as `request_permissions` or skill-script prompts, to fail closed automatically.
 
 Set `approvals_reviewer = "auto_review"` to route eligible interactive approval
-requests through Auto-review. To add rules or replace the reviewer policy, see
+requests through Auto-review. To replace the reviewer policy, see
 [Auto-review configuration](./sandboxing/auto-review.md#configuration).
 
 ```toml
@@ -1204,7 +1204,6 @@ Set `model` to one available to your signed-in account or workspace. See
 | `approval_policy.granular.skill_approval` | `boolean` | When `true`, skill-script approval prompts are allowed to surface. |
 | `approvals_reviewer` | `user \| auto_review` | Who reviews eligible approval prompts under `on-request` or granular approval policies. Defaults to `user`; `auto_review` uses the reviewer subagent. This setting doesn't change sandboxing or review actions already allowed inside the sandbox. |
 | `auto_review.policy` | `string` | Markdown text that replaces the default Auto-review policy. Managed `guardian_policy_config` takes precedence. Blank values are ignored. |
-| `auto_review.extra_policy` | `string` | Markdown rules that Auto-review applies alongside the active policy. Managed `guardian_extra_policy` takes precedence. Blank values are ignored. |
 | `allow_login_shell` | `boolean` | Allow shell-based tools to use login-shell semantics. Defaults to `true`; when `false`, `login = true` requests are rejected and omitted `login` defaults to non-login shells. |
 | `allow_symlinked_codex_home` | `boolean` | On macOS, allow writable sandbox roots at or under `$CODEX_HOME` to follow symlinks. Codex reads this only from the execution host's `$CODEX_HOME/config.toml` at startup. Enabling it trusts targets outside that directory and targets that change between commands. It grants no additional writable roots. Defaults to `false`. |
 | `sandbox_mode` | `read-only \| workspace-write \| danger-full-access` | Sandbox policy for filesystem and network access during command execution. |
@@ -1601,7 +1600,6 @@ from either one wins.
 | `allowed_approval_policies` | `array<string>` | Allowed approval policies, such as `on-request`, `never`, and `granular`. Include `untrusted` to permit the stricter policy derived from an untrusted project; it cannot be selected directly with `approval_policy`. |
 | `allowed_approvals_reviewers` | `array<string>` | Allowed values for `approvals_reviewer`, such as `user` and `auto_review`. |
 | `guardian_policy_config` | `string` | Managed Markdown text that replaces the default Auto-review policy. This takes precedence over local `[auto_review].policy`. Blank values are ignored. |
-| `guardian_extra_policy` | `string` | Managed Markdown rules that Auto-review applies alongside the active policy. This takes precedence over local `[auto_review].extra_policy`. Blank values are ignored. |
 | `additional_developer_instructions` | `string` | Managed developer instructions added as a separate developer message. Codex rejects instructions that exceed a limit of 10,000 estimated tokens, including context markers. |
 | `auto_review` | `table` | Managed automatic-review requirements. |
 | `auto_review.required_on_models` | `array<string>` | Model slugs that must use automatic review. Slugs must be non-empty, omit provider namespaces, and have no surrounding whitespace. Lists from multiple requirements sources are combined. |

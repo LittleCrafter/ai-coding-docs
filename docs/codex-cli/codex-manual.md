@@ -11880,7 +11880,7 @@ High-risk actions require enough user authorization and no matching deny rule.
 Prompt-build, review-session, and parse failures fail closed. Timeouts are
 surfaced separately, but the action still does not run.
 
-To add rules or replace the policy locally or across an organization, see
+To replace the policy locally or across an organization, see
 [Auto-review configuration](./sandboxing/auto-review.md#configuration).
 
 In the ChatGPT desktop app, these reviews appear as Auto-review items with a status
@@ -12217,21 +12217,14 @@ into that template and specifies the response format separately. The CLI uses
 the reviewer model's default policy when available. Otherwise, it uses the
 [bundled policy (`policy.md`)](https://github.com/openai/codex/blob/rust-v0.167.0/codex-rs/prompts/templates/guardian/policy.md).
 
-**To add rules**, set `extra_policy` under `[auto_review]` in local
-`config.toml`, or set the top-level `guardian_extra_policy` in managed
-`requirements.toml`. Codex applies these rules alongside the active policy.
-
-**To replace the policy**, copy the complete policy you want to adapt. If you
+To replace the policy, copy the complete policy you want to adapt. If you
 use the bundled default, copy the full contents of `policy.md`. Edit the rules
 you want to change, then put the full text in local `[auto_review].policy` or
 managed `guardian_policy_config`. Omitted rules drop out of the replacement.
 Codex still uses the reviewer's template and response format.
 
-Codex resolves the two settings independently and ignores blank values.
 Managed `guardian_policy_config` takes precedence over local `[auto_review].policy`.
-Managed `guardian_extra_policy` takes precedence over local `[auto_review].extra_policy`.
-For example, if your organization sets only a replacement policy, your local
-`extra_policy` still adds rules to it.
+Codex ignores blank policy values.
 
 For organization-wide setup, see
 [Configure Auto-review policy](./enterprise/managed-configuration.md#configure-auto-review-policy).
@@ -12244,36 +12237,18 @@ Use an approved lab target, document the actions and engagement window, and
 keep production systems, unrelated hosts, credentials, and persistent changes
 out of scope unless explicitly authorized.
 
-This local `config.toml` example enables Auto-review and adds engagement
-rules to the active policy. Replace the example target and actions with your
-approved scope.
+This local `config.toml` example enables Auto-review and selects the workspace
+permission profile.
 
 ```toml
 approval_policy = "on-request"
 approvals_reviewer = "auto_review"
 default_permissions = ":workspace"
-
-[auto_review]
-extra_policy = """
-## Environment Profile
-- Authorized target: lab.example.com.
-- Approved actions: inspect the target, reproduce authorized vulnerabilities,
-  and validate fixes within the documented engagement window.
-
-## Tenant Risk Taxonomy and Allow/Deny Rules
-- Allow only actions against the approved target that match the documented
-  engagement scope and approved actions.
-- Deny out-of-scope or unknown hosts, production access, credential theft,
-  persistence, data exfiltration, destructive operations, and policy bypass.
-- Deny ambiguous actions and high-impact changes until a human explicitly
-  approves the exact target, action, and side effects.
-"""
 ```
 
 Enforce target restrictions with independent filesystem and network rules.
-For an organization, put the same engagement rules in the top-level
-`guardian_extra_policy` in managed `requirements.toml`. The following
-requirements select Auto-review and restrict the available permission profiles.
+The following managed `requirements.toml` example requires Auto-review and
+restricts the available permission profiles.
 
 ```toml
 allowed_approval_policies = ["on-request"]
@@ -13173,7 +13148,7 @@ Use Auto-review alongside environment isolation, least-privilege permissions, a 
 
 #### Review sensitive Codex actions
 
-[Auto-review](./sandboxing/auto-review.md) routes eligible approval requests to a separate reviewer before the proposed action runs. The reviewer considers the action, task context, and applicable policy. Organizations can [add rules to the active policy](./sandboxing/auto-review.md#configuration) for approved targets, prohibited actions, and required human approvals.
+[Auto-review](./sandboxing/auto-review.md) routes eligible approval requests to a separate reviewer before the proposed action runs. The reviewer considers the action, task context, and applicable policy. Organizations can [replace the reviewer policy](./sandboxing/auto-review.md#configuration) with one that specifies approved targets, prohibited actions, and required human approvals.
 
 Require explicit human approval for actions that affect production, external systems, sensitive data, privilege escalation, persistent access, or irreversible changes. Treat instructions embedded in websites, repositories, documents, and tool outputs as untrusted; they can't expand the authorized scope or override access controls.
 
@@ -13761,7 +13736,6 @@ Set `model` to one available to your signed-in account or workspace. See
 | `apps..open_world_enabled`                                    | `boolean`                                                                                                                                                     |         | Allow or block tools in this app that advertise `open_world_hint = true`.                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `apps..tools..approval_mode`                                  | `auto \| prompt \| writes \| approve`                                                                                                                         |         | Per-tool approval behavior override for a single app tool.                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `apps..tools..enabled`                                        | `boolean`                                                                                                                                                     |         | Per-tool enabled override for an app tool (for example `repos/list`).                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `auto_review.extra_policy`                                    | `string`                                                                                                                                                      |         | Markdown rules that Auto-review applies alongside the active policy. Managed `guardian_extra_policy` takes precedence. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                            |
 | `auto_review.policy`                                          | `string`                                                                                                                                                      |         | Markdown text that replaces the default Auto-review policy. Managed `guardian_policy_config` takes precedence. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                    |
 | `background_terminal_max_timeout`                             | `number`                                                                                                                                                      |         | Maximum poll window in milliseconds for empty `write_stdin` polls (background terminal polling). Default: `300000` (5 minutes). Replaces the older `background_terminal_timeout` key.                                                                                                                                                                                                                                                                                                       |
 | `browser_use.allow_history_access`                            | `boolean`                                                                                                                                                     |         | Set to `false` to restrict browser-history access. Managed requirements can enforce this restriction.                                                                                                                                                                                                                                                                                                                                                                                       |
@@ -14231,7 +14205,6 @@ from either one wins.
 | `features.workspace_dependencies`                            | `boolean`                                   |         | Pin bundled workspace-dependency runtime availability on or off for managed users.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `feedback`                                                   | `table`                                     |         | Managed feedback settings.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `feedback.enabled`                                           | `boolean`                                   |         | Enforce whether users can submit feedback across Codex clients.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `guardian_extra_policy`                                      | `string`                                    |         | Managed Markdown rules that Auto-review applies alongside the active policy. This takes precedence over local `[auto_review].extra_policy`. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `guardian_policy_config`                                     | `string`                                    |         | Managed Markdown text that replaces the default Auto-review policy. This takes precedence over local `[auto_review].policy`. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `hooks`                                                      | `table`                                     |         | Admin-enforced managed lifecycle hooks. Requires a managed hook directory and uses the same event schema as inline `[hooks]` in `config.toml`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `hooks.`                                                     | `array`                                     |         | Matcher groups for a hook event such as `PreModelRequest`, `PostModelRequest`, `PreToolUse`, `PermissionRequest`, `PostToolUse`, `PreCompact`, `PostCompact`, `SessionStart`, `SessionEnd`, `SubagentStart`, `SubagentStop`, `UserPromptSubmit`, or `Stop`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -14790,7 +14763,7 @@ For beta permission profiles that configure filesystem and network access togeth
 You can also use a granular approval policy (`approval_policy = { granular = { ... } }`) to allow or auto-reject individual prompt categories. This is useful when you want normal interactive approvals for some cases but want others, such as `request_permissions` or skill-script prompts, to fail closed automatically.
 
 Set `approvals_reviewer = "auto_review"` to route eligible interactive approval
-requests through Auto-review. To add rules or replace the reviewer policy, see
+requests through Auto-review. To replace the reviewer policy, see
 [Auto-review configuration](./sandboxing/auto-review.md#configuration).
 
 ```toml
@@ -23084,6 +23057,46 @@ these request headers:
 
 Keep authorization decisions in server-side code, and don't depend on
 name-split headers.
+
+#### Call a private site with a SIWC bypass token
+
+Use a Sign in with ChatGPT (SIWC) bypass token when a script or service needs to
+call a site that requires sign-in. The token lets the request pass the site's
+sign-in gate without an interactive browser session.
+
+As the site owner, ask ChatGPT Work or Codex to generate a token for your site:
+
+**Prompt:**
+
+```text
+Generate a Sign in with ChatGPT bypass token for this site so my service can call it without signing in through a browser.
+```
+
+The agent uses `generate_siwc_bypass_token` and returns
+`siwc_bypass_bearer_token`. Generating a token replaces any existing token for
+that site, so update every service that uses the previous value.
+
+Send the token in this HTTP request header:
+
+```text
+OAI-Sites-Authorization: Bearer <siwc_bypass_bearer_token>
+```
+
+Sites consumes this header before forwarding the request to your site. If your
+site also requires its own API credential, send that separately in the ordinary
+`Authorization` header, which Sites preserves.
+
+Bypass requests have no signed-in visitor identity. They don't receive the
+authenticated user headers described above or access to a visitor's connected
+apps. Keep any additional authorization checks in your site's server-side code.
+Use the normal sign-in flow for features that depend on a visitor's identity or
+plugin permissions.
+
+Treat the token as a secret: anyone who has it can pass that site's sign-in
+gate. Store it in your service's secret storage, and keep it out of browser
+code, URLs, and source control. If it is exposed, generate a replacement and
+update your callers. The new token works immediately, but the previous token
+may remain valid until cached configuration expires, for up to five minutes.
 
 #### Bring user data to your site with plugins
 
@@ -47606,27 +47619,21 @@ for examples and security tradeoffs.
 #### Configure Auto-review policy
 
 To make Auto-review the default, select **Global** > **Defaults** > **Command execution** > **Approval reviewer**. Users can still choose another permitted
-reviewer. To require Auto-review or supply organization-wide rules, select
+reviewer. To require Auto-review or replace the reviewer policy, select
 **Edit as TOML** and edit Global `requirements.toml`. Browser actions have
 separate Auto-review controls.
 
-The following example requires Auto-review for eligible approval requests and
-adds an organization-specific rule to the active policy. To also allow manual
-approval, include `"user"` in `allowed_approvals_reviewers`.
+The following example requires Auto-review for eligible approval requests.
+To also allow manual approval, include `"user"` in `allowed_approvals_reviewers`.
 
 ```toml
 allowed_approval_policies = ["on-request"]
 allowed_approvals_reviewers = ["auto_review"]
-
-guardian_extra_policy = """
-Deny uploads of build artifacts to destinations outside artifacts.example.com.
-"""
 ```
 
 To replace the entire policy, use `guardian_policy_config`. See
 [Auto-review configuration](./sandboxing/auto-review.md#configuration) for
-the default policy, how to prepare a replacement, and which managed settings
-take precedence over local ones.
+the default policy and how to prepare a replacement.
 
 #### Control available permission profiles
 
