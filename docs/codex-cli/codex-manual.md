@@ -5893,6 +5893,9 @@ npx @openai/codex-security scan "$REPOSITORY" \
   --auth chatgpt --output-dir "$SCAN_DIR"
 ```
 
+If you have Daybreak Blue access in your ChatGPT workspace, add
+`--model gpt-6-sol --cyber-access-program daybreak_blue` to the scan command.
+
 An interactive terminal shows a live dashboard. Non-interactive terminals show progress
 lines. Add `--headless` to use progress lines in an interactive terminal too.
 The dashboard and saved logs can contain source code or credentials. Review
@@ -6179,15 +6182,12 @@ To use an environment API key, pass `--auth api-key`:
 npx @openai/codex-security scan . --auth api-key
 ```
 
+To scan with Daybreak Blue, use a key from a project with Blue enabled and add
+`--model gpt-6-sol --cyber-access-program daybreak_blue` to the command.
+For other models, see the [model and access program table](https://developers.openai.com/api/docs/guides/daybreak#choose-the-model-and-access-program).
+
 To make stored credentials the automatic default, run
 `unset OPENAI_API_KEY CODEX_API_KEY`.
-
-Use `--auth api-key` with
-`--cyber-access-program standard|daybreak_blue|daybreak_red` to select a
-Cyber access program for OpenAI model requests. Omission preserves Codex
-defaults; `standard` explicitly selects the standard program.
-Selecting a program doesn't grant access; your API project must be approved
-for the selected program. See the [access-program guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/cli.md#select-a-cyber-access-program) for credential requirements.
 
 #### Attribute scans to end users
 
@@ -6224,20 +6224,14 @@ Both providers also support `bulk-scan`.
 #### Use Amazon Bedrock
 
 Use `--provider amazon-bedrock` and a Bedrock model ID with `scan` or
-`bulk-scan`. After AWS provisions model access, scans use AWS credentials
+`bulk-scan`. Bedrock scans use AWS credentials
 without `--auth`, an OpenAI login, or an OpenAI API key.
 
 #### Daybreak Blue and Daybreak Red
 
-Daybreak Blue and Daybreak Red require Trusted Access for Cyber approval.
-To request access, submit the [enterprise access application](https://openai.com/form/enterprise-trusted-access-for-cyber/) or contact your OpenAI account team.
-After approval, work with your AWS account team to provision model access
-on Amazon Bedrock.
-
-Daybreak Red approval does not include GPT-5.6-Cyber access. GPT-5.6-Cyber
-requires separate U.S. government (USG) approval. Ask your OpenAI account
-team to request this additional approval before provisioning GPT-5.6-Cyber
-on Amazon Bedrock. See the [Daybreak access requirements](https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview).
+Request Daybreak access through your OpenAI account team or the [enterprise access application](https://openai.com/form/enterprise-trusted-access-for-cyber/). [Daybreak Red approval](https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview) includes GPT-5.6 Cyber.
+After OpenAI approves your request, ask your AWS account team to provision
+the model in the account you use for scans.
 
 | Access        | Bedrock model ID                   | AWS region  |
 | ------------- | ---------------------------------- | ----------- |
@@ -6246,8 +6240,7 @@ on Amazon Bedrock. See the [Daybreak access requirements](https://help.openai.co
 
 For availability, check the AWS model cards for [Daybreak Blue](https://docs.aws.amazon.com/en_en/bedrock/latest/userguide/model-card-openai-gpt-daybreak-blue-56-sol.html) and [Daybreak Red](https://docs.aws.amazon.com/en_en/bedrock/latest/userguide/model-card-openai-gpt-56-cyber.html).
 
-To scan with Daybreak Blue, replace `` with an AWS profile
-that has access to the Daybreak Blue model:
+Choose an AWS profile with access to the model. For Daybreak Blue, run:
 
 ```bash
 export AWS_PROFILE="<aws-profile-name>"
@@ -6257,8 +6250,7 @@ npx @openai/codex-security scan . \
   --model openai.gpt-daybreak-blue-5.6-sol --effort high
 ```
 
-To scan with Daybreak Red, choose an AWS profile with GPT-5.6-Cyber access.
-This may differ from the profile you use for Daybreak Blue:
+For Daybreak Red, run:
 
 ```bash
 export AWS_PROFILE="<aws-profile-name>"
@@ -6546,6 +6538,7 @@ configuration value.
 | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | `--auth {auto,chatgpt,api-key}`                           | Select the scan credentials. The default is `auto`.                                                             |
 | `--provider {openai,openrouter,fireworks,amazon-bedrock}` | Select the inference provider. The default is `openai`.                                                         |
+| `--cyber-access-program PROGRAM`                          | For OpenAI scans, use `standard`, `daybreak_blue`, or `daybreak_red`.                                           |
 | `--model MODEL`                                           | Select the model. The default is `gpt-5.6-sol`. Required for OpenRouter, Fireworks, and Amazon Bedrock.         |
 | `--effort EFFORT`                                         | Select the model's reasoning effort. The default is `xhigh`; supported values depend on the model and provider. |
 | `--plugin-path PATH`                                      | Use a Codex Security plugin directory or ZIP to override the bundled plugin.                                    |
@@ -28459,7 +28452,6 @@ When the agent makes incorrect assumptions about your codebase, correct them in 
 - **Repeated mistakes**: If the agent makes the same mistake repeatedly, add a rule.
 - **Too much reading**: If it finds the right files but reads too many documents, add routing guidance (which directories/files to prioritize).
 - **Recurring PR feedback**: If you leave the same feedback more than once, codify it.
-- **In GitHub**: In a pull request comment, tag `@codex` with a request (for example, `@codex add this to AGENTS.md`) to delegate the update to a cloud chat.
 - **Automate drift checks**: Use [scheduled tasks](./automations.md) to run recurring checks (for example, daily) that look for guidance gaps and suggest what to add to `AGENTS.md`.
 
 Pair `AGENTS.md` with infrastructure that enforces those rules: pre-commit hooks, linters, and type checkers catch issues before you see them, so the system gets smarter about preventing recurring mistakes.
@@ -35326,26 +35318,6 @@ To request a Security Review manually, add this comment to a pull request:
 Codex reacts while the review is running, then posts security findings directly
 on the pull request. Open the associated Codex task and select the **Security
 Report** tab to view the full report.
-
-#### Act on review findings
-
-After Codex posts a review, you can ask it to fix issues in the same pull
-request by leaving another comment:
-
-```md
-@codex fix the P1 issue
-```
-
-Codex starts a [legacy cloud chat](./environments/cloud-environment.md) with the pull request as context and can push a fix
-back to the branch when it has permission to do so.
-
-#### Give Codex other tasks
-
-If you mention `@codex` in a comment with anything other than `review`, Codex starts a [legacy cloud chat](./environments/cloud-environment.md) using your pull request as context.
-
-```md
-@codex fix the CI failures
-```
 
 #### Troubleshoot code review
 
@@ -53203,8 +53175,6 @@ IDs above without a `us.` or `global.` prefix. See the AWS model cards for [Dayb
 
 Request access through the [enterprise Daybreak application](https://openai.com/form/enterprise-trusted-access-for-cyber/) or your OpenAI account team. After approval,
 work with your AWS account team to provision the model on Amazon Bedrock.
-GPT-5.6-Cyber requires separate model-specific approval beyond Daybreak Red.
-Confirm the [Daybreak access requirements](https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview) with your OpenAI account team.
 
 After provisioning, select Daybreak Blue explicitly in `~/.codex/config.toml`:
 

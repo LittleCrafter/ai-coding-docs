@@ -517,7 +517,6 @@ administrator controls. Overall Work and Codex plan limits are unchanged.
 | [Cloud environments and setup scripts](./environments/cloud-environment.md) | Yes | Yes | Yes | Yes | No |
 | [Cloud agent internet access controls](./cloud/internet-access.md) | Yes | Yes | Yes | Yes | No |
 | [Sites](./sites.md) | Yes | Yes | Yes | Yes | No |
-| [GitHub issue and PR delegation with `@codex`](./third-party/github.md#give-codex-other-tasks) | Yes | Yes | Yes | Yes | No |
 | [GitHub code review and automatic PR reviews](./third-party/github.md) | Yes | Yes | Yes | Yes | No |
 | [Slack cloud integration](./third-party/slack.md) | Yes | Yes | Yes | Yes | No |
 | [Linear cloud integration](./third-party/linear.md) | Yes | Yes | Yes | Yes | No |

@@ -288,8 +288,6 @@ IDs above without a `us.` or `global.` prefix. See the AWS model cards for [Dayb
 
 Request access through the [enterprise Daybreak application](https://openai.com/form/enterprise-trusted-access-for-cyber/) or your OpenAI account team. After approval,
 work with your AWS account team to provision the model on Amazon Bedrock.
-GPT-5.6-Cyber requires separate model-specific approval beyond Daybreak Red.
-Confirm the [Daybreak access requirements](https://help.openai.com/en/articles/20001258-openai-daybreak-trusted-access-for-cyber-overview) with your OpenAI account team.
 
 After provisioning, select Daybreak Blue explicitly in `~/.codex/config.toml`:
 
@@ -386,7 +384,6 @@ Fast Mode isn't available with Amazon Bedrock. Fast Mode uses priority
 | --- | --- |
 | [Codex cloud chats](./cloud.md) | No |
 | [Sites](./sites.md) | No |
-| [GitHub issue and PR delegation with `@codex`](./third-party/github.md#give-codex-other-tasks) | No |
 | [GitHub code review and automatic PR reviews](./third-party/github.md) | No |
 | [Slack cloud integration](./third-party/slack.md) | No |
 | [Linear cloud integration](./third-party/linear.md) | No |

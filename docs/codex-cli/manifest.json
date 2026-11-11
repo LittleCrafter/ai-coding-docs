@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.167.1",
-  "last_updated": "2026-11-11T03:15:44Z",
+  "last_updated": "2026-11-11T13:02:22Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -90,8 +90,8 @@
       "source_url": "https://learn.chatgpt.com/docs/amazon-bedrock",
       "source_md_url": "https://learn.chatgpt.com/docs/amazon-bedrock.md",
       "source_id": "llms:amazon-bedrock",
-      "hash": "02af4879a391f81bb09c1cc0d609b797b6bb50a5346bdb1ea6159665e900a1d6",
-      "last_updated": "2026-11-05T19:08:38Z"
+      "hash": "454999cba943237b6976ad5b9ecd9885faebb063ee738f1db195f242b67130f5",
+      "last_updated": "2026-11-11T13:02:22Z"
     },
     "annotations-extensibility": {
       "slug": "annotations-extensibility",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "7046baf739957b5a93bb41aeed499d99232f04d6717e21e9540d70ef915e0650",
-      "last_updated": "2026-11-11T03:15:44Z"
+      "hash": "87613e0940bc3e1d111371120760e850d0eb25b19e49accb9fbe429bb4380502",
+      "last_updated": "2026-11-11T13:02:22Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -410,8 +410,8 @@
       "source_url": "https://learn.chatgpt.com/docs/customization/overview",
       "source_md_url": "https://learn.chatgpt.com/docs/customization/overview.md",
       "source_id": "llms:customization/overview",
-      "hash": "303e82a879f26d72ca3d5c7ec3e2e0ad4974868eac3dce00bca17f7041170ef7",
-      "last_updated": "2026-09-10T23:35:40Z"
+      "hash": "f74562de05856b3c7216e9b6fedfb3f9287f7c253b9b0e81208295a4cc71510f",
+      "last_updated": "2026-11-11T13:02:22Z"
     },
     "cyber-safety": {
       "slug": "cyber-safety",
@@ -1390,8 +1390,8 @@
       "source_url": "https://learn.chatgpt.com/docs/pricing",
       "source_md_url": "https://learn.chatgpt.com/docs/pricing.md",
       "source_id": "llms:pricing",
-      "hash": "17701ffb0d81fa4a6cc58470e619acd821b88695edfd5c164b3bd505b7503425",
-      "last_updated": "2026-10-28T17:29:45Z"
+      "hash": "cce879883080363a6c7f7529b88e5aade8d6a5387b7323a684e91a8a80801b7b",
+      "last_updated": "2026-11-11T13:02:22Z"
     },
     "projects": {
       "slug": "projects",
@@ -1510,8 +1510,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli.md",
       "source_id": "llms:security/cli",
-      "hash": "b796ba830bd4618bc0a53bc94e2b2148702d07465b9481f0a5cda09a81213d7e",
-      "last_updated": "2026-10-30T21:45:15Z"
+      "hash": "59c122f08a7890186f4246ff72e564ff1d452fb37670094668141007391c0149",
+      "last_updated": "2026-11-11T13:02:22Z"
     },
     "security/cli/bulk-scans": {
       "slug": "security/cli/bulk-scans",
@@ -1570,8 +1570,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/reference",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/reference.md",
       "source_id": "llms:security/cli/reference",
-      "hash": "9f086b7229e71991d8d1e83a66fb635a436d87e11df7ee4bd6f0c7184b914c1c",
-      "last_updated": "2026-11-02T20:56:40Z"
+      "hash": "e3a53fa1b53443122402c6224d0dcfa50791cdad1ea6955210947aedffca7d0d",
+      "last_updated": "2026-11-11T13:02:22Z"
     },
     "security/faq": {
       "slug": "security/faq",
@@ -1870,8 +1870,8 @@
       "source_url": "https://learn.chatgpt.com/docs/third-party/github",
       "source_md_url": "https://learn.chatgpt.com/docs/third-party/github.md",
       "source_id": "llms:third-party/github",
-      "hash": "9b381edb4f0999eeea467c362c0ce813667b79adc1afb99c05052865e31ac8e7",
-      "last_updated": "2026-10-12T20:29:39Z"
+      "hash": "518c3f86ac67a15e00c8dd4498f135cd0a6f35c07236ef3c08fb4972dd368402",
+      "last_updated": "2026-11-11T13:02:22Z"
     },
     "third-party/gitlab": {
       "slug": "third-party/gitlab",
@@ -2075,8 +2075,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-11T03:15:44Z",
-    "fetch_duration_seconds": 72.224,
+    "last_fetch_completed": "2026-11-11T13:02:22Z",
+    "fetch_duration_seconds": 72.197,
     "total_pages_discovered": 207,
     "pages_fetched_successfully": 207,
     "pages_failed": 0,
