@@ -118,7 +118,7 @@ Use an organization-approved GitHub user account, preferably dedicated to this s
 
 If a repository is missing, check the designated account’s GitHub access and the app’s allowed actions in ChatGPT.
 
-Codex Security Cloud uses a personal GitHub connection. See [Cloud setup](../security/setup.md#2-connect-github).
+Daybreak Defense Factory uses a personal GitHub connection. See [Cloud setup](../security/setup.md#2-connect-github).
 
 ### Notion
 

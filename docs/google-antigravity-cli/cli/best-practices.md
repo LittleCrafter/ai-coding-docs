@@ -39,7 +39,7 @@ Type `@` in the prompt box to open path suggestions, and then select a file or d
 
 ### Attaching visual evidence
 
-If you’re debugging visual UI issues, rendering bugs, or frontend layout inconsistencies, capture a screenshot or video recording, copy it, and press `ctrl+v` inside the prompt box to attach it. The agent consults the media file to diagnose the issue.
+If you’re debugging visual UI issues, rendering bugs, or frontend layout inconsistencies, capture a screenshot or video recording, copy it, and press Ctrl + V inside the prompt box to attach it. The agent consults the media file to diagnose the issue.
 
 ## Configure your workspace environment
 
@@ -68,9 +68,9 @@ For fewer prompts, switch to [`auto` mode](./modes.md), which runs shell command
 
 Use active session navigation tools to recover from engineering dead-ends or course-correct intermediate agent loops.
 
-### Course-correct early (`esc`)
+### Course-correct early (Esc)
 
-If you watch an agent execute an incorrect search pattern or write code that deviates from your intentions, press the global escape hatch key `esc` immediately to interrupt the turn and regain focus of a clean prompt.
+If you watch an agent execute an incorrect search pattern or write code that deviates from your intentions, press the global escape hatch key Esc immediately to interrupt the turn and regain focus of a clean prompt.
 
 ### Rewind history with `/rewind`
 

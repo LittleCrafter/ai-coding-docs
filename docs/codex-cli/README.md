@@ -4,7 +4,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 - **Pages mirrored:** 207
 - **Version:** 0.167.1
-- **Last updated:** 2026-11-11T13:02:22Z
+- **Last updated:** 2026-11-11T21:39:35Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -256,7 +256,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Run Codex Security in GitLab CI/CD | [security/cli/ci/gitlab.md](./security/cli/ci/gitlab.md) | [source](<https://learn.chatgpt.com/docs/security/cli/ci/gitlab>) |
 | Codex Security CLI FAQ | [security/cli/faq.md](./security/cli/faq.md) | [source](<https://learn.chatgpt.com/docs/security/cli/faq>) |
 | Codex Security CLI reference | [security/cli/reference.md](./security/cli/reference.md) | [source](<https://learn.chatgpt.com/docs/security/cli/reference>) |
-| Codex Security Cloud FAQ | [security/faq.md](./security/faq.md) | [source](<https://learn.chatgpt.com/docs/security/faq>) |
+| Daybreak Defense Factory FAQ | [security/faq.md](./security/faq.md) | [source](<https://learn.chatgpt.com/docs/security/faq>) |
 | Codex Security plugin quickstart | [security/plugin.md](./security/plugin.md) | [source](<https://learn.chatgpt.com/docs/security/plugin>) |
 | Codex Security plugin changelog | [security/plugin/changelog.md](./security/plugin/changelog.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/changelog>) |
 | Review code changes for security | [security/plugin/code-changes.md](./security/plugin/code-changes.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/code-changes>) |
@@ -270,8 +270,8 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Use the Codex Security workbench | [security/plugin/workbench.md](./security/plugin/workbench.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/workbench>) |
 | Codex Security TypeScript SDK | [security/sdk.md](./security/sdk.md) | [source](<https://learn.chatgpt.com/docs/security/sdk>) |
 | Security Review | [security/security-review.md](./security/security-review.md) | [source](<https://learn.chatgpt.com/docs/security/security-review>) |
-| Codex Security Cloud setup | [security/setup.md](./security/setup.md) | [source](<https://learn.chatgpt.com/docs/security/setup>) |
-| Improve the Cloud threat model | [security/threat-model.md](./security/threat-model.md) | [source](<https://learn.chatgpt.com/docs/security/threat-model>) |
+| Daybreak Defense Factory setup | [security/setup.md](./security/setup.md) | [source](<https://learn.chatgpt.com/docs/security/setup>) |
+| Improve the Daybreak threat model | [security/threat-model.md](./security/threat-model.md) | [source](<https://learn.chatgpt.com/docs/security/threat-model>) |
 
 ## sites
 

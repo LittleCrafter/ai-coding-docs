@@ -1,17 +1,18 @@
-# Codex Security Cloud setup
+# Daybreak Defense Factory setup
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-Run a first scan of a connected GitHub repository with Codex Security Cloud,
-then review its findings. Afterward, you can enable monitoring for new commits.
+Run a first scan of a connected GitHub repository with Daybreak Defense Factory
+(formerly Codex Security Cloud), then review its findings. Afterward, you can
+enable monitoring for new commits.
 
-Codex Security Cloud runs scans in [Codex cloud](../cloud.md). For scans of a
-  local repository in the desktop app or CLI, use the separate [Codex Security
-  plugin](./plugin.md).
+Daybreak Defense Factory runs scans in [Codex cloud](../cloud.md). For scans
+  of a local repository in the desktop app or CLI, use the separate [Codex
+  Security plugin](./plugin.md).
 
 ## Before you start
 
-Use a workspace with Codex Security Cloud access and [Codex cloud](../cloud.md)
+Use a workspace with Daybreak Defense Factory access and [Codex cloud](../cloud.md)
 set up. You need permission to connect the GitHub repository you want to scan.
 You can create its cloud environment during setup.
 
@@ -23,9 +24,8 @@ access yourself, ask your GitHub administrator to add the repository.
 ## 1. Install and open the plugin
 
 1. Open **Plugins** in ChatGPT on the web or in the desktop app.
-2. Search the plugin marketplace for **Codex Security Cloud**.
-3. Install and enable the plugin, then open **Security Cloud** from your
-   installed plugins or sidebar.
+2. Search the plugin marketplace for **Daybreak Defense Factory (Preview)**.
+3. Install and enable the plugin, then open **Daybreak** in the sidebar.
 
 [Open plugin marketplace](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
 
@@ -36,7 +36,7 @@ plugin, select **Scan**. If prompted, select **Connect GitHub** and sign in
 with your own GitHub account. Each person who starts scans needs their own
 connection and access to the repository.
 
-Codex Security Cloud doesn't support workspace connections.
+Daybreak Defense Factory doesn't support workspace connections.
 
 ## 3. Start a repository scan
 
@@ -86,7 +86,7 @@ Once you've reviewed the first scan, you can monitor changes as new commits
 arrive:
 
 1. Select **Scan**, then choose the repository and review the environment.
-2. Under **Scan Method**, select **Continuous Scanning**. Codex Security scans
+2. Under **Scan Method**, select **Continuous Scanning**. The plugin scans
    the repository's default branch.
 3. Choose **Scan commit history from**. Longer windows provide more context,
    but the initial scan takes longer.
@@ -105,10 +105,10 @@ To adjust monitoring, open **Repositories**, select the repository, and open
 many days of history to review, and pause or enable monitoring.
 Select **Save** to apply changes.
 
-The scan owner, people granted edit access, and Codex Security administrators
+The scan owner, people granted edit access, and Daybreak Defense Factory administrators
 can change monitoring settings. Changes, including pausing monitoring, apply to
 that repository's shared configuration in the workspace, not just to the person
-making the change. If you can't edit it, ask the scan owner or a Codex Security
+making the change. If you can't edit it, ask the scan owner or a Daybreak Defense Factory
 administrator.
 
 Review the generated threat model in **Monitoring settings** and update it

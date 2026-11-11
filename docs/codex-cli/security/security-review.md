@@ -96,5 +96,5 @@ findings.
 
 - [Review GitHub pull requests with Codex](../third-party/github.md) explains Code Review and the GitHub integration.
 - [Codex Security](../security.md) gives the product overview.
-- [Codex Security cloud setup](./setup.md) explains repository scans and findings review.
+- [Daybreak Defense Factory setup](./setup.md) explains repository scans and findings review.
 - [Improving the threat model](./threat-model.md) explains how to tune repository context.

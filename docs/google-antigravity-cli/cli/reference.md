@@ -10,6 +10,8 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | :-- | :-- | :-- | :-- |
 | **`/add-dir <path>`** | Utilities | — | Add a directory path to the active workspace. |
 | **[`/agents`](./commands/agents.md)** | Tools & Tasks | — | Open the [Agent Manager panel](./commands/agents.md) to switch custom agents and monitor background subagents. |
+| **[`/agy-customizations`](https://antigravity.google/docs/commands/agy-customizations)** `[request]` | Tools & Tasks | — | Load the [customization reference](https://antigravity.google/docs/commands/agy-customizations) so the agent can create, fix, or explain rules, skills, plugins, hooks, and MCP servers. |
+| **[`/antigravity-guide`](https://antigravity.google/docs/commands/antigravity-guide)** `[question]` | Utilities | — | Ask how to use or configure Antigravity and get an answer from the [official documentation](https://antigravity.google/docs). |
 | **`/artifact`** | Tools & Tasks | — | Open the Artifact Review panel. |
 | **[`/boost`](https://antigravity.google/docs/boost)** `<task>` | Reasoning | — | Run on-demand multi-agent deep reasoning loops. |
 | **[`/browser`](https://antigravity.google/docs/commands/browser)** `<task>` | Tools & Tasks | — | Delegate web browsing, UI verification, and in-browser debugging to the [browser subagent](https://antigravity.google/docs/commands/browser). |
@@ -64,10 +66,10 @@ These hotkeys are always active regardless of which panel, overlay, or prompt is
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
-| **`Esc`** | `cli.escape` | Closes active panels, halts active streams, or clears empty prompts. |
-| **`Ctrl+C`** | `cli.exit` | Terminates the CLI session (prompts for confirmation if agent is working). |
-| **`Ctrl+D`** | `cli.exit` | Exits the CLI session (only when the prompt box is empty). |
-| **`Ctrl+L`** | `cli.clear_screen` | Refreshes and clears the visual terminal buffer. |
+| Esc | `cli.escape` | Closes active panels, halts active streams, or clears empty prompts. |
+| Ctrl + C | `cli.escape` | Interrupts the agent’s current turn. When nothing is running, press it twice to exit the CLI. |
+| Ctrl + D | `cli.exit` | Exits the CLI session (only when the prompt box is empty). |
+| Ctrl + L | `cli.clear_screen` | Refreshes and clears the visual terminal buffer. |
 
 ### Prompt focus keys
 
@@ -75,23 +77,23 @@ These keys are active when writing instructions inside the prompt box.
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
-| **`Enter`** | `cli.enter` | Submits your prompt or active menu selection to the agent. |
-| **`Shift+Enter`** / **`Ctrl+J`** | `prompt.insert_newline` | Inserts a clean newline without submitting. |
-| **`Shift+Tab`** | `cli.cycle_mode` | Cycles between execution modes (`default` > `accept-edits` > `auto` > `plan`; `auto` only where available). |
-| **`Ctrl+V`** | `edit.paste` | Pastes graphic media files or clipboard blocks into the prompt. |
-| **`Ctrl+O`** | `view.toggle_trajectory` | Expands or collapses detailed tool reasoning outputs. |
-| **`Ctrl+R`** | `view.review_artifact` | Opens the Artifact Review panel. |
-| **`Ctrl+G`** | `edit.open_editor` | Launches your default `$EDITOR` shell to compose your prompt. |
-| **`Alt+J`** | `subagent.jump_to_waiting` | Instantly switches focus to the next subagent awaiting confirmation. |
-| **`Ctrl+K`** | `subagent.approve_fast` | Instantly approves the pending subagent action listed in the status alert. |
-| **`Alt+S`** | `swarm.board` | Opens the [live swarm board](https://antigravity.google/docs/swarm#live-board) full screen. |
-| **`Alt+X`** | `swarm.dismiss` | Dismisses a finished swarm’s [status row](https://antigravity.google/docs/swarm#live-status-line). |
-| **`Ctrl+A`** | `—` | Moves the prompt insertion cursor to the beginning of the line. |
-| **`Ctrl+E`** | `—` | Moves the prompt insertion cursor to the end of the line. |
-| **`Ctrl+_`** / **`Ctrl+Shift+-`** | `edit.undo` | Reverts the last edit. |
-| **`Ctrl+Shift+Z`** | `edit.redo` | Redoes the last undone text operation. |
-| **`Ctrl+D`** | `—` | Forward delete (only when the prompt box is non-empty). |
-| **`F5`** | `voice.start_dictation` | Starts or stops [voice dictation](./commands/voice.md). |
+| Enter | `cli.enter` | Submits your prompt or active menu selection to the agent. |
+| Shift + Enter / Ctrl + J | `prompt.insert_newline` | Inserts a clean newline without submitting. |
+| Shift + Tab | `cli.cycle_mode` | Cycles between execution modes (`default` > `accept-edits` > `auto` > `plan`; `auto` only where available). |
+| Ctrl + V | `edit.paste` | Pastes graphic media files or clipboard blocks into the prompt. |
+| Ctrl + O | `view.toggle_trajectory` | Expands or collapses detailed tool reasoning outputs. |
+| Ctrl + R | `view.review_artifact` | Opens the Artifact Review panel. |
+| Ctrl + G | `edit.open_editor` | Opens your prompt in your external editor (the `editor` setting; defaults to `$EDITOR`). |
+| Alt + J | `subagent.jump_to_waiting` | Instantly switches focus to the next subagent awaiting confirmation. |
+| Ctrl + K | `subagent.approve_fast` | Instantly approves the pending subagent action listed in the status alert. |
+| Alt + S | `swarm.board` | Opens the [live swarm board](https://antigravity.google/docs/swarm#live-board) full screen. |
+| Alt + X | `swarm.dismiss` | Dismisses a finished swarm’s [status row](https://antigravity.google/docs/swarm#live-status-line). |
+| Ctrl + A | `—` | Moves the prompt insertion cursor to the beginning of the line. |
+| Ctrl + E | `—` | Moves the prompt insertion cursor to the end of the line. |
+| Ctrl + \_ / Ctrl + Shift + \- | `edit.undo` | Reverts the last edit. |
+| Ctrl + Shift + Z | `edit.redo` | Redoes the last undone text operation. |
+| Ctrl + D | `—` | Forward delete (only when the prompt box is non-empty). |
+| F5 | `voice.start_dictation` | Starts or stops [voice dictation](./commands/voice.md). |
 
 ### Navigation and scrolling
 
@@ -99,11 +101,11 @@ These keys are active inside select panels, menus, and scrollable text boxes.
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
-| **`↑`** / **`↓`** | `navigation.up` / `navigation.down` | Scrolls highlighted selections up or down by one item. |
-| **`PgUp`** / **`Shift+↑`** | `navigation.page_up` / `navigation.half_page_up` | Scrolls the active text viewport up by one page block. |
-| **`PgDn`** / **`Shift+↓`** | `navigation.page_down` / `navigation.half_page_down` | Scrolls the active text viewport down by one page block. |
-| **`←`** / **`→`** | `navigation.left` / `navigation.right` | Swaps pages inside multipage structures (like the Session Picker). |
-| **`Tab`** | `navigation.tab` | Confirms the highlighted slash-command autofill option. |
+| ↑ / ↓ | `navigation.up` / `navigation.down` | Scrolls highlighted selections up or down by one item. |
+| PgUp / Shift + ↑ | `navigation.page_up` / `navigation.half_page_up` | PgUp scrolls the active text viewport up one page; Shift + ↑ scrolls up half a page. |
+| PgDn / Shift + ↓ | `navigation.page_down` / `navigation.half_page_down` | PgDn scrolls the active text viewport down one page; Shift + ↓ scrolls down half a page. |
+| ← / → | `navigation.left` / `navigation.right` | Swaps pages inside multipage structures (like the Session Picker). |
+| Tab | `navigation.tab` | Confirms the highlighted slash-command autofill option. |
 
 ### Tool confirmations
 
@@ -111,9 +113,9 @@ These keys are active during confirmation prompts.
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
-| **`y`** | `confirm.yes` | Authorizes the proposed tool, command, or active artifact. |
-| **`n`** | `confirm.no` | Rejects the proposed tool, command, or active artifact. |
-| **`A`** | `—` | (Inside Review panel) Approves all generated artifacts in one action (built-in shortcut). |
+| y | `confirm.yes` | Authorizes the proposed tool, command, or active artifact. |
+| n | `confirm.no` | Rejects the proposed tool, command, or active artifact. |
+| Shift + A | `—` | (Inside Review panel) Approves all generated artifacts in one action (built-in shortcut). |
 
 ## Command-line flags
 
@@ -172,9 +174,9 @@ To get autocomplete and validation in editors such as VS Code, add `"$schema": "
 | **`notifications`** | boolean | `false` | Rings the terminal bell and shows a desktop notification when the agent needs your approval or an answer, or finishes its turn. |
 | **`showTips`** | boolean | `true` | Displays helpful usage tips while the agent is generating responses. |
 | **`showFeedbackSurvey`** | boolean | `true` | Displays periodic quality feedback surveys upon active task completions. |
-| **`editor`** | string | `"auto"` | External editor for opening artifacts and files and for composing prompts (`Ctrl+G`): `"auto"` (uses `$EDITOR`, then falls back to `vim`, or to `edit` and `notepad` on Windows), `"vim"`, `"emacs"`, or any other editor command. |
+| **`editor`** | string | `"auto"` | External editor for opening artifacts and files and for composing prompts (Ctrl + G): `"auto"` (uses `$EDITOR`, then falls back to `vim`, or to `edit` and `notepad` on Windows), `"vim"`, `"emacs"`, or any other editor command. |
 | **`editorMode`** | string | `"default"` | Prompt editing model: `"default"` (flat text editing) or `"vim"` (modal editing). Distinct from `editor`, which selects an external program. Refer to [Vim editor mode](./vim-editor-mode.md). |
-| **`vimInsertFirst`** | boolean | `false` | Starts Vim editing in Insert mode and makes a bare `Enter` submit. Requires `editorMode` set to `"vim"`. |
+| **`vimInsertFirst`** | boolean | `false` | Starts Vim editing in Insert mode and makes a bare Enter submit. Requires `editorMode` set to `"vim"`. |
 | **`allowNonWorkspaceAccess`** | boolean | `false` | Lets the agent read and edit files outside your workspace folders, subject to `toolPermission`, `agentMode`, and your permission rules. |
 | **`enableTerminalSandbox`** | boolean | `false` | Restricts all local execution commands launched by agents to OS containment rings (in `v1.4.4+`, no effect if the sandbox isn’t available on your machine). |
 | **`useG1Credits`** | boolean | `false` | Uses your AI credits for model requests after your plan’s quota runs out. Not available for business accounts. |

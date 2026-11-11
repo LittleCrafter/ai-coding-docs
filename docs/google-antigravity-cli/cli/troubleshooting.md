@@ -120,7 +120,7 @@ If you still experience access issues, ensure your user account has the necessar
 
 ### Symptom
 
-Pasting screenshots or media files using `Ctrl+V` within an SSH terminal returns a failure notification:
+Pasting screenshots or media files using Ctrl + V within an SSH terminal returns a failure notification:
 
 ```text
 Error: local pasteboard is empty or unreachable over SSH connection
@@ -136,7 +136,7 @@ Verify that you’re using supported terminal emulators and configurations:
 
 1.  **Use iTerm2 or Ghostty**: These emulators support advanced clip channels.
 2.  **Configure iTerm2 forwarding**: Enable clipboard access in your terminal settings:
-    *   Open iTerm2 Preferences (`Cmd+,`).
+    *   Open iTerm2 Preferences (Cmd + ,).
     *   Go to **General** > **Selection**.
     *   Select **Applications in terminal may access clipboard** (enabling OSC 52 write channels).
 3.  **Bypass multiplexers**: If running inside `tmux`, ensure your active configuration maps standard paste clips:

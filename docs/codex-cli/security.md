@@ -8,12 +8,12 @@ lives and how you want to review the results.
 
 ## Choose where to start
 
-| Use                   | When you want to                                                          | Start here                                          |
-| --------------------- | ------------------------------------------------------------------------- | --------------------------------------------------- |
-| Codex Security Cloud  | Scan connected GitHub repositories in Codex cloud or monitor new commits. | [Cloud setup](./security/setup.md)                |
-| Codex Security plugin | Scan a local repository in Codex and work through findings interactively. | [Run your first local scan](./security/plugin.md) |
-| Codex Security CLI    | Run repeatable terminal scans or add checks to CI.                        | [CLI quickstart](./security/cli.md)               |
-| Codex Security SDK    | Run scans and handle results in an application or developer tool.         | [SDK guide](./security/sdk.md)                    |
+| Use                      | When you want to                                                          | Start here                                          |
+| ------------------------ | ------------------------------------------------------------------------- | --------------------------------------------------- |
+| Daybreak Defense Factory | Scan connected GitHub repositories in Codex cloud or monitor new commits. | [Cloud setup](./security/setup.md)                |
+| Codex Security plugin    | Scan a local repository in Codex and work through findings interactively. | [Run your first local scan](./security/plugin.md) |
+| Codex Security CLI       | Run repeatable terminal scans or add checks to CI.                        | [CLI quickstart](./security/cli.md)               |
+| Codex Security SDK       | Run scans and handle results in an application or developer tool.         | [SDK guide](./security/sdk.md)                    |
 
 For your first local scan, use the plugin. In the ChatGPT desktop app, select
 **Codex**, install **Codex Security**, and open **Security** in the sidebar.
@@ -23,7 +23,7 @@ and findings available for review. You can also use the plugin in Codex CLI.
 The Codex Security CLI and SDK are distributed in the public [@openai/codex-security package](https://github.com/openai/codex-security). Scans using OpenAI inference require Codex Security access. See each quickstart for its
 runtime and authentication requirements.
 
-Codex Security Cloud is a separate plugin, available in research preview on
+Daybreak Defense Factory is a separate plugin, available in research preview on
 the web and in the desktop app. It requires workspace access, a GitHub
 connection, and a compatible Codex cloud environment. You can connect the
 repository and create an environment during setup.

@@ -16,15 +16,15 @@ Antigravity CLI features a sticky prompt panel positioned at the bottom of your 
 
 ### Submitting prompts
 
-To initiate an agent turn, type your instruction into the prompt panel and press `Enter`. The agent immediately analyzes your current directory workspace, reads required configurations, and begins formulating an execution plan.
+To initiate an agent turn, type your instruction into the prompt panel and press Enter. The agent immediately analyzes your current directory workspace, reads required configurations, and begins formulating an execution plan.
 
 ### Interrupting active sessions
 
-If the agent initiates an undesired task or loops during command execution, press `Esc` to immediately halt the session.
+If the agent initiates an undesired task or loops during command execution, press Esc to immediately halt the session.
 
 Note
 
-**Universal escape**: The `Esc` key acts as a global escape hatch. Pressing `Esc` instantly cancels any active agent turn, closes overlay panels, and returns focus to a clean prompt box.
+**Universal escape**: The Esc key acts as a global escape hatch. Pressing Esc instantly cancels any active agent turn, closes overlay panels, and returns focus to a clean prompt box.
 
 ## Multiline composition
 
@@ -34,15 +34,15 @@ For complex directives, structured test scenarios, or multi-paragraph instructio
 
 You can insert newlines using any of the following shortcuts:
 
-*   **Standard**: Press `Shift+Enter` or `ctrl+j` to insert a clean newline within your active prompt window without submitting.
-*   **macOS Terminal fallback**: If you’re using Apple Terminal (which doesn’t forward `Shift+Enter` by default), press `Option+Enter`. Ensure you check **Use Option as Meta key** in your Terminal Preferences profile.
-*   **Universal slash escape**: Type a trailing backslash `\` at the end of your active line and press `Enter`. The CLI automatically removes the backslash and inserts a newline.
+*   **Standard**: Press Shift + Enter or Ctrl + J to insert a clean newline within your active prompt window without submitting.
+*   **macOS Terminal fallback**: If you’re using Apple Terminal (which doesn’t forward Shift + Enter by default), press Option + Enter. Ensure you check **Use Option as Meta key** in your Terminal Preferences profile.
+*   **Universal slash escape**: Type a trailing backslash `\` at the end of your active line and press Enter. The CLI automatically removes the backslash and inserts a newline.
 
 ### Editing prompts in `$EDITOR`
 
 To draft or edit extensive prompt structures in your primary development editor, follow these steps:
 
-1.  Press `ctrl+g` inside the empty prompt panel.
+1.  Press Ctrl + G inside the empty prompt panel.
 2.  The CLI launches your system’s default text editor (such as `vim`, `nano`, or `code`, configured using `/config` or your environment’s `$EDITOR` variable).
 3.  Draft your multi-line instruction inside the temporary editor buffer.
 4.  Save and exit the editor. The CLI automatically imports the edited buffer directly back into the terminal prompt.
@@ -53,7 +53,7 @@ Type `@` in the prompt box to add a file or directory to your prompt, or start y
 
 ## Attaching media
 
-Antigravity CLI supports pasting rich media formats directly from your system clipboard. Press `ctrl+v` (or native terminal paste) inside the prompt panel to attach screenshot mockups or video recordings.
+Antigravity CLI supports pasting rich media formats directly from your system clipboard. Press Ctrl + V (or native terminal paste) inside the prompt panel to attach screenshot mockups or video recordings.
 
 ### Supported file types
 

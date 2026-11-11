@@ -34,7 +34,7 @@ The `/fork` command clones your entire conversation history up to the current tu
 
 To fork an active conversation into a new branch, follow these steps:
 
-1.  Type `/fork` inside the prompt panel and press `Enter`.
+1.  Type `/fork` inside the prompt panel and press Enter.
 2.  The CLI allocates a new unique session ID and copies the conversation history and context up to that point while keeping the existing workspace.
 3.  Your active terminal switches immediately to the new branch.
 4.  If the experiment fails, run `/resume` to restore your original, stable conversation branch.

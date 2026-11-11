@@ -401,7 +401,7 @@ Fast Mode isn't available with Amazon Bedrock. Fast Mode uses priority
 | [Analytics dashboard](./enterprise/workspace-analytics.md) | No |
 | [Analytics API](./enterprise/analytics-api.md) | No |
 | [Compliance API and audit logs](./enterprise/compliance-api.md) | No |
-| [Codex Security cloud for connected GitHub repositories](./security/setup.md) | No |
+| [Daybreak Defense Factory for connected GitHub repositories](./security/setup.md) | No |
 
 <div
   id="codex-plan-region-limits"

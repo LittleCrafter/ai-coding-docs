@@ -22,11 +22,11 @@ Vim editor mode is off by default. Turn it on from the interactive settings pane
 
 To enable Vim editor mode in the settings panel, follow these steps:
 
-1.  Type `/settings` inside the prompt panel and press `Enter`.
-2.  Navigate to **Editor Mode** using `↑`/`↓`.
-3.  Press `Enter` to select `vim`.
-4.  Set **Editor Mode** > **Insert First** to choose which mode each prompt starts in. Leave it `off` to start in Normal mode, or set it `on` to start in Insert mode with a bare `Enter` that submits. Refer to [Start in insert mode](#start-in-insert-mode).
-5.  Press `Esc` to save and close the editor.
+1.  Type `/settings` inside the prompt panel and press Enter.
+2.  Navigate to **Editor Mode** using ↑/↓.
+3.  Press Enter to select `vim`.
+4.  Set **Editor Mode** > **Insert First** to choose which mode each prompt starts in. Leave it `off` to start in Normal mode, or set it `on` to start in Insert mode with a bare Enter that submits. Refer to [Start in insert mode](#start-in-insert-mode).
+5.  Press Esc to save and close the editor.
 
 ### Using `settings.json`
 
@@ -41,15 +41,15 @@ Set `editorMode` in your configuration profile:
 
 The CLI loads this file from `~/.gemini/antigravity-cli/settings.json` at startup. `editorMode` accepts `"default"` and `"vim"`. `vimInsertFirst` controls which mode each new prompt starts in and applies only when `editorMode` is `"vim"`; refer to [Start in insert mode](#start-in-insert-mode).
 
-> **Note:** `editorMode` is unrelated to the [`editor` setting](https://antigravity.google/docs/cli/settings). `editor` picks the external program that `Ctrl+G` launches, so setting `editor` to `"vim"` opens Vim in a separate window and does nothing to the prompt. `editorMode` is the one that controls modal editing inside the CLI prompt itself.
+> **Note:** `editorMode` is unrelated to the [`editor` setting](https://antigravity.google/docs/cli/settings). `editor` picks the external program that Ctrl + G launches, so setting `editor` to `"vim"` opens Vim in a separate window and does nothing to the prompt. `editorMode` is the one that controls modal editing inside the CLI prompt itself.
 
 ## Switch between modes
 
-Vim editor mode starts in NORMAL. Press `i` to type, and `Esc` to return to NORMAL.
+Vim editor mode starts in NORMAL. Press `i` to type, and Esc to return to NORMAL.
 
 | Command | Action | From mode |
 | :-- | :-- | :-- |
-| `Esc`, `Ctrl+C` | Enter NORMAL mode | INSERT, VISUAL |
+| Esc / Ctrl + C | Enter NORMAL mode | INSERT, VISUAL |
 | `i` | Insert before the cursor | NORMAL |
 | `I` | Insert at the first non-blank character | NORMAL |
 | `a` | Insert after the cursor | NORMAL |
@@ -70,13 +70,13 @@ The status line reports the current mode:
 
 An empty badge area means you’re in NORMAL mode. If you run a [custom status line](#show-the-mode-in-a-custom-status-line), it replaces this badge unless you stack it with the default.
 
-> **Tip:** Press `?` in NORMAL mode to open the shortcuts overlay, or run `/help` and select the `vim` tab for a full cheat sheet.
+> **Tip:** Press ? in NORMAL mode to open the shortcuts overlay, or run `/help` and select the `vim` tab for a full cheat sheet.
 
 ## Submit your prompt
 
 Enter behaves differently in each mode, so you can compose multi-line prompts without accidental submits.
 
-| Context | `Enter` | `Ctrl+S` / `Ctrl+Enter` | `ZZ` |
+| Context | Enter | Ctrl + S / Ctrl + Enter | `ZZ` |
 | :-- | :-- | :-- | :-- |
 | NORMAL mode | Submit | Submit | Submit |
 | INSERT mode | Insert a newline | Submit | — |
@@ -86,7 +86,7 @@ Enter behaves differently in each mode, so you can compose multi-line prompts wi
 
 ### Start in insert mode
 
-Set `vimInsertFirst` when you want each new prompt to begin in INSERT mode with a bare `Enter` that submits. This keeps the default typing experience while leaving NORMAL mode one `Esc` away.
+Set `vimInsertFirst` when you want each new prompt to begin in INSERT mode with a bare Enter that submits. This keeps the default typing experience while leaving NORMAL mode one Esc away.
 
 ```json
 {
@@ -127,7 +127,7 @@ Editing commands fall into three groups: single keys that act immediately, opera
 | `D` `C` | Delete or change from the cursor to the end of the line |
 | `o` `O` | Open a new line below or above and enter INSERT mode |
 | `p` `P` | Paste after or before the cursor |
-| `u` `U` | Undo, redo. `Ctrl+R` does not redo; it opens artifact review |
+| `u` `U` | Undo, redo. Ctrl + R does not redo; it opens artifact review |
 
 Commands take no count prefix, so `3dd` deletes one line. To act on several lines at once, select them with `V` and press the operator. There is also no `.` to repeat the last change.
 
@@ -178,7 +178,7 @@ yiw    Yank the word under the cursor
 
 ## Work with selections
 
-Press `v` or `V` to select, move with any motion, then apply a command. Press `v` or `V` again, or `Esc`, to leave.
+Press `v` or `V` to select, move with any motion, then apply a command. Press `v` or `V` again, or Esc, to leave.
 
 | Key | Action on the selection |
 | :-- | :-- |
@@ -193,7 +193,7 @@ Press `v` or `V` to select, move with any motion, then apply a command. Press `v
 
 ## Run slash and shell commands
 
-Press `/` or `!` in NORMAL mode. The CLI inserts the character and switches to INSERT mode, so slash commands and shell commands work without pressing `i` first.
+Press / or ! in NORMAL mode. The CLI inserts the character and switches to INSERT mode, so slash commands and shell commands work without pressing `i` first.
 
 ```text
 /settings     Open the settings panel from NORMAL mode
@@ -216,7 +216,7 @@ Motions, operators, and text objects are fixed and can’t be remapped.
 
 ### Submit with Enter in NORMAL mode only
 
-This is the default. `Enter` submits from NORMAL mode and inserts a newline in INSERT mode, so you can type freely and submit with a single `Esc` `Enter`. No configuration is needed. Leave `vimInsertFirst` off:
+This is the default. Enter submits from NORMAL mode and inserts a newline in INSERT mode, so you can type freely and submit with a single Esc Enter. No configuration is needed. Leave `vimInsertFirst` off:
 
 ```json
 {
@@ -227,7 +227,7 @@ This is the default. `Enter` submits from NORMAL mode and inserts a newline in I
 
 ### Submit with Enter in INSERT mode too
 
-Move `enter` out of `vim.insert.insert_newline` and into `vim.insert.submit`. `Shift+Enter`, `Alt+Enter`, and `Ctrl+J` still insert newlines:
+Move `enter` out of `vim.insert.insert_newline` and into `vim.insert.submit`. Shift + Enter, Alt + Enter, and Ctrl + J still insert newlines:
 
 ```json
 {
@@ -238,7 +238,7 @@ Move `enter` out of `vim.insert.insert_newline` and into `vim.insert.submit`. `S
 
 Setting `vimInsertFirst` to `true` achieves the same submit behavior without editing keybindings, but it also changes which mode each new prompt starts in.
 
-> **Warning:** `Enter` always submits in NORMAL mode. Remapping `vim.normal.submit` adds keys; it never removes `Enter`.
+> **Warning:** Enter always submits in NORMAL mode. Remapping `vim.normal.submit` adds keys; it never removes Enter.
 
 ## Show the mode in a custom status line
 

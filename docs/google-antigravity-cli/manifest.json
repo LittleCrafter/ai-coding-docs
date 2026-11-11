@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-11-10T21:03:34Z",
+  "last_updated": "2026-11-11T21:37:00Z",
   "files": {
     "cli/acp": {
       "slug": "cli/acp",
@@ -20,8 +20,8 @@
       "source_url": "https://antigravity.google/docs/cli/artifacts",
       "source_md_url": "https://antigravity.google/docs/cli/artifacts.md",
       "source_id": "cli/artifacts",
-      "hash": "e552c11f8138925c84c4665d9746025f5fc44a62b883a750ae15882f9f95e295",
-      "last_updated": "2026-10-22T07:59:56Z"
+      "hash": "e2061828ef359ad68cdb82e17d04570dd65eb395c12a7ca95a58404e28609404",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/best-practices": {
       "slug": "cli/best-practices",
@@ -30,8 +30,8 @@
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "adb3059cd864a817f5aecd6ff2e030207b9a3caf195eb18bf1e0f912401a6460",
-      "last_updated": "2026-11-04T18:54:31Z"
+      "hash": "f7b747e4f654a55598c6383ddc80d2ccde9e7981df329833d70ca4fe92892040",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -90,8 +90,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/credits",
       "source_md_url": "https://antigravity.google/docs/cli/commands/credits.md",
       "source_id": "cli/commands/credits",
-      "hash": "f5233739121e83b695e570646999efa5f15f750b46048bae55c2431969f6aa05",
-      "last_updated": "2026-10-22T01:59:38Z"
+      "hash": "1d7cdc8c459f3a12aac0a1958a3d44a75d3a441119c46a2e072c4b3b5f97a773",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/commands/diff": {
       "slug": "cli/commands/diff",
@@ -170,8 +170,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/voice",
       "source_md_url": "https://antigravity.google/docs/cli/commands/voice.md",
       "source_id": "cli/commands/voice",
-      "hash": "c1df92aff799de39dd7b75fb825135f248e15ac06828321d0df70a0d689b37d1",
-      "last_updated": "2026-11-04T00:56:54Z"
+      "hash": "3517030892490748d36ab370a79407bd7eca6bdca3d6b6a5bc1f09bb01a99d3c",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/conversations": {
       "slug": "cli/conversations",
@@ -180,8 +180,8 @@
       "source_url": "https://antigravity.google/docs/cli/conversations",
       "source_md_url": "https://antigravity.google/docs/cli/conversations.md",
       "source_id": "cli/conversations",
-      "hash": "59ba429d8290ec13c543021c68d334635cf5e39dadbacbb23a111a85537a91ff",
-      "last_updated": "2026-10-22T14:08:50Z"
+      "hash": "bb7ba6bd97a6478884dfaddedcf81f66c3783c6523b4989fad8fb62535e07bf0",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/credits": {
       "slug": "cli/credits",
@@ -230,8 +230,8 @@
       "source_url": "https://antigravity.google/docs/cli/prompting",
       "source_md_url": "https://antigravity.google/docs/cli/prompting.md",
       "source_id": "cli/prompting",
-      "hash": "5beb2e5b2a405a938711eac6e7baac5a64b91841ac2c709e87bc2cbcb4089358",
-      "last_updated": "2026-10-29T09:13:03Z"
+      "hash": "1f6ba0973a66eb785cbb9c635911d54b319117a80f7b2b5a9f61587f9727ba91",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/reference": {
       "slug": "cli/reference",
@@ -240,8 +240,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "f8c4bdfb384a7d9398e482e931e9774ead8c049c7a5586978dc82ddb72833bac",
-      "last_updated": "2026-11-10T21:03:34Z"
+      "hash": "5ece1bcd9644f8d021077070944da707f88bf0970e1408b77be83600df3777bd",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -270,8 +270,8 @@
       "source_url": "https://antigravity.google/docs/cli/troubleshooting",
       "source_md_url": "https://antigravity.google/docs/cli/troubleshooting.md",
       "source_id": "cli/troubleshooting",
-      "hash": "b9db83284a60b72ec1ca7c95a7bb1626e30007f57d9ca2318fccbea543c01ece",
-      "last_updated": "2026-10-22T14:08:50Z"
+      "hash": "e67ad885a0fb6e04c2023fab1e5f2146d8d3a6c9141c540a92870b974902141d",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/using": {
       "slug": "cli/using",
@@ -280,8 +280,8 @@
       "source_url": "https://antigravity.google/docs/cli/using",
       "source_md_url": "https://antigravity.google/docs/cli/using.md",
       "source_id": "cli/using",
-      "hash": "6f52e02fd48c41acb8de1e888796f89c5895fdfe50fec2847011e076771a2f87",
-      "last_updated": "2026-10-22T23:41:52Z"
+      "hash": "74518e766f8cec74bebd69c5dbc65e8c39d25e8658b78cec5e8bebeb06e347e2",
+      "last_updated": "2026-11-11T21:37:00Z"
     },
     "cli/vim-editor-mode": {
       "slug": "cli/vim-editor-mode",
@@ -290,13 +290,13 @@
       "source_url": "https://antigravity.google/docs/cli/vim-editor-mode",
       "source_md_url": "https://antigravity.google/docs/cli/vim-editor-mode.md",
       "source_id": "cli/vim-editor-mode",
-      "hash": "4730597390e1e345d483bf4a6ac9330c492bf43ef5540e61a3e389ef135a5659",
-      "last_updated": "2026-10-22T14:08:50Z"
+      "hash": "484b63965eda7f4eb52b870ac34afa6b84e6b82d4734bb163eaf8aed750ee1df",
+      "last_updated": "2026-11-11T21:37:00Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-10T21:03:34Z",
-    "fetch_duration_seconds": 9.864,
+    "last_fetch_completed": "2026-11-11T21:37:00Z",
+    "fetch_duration_seconds": 9.858,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,

@@ -15,7 +15,7 @@ For details on how credits are tracked, low credit alerts, and settings configur
 To view your credit status, follow these steps:
 
 1.  Type `/credits` in the prompt box.
-2.  Press `Enter`.
+2.  Press Enter.
 
 ```text
 /credits
@@ -27,7 +27,7 @@ The credits panel displays the following details:
 *   **Usage summary**: A breakdown of credits consumed in the current billing cycle.
 *   **Quick links**: Actions to buy more credits or upgrade your plan (which open the relevant web portals).
 
-Press `Esc` to close the panel and return to the main prompt.
+Press Esc to close the panel and return to the main prompt.
 
 ## Next steps
 

@@ -42,7 +42,7 @@ The following keyboard shortcuts control active dictation sessions. All other ke
 | :-- | :-- |
 | Enter (or F5) | Stop recording and insert the transcript into the prompt. |
 | Esc | Discard the recording and restore previous prompt contents. |
-| Ctrl+Z _(after)_ | Revert the entire dictation as a single undo operation. |
+| Ctrl + \_ _(after)_ | Revert the entire dictation as a single undo operation. |
 
 If the prompt box already contained text before starting dictation, the transcript is appended to the existing text rather than replacing it.
 
@@ -139,7 +139,7 @@ If you encounter issues with voice dictation, review the following solutions:
 
 *   **Transcription fails with a permissions message**: Your stored credentials predate voice dictation support. Execute `/logout`, sign in again to refresh permissions, and retry. Note that voice dictation isn’t available for business or enterprise accounts.
 *   **Nothing is transcribed and the recording is silent**: The active terminal process lacks operating system microphone permissions (the terminal running the CLI for local sessions, or the terminal running `agy mic-serve` for SSH sessions):
-    *   **macOS**: Approve the system permission dialog, or grant access under **System Settings** > **Privacy & Security** > **Microphone**. Restart your terminal using Cmd+Q to apply the updated permission.
+    *   **macOS**: Approve the system permission dialog, or grant access under **System Settings** > **Privacy & Security** > **Microphone**. Restart your terminal using Cmd + Q to apply the updated permission.
     *   **Windows**: Enable microphone access under **Settings** > **Privacy & Security** > **Microphone**, and ensure **Let desktop apps access your microphone** is enabled.
 *   **Connecting fails immediately over SSH**: No process is listening on the forwarded port. Verify that both `agy mic-serve` on your local machine and the `ssh -R` reverse tunnel are running.
 *   **Dictation reports that the microphone server closed the connection**: The server process terminated or the network tunnel dropped. Inspect the output of `agy mic-serve` on your local machine for detailed error diagnostics.

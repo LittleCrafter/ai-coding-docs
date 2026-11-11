@@ -19,7 +19,7 @@ The TUI partitions these assets into two interactive layers:
 
 ## Overview of /artifact
 
-When the agent produces or modifies files, a notification updates in your TUI status bar (`/artifact to review`). Press `ctrl+r` inside the prompt box to open the full-screen **Artifact Picker** panel.
+When the agent produces or modifies files, a notification updates in your TUI status bar (`/artifact to review`). Press Ctrl + R inside the prompt box to open the full-screen **Artifact Picker** panel.
 
 ```text
                                                                                                     10 artifacts · /artifact to review
@@ -47,15 +47,15 @@ Audit the file checklist using the following dedicated panel controls:
 
 | Key | TUI Command | Action Behavior |
 | :-- | :-- | :-- |
-| **`↑`** / **`↓`** | `navigation.up` / `navigation.down` | Scrolls highlighted selections up and down through the list of entries. |
-| **`h`** / **`l`** | `navigation.left` / `navigation.right` | Focuses and toggles between inline row buttons: **open**, **approve**, and **reject** (Left/Right arrows also supported). |
-| **`p`** | `—` | Toggles a **quick inline file preview**. This opens a 12-line truncated and indented code block preview directly under the selected row. |
-| **`y`** | `confirm.yes` | Instantly approves the highlighted file. The status marker updates to a green checkmark (`✓ approved`). |
-| **`n`** | `confirm.no` | Instantly rejects the highlighted file. The status marker updates to a red cross (`✗ rejected`). |
-| **`Shift+A`** | `—` | Bulk-approves all pending actionable files in one action. |
-| **`Shift+R`** | `—` | Bulk-rejects all pending actionable files in one action. |
-| **`Enter`** | `cli.enter` | Executes the active focused button. If the `open` button is focused, it launches the full-screen detail viewer. |
-| **`Esc`** | `cli.escape` | Saves your active review state, submits approvals/rejections back to the agent thread, and returns focus to the prompt box. |
+| ↑ / ↓ | `navigation.up` / `navigation.down` | Scrolls highlighted selections up and down through the list of entries. |
+| h / l | `navigation.left` / `navigation.right` | Focuses and toggles between inline row buttons: **open**, **approve**, and **reject** (← / → also work). |
+| p | `—` | Toggles a **quick inline file preview**. This opens a 12-line truncated and indented code block preview directly under the selected row. |
+| y | `confirm.yes` | Instantly approves the highlighted file. The status marker updates to a green checkmark (`✓ approved`). |
+| n | `confirm.no` | Instantly rejects the highlighted file. The status marker updates to a red cross (`✗ rejected`). |
+| Shift + A | `—` | Bulk-approves all pending actionable files in one action. |
+| Shift + R | `—` | Bulk-rejects all pending actionable files in one action. |
+| Enter | `cli.enter` | Executes the active focused button. If the `open` button is focused, it launches the full-screen detail viewer. |
+| Esc | `cli.escape` | Saves your active review state, submits approvals/rejections back to the agent thread, and returns focus to the prompt box. |
 
 ### Code files and visual media
 
@@ -63,14 +63,14 @@ To organize workspace assets, the picker separates files by format types:
 
 *   **Actionable code files**: Standard programming code, configuration files, and plan Markdown files that require explicit approvals.
 *   **Collapsible media drawer**: Visual asset files (such as PNG, JPG, WebP, SVG, MP4, or WebM media) are grouped into a dedicated **Media** drawer header. Use the following actions to interact with media items:
-    *   Highlight the **Media** header row and press `Enter` to expand or collapse the drawer list.
-    *   Highlight a specific media item and press `Enter` to open the file inside your operating system’s native media viewer.
+    *   Highlight the **Media** header row and press Enter to expand or collapse the drawer list.
+    *   Highlight a specific media item and press Enter to open the file inside your operating system’s native media viewer.
 
 * * *
 
 ## Viewing an artifact
 
-To launch a close audit of a file’s code structure or proposed logic, select `open` (or press `Enter` directly on a highlighted code row) to open the **Artifact Detail Viewer**.
+To launch a close audit of a file’s code structure or proposed logic, select `open` (or press Enter directly on a highlighted code row) to open the **Artifact Detail Viewer**.
 
 ```text
 implementation_plan.md
@@ -142,7 +142,7 @@ implementation_plan.md
 Use the following keyboard shortcuts to navigate the detail viewer:
 
 *   **Scrolling**: Scroll page-by-page or line-by-line using `j`/`k` (or standard arrow keys).
-*   **Boundary jump**: Press `g` to jump to the top of the file, and `Shift+G` to jump directly to the bottom.
+*   **Boundary jump**: Press `g` to jump to the top of the file, and Shift + G to jump directly to the bottom.
 *   **Toggle gutter**: Press `l` to toggle the line number gutter on and off for a cleaner presentation of the raw code.
 
 ### Granular line commenting
@@ -151,7 +151,7 @@ If a specific block of code requires correction, follow these steps:
 
 1.  Navigate and position your cursor on the target line.
 2.  Press `c` to open an inline, multi-line text editor buffer attached directly to that line.
-3.  Draft your descriptive feedback, and press `Esc` to save and submit the comment. The line is updated with a visual comment indicator (`💬`).
+3.  Draft your descriptive feedback, and press Esc to save and submit the comment. The line is updated with a visual comment indicator (`💬`).
 4.  To delete your active feedback, position your cursor on the commented line and press `d`.
 
 ### Custom Mermaid diagram rendering
@@ -162,9 +162,9 @@ If the active document contains structured system flowcharts, database relations
     *   **Kitty graphics image**: Renders diagrams natively as inline graphics within Kitty-compatible terminal emulators.
     *   **ASCII box art** (default): Renders diagrams as clean, high-performance text art compatible with all shells.
     *   **Raw code**: Shows the raw Markdown code block fences.
-*   **Zooming graphics**: When Kitty graphics image mode is active, press `ctrl+=` to zoom in and scale up the image, and `ctrl+-` to zoom out.
+*   **Zooming graphics**: When Kitty graphics image mode is active, press Ctrl + \= to zoom in and scale up the image, and Ctrl + \- to zoom out.
 
-Press `Esc` to close the detail viewer and return to the primary picker checklist.
+Press Esc to close the detail viewer and return to the primary picker checklist.
 
 ## Next steps
 

@@ -5552,13 +5552,6 @@ open findings in the repository summary don't affect that policy. An
 incomplete scan can leave areas without a review even when it reports no
 findings.
 
-In the Action release `action-v0.3.0`, a completed scan means the configured analysis
-produced a valid result. Scope exclusions, deferred investigations, and other
-coverage notes do not bypass the severity policy. Scanner and required
-reporting errors fail the job. CLI `0.3.0` returns exit code `2` for input,
-execution, result-integrity, or required-output failures. Review `coverage.json` when assessing the result; completion does
-not certify that every vulnerability was found.
-
 Configure enforcement in the [GitHub Actions
 guide](./security/cli/ci/github.md#choose-a-severity-policy) or the [GitLab
 CI/CD guide](./security/cli/ci/gitlab.md#separate-reporting-from-policy-enforcement).
@@ -5739,8 +5732,8 @@ can show how findings changed, but a missing finding alone doesn't verify a fix.
 
 In `scan-manifest.json`, check `scan.status` to see whether the scan finished.
 `scan.scope` records the configured scope. `scan.review.excludedPaths` lists
-path patterns the scan excluded from review. If an older manifest has
-`scan.coverageRef`, open the file it names for coverage details.
+path patterns the scan excluded from review. Check `scan.scope.limitations` for recorded
+gaps, such as a deep scan reaching its deadline before any review finished.
 
 Coverage gaps don't change a completed scan's exit code. Exit `0` doesn't mean
 every file was reviewed. A later scan can't establish that an earlier finding
@@ -5753,18 +5746,16 @@ no longer exists when it doesn't cover that finding's original path.
 Set a worker deadline when starting a deep scan:
 
 ```bash
-npx @openai/codex-security scan . --mode deep --max-time-hours 1.5
+npx @openai/codex-security scan . --mode deep --max-time 90
 ```
 
-The default is `96` hours. Use any positive value up to `96`, including
-fractions. At the deadline, Codex Security stops unfinished workers, keeps
-completed standard-scan results, and aggregates them into the final report.
-Check the report for reviewed areas and deferred work. The deadline alone
-doesn't determine the exit code; execution status and the severity policy do.
+The default and maximum are 5,760 minutes (96 hours). You can use fractional
+minutes. At the deadline, discovery stops and the report combines results from
+completed reviews. Check the report for reviewed areas and deferred work.
 
-For persistent settings or bulk campaigns, set `max_time_hours` under
-`[deep_scan]` in the [deep-scan
-configuration](./security/cli/reference.md#configure-deep-scans).
+To reuse a time limit, set `scan.max_time_minutes` in your
+[project configuration](./security/cli/reference.md#configure-deep-scans).
+Bulk campaigns apply it to each scan attempt.
 
 #### How do scan cost limits work
 
@@ -5781,16 +5772,7 @@ report with a budget warning. It returns `0`, or `1` if findings meet the
 configured severity threshold. If it can't produce a valid completed result,
 it returns `2` and preserves any available output.
 
-For GitHub pull-request checks and scheduled repository scans, use the
-[Codex Security GitHub Action](./security/cli/ci/github.md). With
-`action-v0.3.0`, a completed scan means the configured analysis produced a
-valid result. Scope exclusions and deferred investigations do not bypass the
-severity policy. Review `coverage.json` to assess the scan's scope and
-limitations. To also reject empty diffs and dry runs, require the Action's
-`scan-status` output to be `completed`; see [Choose a severity
-policy](./security/cli/ci/github.md#choose-a-severity-policy).
-
-For other providers, see the [CI/CD overview](./security/cli/ci.md).
+To run scans in CI, see the [CI/CD overview](./security/cli/ci.md).
 For a check before each commit, use
 [`install-hook`](./security/cli/reference.md#codex-security-install-hook).
 
@@ -6120,7 +6102,7 @@ usage: codex-security scan [-h] [--auth {auto,chatgpt,api-key}]
                            [--path PATH | --diff BASE | --working-tree]
                            [--head HEAD] [--base BASE]
                            [--knowledge-base PATH] [--scan-prompt-file FILE]
-                           [--validation-prompt-file FILE]
+                           [--validation-prompt-file FILE] [--rubric FILE]
                            [--post-scan-prompt-file FILE]
                            [--mode {standard,deep}] [--workers N]
                            [--subagents N] [--stop-after-no-new N]
@@ -6276,7 +6258,7 @@ your credentials, region, and model permissions.
 
 The CLI supports cost estimates and `--max-cost` for the Daybreak Blue and
 Daybreak Red model IDs above. Estimates use AWS Standard
-commercial in-region prices, including the AWS fee. The cost limit uses
+prices, including the AWS fee. The cost limit uses
 `estimatedUsd`, the short-context baseline. Requests already in progress can
 put this estimate above the limit. Long-context pricing can raise the reported
 `estimatedUsdRange` above it. This limit is not a billing cap.
@@ -6337,10 +6319,10 @@ Use these options with `--mode deep` to control discovery:
 
 | Argument                 | Description                                                                                           |
 | ------------------------ | ----------------------------------------------------------------------------------------------------- |
-| `--workers N`            | Limit on concurrent independent standard-scan workers. Defaults to `4`.                               |
+| `--workers N`            | Maximum standard reviews running at once. Defaults to `4`.                                            |
 | `--subagents N`          | Subagents available to each worker. Defaults to `3`. Use `0` to disable them.                         |
 | `--stop-after-no-new N`  | Stop after `N` consecutive completed worker scans find no new issues. Defaults to `4`.                |
-| `--max-discovery-runs N` | Limit on total independent standard-scan runs. Defaults to `40`.                                      |
+| `--max-discovery-runs N` | Maximum reviews started, including failed attempts. Defaults to `40`.                                 |
 | `--max-time MINUTES`     | Discovery time limit. Accepts positive fractional minutes. The default and maximum are 5,760 minutes. |
 
 For example, use two workers, allow up to ten runs, and stop discovery after 90 minutes:
@@ -6354,11 +6336,6 @@ npx @openai/codex-security scan . \
   --max-discovery-runs 10 \
   --max-time 90
 ```
-
-When the time limit expires, the scan stops unfinished workers and combines
-completed findings in its report. For a standard scan, `--max-time` sets an
-advisory investigation time. Reporting can finish later. Custom validation
-and post-scan instructions run outside that allowance.
 
 To reuse these limits, save them in a
 [project configuration file](#load-project-configuration):
@@ -6447,6 +6424,11 @@ or severity-policy decision. You can't combine `--validate` with `--dry-run`,
 `--mock`, or a scan cost limit set on the command line or in the project
 configuration.
 
+#### Choose how to grade severity
+
+Standard and deep scans use the bundled severity rubric by default. Pass
+`--rubric FILE` to use your own Markdown policy.
+
 #### Set output and policy options
 
 Use these options to keep artifacts, preserve earlier results, or create a
@@ -6455,7 +6437,7 @@ machine-readable result.
 | Argument                   | Description                                                                                                                  |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `--output-dir DIR`         | Write scan artifacts to a private directory outside the enclosing Git worktree. Defaults to persistent Codex Security state. |
-| `--archive-existing`       | Move existing results to `DIR.previous--` and start with an empty output directory. Requires `--output-dir`.                 |
+| `--archive-existing`       | Move existing results to a sibling directory and report the archive path. Requires `--output-dir`.                           |
 | `--fail-on-severity LEVEL` | Return exit `1` when a completed scan reports a finding at or above `critical`, `high`, `medium`, or `low`.                  |
 | `--patch`                  | Fix and verify selected findings after a complete scan.                                                                      |
 | `--patch-severity LEVEL`   | Patch findings at or above `critical`, `high`, `medium`, or `low`. Defaults to `low`.                                        |
@@ -6480,11 +6462,11 @@ The cost limit uses `estimatedUsd`, the short-context baseline. Requests already
 in progress can put this estimate above the limit. Long-context pricing can
 raise `estimatedUsdRange` above it. This limit is not a billing cap.
 
-If a deep scan reaches the limit
-after Codex Security aggregates completed worker results, the CLI can seal a
-completed result and report the budget warning. It returns `0`, or `1` if
-findings meet the configured severity threshold. If it can't produce a valid
-completed result, it returns `2` and leaves any available output on disk.
+If a deep scan reaches the limit after discovery, the CLI can seal a
+completed result with a budget warning. Check `scan.scope.limitations` in
+the manifest to see whether the scan deferred validation. A completed scan
+returns `0`, or `1` if findings meet the configured severity threshold. If
+the CLI can't finalize the result, it returns `2` and keeps any available output.
 
 When you omit `--output-dir`, results persist under
 `$CODEX_HOME/state/plugins/codex-security/scans/`. `CODEX_HOME`
@@ -6549,9 +6531,11 @@ Codex Security accepts model IDs and reasoning-effort values as strings.
 Supported combinations depend on the model, provider, Codex version, and your
 credentials.
 
-If the scan's isolated Codex configuration selects a profile, that profile's
-`model` and `model_reasoning_effort` values take precedence over `--model` and
-`--effort`. Your normal Codex configuration isn't loaded.
+To reuse a Codex file profile, put its settings in `$CODEX_HOME/review.config.toml`
+(`~/.codex/review.config.toml` by default). Select it with
+`--codex "profile='review'"` or set `codex.profile` to `review` in your project
+configuration. Explicit scan settings override file profile values, which
+override scanner defaults.
 Add `--dry-run --verbose` to your scan command to inspect the resolved model
 and effort before starting a scan.
 
@@ -7194,50 +7178,58 @@ authentication outside the CLI. See the [findings service guide](https://github.
 
 Use `--to local` to save imported findings on your machine. With `--to cloud`,
 even a preview contacts the service. It needs a file-backed ChatGPT login and
-an authorized repository ID or URL with an existing Cloud environment. A Cloud
-import can return a partial result if the service rejects individual records.
+an authorized repository ID or URL. A Cloud import can return a partial result
+if the service rejects individual records.
 See the [GitHub import guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/cli.md#import-github-findings-locally-or-to-cloud) for both workflows.
 
-To import Dependabot alerts for a local checkout, you need a saved export from
-the same GitHub repository. Follow the [Dependabot export guide](https://github.com/openai/codex-security/blob/main/docs/scanner-imports/github-dependabot.md) to save all pages outside the checkout using a token with read access to Dependabot alerts.
+#### Preview and save a local report
 
-Append `echo "$out/dependabot.jsonl"` to the export script before running it.
-In a new shell, use the path it printed to preview the file. Replace `./project` and `OWNER/REPO` with your checkout and repository.
-If the checkout has network remotes, one must match the alert repository.
-Otherwise, verify that the export belongs to the checkout.
+For example, export [Dependabot alerts](https://github.com/openai/codex-security/blob/main/docs/scanner-imports/github-dependabot.md#export-repository-alerts)
+to a private file outside the checkout. Use the matching checkout for
+`--repository` and a stable `--source-key` so repeat imports update the same
+alerts. If the checkout has network remotes, one must match the alert repository.
 
 ```bash
-export CODEX_SECURITY_ENABLE_EXTERNAL_IMPORTS=1
 npx @openai/codex-security publish findings /path/to/dependabot.jsonl \
   --to local --repository ./project --provider github \
   --source-key github.com/OWNER/REPO/dependabot --dry-run --format json
-```
 
-Check the destination and exclusions in the preview. A dry run exits with `0`
-even if it lists excluded alerts. To save the accepted alerts, rerun without
-`--dry-run` and confirm, or replace `--dry-run` with `--yes`. If the import
-excludes any alerts, it saves the accepted ones and exits with `1`. Read the
-stored alerts in the same shell.
+npx @openai/codex-security publish findings /path/to/dependabot.jsonl \
+  --to local --repository ./project --provider github \
+  --source-key github.com/OWNER/REPO/dependabot
 
-```bash
 npx @openai/codex-security findings imported ./project --format json
 ```
 
-Imported alerts start with the assessment status `not_assessed`. With the same
-source key, a later import updates the stored records for alerts in the file.
-Omitted alerts keep their last imported state. Alerts that share an advisory remain
-separate records.
+Imported findings start as `not_assessed`. Repeat imports update matching
+records and retain existing findings that the new report omits. When only some records
+are excluded, the preview exits with `0` and the import saves the accepted
+records and exits with `1`. A valid report with no findings exits with `0`.
+If all records are excluded, both commands exit with `2`.
+
+#### Publish a report to Cloud
+
+Keep the file, provider, and source key from the local preview. Set `--to cloud`,
+pass the connected repository URL or Cloud ID to `--repository`, and preview again
+with `--dry-run --format json`. To publish, rerun without `--dry-run` and confirm.
+
+| Destination in the preview | How to verify the import                                                                                                                                                                      |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `privateImport`            | The findings go to your private inbox. The repository is the suggested assessment target. Check that `privateJob.status` is `completed` and review the counts of errors and unprocessed rows. |
+| `requests`                 | Check the destination environment for each request. Review the receipt for verified, unacknowledged, or failed records before retrying.                                                       |
+
+If the CLI returns `savedSubmission`, keep the checkpoint and follow the [Cloud import recovery steps](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/cli.md#resume-interrupted-imports).
 
 #### Finding review commands
 
 These commands work with existing findings:
 
-| Command             | Example                                                                                | Behavior                                                                                                                                                                                    |
-| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `classify-severity` | `codex-security classify-severity --scan latest --rubric policy.md --json`             | Apply a rubric without repeating discovery or rewriting original findings. Omit `--rubric` to inherit an existing severity without model calls. Findings without severity require a rubric. |
-| `suggest-owners`    | `codex-security suggest-owners findings.json --source-root /path/to/repository --json` | Read committed source, CODEOWNERS, blame, and Git history to suggest owners. Doesn't assign tickets.                                                                                        |
-| `dedupe`            | `codex-security dedupe --scan SCAN_ID --json`                                          | Identify duplicate findings in local SQLite. Missing or stale embeddings require an embedding API key; fresh reviews require model access.                                                  |
-| `verify-fix`        | `codex-security verify-fix --scan SCAN_ID --json`                                      | Check existing fixes in a read-only sandbox. Accepts finding IDs, descriptions, and Linear selectors.                                                                                       |
+| Command             | Example                                                                                | Behavior                                                                                                                                   |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `classify-severity` | `codex-security classify-severity --scan latest --rubric policy.md --json`             | Reassess severity with the bundled rubric or a policy supplied with `--rubric` while preserving the original findings.                     |
+| `suggest-owners`    | `codex-security suggest-owners findings.json --source-root /path/to/repository --json` | Read committed source, CODEOWNERS, blame, and Git history to suggest owners. Doesn't assign tickets.                                       |
+| `dedupe`            | `codex-security dedupe --scan SCAN_ID --json`                                          | Identify duplicate findings in local SQLite. Missing or stale embeddings require an embedding API key; fresh reviews require model access. |
+| `verify-fix`        | `codex-security verify-fix --scan SCAN_ID --json`                                      | Check existing fixes in a read-only sandbox. Accepts finding IDs, descriptions, and Linear selectors.                                      |
 
 `verify-fix` returns `2` if any check is inconclusive or fails. Otherwise, it
 returns `1` if any finding remains vulnerable, or `0` if all findings are fixed.
@@ -7589,272 +7581,9 @@ Python 3.10 or later.
 Python 3.10 also requires `tomli`. Use `--python` with `scan`, `bulk-scan`, or
 `export`, or set `PYTHON` for any Python-backed command.
 
-To read or resume compressed Codex sessions (`.jsonl.zst`), use Node.js
-22.15.0 or later within 22.x, or Node.js 24 or 26. Plain `.jsonl` sessions work
-on all supported Node.js versions.
-
 Continue with the [CLI quickstart](./security/cli.md), [bulk-scan
 guide](./security/cli/bulk-scans.md), [CLI FAQ](./security/cli/faq.md), [CI
 guide](./security/cli/ci.md), or [TypeScript SDK guide](./security/sdk.md).
-
-### Codex Security Cloud FAQ
-
-Source: [Codex Security Cloud FAQ](./security/faq.md)
-
-These answers apply to Codex Security Cloud. For installation and a first scan,
-use [Cloud setup](./security/setup.md). Local scans have separate
-[plugin](./security/plugin.md) and [CLI](./security/cli.md) guides.
-
-#### Billing
-
-#### How are Cloud scans billed?
-
-Repository scans and continuous scans set up after October 1, 2026, at
-12:53 PM Pacific are billed based on token usage at your plan's rates, in
-credits or USD depending on your billing plan. For
-[eligible accounts](#do-i-get-a-free-scanning-period-or-free-scanning-credits),
-free scanning credits apply before paid usage is billed.
-
-This usage is not covered by your plan's included usage allowance.
-
-Continuous scans set up before that cutoff are free until
-October 21, 2026. After that, they are billed at regular token rates under
-your account's billing plan if you enable paid usage. Otherwise, they pause.
-
-#### Do I get a free scanning period or free scanning credits?
-
-What you receive depends on whether your account had continuous scanning set
-up before October 1, 2026, at 12:53 PM Pacific:
-
-- If it did, your covered continuous scans remain free until October 21, 2026.
-  This free period doesn't cover repository scans or continuous scanning set
-  up after October 1, 2026, at 12:53 PM Pacific.
-- If it didn't, eligible accounts receive $500 in free scanning credits
-  instead of the free continuous-scanning period.
-
-#### How do free scanning credits work?
-
-Repository scans and continuous scanning use the same free balance. In a
-workspace, everyone shares that balance. These free scanning credits don't
-expire.
-
-When the free balance runs out, further scanning is billed under your
-account's or workspace's billing plan.
-
-#### What happens when the free continuous-scanning period ends?
-
-Select **Keep scans running** and enable paid usage to continue these scans
-after the free period. They are then billed at regular token rates under
-your account's or workspace's billing plan.
-
-If you opt out or don't enable paid usage, those scans pause when the free
-period ends. Select **Re-enable scans** to enable paid usage afterward.
-In a workspace, ask a workspace owner to make this choice if you don't have
-permission.
-
-#### Where can I see token usage and charges?
-
-Open a scan in **Scans** to review its token usage and cost. Hover over the
-token count to see input, cached input, and output tokens. Cached input is
-included in the input count, not added on top of it.
-
-Usage shows the cost before free scanning credits or billing exemptions,
-along with any amount covered by free scanning credits.
-
-Scans marked "Exempt from billing. No charges apply." incur no charges,
-even when they show token usage and cost.
-
-#### Scanning
-
-#### Does the project need to be built for scanning?
-
-Codex Security can analyze source without a successful build. Validation may
-need dependencies or a working build to reproduce an issue. Configure those
-requirements in the [Codex cloud
-environment](./environments/cloud-environment.md).
-
-If validation can't run, inspect what the finding establishes from source and
-what still depends on runtime or deployment behavior.
-
-#### What languages are supported?
-
-Codex Security analyzes source across languages. Results depend on the model's
-ability to reason about the language and framework, and on the available
-repository context. A successful scan doesn't imply equal coverage across
-languages or components. Check the report for the scope actually reviewed.
-
-#### How do repository scans and commit monitoring differ?
-
-A **One-Time Scan** reviews the repository once. **Continuous Scanning** monitors
-new commits and can review selected commit history. Enable it after the first
-scan using [Monitor new commits](./security/setup.md#5-monitor-new-commits).
-
-#### Can I pause commit monitoring?
-
-Open **Repositories**, select the repository, and open **Monitoring settings**.
-Set monitoring to **Paused** and select **Save**. You can enable it again from
-the same settings.
-
-#### Can I edit the threat model?
-
-Yes. Update it in the monitored repository's **Monitoring settings** when the
-architecture, deployment, or security assumptions change. The [threat-model
-guide](./security/threat-model.md) explains what to include. Changes apply to
-future scans.
-
-#### Findings and validation
-
-#### What does validation establish?
-
-Read the evidence attached to the particular finding. Source analysis can
-establish a vulnerable code path. Execution evidence can show that a specific
-reproducer or test demonstrated the issue.
-
-A finding's recorded status and severity help organize review. Use the
-underlying evidence and prerequisites to decide whether it applies to your
-system and what to fix.
-
-#### What happens if validation fails?
-
-Inspect the attempted validation and any available logs. A failed reproducer
-can mean the issue doesn't apply, but it can also mean the environment or test
-was unsuitable. Resolve the stated gap before dismissing the finding or
-claiming that it was reproduced.
-
-#### What if the scan reports no findings?
-
-Confirm that the scan completed and reviewed the intended repository and
-revision. Read any recorded limits or unfinished work. A scan that reports no
-findings can still miss vulnerabilities.
-
-#### Fixes
-
-#### Does Codex Security apply patches automatically?
-
-The action depends on the finding. **Fix with Codex** on a repository finding
-starts a conversation that asks Codex to verify the issue, implement a fix,
-and run relevant tests. Review the changes in that conversation.
-
-For a finding with a suggested patch, review the diff before selecting
-**Create draft pull request**. Creating the draft doesn't merge the fix.
-
-#### How do I know whether a patch fixed the issue?
-
-Review the patch's validation evidence, including whether the original issue
-still reproduces and whether legitimate behavior still works. If validation
-wasn't completed, keep that uncertainty with the finding. A proposed patch,
-draft pull request, or status change alone doesn't verify a fix.
-
-### Codex Security Cloud setup
-
-Source: [Codex Security Cloud setup](./security/setup.md)
-
-Run a first scan of a connected GitHub repository with Codex Security Cloud,
-then review its findings. Afterward, you can enable monitoring for new commits.
-
-Codex Security Cloud runs scans in [Codex cloud](./cloud.md). For scans of a
-local repository in the desktop app or CLI, use the separate [Codex Security
-plugin](./security/plugin.md).
-
-#### Before you start
-
-Use a workspace with Codex Security Cloud access and [Codex cloud](./cloud.md)
-set up. You need permission to connect the GitHub repository you want to scan.
-You can create its cloud environment during setup.
-
-If the plugin is unavailable, check access with your workspace administrator.
-If a repository is missing, use **Configure access** in the repository picker to
-check the GitHub app's organization and repository access. If you can't grant
-access yourself, ask your GitHub administrator to add the repository.
-
-#### 1. Install and open the plugin
-
-1. Open **Plugins** in ChatGPT on the web or in the desktop app.
-2. Search the plugin marketplace for **Codex Security Cloud**.
-3. Install and enable the plugin, then open **Security Cloud** from your
-   installed plugins or sidebar.
-
-[Open plugin marketplace](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
-
-#### 2. Connect GitHub
-
-Confirm that [Codex cloud](./cloud.md) is set up for your workspace. In the
-plugin, select **Scan**. If prompted, select **Connect GitHub** and sign in
-with your own GitHub account. Each person who starts scans needs their own
-connection and access to the repository.
-
-Codex Security Cloud doesn't support workspace connections.
-
-#### 3. Start a repository scan
-
-1. In **New Scan**, choose the repository.
-2. Review the environment. **Auto** creates an environment when you start.
-   Use **Customize** to choose an existing environment. See [Codex cloud
-   environments](./environments/cloud-environment.md) for setup details.
-3. Under **Scan Method**, select **One-Time Scan**.
-4. Select **Create**.
-
-Open the scan in **Scans** to follow progress. Wait for it to finish, then
-check the reported status and target before interpreting its findings. If it
-fails or is canceled, read the available output as an incomplete review.
-
-#### 4. Review findings and available fixes
-
-Open **Findings**. Use **Open findings** to review findings with a **New**,
-**Triaged**, or **In Progress** status. Search the list or use **Filters** to
-narrow the results. The **Severity and status** chart summarizes the matching
-findings.
-
-    Filter and review open findings. Repositories, findings, and counts are
-    fictional.
-
-Open a finding from the scan or from **Findings**. Check its affected code and
-revision, the path an attacker could take, and the validation evidence. Read
-any unresolved assumptions before deciding whether the issue applies. A scan
-with no reported findings doesn't establish that the repository has no
-vulnerabilities.
-
-When a repository finding offers **Fix with Codex**, selecting it starts a
-Codex conversation to check the finding against current code, implement a fix,
-and run relevant tests. Review the resulting changes and test evidence there.
-
-Findings from commit monitoring can instead offer a suggested patch. Review
-that patch before selecting **Create draft pull request**. These actions have
-different effects, so follow the workflow shown for the finding.
-
-#### 5. Monitor new commits
-
-Once you've reviewed the first scan, you can monitor changes as new commits
-arrive:
-
-1. Select **Scan**, then choose the repository and review the environment.
-2. Under **Scan Method**, select **Continuous Scanning**. Codex Security scans
-   the repository's default branch.
-3. Choose **Scan commit history from**. Longer windows provide more context,
-   but the initial scan takes longer.
-4. Optionally add threat model scoping guidance.
-5. Select **Create**.
-
-   Configure continuous scanning. The repository shown is fictional.
-
-To adjust monitoring, open **Repositories**, select the repository, and open
-**Monitoring settings**. You can change the Cloud environment, choose how
-many days of history to review, and pause or enable monitoring.
-Select **Save** to apply changes.
-
-The scan owner, people granted edit access, and Codex Security administrators
-can change monitoring settings. Changes, including pausing monitoring, apply to
-that repository's shared configuration in the workspace, not just to the person
-making the change. If you can't edit it, ask the scan owner or a Codex Security
-administrator.
-
-Review the generated threat model in **Monitoring settings** and update it
-with deployment or security context the code doesn't establish. See
-[Improve the threat model](./security/threat-model.md).
-
-For questions about builds, validation, or result interpretation, see the
-[Cloud FAQ](./security/faq.md). To review GitHub pull requests, use
-[Security Review](./security/security-review.md).
 
 ### Codex Security plugin changelog
 
@@ -8417,8 +8146,8 @@ report with evidence and remediation guidance.
 
 This page covers the Codex Security plugin in the desktop app or Codex CLI. To
 scan a connected GitHub repository in Codex cloud, install the separate
-**Codex Security Cloud** plugin from the plugin marketplace. See [Cloud
-setup](./security/setup.md).
+**Daybreak Defense Factory (Preview)** plugin from the plugin marketplace. See
+[Cloud setup](./security/setup.md).
 
 #### Install the plugin
 
@@ -8582,10 +8311,6 @@ findings, the scan manifest, and paths to saved reports.
 The SDK uses ECMAScript modules (ESM) and runs server-side with Node.js 24 or 26,
 or Node.js 22 starting with 22.13.0. Scanning also requires Python 3.10 or later.
 Python 3.10 also requires the `tomli` package.
-
-To read or resume compressed Codex sessions (`.jsonl.zst`), use Node.js
-22.15.0 or later within 22.x, or Node.js 24 or 26. Plain `.jsonl` sessions work
-on all supported Node.js versions.
 
 For general coding agents, see the [Codex SDK guide](./codex-sdk.md). For
 terminal and CI workflows, see the [Codex Security CLI
@@ -8894,6 +8619,13 @@ working-tree scans. To use the same procedure for each standard component
 scan, pass `scanOptions.validationPrompt` to `runComponentScans`. Deep scans
 reject custom validation.
 
+#### Apply a severity policy
+
+Pass `rubricPath` to grade findings with a Markdown policy, or pass a
+`severityRubric` snapshot with `markdown`, a positive integer `revision`, and the `sha256`
+digest of the exact UTF-8 Markdown. A snapshot takes precedence over a file. Standard and deep scans save the
+selected rubric for retries, resumes, and reruns.
+
 #### Set a scan budget
 
 Set `maxCostUsd` to stop a scan when its estimated model cost exceeds a limit.
@@ -8917,11 +8649,6 @@ try {
 The limit uses `estimatedUsd`, the short-context baseline. Requests already
 in progress can put this estimate above the limit. Long-context pricing can
 raise `estimatedUsdRange` above it. This limit is not a billing cap.
-
-If a deep scan reaches the limit after
-Codex Security aggregates completed worker results, `run` can return a result
-with `manifest.scan.status` set to `"completed"` and report the budget warning
-through `onWarning`.
 
 If the scan can't produce a valid completed result, `run` throws
 `ScanCostLimitExceededError` and preserves any available output.
@@ -9180,6 +8907,7 @@ lifecycle callbacks:
 | `onReconnect(attempt, maxAttempts)` | The SDK retries a disconnected scan stream.          |
 | `onActivity(activity)`              | A command, tool, reasoning step, or message updates. |
 | `onProgress(progress)`              | The scan phase or reviewed file count changes.       |
+| `onDeepProgress(progress)`          | Counts of active or completed deep reviews change.   |
 | `onWorkerStatus(status)`            | Best-effort counts of workers planned and started.   |
 | `onSessionEvent(session)`           | A scan or worker session emits an event.             |
 | `onCost(cost)`                      | An updated estimated scan cost is available.         |
@@ -9298,6 +9026,265 @@ take:
 Continue with the [CLI quickstart](./security/cli.md), [CI
 guide](./security/cli/ci.md), or [CLI
 reference](./security/cli/reference.md).
+
+### Daybreak Defense Factory FAQ
+
+Source: [Daybreak Defense Factory FAQ](./security/faq.md)
+
+These answers apply to Daybreak Defense Factory. For installation and a first scan,
+use [Cloud setup](./security/setup.md). Local scans have separate
+[plugin](./security/plugin.md) and [CLI](./security/cli.md) guides.
+
+#### Billing
+
+#### How are Cloud scans billed?
+
+Repository scans and continuous scans set up after October 1, 2026, at
+12:53 PM Pacific are billed based on token usage at your plan's rates, in
+credits or USD depending on your billing plan. For
+[eligible accounts](#do-i-get-a-free-scanning-period-or-free-scanning-credits),
+free scanning credits apply before paid usage is billed.
+
+This usage is not covered by your plan's included usage allowance.
+
+Continuous scans set up before that cutoff are free until
+October 21, 2026. After that, they are billed at regular token rates under
+your account's billing plan if you enable paid usage. Otherwise, they pause.
+
+#### Do I get a free scanning period or free scanning credits?
+
+What you receive depends on whether your account had continuous scanning set
+up before October 1, 2026, at 12:53 PM Pacific:
+
+- If it did, your covered continuous scans remain free until October 21, 2026.
+  This free period doesn't cover repository scans or continuous scanning set
+  up after October 1, 2026, at 12:53 PM Pacific.
+- If it didn't, eligible accounts receive $500 in free scanning credits
+  instead of the free continuous-scanning period.
+
+#### How do free scanning credits work?
+
+Repository scans and continuous scanning use the same free balance. In a
+workspace, everyone shares that balance. These free scanning credits don't
+expire.
+
+When the free balance runs out, further scanning is billed under your
+account's or workspace's billing plan.
+
+#### What happens when the free continuous-scanning period ends?
+
+Select **Keep scans running** and enable paid usage to continue these scans
+after the free period. They are then billed at regular token rates under
+your account's or workspace's billing plan.
+
+If you opt out or don't enable paid usage, those scans pause when the free
+period ends. Select **Re-enable scans** to enable paid usage afterward.
+In a workspace, ask a workspace owner to make this choice if you don't have
+permission.
+
+#### Where can I see token usage and charges?
+
+Open a scan in **Scans** to review its token usage and cost. Hover over the
+token count to see input, cached input, and output tokens. Cached input is
+included in the input count, not added on top of it.
+
+Usage shows the cost before free scanning credits or billing exemptions,
+along with any amount covered by free scanning credits.
+
+Scans marked "Exempt from billing. No charges apply." incur no charges,
+even when they show token usage and cost.
+
+#### Scanning
+
+#### Does the project need to be built for scanning?
+
+Daybreak can analyze source without a successful build. Validation may
+need dependencies or a working build to reproduce an issue. Configure those
+requirements in the [Codex cloud
+environment](./environments/cloud-environment.md).
+
+If validation can't run, inspect what the finding establishes from source and
+what still depends on runtime or deployment behavior.
+
+#### What languages are supported?
+
+Daybreak analyzes source across languages. Results depend on the model's
+ability to reason about the language and framework, and on the available
+repository context. A successful scan doesn't imply equal coverage across
+languages or components. Check the report for the scope actually reviewed.
+
+#### How do repository scans and commit monitoring differ?
+
+A **One-Time Scan** reviews the repository once. **Continuous Scanning** monitors
+new commits and can review selected commit history. Enable it after the first
+scan using [Monitor new commits](./security/setup.md#5-monitor-new-commits).
+
+#### Can I pause commit monitoring?
+
+Open **Repositories**, select the repository, and open **Monitoring settings**.
+Set monitoring to **Paused** and select **Save**. You can enable it again from
+the same settings.
+
+#### Can I edit the threat model?
+
+Yes. Update it in the monitored repository's **Monitoring settings** when the
+architecture, deployment, or security assumptions change. The [threat-model
+guide](./security/threat-model.md) explains what to include. Changes apply to
+future scans.
+
+#### Findings and validation
+
+#### What does validation establish?
+
+Read the evidence attached to the particular finding. Source analysis can
+establish a vulnerable code path. Execution evidence can show that a specific
+reproducer or test demonstrated the issue.
+
+A finding's recorded status and severity help organize review. Use the
+underlying evidence and prerequisites to decide whether it applies to your
+system and what to fix.
+
+#### What happens if validation fails?
+
+Inspect the attempted validation and any available logs. A failed reproducer
+can mean the issue doesn't apply, but it can also mean the environment or test
+was unsuitable. Resolve the stated gap before dismissing the finding or
+claiming that it was reproduced.
+
+#### What if the scan reports no findings?
+
+Confirm that the scan completed and reviewed the intended repository and
+revision. Read any recorded limits or unfinished work. A scan that reports no
+findings can still miss vulnerabilities.
+
+#### Fixes
+
+#### Does Daybreak apply patches automatically?
+
+The action depends on the finding. **Fix with Codex** on a repository finding
+starts a conversation that asks Codex to verify the issue, implement a fix,
+and run relevant tests. Review the changes in that conversation.
+
+For a finding with a suggested patch, review the diff before selecting
+**Create draft pull request**. Creating the draft doesn't merge the fix.
+
+#### How do I know whether a patch fixed the issue?
+
+Review the patch's validation evidence, including whether the original issue
+still reproduces and whether legitimate behavior still works. If validation
+wasn't completed, keep that uncertainty with the finding. A proposed patch,
+draft pull request, or status change alone doesn't verify a fix.
+
+### Daybreak Defense Factory setup
+
+Source: [Daybreak Defense Factory setup](./security/setup.md)
+
+Run a first scan of a connected GitHub repository with Daybreak Defense Factory
+(formerly Codex Security Cloud), then review its findings. Afterward, you can
+enable monitoring for new commits.
+
+Daybreak Defense Factory runs scans in [Codex cloud](./cloud.md). For scans
+of a local repository in the desktop app or CLI, use the separate [Codex
+Security plugin](./security/plugin.md).
+
+#### Before you start
+
+Use a workspace with Daybreak Defense Factory access and [Codex cloud](./cloud.md)
+set up. You need permission to connect the GitHub repository you want to scan.
+You can create its cloud environment during setup.
+
+If the plugin is unavailable, check access with your workspace administrator.
+If a repository is missing, use **Configure access** in the repository picker to
+check the GitHub app's organization and repository access. If you can't grant
+access yourself, ask your GitHub administrator to add the repository.
+
+#### 1. Install and open the plugin
+
+1. Open **Plugins** in ChatGPT on the web or in the desktop app.
+2. Search the plugin marketplace for **Daybreak Defense Factory (Preview)**.
+3. Install and enable the plugin, then open **Daybreak** in the sidebar.
+
+[Open plugin marketplace](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
+
+#### 2. Connect GitHub
+
+Confirm that [Codex cloud](./cloud.md) is set up for your workspace. In the
+plugin, select **Scan**. If prompted, select **Connect GitHub** and sign in
+with your own GitHub account. Each person who starts scans needs their own
+connection and access to the repository.
+
+Daybreak Defense Factory doesn't support workspace connections.
+
+#### 3. Start a repository scan
+
+1. In **New Scan**, choose the repository.
+2. Review the environment. **Auto** creates an environment when you start.
+   Use **Customize** to choose an existing environment. See [Codex cloud
+   environments](./environments/cloud-environment.md) for setup details.
+3. Under **Scan Method**, select **One-Time Scan**.
+4. Select **Create**.
+
+Open the scan in **Scans** to follow progress. Wait for it to finish, then
+check the reported status and target before interpreting its findings. If it
+fails or is canceled, read the available output as an incomplete review.
+
+#### 4. Review findings and available fixes
+
+Open **Findings**. Use **Open findings** to review findings with a **New**,
+**Triaged**, or **In Progress** status. Search the list or use **Filters** to
+narrow the results. The **Severity and status** chart summarizes the matching
+findings.
+
+    Filter and review open findings. Repositories, findings, and counts are
+    fictional.
+
+Open a finding from the scan or from **Findings**. Check its affected code and
+revision, the path an attacker could take, and the validation evidence. Read
+any unresolved assumptions before deciding whether the issue applies. A scan
+with no reported findings doesn't establish that the repository has no
+vulnerabilities.
+
+When a repository finding offers **Fix with Codex**, selecting it starts a
+Codex conversation to check the finding against current code, implement a fix,
+and run relevant tests. Review the resulting changes and test evidence there.
+
+Findings from commit monitoring can instead offer a suggested patch. Review
+that patch before selecting **Create draft pull request**. These actions have
+different effects, so follow the workflow shown for the finding.
+
+#### 5. Monitor new commits
+
+Once you've reviewed the first scan, you can monitor changes as new commits
+arrive:
+
+1. Select **Scan**, then choose the repository and review the environment.
+2. Under **Scan Method**, select **Continuous Scanning**. The plugin scans
+   the repository's default branch.
+3. Choose **Scan commit history from**. Longer windows provide more context,
+   but the initial scan takes longer.
+4. Optionally add threat model scoping guidance.
+5. Select **Create**.
+
+   Configure continuous scanning. The repository shown is fictional.
+
+To adjust monitoring, open **Repositories**, select the repository, and open
+**Monitoring settings**. You can change the Cloud environment, choose how
+many days of history to review, and pause or enable monitoring.
+Select **Save** to apply changes.
+
+The scan owner, people granted edit access, and Daybreak Defense Factory administrators
+can change monitoring settings. Changes, including pausing monitoring, apply to
+that repository's shared configuration in the workspace, not just to the person
+making the change. If you can't edit it, ask the scan owner or a Daybreak Defense Factory
+administrator.
+
+Review the generated threat model in **Monitoring settings** and update it
+with deployment or security context the code doesn't establish. See
+[Improve the threat model](./security/threat-model.md).
+
+For questions about builds, validation, or result interpretation, see the
+[Cloud FAQ](./security/faq.md). To review GitHub pull requests, use
+[Security Review](./security/security-review.md).
 
 ### Export and track security findings
 
@@ -9479,18 +9466,17 @@ CI/CD](./security/plugin/code-changes.md#automate-reviews-in-cicd).
 After verification, merge the change through your normal code-review process.
 If verification is incomplete, keep the finding open with the remaining work.
 
-### Improve the Cloud threat model
+### Improve the Daybreak threat model
 
-Source: [Improve the Cloud threat model](./security/threat-model.md)
+Source: [Improve the Daybreak threat model](./security/threat-model.md)
 
 Update a monitored repository's threat model when the generated version misses
-security assumptions or deployment context. This guide applies to Codex
-Security Cloud. For local plugin policy, see [Configure the
+security assumptions or deployment context. This guide applies to Daybreak Defense Factory. For local plugin policy, see [Configure the
 scan](./security/plugin/scans.md#configure-the-scan).
 
 #### What a threat model is
 
-A threat model is a short security summary of how your repository works. Codex Security creates the first draft from the code and uses it to guide future commit scans and prioritize findings.
+A threat model is a short security summary of how your repository works. Daybreak creates the first draft from the code and uses it to guide future commit scans and prioritize findings.
 
 A threat model describes:
 
@@ -9512,7 +9498,7 @@ as internal-only unless that is true of the deployment you want assessed.
 
 #### Edit the threat model
 
-1. Open the Codex Security Cloud plugin. See [Cloud setup](./security/setup.md)
+1. Open **Daybreak** in the sidebar. See [Cloud setup](./security/setup.md)
    if you haven't installed it or configured commit monitoring.
 2. Open **Repositories** and select the monitored repository.
 3. Open **Monitoring settings**.
@@ -10243,15 +10229,8 @@ npx @openai/codex-security bulk-scan repositories.csv \
   --workers 4
 ```
 
-`--workers` controls concurrent repository scans and defaults to `4`. It does
-not set the number of independent standard-scan workers within each deep scan;
-configure those limits through
-[`[deep_scan]`](./security/cli/reference.md#configure-deep-scans). Use `--mode
-deep` to select deep scanning for rows without their own `mode`. Each CSV row
-can still choose its own scan mode and repository scope.
-
-Set `[deep_scan].max_time_hours` to limit worker execution for each deep scan in
-the campaign. The `--max-time-hours` flag works with `scan`, not `bulk-scan`.
+`--workers` controls how many repositories the campaign scans at once and
+defaults to `4`.
 
 The CLI checks out each pinned revision, scans the selected target, records the
 result, and removes the temporary repository checkout. A repository counts as
@@ -10460,12 +10439,11 @@ credentials and deployment steps in separate jobs.
 
 #### Add the GitHub Actions workflow
 
-**Scan costs:** These workflows use your API key and may incur charges. Both
-examples omit `max-cost`, so they have no estimated cost stop threshold. To
-set a threshold of $5 per scan, add `max-cost: "5"` to the Codex Security
-Action's `with` settings. This isn't a hard spending cap: requests already in
-progress can exceed it. See [Set an optional scan
-budget](#set-an-optional-scan-budget) for pricing-support requirements.
+**Scan costs:** These workflows use your API key and may incur charges. The
+scheduled example omits `max-cost`. The pull-request workflow sets an
+estimated threshold of $5 per scan. The cost of requests already in progress
+can exceed that threshold. See [Set an optional scan
+budget](#set-an-optional-scan-budget).
 
 #### Scan the repository on a schedule
 
@@ -10493,12 +10471,6 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
-      - name: Set up the Ubuntu sandbox
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes bubblewrap apparmor-profiles
-          sudo apparmor_parser -r /usr/share/apparmor/extra-profiles/bwrap-userns-restrict
-
       - name: Check out the repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -10506,7 +10478,7 @@ jobs:
 
       - name: Scan the repository
         id: security
-        uses: openai/codex-security@3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3 # action-v0.3.0
+        uses: openai/codex-security@a98b35d7eef9f85c298c86229445bb64ac427aaf # action-v0.9.1
         with:
           scope: repository
           model: gpt-6-sol
@@ -10519,15 +10491,10 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
 ```
 
-**About the version:** Both examples pin the Codex Security Action to commit
-`3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3` for the `action-v0.3.0` release,
-which installs CLI `0.3.0`. Review a newer Action release before updating the
-pinned commit.
-
-**Adapting the runner:** The Action needs Node.js 24 and Python 3.11 or later,
-which this runner provides. The sandbox setup installs the `bubblewrap`
-package and loads the supplied AppArmor profile before the scan. Installing
-the package alone is not enough on this runner.
+The Action checks the Codex sandbox before using the scan credential. On a
+GitHub-hosted Ubuntu 24.04 VM, it installs the required packages and loads the
+AppArmor profile if needed. On self-hosted runners and in job containers,
+provide a working sandbox, Linux x64, Node.js 24, and Python 3.11 or later.
 
 To run the workflow manually, open **Actions → Codex Security repository →
 Run workflow**. Open a completed run to review the summary, annotations, and
@@ -10551,78 +10518,31 @@ immediately after checkout.
 
 #### Scan pull-request changes
 
-Using the same secret, create `.github/workflows/codex-security-pr.yml`:
+1. Copy the [pull-request workflow](https://github.com/openai/codex-security/blob/a98b35d7eef9f85c298c86229445bb64ac427aaf/github-action/examples/pull-request.yml)
+   to `.github/workflows/codex-security-pr.yml`. Replace
+   `REPLACE_WITH_REVIEWED_COMMIT` with `a98b35d7eef9f85c298c86229445bb64ac427aaf`, the distribution commit for `action-v0.9.1`.
+2. Choose a model your API key can access. The template sets a $5 threshold for estimated
+   scan costs and fails on high or critical findings. For advisory findings, set
+   `fail-on-severity: none`.
+3. Open a PR from a branch in the same repository. Under **Checks**, open
+   **Scan changes** to review the results. The workflow also reports a check
+   named for the target branch, such as **Codex Security / main**.
 
-```yaml
-name: Codex Security PR
+The workflow checks the PR head, target branch, and live base revision before
+scanning and again before accepting the result. If the base advances, update
+the PR branch to trigger a fresh scan. To enforce this at merge time, follow the [branch protection and freshness requirements](https://github.com/openai/codex-security/blob/a98b35d7eef9f85c298c86229445bb64ac427aaf/github-action/README.md#scan-pull-requests).
 
-on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-
-permissions:
-  contents: read
-
-concurrency:
-  group: codex-security-pr-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
-
-jobs:
-  security:
-    if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
-    name: Codex Security
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
-    steps:
-      - name: Set up the Ubuntu sandbox
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes bubblewrap apparmor-profiles
-          sudo apparmor_parser -r /usr/share/apparmor/extra-profiles/bwrap-userns-restrict
-
-      - name: Check out the pull request
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Scan PR changes
-        id: security
-        uses: openai/codex-security@3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3 # action-v0.3.0
-        with:
-          scope: diff
-          model: gpt-6-sol
-          # For approved Daybreak Blue access, uncomment the next input.
-          # cyber-access-program: daybreak_blue
-          effort: high
-          fail-on-severity: none
-          upload-artifacts: "true"
-        env:
-          OPENAI_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
-```
-
-Open or update a PR from a branch in the same repository. The Action uses
-the full history to find the exact merge base and scans changes through the
-checked-out PR head. View the **Codex Security**
-check under **Checks** in the PR. Start with advisory findings, then [choose a severity
-policy](#choose-a-severity-policy) when you are ready to gate changes.
-
-This example skips fork PRs and PRs opened by `dependabot[bot]`. A skipped job
-is not evidence of a security review. To include these bot PRs, remove the actor
-exclusion and also
-configure `CODEX_SECURITY_API_KEY` as a [secret
-for dependabot[bot]](https://docs.github.com/en/code-security/reference/supply-chain-security/troubleshoot-dependabot/dependabot-on-actions#accessing-secrets). The Action does not support `pull_request_target` or `workflow_run`.
+The scan job skips fork PRs, so they cannot pass this workflow's required
+check. To scan Dependabot PRs, also save `CODEX_SECURITY_API_KEY` as a [Dependabot secret](https://docs.github.com/en/code-security/reference/supply-chain-security/troubleshoot-dependabot/dependabot-on-actions#accessing-secrets).
 
 The scanner reads applicable `SECURITY.md` guidance from the checkout,
 including policy changes in the PR. Review those changes alongside the code.
 
 #### Configure optional Daybreak access
 
-Daybreak is optional. Both workflow examples use `gpt-6-sol`. If your
-organization has been approved for [Trusted Access for
-Cyber](./cyber-safety.md#trusted-access-for-cyber), remove the `#` before
-`cyber-access-program` in the scan step's `with` block:
+If your organization has approval for [Trusted Access for
+Cyber](./cyber-safety.md#trusted-access-for-cyber), select the program and a
+compatible model in the scan step's `with` block:
 
 ```yaml
 model: gpt-6-sol
@@ -10632,10 +10552,9 @@ cyber-access-program: daybreak_blue
 Use an API key from a project enabled for Daybreak Blue with access to
 `gpt-6-sol`.
 
-The program input also accepts `standard`. Without Daybreak access, use a
-model your API key can access under standard safeguards and omit
-`cyber-access-program` or set it to `standard`. Selecting a model or program
-does not grant access. See the Action's [Daybreak access guidance](https://github.com/openai/codex-security/blob/3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3/github-action/README.md#daybreak-access-and-refusals).
+The input also accepts `daybreak_red` for projects with Red access. To select
+standard safeguards, set `cyber-access-program` to `standard`. Omitting the
+input uses the CLI defaults. See the Action's [Daybreak access guidance](https://github.com/openai/codex-security/blob/a98b35d7eef9f85c298c86229445bb64ac427aaf/github-action/README.md#daybreak-access-and-refusals).
 
 A refusal or safety block that aborts the scan fails the Action, including when
 `fail-on-severity` is `none`. That input controls findings policy, not scanner
@@ -10643,32 +10562,31 @@ errors.
 
 #### Set an optional scan budget
 
-Both workflow examples omit `max-cost`, so they have no estimated cost stop
-threshold. To set one, add a positive USD amount with the `max-cost` input.
-For direct CLI scans, use `--max-cost`.
+The scheduled workflow omits `max-cost`. To set a threshold, add a positive
+USD amount with the `max-cost` input. For direct CLI scans, use `--max-cost`.
 
-The cost limit requires CLI pricing support for the selected model. The
-estimated threshold is not a hard spending cap: the cost of requests already
-in progress can exceed it.
-Review findings and `coverage.json` if a scan stops at the threshold. See
+The cost limit requires CLI pricing support for the selected model. The cost of
+requests already in progress can exceed the estimated threshold. Review findings and
+`scan-manifest.json` if a scan stops at the threshold. See
 [output and policy options](./security/cli/reference.md#set-output-and-policy-options)
 for cost-limit behavior.
 
 #### Save reports and upload SARIF
 
-The examples set `upload-artifacts: "true"` to save downloadable reports with a
-seven-day retention window. Reports can contain source snippets, vulnerability
+Set `upload-artifacts: "true"` to save downloadable reports. The default
+retention is seven days. Reports can contain source snippets, vulnerability
 evidence, and remediation details. Choose a retention window and repository
 access appropriate for your code. The Action uploads only validated reports
 on its allowlist; do not recursively upload its `results-directory` output.
 
-SARIF upload is optional. For private or internal repositories, enable [GitHub Code Security](https://docs.github.com/en/code-security/how-tos/find-and-fix-code-vulnerabilities/integrate-with-existing-tools/upload-sarif-file) before uploading. Replace the workflow's `permissions` block with:
+SARIF upload is optional. For private or internal repositories, enable [GitHub Code Security](https://docs.github.com/en/code-security/how-tos/find-and-fix-code-vulnerabilities/integrate-with-existing-tools/upload-sarif-file) before uploading. The scan job needs these permissions for SARIF upload:
 
 ```yaml
 permissions:
   contents: read
   security-events: write
   actions: read # Required for private repositories
+  pull-requests: read # Required only in the PR workflow
 ```
 
 Then add this step after the scan in either workflow:
@@ -10691,22 +10609,23 @@ SARIF is not uploaded for failed or interrupted scans, empty diffs, or dry
 runs.
 
 See the Action's [input
-and output reference](https://github.com/openai/codex-security/blob/3f61e5150981a5087c32e4395bbaa8ce5ce0c3e3/github-action/README.md#inputs) for all settings, status fields, and report paths.
+and output reference](https://github.com/openai/codex-security/blob/a98b35d7eef9f85c298c86229445bb64ac427aaf/github-action/README.md#inputs) for all settings, status fields, and report paths.
 
 #### Choose a severity policy
 
-The GitHub workflows start with `fail-on-severity: none`. To fail on high or
-critical findings from a completed scan, change the scan step's input:
+The scheduled workflow starts with `fail-on-severity: none`. To fail on high or
+critical findings from a completed scan, use the PR workflow's setting:
 
 ```yaml
 fail-on-severity: high
 ```
 
-Make **Codex Security** a required status check in your repository rules to
-block merges when the PR job fails. GitHub treats a [conditionally skipped job as successful](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks),
-even for required checks. Fork PRs and PRs from `dependabot[bot]` pass this
-check without a scan. To block those skips, [require a
-successful, completed scan](#require-a-successful-completed-scan).
+For each protected target branch, require the matching check from the GitHub
+Actions app, such as **Codex Security / main** on `main`. GitHub treats
+a [conditionally skipped job as successful](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks).
+The workflow's required check also verifies that the scan job ran. It accepts
+a completed scan or a verified empty diff. To block empty diffs too,
+[require a successful, completed scan](#require-a-successful-completed-scan).
 
 The Action follows the CLI outcome:
 
@@ -10718,20 +10637,13 @@ The Action follows the CLI outcome:
 - Invalid or missing required reports, a changed checkout, failures to upload
   requested artifacts, and runtime cleanup failures also fail the step.
 
-A completed scan means the configured analysis produced a valid result.
-Scope exclusions, deferred investigations, and other notes in `coverage.json`
-do not create a separate scan outcome or bypass the severity policy.
-Completion does not certify that every vulnerability was found. Review
-`coverage.json` when assessing the result.
-
 #### Require a successful, completed scan
 
 For a stricter policy, add a separate gate that runs even if the scan job
 fails or GitHub skips it. A step inside the scan job can't check a skipped job
 because none of its steps run.
 
-In the PR workflow, add this `outputs` mapping to the existing `security` job,
-at the same indentation as `runs-on` and `steps`:
+The PR workflow exposes the scan status through the `security` job:
 
 ```yaml
 outputs:
@@ -10742,9 +10654,9 @@ Then add this job under `jobs`, alongside the existing `security` job:
 
 ```yaml
 security-gate:
-  name: Codex Security gate
+  name: ${{ github.event.action == 'edited' && github.event.changes.base == null && 'metadata / ' || '' }}Codex Security gate / ${{ github.event.pull_request.base.ref }}
   needs: security
-  if: ${{ always() }}
+  if: always() && (github.event.action != 'edited' || github.event.changes.base != null)
   runs-on: ubuntu-24.04
   steps:
     - name: Require a successful, completed scan
@@ -10754,31 +10666,24 @@ security-gate:
       run: test "$SCAN_RESULT" = success && test "$SCAN_STATUS" = completed
 ```
 
-Make **Codex Security gate** the required status check for this policy. It
-requires both a successful scan job and `scan-status: completed`. Checking
-both preserves failures from the severity policy, reporting, and cleanup,
-even when the scan itself completed.
+For each protected branch, require its gate alongside its scan check. For
+`main`, require **Codex Security gate / main** and **Codex Security / main**. The gate requires both a successful scan job and
+`scan-status: completed`. Checking both preserves failures from the severity
+policy, reporting, and cleanup, even when the scan itself completed.
 
-With the example's exclusions, this gate blocks fork PRs and PRs from
-`dependabot[bot]`. It also blocks empty diffs and dry runs, which the Action
-marks as `skipped`.
-The gate doesn't scan excluded PRs. Choose this policy only if these cases
-should prevent merging.
+With the example's exclusions, this gate blocks fork PRs. It also blocks
+empty diffs and dry runs, which the Action marks as `skipped`. The gate
+doesn't scan excluded PRs. Choose this policy only if these cases should
+prevent merging.
 
 #### Troubleshoot a scan
 
 - **Unknown Git ref or unexpected diff:** Check out the PR head with
   `fetch-depth: 0`.
-- **Sandbox startup error:** On Ubuntu 24.04, install the `bubblewrap` package
-  and load the AppArmor profile before the Action. Installing the package alone
-  does not load the required profile.
 - **Missing credentials:** Confirm that `CODEX_SECURITY_API_KEY` is available to
   the trusted workflow and mapped to the scan step's `OPENAI_API_KEY`
   environment variable.
 - **Python setup error:** The Action requires Python 3.11 or later.
-- **Coverage notes:** Review scope exclusions and deferred investigations in
-  `coverage.json`. These notes do not cause execution failures or bypass the
-  severity policy.
 - **Missing SARIF:** Inspect `scan-status`, `report-status`, and
   `sarif-upload-ready`. If optional SARIF is missing, the Action warns without
   changing the scan outcome; requested artifact-upload failures still fail the
@@ -11262,7 +11167,7 @@ findings.
 
 - [Review GitHub pull requests with Codex](./third-party/github.md) explains Code Review and the GitHub integration.
 - [Codex Security](./security.md) gives the product overview.
-- [Codex Security cloud setup](./security/setup.md) explains repository scans and findings review.
+- [Daybreak Defense Factory setup](./security/setup.md) explains repository scans and findings review.
 - [Improving the threat model](./security/threat-model.md) explains how to tune repository context.
 
 ### Triage a backlog
@@ -13498,12 +13403,12 @@ lives and how you want to review the results.
 
 #### Choose where to start
 
-| Use                   | When you want to                                                          | Start here                                          |
-| --------------------- | ------------------------------------------------------------------------- | --------------------------------------------------- |
-| Codex Security Cloud  | Scan connected GitHub repositories in Codex cloud or monitor new commits. | [Cloud setup](./security/setup.md)                |
-| Codex Security plugin | Scan a local repository in Codex and work through findings interactively. | [Run your first local scan](./security/plugin.md) |
-| Codex Security CLI    | Run repeatable terminal scans or add checks to CI.                        | [CLI quickstart](./security/cli.md)               |
-| Codex Security SDK    | Run scans and handle results in an application or developer tool.         | [SDK guide](./security/sdk.md)                    |
+| Use                      | When you want to                                                          | Start here                                          |
+| ------------------------ | ------------------------------------------------------------------------- | --------------------------------------------------- |
+| Daybreak Defense Factory | Scan connected GitHub repositories in Codex cloud or monitor new commits. | [Cloud setup](./security/setup.md)                |
+| Codex Security plugin    | Scan a local repository in Codex and work through findings interactively. | [Run your first local scan](./security/plugin.md) |
+| Codex Security CLI       | Run repeatable terminal scans or add checks to CI.                        | [CLI quickstart](./security/cli.md)               |
+| Codex Security SDK       | Run scans and handle results in an application or developer tool.         | [SDK guide](./security/sdk.md)                    |
 
 For your first local scan, use the plugin. In the ChatGPT desktop app, select
 **Codex**, install **Codex Security**, and open **Security** in the sidebar.
@@ -13513,7 +13418,7 @@ and findings available for review. You can also use the plugin in Codex CLI.
 The Codex Security CLI and SDK are distributed in the public [@openai/codex-security package](https://github.com/openai/codex-security). Scans using OpenAI inference require Codex Security access. See each quickstart for its
 runtime and authentication requirements.
 
-Codex Security Cloud is a separate plugin, available in research preview on
+Daybreak Defense Factory is a separate plugin, available in research preview on
 the web and in the desktop app. It requires workspace access, a GitHub
 connection, and a compatible Codex cloud environment. You can connect the
 repository and create an environment during setup.
@@ -13582,13 +13487,13 @@ Find, understand, and remediate vulnerabilities.
 
 - [Codex Security TypeScript SDK](./security/sdk.md): Integrate security scanning and progress reporting into developer tools.
 
-- [Codex Security Cloud setup](./security/setup.md): Install the Cloud plugin, connect GitHub, and start a security scan.
+- [Daybreak Defense Factory setup](./security/setup.md): Install the plugin, connect GitHub, and start a security scan.
 
 - [Security Review](./security/security-review.md): Run in-depth security reviews on GitHub pull requests.
 
 - [Threat model](./security/threat-model.md): Review and improve the threat model for your codebase.
 
-- [Codex Security Cloud FAQ](./security/faq.md): Get answers about cloud scans, findings, privacy, and access.
+- [Daybreak Defense Factory FAQ](./security/faq.md): Get answers about cloud scans, findings, privacy, and access.
 
 #### Cyber safety
 
@@ -51702,7 +51607,7 @@ Use an organization-approved GitHub user account, preferably dedicated to this s
 
 If a repository is missing, check the designated account’s GitHub access and the app’s allowed actions in ChatGPT.
 
-Codex Security Cloud uses a personal GitHub connection. See [Cloud setup](./security/setup.md#2-connect-github).
+Daybreak Defense Factory uses a personal GitHub connection. See [Cloud setup](./security/setup.md#2-connect-github).
 
 #### Notion
 

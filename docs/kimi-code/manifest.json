@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.5.3",
-  "last_updated": "2026-11-11T13:03:20Z",
+  "last_updated": "2026-11-11T21:40:09Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -30,8 +30,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/env-vars.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/env-vars.md",
       "source_id": "docs/en/configuration/env-vars.md",
-      "hash": "b3a9105f64a5e97bdb64c3a173d277054f89de71771f00fdbcde8f700ed5a7d9",
-      "last_updated": "2026-11-11T13:03:20Z"
+      "hash": "09e2edd8d8f80d69b88bf99dc76e5f9328860d2a2012b78287575951e98f5f65",
+      "last_updated": "2026-11-11T21:40:09Z"
     },
     "configuration/overrides": {
       "slug": "configuration/overrides",
@@ -150,8 +150,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/interaction.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/interaction.md",
       "source_id": "docs/en/guides/interaction.md",
-      "hash": "57f52a448c7e0036071171257e1ee99c6c1f11fd2432921b7e005e963f6e09bc",
-      "last_updated": "2026-11-10T13:52:57Z"
+      "hash": "87c000b80b3b8d083bbb621b1db4ed397e11540651eb01e4823dda0c60bf7563",
+      "last_updated": "2026-11-11T21:40:09Z"
     },
     "guides/migration": {
       "slug": "guides/migration",
@@ -240,8 +240,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/keyboard.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/keyboard.md",
       "source_id": "docs/en/reference/keyboard.md",
-      "hash": "0fece7bffedcc628a2f439c24bb33c3f71fc21a46c676130549efb7855a59e0e",
-      "last_updated": "2026-11-03T10:12:32Z"
+      "hash": "5904aff77f2e929630dee700abd6a422e13e323c93add2fd815f03f26ac3627c",
+      "last_updated": "2026-11-11T21:40:09Z"
     },
     "reference/kimi-acp": {
       "slug": "reference/kimi-acp",
@@ -305,8 +305,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-11T13:03:20Z",
-    "fetch_duration_seconds": 10.364,
+    "last_fetch_completed": "2026-11-11T21:40:09Z",
+    "fetch_duration_seconds": 10.305,
     "total_pages_discovered": 30,
     "pages_fetched_successfully": 30,
     "pages_failed": 0,
