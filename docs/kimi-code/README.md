@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 30
-- **Version:** 2.5.3
-- **Last updated:** 2026-11-12T04:28:07Z
+- **Pages mirrored:** 34
+- **Version:** 2.6.0
+- **Last updated:** 2026-11-12T14:05:09Z
 - **Official docs:** https://moonshotai.github.io/kimi-code/en
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -58,7 +58,11 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Keyboard Shortcuts | [reference/keyboard.md](./reference/keyboard.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/keyboard.html>) |
 | \`kimi acp\` Subcommand | [reference/kimi-acp.md](./reference/kimi-acp.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/kimi-acp.html>) |
 | \`kimi\` Command | [reference/kimi-command.md](./reference/kimi-command.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/kimi-command.html>) |
-| Server API | [reference/server-api.md](./reference/server-api.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api.html>) |
+| Server API (Beta) | [reference/server-api.md](./reference/server-api.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api.html>) |
+| Sessions and conversations | [reference/server-api-conversation.md](./reference/server-api-conversation.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api-conversation.html>) |
+| File endpoints | [reference/server-api-files.md](./reference/server-api-files.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api-files.html>) |
+| Service and configuration endpoints | [reference/server-api-service.md](./reference/server-api-service.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api-service.html>) |
+| Session endpoints | [reference/server-api-sessions.md](./reference/server-api-sessions.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api-sessions.html>) |
 | Slash Commands | [reference/slash-commands.md](./reference/slash-commands.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/slash-commands.html>) |
 | Built-in Tools | [reference/tools.md](./reference/tools.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/tools.html>) |
 
