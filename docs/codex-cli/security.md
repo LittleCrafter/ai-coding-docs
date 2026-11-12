@@ -6,38 +6,18 @@ Codex Security reviews code for vulnerabilities and reports evidence you can
 use to investigate and fix them. Choose how to run it based on where your code
 lives and how you want to review the results.
 
+The **Overview** in Daybreak Defense Factory shows proposed fixes and tracks [open and fixed findings](./security/findings-and-fixes.md) across your repositories.
+
+> Illustration: Daybreak Overview with proposed fixes across three repositories, open findings by severity, and the daily trend for new and fixed findings.
+
 ## Choose where to start
 
-| Use                      | When you want to                                                          | Start here                                          |
-| ------------------------ | ------------------------------------------------------------------------- | --------------------------------------------------- |
-| Daybreak Defense Factory | Scan connected GitHub repositories in Codex cloud or monitor new commits. | [Cloud setup](./security/setup.md)                |
-| Codex Security plugin    | Scan a local repository in Codex and work through findings interactively. | [Run your first local scan](./security/plugin.md) |
-| Codex Security CLI       | Run repeatable terminal scans or add checks to CI.                        | [CLI quickstart](./security/cli.md)               |
-| Codex Security SDK       | Run scans and handle results in an application or developer tool.         | [SDK guide](./security/sdk.md)                    |
-
-For your first local scan, use the plugin. In the ChatGPT desktop app, select
-**Codex**, install **Codex Security**, and open **Security** in the sidebar.
-The [Security workbench](./security/plugin/workbench.md) keeps saved scans
-and findings available for review. You can also use the plugin in Codex CLI.
-
-The Codex Security CLI and SDK are distributed in the public [@openai/codex-security package](https://github.com/openai/codex-security). Scans using OpenAI inference require Codex Security access. See each quickstart for its
-runtime and authentication requirements.
-
-Daybreak Defense Factory is a separate plugin, available in research preview on
-the web and in the desktop app. It requires workspace access, a GitHub
-connection, and a compatible Codex cloud environment. You can connect the
-repository and create an environment during setup.
-
-<figure className="not-prose my-8">
-
-  <figcaption className="mt-3 text-sm text-secondary">
-    Track open findings and fixes across repositories. This example uses
-    fictional repositories, findings, and counts.
-  </figcaption>
-</figure>
-
-For security reviews posted to GitHub pull requests, see
-[Security Review](./security/security-review.md).
+| Use                      | When you want to                                                                              | Start here                                          |
+| ------------------------ | --------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Daybreak Defense Factory | Scan a GitHub repository, review findings from other tools, and propose fixes with your team. | [Set up Daybreak](./security/setup.md)            |
+| Codex Security plugin    | Scan a local repository in Codex and work through findings interactively.                     | [Run your first local scan](./security/plugin.md) |
+| Codex Security CLI       | Run repeatable terminal scans or add checks to CI.                                            | [CLI quickstart](./security/cli.md)               |
+| Codex Security SDK       | Run scans and handle results in an application or developer tool.                             | [SDK guide](./security/sdk.md)                    |
 
 ## Choose the next task
 

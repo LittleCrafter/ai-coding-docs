@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.167.2",
-  "last_updated": "2026-11-12T04:27:18Z",
+  "last_updated": "2026-11-12T21:39:51Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -20,8 +20,8 @@
       "source_url": "https://learn.chatgpt.com/docs/administration",
       "source_md_url": "https://learn.chatgpt.com/docs/administration.md",
       "source_id": "llms:administration",
-      "hash": "174bebbbc4df8d717cbd68f2bb3e57a491a58140b21367aec0920511159e3891",
-      "last_updated": "2026-11-05T19:08:38Z"
+      "hash": "83e1cc161d9a7556cdf72e175cea32eb8e3ff67a8969976c4c078d43706ee8e9",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "agent-approvals-security": {
       "slug": "agent-approvals-security",
@@ -90,8 +90,8 @@
       "source_url": "https://learn.chatgpt.com/docs/amazon-bedrock",
       "source_md_url": "https://learn.chatgpt.com/docs/amazon-bedrock.md",
       "source_id": "llms:amazon-bedrock",
-      "hash": "930615b2b9e307b8a62cf36444fd26aebc6170c12f138f8683010a14fa6b5b0a",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "2ce15f72db7657326f9ac4186623102e617e3dfaa6340e94234cd59dc418e5c5",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "annotations-extensibility": {
       "slug": "annotations-extensibility",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "b8fe2d7f9447c1c327cbb966b1419e54222ce5980c485ab315f9db66706ad658",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "e924e1ecd6be4d2ad15ab760eb45ad5e56525825971ba5cc7c67c885db4d0adf",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -500,8 +500,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/controls",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/controls.md",
       "source_id": "llms:dots/controls",
-      "hash": "67511e409bdf479d16f13a887d416bf527d5717605769805365a7c52ea7bc504",
-      "last_updated": "2026-10-20T23:32:49Z"
+      "hash": "668ba694e6f618ef5b908a3f1c671ac45cdb9d688e84ae20bd41bc10beca47f4",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "dots/getting-started": {
       "slug": "dots/getting-started",
@@ -550,8 +550,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/admin-setup",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/admin-setup.md",
       "source_id": "llms:enterprise/admin-setup",
-      "hash": "a5d03418c0d87a1af2bead6a75b29f73d99988eae9a36b9adb817c843120d37a",
-      "last_updated": "2026-11-06T18:35:30Z"
+      "hash": "79dec9a35a07d95e5b3470b726c5e8c0bde41ec0b6c46a0a7325e11ecc14cde7",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "enterprise/agent-security": {
       "slug": "enterprise/agent-security",
@@ -683,6 +683,16 @@
       "hash": "bc099c00b1a9b35f2c9a66cf20bdd65ee88d7b0aaab6e52ec0a3433dcdc085df",
       "last_updated": "2026-11-05T19:08:38Z"
     },
+    "enterprise/desktop-browser-policies": {
+      "slug": "enterprise/desktop-browser-policies",
+      "title": "Desktop browser policies",
+      "group": "enterprise",
+      "source_url": "https://learn.chatgpt.com/docs/enterprise/desktop-browser-policies",
+      "source_md_url": "https://learn.chatgpt.com/docs/enterprise/desktop-browser-policies.md",
+      "source_id": "llms:enterprise/desktop-browser-policies",
+      "hash": "36cf1185c0578ba515e0c6f04bbbba833589d01f3dadc5aa550fc5930f3fe488",
+      "last_updated": "2026-11-12T21:39:51Z"
+    },
     "enterprise/dots-admin-guide": {
       "slug": "enterprise/dots-admin-guide",
       "title": "Manage dots permissions and capabilities",
@@ -700,8 +710,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/dots-security",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/dots-security.md",
       "source_id": "llms:enterprise/dots-security",
-      "hash": "60b267dda3acc3317e5b88ae91740a24371b10972e15cbd57be06bb799e2d8d8",
-      "last_updated": "2026-11-10T21:06:06Z"
+      "hash": "90e1115818ac313ced6d8b66899d9ab4dc9dc42eab87ae191055ec794ac9acf5",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "enterprise/dynamic-groups": {
       "slug": "enterprise/dynamic-groups",
@@ -790,8 +800,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration.md",
       "source_id": "llms:enterprise/managed-configuration",
-      "hash": "eac10e2b359f42a5781b79fa1f2343d8222b3c428f6b216a0fe1139cc90f42a3",
-      "last_updated": "2026-11-11T03:15:44Z"
+      "hash": "5e66aeb38a682d0ab3385c9092503cbd39a9f0f3e91a410cfa4c983619464038",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "enterprise/plugin-management": {
       "slug": "enterprise/plugin-management",
@@ -860,8 +870,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/shared-connections",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/shared-connections.md",
       "source_id": "llms:enterprise/shared-connections",
-      "hash": "99c635fe1dc44e4ecdc84aa72b3755e68ab12276277e8f62176305bb75ad1667",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "3036cdba6faa6022ca30992c942827dbec210a64c6d4f51a3987cdf5486980fc",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "enterprise/sites": {
       "slug": "enterprise/sites",
@@ -870,8 +880,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/sites",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/sites.md",
       "source_id": "llms:enterprise/sites",
-      "hash": "81b0b8d5d72aa31087ad24c992a526e637a3d74950f6cc2a27bfd1c4dda1c522",
-      "last_updated": "2026-11-06T18:35:30Z"
+      "hash": "607d831f99e136e2355056f43e417de7ca9f77cacb98a42e60dd999aa78bec83",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "enterprise/skills": {
       "slug": "enterprise/skills",
@@ -1490,8 +1500,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security",
       "source_md_url": "https://learn.chatgpt.com/docs/security.md",
       "source_id": "llms:security",
-      "hash": "25e17ef73481d530ed2bfc5c2bcea668253ceadb92f97faae2dd7630fcbaae2a",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "c4ea81cc36812a6adf40623a07e7b7fb3219aa9c1a1b00245fa4a4de9596cd15",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "security-administration": {
       "slug": "security-administration",
@@ -1500,8 +1510,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security-administration",
       "source_md_url": "https://learn.chatgpt.com/docs/security-administration.md",
       "source_id": "llms:security-administration",
-      "hash": "3280f3ea26bdb8112c17612190c04ad267a7d850a431bc6096cfe1a9b60b1dd9",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "5f4b51f11557af0c357d8695a8accff4e341fe4722aee93e128ab880a90ac847",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "security/cli": {
       "slug": "security/cli",
@@ -1570,8 +1580,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/reference",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/reference.md",
       "source_id": "llms:security/cli/reference",
-      "hash": "3b8f846bebf9cd4a9c5d5eb03a427c93c284878704876f1c8d2555c844a14f29",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "20a5408201619ec8ae330fcf7d06dd02f649462616c0ff79163ff47a51d239d5",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "security/faq": {
       "slug": "security/faq",
@@ -1580,8 +1590,28 @@
       "source_url": "https://learn.chatgpt.com/docs/security/faq",
       "source_md_url": "https://learn.chatgpt.com/docs/security/faq.md",
       "source_id": "llms:security/faq",
-      "hash": "e0e6ce2efb0824ef3df89b23f1903770e22aa96f4d6b82a9cbeb132e310dc7f2",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "34db2678c7cd106b8bd309ee72f6b66d42dd1855d7fee8e415a638a4d6144597",
+      "last_updated": "2026-11-12T21:39:51Z"
+    },
+    "security/findings-and-fixes": {
+      "slug": "security/findings-and-fixes",
+      "title": "Review findings and fixes in Daybreak",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/findings-and-fixes",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/findings-and-fixes.md",
+      "source_id": "llms:security/findings-and-fixes",
+      "hash": "afc3a9348817559032567fa16e45cc1f9c5832cce8e0e8a406a83bc1d793ab94",
+      "last_updated": "2026-11-12T21:39:51Z"
+    },
+    "security/notifications": {
+      "slug": "security/notifications",
+      "title": "Daybreak notifications",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/notifications",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/notifications.md",
+      "source_id": "llms:security/notifications",
+      "hash": "3b7491b1fba34680fa2e01b77b568820413ef34c93bb416c4ef7fbfa697ad851",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "security/plugin": {
       "slug": "security/plugin",
@@ -1693,6 +1723,16 @@
       "hash": "bc8276e98194bc963ba950f0b62c6028f2cfcd1bd99a7ee49d40b5e9b1139ba9",
       "last_updated": "2026-10-16T07:36:35Z"
     },
+    "security/scanner-imports": {
+      "slug": "security/scanner-imports",
+      "title": "Import scanner findings into Daybreak",
+      "group": "security",
+      "source_url": "https://learn.chatgpt.com/docs/security/scanner-imports",
+      "source_md_url": "https://learn.chatgpt.com/docs/security/scanner-imports.md",
+      "source_id": "llms:security/scanner-imports",
+      "hash": "86ec14922d692b4df93077cbc506081ff68c0e285bc3591213b20887a20863e5",
+      "last_updated": "2026-11-12T21:39:51Z"
+    },
     "security/sdk": {
       "slug": "security/sdk",
       "title": "Codex Security TypeScript SDK",
@@ -1710,28 +1750,28 @@
       "source_url": "https://learn.chatgpt.com/docs/security/security-review",
       "source_md_url": "https://learn.chatgpt.com/docs/security/security-review.md",
       "source_id": "llms:security/security-review",
-      "hash": "66f24cdeb1cbd88aa661e1ba461be796616a6451c0ea99bf3be736b73b2e619f",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "6a5cde41f839da9ec361f869d7496325ef1929491ba4e7710f723eac115fc064",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "security/setup": {
       "slug": "security/setup",
-      "title": "Daybreak Defense Factory setup",
+      "title": "Set up Daybreak Defense Factory",
       "group": "security",
       "source_url": "https://learn.chatgpt.com/docs/security/setup",
       "source_md_url": "https://learn.chatgpt.com/docs/security/setup.md",
       "source_id": "llms:security/setup",
-      "hash": "a394d2514ada33170d4f52259bffd60c6aa6016e9edcc6b0632024b1c42ca994",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "55a6552b4ed50eb2d05faf5edfec28525ebdf0772a7f9cb4f6356e82410afc63",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "security/threat-model": {
       "slug": "security/threat-model",
-      "title": "Improve the Daybreak threat model",
+      "title": "Improve the repository threat model",
       "group": "security",
       "source_url": "https://learn.chatgpt.com/docs/security/threat-model",
       "source_md_url": "https://learn.chatgpt.com/docs/security/threat-model.md",
       "source_id": "llms:security/threat-model",
-      "hash": "c0d54c6478d58f5f98bde1e7e1e6d7e95e43c8caf7a8ab83a4742082e86bf100",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "8db6d8a0e3a6dee776f14ddf5a3f40cbb6be7eee693d5196c5c96c1b0b61a591",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "sign-in-with-chatgpt": {
       "slug": "sign-in-with-chatgpt",
@@ -1750,8 +1790,8 @@
       "source_url": "https://learn.chatgpt.com/docs/sites",
       "source_md_url": "https://learn.chatgpt.com/docs/sites.md",
       "source_id": "llms:sites",
-      "hash": "3e5c2cdf5d939cdf1e58e658a303be5138b932534f2babbc14a6af5c1cec4587",
-      "last_updated": "2026-11-10T04:52:27Z"
+      "hash": "1f3450106f1261fe912fcb9a01ce9222cab6efcf8d6d463a82d362788449cba0",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "sites/creating-a-site": {
       "slug": "sites/creating-a-site",
@@ -1760,8 +1800,8 @@
       "source_url": "https://learn.chatgpt.com/docs/sites/creating-a-site",
       "source_md_url": "https://learn.chatgpt.com/docs/sites/creating-a-site.md",
       "source_id": "llms:sites/creating-a-site",
-      "hash": "5640ea584b75f4b4c666f9148d4efe3dc197a06c697c57b0ea4ad16754c49551",
-      "last_updated": "2026-10-15T23:24:00Z"
+      "hash": "088b186934ce66439b473acf26d39f73233c6c97ba4d2e053d808c293993932f",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "sites/data-and-connections": {
       "slug": "sites/data-and-connections",
@@ -1790,8 +1830,8 @@
       "source_url": "https://learn.chatgpt.com/docs/sites/publishing-and-sharing",
       "source_md_url": "https://learn.chatgpt.com/docs/sites/publishing-and-sharing.md",
       "source_id": "llms:sites/publishing-and-sharing",
-      "hash": "a70567fa89df717262e02c34a83ec77717939b19effc5e3e3ccedce1f2ae6564",
-      "last_updated": "2026-11-06T18:35:30Z"
+      "hash": "00c38cdd5243721afe9c751e124810d1a6dabbae6d04ee15daac472a011091d9",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "skills-and-plugins": {
       "slug": "skills-and-plugins",
@@ -1960,8 +2000,8 @@
       "source_url": "https://learn.chatgpt.com/docs/whats-new",
       "source_md_url": "https://learn.chatgpt.com/docs/whats-new.md",
       "source_id": "llms:whats-new",
-      "hash": "c3680f7af0a2388c652f8803b5edf74fcf933cabaf97ebc6b20180e1bb6c1ecf",
-      "last_updated": "2026-11-05T19:08:38Z"
+      "hash": "233cd815f038b58a2604c96c095e5dee6f302d3a61bd27d81f9f3a75ecea1f6f",
+      "last_updated": "2026-11-12T21:39:51Z"
     },
     "whats-new/devday-2026": {
       "slug": "whats-new/devday-2026",
@@ -2075,10 +2115,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-12T04:27:18Z",
-    "fetch_duration_seconds": 72.191,
-    "total_pages_discovered": 207,
-    "pages_fetched_successfully": 207,
+    "last_fetch_completed": "2026-11-12T21:39:51Z",
+    "fetch_duration_seconds": 73.583,
+    "total_pages_discovered": 211,
+    "pages_fetched_successfully": 211,
     "pages_failed": 0,
     "failed_pages": []
   }

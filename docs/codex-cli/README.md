@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 207
+- **Pages mirrored:** 211
 - **Version:** 0.167.2
-- **Last updated:** 2026-11-12T04:27:18Z
+- **Last updated:** 2026-11-12T21:39:51Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -170,6 +170,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Compliance API and audit events | [enterprise/compliance-api.md](./enterprise/compliance-api.md) | [source](<https://learn.chatgpt.com/docs/enterprise/compliance-api>) |
 | Self-host Codex configuration for your team | [enterprise/configuration-server.md](./enterprise/configuration-server.md) | [source](<https://learn.chatgpt.com/docs/enterprise/configuration-server>) |
 | Connect to a gateway | [enterprise/connect-to-a-gateway.md](./enterprise/connect-to-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway>) |
+| Desktop browser policies | [enterprise/desktop-browser-policies.md](./enterprise/desktop-browser-policies.md) | [source](<https://learn.chatgpt.com/docs/enterprise/desktop-browser-policies>) |
 | Manage dots permissions and capabilities | [enterprise/dots-admin-guide.md](./enterprise/dots-admin-guide.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-admin-guide>) |
 | Safety and security in dots | [enterprise/dots-security.md](./enterprise/dots-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-security>) |
 | Dynamic groups | [enterprise/dynamic-groups.md](./enterprise/dynamic-groups.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dynamic-groups>) |
@@ -257,6 +258,8 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Codex Security CLI FAQ | [security/cli/faq.md](./security/cli/faq.md) | [source](<https://learn.chatgpt.com/docs/security/cli/faq>) |
 | Codex Security CLI reference | [security/cli/reference.md](./security/cli/reference.md) | [source](<https://learn.chatgpt.com/docs/security/cli/reference>) |
 | Daybreak Defense Factory FAQ | [security/faq.md](./security/faq.md) | [source](<https://learn.chatgpt.com/docs/security/faq>) |
+| Review findings and fixes in Daybreak | [security/findings-and-fixes.md](./security/findings-and-fixes.md) | [source](<https://learn.chatgpt.com/docs/security/findings-and-fixes>) |
+| Daybreak notifications | [security/notifications.md](./security/notifications.md) | [source](<https://learn.chatgpt.com/docs/security/notifications>) |
 | Codex Security plugin quickstart | [security/plugin.md](./security/plugin.md) | [source](<https://learn.chatgpt.com/docs/security/plugin>) |
 | Codex Security plugin changelog | [security/plugin/changelog.md](./security/plugin/changelog.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/changelog>) |
 | Review code changes for security | [security/plugin/code-changes.md](./security/plugin/code-changes.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/code-changes>) |
@@ -268,10 +271,11 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Triage a backlog | [security/plugin/triage-backlog.md](./security/plugin/triage-backlog.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/triage-backlog>) |
 | Write vulnerability reports | [security/plugin/vulnerability-reports.md](./security/plugin/vulnerability-reports.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/vulnerability-reports>) |
 | Use the Codex Security workbench | [security/plugin/workbench.md](./security/plugin/workbench.md) | [source](<https://learn.chatgpt.com/docs/security/plugin/workbench>) |
+| Import scanner findings into Daybreak | [security/scanner-imports.md](./security/scanner-imports.md) | [source](<https://learn.chatgpt.com/docs/security/scanner-imports>) |
 | Codex Security TypeScript SDK | [security/sdk.md](./security/sdk.md) | [source](<https://learn.chatgpt.com/docs/security/sdk>) |
 | Security Review | [security/security-review.md](./security/security-review.md) | [source](<https://learn.chatgpt.com/docs/security/security-review>) |
-| Daybreak Defense Factory setup | [security/setup.md](./security/setup.md) | [source](<https://learn.chatgpt.com/docs/security/setup>) |
-| Improve the Daybreak threat model | [security/threat-model.md](./security/threat-model.md) | [source](<https://learn.chatgpt.com/docs/security/threat-model>) |
+| Set up Daybreak Defense Factory | [security/setup.md](./security/setup.md) | [source](<https://learn.chatgpt.com/docs/security/setup>) |
+| Improve the repository threat model | [security/threat-model.md](./security/threat-model.md) | [source](<https://learn.chatgpt.com/docs/security/threat-model>) |
 
 ## sites
 

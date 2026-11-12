@@ -819,8 +819,8 @@ the networks you plan to use. Keep these boundaries in mind:
 
 > [!WARNING]
 > Keep `[experimental_network]` in published policies until every client and
-> policy validator supports `[network_proxy]`. Older versions can ignore or
-> strip the new name. Test enforcement on the client versions and operating
+> policy validation tool supports `[network_proxy]`. Older versions can ignore
+> or strip the new name. Test enforcement on the client versions and operating
 > systems you deploy, especially Windows, where support is limited.
 
 Use **Requirements** > **Network use controls** to manage supported command
@@ -1221,6 +1221,8 @@ the allowed and blocked workflows on each relevant client and execution path.
 ## Deploy device-managed configuration
 
 Use local system requirements or MDM for authentication restrictions and device-managed policies. The legacy `managed_config.toml` mechanism has different startup precedence from Agent security **Defaults**. The MDM workflow covers both requirements and legacy defaults.
+
+For Chrome policies that apply to browsing inside the desktop app, see [Manage desktop browser policies with MDM](./desktop-browser-policies.md).
 
 ### Manage authentication locally
 

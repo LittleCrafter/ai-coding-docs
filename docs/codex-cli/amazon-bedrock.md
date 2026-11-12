@@ -13,6 +13,12 @@ This page covers direct access to Bedrock. If your organization already
   the Bedrock credentials. For deployment guidance, see [Roll out a
   gateway](./enterprise/roll-out-a-gateway.md).
 
+ChatGPT Enterprise purchased through AWS Marketplace is a separate offering
+  from the Bedrock client setup described here. For residency requirements for
+  that offering, see the 
+  [data residency and inference residency guidance in the Help Center](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt)
+  .
+
 ## How it works
 
 When you configure a local ChatGPT Work or Codex surface with Amazon Bedrock as

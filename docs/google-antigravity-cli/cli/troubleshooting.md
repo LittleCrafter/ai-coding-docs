@@ -55,10 +55,14 @@ To add the binary directory to your path on macOS or Linux, follow these steps:
 
 To add the binary directory to your path on Windows, follow these steps:
 
-1.  Open a PowerShell terminal as an Administrator and execute the following command:
+1.  Open a PowerShell terminal and run the following commands:
     
     ```powershell
-    [System.Environment]::SetEnvironmentVariable("Path", [System.Environment]::GetEnvironmentVariable("Path", "User") + ";C:\Program Files\Google\antigravity-cli", "User")
+    $binDir = "$env:LOCALAPPDATA\agy\bin"
+    $userPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
+    if (($userPath -split ";") -notcontains $binDir) {
+        [System.Environment]::SetEnvironmentVariable("Path", (($userPath.TrimEnd(";"), $binDir | Where-Object { $_ }) -join ";"), "User")
+    }
     ```
     
 2.  Restart your terminal emulator for the system registry environment to refresh.

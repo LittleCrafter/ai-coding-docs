@@ -4,6 +4,12 @@
 
 For every versioned update, bug fix, and minor improvement, see the [ChatGPT and Codex changelog](https://learn.chatgpt.com/docs/changelog) and [API changelog](https://developers.openai.com/api/docs/changelog).
 
+## November 9–13, 2026
+
+### Set custom instructions for your dot
+
+Tell your dot how you’d like it to respond and work with you. You can ask it to update your instructions in conversation or edit them in **Customize → Behavior**. [Learn how to set custom instructions](./dots/controls.md).
+
 ## [November 2–6, 2026](./whats-new/november-2-6-2026.md)
 
 ### Reply to your dot from an iOS notification

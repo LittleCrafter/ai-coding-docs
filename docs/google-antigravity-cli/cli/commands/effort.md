@@ -22,7 +22,7 @@ The CLI recognizes the following effort levels, ordered from lightest to heavies
 
 Note
 
-The set of levels you can choose from depends on your active model. Most adjustable models offer `low`, `medium`, and `high`; only some models also expose `xhigh` or `max`. If you run `/effort` while using a model with a fixed reasoning budget, the CLI reports that effort isn’t adjustable for the current model.
+The set of levels you can choose from depends on your active model. Most adjustable models offer `low`, `medium`, and `high`; only some models also expose `xhigh` or `max`. If you run `/effort` while using a model with a fixed reasoning budget, such as [Orchestrator](https://antigravity.google/docs/models#orchestrator), the CLI reports that effort isn’t adjustable for the current model.
 
 ## Change effort interactively
 

@@ -418,6 +418,11 @@ gemini-4-carbon-medium    Gemini 4 Carbon (Medium)
 gemini-4-carbon-low       Gemini 4 Carbon (Low)
 gemini-4-argon-high       Gemini 4 Argon (High)
 gemini-4-argon-medium     Gemini 4 Argon (Medium)
+gemini-4-hydrogen-xhigh   Gemini 4 Hydrogen (XHigh)
+gemini-4-hydrogen-high    Gemini 4 Hydrogen (High)
+gemini-4-hydrogen-medium  Gemini 4 Hydrogen (Medium)
+gemini-4-hydrogen-low     Gemini 4 Hydrogen (Low)
+gemini-pro-orchestrator   Orchestrator
 gemini-3.8-flash-high     Gemini 3.8 Flash (High)
 gemini-3.8-flash-medium   Gemini 3.8 Flash (Medium)
 gemini-3.7-flash-high     Gemini 3.7 Flash (High)
@@ -432,7 +437,7 @@ gemini-3.1-pro-high       Gemini 3.1 Pro (High)
 # Pin a model by slug.
 agy -p "Reverse the string antigravity." --model gemini-3.8-flash-medium
 
-# Set reasoning effort (low, medium, or high).
+# Set reasoning effort (low, medium, high, xhigh, or max, depending on the model).
 agy -p "Outline a plan to add caching to this service." --effort high
 
 # Select an agent (list them with `agy agents`).
@@ -514,7 +519,7 @@ agy -p "Summarize the design tradeoffs of optimistic locking." --print-timeout 1
 | `--input-format` | `text` | Input format: `text` or `stream-json`; reads prompts on stdin |
 | `--json-schema` | — | Schema string or file path to enforce structured output |
 | `--model` | — | Model slug for this run (refer to `agy models`) |
-| `--effort` | — | Reasoning effort: `low`, `medium`, or `high` |
+| `--effort` | — | [Reasoning effort](./commands/effort.md): `low`, `medium`, `high`, `xhigh`, or `max` (depending on the model) |
 | `--agent` | — | Agent for this run (refer to `agy agents`) |
 | `--continue`, `-c` | `false` | Continue the most recent conversation |
 | `--conversation` | — | Resume a conversation by ID |

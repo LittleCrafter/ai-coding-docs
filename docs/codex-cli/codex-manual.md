@@ -817,6 +817,12 @@ Source: [What's new](./whats-new.md)
 
 For every versioned update, bug fix, and minor improvement, see the [ChatGPT and Codex changelog](https://learn.chatgpt.com/docs/changelog) and [API changelog](https://developers.openai.com/api/docs/changelog).
 
+#### November 9–13, 2026
+
+#### Set custom instructions for your dot
+
+Tell your dot how you’d like it to respond and work with you. You can ask it to update your instructions in conversation or edit them in **Customize → Behavior**. [Learn how to set custom instructions](./dots/controls.md).
+
 #### [November 2–6, 2026](./whats-new/november-2-6-2026.md)
 
 #### Reply to your dot from an iOS notification
@@ -3724,6 +3730,33 @@ ways to help. The tools it uses for that research can't send messages, change
 app content, or control your browser or computer. Any follow-up action is
 subject to the same permissions and safety requirements.
 
+#### Set custom instructions
+
+Custom instructions are specific to your dot. Use them to set how your dot
+works, such as your preferred writing style, how often it checks in, or when it
+asks before taking an action. Your dot's instructions are separate from your
+ChatGPT custom instructions.
+
+Tell your dot in chat what you'd like it to remember as an ongoing instruction.
+For example, “When you finish a task, link to the result and tell me what needs
+my attention.” You can also ask your dot to update an instruction later.
+
+On mobile, when **Behavior** is available, you can review your dot's
+instructions in **Customize** and edit them if editing is enabled:
+
+1. Open the sidebar and select **Customize** > **Behavior**.
+2. If you see tabs for ChatGPT and your dot, select your dot's name.
+3. Enter your preferences under **How [your dot's name] handles tasks**.
+4. Select the checkmark (**Save**).
+
+Return to **Customize** > **Behavior** to edit your instructions and save your
+changes. If your mobile app
+doesn't show **Behavior**, update the app or use your dot's chat on desktop or
+web.
+
+Custom rules, where available, let you choose how your dot handles specific
+actions and approvals. See [Set custom rules](#set-custom-rules).
+
 #### Set custom rules
 
 Custom rules are optional controls for specific ongoing boundaries. Start with
@@ -3735,6 +3768,7 @@ After setting up your dot, open custom rules for your app:
 - **Desktop and web:** Open **Settings** > **Personalization** and select
   **Custom rules** under **Permissions**.
 - **iOS and Android:** Open the sidebar, then select **Customize** > **Custom rules**.
+  This option appears when **Behavior** is unavailable.
 
 Select **Add**, describe the action, choose how your dot should handle it,
 and select **Add rule**. The choices are:
@@ -3748,7 +3782,8 @@ and select **Add rule**. The choices are:
 
 For example, you could choose **Ask before taking action** for sending messages
 to customers, or **Hand off to you** for deleting shared project files. Use your
-conversation for preferences such as writing style or how you like updates;
+conversation or [custom instructions](#set-custom-instructions) for preferences
+such as writing style or how you like updates;
 custom rules control when your dot can take an action.
 
 Saved custom rules apply to your dot in the same account. They can give your
@@ -7176,11 +7211,7 @@ authentication outside the CLI. See the [findings service guide](https://github.
 
 #### `codex-security publish findings`
 
-Use `--to local` to save imported findings on your machine. With `--to cloud`,
-even a preview contacts the service. It needs a file-backed ChatGPT login and
-an authorized repository ID or URL. A Cloud import can return a partial result
-if the service rejects individual records.
-See the [GitHub import guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/cli.md#import-github-findings-locally-or-to-cloud) for both workflows.
+You can save scanner findings locally or publish them to Daybreak.
 
 #### Preview and save a local report
 
@@ -9031,68 +9062,26 @@ reference](./security/cli/reference.md).
 
 Source: [Daybreak Defense Factory FAQ](./security/faq.md)
 
-These answers apply to Daybreak Defense Factory. For installation and a first scan,
-use [Cloud setup](./security/setup.md). Local scans have separate
+[Set up Daybreak Defense Factory](./security/setup.md) walks you through your first cloud scan. Local scans have separate
 [plugin](./security/plugin.md) and [CLI](./security/cli.md) guides.
 
 #### Billing
 
-#### How are Cloud scans billed?
+#### How are cloud scans billed?
 
-Repository scans and continuous scans set up after October 1, 2026, at
-12:53 PM Pacific are billed based on token usage at your plan's rates, in
-credits or USD depending on your billing plan. For
-[eligible accounts](#do-i-get-a-free-scanning-period-or-free-scanning-credits),
-free scanning credits apply before paid usage is billed.
+Repository scans and continuous monitoring are billed by token usage at your
+plan’s rates, in credits or USD. Your plan’s included usage allowance does
+not cover these scans.
 
-This usage is not covered by your plan's included usage allowance.
+Repository scans and continuous monitoring draw from the same credit balance.
+In a workspace, everyone shares that balance. Free scanning credits don’t
+expire. When they run out, further scans are billed at your plan’s rates.
 
-Continuous scans set up before that cutoff are free until
-October 21, 2026. After that, they are billed at regular token rates under
-your account's billing plan if you enable paid usage. Otherwise, they pause.
+#### Where can I see scan costs?
 
-#### Do I get a free scanning period or free scanning credits?
-
-What you receive depends on whether your account had continuous scanning set
-up before October 1, 2026, at 12:53 PM Pacific:
-
-- If it did, your covered continuous scans remain free until October 21, 2026.
-  This free period doesn't cover repository scans or continuous scanning set
-  up after October 1, 2026, at 12:53 PM Pacific.
-- If it didn't, eligible accounts receive $500 in free scanning credits
-  instead of the free continuous-scanning period.
-
-#### How do free scanning credits work?
-
-Repository scans and continuous scanning use the same free balance. In a
-workspace, everyone shares that balance. These free scanning credits don't
-expire.
-
-When the free balance runs out, further scanning is billed under your
-account's or workspace's billing plan.
-
-#### What happens when the free continuous-scanning period ends?
-
-Select **Keep scans running** and enable paid usage to continue these scans
-after the free period. They are then billed at regular token rates under
-your account's or workspace's billing plan.
-
-If you opt out or don't enable paid usage, those scans pause when the free
-period ends. Select **Re-enable scans** to enable paid usage afterward.
-In a workspace, ask a workspace owner to make this choice if you don't have
-permission.
-
-#### Where can I see token usage and charges?
-
-Open a scan in **Scans** to review its token usage and cost. Hover over the
-token count to see input, cached input, and output tokens. Cached input is
-included in the input count, not added on top of it.
-
-Usage shows the cost before free scanning credits or billing exemptions,
-along with any amount covered by free scanning credits.
-
-Scans marked "Exempt from billing. No charges apply." incur no charges,
-even when they show token usage and cost.
+Open **Usage** to compare costs by repository over a date range. **Scan cost**
+shows the cost before credits and exemptions. **Billable remainder** shows
+the amount remaining after credits and exemptions apply.
 
 #### Scanning
 
@@ -9113,24 +9102,29 @@ ability to reason about the language and framework, and on the available
 repository context. A successful scan doesn't imply equal coverage across
 languages or components. Check the report for the scope actually reviewed.
 
-#### How do repository scans and commit monitoring differ?
+#### Which scan should I use?
 
-A **One-Time Scan** reviews the repository once. **Continuous Scanning** monitors
-new commits and can review selected commit history. Enable it after the first
-scan using [Monitor new commits](./security/setup.md#5-monitor-new-commits).
+Use a repository scan to look for issues already in the code, continuous
+monitoring to check new commits on the default branch, or a scheduled scan for
+recurring repository reviews. You can check changes before they merge with
+[PR reviews](./security/security-review.md#enable-pr-reviews-in-daybreak).
 
 #### Can I pause commit monitoring?
 
-Open **Repositories**, select the repository, and open **Monitoring settings**.
-Set monitoring to **Paused** and select **Save**. You can enable it again from
-the same settings.
+Yes. Open **Repositories**, select the repository, and open **Continuous scanning settings**.
+Turn off **Continuous monitoring** and save your changes. You can turn it back on in the same settings.
 
 #### Can I edit the threat model?
 
-Yes. Update it in the monitored repository's **Monitoring settings** when the
-architecture, deployment, or security assumptions change. The [threat-model
-guide](./security/threat-model.md) explains what to include. Changes apply to
-future scans.
+Yes. Open **Threat model** in the monitored repository and update it when the
+architecture, deployment, or security assumptions change. Your edits apply to
+future scans. The [threat model guide](./security/threat-model.md) explains what to include.
+
+#### Can I scan code hosted on GitLab?
+
+Cloud scans use a connected GitHub repository. For GitLab, scan a [local
+checkout](./security/setup.md#scan-your-local-checkout) or run the
+[Codex Security CLI in GitLab CI/CD](./security/cli/ci/gitlab.md).
 
 #### Findings and validation
 
@@ -9161,12 +9155,9 @@ findings can still miss vulnerabilities.
 
 #### Does Daybreak apply patches automatically?
 
-The action depends on the finding. **Fix with Codex** on a repository finding
-starts a conversation that asks Codex to verify the issue, implement a fix,
-and run relevant tests. Review the changes in that conversation.
-
-For a finding with a suggested patch, review the diff before selecting
-**Create draft pull request**. Creating the draft doesn't merge the fix.
+Daybreak saves a proposed patch for review. **Fix with Codex** lets you
+discuss or refine it. **Create PR** opens a draft pull request on GitHub.
+See [Review a proposed fix](./security/findings-and-fixes.md#review-a-proposed-fix).
 
 #### How do I know whether a patch fixed the issue?
 
@@ -9175,116 +9166,55 @@ still reproduces and whether legitimate behavior still works. If validation
 wasn't completed, keep that uncertainty with the finding. A proposed patch,
 draft pull request, or status change alone doesn't verify a fix.
 
-### Daybreak Defense Factory setup
+### Daybreak notifications
 
-Source: [Daybreak Defense Factory setup](./security/setup.md)
+Source: [Daybreak notifications](./security/notifications.md)
 
-Run a first scan of a connected GitHub repository with Daybreak Defense Factory
-(formerly Codex Security Cloud), then review its findings. Afterward, you can
-enable monitoring for new commits.
+You can send scan events to a service you control using a workspace webhook. For
+example, you can use it to update a security dashboard when a scan finishes or
+refresh a ticket when the scan results change. Each destination receives the
+events you select from across your ChatGPT workspace.
 
-Daybreak Defense Factory runs scans in [Codex cloud](./cloud.md). For scans
-of a local repository in the desktop app or CLI, use the separate [Codex
-Security plugin](./security/plugin.md).
+#### Add a workspace webhook
 
-#### Before you start
+1. In Daybreak, go to **Settings** > **Notifications** and select **Add**.
+2. Enter a **Name** and an **Endpoint URL**. Use a publicly reachable HTTPS
+   endpoint that accepts `POST` requests on port 443.
+3. Choose which events to receive.
+   - **Scan finished** (`scan.finished`) reports scan completions, failures, and cancellations.
+   - **Scan updated** (`scan.updated`) reports later changes to a scan’s results, such as updated validation or severity.
 
-Use a workspace with Daybreak Defense Factory access and [Codex cloud](./cloud.md)
-set up. You need permission to connect the GitHub repository you want to scan.
-You can create its cloud environment during setup.
+4. Select **Add**. Copy the signing secret and store it securely. Daybreak
+   shows the full secret once.
+5. In the destination’s menu, select **Send test notification**, then **Send
+   test**. Daybreak sends a sample `scan.finished` event with `is_test: true`
+   and reports delivery when your endpoint returns a `2xx` response.
 
-If the plugin is unavailable, check access with your workspace administrator.
-If a repository is missing, use **Configure access** in the repository picker to
-check the GitHub app's organization and repository access. If you can't grant
-access yourself, ask your GitHub administrator to add the repository.
+#### Verify and handle deliveries
 
-#### 1. Install and open the plugin
+Daybreak sends a JSON `POST` signed with HMAC-SHA256. The signature covers the
+`webhook-id`, `webhook-timestamp`, and original request body. Verify the request using the
+`webhook-signature` header before processing the event.
+Pass the original request bytes to your verifier so changes to whitespace or
+JSON formatting don’t invalidate the signature. For details, see the [Standard Webhooks specification](https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#verifying-signatures).
+For language-specific verification libraries, see the [Standard Webhooks reference implementations](https://github.com/standard-webhooks/standard-webhooks#reference-implementations).
 
-1. Open **Plugins** in ChatGPT on the web or in the desktop app.
-2. Search the plugin marketplace for **Daybreak Defense Factory (Preview)**.
-3. Install and enable the plugin, then open **Daybreak** in the sidebar.
+Check `is_test` before triggering your production workflow. You can identify
+repeat deliveries by the payload’s `id` and group events for the same scan by
+`data.scan_id`. Daybreak allows
+10 seconds per delivery attempt, including test deliveries. Return a `2xx`
+response within that window once your service has accepted the event. For
+longer processing, save the event to a queue and respond before processing it.
 
-[Open plugin marketplace](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
+#### Manage destinations and rotate secrets
 
-#### 2. Connect GitHub
-
-Confirm that [Codex cloud](./cloud.md) is set up for your workspace. In the
-plugin, select **Scan**. If prompted, select **Connect GitHub** and sign in
-with your own GitHub account. Each person who starts scans needs their own
-connection and access to the repository.
-
-Daybreak Defense Factory doesn't support workspace connections.
-
-#### 3. Start a repository scan
-
-1. In **New Scan**, choose the repository.
-2. Review the environment. **Auto** creates an environment when you start.
-   Use **Customize** to choose an existing environment. See [Codex cloud
-   environments](./environments/cloud-environment.md) for setup details.
-3. Under **Scan Method**, select **One-Time Scan**.
-4. Select **Create**.
-
-Open the scan in **Scans** to follow progress. Wait for it to finish, then
-check the reported status and target before interpreting its findings. If it
-fails or is canceled, read the available output as an incomplete review.
-
-#### 4. Review findings and available fixes
-
-Open **Findings**. Use **Open findings** to review findings with a **New**,
-**Triaged**, or **In Progress** status. Search the list or use **Filters** to
-narrow the results. The **Severity and status** chart summarizes the matching
-findings.
-
-    Filter and review open findings. Repositories, findings, and counts are
-    fictional.
-
-Open a finding from the scan or from **Findings**. Check its affected code and
-revision, the path an attacker could take, and the validation evidence. Read
-any unresolved assumptions before deciding whether the issue applies. A scan
-with no reported findings doesn't establish that the repository has no
-vulnerabilities.
-
-When a repository finding offers **Fix with Codex**, selecting it starts a
-Codex conversation to check the finding against current code, implement a fix,
-and run relevant tests. Review the resulting changes and test evidence there.
-
-Findings from commit monitoring can instead offer a suggested patch. Review
-that patch before selecting **Create draft pull request**. These actions have
-different effects, so follow the workflow shown for the finding.
-
-#### 5. Monitor new commits
-
-Once you've reviewed the first scan, you can monitor changes as new commits
-arrive:
-
-1. Select **Scan**, then choose the repository and review the environment.
-2. Under **Scan Method**, select **Continuous Scanning**. The plugin scans
-   the repository's default branch.
-3. Choose **Scan commit history from**. Longer windows provide more context,
-   but the initial scan takes longer.
-4. Optionally add threat model scoping guidance.
-5. Select **Create**.
-
-   Configure continuous scanning. The repository shown is fictional.
-
-To adjust monitoring, open **Repositories**, select the repository, and open
-**Monitoring settings**. You can change the Cloud environment, choose how
-many days of history to review, and pause or enable monitoring.
-Select **Save** to apply changes.
-
-The scan owner, people granted edit access, and Daybreak Defense Factory administrators
-can change monitoring settings. Changes, including pausing monitoring, apply to
-that repository's shared configuration in the workspace, not just to the person
-making the change. If you can't edit it, ask the scan owner or a Daybreak Defense Factory
-administrator.
-
-Review the generated threat model in **Monitoring settings** and update it
-with deployment or security context the code doesn't establish. See
-[Improve the threat model](./security/threat-model.md).
-
-For questions about builds, validation, or result interpretation, see the
-[Cloud FAQ](./security/faq.md). To review GitHub pull requests, use
-[Security Review](./security/security-review.md).
+Select **Edit** in the destination’s menu. You can change the URL, choose
+different events, or turn off **Enabled** to pause deliveries. Select
+**Rotate secret** to replace the signing secret. Copy the replacement and update your receiver. Select
+**Keep the current secret active for 24 hours** when rotating if your receiver
+needs time to switch. Daybreak signs with both secrets during that window, so
+either secret can verify the delivery. With immediate rotation, update the
+receiver before sending a new test.
 
 ### Export and track security findings
 
@@ -9466,9 +9396,98 @@ CI/CD](./security/plugin/code-changes.md#automate-reviews-in-cicd).
 After verification, merge the change through your normal code-review process.
 If verification is incomplete, keep the finding open with the remaining work.
 
-### Improve the Daybreak threat model
+### Import scanner findings into Daybreak
 
-Source: [Improve the Daybreak threat model](./security/threat-model.md)
+Source: [Import scanner findings into Daybreak](./security/scanner-imports.md)
+
+You can import findings into Daybreak Defense Factory by connecting a scanner or
+[uploading a report](#upload-a-scanner-report). Daybreak can assess those findings
+against your code and share eligible results with your team.
+
+Open **Settings → Integrations**, or select **Import** from **Findings**. The
+available options depend on your workspace. Assessment requires access to the
+scanner evidence and the repository commit. Sharing also requires an environment
+where you can publish findings.
+
+#### Import from a connected scanner
+
+1. Select **Connect** beside the scanner, **Reconnect** if your connection expired, or **Import** to use an existing connection.
+2. Choose the source and the findings to import. If **Import all for a repository** is available for Snyk or Endor, choose a connected GitHub repository to include all matching projects in the selected organization or namespace. Otherwise, choose a project and select findings. In Wiz, you can also use a supported saved view.
+3. Review the finding count, repository, and commit for assessment. The count on **Import 12 findings**, for example, includes all 12 selected scanner findings, even those that can't be assessed. It can differ from the number of shared findings.
+4. Check what the confirmation will do. If it names a shared workspace and destination, confirming authorizes assessment and publication of eligible **Reportable** results there. People with access to that destination can read the published assessment and source evidence. Daybreak preselects the only eligible environment. If several environments are eligible, choose one before confirming. If the review offers private assessment or saving only, the results stay private.
+5. Confirm when the count and destination are correct. If the review expires or the source changes, review it again. Once the import starts, you can close Settings and follow it in **My recent imports**.
+
+#### Choose a source
+
+| Scanner          | Connection                                                                                                                               | What you can select                                                                                                                                                                                                           |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Wiz              | Sign in to your Wiz account and approve the connection.                                                                                  | Package vulnerabilities in a project, or a saved vulnerability findings view filtered to one container repository and container images. **Filter this page** searches the current page. You can select findings across pages. |
+| Snyk Open Source | Use a Snyk US-01 API token with REST read access to the organization, projects, and issues.                                              | Choose the organization that monitors your repository. Separate manifests can appear as separate monitored projects. If you lack REST access, use an Issues Detail CSV instead.                                               |
+| Endor Labs       | Enter your US namespace, API key, and API secret. Use an expiring read-only key scoped to the namespace, with child namespaces disabled. | Choose findings from a project’s main context, or use repository import when available.                                                                                                                                       |
+
+Daybreak uses the scanner’s reported revision when it can verify it. If Snyk omits the commit, the review can offer a fallback for that repository. For a Wiz finding that needs a checkout, choose the GitHub repository and enter the full 40-character commit SHA your connection can read. This is the code Daybreak will assess. It can differ from the code used to build the container image. The import keeps the scanner’s original evidence.
+
+#### Fit a connected import within the limits
+
+| Scanner          | Limit for one source read                                                                                                                        | If you reach it                                                                                                                  |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| Wiz              | 5,000 matching occurrences per filtered project or saved view, up to 100 pages of 50, within 32 MiB.                                             | Narrow the severity, fix availability, or CVE filters before previewing again.                                                   |
+| Snyk Open Source | 10,000 package issues per monitored project, up to 100 pages of 100. The encoded original pages and converted report together must fit in 8 MiB. | Choose a smaller project or upload a filtered export. Selecting fewer issues after preview still requires the full project read. |
+| Endor Labs       | 5,000 findings per project preview, in pages of up to 100, within a 32 MiB read budget.                                                          | Choose a smaller project or upload a filtered export. If the full evidence exceeds the limit, select fewer individual findings.  |
+
+Each captured report and its evidence must total no more than 32 MiB. A repository import must finish reading all matching projects before it can confirm the repository count.
+
+An individual selection accepts up to 10,000 scanner occurrences. A review can assess up to 10,000 rows with verified targets. The list of rows and their assigned revisions must also fit in 512 KiB, so you may need to split a smaller selection. For Wiz, the checkout limit counts **findings assigned a checkout**, even when several use the same commit. Depending on the picker available in your workspace, you can assign up to 16 or 100 findings per review. Split your selection at the limit shown. A confirmation can authorize up to 100 destination environments, one per repository connection.
+
+#### Upload a scanner report
+
+Select **Upload file** beside the scanner. Settings detects the format and shows which exports your workspace accepts.
+
+| Scanner          | File for Settings                                                                                                                                                                                                                                                                                                                 |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Wiz              | A complete package vulnerability report in Detailed JSON, or one native finding per line in JSON Lines. In Wiz **Vulnerability Findings**, filter the report, select **Save as → Report**, and choose **Repository Branch**, **JSON**, and **Detailed** for a repository export. Enter the exporting Wiz tenant ID when prompted. |
+| Snyk Open Source | An Issues Detail CSV from one organization. Check the organization in the preview.                                                                                                                                                                                                                                                |
+| Endor Labs       | Native Finding JSON from `endorctl` for the namespace you want to import. Keep the original finding UUIDs and complete any paginated export.                                                                                                                                                                                      |
+
+The uploaded file and its expanded contents must each fit in **32 MiB**, including for gzip uploads. For Snyk CSV and Wiz JSON Lines, Settings recognizes up to **10,000 data rows** per file. Split larger files before uploading. A single JSON finding over 1 MiB can be rejected. For Snyk CSV, keep the header within 32,768 characters, each field within 131,072 characters, and each logical row within 1,048,576 characters.
+
+#### Choose whether to assess or share
+
+Saving the file uploads it for review. Check the verified repositories and commits, the rows that still need a checkout, and any rejected inputs before you start the import.
+
+- To keep the evidence for later, choose **Save without assessment** when the review offers assessment, or **Save privately** when it doesn’t.
+- To assess eligible rows and keep all results private, choose **Import and assess privately**. You can choose targets later for rows that still need one. If more than 10,000 rows have targets, split the report or save it without assessment.
+- To share eligible results, select **Also publish Reportable findings**, which starts unchecked. Review the workspace and destinations. If a repository has several eligible environments, choose one or select **Keep private**. Confirm with **Import and publish reportable findings**.
+
+Automatic sharing requires a Reportable assessment, a scanner-reported severity, and a destination you authorized. The original report stays private. In **Activity**, **Stop automatic sharing** stops future publication from that import.
+
+#### Import from the CLI
+
+You can import a saved scanner export with `codex-security publish findings`. Preview locally with `--to local --dry-run`. To preview a cloud import, use `--to cloud --dry-run --format json` with a connected repository. A cloud preview contacts Daybreak and requires a file-backed ChatGPT login.
+
+Inspect the preview before removing `--dry-run` and confirming. A `privateImport` entry saves the findings to your private inbox. Entries in `requests` publish to the repository environments listed there. Check the receipt for exclusions, failures, and unprocessed rows. See the [CLI reference](./security/cli/reference.md#codex-security-publish-findings) for local and cloud import examples and the [scanner import guides](https://github.com/openai/codex-security/blob/main/docs/scanner-imports/README.md) for CLI formats and commands.
+
+#### Reopen an import
+
+Open **My recent imports** from **Settings → Integrations** or **Findings → Import** in the workspace where you made the import. You can also reopen a private import from its row in **Scans**. The summary accounts for each row, including rejected inputs and their reasons. Open an accepted row to see its scanner ID and saved evidence, along with any assessment or published finding. Disconnecting the scanner stops new reads through that connection. You can still reopen your saved imports.
+
+Choose **Assess** on a private finding to check its evidence against the selected commit. Read the reason beside **Reportable**, **Deferred**, **Suppressed**, or **Not applicable**. For example, a commit Daybreak can’t read can leave a finding Deferred. To share a privately assessed Reportable result, select an authorized destination environment and **Publish to shared findings**. If the scanner didn’t supply a recognized severity, choose one before publishing.
+
+#### Recognize repeat imports
+
+If confirmation was interrupted, reopen the original receipt or select **Check original import** when offered. Retrying the original request recovers that import with the choices you already made.
+
+When you start a new import, Daybreak compares each row with the evidence it already has.
+
+- With the same Endor connection and project, or the same Wiz connection and project or saved repository view, unchanged scanner IDs and evidence can point to the existing private observation. A new connected Snyk import captures a new private observation for each issue. Requesting assessment again can assess even an unchanged row.
+- Uploading the identical Snyk CSV for the same organization reuses the accepted rows. For example, uploading the same five issues again can show five unchanged and zero new. Changed evidence creates a new version. An earlier assessment still refers to the evidence and commit it reviewed.
+- If one report repeats a scanner finding ID, Daybreak flags both occurrences and can import the other valid rows. Keep one correct record and import the corrected report. Separate IDs can describe different affected packages or repositories, even when they cite the same CVE.
+
+After publication, Daybreak checks for an existing shared finding in the same repository and environment. A match adds the published evidence to that issue. A distinct issue can create a new finding. Two scanner observations can therefore appear on one shared finding. Retrying the same publication doesn’t add the evidence twice. Open **Observations** on the shared finding to inspect its sources. See [Review findings and fixes](./security/findings-and-fixes.md).
+
+### Improve the repository threat model
+
+Source: [Improve the repository threat model](./security/threat-model.md)
 
 Update a monitored repository's threat model when the generated version misses
 security assumptions or deployment context. This guide applies to Daybreak Defense Factory. For local plugin policy, see [Configure the
@@ -9498,16 +9517,24 @@ as internal-only unless that is true of the deployment you want assessed.
 
 #### Edit the threat model
 
-1. Open **Daybreak** in the sidebar. See [Cloud setup](./security/setup.md)
-   if you haven't installed it or configured commit monitoring.
-2. Open **Repositories** and select the monitored repository.
-3. Open **Monitoring settings**.
-4. Edit **Threat model**, then select **Save**.
+1. Open **Repositories** in Daybreak and select the monitored repository.
+2. Open its **Threat model** and choose the edit control.
+3. Add the deployment details or security assumptions the scan should use, then save your changes.
 
 Changes apply to future scans.
 
 Revisit the model after changes to authentication, tenant boundaries, or exposed
 services. Keep facts about the deployment separate from priorities for the scan.
+
+#### Add context for validation
+
+Select **Manage** under **Validation context** on the repository overview.
+If the repository has a `SECURITY.md` file, you can read it here. Make any changes to
+the file in the repository.
+
+Use **Additional context** for details Daybreak should consider when it checks
+future findings. For example, identify which gateway enforces tenant
+membership and which routes can bypass it. Select **Save**.
 
 ### Propose security hardening
 
@@ -9887,6 +9914,48 @@ mode](./non-interactive-mode.md). If your organization permits the [Codex
 GitHub Action](./github-action.md), it can install the CLI at runtime, but
 you must still install the plugin first and point the action's `codex-home`
 input at the same `CODEX_HOME`.
+
+### Review findings and fixes in Daybreak
+
+Source: [Review findings and fixes in Daybreak](./security/findings-and-fixes.md)
+
+import {
+DaybreakFindings,
+DaybreakFindingDetail,
+DaybreakObservations,
+DaybreakFix,
+} from "@components/react/illustrative/DaybreakFindings.react";
+
+Daybreak allows you to quickly review proposed fixes based on findings from your scans.
+Open **Overview** in Daybreak. Under **Proposed fixes**, select **Review** to
+inspect a patch. To investigate an issue first, open **Findings** and select a
+finding.
+
+#### What’s on the findings page?
+
+The chart groups findings by severity and status. The table below it shows who
+owns each finding, which scanner reported it, and when it was detected. You
+can search the list or filter it by repository.
+
+Select a finding to see its summary, root cause, and supporting evidence.
+The detail page explains how someone could exploit the issue and shows its
+reported severity and current status.
+
+#### Import findings from other scanners
+
+Open **Settings → Integrations**. Select **Connect** to link a scanner or **Import** to use an existing connection. Check the count, repository, and destination. If the confirmation names a shared destination, confirming authorizes assessment and publication of eligible **Reportable** results there.
+
+You can save or assess an uploaded report privately, or share eligible results. Reopen **My recent imports** for the private outcomes. Each shared finding lists the evidence from its scanners under **Observations**. See [Import scanner findings](./security/scanner-imports.md) for the steps and limits.
+
+#### Review a proposed fix
+
+1. Under **Findings**, select **Fix** on a finding to generate a patch. You can also select multiple findings in the list. For example, select two findings and choose **Generate 2 fixes**. Daybreak prepares the patches in the background. Open **Fixes** to review them.
+2. Open a proposed fix. Read its summary and diff under **Proposed changes**. Read the **Patch checker** result to see what Daybreak verified. For the export issue shown below, look for a test that rejects a request from another project and one that still allows an authorized export.
+3. If you have questions or want a change, choose **Fix with Codex** from the menu next to **Create PR**. When the patch is ready for your team, select **Create PR** to open a draft pull request on GitHub.
+
+Review and test the change in the pull request. After it merges, verify that
+the original attack path fails on the merged revision before marking the
+finding **Fixed**.
 
 ### Run a Codex Security scan
 
@@ -11096,7 +11165,13 @@ To configure automatic Codex Security Review, you need:
 - [Codex cloud](./cloud.md) set up with a connected GitHub repository
 - GitHub push or admin permission for the repository settings
 
-An existing Codex Security scan is optional.
+You can enable reviews before running a repository scan.
+
+#### Enable PR reviews in Daybreak
+
+1. Open **Daybreak** and choose **Set up PR reviews** on the welcome screen.
+2. Connect your GitHub organization if prompted. Select the repositories you want Daybreak to review.
+3. Select **Enable PR reviews**. Daybreak checks new pull requests as they open in those repositories.
 
 #### Configure Codex Security Review
 
@@ -11169,6 +11244,74 @@ findings.
 - [Codex Security](./security.md) gives the product overview.
 - [Daybreak Defense Factory setup](./security/setup.md) explains repository scans and findings review.
 - [Improving the threat model](./security/threat-model.md) explains how to tune repository context.
+
+### Set up Daybreak Defense Factory
+
+Source: [Set up Daybreak Defense Factory](./security/setup.md)
+
+import {
+DaybreakScanScope,
+DaybreakNewScan,
+} from "@components/react/illustrative/DaybreakForms.react";
+
+Daybreak Defense Factory scans code in a connected GitHub repository and shares
+the findings with your team. Start with one repository or folder. Once you’ve
+reviewed the results, you can monitor new commits or set a schedule.
+
+#### Open Daybreak and connect GitHub
+
+1. Open **Plugins** on the web or in the desktop app using a ChatGPT workspace with access to Daybreak. Search for **Daybreak Defense Factory (Preview)**, then install and enable it.
+2. Open **Daybreak** in the sidebar. On the welcome screen, select **Run an agentic scan**.
+3. If prompted, select **Connect GitHub** and sign in with an account that can access the repository.
+
+[Open Daybreak in the marketplace](https://chatgpt.com/plugins/plugin_connector_1p_6317a32dbf5c81919acd66de6722daf5)
+
+Cloud scans run in [Codex cloud](./cloud.md). Each person who starts a scan
+needs a personal GitHub connection. Daybreak Defense Factory doesn't support workspace connections. If the repository doesn’t appear, check
+which repositories the GitHub app can access under **Configure access**. Ask your GitHub administrator to
+add the repository if needed.
+
+#### Run your first scan
+
+1. On **Configure your scan**, select a repository.
+2. Choose **Full repository** to scan the default branch, or **Specific folder or files** to narrow the scan. Enter one path per line, relative to the repository root. For example, enter `src/` to scan only the application code in that folder.
+3. Select **Start Scan**. When **First scan queued** appears, select **View scan**. Check the repository and paths in the scan record. You can return to it from **Scans**.
+
+When the scan finishes, open a finding to see the affected code and how an
+attacker could reach it. If the scan failed or stopped early, check what it
+covered before interpreting the results. See [Review findings and fixes](./security/findings-and-fixes.md).
+
+#### Choose how to scan a repository
+
+From **New scan**, choose **Cloud**, select the repository, and check the
+[cloud environment](./environments/cloud-environment.md) that Daybreak will use.
+
+| Scan method               | When to use it                                                                                                   |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Repository scan**       | Check the current code once. Use this to look for existing issues, including bugs that span several commits.     |
+| **Continuous monitoring** | Check new commits on the default branch. Choose how far back to start if you also want to review recent history. |
+| **Scheduled scan**        | Repeat a repository scan on a schedule. Use this for a regular review of the default branch.                     |
+
+You can change or pause monitoring in **Continuous scanning settings**. Open
+**Repositories** and select the repository to find these settings. The owner, people with edit access,
+and Daybreak Defense Factory administrators can change these settings for the whole team. You can also
+[edit the repository’s threat model](./security/threat-model.md) to update the context for future scans.
+
+You can [enable pull request reviews](./security/security-review.md) to check
+changes before they merge. [Workspace notifications](./security/notifications.md)
+let you send scan events to a service you control.
+
+#### Scan your local checkout
+
+In the desktop app, select **New scan**, then **Local**. Choose **Codebase** to
+scan the checkout or **Changes** to review uncommitted work. For a codebase
+scan, you can limit the scope to one folder. Turn on **Deep scan** if you want
+multiple passes and can spend more time and tokens.
+
+Local findings appear in **Overview** on this device. A local scan can send
+relevant code and prompts to the configured model provider. Local scans with
+Daybreak Blue require trusted access. If you see **Apply for Daybreak**, use it
+to request access.
 
 ### Triage a backlog
 
@@ -13401,33 +13544,16 @@ Codex Security reviews code for vulnerabilities and reports evidence you can
 use to investigate and fix them. Choose how to run it based on where your code
 lives and how you want to review the results.
 
+The **Overview** in Daybreak Defense Factory shows proposed fixes and tracks [open and fixed findings](./security/findings-and-fixes.md) across your repositories.
+
 #### Choose where to start
 
-| Use                      | When you want to                                                          | Start here                                          |
-| ------------------------ | ------------------------------------------------------------------------- | --------------------------------------------------- |
-| Daybreak Defense Factory | Scan connected GitHub repositories in Codex cloud or monitor new commits. | [Cloud setup](./security/setup.md)                |
-| Codex Security plugin    | Scan a local repository in Codex and work through findings interactively. | [Run your first local scan](./security/plugin.md) |
-| Codex Security CLI       | Run repeatable terminal scans or add checks to CI.                        | [CLI quickstart](./security/cli.md)               |
-| Codex Security SDK       | Run scans and handle results in an application or developer tool.         | [SDK guide](./security/sdk.md)                    |
-
-For your first local scan, use the plugin. In the ChatGPT desktop app, select
-**Codex**, install **Codex Security**, and open **Security** in the sidebar.
-The [Security workbench](./security/plugin/workbench.md) keeps saved scans
-and findings available for review. You can also use the plugin in Codex CLI.
-
-The Codex Security CLI and SDK are distributed in the public [@openai/codex-security package](https://github.com/openai/codex-security). Scans using OpenAI inference require Codex Security access. See each quickstart for its
-runtime and authentication requirements.
-
-Daybreak Defense Factory is a separate plugin, available in research preview on
-the web and in the desktop app. It requires workspace access, a GitHub
-connection, and a compatible Codex cloud environment. You can connect the
-repository and create an environment during setup.
-
-    Track open findings and fixes across repositories. This example uses
-    fictional repositories, findings, and counts.
-
-For security reviews posted to GitHub pull requests, see
-[Security Review](./security/security-review.md).
+| Use                      | When you want to                                                                              | Start here                                          |
+| ------------------------ | --------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Daybreak Defense Factory | Scan a GitHub repository, review findings from other tools, and propose fixes with your team. | [Set up Daybreak](./security/setup.md)            |
+| Codex Security plugin    | Scan a local repository in Codex and work through findings interactively.                     | [Run your first local scan](./security/plugin.md) |
+| Codex Security CLI       | Run repeatable terminal scans or add checks to CI.                                            | [CLI quickstart](./security/cli.md)               |
+| Codex Security SDK       | Run scans and handle results in an application or developer tool.                             | [SDK guide](./security/sdk.md)                    |
 
 #### Choose the next task
 
@@ -13487,7 +13613,9 @@ Find, understand, and remediate vulnerabilities.
 
 - [Codex Security TypeScript SDK](./security/sdk.md): Integrate security scanning and progress reporting into developer tools.
 
-- [Daybreak Defense Factory setup](./security/setup.md): Install the plugin, connect GitHub, and start a security scan.
+- [Daybreak Defense Factory setup](./security/setup.md): Connect GitHub and scan a repository with Daybreak.
+
+- [Review findings and fixes](./security/findings-and-fixes.md): Assess a finding and review its patch before opening a pull request.
 
 - [Security Review](./security/security-review.md): Run in-depth security reviews on GitHub pull requests.
 
@@ -22772,7 +22900,7 @@ Open ChatGPT on the web or in the desktop app. Include the word "website" in you
 **Prompt:**
 
 ```text
-Build a project request dashboard website for my operations team. Let team members submit requests, see who owns each one, update the status, and filter the list. Require people to sign in with their workspace account, and keep the request data saved between visits.
+Build a project request dashboard website for my operations team. Use my connected Google Drive plugin to find our request intake guide and suggest fields and status labels. Ask me to confirm them before building. Let team members submit requests, see who owns each one, update the status, and filter the list. Require people to sign in with their workspace account, and keep the request data saved between visits.
 ```
 
 **For ChatGPT Enterprise users:** A workspace admin must enable sites for your
@@ -22784,7 +22912,7 @@ The dashboard is one example. You can adapt the following flow to the site you w
 
 1. Describe the site
 
-   Tell ChatGPT who the site is for and what you'd like people to do. Share the documents or data it needs. For a request dashboard, you might include sample requests, owners, and status labels.
+   Tell ChatGPT who the site is for and what you'd like people to do. Share the documents or data it needs. For a request dashboard, you might include sample requests, owners, and status labels. Mention a plugin with `@` and describe what it should contribute: for example, Google Drive for intake guidelines or Slack for recent request discussions. If you aren't sure what is available, ask ChatGPT which plugins you can use. See [Data and connections](./sites/data-and-connections.md#bring-user-data-to-your-site-with-plugins) to use connected data in the site itself.
 
 2. Review the site
 
@@ -22816,6 +22944,32 @@ a local project before publishing it.
 Every sites deployment URL is a production deployment. If you want to review a
 build before it becomes live, ask ChatGPT to save a version without deploying
 it.
+
+#### Start from an existing site with Remix
+
+As an alternative to starting with a prompt, use **Remix** when a coworker's site already does much of what you need. For example, you could adapt a project hub for a new team while keeping its useful layout and navigation.
+
+Choose a site for the task it helps people complete. Before remixing, decide what to keep, what to replace, and what your audience should be able to do. If you want to maintain the same site together, [collaborate on it](./sites/publishing-and-sharing.md#collaborate-on-a-site) instead.
+
+1. Open the source site and select Remix
+
+   Open the site while signed in with your ChatGPT workspace account. Select **Remix** in the toolbar in the lower-right corner, or open the toolbar menu to find it.
+
+Continue in ChatGPT. If a composer opens in the toolbar, select **Open ChatGPT**. The ChatGPT composer includes **Remix** and the source site's name. In this example, the source is **Project Plan Progress Dashboard**.
+
+2. Add your instructions and send
+
+   Keep the source site in the composer and describe what you want to change. Name the audience, what to keep, and what to replace. Add the files or context ChatGPT needs, then send your request.
+
+3. Review and refine the adapted site
+
+   Check the pages, links, examples, and actions against your team's needs. For this dashboard, try finding the next milestone and its owner, then opening a supporting resource. Ask for focused changes where the result needs work.
+
+4. Share when it's ready
+
+   Follow the [review and sharing checks](./sites/publishing-and-sharing.md#review-before-you-share) before publishing. Ask a teammate to try the task the site supports.
+
+For current Sites availability, access requirements, and management instructions, see [Creating and using ChatGPT Sites](https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites) in the Help Center.
 
 #### Save records and progress
 
@@ -23843,6 +23997,14 @@ Editor access is separate from visitor access. The steps above first add the
 person as a visitor, then grant editing access. Promoting a visitor to editor
 doesn't change the site's audience setting.
 
+#### Adapt a site for another team
+
+Co-editing helps you maintain one site together. If another team needs its own version for a different project or purpose, **Remix** offers an alternative.
+
+For example, a project team can co-edit one hub to keep its milestones current. Another team can remix that hub to use its layout with their own milestones and resources. Follow the [Remix walkthrough](./sites/creating-a-site.md#start-from-an-existing-site-with-remix) to adapt a site, then review the result for its new audience before sharing it.
+
+For current sharing and editor permissions, see [Creating and using ChatGPT Sites](https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites) in the Help Center.
+
 ### Sites
 
 Source: [Sites](./sites.md)
@@ -23871,6 +24033,10 @@ The examples below are just inspiration for what you can build with Sites. Explo
 #### Sites use cases
 
 Here are some example use cases you can try with Sites.
+
+To build your first site, follow [Create a site](./sites/creating-a-site.md) to describe what you need, review the result, and refine it.
+
+You can also use **Remix** to build on a useful site a coworker has already made. Keep the parts that fit your task and adapt the content and experience for your team. Learn how to [start from an existing site with Remix](./sites/creating-a-site.md#start-from-an-existing-site-with-remix).
 
 #### Understand limits and unsupported uses
 
@@ -41339,6 +41505,10 @@ For enterprise security, privacy, and runtime protections, see
 [Agent approvals and security](./agent-approvals-security.md) and the
 [Codex security white paper](https://trust.openai.com/?itemUid=382f924d-54f3-43a8-a9df-c39e6c959958&source=click).
 
+**ChatGPT Enterprise on AWS Marketplace**
+
+Review the [data residency and inference residency requirements in the Help Center](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt) for ChatGPT Enterprise purchased through AWS Marketplace. Then use this guide to plan your workspace rollout.
+
 #### Step 1: Assign owners and choose a rollout
 
 Assign an owner for each part of the rollout:
@@ -45658,6 +45828,397 @@ For details about the provisioning setting, see Microsoft's [application deploym
 
 - See [Microsoft Win32 deployment settings](https://learn.microsoft.com/en-us/intune/app-management/deployment/add-win32)
 
+### Desktop browser policies
+
+Source: [Desktop browser policies](./enterprise/desktop-browser-policies.md)
+
+Use mobile device management (MDM) to configure the built-in browser in the ChatGPT desktop app. Choose a policy from the [supported list](#support-policy-reference), then look up its name and value format in the [Chrome Enterprise policy reference](https://chromeenterprise.google/policies/) before deploying it. Check the platform and browser version for each policy.
+
+If you already manage Chrome, the deployment process will be familiar. Chrome supports both device-based policy deployment and cloud browser management through Google Admin. ChatGPT desktop currently supports device-based deployment through MDM, Group Policy, or configuration-management tools; cloud management of these browser policies is not yet available.
+
+For a given operating system, the policy contents and formats stay the same. The main change is **where you deploy them on the device**: use ChatGPT desktop's registry keys, preference domain, or policy directory instead of Chrome's.
+
+#### Policy locations by platform
+
+| Platform | Policy format                                  | Chrome location                     | ChatGPT desktop location           |
+| -------- | ---------------------------------------------- | ----------------------------------- | ---------------------------------- |
+| Windows  | Registry values and keys                       | `SOFTWARE\Policies\Google\Chrome`   | `SOFTWARE\Policies\OpenAI\Codex`   |
+| macOS    | Managed preferences in a configuration profile | `com.google.Chrome`                 | `com.openai.codex`                 |
+| Linux    | JSON files in the mandatory-policy directory   | `/etc/opt/chrome/policies/managed/` | `/etc/opt/codex/policies/managed/` |
+
+The ChatGPT desktop identifiers still contain `Codex` or `codex`. Use them exactly as shown.
+
+- **Windows:** Use `HKEY_LOCAL_MACHINE` for all users on a device, or `HKEY_CURRENT_USER` for a specific user. Use Chrome’s Windows registry format for values and lists. Chrome's standard administrative templates (ADMX) target Chrome; use custom registry settings for ChatGPT desktop.
+- **macOS:** Deploy the policy keys and their property list values as managed preferences under `com.openai.codex`. A profile targeting Chrome's domain does not target ChatGPT desktop.
+- **Linux:** Deploy JSON files directly into `/etc/opt/codex/policies/managed/`. Use `/etc/opt/codex/policies/recommended/` for policies that support defaults that users can change.
+
+#### Admin guide
+
+#### Example policies
+
+The examples below configure two policies:
+
+| Policy                   | Example value             | Effect                                                                                     |
+| ------------------------ | ------------------------- | ------------------------------------------------------------------------------------------ |
+| `PasswordManagerEnabled` | `false`                   | Prevents saving new passwords. Existing saved passwords are not deleted.                   |
+| `CookiesBlockedForUrls`  | `["https://example.com"]` | Prevents `https://example.com` from setting cookies. It does not block access to the site. |
+
+Replace these examples with your organization's settings.
+
+#### Windows: Microsoft Intune or Group Policy
+
+For **Microsoft Intune**, save the following as a PowerShell script and add it under **Platform scripts**. It writes mandatory policies for all users on the device:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+$policyRoot = 'HKLM:\SOFTWARE\Policies\OpenAI\Codex'
+if (-not (Test-Path -LiteralPath $policyRoot)) {
+  New-Item -Path $policyRoot -Force | Out-Null
+}
+New-ItemProperty -Path $policyRoot -Name PasswordManagerEnabled -PropertyType DWord -Value 0 -Force | Out-Null
+$cookieKey = "$policyRoot\CookiesBlockedForUrls"
+if (-not (Test-Path -LiteralPath $cookieKey)) {
+  New-Item -Path $cookieKey -Force | Out-Null
+}
+New-ItemProperty -Path $cookieKey -Name '1' -PropertyType String -Value 'https://example.com' -Force | Out-Null
+```
+
+In [Microsoft Intune Platform scripts](https://learn.microsoft.com/en-us/intune/device-management/tools/run-powershell-scripts-windows), set **Run this script using the logged on credentials** to **No** and **Run script in 64-bit PowerShell host** to **Yes**, then assign it to your pilot group. After the script runs, restart ChatGPT desktop and [verify the policies](#verify-the-policies).
+
+For **Group Policy**, create Registry preference items for the same keys, value names, types, and values shown in the script, and apply them to your pilot devices.
+
+Registry value formats:
+
+- **True or false:** `REG_DWORD`, with `0` for false and `1` for true.
+- **String lists:** Create a child key named after the policy. Number its `REG_SZ` values starting at `1`. When updating a list, remove numbered values that no longer apply.
+- **Structured policies:** Follow the policy reference's Windows encoding. For example, `ExtensionSettings` stores its dictionary as a JSON string in a `REG_SZ` value.
+
+For per-user policies, use the same path under `HKEY_CURRENT_USER` and deploy in the intended user's context. A script running as SYSTEM does not write to the signed-in user's `HKEY_CURRENT_USER`. For policies that support recommended defaults, use a child key named `Recommended` beneath the ChatGPT desktop root.
+
+#### macOS configuration profiles
+
+Create a configuration profile that sets **forced (mandatory) managed preferences** in the `com.openai.codex` domain. For `Jamf Pro`, first save the following as `com.openai.codex.plist`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PasswordManagerEnabled</key>
+  <false/>
+  <key>CookiesBlockedForUrls</key>
+  <array>
+    <string>https://example.com</string>
+  </array>
+</dict>
+</plist>
+```
+
+- `Jamf Pro`: Use a computer configuration profile's **Application & Custom Settings** payload, upload the property list, and set the preference domain to `com.openai.codex`. See [the custom settings instructions](https://learn.jamf.com/r/en-US/technical-articles/Deploying_Custom_Computer_Configuration_Profiles_Using_the_Application_and_Custom_Settings_Payload).
+- **Microsoft Intune:** Create a macOS **Templates → Preference file** profile and set **Preference domain name** to `com.openai.codex`. For this profile, save only the key-value pairs inside the example's outer `; omit the XML declaration, DOCTYPE, `, and outer `wrappers. Keep the nested` intact. See [Intune's preference-file instructions](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-preference-file-macos).
+- **Other MDM tools:** Use their custom managed-preferences workflow or deploy an equivalent `.mobileconfig` profile for this domain.
+
+Assign the profile to your pilot devices and confirm installation. Restart ChatGPT desktop and [verify the policies](#verify-the-policies). Use managed preferences: a normal user preference written with `defaults write` does not make a policy mandatory.
+
+#### Linux configuration management
+
+Use a tool such as `Ansible`, Puppet, or Chef to deliver a JSON policy file to your devices, just as you would for Chrome.
+
+1. Create `/etc/opt/codex/policies/managed/` if needed.
+2. Deploy a JSON file directly into that directory using your configuration-management tool, package, or device-management agent.
+3. Make the directories and file owned by `root`, readable by ChatGPT desktop users, and writable only by trusted administrators. Typical permissions are `0755` for directories and `0644` for files.
+4. Restart ChatGPT desktop and [verify the policies](#verify-the-policies).
+
+Example `/etc/opt/codex/policies/managed/browser.json`:
+
+```json
+{
+  "PasswordManagerEnabled": false,
+  "CookiesBlockedForUrls": ["https://example.com"]
+}
+```
+
+Use JSON boolean values, numbers, arrays, and objects as required by each policy. Place files directly in `managed/`; nested directories are not read. Avoid defining the same policy in multiple files.
+
+#### Verify the policies
+
+1. Confirm that your deployment tool delivered the registry values, installed profile, or JSON file to a pilot device.
+2. Quit and reopen ChatGPT desktop. Open an in-app browser tab and navigate to `chrome://policy` **inside ChatGPT desktop**.
+3. Select **Reload policies**. Check each policy's value, source, scope, level, and status. For the mandatory examples, expect source **Platform**, level **Mandatory**, and no policy error.
+4. Test the intended behavior in that browser. A policy appearing on this page confirms it was read; it does not by itself prove that the affected feature behaves as intended.
+
+Some policies require a full app restart even after reloading policies. Complete the pilot checks before expanding the deployment.
+
+If a policy is missing, check its spelling, target location, assignment, and read permissions. If a policy shows an error or is ignored, check the value type, supported platform and policy level, and any conflicting policy reported on `chrome://policy`.
+
+To change or remove a policy, update the deployment that supplied it and remove obsolete registry entries or file keys. If you used a script, remove the values it wrote before you remove the script assignment. Restart ChatGPT desktop and verify again.
+
+#### Support policy reference
+
+ChatGPT desktop’s in-app browser supports the 244 policies listed below. For each policy’s purpose, accepted values, and platform details, look up its name in Google’s [Chrome Enterprise policy list](https://chromeenterprise.google/policies/).
+
+#### A–C
+
+- `AccessControlAllowMethodsInCORSPreflightSpecConformant`
+- `AIModeSettings`
+- `AllowDeletingBrowserHistory`
+- `AllowedDomainsForApps`
+- `AllowSystemNotifications`
+- `AllowWebAuthnWithBrokenTlsCerts`
+- `AlternateErrorPagesEnabled`
+- `AlwaysOpenPdfExternally`
+- `AudioCaptureAllowed`
+- `AudioCaptureAllowedUrls`
+- `AuthNegotiateDelegateAllowlist`
+- `AuthServerAllowlist`
+- `AutofillAddressEnabled`
+- `AutofillCreditCardEnabled`
+- `AutoFillEnabled`
+- `AutofillSettings`
+- `AutoLaunchProtocolsFromOrigins`
+- `AutomaticDownloadsAllowedForUrls`
+- `AutomaticDownloadsBlockedForUrls`
+- `AutomaticFullscreenAllowedForUrls`
+- `AutomaticFullscreenBlockedForUrls`
+- `AutoOpenAllowedForURLs`
+- `AutoOpenFileTypes`
+- `AutoplayAllowed`
+- `AutoplayAllowlist`
+- `AutoSelectCertificateForUrls`
+- `BlockExternalExtensions`
+- `BlockThirdPartyCookies`
+- `BoundSessionCredentialsEnabled`
+- `CACertificates`
+- `CACertificatesWithConstraints`
+- `CacheEncryptionEnabled`
+- `CADistrustedCertificates`
+- `CAHintCertificates`
+- `CAPlatformIntegrationEnabled`
+- `CloudAPAuthEnabled`
+- `ComponentUpdatesEnabled`
+- `CompressionDictionaryTransportEnabled`
+- `CookiesAllowedForUrls`
+- `CookiesBlockedForUrls`
+- `CORSNonWildcardRequestHeadersSupport`
+- `CpuPerformanceTierOverride`
+
+#### D–F
+
+- `DataUrlInSvgUseEnabled`
+- `DataUrlInWebWorkerOpaqueOriginEnabled`
+- `DefaultAutomaticDownloadsSetting`
+- `DefaultIdleDetectionSetting`
+- `DefaultImagesSetting`
+- `DefaultJavaScriptJitSetting`
+- `DefaultJavaScriptOptimizerSetting`
+- `DefaultJavaScriptSetting`
+- `DefaultLocalFontsSetting`
+- `DefaultMediaStreamSetting`
+- `DefaultNotificationsSetting`
+- `DefaultPopupsSetting`
+- `DefaultPrinterSelection`
+- `DefaultSearchProviderAlternateURLs`
+- `DefaultSearchProviderContextMenuAccessAllowed`
+- `DefaultSearchProviderName`
+- `DefaultSearchProviderNewTabURL`
+- `DefaultSearchProviderSearchURLPostParams`
+- `DefaultSearchProviderSuggestURL`
+- `DefaultSearchProviderSuggestURLPostParams`
+- `DefaultSensorsSetting`
+- `DefaultSerialGuardSetting`
+- `DefaultWebBluetoothGuardSetting`
+- `DefaultWebHidGuardSetting`
+- `DefaultWebUsbGuardSetting`
+- `DefaultWindowManagementSetting`
+- `DefaultWindowPlacementSetting`
+- `Disable3DAPIs`
+- `DisabledSchemes`
+- `DisablePrintPreview`
+- `DNSInterceptionChecksEnabled`
+- `DownloadRestrictions`
+- `EditBookmarksEnabled`
+- `EnableMediaRouter`
+- `EnableOnlineRevocationChecks`
+- `EncryptedClientHelloEnabled`
+- `EnterpriseHardwarePlatformAPIEnabled`
+- `ExemptDomainFileTypePairsFromFileTypeDownloadWarnings`
+- `ExtensionAllowedTypes`
+- `ExtensionDeveloperModeSettings`
+- `ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrls`
+- `ExtensionInstallAllowlist`
+- `ExtensionInstallBlocklist`
+- `ExtensionInstallForcelist`
+- `ExtensionInstallSources`
+- `ExtensionInstallTypeBlocklist`
+- `ExtensionSettings`
+- `ExtensionUnpublishedAvailability`
+- `ExternalProtocolDialogShowAlwaysOpenCheckbox`
+- `FileOrDirectoryPickerWithoutGestureAllowedForOrigins`
+- `ForceForegroundPriorityForUrls`
+- `ForceGoogleSafeSearch`
+- `ForceSafeSearch`
+- `ForceYouTubeRestrict`
+- `ForceYouTubeSafetyMode`
+
+#### G–L
+
+- `GeolocationBlockedForUrls`
+- `HSTSPolicyBypassList`
+- `HttpAllowlist`
+- `HttpHeaderInjection`
+- `HttpsUpgradesEnabled`
+- `IdleDetectionAllowedForUrls`
+- `IdleDetectionBlockedForUrls`
+- `ImagesAllowedForUrls`
+- `ImagesBlockedForUrls`
+- `ImportHistory`
+- `ImportSavedPasswords`
+- `IsolateOrigins`
+- `JavaScriptAllowedForUrls`
+- `JavaScriptBlockedForUrls`
+- `JavascriptEnabled`
+- `JavaScriptJitAllowedForSites`
+- `JavaScriptJitBlockedForSites`
+- `JavaScriptOptimizerAllowedForSites`
+- `JavaScriptOptimizerBlockedForSites`
+- `LocalFontsAllowedForUrls`
+- `LocalFontsBlockedForUrls`
+- `LocalNetworkAccessAllowedForUrls`
+- `LocalNetworkAccessBlockedForUrls`
+- `LocalNetworkAccessIpAddressSpaceOverrides`
+- `LocalNetworkAccessRestrictionsTemporaryOptOut`
+- `LocalNetworkAllowedForUrls`
+- `LocalNetworkBlockedForUrls`
+- `LookalikeWarningAllowlistDomains`
+- `LoopbackNetworkAllowedForUrls`
+- `LoopbackNetworkBlockedForUrls`
+
+#### M–P
+
+- `ManagedBookmarks`
+- `ManagedConfigurationPerOrigin`
+- `NativeHostsExecutablesLaunchDirectly`
+- `NativeMessagingAllowlist`
+- `NativeMessagingBlocklist`
+- `NativeMessagingUserLevelHosts`
+- `NetworkPredictionOptions`
+- `NotificationsAllowedForUrls`
+- `NotificationsBlockedForUrls`
+- `OopPrintDriversAllowed`
+- `OriginAgentClusterDefaultEnabled`
+- `PartitionedBlobUrlUsage`
+- `PasswordLeakDetectionEnabled`
+- `PasswordManagerBlocklist`
+- `PasswordManagerEnabled`
+- `PaymentMethodQueryEnabled`
+- `PdfAnnotationsEnabled`
+- `PdfLocalFileAccessAllowedForDomains`
+- `PdfUseSkiaRendererEnabled`
+- `PdfViewerOutOfProcessIframeEnabled`
+- `PolicyDictionaryMultipleSourceMergeList`
+- `PopupsAllowedForUrls`
+- `PopupsBlockedForUrls`
+- `PreferSlowCiphers`
+- `PreferSlowKexAlgorithms`
+- `PrefetchWithServiceWorkerEnabled`
+- `PrinterTypeDenyList`
+- `PrintHeaderFooter`
+- `PrintingAllowedBackgroundGraphicsModes`
+- `PrintingBackgroundGraphicsDefault`
+- `PrintingEnabled`
+- `PrintingLPACSandboxEnabled`
+- `PrintingPaperSizeDefault`
+- `PrintPdfAsImageAvailability`
+- `PrintPdfAsImageDefault`
+- `PrintPostScriptMode`
+- `PrintPreviewUseSystemDefaultPrinter`
+- `PrintRasterizationMode`
+- `PrintRasterizePdfDpi`
+- `PromptOnMultipleMatchingCertificates`
+- `ProxyBypassList`
+- `ProxyMode`
+- `ProxyPacUrl`
+- `ProxyServer`
+- `ProxyServerMode`
+- `ProxySettings`
+
+#### Q–S
+
+- `QuicAllowed`
+- `ReduceAcceptLanguageEnabled`
+- `RegisteredProtocolHandlers`
+- `RelaunchFastIfOutdated`
+- `RelaunchNotification`
+- `RelaunchNotificationPeriod`
+- `RelaunchWindow`
+- `RemoteDebuggingAllowed`
+- `RequireOnlineRevocationChecksForLocalAnchors`
+- `RestrictYouTubeCookiesDeletion`
+- `SameOriginTabCaptureAllowedByOrigins`
+- `SandboxExternalProtocolBlocked`
+- `ScreenCaptureAllowed`
+- `ScreenCaptureAllowedByOrigins`
+- `ScreenCaptureWithoutGestureAllowedForOrigins`
+- `ScrollToTextFragmentEnabled`
+- `SearchSuggestEnabled`
+- `SecurityKeyPermitAttestation`
+- `SensorsAllowedForUrls`
+- `SensorsBlockedForUrls`
+- `SerialAllowAllPortsForUrls`
+- `SerialAllowUsbDevicesForUrls`
+- `SerialAskForUrls`
+- `SerialBlockedForUrls`
+- `ServiceWorkerAutoPreloadEnabled`
+- `ServiceWorkerToControlSrcdocIframeEnabled`
+- `SharedArrayBufferUnrestrictedAccessAllowed`
+- `SharedWorkerBlobURLFixEnabled`
+- `SharedWorkerExtendedLifetimeEnabled`
+- `SignedHTTPExchangeEnabled`
+- `SilentPrintingEnabled`
+- `SitePerProcess`
+- `SpellcheckEnabled`
+- `SpellcheckLanguage`
+- `SpellcheckLanguageBlocklist`
+- `SSLErrorOverrideAllowed`
+- `SSLErrorOverrideAllowedForOrigins`
+- `StandardizedBrowserZoomEnabled`
+- `StaticStorageQuotaEnabled`
+- `StrictMimetypeCheckForWorkerScriptsEnabled`
+- `SuppressDifferentOriginSubframeDialogs`
+
+#### T–Z
+
+- `TabCaptureAllowedByOrigins`
+- `TranslatorAPIAllowed`
+- `URLAllowlist`
+- `URLBlocklist`
+- `UrlKeyedAnonymizedDataCollectionEnabled`
+- `VideoCaptureAllowed`
+- `VideoCaptureAllowedUrls`
+- `WebAudioOutputBufferingEnabled`
+- `WebHidAllowAllDevicesForUrls`
+- `WebHidAllowDevicesForUrls`
+- `WebHidAllowDevicesWithHidUsagesForUrls`
+- `WebHidAskForUrls`
+- `WebHidBlockedForUrls`
+- `WebRtcDiagnosticLogCollectionAllowedForOrigins`
+- `WebRtcIPHandling`
+- `WebRtcIPHandlingUrl`
+- `WebRtcLocalIpsAllowedUrls`
+- `WebRtcPostQuantumKeyAgreement`
+- `WebRtcTextLogCollectionAllowed`
+- `WebRtcUdpPortRange`
+- `WebUsbAllowDevicesForUrls`
+- `WebUsbAskForUrls`
+- `WebUsbBlockedForUrls`
+- `WindowCaptureAllowedByOrigins`
+- `WindowManagementAllowedForUrls`
+- `WindowManagementBlockedForUrls`
+- `WindowPlacementAllowedForUrls`
+- `WindowPlacementBlockedForUrls`
+- `WPADQuickCheckEnabled`
+- `XSLTEnabled`
+
 ### Dynamic groups
 
 Source: [Dynamic groups](./enterprise/dynamic-groups.md)
@@ -47811,8 +48372,8 @@ the networks you plan to use. Keep these boundaries in mind:
 #### Configure network access requirements
 
 Keep `[experimental_network]` in published policies until every client and
-policy validator supports `[network_proxy]`. Older versions can ignore or
-strip the new name. Test enforcement on the client versions and operating
+policy validation tool supports `[network_proxy]`. Older versions can ignore
+or strip the new name. Test enforcement on the client versions and operating
 systems you deploy, especially Windows, where support is limited.
 
 Use **Requirements** > **Network use controls** to manage supported command
@@ -48211,6 +48772,8 @@ the allowed and blocked workflows on each relevant client and execution path.
 #### Deploy device-managed configuration
 
 Use local system requirements or MDM for authentication restrictions and device-managed policies. The legacy `managed_config.toml` mechanism has different startup precedence from Agent security **Defaults**. The MDM workflow covers both requirements and legacy defaults.
+
+For Chrome policies that apply to browsing inside the desktop app, see [Manage desktop browser policies with MDM](./enterprise/desktop-browser-policies.md).
 
 #### Manage authentication locally
 
@@ -49628,6 +50191,12 @@ We’re developing additional rules in Agent Security so admins can choose which
 | **Zero data retention**                                                                                                                                                    | Neither dots nor Work with local computer access provides strict zero data retention.                                                                                                                                                                   |
 | **FedRAMP**                                                                                                                                                                | Dots are unavailable in FedRAMP workspaces.                                                                                                                                                                                                             |
 
+#### EKM coverage for the dot’s cloud computer
+
+For eligible workspaces with EKM enabled, your workspace’s customer-managed key protects saved cloud computer snapshots and saved browser cookies at rest. Browser cookies are stored separately from snapshots.
+
+The same access controls that protect other OpenAI services handling customer data also apply to the running cloud computer.
+
 #### Manage who can use and direct a dot
 
 - **Workspace access:** During the admin preview, access to dots is off by default. To enable it for a group, grant Use dots on the group’s custom role.
@@ -49775,7 +50344,7 @@ The cloud browser keeps its own cookies, separate from the browser on your devic
 | Space files                                            | Saved files follow the Enterprise workspace retention policy. Opening, downloading or reattaching an existing Space file [does not restart its retention period](https://help.openai.com/en/articles/20001052-using-library-to-manage-files-in-chatgpt).                                                                            | The member deletes the file in Space. Compliance admins can delete it through the Space API. The file can also expire under workspace policy.                                                                                                                                                                                                                                         | The Space file survives dot deletion. After Space deletion, permanent removal is scheduled within 30 days, with exceptions for data already de-identified and disassociated, or retained for security or legal obligations. See Backups below.                                                                                                                                                                                                              |
 | Cached files and Outputs                               | The dot chat can keep a separate copy of a Space file. Space’s retention and deletion controls apply to the Space copy.                                                                                                                                                                                                             | Deleting the Space file, even from Trash, does not trigger deletion of the dot-chat cache. No separate self-service removal procedure is confirmed.                                                                                                                                                                                                                                   | A file may remain listed in Outputs after the Space copy is deleted. The dot-owned cached copy is deleted within 30 days of dot deletion. A separate way to clear the listing remains unconfirmed.                                                                                                                                                                                                                                                          |
 | Cloud computer files and browser state                 | The dot’s cloud disk can retain files and browser state. Snapshot expiry depends on workspace configuration.                                                                                                                                                                                                                        | Deleting a dot deletes its cloud browser and computer.                                                                                                                                                                                                                                                                                                                                | The dot’s cloud-computer data, disk, browser state, snapshots, and backups are deleted within 30 days of dot deletion. Copies saved elsewhere follow their destination’s policy.                                                                                                                                                                                                                                                                            |
-| VM snapshots                                           | For eligible workspaces with data residency, Enterprise Key Management (EKM), or both, the enabled control wipes snapshots on a five-day cycle, with a seven-day maximum.                                                                                                                                                           | The platform expires snapshots automatically. Deleting the dot separately starts the cloud-computer deletion process.                                                                                                                                                                                                                                                                 | For workspaces without data residency or EKM, there is no maximum age for an active dot’s snapshots. They may remain for as long as the dot exists, and customers cannot currently request an early purge. Snapshots are deleted within 30 days after the dot is deleted.                                                                                                                                                                                   |
+| Cloud computer snapshots                               | For eligible workspaces with data residency, Enterprise Key Management (EKM), or both, the enabled control wipes snapshots on a five-day cycle, with a seven-day maximum.                                                                                                                                                           | The platform expires snapshots automatically. Deleting the dot separately starts the cloud-computer deletion process.                                                                                                                                                                                                                                                                 | For workspaces without data residency or EKM, there is no maximum age for an active dot’s snapshots. They may remain for as long as the dot exists, and customers cannot currently request an early purge. Snapshots are deleted within 30 days after the dot is deleted.                                                                                                                                                                                   |
 | Backups                                                | Space backups have a separate documented window. Dot-owned backups are deleted within 30 days of dot deletion.                                                                                                                                                                                                                      | When a Space file is deleted, expires or becomes inactive, the active Compliance API stops returning it. The platform manages backup expiry.                                                                                                                                                                                                                                          | A Space backup may remain for up to 30 additional days, or longer for security or legal obligations. Dot-owned backups are deleted within 30 days of dot deletion.                                                                                                                                                                                                                                                                                          |
 | Delegated Work and Codex threads                       | Hosted [Work](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention) and [Codex](./auth.md#openai-authentication) threads follow the workspace’s retention policy. [Device-only records](./enterprise/chatgpt-work-local-security.md#data-handling-and-retention) follow local storage and backup policies. | The workspace policy governs when hosted threads expire. For Codex Cloud, see the [workspace retention guidance](./auth.md#openai-authentication). Deleting a dot leaves its delegated Codex and Work threads intact.                                                                                                                                                               | When a Codex chat is deleted in the desktop app, OpenAI schedules it for permanent deletion from its systems within 30 days, subject to [published exceptions](https://help.openai.com/en/articles/20001333-archiving-and-deleting-codex-chats-in-the-chatgpt-app). Work Cloud schedules deleted chats for permanent deletion within 30 days, subject to [published exceptions](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention). |
 | Pages in Spaces                                        | Space pages persist until someone deletes them; the workspace chat retention period does not expire them.                                                                                                                                                                                                                           | A page’s [creator or owner](https://help.openai.com/en/articles/20001544-chatgpt-space-sharing-data-and-controls) can move it and its subpages to Trash. Delete separately saved attachments in their own location. Members can delete their own saved Space files. Compliance admins with the [required API permissions](./enterprise/chatgpt-space.md) can delete eligible files. | Space purges a page on permanent deletion or after 30 days in Trash. Pages trashed before the October 1 rollout require manual deletion. Deleting the page leaves separately stored attachments in place.                                                                                                                                                                                                                                                   |
@@ -50483,6 +51052,18 @@ Review who has edit access. After the owner publishes for the first time, editor
 Site access and access to individual records are separate. For private application data, enforce record access in server-side code and test with ordinary visitor accounts.
 
 For example, a request tracker might let every workspace member open the site while allowing each person to see only their own requests. The application needs to check that rule when returning a record or accepting an action. Hiding a page element does not enforce the rule. Test with separate accounts that should and should not have access to the same record.
+
+#### Help teams create and reuse sites
+
+Help members choose a task for their first site, such as finding project resources or guiding a new teammate through onboarding. Point them to [Create a site](./sites/creating-a-site.md) to learn how to describe what they need, review the result, and refine it.
+
+As an alternative, teams can use **Remix** to adapt an existing site. Share a few useful examples with a short explanation of who each one helps and what people can do with it.
+
+Encourage teams to decide whether they need one shared site or a separate adaptation. Co-editing suits people maintaining the same project hub; remixing suits another team that wants the layout with its own milestones and resources. Point builders to the [Remix walkthrough](./sites/creating-a-site.md#start-from-an-existing-site-with-remix).
+
+Ask each team to name the intended audience and the person who will keep its site useful. Before sharing an adaptation, have someone from that audience try a real task and check that the content, links, and actions fit their needs.
+
+For current workspace controls and site permissions, use [Managing ChatGPT Sites for your workspace](https://help.openai.com/en/articles/20001338-managing-chatgpt-sites-for-your-workspace) in the Help Center.
 
 #### Configure connections
 
@@ -51607,7 +52188,7 @@ Use an organization-approved GitHub user account, preferably dedicated to this s
 
 If a repository is missing, check the designated account’s GitHub access and the app’s allowed actions in ChatGPT.
 
-Daybreak Defense Factory uses a personal GitHub connection. See [Cloud setup](./security/setup.md#2-connect-github).
+Daybreak Defense Factory uses a personal GitHub connection. See [Set up Daybreak](./security/setup.md#open-daybreak-and-connect-github).
 
 #### Notion
 
@@ -52016,6 +52597,8 @@ Manage app installation, updates, runtime settings, remote connections, and work
 - [Manage app updates](./enterprise/manage-app-updates.md): Control desktop app updates and deploy approved versions through your device management platform.
 
 - [Managed configuration](./enterprise/managed-configuration.md): Review the global baseline in Agent Security, policy precedence for this feature, and supported runtime requirements.
+
+- [Desktop browser policies](./enterprise/desktop-browser-policies.md): Deploy supported Chrome policies to the built-in desktop browser with device management tools.
 
 - [Self-host Codex configuration for your team](./enterprise/configuration-server.md): Serve Codex defaults and required settings from your own HTTPS endpoint.
 
@@ -52824,6 +53407,12 @@ sign-in](./enterprise/connect-to-a-gateway.md). That path supports native
 gateway OAuth with your organization's identity provider; the gateway manages
 the Bedrock credentials. For deployment guidance, see [Roll out a
 gateway](./enterprise/roll-out-a-gateway.md).
+
+ChatGPT Enterprise purchased through AWS Marketplace is a separate offering
+from the Bedrock client setup described here. For residency requirements for
+that offering, see the
+[data residency and inference residency guidance in the Help Center](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt)
+.
 
 #### How it works
 
