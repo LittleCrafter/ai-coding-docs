@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.322",
-  "last_updated": "2026-11-11T21:38:22Z",
+  "last_updated": "2026-11-12T04:26:04Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -830,8 +830,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop",
       "source_md_url": "https://code.claude.com/docs/en/desktop.md",
       "source_id": "desktop",
-      "hash": "cfc3131bd25c1fb47b122908921c47551ccf67339ec81cc357b1f66e9f4b3250",
-      "last_updated": "2026-11-10T21:04:53Z"
+      "hash": "ccd83bf92a2844ebd760c1e326122d5fb1355ec771d9b0625639547ebd105cf1",
+      "last_updated": "2026-11-12T04:26:04Z"
     },
     "desktop-ios-simulator": {
       "slug": "desktop-ios-simulator",
@@ -1560,8 +1560,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins/mods/test",
       "source_md_url": "https://code.claude.com/docs/en/plugins/mods/test.md",
       "source_id": "plugins/mods/test",
-      "hash": "65d8154fd43d809a68bbb0436fda364f16ccc0b01c7a599097204ad033620ed7",
-      "last_updated": "2026-10-26T21:58:03Z"
+      "hash": "0023ee9e002a888eeeea8652ca40633b4745839efb5e7b3f57a8c297c52fae56",
+      "last_updated": "2026-11-12T04:26:04Z"
     },
     "plugins/mods/troubleshoot": {
       "slug": "plugins/mods/troubleshoot",
@@ -1850,8 +1850,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "304541915e9965992f707a032e64ce1c070c1084fe0c59d63ff3bae9fd500786",
-      "last_updated": "2026-11-11T03:14:31Z"
+      "hash": "164320461acfc2ab93d6f7dfddb859fe3d36aef77ac9aeca28fe744d523c65fd",
+      "last_updated": "2026-11-12T04:26:04Z"
     },
     "setup": {
       "slug": "setup",
@@ -2025,8 +2025,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-11T21:38:22Z",
-    "fetch_duration_seconds": 70.441,
+    "last_fetch_completed": "2026-11-12T04:26:04Z",
+    "fetch_duration_seconds": 70.549,
     "total_pages_discovered": 202,
     "pages_fetched_successfully": 202,
     "pages_failed": 0,
