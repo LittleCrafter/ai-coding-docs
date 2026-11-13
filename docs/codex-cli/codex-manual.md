@@ -25509,6 +25509,21 @@ People can select part of a page, add a comment, and send it in Context to Codex
 As a developer, you can use the Browser Annotation API to provide context or controls specific to your application. For
 example, you can attach previews for component variants in a design system preview for developers to know how to update the components on a website.
 
+The examples use TypeScript. Save a copied example as `annotations.ts` and compile it for the browser:
+
+```bash
+npm install --save-dev esbuild
+npx esbuild annotations.ts --format=esm --outfile=annotations.js
+```
+
+Load the compiled module after adding the example's HTML elements to your page:
+
+```html snippet=setup reason="Load the compiled example module on a page with the documented HTML elements."
+<script type="module" src="./annotations.js"></script>
+```
+
+If your application already builds TypeScript, include the example in that build instead.
+
 To get help understanding the Browser Annotation API or adding annotation support to your website, install the Annotations Extensibility plugin.
 
 Install the Annotations Extensibility plugin
@@ -25683,13 +25698,9 @@ Run the script after both elements exist:
 <button id="discuss-delivery" type="button" hidden>Explain more</button>
 ```
 
-```javascript
-const summary = /** @type {HTMLElement} */ (
-  document.getElementById("delivery-summary")
-);
-const button = /** @type {HTMLButtonElement} */ (
-  document.getElementById("discuss-delivery")
-);
+```typescript
+const summary = document.getElementById("delivery-summary") as HTMLElement;
+const button = document.getElementById("discuss-delivery") as HTMLButtonElement;
 
 button.hidden = typeof document.oai?.annotation?.request !== "function";
 
@@ -25753,13 +25764,9 @@ an `oai-annotation-container-text` attribute:
 
 Run this script after both elements exist:
 
-```javascript
-const passage = /** @type {HTMLElement} */ (
-  document.getElementById("draft-passage")
-);
-const button = /** @type {HTMLButtonElement} */ (
-  document.getElementById("discuss-passage")
-);
+```typescript
+const passage = document.getElementById("draft-passage") as HTMLElement;
+const button = document.getElementById("discuss-passage") as HTMLButtonElement;
 
 button.hidden = typeof document.oai?.annotation?.request !== "function";
 
@@ -25846,22 +25853,20 @@ the cards directly; selection attributes aren't required:
 
 Run this script after creating the preview:
 
-```javascript
-const preview = /** @type {HTMLElement} */ (
-  document.getElementById("component-preview")
-);
+```typescript
+const preview = document.getElementById("component-preview") as HTMLElement;
 const annotation = document.oai?.annotation;
 
-/** @param {CustomEvent<{ callback: string; value: number | string }>} event */
-function previewSpacing(event) {
-  const { callback, value } = event.detail;
+function previewSpacing(event: Event) {
+  const { callback, value } = (
+    event as CustomEvent<{ callback: string; value: number | string }>
+  ).detail;
   if (callback === "setCardPadding") {
     preview.style.setProperty("--card-padding", `${value}px`);
   }
 }
 
-/** @type {{ dispose(): void } | undefined} */
-let registration;
+let registration: { dispose(): void } | undefined;
 if (typeof annotation?.registerControls === "function") {
   preview.addEventListener("oaiannotationcontrolchange", previewSpacing);
   registration = annotation.registerControls({
@@ -25916,10 +25921,8 @@ selection attributes or metadata. Run the script after the paragraph exists:
 <p id="email-draft">Draft a follow-up email about the project timeline.</p>
 ```
 
-```javascript
-const draft = /** @type {HTMLElement} */ (
-  document.getElementById("email-draft")
-);
+```typescript
+const draft = document.getElementById("email-draft") as HTMLElement;
 const registration = document.oai?.annotation?.registerControls?.({
   targets: draft,
   controlsHeading: "Email options",
@@ -26101,13 +26104,9 @@ and a stable object ID. Put the script after the canvas:
 </canvas>
 ```
 
-```javascript
-const canvas = /** @type {HTMLCanvasElement} */ (
-  document.getElementById("revenue-canvas")
-);
-const context = /** @type {CanvasRenderingContext2D} */ (
-  canvas.getContext("2d")
-);
+```typescript
+const canvas = document.getElementById("revenue-canvas") as HTMLCanvasElement;
+const context = canvas.getContext("2d") as CanvasRenderingContext2D;
 const bar = { x: 40, y: 60, width: 320, height: 100 };
 
 context.fillStyle = "#2563eb";
@@ -26199,9 +26198,14 @@ selection feedback. It doesn't require the optional context fields.
 For the canvas above, define this function and add
 `renderSelection: renderRevenueSelection` to the `registerSurface()` options:
 
-```javascript
-/** @param {{ hoveredId: string | null; selectedId: string | null }} selection */
-function renderRevenueSelection({ hoveredId, selectedId }) {
+```typescript
+function renderRevenueSelection({
+  hoveredId,
+  selectedId,
+}: {
+  hoveredId: string | null;
+  selectedId: string | null;
+}) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "#2563eb";
   context.fillRect(bar.x, bar.y, bar.width, bar.height);
@@ -26250,21 +26254,20 @@ then run the script after it exists:
 </button>
 ```
 
-```javascript
-const button = /** @type {HTMLButtonElement} */ (
-  document.getElementById("toggle-annotations")
-);
+```typescript
+const button = document.getElementById(
+  "toggle-annotations"
+) as HTMLButtonElement;
 const annotation = document.oai?.annotation;
 
-/** @param {boolean} active */
-function renderMode(active) {
+function renderMode(active: boolean) {
   button.textContent = active
     ? "Exit annotation mode"
     : "Enter annotation mode";
 }
 
-/** @param {CustomEvent<{ active: boolean }>} event */
-const onModeChange = (event) => renderMode(event.detail.active);
+const onModeChange = (event: Event) =>
+  renderMode((event as CustomEvent<{ active: boolean }>).detail.active);
 const onClick = () => annotation?.toggle(!annotation.isActive());
 
 if (
@@ -26830,10 +26833,10 @@ Alex — Moonwaffle work:     prf_8d7e4b19
 
 These example IDs do not encode profile labels or internal relationships. They are persisted once per profile and reused across reconnection, token refresh, and changes to email or display name.
 
-**Build the response from the authenticated profile.** This JavaScript example shows handler logic you can connect to your MCP SDK. `loadAuthenticatedProfile` is your application’s integration code: it validates the request credentials, enforces their permissions, and retrieves the corresponding profile’s persisted ID and display metadata. `requestContext` comes from your server’s request handling; it is not a model-supplied tool argument.
+**Build the response from the authenticated profile.** This TypeScript example shows handler logic you can connect to your MCP SDK. `loadAuthenticatedProfile` is your application’s integration code: it validates the request credentials, enforces their permissions, and retrieves the corresponding profile’s persisted ID and display metadata. `requestContext` comes from your server’s request handling; it is not a model-supplied tool argument.
 
-```javascript
-async function getProfile(requestContext) {
+```typescript
+async function getProfile(requestContext: { token: string }) {
   // Your auth/provider integration validates credentials and loads
   // the existing profile. Auth failures use normal MCP auth handling.
   const account = await loadAuthenticatedProfile(requestContext);
@@ -30285,10 +30288,14 @@ npm install standardwebhooks
 
 Pass a `webhookFetch` function with the same interface as `fetch` that validates callback addresses on each connection and blocks redirects.
 
-```javascript
+```typescript
 import { Webhook } from "standardwebhooks";
 
-export async function sendEvent(subscription, event, webhookFetch) {
+export async function sendEvent(
+  subscription: { id: string; url: string; secret: string },
+  event: { eventId: string },
+  webhookFetch: typeof fetch
+) {
   const body = JSON.stringify(event);
   if (Buffer.byteLength(body, "utf8") > 256 * 1024) {
     throw new Error("Event payload exceeds 256 KiB");
@@ -30802,13 +30809,13 @@ server](https://developers.openai.com/plugins/build/chatgpt-ui#layer-on-chatgpt-
 
 #### Build an MCP server
 
-Install the official Python or Node MCP SDK to create a server and expose a `/mcp` endpoint.
+Install the official Python or TypeScript MCP SDK to create a server and expose a `/mcp` endpoint.
 
-In this quickstart, we'll use the [Node SDK](https://github.com/modelcontextprotocol/typescript-sdk).
+In this quickstart, we'll use the [TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk).
 
 If you're using Python, refer to our [examples repository on GitHub](https://github.com/openai/openai-apps-sdk-examples) to see an example MCP server with the Python SDK.
 
-Install the Node SDK, MCP Apps helpers, and the `zod` package with:
+Use Node.js 22.6 or later. Install the TypeScript SDK, MCP Apps helpers, and the `zod` package with:
 
 ```bash
 npm install @modelcontextprotocol/sdk @modelcontextprotocol/ext-apps zod
@@ -30818,9 +30825,9 @@ npm install @modelcontextprotocol/sdk @modelcontextprotocol/ext-apps zod
 
 Register a resource for your component bundle and the tools the model can call (for example, `add_todo` and `complete_todo`) so ChatGPT can drive the UI.
 
-Create a file named `server.js` and paste the following example that uses the Node SDK:
+Create a file named `server.ts` and paste the following example that uses the TypeScript SDK:
 
-```javascript
+```typescript
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 import {
@@ -30852,11 +30859,11 @@ const todoOutputSchema = {
   ),
 };
 
-let todos = [];
+let todos: { id: string; title: string; completed: boolean }[] = [];
 let nextId = 1;
 
-const replyWithTodos = (message) => ({
-  content: message ? [{ type: "text", text: message }] : [],
+const replyWithTodos = (message: string) => ({
+  content: message ? [{ type: "text" as const, text: message }] : [],
   structuredContent: { tasks: todos },
 });
 
@@ -31008,7 +31015,7 @@ Usually, you can run a build command such as `npm run build` to produce a `dist`
 
 In this quickstart, since we're using vanilla HTML, no build step is required.
 
-Start the MCP server on `http://localhost:/mcp` from the directory that contains `server.js` (or `server.ts`).
+Start the MCP server on `http://localhost:/mcp` from the directory that contains `server.ts`.
 
 Make sure you have `"type": "module"` in your `package.json` file:
 
@@ -31026,7 +31033,7 @@ Make sure you have `"type": "module"` in your `package.json` file:
 Then run the server with the following command:
 
 ```bash
-node server.js
+node --experimental-strip-types server.ts
 ```
 
 The server should print `Todo MCP server listening on http://localhost:8787/mcp` once it is ready.
@@ -53680,7 +53687,7 @@ model = "openai.gpt-daybreak-blue-5.6-sol"
 region = "us-east-2"
 ```
 
-For approved Daybreak Red access to GPT-5.6-Cyber, replace the model ID with
+For approved Daybreak Red access to GPT-5.6 Cyber, replace the model ID with
 `openai.gpt-5.6-cyber` and keep the same provider and Region. Keep your
 [AWS authentication](#authentication-options) configured, then
 [verify the selected provider and model](#verify-setup).

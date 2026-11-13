@@ -305,7 +305,7 @@ model = "openai.gpt-daybreak-blue-5.6-sol"
 region = "us-east-2"
 ```
 
-For approved Daybreak Red access to GPT-5.6-Cyber, replace the model ID with
+For approved Daybreak Red access to GPT-5.6 Cyber, replace the model ID with
 `openai.gpt-5.6-cyber` and keep the same provider and Region. Keep your
 [AWS authentication](#authentication-options) configured, then
 [verify the selected provider and model](#verify-setup).
