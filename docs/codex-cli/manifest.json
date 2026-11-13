@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.169.0",
-  "last_updated": "2026-11-13T13:30:47Z",
+  "last_updated": "2026-11-13T21:04:31Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "5f4f5134231239cbfd79c6822890dd584b63fa3bd860fb0fc06e84bc155798f7",
-      "last_updated": "2026-11-13T03:43:03Z"
+      "hash": "4c54b64915fc2c12e1625f546b3d7514e2499a29786134e5b6e44ce0ccef09e8",
+      "last_updated": "2026-11-13T21:04:31Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -300,8 +300,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/config.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
       "source_id": "docs/config.md",
-      "hash": "532f91a4b377326659687afa6efe35df9ecf4e03ec3bea89f497e00f3c402f0b",
-      "last_updated": "2026-11-11T03:15:44Z"
+      "hash": "ac983d9b6e7ed017076fa697d2bfde88f062414db2c1c331f82cad473614510f",
+      "last_updated": "2026-11-13T21:04:31Z"
     },
     "config-file/config-advanced": {
       "slug": "config-file/config-advanced",
@@ -310,8 +310,8 @@
       "source_url": "https://learn.chatgpt.com/docs/config-file/config-advanced",
       "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-advanced.md",
       "source_id": "llms:config-file/config-advanced",
-      "hash": "60929bd0bae13a709b8883a3ca2bd4b7b285347ed21fe8f00a10e105fb14b300",
-      "last_updated": "2026-11-11T03:15:44Z"
+      "hash": "6b67acdaf3a892ad5e78129e6b379ae2cfde098623d758364a1549c207275ba3",
+      "last_updated": "2026-11-13T21:04:31Z"
     },
     "config-file/config-basic": {
       "slug": "config-file/config-basic",
@@ -2115,8 +2115,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-13T13:30:47Z",
-    "fetch_duration_seconds": 73.653,
+    "last_fetch_completed": "2026-11-13T21:04:31Z",
+    "fetch_duration_seconds": 73.627,
     "total_pages_discovered": 211,
     "pages_fetched_successfully": 211,
     "pages_failed": 0,

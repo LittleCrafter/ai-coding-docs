@@ -36,9 +36,9 @@ Sort order by creation time. `asc` for ascending, `desc` for descending.
 
 **purpose** string
 
-**Possible values:** `user_data`
+**Possible values:** `user_data`, `text_recognition`, `rich_layout_recognition`
 
-Only return files with the given purpose. Only `user_data` is supported.
+Only return files with the given purpose.
 
 ## Responses
 
@@ -74,7 +74,7 @@ required
 
 The list of file objects.
 
-Describes a file that has been uploaded to the Files API.
+Describes a file that has been uploaded to the Files API. A file uploaded with an OCR purpose is returned only after parsing succeeds.
 
   * Array [
 
@@ -102,7 +102,7 @@ The name of the file.
 
 **purpose** stringrequired
 
-**Possible values:** `user_data`
+**Possible values:** `user_data`, `text_recognition`, `rich_layout_recognition`
 
 The intended purpose of the file.
 

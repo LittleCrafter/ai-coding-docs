@@ -4,6 +4,8 @@ This guide will introduce how to use the DeepSeek `/chat/completions` API for mu
 
 The DeepSeek `/chat/completions` API is a "stateless" API, meaning the server does not record the context of the user's requests. Therefore, the user must **concatenate all previous conversation history** and pass it to the chat API with each request.
 
+For requests that use the [web tools](<./web_tools.md>) or [model content safety](<./safety.md>), the history is passed back differently; see [Web Tools - Multi-turn Conversations](<./web_tools.md#multi-turn>).
+
 The following code in Python demonstrates how to concatenate context to achieve multi-turn conversations.
 
 ```python

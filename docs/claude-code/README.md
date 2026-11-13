@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 202
-- **Version:** 2.1.323
-- **Last updated:** 2026-11-13T13:29:32Z
+- **Pages mirrored:** 203
+- **Version:** 2.1.325
+- **Last updated:** 2026-11-13T21:03:16Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -44,6 +44,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Scan your codebase for vulnerabilities | [claude-security.md](./claude-security.md) | [source](<https://code.claude.com/docs/en/claude-security>) |
 | CLI reference | [cli-reference.md](./cli-reference.md) | [source](<https://code.claude.com/docs/en/cli-reference>) |
 | Configure cloud environments | [cloud-environments.md](./cloud-environments.md) | [source](<https://code.claude.com/docs/en/cloud-environments>) |
+| Run tool calls from code with Code Mode | [code-mode.md](./code-mode.md) | [source](<https://code.claude.com/docs/en/code-mode>) |
 | Code Review | [code-review.md](./code-review.md) | [source](<https://code.claude.com/docs/en/code-review>) |
 | Code Review costs and usage | [code-review-costs.md](./code-review-costs.md) | [source](<https://code.claude.com/docs/en/code-review-costs>) |
 | Customize Code Review | [code-review-customize.md](./code-review-customize.md) | [source](<https://code.claude.com/docs/en/code-review-customize>) |

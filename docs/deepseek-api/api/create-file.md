@@ -12,6 +12,8 @@ Upload an image file that can later be referenced by its `file_id` in chat compl
 
 Supported formats: JPEG, PNG, GIF, and WebP. The format is detected from the file content. See the [Files API guide](<../guides/files_api.md>) for details.
 
+To upload documents, set `purpose` to `text_recognition` or `rich_layout_recognition` and send it before the `file` field. See the [File Parsing guide](<../guides/document_parsing.md>).
+
 ## Request
 
 **multipart/form-data**
@@ -24,15 +26,15 @@ required
 
 **
 
-**file** binaryrequired
-
-The image file to upload. Supported formats: JPEG, PNG, GIF, and WebP. Maximum file size: 64 MiB.
-
 **purpose** stringrequired
 
-**Possible values:** `user_data`
+**Possible values:** `user_data`, `text_recognition`, `rich_layout_recognition`
 
-The intended purpose of the uploaded file. Must be `user_data`.
+The intended purpose of the uploaded file. When uploading a document, send this field before `file`. See the [Files API guide](<../guides/files_api.md>) for the file types each purpose accepts.
+
+**file** binaryrequired
+
+The file to upload. The accepted file types depend on `purpose`.
 
 **expires_after[anchor]** string
 
@@ -86,7 +88,7 @@ The name of the file.
 
 **purpose** stringrequired
 
-**Possible values:** `user_data`
+**Possible values:** `user_data`, `text_recognition`, `rich_layout_recognition`
 
 The intended purpose of the file.
 

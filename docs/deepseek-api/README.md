@@ -2,8 +2,8 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 57
-- **Last updated:** 2026-11-11T13:03:09Z
+- **Pages mirrored:** 70
+- **Last updated:** 2026-11-13T21:05:01Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -18,6 +18,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 
 | Page | Local | Source |
 | --- | --- | --- |
+| Speech to Text | [api/asr.md](./api/asr.md) | [source](<https://api-docs.deepseek.com/api/asr>) |
 | Chat Completions API | [api/create-chat-completion.md](./api/create-chat-completion.md) | [source](<https://api-docs.deepseek.com/api/create-chat-completion>) |
 | FIM Completion API (Beta) | [api/create-completion.md](./api/create-completion.md) | [source](<https://api-docs.deepseek.com/api/create-completion>) |
 | Upload File | [api/create-file.md](./api/create-file.md) | [source](<https://api-docs.deepseek.com/api/create-file>) |
@@ -28,25 +29,36 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Get User Balance | [api/get-user-balance.md](./api/get-user-balance.md) | [source](<https://api-docs.deepseek.com/api/get-user-balance>) |
 | List Files | [api/list-files.md](./api/list-files.md) | [source](<https://api-docs.deepseek.com/api/list-files>) |
 | Lists Models | [api/list-models.md](./api/list-models.md) | [source](<https://api-docs.deepseek.com/api/list-models>) |
+| OCR | [api/ocr.md](./api/ocr.md) | [source](<https://api-docs.deepseek.com/api/ocr>) |
 | Retrieve File | [api/retrieve-file.md](./api/retrieve-file.md) | [source](<https://api-docs.deepseek.com/api/retrieve-file>) |
 | Search | [api/search.md](./api/search.md) | [source](<https://api-docs.deepseek.com/api/search>) |
+| Text to Speech | [api/tts.md](./api/tts.md) | [source](<https://api-docs.deepseek.com/api/tts>) |
 
 ## guides
 
 | Page | Local | Source |
 | --- | --- | --- |
 | Using the Anthropic API | [guides/anthropic_api.md](./guides/anthropic_api.md) | [source](<https://api-docs.deepseek.com/guides/anthropic_api>) |
+| Speech to Text | [guides/asr.md](./guides/asr.md) | [source](<https://api-docs.deepseek.com/guides/asr>) |
+| Build a Chatbot | [guides/build_a_chatbot.md](./guides/build_a_chatbot.md) | [source](<https://api-docs.deepseek.com/guides/build_a_chatbot>) |
 | Chat Prefix Completion (Beta) | [guides/chat_prefix_completion.md](./guides/chat_prefix_completion.md) | [source](<https://api-docs.deepseek.com/guides/chat_prefix_completion>) |
+| Conversation Title | [guides/conversation_title.md](./guides/conversation_title.md) | [source](<https://api-docs.deepseek.com/guides/conversation_title>) |
+| File Parsing | [guides/document_parsing.md](./guides/document_parsing.md) | [source](<https://api-docs.deepseek.com/guides/document_parsing>) |
 | Files API | [guides/files_api.md](./guides/files_api.md) | [source](<https://api-docs.deepseek.com/guides/files_api>) |
 | FIM Completion (Beta) | [guides/fim_completion.md](./guides/fim_completion.md) | [source](<https://api-docs.deepseek.com/guides/fim_completion>) |
 | JSON Output | [guides/json_mode.md](./guides/json_mode.md) | [source](<https://api-docs.deepseek.com/guides/json_mode>) |
 | Context Caching | [guides/kv_cache.md](./guides/kv_cache.md) | [source](<https://api-docs.deepseek.com/guides/kv_cache>) |
+| User Metadata Marker | [guides/latest_reminder.md](./guides/latest_reminder.md) | [source](<https://api-docs.deepseek.com/guides/latest_reminder>) |
 | Multi-round Conversation | [guides/multi_round_chat.md](./guides/multi_round_chat.md) | [source](<https://api-docs.deepseek.com/guides/multi_round_chat>) |
+| OCR | [guides/ocr.md](./guides/ocr.md) | [source](<https://api-docs.deepseek.com/guides/ocr>) |
 | Using the Responses API | [guides/responses_api.md](./guides/responses_api.md) | [source](<https://api-docs.deepseek.com/guides/responses_api>) |
+| Model Content Safety | [guides/safety.md](./guides/safety.md) | [source](<https://api-docs.deepseek.com/guides/safety>) |
 | Search &amp; Fetch | [guides/search.md](./guides/search.md) | [source](<https://api-docs.deepseek.com/guides/search>) |
 | Thinking Mode | [guides/thinking_mode.md](./guides/thinking_mode.md) | [source](<https://api-docs.deepseek.com/guides/thinking_mode>) |
 | Tool Calls | [guides/tool_calls.md](./guides/tool_calls.md) | [source](<https://api-docs.deepseek.com/guides/tool_calls>) |
+| Text to Speech | [guides/tts.md](./guides/tts.md) | [source](<https://api-docs.deepseek.com/guides/tts>) |
 | Vision | [guides/vision.md](./guides/vision.md) | [source](<https://api-docs.deepseek.com/guides/vision>) |
+| Web Tools | [guides/web_tools.md](./guides/web_tools.md) | [source](<https://api-docs.deepseek.com/guides/web_tools>) |
 
 ## news
 
@@ -71,6 +83,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live | [news/news260821.md](./news/news260821.md) | [source](<https://api-docs.deepseek.com/news/news260821>) |
 | DeepSeek-V4.1-Flash: Smarter, Faster, More Efficient | [news/news260910.md](./news/news260910.md) | [source](<https://api-docs.deepseek.com/news/news260910>) |
 | DeepSeek-V4.1-Flash-1017: Wish-Driven Programming Made Real | [news/news261017.md](./news/news261017.md) | [source](<https://api-docs.deepseek.com/news/news261017>) |
+| The full DeepSeek App experience, now via API | [news/news261113.md](./news/news261113.md) | [source](<https://api-docs.deepseek.com/news/news261113>) |
 
 ## quick_start
 

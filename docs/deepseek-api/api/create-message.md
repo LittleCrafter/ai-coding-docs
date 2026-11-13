@@ -102,6 +102,44 @@ Each text block must have `type: "text"`, with its content in the `text` field. 
 
 The text content.
 
+**
+
+citations
+
+**
+
+object[]
+
+nullable
+
+Sources cited by this text. Returned when the answer cites results of the web tools; ignored on input.
+
+A source cited by the answer. Returned with the web tools.
+
+  * Array [
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
+  * ]
+
 **Image block**
 
 Image input is supported by `deepseek-flash` in user messages and tool results. Images in assistant messages are not supported. `deepseek-v4-pro` does not support image input. See the [Vision Guide](<../guides/vision.md>) for image limits.
@@ -152,6 +190,50 @@ Requires the request header `anthropic-beta: files-api-2025-04-14`.
 
 The ID of an uploaded image file. See the [Files API Guide](<../guides/files_api.md#anthropic-compatible-files-api>).
 
+**Document block**
+
+A document for the model to read, supported in user messages. See the [File Parsing Guide](<../guides/document_parsing.md#document-qa>).
+
+**type** stringrequired
+
+**Possible values:** `document`
+
+**source** object
+
+required
+
+oneOf
+
+**Uploaded file**
+
+The request must carry the `anthropic-beta: files-api-2025-04-14` header.
+
+**type** stringrequired
+
+**Possible values:** `file`
+
+**file_id** stringrequired
+
+The ID of a file uploaded via the [Files API](<../guides/files_api.md>), of the form `file-api-...`.
+
+**Inline text**
+
+**type** stringrequired
+
+**Possible values:** `text`
+
+**media_type** string
+
+**Possible values:** `text/plain`
+
+**data** stringrequired
+
+The text of the document.
+
+**title** string
+
+Optional. The file name shown to the model for a `text` source.
+
 **Tool-result block**
 
 Only valid in user messages. Return one result for every pending tool-use ID, with no duplicates, before any text or image blocks.
@@ -193,6 +275,44 @@ Each text block must have `type: "text"`, with its content in the `text` field. 
 **text** stringrequired
 
 The text content.
+
+**
+
+citations
+
+**
+
+object[]
+
+nullable
+
+Sources cited by this text. Returned when the answer cites results of the web tools; ignored on input.
+
+A source cited by the answer. Returned with the web tools.
+
+  * Array [
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
+  * ]
 
 **Image block**
 
@@ -294,6 +414,44 @@ Each text block must have `type: "text"`, with its content in the `text` field. 
 
 The text content.
 
+**
+
+citations
+
+**
+
+object[]
+
+nullable
+
+Sources cited by this text. Returned when the answer cites results of the web tools; ignored on input.
+
+A source cited by the answer. Returned with the web tools.
+
+  * Array [
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
+  * ]
+
 **Thinking block**
 
 **type** stringrequired
@@ -330,7 +488,7 @@ The JSON arguments supplied to the tool, normally an object matching its `input_
 
 **Server-tool-use block**
 
-Returned when the service runs web search. Its matching `web_search_tool_result` appears in the same assistant message; the client does not run this tool.
+Returned when the service runs web search, `deepseek_web_search` or `deepseek_read_url`. Its matching `web_search_tool_result` or `web_fetch_tool_result` appears in the same assistant message; the client does not run this tool.
 
 **type** stringrequired
 
@@ -342,7 +500,7 @@ The server-tool-call ID.
 
 **name** stringrequired
 
-**Possible values:** `web_search`
+**Possible values:** `web_search`, `web_fetch`, `deepseek_web_search`, `deepseek_read_url`
 
 **input** nullablerequired
 
@@ -361,6 +519,12 @@ Identifies a direct server-tool call.
 **type** stringrequired
 
 **Possible values:** `direct`
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
 
 **Web search result block**
 
@@ -410,6 +574,18 @@ Opaque result content. Preserve this value unchanged when passing the result bac
 
 Page-age metadata, when available; may be `null`.
 
+**snippet** stringnullable
+
+DeepSeek extension. A plain-text summary of the result for display.
+
+**site_name** stringnullable
+
+DeepSeek extension. The name of the site, or `null` when unknown.
+
+**site_icon** stringnullable
+
+DeepSeek extension. The URL of the site icon, or `null` when unknown.
+
 **Web search error**
 
 **type** stringrequired
@@ -424,7 +600,121 @@ The reason the server-side search failed.
 
   * ]
 
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
+
+**Web fetch result block**
+
+Returned for a page opened during deep thinking search (`deepseek_web_search`), or a link read by `deepseek_read_url`. Pass it back unchanged, including `kind` and `signature`. See the [Web Tools Guide](<../guides/web_tools.md#response-blocks>).
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_tool_result`
+
+**tool_use_id** stringrequired
+
+The ID of the associated `server_tool_use` block.
+
+**content** object
+
+required
+
+The fetched page, or the reason the fetch failed.
+
+oneOf
+
+**Web fetch result**
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_result`
+
+**url** stringrequired
+
+The URL of the page.
+
+**
+
+content
+
+**
+
+object
+
+required
+
+The page as a text document.
+
+**type** string
+
+**Possible values:** `document`
+
+**
+
+source
+
+**
+
+object
+
+**type** string
+
+**Possible values:** `text`
+
+**media_type** string
+
+**Possible values:** `text/plain`
+
+**data** string
+
+Always an empty string: the page text is not returned. For `read_link`, the page is carried in `signature`.
+
+**title** stringnullable
+
+The page title.
+
+**published_at** stringnullable
+
+DeepSeek extension, in place of `retrieved_at`. The publication time of the page, or `null` when unknown. For a link read from the user message, the date found on the page, in no fixed format; for a page opened during deep thinking search, an RFC 3339 timestamp.
+
+**Web fetch error**
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_tool_result_error`
+
+**error_code** stringrequired
+
+**Possible values:** `url_not_accessible`, `url_not_allowed`, `unavailable`
+
+The reason the fetch failed. See the [Web Tools Guide](<../guides/web_tools.md#response-blocks>).
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
+
+**signature** string
+
+DeepSeek extension. Present on successful `read_link` results: the page that was read, encrypted. Pass it back unchanged to restore the page into the context.
+
   * ]
+
+**Latest reminder message**
+
+DeepSeek extension. Gives the model the current date, location, platform and language, like DeepSeek Chat. Place it directly before the `user` message it belongs to; anywhere else it returns `400`. Works with or without the web tools. See the [User Metadata Marker Guide](<../guides/latest_reminder.md>).
+
+**role** stringrequired
+
+**Possible values:** `latest_reminder`
+
+**content** stringrequired
+
+`<date>,<weekday>,<location>,<platform>,<language>`, for example `2026-11-11,Wednesday,Singapore,Web,English`.
 
   * ]
 
@@ -453,6 +743,44 @@ Each text block must have `type: "text"`, with its content in the `text` field. 
 **text** stringrequired
 
 The text content.
+
+**
+
+citations
+
+**
+
+object[]
+
+nullable
+
+Sources cited by this text. Returned when the answer cites results of the web tools; ignored on input.
+
+A source cited by the answer. Returned with the web tools.
+
+  * Array [
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
+  * ]
 
   * ]
 
@@ -524,7 +852,7 @@ object[]
 
 nullable
 
-Tools available to the model. Supports client-defined tools and the web search server tool. Tool names must be unique. An empty list is treated as no tools. `cache_control` is ignored.
+Tools available to the model. Supports client-defined tools, the web search server tool, and the `deepseek_web_search` and `deepseek_read_url` server tools. Tool names must be unique. An empty list is treated as no tools. `cache_control` is ignored.
 
   * Array [
 
@@ -579,6 +907,34 @@ The service executes web searches and returns `server_tool_use` and `web_search_
 **Possible values:** `>= 0`
 
 Maximum searches allowed in this request. The default and service-side cap are normally 5; for Claude Code search-subagent compatibility requests, both are 1. Larger values are capped at the applicable limit. A search beyond this limit returns a `max_uses_exceeded` result.
+
+**DeepSeek web search server tool**
+
+DeepSeek extension. Lets the model search the web; with thinking enabled, it runs deep thinking search. See the [Web Tools Guide](<../guides/web_tools.md>).
+
+**type** stringrequired
+
+**Possible values:** `deepseek_web_search`
+
+**name** string
+
+**Possible values:** `deepseek_web_search`
+
+Optional. The service does not check it.
+
+**DeepSeek read URL server tool**
+
+DeepSeek extension. Lets the model read the links in the last user message. See the [Web Tools Guide](<../guides/web_tools.md#read-links>).
+
+**type** stringrequired
+
+**Possible values:** `deepseek_read_url`
+
+**name** string
+
+**Possible values:** `deepseek_read_url`
+
+Optional. The service does not check it.
 
   * ]
 
@@ -680,6 +1036,40 @@ Request metadata. Only `user_id` is supported; other metadata fields are ignored
 
 A custom end-user identifier. We recommend using only ASCII letters, digits, underscores (`_`), and hyphens (`-`). The UTF-8 encoded value must not exceed 512 bytes. Do not include personal information. See [Rate Limit & Isolation](<../quick_start/rate_limit.md>).
 
+**
+
+safety_check
+
+**
+
+object
+
+nullable
+
+DeepSeek extension. Set `level` to `high` to turn on basic risk control, which reviews the model input and output. See the [Model Content Safety Guide](<../guides/safety.md>).
+
+**level** stringrequired
+
+**Possible values:** `low`, `high`
+
+`high`: basic risk control. `low`: the default checks, the same as omitting `safety_check`.
+
+**
+
+title
+
+**
+
+object
+
+nullable
+
+DeepSeek extension. Set `{"enabled": true}` to have the response carry a short title for the conversation. See the [Conversation Title Guide](<../guides/conversation_title.md>).
+
+**enabled** booleanrequired
+
+Whether to return a conversation title.
+
 ## Responses
 
 **200 (No streaming)**
@@ -740,6 +1130,44 @@ Each text block must have `type: "text"`, with its content in the `text` field. 
 
 The text content.
 
+**
+
+citations
+
+**
+
+object[]
+
+nullable
+
+Sources cited by this text. Returned when the answer cites results of the web tools; ignored on input.
+
+A source cited by the answer. Returned with the web tools.
+
+  * Array [
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
+  * ]
+
 **Thinking output**
 
 **type** stringrequired
@@ -788,11 +1216,11 @@ Identifier of the server tool call.
 
 **name** stringrequired
 
-Name of the server tool.
+Name of the server tool: `web_search` for web search. With the web tools, the declared tool that enabled the capability: `deepseek_web_search` for searches and the steps of deep thinking search, or `deepseek_read_url` for URL reading.
 
 **input** nullablerequired
 
-Arguments supplied to the server tool as a JSON value, normally an object.
+Arguments supplied to the server tool as a JSON value, normally an object. With the web tools, `input.action` is `search`, `open_page`, `find_in_page` or `read_link`.
 
 **
 
@@ -807,6 +1235,12 @@ required
 **type** stringrequired
 
 **Possible values:** `direct`
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
 
 **Web search result block**
 
@@ -856,6 +1290,18 @@ Opaque result content. Preserve this value unchanged when passing the result bac
 
 Page-age metadata, when available; may be `null`.
 
+**snippet** stringnullable
+
+DeepSeek extension. A plain-text summary of the result for display.
+
+**site_name** stringnullable
+
+DeepSeek extension. The name of the site, or `null` when unknown.
+
+**site_icon** stringnullable
+
+DeepSeek extension. The URL of the site icon, or `null` when unknown.
+
 **Web search error**
 
 **type** stringrequired
@@ -870,6 +1316,108 @@ The reason the server-side search failed.
 
   * ]
 
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
+
+**Web fetch result block**
+
+Returned for a page opened during deep thinking search (`deepseek_web_search`), or a link read by `deepseek_read_url`. Pass it back unchanged, including `kind` and `signature`. See the [Web Tools Guide](<../guides/web_tools.md#response-blocks>).
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_tool_result`
+
+**tool_use_id** stringrequired
+
+The ID of the associated `server_tool_use` block.
+
+**content** object
+
+required
+
+The fetched page, or the reason the fetch failed.
+
+oneOf
+
+**Web fetch result**
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_result`
+
+**url** stringrequired
+
+The URL of the page.
+
+**
+
+content
+
+**
+
+object
+
+required
+
+The page as a text document.
+
+**type** string
+
+**Possible values:** `document`
+
+**
+
+source
+
+**
+
+object
+
+**type** string
+
+**Possible values:** `text`
+
+**media_type** string
+
+**Possible values:** `text/plain`
+
+**data** string
+
+Always an empty string: the page text is not returned. For `read_link`, the page is carried in `signature`.
+
+**title** stringnullable
+
+The page title.
+
+**published_at** stringnullable
+
+DeepSeek extension, in place of `retrieved_at`. The publication time of the page, or `null` when unknown. For a link read from the user message, the date found on the page, in no fixed format; for a page opened during deep thinking search, an RFC 3339 timestamp.
+
+**Web fetch error**
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_tool_result_error`
+
+**error_code** stringrequired
+
+**Possible values:** `url_not_accessible`, `url_not_allowed`, `unavailable`
+
+The reason the fetch failed. See the [Web Tools Guide](<../guides/web_tools.md#response-blocks>).
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
+
+**signature** string
+
+DeepSeek extension. Present on successful `read_link` results: the page that was read, encrypted. Pass it back unchanged to restore the page into the context.
+
   * ]
 
 **stop_reason** stringnullablerequired
@@ -881,6 +1429,34 @@ Why generation stopped: natural completion, output limit, a stop sequence, a cli
 **stop_sequence** stringnullablerequired
 
 The matched stop sequence, or null when no stop sequence was matched.
+
+**
+
+stop_details
+
+**
+
+object
+
+nullable
+
+Present when the model content safety review refuses the response (`stop_reason` is `refusal`). See the [Model Content Safety Guide](<../guides/safety.md#handling-refusals>).
+
+**type** stringrequired
+
+**Possible values:** `refusal`
+
+**category** stringnullable
+
+Always `null`.
+
+**explanation** stringnullable
+
+Names the blocked images when images in the request fail the review; otherwise `null`.
+
+**title** string
+
+DeepSeek extension. The conversation title, present only when the request enabled `title` and a title was generated. Not related to the `title` of search results and citations.
 
 **
 
@@ -916,6 +1492,28 @@ Input tokens served from the context cache.
 
 Generated output tokens, including thinking tokens when thinking is enabled. In message_delta this is the cumulative count, not an increment.
 
+**
+
+output_tokens_details
+
+**
+
+object
+
+Breakdown of `output_tokens`. Present when thinking is enabled or `safety_check` is `high`.
+
+**thinking_tokens** integer
+
+**Possible values:** `>= 0`
+
+Thinking tokens, already included in `output_tokens`.
+
+**safety_tokens** integer
+
+**Possible values:** `>= 0`
+
+DeepSeek extension. Tokens of the safety review, already included in `output_tokens`. Present only when `safety_check` is `high`.
+
 **service_tier** stringrequired
 
 **Possible values:** `standard`
@@ -928,7 +1526,7 @@ server_tool_use
 
 object
 
-Server-side web search counts, separate from token usage. Present only when at least one web search was attempted; otherwise omitted. Both fields are present when this object is returned. Read the final message's usage for non-streaming responses or the final message_delta.usage for streaming responses. These counts are cumulative, not deltas. See [Server tool usage](<../guides/anthropic_api.md#server-tool-usage>).
+Server-side web search and fetch counts, separate from token usage. Present only when at least one of the counts is greater than zero; otherwise omitted. All fields are present when this object is returned. Read the final message's usage for non-streaming responses or the final message_delta.usage for streaming responses. These counts are cumulative, not deltas. See [Server tool usage](<../guides/anthropic_api.md#server-tool-usage>).
 
 **web_search_requests** integerrequired
 
@@ -941,6 +1539,24 @@ Number of server-side web search attempts, including failed attempts and attempt
 **Possible values:** `>= 0`
 
 Number of successful server-side web searches that returned nonempty results. Failed attempts and empty results are not counted. This field can be used as a basis for billing.
+
+**web_fetch_requests** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of fetch result blocks in the response, including errors. For display only.
+
+**tool_fetch** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of billed page fetches.
+
+**tool_image_search** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of billed image searches.
 
 **Example**
 
@@ -1045,6 +1661,44 @@ Each text block must have `type: "text"`, with its content in the `text` field. 
 
 The text content.
 
+**
+
+citations
+
+**
+
+object[]
+
+nullable
+
+Sources cited by this text. Returned when the answer cites results of the web tools; ignored on input.
+
+A source cited by the answer. Returned with the web tools.
+
+  * Array [
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
+  * ]
+
 **Thinking output**
 
 **type** stringrequired
@@ -1093,11 +1747,11 @@ Identifier of the server tool call.
 
 **name** stringrequired
 
-Name of the server tool.
+Name of the server tool: `web_search` for web search. With the web tools, the declared tool that enabled the capability: `deepseek_web_search` for searches and the steps of deep thinking search, or `deepseek_read_url` for URL reading.
 
 **input** nullablerequired
 
-Arguments supplied to the server tool as a JSON value, normally an object.
+Arguments supplied to the server tool as a JSON value, normally an object. With the web tools, `input.action` is `search`, `open_page`, `find_in_page` or `read_link`.
 
 **
 
@@ -1112,6 +1766,12 @@ required
 **type** stringrequired
 
 **Possible values:** `direct`
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
 
 **Web search result block**
 
@@ -1161,6 +1821,18 @@ Opaque result content. Preserve this value unchanged when passing the result bac
 
 Page-age metadata, when available; may be `null`.
 
+**snippet** stringnullable
+
+DeepSeek extension. A plain-text summary of the result for display.
+
+**site_name** stringnullable
+
+DeepSeek extension. The name of the site, or `null` when unknown.
+
+**site_icon** stringnullable
+
+DeepSeek extension. The URL of the site icon, or `null` when unknown.
+
 **Web search error**
 
 **type** stringrequired
@@ -1175,6 +1847,108 @@ The reason the server-side search failed.
 
   * ]
 
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
+
+**Web fetch result block**
+
+Returned for a page opened during deep thinking search (`deepseek_web_search`), or a link read by `deepseek_read_url`. Pass it back unchanged, including `kind` and `signature`. See the [Web Tools Guide](<../guides/web_tools.md#response-blocks>).
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_tool_result`
+
+**tool_use_id** stringrequired
+
+The ID of the associated `server_tool_use` block.
+
+**content** object
+
+required
+
+The fetched page, or the reason the fetch failed.
+
+oneOf
+
+**Web fetch result**
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_result`
+
+**url** stringrequired
+
+The URL of the page.
+
+**
+
+content
+
+**
+
+object
+
+required
+
+The page as a text document.
+
+**type** string
+
+**Possible values:** `document`
+
+**
+
+source
+
+**
+
+object
+
+**type** string
+
+**Possible values:** `text`
+
+**media_type** string
+
+**Possible values:** `text/plain`
+
+**data** string
+
+Always an empty string: the page text is not returned. For `read_link`, the page is carried in `signature`.
+
+**title** stringnullable
+
+The page title.
+
+**published_at** stringnullable
+
+DeepSeek extension, in place of `retrieved_at`. The publication time of the page, or `null` when unknown. For a link read from the user message, the date found on the page, in no fixed format; for a page opened during deep thinking search, an RFC 3339 timestamp.
+
+**Web fetch error**
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_tool_result_error`
+
+**error_code** stringrequired
+
+**Possible values:** `url_not_accessible`, `url_not_allowed`, `unavailable`
+
+The reason the fetch failed. See the [Web Tools Guide](<../guides/web_tools.md#response-blocks>).
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
+
+**signature** string
+
+DeepSeek extension. Present on successful `read_link` results: the page that was read, encrypted. Pass it back unchanged to restore the page into the context.
+
   * ]
 
 **stop_reason** stringnullablerequired
@@ -1186,6 +1960,34 @@ Why generation stopped: natural completion, output limit, a stop sequence, a cli
 **stop_sequence** stringnullablerequired
 
 The matched stop sequence, or null when no stop sequence was matched.
+
+**
+
+stop_details
+
+**
+
+object
+
+nullable
+
+Present when the model content safety review refuses the response (`stop_reason` is `refusal`). See the [Model Content Safety Guide](<../guides/safety.md#handling-refusals>).
+
+**type** stringrequired
+
+**Possible values:** `refusal`
+
+**category** stringnullable
+
+Always `null`.
+
+**explanation** stringnullable
+
+Names the blocked images when images in the request fail the review; otherwise `null`.
+
+**title** string
+
+DeepSeek extension. The conversation title, present only when the request enabled `title` and a title was generated. Not related to the `title` of search results and citations.
 
 **
 
@@ -1221,6 +2023,28 @@ Input tokens served from the context cache.
 
 Generated output tokens, including thinking tokens when thinking is enabled. In message_delta this is the cumulative count, not an increment.
 
+**
+
+output_tokens_details
+
+**
+
+object
+
+Breakdown of `output_tokens`. Present when thinking is enabled or `safety_check` is `high`.
+
+**thinking_tokens** integer
+
+**Possible values:** `>= 0`
+
+Thinking tokens, already included in `output_tokens`.
+
+**safety_tokens** integer
+
+**Possible values:** `>= 0`
+
+DeepSeek extension. Tokens of the safety review, already included in `output_tokens`. Present only when `safety_check` is `high`.
+
 **service_tier** stringrequired
 
 **Possible values:** `standard`
@@ -1233,7 +2057,7 @@ server_tool_use
 
 object
 
-Server-side web search counts, separate from token usage. Present only when at least one web search was attempted; otherwise omitted. Both fields are present when this object is returned. Read the final message's usage for non-streaming responses or the final message_delta.usage for streaming responses. These counts are cumulative, not deltas. See [Server tool usage](<../guides/anthropic_api.md#server-tool-usage>).
+Server-side web search and fetch counts, separate from token usage. Present only when at least one of the counts is greater than zero; otherwise omitted. All fields are present when this object is returned. Read the final message's usage for non-streaming responses or the final message_delta.usage for streaming responses. These counts are cumulative, not deltas. See [Server tool usage](<../guides/anthropic_api.md#server-tool-usage>).
 
 **web_search_requests** integerrequired
 
@@ -1246,6 +2070,24 @@ Number of server-side web search attempts, including failed attempts and attempt
 **Possible values:** `>= 0`
 
 Number of successful server-side web searches that returned nonempty results. Failed attempts and empty results are not counted. This field can be used as a basis for billing.
+
+**web_fetch_requests** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of fetch result blocks in the response, including errors. For display only.
+
+**tool_fetch** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of billed page fetches.
+
+**tool_image_search** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of billed image searches.
 
 **content_block_start**
 
@@ -1276,6 +2118,44 @@ Each text block must have `type: "text"`, with its content in the `text` field. 
 **text** stringrequired
 
 The text content.
+
+**
+
+citations
+
+**
+
+object[]
+
+nullable
+
+Sources cited by this text. Returned when the answer cites results of the web tools; ignored on input.
+
+A source cited by the answer. Returned with the web tools.
+
+  * Array [
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
+  * ]
 
 **Thinking output**
 
@@ -1325,11 +2205,11 @@ Identifier of the server tool call.
 
 **name** stringrequired
 
-Name of the server tool.
+Name of the server tool: `web_search` for web search. With the web tools, the declared tool that enabled the capability: `deepseek_web_search` for searches and the steps of deep thinking search, or `deepseek_read_url` for URL reading.
 
 **input** nullablerequired
 
-Arguments supplied to the server tool as a JSON value, normally an object.
+Arguments supplied to the server tool as a JSON value, normally an object. With the web tools, `input.action` is `search`, `open_page`, `find_in_page` or `read_link`.
 
 **
 
@@ -1344,6 +2224,12 @@ required
 **type** stringrequired
 
 **Possible values:** `direct`
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
 
 **Web search result block**
 
@@ -1393,6 +2279,18 @@ Opaque result content. Preserve this value unchanged when passing the result bac
 
 Page-age metadata, when available; may be `null`.
 
+**snippet** stringnullable
+
+DeepSeek extension. A plain-text summary of the result for display.
+
+**site_name** stringnullable
+
+DeepSeek extension. The name of the site, or `null` when unknown.
+
+**site_icon** stringnullable
+
+DeepSeek extension. The URL of the site icon, or `null` when unknown.
+
 **Web search error**
 
 **type** stringrequired
@@ -1406,6 +2304,108 @@ Page-age metadata, when available; may be `null`.
 The reason the server-side search failed.
 
   * ]
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
+
+**Web fetch result block**
+
+Returned for a page opened during deep thinking search (`deepseek_web_search`), or a link read by `deepseek_read_url`. Pass it back unchanged, including `kind` and `signature`. See the [Web Tools Guide](<../guides/web_tools.md#response-blocks>).
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_tool_result`
+
+**tool_use_id** stringrequired
+
+The ID of the associated `server_tool_use` block.
+
+**content** object
+
+required
+
+The fetched page, or the reason the fetch failed.
+
+oneOf
+
+**Web fetch result**
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_result`
+
+**url** stringrequired
+
+The URL of the page.
+
+**
+
+content
+
+**
+
+object
+
+required
+
+The page as a text document.
+
+**type** string
+
+**Possible values:** `document`
+
+**
+
+source
+
+**
+
+object
+
+**type** string
+
+**Possible values:** `text`
+
+**media_type** string
+
+**Possible values:** `text/plain`
+
+**data** string
+
+Always an empty string: the page text is not returned. For `read_link`, the page is carried in `signature`.
+
+**title** stringnullable
+
+The page title.
+
+**published_at** stringnullable
+
+DeepSeek extension, in place of `retrieved_at`. The publication time of the page, or `null` when unknown. For a link read from the user message, the date found on the page, in no fixed format; for a page opened during deep thinking search, an RFC 3339 timestamp.
+
+**Web fetch error**
+
+**type** stringrequired
+
+**Possible values:** `web_fetch_tool_result_error`
+
+**error_code** stringrequired
+
+**Possible values:** `url_not_accessible`, `url_not_allowed`, `unavailable`
+
+The reason the fetch failed. See the [Web Tools Guide](<../guides/web_tools.md#response-blocks>).
+
+**kind** Web tools capability (string)
+
+**Possible values:** `search`, `deep_search`, `read_link`, `image_search`, `deep_image_search`
+
+DeepSeek extension on blocks produced by the web tools: `search` for web search, `deep_search` for deep thinking search, `read_link` for URL reading, and `image_search` or `deep_image_search` (during deep thinking search) for image search. Pass it back unchanged.
+
+**signature** string
+
+DeepSeek extension. Present on successful `read_link` results: the page that was read, encrypted. Pass it back unchanged to restore the page into the context.
 
 **content_block_delta**
 
@@ -1465,6 +2465,46 @@ Signature for the completed thinking block.
 
 A fragment of the tool input JSON. Concatenate all fragments for this block, then parse the JSON after content_block_stop.
 
+**Citations delta**
+
+Adds one citation to the current text block. Returned with the web tools.
+
+**type** stringrequired
+
+**Possible values:** `citations_delta`
+
+**
+
+citation
+
+**
+
+object
+
+required
+
+A source cited by the answer. Returned with the web tools.
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
 **content_block_stop**
 
 **type** stringrequired
@@ -1505,6 +2545,34 @@ The matched stop sequence, or null when no stop sequence was matched.
 
 **
 
+stop_details
+
+**
+
+object
+
+nullable
+
+Present when the model content safety review refuses the response (`stop_reason` is `refusal`). See the [Model Content Safety Guide](<../guides/safety.md#handling-refusals>).
+
+**type** stringrequired
+
+**Possible values:** `refusal`
+
+**category** stringnullable
+
+Always `null`.
+
+**explanation** stringnullable
+
+Names the blocked images when images in the request fail the review; otherwise `null`.
+
+**title** string
+
+DeepSeek extension. The conversation title, present only when the request enabled `title` and a title was generated.
+
+**
+
 usage
 
 **
@@ -1537,6 +2605,28 @@ Input tokens served from the context cache.
 
 Generated output tokens, including thinking tokens when thinking is enabled. In message_delta this is the cumulative count, not an increment.
 
+**
+
+output_tokens_details
+
+**
+
+object
+
+Breakdown of `output_tokens`. Present when thinking is enabled or `safety_check` is `high`.
+
+**thinking_tokens** integer
+
+**Possible values:** `>= 0`
+
+Thinking tokens, already included in `output_tokens`.
+
+**safety_tokens** integer
+
+**Possible values:** `>= 0`
+
+DeepSeek extension. Tokens of the safety review, already included in `output_tokens`. Present only when `safety_check` is `high`.
+
 **service_tier** stringrequired
 
 **Possible values:** `standard`
@@ -1549,7 +2639,7 @@ server_tool_use
 
 object
 
-Server-side web search counts, separate from token usage. Present only when at least one web search was attempted; otherwise omitted. Both fields are present when this object is returned. Read the final message's usage for non-streaming responses or the final message_delta.usage for streaming responses. These counts are cumulative, not deltas. See [Server tool usage](<../guides/anthropic_api.md#server-tool-usage>).
+Server-side web search and fetch counts, separate from token usage. Present only when at least one of the counts is greater than zero; otherwise omitted. All fields are present when this object is returned. Read the final message's usage for non-streaming responses or the final message_delta.usage for streaming responses. These counts are cumulative, not deltas. See [Server tool usage](<../guides/anthropic_api.md#server-tool-usage>).
 
 **web_search_requests** integerrequired
 
@@ -1562,6 +2652,24 @@ Number of server-side web search attempts, including failed attempts and attempt
 **Possible values:** `>= 0`
 
 Number of successful server-side web searches that returned nonempty results. Failed attempts and empty results are not counted. This field can be used as a basis for billing.
+
+**web_fetch_requests** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of fetch result blocks in the response, including errors. For display only.
+
+**tool_fetch** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of billed page fetches.
+
+**tool_image_search** integer
+
+**Possible values:** `>= 0`
+
+With the web tools. Number of billed image searches.
 
 **message_stop**
 
@@ -1604,7 +2712,7 @@ data: {"type":"message_stop"}
 
 **400 (Bad request)**
 
-Invalid request, for example an empty `messages` array or unpaired tool results. Request errors use the common DeepSeek `{error: {message, type, param, code}}` structure, without the Anthropic top-level `type: "error"` field. See [Error Codes](<../quick_start/error_codes.md>) for other HTTP errors.
+Invalid request, for example an empty `messages` array or unpaired tool results. Errors use the Anthropic structure `{type: "error", error: {type, message}}`, where `error.type` follows the HTTP status: `invalid_request_error` (400, 422), `authentication_error` (401), `billing_error` (402), `permission_error` (403), `not_found_error` (404), `request_too_large` (413), `rate_limit_error` (429), `timeout_error` (408, 504), `overloaded_error` (503) and `api_error` (500 and others). See [Error Codes](<../quick_start/error_codes.md>) for the causes of each status.
 
 **application/json**
 
@@ -1616,6 +2724,12 @@ Schema
 
 **
 
+**type** stringrequired
+
+**Possible values:** `error`
+
+Always `error`.
+
 **
 
 error
@@ -1626,23 +2740,22 @@ object
 
 required
 
-**code** stringnullablerequired
+**type** stringrequired
+
+The error type, such as `invalid_request_error` or `rate_limit_error`.
 
 **message** stringrequired
 
-**param** stringnullablerequired
-
-**type** stringrequired
+A description of the error.
 
 **Example**
 
 ```json
 {
+  "type": "error",
   "error": {
-    "message": "messages: at least one message is required",
     "type": "invalid_request_error",
-    "param": null,
-    "code": "invalid_request_error"
+    "message": "messages: at least one message is required"
   }
 }
 ```

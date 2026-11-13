@@ -58,7 +58,7 @@ The name of the file.
 
 **purpose** stringrequired
 
-**Possible values:** `user_data`
+**Possible values:** `user_data`, `text_recognition`, `rich_layout_recognition`
 
 The intended purpose of the file.
 

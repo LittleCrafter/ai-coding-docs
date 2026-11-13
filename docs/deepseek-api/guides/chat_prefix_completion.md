@@ -2,6 +2,8 @@
 
 The chat prefix completion follows the [Chat Completion API](<../api/create-chat-completion.md>), where users provide an assistant's prefix message for the model to complete the rest of the message.
 
+For requests that use the [web tools](<./web_tools.md>) or [model content safety](<./safety.md>), see [Web Tools - Continue Generation](<./web_tools.md#continue-generation>).
+
 ## Notice
 
   1. When using chat prefix completion, users must ensure that the `role` of the last message in the `messages` list is `assistant` and set the `prefix` parameter of the last message to `True`.

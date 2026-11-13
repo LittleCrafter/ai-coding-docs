@@ -628,7 +628,7 @@ What happens to a worktree Claude created for the session:
 
 * Agent view removes it, including uncommitted changes, so commit what you want to keep first.
 * `claude rm` keeps it, along with the session row, when it has uncommitted changes.
-* Neither agent view nor `claude rm` removes a worktree that another running session is using or has locked, and deleting again doesn't change that. Claude Code keeps the worktree and the session, and names the kept directory and the reason; in agent view, the session's row shows `not deleted`. Close the other session, then delete again.
+* Neither agent view nor `claude rm` removes a worktree that another running session is using or has locked, and deleting again doesn't change that. Claude Code keeps the worktree and the session, and names the kept directory and the reason; in agent view, the session's row shows `not removed`. Close the other session, then delete again.
 * When you delete a session whose worktree has commits that Claude Code can't confirm are saved elsewhere, Claude Code keeps the worktree and the session, and the message names the worktree's branch and how many commits are unpushed. The message also offers the two ways forward: push the commits, or delete again to discard them.
 
   Commits on a remote don't block the delete. Neither do commits on the local copy of your `origin` remote's default branch, as long as that branch is checked out in your main checkout, the repository directory itself rather than a worktree.
@@ -935,7 +935,9 @@ The dispatch input expects a task description, not a conversational opener. A pr
 Shutting down or restarting your machine stops running background sessions. A session that was waiting on your input stays under `Needs input` when you come back. For any other running session, what agent view shows depends on how long ago it last made progress:
 
 * Within 48 hours, the session shows as failed. Attach or reply to it and it restarts from its saved conversation. To pick the interrupted work back up, send it a reply asking it to continue.
-* Past 48 hours, such as after the machine was off for days, the session shows as stopped with `ended while the background service was off`. Press `Enter` on the row and the footer shows `Press enter again to resume this session (it ended while the background service was off), or ctrl+x to delete it.` Press `Enter` on the same row again to resume its saved conversation. A reply, or `claude attach <id>`, resumes it without that footer prompt.
+* Past 48 hours, such as after the machine was off for days, the session shows as stopped with `ended while the background service was off`.
+
+  Press `Enter` on the row and the footer shows `Press enter again to resume this session (it ended while the background service was off), or ctrl+x to remove it.` Press `Enter` on the same row again to resume its saved conversation. A reply, or `claude attach <id>`, resumes it without that footer prompt.
 
 When [transcript cleanup](https://code.claude.com/docs/en/settings-reference.md#cleanupperioddays) has removed a stopped session's saved conversation, Claude Code refuses to open the row: the message says there is nothing to resume. `claude rm <id>` deletes the row, except in the [kept cases](#what-deleting-a-session-removes) described above, and `claude respawn <id>` runs its original prompt again. See [This session's saved conversation is no longer on disk](https://code.claude.com/docs/en/errors.md#this-sessions-saved-conversation-is-no-longer-on-disk).
 
