@@ -36,7 +36,7 @@ This diagram shows a plugin named `my-plugin` that holds a skill, an agent, hook
 
 ![Diagram in two columns joined by five straight arrows. Left, the directory of a plugin named my-plugin, holding a manifest at .claude-plugin/plugin.json, skills/review/SKILL.md, agents/reviewer.md, hooks/hooks.json, .mcp.json, and other components. Right, what each file gives you in your session: the manifest sets the plugin name, my-plugin; the skill runs as /my-plugin:review; the agent file is a subagent Claude can delegate to; the hooks file holds hooks that run on lifecycle events; and .mcp.json adds an MCP server that gives Claude tools.](../media/images/plugin-directory.svg)
 
-For every component type a plugin can hold, with an example of each, see [Plugin components](https://code.claude.com/docs/en/plugins/components.md). To see where each piece is located in a plugin's directory, use the [plugin explorer](https://code.claude.com/docs/en/plugins/components.md#explore-the-plugin-directory) on that page.
+For component types a plugin can hold, with an example of each, see [Plugin components](https://code.claude.com/docs/en/plugins/components.md). To see where each piece is located in a plugin's directory, use the [plugin explorer](https://code.claude.com/docs/en/plugins/components.md#explore-the-plugin-directory) on that page.
 
 ### Decide whether you need a plugin
 
