@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 203
+- **Pages mirrored:** 204
 - **Version:** 2.1.325
-- **Last updated:** 2026-11-14T12:34:49Z
+- **Last updated:** 2026-11-14T19:33:01Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -39,6 +39,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Claude apps gateway spend limits | [claude-apps-gateway-spend-limits.md](./claude-apps-gateway-spend-limits.md) | [source](<https://code.claude.com/docs/en/claude-apps-gateway-spend-limits>) |
 | Use Claude Code in the cloud | [claude-code-on-the-web.md](./claude-code-on-the-web.md) | [source](<https://code.claude.com/docs/en/claude-code-on-the-web>) |
 | Explore the .claude directory | [claude-directory.md](./claude-directory.md) | [source](<https://code.claude.com/docs/en/claude-directory>) |
+| Claude Code with Claude Models on Google Cloud (Anthropic managed) | [claude-models-on-google-cloud-anthropic-managed.md](./claude-models-on-google-cloud-anthropic-managed.md) | [source](<https://code.claude.com/docs/en/claude-models-on-google-cloud-anthropic-managed>) |
 | Claude Code on Claude Platform on AWS | [claude-platform-on-aws.md](./claude-platform-on-aws.md) | [source](<https://code.claude.com/docs/en/claude-platform-on-aws>) |
 | Let Claude coordinate ongoing work with Projects | [claude-projects.md](./claude-projects.md) | [source](<https://code.claude.com/docs/en/claude-projects>) |
 | Scan your codebase for vulnerabilities | [claude-security.md](./claude-security.md) | [source](<https://code.claude.com/docs/en/claude-security>) |
