@@ -2,9 +2,8 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-Daybreak Defense Factory scans code in a connected GitHub repository and shares
-the findings with your team. Start with one repository or folder. Once you’ve
-reviewed the results, you can monitor new commits or set a schedule.
+Use Daybreak Defense Factory to scan a connected GitHub repository or folder and
+share findings with your team. You can also monitor new commits or schedule scans.
 
 > Illustration: Daybreak welcome screen with options to set up PR reviews, run an agentic scan, or connect your tools.
 
@@ -46,9 +45,9 @@ From **New scan**, choose **Cloud**, select the repository, and check the
 
 > Illustration: New scan panel with the Cloud option selected, the three scan methods, and the choice of a full repository or specific paths.
 
-You can change or pause monitoring in **Continuous scanning settings**. Open
-**Repositories** and select the repository to find these settings. The owner, people with edit access,
-and Daybreak Defense Factory administrators can change these settings for the whole team. You can also
+To change or pause monitoring, open **Repositories**, select the repository, and open
+**Continuous scanning settings**. The owner, people with edit access, and Daybreak Defense Factory
+administrators can change these settings for the whole team. You can also
 [edit the repository’s threat model](./threat-model.md) to update the context for future scans.
 
 You can [enable pull request reviews](./security-review.md) to check

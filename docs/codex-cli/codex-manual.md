@@ -3383,6 +3383,37 @@ where the project or chat appears in the sidebar.
 
 Restore archived chats from **Settings > Data Controls > Archived chats**.
 
+#### Use locked chats
+
+Locked chats keep conversations out of your normal history and search. You can return to them
+with your account PIN when you're ready.
+
+For example, you might lock a chat to:
+
+- Think through a career change before you're ready to discuss it.
+- Prepare for a difficult conversation.
+- Plan a surprise gift or celebration.
+
+You can lock eligible cloud Chat and Work conversations. Local Work and Codex
+conversations aren't supported.
+
+1. Open the chat's more menu (…), select **Lock chat**, confirm, and create or enter
+   your account PIN.
+2. Go to **Projects > Locked chats** and enter your PIN for temporary
+   access.
+3. Select **Lock now** when finished. Check other devices before screen sharing;
+   titles or content can remain visible until you refresh ChatGPT on those devices.
+
+Locking a project chat removes it from the project, so the chat no longer has
+access to project instructions, files, or memory. **Unlock chat** restores normal
+history.
+
+If you forget your PIN, resetting it permanently deletes locked chats and content
+protected only by that PIN.
+
+See [Using locked chats](https://help.openai.com/en/articles/20001411-using-locked-chats-in-chatgpt)
+for availability, sharing, files, memory, and PIN settings.
+
 #### Use local projects for folders and codebases
 
 To use an approved project folder while you [continue Work across devices](./get-started-with-work.md#continue-work-across-devices),
@@ -4396,7 +4427,7 @@ Access depends on your plan, region, and workspace settings. Dots are rolling ou
 
 - **Pro 100, Pro 200, and Pro 500:** For users aged 18 and older outside the European Economic Area, United Kingdom, and Switzerland.
 - **Business Premium:** Available in supported ChatGPT regions, subject to workspace eligibility.
-- **Enterprise, Edu, and Healthcare:** Generally available in eligible workspaces. Workspaces with UAE data or inference residency are ineligible. During the admin preview, your admin can enable access for your role. Starting November 18, 2026, access is on by default unless your workspace opts out.
+- **Enterprise, Edu, and Healthcare:** Generally available in eligible workspaces. For current workspace eligibility and regional availability, see [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt). During the admin preview, your admin can enable access for your role. Starting November 18, 2026, access is on by default unless your workspace opts out.
 
 For Pro and Business Premium, conversations with your dot don’t count toward your ChatGPT usage limits. Tasks your dot starts or manages in Work or Codex count toward those products’ usage limits as usual. Your plan includes an allowance for deeper work, with extended limits for the first month after launch. For Enterprise pricing and delegated task charges, see [Enterprise preview and billing](./enterprise/dots-admin-guide.md#enterprise-preview-and-billing).
 
@@ -5524,9 +5555,8 @@ Sandbox behavior, approvals, cyber-safety, and security-specific guidance.
 
 Source: [Codex Security CI/CD overview](./security/cli/ci.md)
 
-Run Codex Security in CI to review pull-request or merge-request changes, scan
-your default branch, and preserve findings and coverage. See your CI
-provider's guide for the workflow, report handling, and enforcement options.
+Run Codex Security in CI to review pull or merge requests, scan your default
+branch, and save findings and coverage reports.
 
 #### Prepare the workflow
 
@@ -5557,8 +5587,7 @@ for the Action settings.
 
 Use the [GitHub Actions guide](./security/cli/ci/github.md) for pull-request
 checks and scheduled repository scans. The Codex Security Action installs the CLI,
-saves reports, and adds a job summary and source annotations. The guide includes
-runner setup, optional Daybreak access, SARIF upload, and severity enforcement.
+saves reports, and adds a job summary and source annotations.
 
 #### Add the GitLab CI/CD pipeline
 
@@ -5581,11 +5610,9 @@ revisions, report formats, state and output directories, and retry behavior.
 Start with advisory results. Review representative findings, scan coverage,
 cost, and runtime before deciding which outcomes should block a merge.
 
-Evaluate both findings and scan completeness. The severity policy evaluates
-findings from the current scan at or above the configured threshold. Earlier
-open findings in the repository summary don't affect that policy. An
-incomplete scan can leave areas without a review even when it reports no
-findings.
+The severity policy considers findings from the current scan at or above your
+threshold. Earlier open findings don't affect it. Check scan completeness
+separately, since an incomplete scan can report no findings.
 
 Configure enforcement in the [GitHub Actions
 guide](./security/cli/ci/github.md#choose-a-severity-policy) or the [GitLab
@@ -5597,9 +5624,7 @@ codes](./security/cli/reference.md#exit-codes-and-signals).
 
 Source: [Codex Security CLI FAQ](./security/cli/faq.md)
 
-Find answers to common questions about scanning repositories and managing
-security findings from the terminal. For installation and a first scan, start
-with the [CLI quickstart](./security/cli.md).
+For installation and a first scan, see the [CLI quickstart](./security/cli.md).
 
 #### Repository scans
 
@@ -5816,7 +5841,7 @@ For a check before each commit, use
 Source: [Codex Security CLI quickstart](./security/cli.md)
 
 Run a standard scan of a local repository with the standalone Codex Security
-CLI. This quickstart ends with a saved report you can review and revisit.
+CLI and save a report.
 For scans inside a Codex conversation, use the [Codex Security
 plugin](./security/plugin.md).
 
@@ -5842,8 +5867,8 @@ npm install -g @openai/codex-security
 codex-security --version
 ```
 
-The package provides the `codex-security` command and its `cs` alias. Ensure
-npm's global executable directory is on your `PATH`.
+The package provides the `codex-security` command and its `cs` alias. Add
+npm's global executable directory to your `PATH` if needed.
 
 To run without a global installation, use `npx`:
 
@@ -5879,8 +5904,7 @@ sign-in or OpenAI API key.
 
 #### Prepare a scan
 
-Replace these paths with your repository and a new results directory outside
-its Git worktree:
+Choose your repository and a new results directory outside its Git worktree:
 
 ```bash
 REPOSITORY=/path/to/repository
@@ -9092,15 +9116,12 @@ need dependencies or a working build to reproduce an issue. Configure those
 requirements in the [Codex cloud
 environment](./environments/cloud-environment.md).
 
-If validation can't run, inspect what the finding establishes from source and
-what still depends on runtime or deployment behavior.
-
 #### What languages are supported?
 
 Daybreak analyzes source across languages. Results depend on the model's
 ability to reason about the language and framework, and on the available
-repository context. A successful scan doesn't imply equal coverage across
-languages or components. Check the report for the scope actually reviewed.
+repository context. Check the report for the scope reviewed, since coverage can
+vary across languages and components.
 
 #### Which scan should I use?
 
@@ -9130,26 +9151,22 @@ checkout](./security/setup.md#scan-your-local-checkout) or run the
 
 #### What does validation establish?
 
-Read the evidence attached to the particular finding. Source analysis can
-establish a vulnerable code path. Execution evidence can show that a specific
-reproducer or test demonstrated the issue.
-
-A finding's recorded status and severity help organize review. Use the
-underlying evidence and prerequisites to decide whether it applies to your
-system and what to fix.
+Source analysis can establish a vulnerable code path. A successful reproducer
+or test can demonstrate the issue at runtime. Check the finding's evidence and
+prerequisites to decide whether it applies to your system. If validation can't
+run, identify what still depends on runtime or deployment behavior.
 
 #### What happens if validation fails?
 
-Inspect the attempted validation and any available logs. A failed reproducer
-can mean the issue doesn't apply, but it can also mean the environment or test
-was unsuitable. Resolve the stated gap before dismissing the finding or
-claiming that it was reproduced.
+Inspect the attempted validation and any available logs. The issue may not
+apply, or the environment or test may have been unable to exercise it.
+Investigate before dismissing the finding.
 
 #### What if the scan reports no findings?
 
-Confirm that the scan completed and reviewed the intended repository and
-revision. Read any recorded limits or unfinished work. A scan that reports no
-findings can still miss vulnerabilities.
+Check that the scan completed on the intended repository and revision, and
+review any coverage limits or unfinished work. A report with no findings
+doesn't rule out vulnerabilities.
 
 #### Fixes
 
@@ -9161,10 +9178,9 @@ See [Review a proposed fix](./security/findings-and-fixes.md#review-a-proposed-f
 
 #### How do I know whether a patch fixed the issue?
 
-Review the patch's validation evidence, including whether the original issue
-still reproduces and whether legitimate behavior still works. If validation
-wasn't completed, keep that uncertainty with the finding. A proposed patch,
-draft pull request, or status change alone doesn't verify a fix.
+Check whether the original issue still reproduces and whether legitimate
+behavior still works. If validation is incomplete, record what remains
+untested. A patch, pull request, or status change alone doesn't verify a fix.
 
 ### Daybreak notifications
 
@@ -9224,7 +9240,7 @@ Export findings from a completed scan to use them in another tool. To track
 remediation or coordinate disclosure, ask Codex to prepare an issue or a
 private draft GitHub Security Advisory.
 
-#### Export a portable artifact
+#### Export findings
 
 In the desktop app, open a completed scan from **Security** > **Scans**. Under
 **Artifacts**, select **Findings JSON** to open the structured findings or
@@ -9413,8 +9429,8 @@ where you can publish findings.
 
 1. Select **Connect** beside the scanner, **Reconnect** if your connection expired, or **Import** to use an existing connection.
 2. Choose the source and the findings to import. If **Import all for a repository** is available for Snyk or Endor, choose a connected GitHub repository to include all matching projects in the selected organization or namespace. Otherwise, choose a project and select findings. In Wiz, you can also use a supported saved view.
-3. Review the finding count, repository, and commit for assessment. The count on **Import 12 findings**, for example, includes all 12 selected scanner findings, even those that can't be assessed. It can differ from the number of shared findings.
-4. Check what the confirmation will do. If it names a shared workspace and destination, confirming authorizes assessment and publication of eligible **Reportable** results there. People with access to that destination can read the published assessment and source evidence. Daybreak preselects the only eligible environment. If several environments are eligible, choose one before confirming. If the review offers private assessment or saving only, the results stay private.
+3. Review the finding count, repository, and commit. The count includes selected findings that can't be assessed, so it may exceed the number ultimately shared.
+4. Check the destination. Confirming a shared destination authorizes Daybreak to assess the findings and publish eligible **Reportable** results there. Anyone with destination access can read the published assessment and source evidence. Daybreak selects the environment automatically if only one is eligible. If several are eligible, choose one. Assessing or saving privately keeps the results private.
 5. Confirm when the count and destination are correct. If the review expires or the source changes, review it again. Once the import starts, you can close Settings and follow it in **My recent imports**.
 
 #### Choose a source
@@ -9540,15 +9556,12 @@ membership and which routes can bypass it. Select **Save**.
 
 Source: [Propose security hardening](./security/plugin/security-hardening.md)
 
-Use `$codex-security:propose-security-hardening` to turn a collection of
-security evidence into structural or architectural hardening options. The
-workflow can analyze a completed Codex Security scan or start from supplied
-findings, disclosure reports, incident reviews, assessment documents, and
-source code.
-
-The result compares design options and their engineering tradeoffs. Codex
-changes the repository only after you select an option and ask it
-to implement it.
+Use `$codex-security:propose-security-hardening` to compare structural or
+architectural changes that address security findings or recurring vulnerability patterns.
+Start from a completed scan, supplied findings, disclosure or incident reports,
+assessment documents, or source code. Codex compares the options and their
+engineering tradeoffs and changes the repository only if you select an option
+and ask it to implement it.
 
 #### Prepare the evidence
 
@@ -9561,9 +9574,8 @@ Provide the workflow with:
 - Constraints for performance, memory, compatibility, reliability, operations,
   delivery time, or change scope.
 
-For example, repeated authorization bugs may suggest that a shared control
-would be easier to enforce than checks in each handler. The evidence may also
-support keeping a local fix instead of changing the architecture.
+For example, compare a shared authorization check with checks in each handler
+when several findings involve missing authorization.
 
 #### Run the workflow
 
@@ -9587,10 +9599,6 @@ Before choosing an option, check that the proposal:
   questions.
 - Includes rollout, validation, rollback, and implementation guidance.
 - Separates observed facts, inferences, and proposed design properties.
-
-Review the evidence and tradeoffs before choosing an option. An architecture
-diagram or design recommendation doesn't replace validation of the original
-findings or the implemented fix.
 
 #### Use hardening guidance from a scan
 
@@ -9926,10 +9934,8 @@ DaybreakObservations,
 DaybreakFix,
 } from "@components/react/illustrative/DaybreakFindings.react";
 
-Daybreak allows you to quickly review proposed fixes based on findings from your scans.
-Open **Overview** in Daybreak. Under **Proposed fixes**, select **Review** to
-inspect a patch. To investigate an issue first, open **Findings** and select a
-finding.
+In Daybreak, open **Findings** and select a finding to investigate it. To review
+a proposed patch, open **Overview** and select **Review** under **Proposed fixes**.
 
 #### What’s on the findings page?
 
@@ -9943,13 +9949,15 @@ reported severity and current status.
 
 #### Import findings from other scanners
 
-Open **Settings → Integrations**. Select **Connect** to link a scanner or **Import** to use an existing connection. Check the count, repository, and destination. If the confirmation names a shared destination, confirming authorizes assessment and publication of eligible **Reportable** results there.
-
-You can save or assess an uploaded report privately, or share eligible results. Reopen **My recent imports** for the private outcomes. Each shared finding lists the evidence from its scanners under **Observations**. See [Import scanner findings](./security/scanner-imports.md) for the steps and limits.
+You can [import scanner findings](./security/scanner-imports.md) from **Settings → Integrations**
+or upload a report. Check the destination before confirming an import. Confirming
+a shared destination authorizes assessment and publication of eligible **Reportable** results.
+Private results remain in **My recent imports**. On a shared finding, **Observations**
+lists the evidence from each scanner.
 
 #### Review a proposed fix
 
-1. Under **Findings**, select **Fix** on a finding to generate a patch. You can also select multiple findings in the list. For example, select two findings and choose **Generate 2 fixes**. Daybreak prepares the patches in the background. Open **Fixes** to review them.
+1. Under **Findings**, select **Fix** on a finding, or select multiple findings and generate their fixes. Daybreak prepares the patches in the background. Open **Fixes** to review them.
 2. Open a proposed fix. Read its summary and diff under **Proposed changes**. Read the **Patch checker** result to see what Daybreak verified. For the export issue shown below, look for a test that rejects a request from another project and one that still allows an authorized export.
 3. If you have questions or want a change, choose **Fix with Codex** from the menu next to **Create PR**. When the patch is ready for your team, select **Create PR** to open a draft pull request on GitHub.
 
@@ -9961,8 +9969,7 @@ finding **Fixed**.
 
 Source: [Run a Codex Security scan](./security/plugin/scans.md)
 
-Use a standard scan to review a repository or a selected folder. This guide
-explains how to set the scope, supply security context, and assess the result.
+Use a standard scan to review a repository or folder.
 If you haven't installed the plugin, start with the [plugin
 quickstart](./security/plugin.md).
 
@@ -9975,9 +9982,8 @@ scan](./security/plugin/deep-scans.md). For a pull request or local diff,
 In the desktop app, open **Security**, select **Scans**, and select **+ Scan**.
 Choose an existing repository or another folder, then select **Codebase**.
 
-Scan the whole repository when you need broad coverage and the repository is a
-reasonable review unit. For a monorepo, choose one folder when a service,
-package, or component has an owner and security boundary.
+Scan the whole repository, or select a folder to review one service or package
+in a monorepo.
 
 You can also start a scan from a Codex conversation:
 
@@ -10022,35 +10028,23 @@ finishes, since findings can change while Codex checks the evidence.
 
 #### Review the completed scan
 
-Review the result in this order:
+Check the target, revision, scan area, and any areas the scan deferred. For each
+finding, review the attack path, failed control, supported impact, validation
+method, and unresolved questions. Source analysis can support a finding without
+a runtime reproduction. If execution could resolve an open question, ask Codex
+to validate that finding.
 
-1. Confirm the target, revision, and scan area.
-2. Read reviewed surfaces and any deferred or follow-up areas.
-3. For each finding, check how an attacker reaches the affected code, which
-   control fails, and what impact the evidence supports. Read the validation
-   method and any unresolved questions.
-4. Investigate findings with missing evidence. Dismiss a finding when you can
-   explain why it doesn't apply, and keep that explanation with the result.
-5. Select one accepted finding before starting a fix.
-
-A completed scan and complete coverage are separate claims. Read deferred
-areas even when the scan finishes successfully. Source-based validation can
-support a finding without a runtime reproduction. To resolve uncertainty
-that depends on execution, ask for validation of the specific finding.
+When dismissing a finding, record why it doesn't apply. To address an accepted
+finding, [generate and verify a fix](./security/plugin/fix-findings.md).
 
     Review the finding's severity, validation status, root cause, and attack
     path.
 
 #### Use your first scan as a baseline
 
-Before scanning, decide what you want to compare, such as evidence quality
-or false positives. If you
-test against a known finding, record whether you provided it to Codex or
-withheld it from the scan.
-
-Record the repository revision, plugin version, model, and reasoning effort.
-Use this baseline to compare later scans after the code, security controls, or
-scan settings change.
+To compare scans, record the revision, plugin version, model, and reasoning
+effort. If you're testing against a known vulnerability, also record whether
+you supplied it to Codex or withheld it.
 
 #### Reopen a previous scan
 
@@ -10064,8 +10058,7 @@ earlier scan or its artifacts.
 Open `report.md` for a portable report, and keep its scan directory together
 when sharing or archiving it. Use [Export and track
 findings](./security/plugin/export-findings.md) for other formats or issue
-tracking. After accepting a finding, [generate and verify a
-fix](./security/plugin/fix-findings.md).
+tracking.
 
 ### Run a deep security scan
 
@@ -10075,19 +10068,10 @@ A deep scan runs multiple independent standard scans over the same repository
 or folder and combines their findings. Use it when you want repeated review
 and can allow for the additional runtime and token use.
 
-Start with a [standard scan](./security/plugin/scans.md) to check that the
-scope and security context match your goal. Repeated review can find issues
-missed by an earlier pass, but doesn't guarantee complete detection or identical
-results between runs.
-
-#### Choose between standard and deep scans
-
-|            | Standard scan                               | Deep scan                                      |
-| ---------- | ------------------------------------------- | ---------------------------------------------- |
-| Review     | One standard scan                           | Multiple standard scans with combined findings |
-| Use it for | A first scan or a review of a defined scope | Additional independent reviews of that scope   |
-| Scope      | Repository or folder                        | Repository or folder                           |
-| Changes    | Use the change-review workflow              | Not supported                                  |
+Start with a [standard scan](./security/plugin/scans.md) to check the scope
+and security context. A deep scan can find issues an earlier pass missed, but
+results can still vary and coverage can remain incomplete. For a diff, use
+[Review code changes](./security/plugin/code-changes.md).
 
 #### Start the deep scan
 
@@ -10131,13 +10115,9 @@ or structural hardening guidance when you request those outputs.
 Keep any linked `findings/` and `hardening/` directories with the report when
 sharing or archiving the result.
 
-Review the coverage summary before the findings. Even a deep scan has limits,
-so check deferred surfaces and remaining proof gaps before drawing a
-conclusion. For a finding you accept, continue with [Fix and verify a
+Check the coverage summary for deferred areas and the findings for unresolved
+questions. For a finding you accept, continue with [Fix and verify a
 finding](./security/plugin/fix-findings.md).
-
-To review a pull request, commit, branch range, or local patch, use [Review code
-changes](./security/plugin/code-changes.md). Deep scans don't accept diff targets.
 
 #### Configure deep-scan runtime
 
@@ -11175,10 +11155,9 @@ You can enable reviews before running a repository scan.
 
 #### Configure Codex Security Review
 
-Repository settings are shared. Changing them affects the pull requests selected
-by the repository's **Review** policy, not just your own pull requests. Personal
-preferences apply to your pull requests when the repository follows personal
-preferences.
+Repository settings apply to all pull requests selected by the **Review** policy.
+Your personal settings apply to your pull requests when the repository follows
+personal preferences.
 
 1. Go to [Codex settings](https://chatgpt.com/settings/code-review) and choose a repository.
 2. Under **Review security vulnerabilities**, turn on **Auto security review**.
@@ -11194,18 +11173,16 @@ preferences.
    - **Whenever code review runs** requires Code Review and runs Codex Security
      Review alongside it.
 
-Connecting GitHub or enabling personal reviews for another contributor doesn't
-request an extra review of your pull requests. Repository and personal settings
-determine whether an automatic review runs; they don't create one review per
-connected user. Later pushes can trigger another review according to **Trigger**,
-and you can request additional reviews manually.
+Connecting another contributor's GitHub account or enabling their personal reviews
+doesn't trigger an extra review of your pull requests. Later pushes can trigger
+another review according to **Trigger**, and you can request reviews manually.
 
 #### Add threat-model context
 
 You can configure a threat model to give Codex context about your application's
 assets, trust boundaries, security assumptions, and repository-specific risks.
 If the repository has an existing Codex Security scan configuration, you can use
-its threat model. Otherwise, provide the path to a threat model file checked
+its [threat model](./security/threat-model.md). Otherwise, provide the path to a threat model file checked
 into the repository. If you do not specify a source, Codex regenerates the
 threat model for every review.
 
@@ -11238,13 +11215,6 @@ post findings to the pull request. Check the task status and full report
 before interpreting an empty comment result as a completed review with no
 findings.
 
-#### Related docs
-
-- [Review GitHub pull requests with Codex](./third-party/github.md) explains Code Review and the GitHub integration.
-- [Codex Security](./security.md) gives the product overview.
-- [Daybreak Defense Factory setup](./security/setup.md) explains repository scans and findings review.
-- [Improving the threat model](./security/threat-model.md) explains how to tune repository context.
-
 ### Set up Daybreak Defense Factory
 
 Source: [Set up Daybreak Defense Factory](./security/setup.md)
@@ -11254,9 +11224,8 @@ DaybreakScanScope,
 DaybreakNewScan,
 } from "@components/react/illustrative/DaybreakForms.react";
 
-Daybreak Defense Factory scans code in a connected GitHub repository and shares
-the findings with your team. Start with one repository or folder. Once you’ve
-reviewed the results, you can monitor new commits or set a schedule.
+Use Daybreak Defense Factory to scan a connected GitHub repository or folder and
+share findings with your team. You can also monitor new commits or schedule scans.
 
 #### Open Daybreak and connect GitHub
 
@@ -11292,9 +11261,9 @@ From **New scan**, choose **Cloud**, select the repository, and check the
 | **Continuous monitoring** | Check new commits on the default branch. Choose how far back to start if you also want to review recent history. |
 | **Scheduled scan**        | Repeat a repository scan on a schedule. Use this for a regular review of the default branch.                     |
 
-You can change or pause monitoring in **Continuous scanning settings**. Open
-**Repositories** and select the repository to find these settings. The owner, people with edit access,
-and Daybreak Defense Factory administrators can change these settings for the whole team. You can also
+To change or pause monitoring, open **Repositories**, select the repository, and open
+**Continuous scanning settings**. The owner, people with edit access, and Daybreak Defense Factory
+administrators can change these settings for the whole team. You can also
 [edit the repository’s threat model](./security/threat-model.md) to update the context for future scans.
 
 You can [enable pull request reviews](./security/security-review.md) to check
@@ -11326,12 +11295,6 @@ Run this workflow from a Codex project scoped to the repository you want to
 assess. Codex must be able to read the repository's source code. Jira and Linear
 connectors can provide finding data, while GitHub findings require authenticated
 GitHub REST access. Neither replaces access to the source code.
-
-This differs from `$codex-security:validation`, which can build or run code,
-create a test or proof of concept, or exercise a real interface to
-reproduce or disprove a finding. Use triage to classify and rank an
-existing backlog. Use validation when runtime evidence could resolve a finding
-that static evidence leaves uncertain.
 
 Backlog triage starts from existing findings. To search the repository for new
 vulnerabilities, [run a security scan](./security/plugin/scans.md). Triage
@@ -11394,22 +11357,16 @@ against the claim, along with unresolved questions.
 | `not_actionable` | Repository evidence rules out the claim, such as by showing an unaffected version, unreachable path, effective guard, or non-shipped surface.                 |
 | `needs_review`   | Repository evidence isn't enough to decide because required information is missing, ambiguous, runtime-dependent, environment-dependent, or policy-dependent. |
 
-Use the rankings to decide which `confirmed` findings to fix first and which
-`needs_review` findings to investigate first. Each group is ranked separately.
-
-Read the verdict's rationale alongside the affected code and attacker
-prerequisites. Check the evidence against the claim and any open questions
-before acting on the rank. Here, `confirmed` means supported by static
-repository evidence, not reproduced by executing the application.
-
-Jira, Linear, and other backlog records remain unchanged unless you ask Codex
-to update them after reviewing the triage results.
+Codex ranks `confirmed` and `needs_review` findings separately. Review the
+rationale, affected code, and attacker prerequisites before acting on a rank.
+A `confirmed` verdict is based on static evidence, not runtime reproduction.
+Source tickets remain unchanged unless you ask Codex to update them.
 
 #### Next steps
 
 - `confirmed`: After a person accepts the finding for remediation, use
   [`$codex-security:fix-finding`](./security/plugin/fix-findings.md) to fix and
-  verify it. Triage prepares a prompt-ready handoff but doesn't invoke the skill
+  verify it. Triage prepares a handoff but doesn't invoke the skill
   automatically.
 - `needs_review`: If running code can resolve the proof gap, use
   `$codex-security:validation` to test the finding against running code. Pass
@@ -11420,8 +11377,8 @@ to update them after reviewing the triage results.
   Use $codex-security:validation to dynamically validate finding [triage item ID or source ID] from the backlog triage result. Reproduce or disprove the finding, record what you tested, and list any remaining uncertainty.
   ```
 
-  Unlike triage, validation may build or run code, create a test or
-  proof of concept, or exercise a real interface. See [Codex approval and
+  Validation may build or run code, create a test or proof of concept, or
+  exercise a real interface. See [Codex approval and
   security policies](./agent-approvals-security.md) for execution controls.
 
 - `needs_review`: If the finding depends on product policy or deployment
@@ -11522,10 +11479,9 @@ quickstart](./security/cli.md).
 
 Source: [Write vulnerability reports](./security/plugin/vulnerability-reports.md)
 
-Use `$codex-security:vulnerability-writeup` to create a self-contained report
-for each distinct vulnerability. You can start from Codex Security scan results
-or use supplied findings, disclosure notes, PoCs, and source code directly. A
-Codex Security scan isn't required.
+Use `$codex-security:vulnerability-writeup` to write one report per vulnerability
+from scan results, findings, disclosure notes, PoCs, or source code. You don't
+need to run a Codex Security scan first.
 
 #### Prepare the evidence
 
@@ -11548,10 +11504,9 @@ Send a prompt like:
 Use $codex-security:vulnerability-writeup to create one self-contained report for each distinct vulnerability in [input paths]. Verify the claims against [source path and revision], preserve or improve the supplied PoCs, and write the reports to [output directory]. Use a local test environment for reproductions.
 ```
 
-Codex inventories the supplied material, groups reports that describe the same
-root cause and vulnerable path, and creates one report directory per distinct
-vulnerability. Each directory contains a Markdown report
-and a `poc/` directory when supporting PoC files are available.
+Codex groups reports with the same root cause and vulnerable path into one
+directory per vulnerability. Each directory contains a Markdown report and,
+when available, supporting files in `poc/`.
 
 #### Review each report
 
@@ -13540,9 +13495,9 @@ Security and privacy are foundational to user trust. Bake them into your plannin
 
 Source: [Codex Security](https://learn.chatgpt.com/docs/security/index.md)
 
-Codex Security reviews code for vulnerabilities and reports evidence you can
-use to investigate and fix them. Choose how to run it based on where your code
-lives and how you want to review the results.
+Codex Security scans code for vulnerabilities and reports findings with supporting
+evidence. Run it in Daybreak Defense Factory, in Codex, from a terminal, or through
+the SDK.
 
 The **Overview** in Daybreak Defense Factory shows proposed fixes and tracks [open and fixed findings](./security/findings-and-fixes.md) across your repositories.
 
@@ -13556,8 +13511,6 @@ The **Overview** in Daybreak Defense Factory shows proposed fixes and tracks [op
 | Codex Security SDK       | Run scans and handle results in an application or developer tool.                             | [SDK guide](./security/sdk.md)                    |
 
 #### Choose the next task
-
-After a local scan, review its scope and findings before deciding what to do next.
 
 | Task                                                  | Guide                                                               |
 | ----------------------------------------------------- | ------------------------------------------------------------------- |
@@ -13795,6 +13748,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `features.context_management.experimental_mode`               | `boolean`                                                                                                                                                     |         | Experimental context-management setting. The feature is not currently available.                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `features.enable_request_compression`                         | `boolean`                                                                                                                                                     |         | Compress streaming request bodies with zstd when supported (stable; on by default).                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `features.fast_mode`                                          | `boolean`                                                                                                                                                     |         | Enable Fast mode controls advertised by the active model (stable; on by default), independently of `features.ultrafast_mode`. Availability still depends on the model and account.                                                                                                                                                                                                                                                                                                          |
+| `features.gateway_setup_wizard`                               | `boolean`                                                                                                                                                     |         | Offer custom gateway setup during CLI sign-in when the user can choose a provider. Defaults to `false`. See [Connect to a gateway](./enterprise/connect-to-a-gateway.md#configure-the-provider).                                                                                                                                                                                                                                                                                          |
 | `features.goals`                                              | `boolean`                                                                                                                                                     |         | Enable persisted goals and automatic continuation (stable; on by default).                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `features.hooks`                                              | `boolean`                                                                                                                                                     |         | Enable lifecycle hooks loaded from `hooks.json` or inline `[hooks]` config. `features.codex_hooks` is a deprecated alias.                                                                                                                                                                                                                                                                                                                                                                   |
 | `features.memories`                                           | `boolean`                                                                                                                                                     |         | Enable [Memories](./customization/memories.md) (off by default).                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -13921,8 +13875,10 @@ Set `model` to one available to your signed-in account or workspace. See
 | `model_providers..env_key`                                    | `string`                                                                                                                                                      |         | Environment variable supplying the provider API key.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `model_providers..env_key_instructions`                       | `string`                                                                                                                                                      |         | Optional setup guidance for the provider API key.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `model_providers..experimental_bearer_token`                  | `string`                                                                                                                                                      |         | Direct bearer token for the provider (discouraged; use `env_key`).                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `model_providers..gateway_oauth.credential_export`            | `table`                                                                                                                                                       |         | Use a command as the gateway credential source. Set `command` to an executable that prints one access token. Optional fields are `args` and `timeout_ms` (default `30000`). Omit the OAuth client ID and endpoint settings when using this table.                                                                                                                                                                                                                                           |
+| `model_providers..gateway_oauth.device_authorization_url`     | `string`                                                                                                                                                      |         | Optional device authorization endpoint for signing in to the gateway over SSH or from a terminal without a browser.                                                                                                                                                                                                                                                                                                                                                                         |
 | `model_providers..http_headers`                               | `map`                                                                                                                                                         |         | Static HTTP headers added to provider requests.                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `model_providers..model_catalog_url`                          | `string`                                                                                                                                                      |         | Full URL for a Codex-native model catalog. Omit to keep the provider's default model discovery.                                                                                                                                                                                                                                                                                                                                                                                             |
+| `model_providers..model_catalog_url`                          | `string`                                                                                                                                                      |         | Full URL for a Codex-native model catalog. Codex can fetch it with existing gateway OAuth credentials when the URL has the same scheme, host, and port as `base_url`. Omit to keep the provider's default model discovery.                                                                                                                                                                                                                                                                  |
 | `model_providers..name`                                       | `string`                                                                                                                                                      |         | Display name for a custom model provider.                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `model_providers..query_params`                               | `map`                                                                                                                                                         |         | Extra query parameters appended to provider requests.                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `model_providers..request_max_retries`                        | `number`                                                                                                                                                      |         | Retry count for HTTP requests to the provider (default: 4).                                                                                                                                                                                                                                                                                                                                                                                                                                 |
@@ -14040,6 +13996,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `tui.alternate_screen`                                        | `auto \| always \| never`                                                                                                                                     |         | Control alternate screen usage for the TUI (default: auto; auto skips it in Zellij to preserve scrollback).                                                                                                                                                                                                                                                                                                                                                                                 |
 | `tui.animations`                                              | `boolean`                                                                                                                                                     |         | Enable terminal animations (welcome screen, shimmer, spinner) (default: true).                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `tui.auto_recap`                                              | `boolean`                                                                                                                                                     |         | Generate automatic conversation recaps while the terminal is unfocused (default: true). Set to `false` to disable automatic recaps; `/recap` remains available.                                                                                                                                                                                                                                                                                                                             |
+| `tui.collapse_turn_details`                                   | `boolean`                                                                                                                                                     |         | Summarize tool calls and fold completed activity beneath each prompt in the full-screen transcript. Answers stay visible. Defaults to `false`.                                                                                                                                                                                                                                                                                                                                              |
 | `tui.disable_paste_burst`                                     | `boolean`                                                                                                                                                     |         | Disable burst-paste detection in the TUI (default: false). Takes precedence over the legacy top-level `disable_paste_burst` setting.                                                                                                                                                                                                                                                                                                                                                        |
 | `tui.keymap..`                                                | `string \| array`                                                                                                                                             |         | Keyboard shortcut binding for a TUI action. Supported contexts include `global`, `chat`, `composer`, `editor`, `vim_normal`, `vim_operator`, `vim_text_object`, `pager`, `list`, and `approval`. Selected composer actions fall back to matching `tui.keymap.global` bindings; context-specific bindings take precedence when supported.                                                                                                                                                    |
 | `tui.keymap.. = []`                                           | `empty array`                                                                                                                                                 |         | Unbind the action in that keymap context. Key names use normalized strings such as `ctrl-a`, `shift-enter`, `page-down`, or `minus`.                                                                                                                                                                                                                                                                                                                                                        |
@@ -14650,13 +14607,11 @@ http_headers = { "X-Example-Header" = "example-value" }
 env_http_headers = { "X-Example-Features" = "EXAMPLE_FEATURES" }
 ```
 
-For browser sign-in through your organization's identity provider, use
+To sign in through your organization's identity provider, use
 [native gateway OAuth](./enterprise/connect-to-a-gateway.md#use-native-gateway-oauth).
 Configure `[model_providers..gateway_oauth]` with the authorization and token
-URLs, public client ID, and token delivery settings. This works with
-`requires_openai_auth = false`; ChatGPT sign-in, PowerShell, the Azure CLI, and
-an external credential helper aren't required. The gateway must accept the OAuth
-token in the configured cookie or custom header.
+URLs and the public client ID. If the gateway supports device-code sign-in,
+set `device_authorization_url` so CLI users can sign in over SSH.
 
 Use command-backed authentication when a provider needs Codex to fetch bearer tokens from an external credential helper:
 
@@ -15108,14 +15063,14 @@ The elevated setup failure metrics include `code` and `message` when Windows set
 
 #### Feedback controls
 
-By default, local clients let users send feedback from `/feedback`. To disable feedback collection across the ChatGPT desktop app, Codex CLI, and IDE extension on a machine, update your config:
+By default, local clients let users send feedback from `/feedback`. To disable feedback uploads across the ChatGPT desktop app, Codex CLI, and IDE extension on a machine, update your config:
 
 ```toml
 [feedback]
 enabled = false
 ```
 
-When disabled, `/feedback` shows a disabled message and Codex rejects feedback submissions.
+If your local app server supports diagnostic archives, press Ctrl+&nbsp;S&nbsp; in the CLI `/feedback` editor to save a ZIP locally, even when uploads are off.
 
 #### Hide or surface reasoning events
 
@@ -16828,6 +16783,10 @@ show_tooltips = true
 
 # alternate_screen = "auto"
 
+# Fold completed activity in the full-screen transcript. Default: false.
+
+# collapse_turn_details = true
+
 # Working directory for resumed or forked sessions: current | session.
 
 # Leave unset to choose when the current and saved session directories differ.
@@ -17255,6 +17214,22 @@ prefer_mxc = true
 # timeout_ms = 5000
 
 # refresh_interval_ms = 300000
+
+# To use gateway OAuth, replace the [model_providers.proxy.auth] table above with:
+
+# [model_providers.proxy.gateway_oauth]
+
+# authorization_url = "https://login.example.com/oauth/authorize"
+
+# token_url = "https://login.example.com/oauth/token"
+
+# client_id = "codex"
+
+# device_authorization_url = "https://login.example.com/oauth/device" # optional device-code sign-in
+
+# To use a token-export command, replace the four OAuth settings above with:
+
+# credential_export = { command = "/usr/local/bin/export-gateway-token" }
 
 # --- Example: Local OSS (e.g., Ollama-compatible) ---
 
@@ -17996,14 +17971,15 @@ Codex prints the patched files and exits non-zero if `git apply` fails (for exam
 Run a code review non-interactively. Choose exactly one review target, or pass
 custom review instructions as a prompt.
 
-| Key               | Type / Values              | Default | Details                                                                         |
-| ----------------- | -------------------------- | ------- | ------------------------------------------------------------------------------- |
-| `--base`          | `branch`                   |         | Review changes against the specified base branch.                               |
-| `--commit`        | `SHA`                      |         | Review the changes introduced by the specified commit.                          |
-| `--strict-config` | `boolean`                  | `false` | Error when `config.toml` contains fields this Codex version does not recognize. |
-| `--title`         | `string`                   |         | Set the commit title shown in the review summary. Requires `--commit`.          |
-| `--uncommitted`   | `boolean`                  | `false` | Review staged, unstaged, and untracked changes.                                 |
-| `PROMPT`          | `string \| - (read stdin)` |         | Custom review instructions. Use `-` to read the instructions from stdin.        |
+| Key               | Type / Values              | Default | Details                                                                                                                                   |
+| ----------------- | -------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `--base`          | `branch`                   |         | Review changes against the specified base branch.                                                                                         |
+| `--commit`        | `SHA`                      |         | Review the changes introduced by the specified commit.                                                                                    |
+| `--strict-config` | `boolean`                  | `false` | Error when `config.toml` contains fields this Codex version does not recognize.                                                           |
+| `--title`         | `string`                   |         | Set the commit title shown in the review summary. Requires `--commit`.                                                                    |
+| `--trust`         | `boolean`                  | `false` | Trust this project for this review and future chats, including its configured MCP servers. Codex refuses an explicitly untrusted project. |
+| `--uncommitted`   | `boolean`                  | `false` | Review staged, unstaged, and untracked changes.                                                                                           |
+| `PROMPT`          | `string \| - (read stdin)` |         | Custom review instructions. Use `-` to read the instructions from stdin.                                                                  |
 
 `--uncommitted`, `--base`, `--commit`, and a custom `PROMPT` conflict with one
 another. Use `--title` only with `--commit`.
@@ -18136,6 +18112,7 @@ Use `codex exec` (or the short form `codex e`) for scripted or CI-style runs tha
 | `--sandbox, -s`                                      | `read-only \| workspace-write \| danger-full-access` |         | Sandbox policy for model-generated commands. Defaults to configuration.                                                                                                                                         |
 | `--skip-git-repo-check`                              | `boolean`                                            | `false` | Allow running outside a Git repository (useful for one-off directories).                                                                                                                                        |
 | `--thread-source`                                    | `SOURCE`                                             | `user`  | Set the source label for a new or forked thread. Resuming a thread keeps its original label.                                                                                                                    |
+| `--trust`                                            | `boolean`                                            | `false` | Save project trust for this run and future chats, even with `--ephemeral`. Conflicts with `--ignore-user-config`.                                                                                               |
 | `--worktree`                                         | `boolean`                                            | `false` | Run a new or forked session in a managed Git worktree. Requires local execution; can't be combined with `resume`, `review`, `--ephemeral`, or `--ignore-user-config`.                                           |
 | `-c, --config`                                       | `key=value`                                          |         | Inline configuration override for the non-interactive run (repeatable).                                                                                                                                         |
 | `PROMPT`                                             | `string \| - (read stdin)`                           |         | Initial instruction for the task. Use `-` to pipe the prompt from stdin.                                                                                                                                        |
@@ -20773,18 +20750,30 @@ directly from Work Louder.
 
 Source: [Composer Predictions](./features/composer-predictions.md)
 
-Composer predictions provides autocomplete-style suggestions for your next message in the Codex desktop app. After Codex responds, it uses the current conversation to suggest a follow-up prompt in the message box. Press **Tab** to accept the suggested message as an editable draft, or type your own message.
+The Composer predictions feature suggests a next message based on the conversation in your current Codex desktop thread. It can help you continue a task, refine a draft, or ask for a useful next step after Codex responds. Review each suggestion to decide whether it matches what you want to do.
 
-To use composer predictions, make sure you've updated the [Codex desktop app](https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan) and have signed in to your personal ChatGPT Pro account.
+Before you start, update the Codex desktop app and sign in to an eligible account. Check [Composer predictions in Codex](https://help.openai.com/en/articles/20001601-composer-predictions-in-codex) for current plan, model, and thread requirements.
 
 #### Tab to accept
 
 1. Send a message in a supported thread. When Codex finishes responding, look for a suggestion in the message box.
-2. **Press Tab to accept the prediction.** The suggested text becomes an editable
+2. Press Tab to accept the prediction. The suggested text becomes an editable
    draft in the message box.
-3. Review the text, make any changes, then send it when you’re ready.
+3. Check the suggested action, audience, and details. Edit anything that doesn't match your intent, then send it when you're ready.
 
 To write something else, start typing your own message. You can keep typing without waiting for a prediction. Accepting a prediction adds text to the message box. It does not send the message for you.
+
+A prediction won't appear after every response. You can continue the conversation by typing your own message.
+
+#### Example: Refine a project update
+
+In this example, you've asked Codex to summarize project notes. A prediction suggests turning the summary into a team update. Accept it if that's your next step, or edit it to specify the audience and what to include.
+
+For example, you could edit the accepted suggestion before sending:
+
+> Turn this summary into a short update for the project team. Separate confirmed progress from open questions, and don't describe the launch date as final.
+
+Review the resulting update against your notes before sharing it. Accepting a useful suggestion doesn't verify the facts in the response.
 
 #### How predictions use context
 
@@ -20792,11 +20781,7 @@ Predictions use the conversation in your current thread. If context from past wo
 
 #### Availability and controls
 
-Composer predictions is currently in beta for users aged 18 and older on personal ChatGPT Pro plans in supported regions. It’s available in local and SSH threads in the Codex desktop app with GPT-6 Astra, GPT-6.1 Sol, and GPT-6.1 Terra. Predictions are enabled by default for eligible users. You can turn them on or off using the **Show predictions** toggle in **Settings → General → Composer**.
-
-Generating predictions doesn’t count toward your Codex usage limits or consume credits. When you send a message, including an accepted prediction, normal Codex usage limits and billing apply.
-
-For setup and troubleshooting, see [Composer predictions in Codex](https://help.openai.com/en/articles/20001601-composer-predictions-in-codex).
+For current availability, how to turn predictions on or off, usage limits, billing, and troubleshooting, see [Composer predictions in Codex](https://help.openai.com/en/articles/20001601-composer-predictions-in-codex) in the Help Center.
 
 ### Computer Use
 
@@ -21456,7 +21441,7 @@ completion still works before you queue the command.
 | [`/memories`](#configure-memories-with-memories)                                            | Configure memory use and generation.                            | Turn memory injection or memory generation on or off without leaving the TUI.                       |
 | [`/skills`](#use-skills-with-skills)                                                        | Browse and use skills.                                          | Improve task-specific behavior by selecting a relevant local skill.                                 |
 | [`/import`](#import-claude-code-or-cursor-setup-with-import)                                | Import Claude Code or Cursor setup, projects, and chats.        | Migrate supported external-agent artifacts into Codex configuration and local files.                |
-| [`/feedback`](#send-feedback-with-feedback)                                                 | Send logs to the Codex maintainers.                             | Report issues or share diagnostics with support.                                                    |
+| [`/feedback`](#send-feedback-with-feedback)                                                 | Send feedback or save a diagnostic ZIP.                         | Report issues or share diagnostics with support.                                                    |
 | [`/init`](#generate-agentsmd-with-init)                                                     | Generate an `AGENTS.md` scaffold in the current directory.      | Capture persistent instructions for the repository or subdirectory you're working in.               |
 | [`/logout`](#sign-out-with-logout)                                                          | Sign out of Codex.                                              | Clear local credentials when using a shared machine.                                                |
 | [`/mcp`](#list-mcp-tools-with-mcp)                                                          | List configured Model Context Protocol (MCP) tools.             | Check which external tools Codex can call during the session; add `verbose` for server details.     |
@@ -21472,7 +21457,7 @@ completion still works before you queue the command.
 | [`/stop`](#stop-background-terminals-with-stop)                                             | Stop all background terminals.                                  | Cancel background terminal work started by the current session.                                     |
 | [`/fork`](#fork-the-current-chat-with-fork)                                                 | Fork the current chat into a new chat.                          | Branch the active session to explore a new approach without losing the current transcript.          |
 | [`/app`](#continue-in-the-desktop-app-with-app)                                             | Continue the current session in the ChatGPT desktop app.        | Move from the TUI to the desktop app on macOS or Windows.                                           |
-| [`/side`, `/btw`](#start-a-side-chat-with-side)                                             | Start an ephemeral side chat.                                   | Ask a focused follow-up without disrupting the main chat's transcript.                              |
+| [`/side`, `/btw`](#start-a-side-chat-with-side)                                             | Open a side chat.                                               | Ask a focused follow-up without disrupting the main chat's transcript.                              |
 | [`/raw`](#toggle-raw-scrollback-with-raw)                                                   | Toggle raw scrollback mode.                                     | Make terminal selection and copying less formatted while reviewing long output.                     |
 | [`/resume`](#resume-a-saved-chat-with-resume)                                               | Resume a saved chat from your session list.                     | Continue work from a previous CLI session without starting over.                                    |
 | [`/new`](#start-a-new-chat-with-new)                                                        | Start a new chat inside the same CLI session.                   | Reset the chat context without leaving the CLI when you want a fresh prompt in the same repo.       |
@@ -21628,6 +21613,9 @@ migration plan for this service`).
 
 Expected: Codex enters plan mode and uses your optional inline prompt as the first planning request.
 
+Choose **Yes, clear context and implement** to start a fresh chat with the
+complete plan. If Codex can't transfer the plan, it keeps the current chat open.
+
 While Codex is already working, `/plan` is temporarily unavailable.
 
 #### Set or view a task goal with `/goal`
@@ -21719,7 +21707,7 @@ If a turn is running, confirming `/archive` stops that turn before archiving.
 1. Type `/delete` and press Enter.
 2. Confirm that you want to delete the current session.
 
-Expected: Codex permanently deletes the transcript and spawned descendant
+Expected: Codex permanently deletes the transcript, its saved side chats, and spawned descendant
 sessions. When connected to a local background server or remote server, Codex
 returns to the command center. Without a shared server, Codex exits.
 
@@ -21968,7 +21956,7 @@ Expected: The desktop app opens the same saved chat so you can continue there.
 
 #### Start a side chat with `/side`
 
-Use `/side` to start an ephemeral fork from the current chat without switching away from the main chat.
+Use `/side` to ask a follow-up in a separate chat while the main chat continues.
 
 1. Type `/side` to open a side chat.
 2. Optionally add inline text, for example `/side Check whether this plan has an obvious risk`.
@@ -21977,6 +21965,11 @@ Use `/side` to start an ephemeral fork from the current chat without switching a
 Expected: Codex opens a side chat whose transcript is separate from
 the parent chat. While you are in side mode, the TUI continues to show the
 parent chat's status so you can see whether the main chat is still running.
+
+Side chats are temporary by default. In a local full-screen session with
+`features.tui_workspace` enabled and saved history available, `/side` reopens
+an existing side chat and `/side ` starts a new one. You can reopen
+saved side chats from the sidebar after restarting Codex.
 
 `/side` is unavailable inside another side chat and during review mode.
 
@@ -22036,13 +22029,15 @@ browser.
 
 #### Manage chats with `/agents`
 
-1. Type `/agents` and press Enter.
-2. Select a chat from the command center to open it.
+1. Type `/agents` and press Enter, or run `codex agents` from your terminal.
+2. To find an older chat, press F3 or &nbsp;/&nbsp; and type part of its name, prompt preview, or working directory. Search ignores case.
+3. Select a chat to open it.
 
-Expected: Codex shows an overview of chats on the connected server. You can
-inspect their status and switch between them. To open the command center
-directly from your terminal, run `codex agents`. The command center requires a
-shared local or remote server.
+On macOS and Linux, eligible local sessions signed in with ChatGPT can use an
+experimental Cloud connection. Enable `features.tui_multi_backend`, then use the
+host shortcut shown in a new chat’s composer to switch from Local to Cloud before
+sending your first prompt. In Cloud chats, you can send images, select a model
+and reasoning effort for the next turn, and archive or restore chats.
 
 #### Switch agent threads with `/subagents`
 
@@ -22055,10 +22050,10 @@ agent's work.
 #### Send feedback with `/feedback`
 
 1. Type `/feedback` and press Enter.
-2. Follow the prompts to include logs or diagnostics.
+2. Choose a feedback category and whether to include logs.
+3. In the note editor, press Enter to submit feedback. On a local connection, press Ctrl+&nbsp;S&nbsp; to save a diagnostic ZIP instead.
 
-Expected: Codex collects the requested diagnostics and submits them to the
-maintainers.
+Codex shows the path to the ZIP. You can save it even if your settings block uploads.
 
 #### Sign out with `/logout`
 
@@ -38260,6 +38255,7 @@ those plugins.
 #### List models (`model/list`)
 
 Call `model/list` to populate a model picker with the available models and reasoning efforts.
+Pass `modelProvider` to list models for a specific configured provider. Omit it to use the default provider selected at server startup.
 
 The response below illustrates the structure. Available models, reasoning
 efforts, and defaults depend on the client and account; use the returned
@@ -38297,7 +38293,8 @@ Each model entry can include:
 - `supportsPersonality` - deprecated compatibility field; always `false`. Models no longer support personality selection.
 - `isDefault` - whether the model is the recommended default.
 
-If the startup provider no longer satisfies managed requirements, `model/list`
+An unknown `modelProvider` returns `-32600` with `data.type` set to
+`modelProviderNotConfigured`. If the selected provider no longer satisfies managed requirements, `model/list`
 returns `-32600` and asks the client to restart Codex.
 
 By default, `model/list` returns picker-visible models only. Set `includeHidden: true` if you need the full list and want to filter on the client side using `hidden`.
@@ -39893,6 +39890,20 @@ Codex supports these authentication modes. `account/updated.authMode` shows the 
 - `mcpServer/oauthLogin/completed` (notify) - emitted after a `mcpServer/oauth/login` flow finishes; payload includes `{ name, threadId, loginId?, success, error? }`. Older servers omit `loginId`. `threadId` can be `null` for app-scoped or plugin OAuth flows.
 - `mcpServer/startupStatus/updated` (notify) - emitted when a configured MCP server's startup status changes; payload includes `{ threadId, name, status, error, failureReason }`. `threadId` is `null` for app-scoped startup. On failed startup, `failureReason: "reauthenticationRequired"` means stored OAuth credentials expired and couldn't be refreshed, so the client should offer to reconnect the server.
 
+#### Sign in to a configured gateway
+
+If your client handles gateway sign-in, set `capabilities.explicitGatewayOauth` to
+`true` during initialization. On each connection, call `account/gatewayOAuth/read`
+successfully before sending authenticated requests. Pass `modelProvider` to check
+or sign in to a specific gateway. Omit it to use the current provider.
+
+For device-code sign-in, check that `account/gatewayOAuth/read` returns
+`supportsDeviceAuth: true`. Call `account/gatewayOAuth/login` with the same
+`modelProvider` and `deviceAuth: true`. A `null` prompt means the server reused
+or refreshed the credential. Otherwise, show `prompt.verificationUrl` and
+`prompt.userCode`, then wait for `account/gatewayOAuth/changed` with the
+matching `loginId` to report whether sign-in succeeded.
+
 #### 1) Check auth state
 
 Request:
@@ -40691,6 +40702,10 @@ Use `danger-full-access` only in a controlled environment (for example, an isola
 `--full-auto` is no longer supported. Update scripts to use
 `--sandbox workspace-write`, or use `--approve-for-me` to route approval
 requests through automatic review with the workspace-write sandbox.
+
+Local `codex exec` and `codex review` runs load project configuration and project-defined MCP servers only for trusted projects, even in a writable sandbox. Pass `--trust` to save trust for this and future chats. Project-defined MCP servers can run commands outside the sandbox.
+
+Trust persists with `--ephemeral`. If you marked the project untrusted, change that setting first. You can't combine `--trust` with `--ignore-user-config`.
 
 Use `--ignore-user-config` when you need a run that doesn't load `$CODEX_HOME/config.toml`, and `--ignore-rules` when you need to skip user and project execpolicy `.rules` files for a controlled automation environment.
 
@@ -41569,7 +41584,7 @@ Check compatibility before enabling sync:
 
 - **Enterprise hooks.** If your rollout depends on hooks, check [which handlers run with cloud orchestration](./hooks.md#hooks-with-cloud-orchestration). Test the events and failure cases you rely on before enabling access. Review [audit coverage](./enterprise/compliance-api.md#audit-records-for-local-computer-access-with-work-cloud) separately.
 
-- Data requirements. Local computer access with Work Cloud does not provide strict zero data retention. Data residency and inference residency cover only eligible content and supported workloads, regions, and configurations. Enterprise Key Management (EKM) covers supported stored content in eligible workspaces. Work is not supported with UAE inference residency. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots. If your organization requires ZDR, do not enable this feature.
+- Data requirements. Local computer access with Work Cloud does not provide strict zero data retention. For current regional availability and coverage requirements, consult the Help Center’s [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt). If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots. If your organization requires ZDR, do not enable this feature.
 
 As a workspace owner, review Work permissions for the intended users or groups. Enable Work Cloud, then turn on **Allow local computer access**. Use supported role assignments to grant access. See [Roles and workspace permissions](./enterprise/roles-and-workspace-permissions.md).
 
@@ -42416,7 +42431,7 @@ No. Local computer access with Work Cloud does not change Codex's existing confi
 
 #### Is sync suitable for a ZDR deployment?
 
-No. Local computer access with Work Cloud does not provide strict zero data retention. Data residency and inference residency cover only eligible content and supported workloads, regions, and configurations. Enterprise Key Management (EKM) covers supported stored content in eligible workspaces. Work is not supported with UAE inference residency. Running a step on a connected computer does not make the workflow a ZDR deployment.
+No. Local computer access with Work Cloud does not provide strict zero data retention. For current regional availability and coverage requirements, consult the Help Center’s [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt). Running a step on a connected computer does not make the workflow a ZDR deployment.
 
 #### Overview
 
@@ -42567,7 +42582,7 @@ permissions and security controls.
 
 ChatGPT Work uses the privacy, security, and data commitments applicable to the customer's ChatGPT workspace, subject to plan, configuration, surface, feature, and region. For ChatGPT Enterprise, this includes [no training on business data by default](https://help.openai.com/en/articles/8983130-what-if-i-want-to-keep-my-history-on-but-disable-model-training), encryption in transit and at rest, workspace-level access controls, and supported audit logging.
 
-For Work with local access, residency applies only to eligible content and supported workloads, regions, and configurations; EKM covers supported stored content in eligible workspaces. Work is not supported with UAE inference residency. This experience does not provide strict zero data retention. Dots have separate beta exclusions and do not support data or inference residency. See [compatibility and data requirements](./enterprise/cloud-local-access.md#check-compatibility-and-data-requirements). HIPAA and Business Associate Agreement coverage depend on the features and agreement in use.
+For current regional availability and data requirements, use the Help Center as the source of truth: [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt) and [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot). Work with local access does not provide strict zero data retention. Review [compatibility and data requirements](./enterprise/cloud-local-access.md#check-compatibility-and-data-requirements) before enabling local access. Confirm that the features and agreement in use meet your organization’s requirements.
 
 Connected services have their own retention, logging, access, residency, and compliance requirements. When ChatGPT Work uses plugins, repositories, or third-party systems, evaluate both the ChatGPT workspace controls and the connected system's controls.
 
@@ -42592,6 +42607,16 @@ classes, retention periods, and deletion paths.
 Review retention requirements across both the ChatGPT workspace and connected
 enterprise systems so your organization's data governance, compliance, and
 record-retention policies apply to each system.
+
+#### How do locked chats affect workspace administration?
+
+Admins can't disable locked chats through settings or RBAC, unlock them, or reset
+a user's account PIN. Workspace policies and retention still apply. Enterprise
+and Edu conversation message logs remain available through the Compliance
+Platform.
+
+Share the [locked chat steps](./projects.md#web-use-locked-chats) with users, and check [Help Center](https://help.openai.com/en/articles/20001411-using-locked-chats-in-chatgpt)
+for availability and details.
 
 #### Observability
 
@@ -43016,7 +43041,7 @@ See [Code and shell sandboxing](./sandboxing.md).
 
 A conversation using Local computer access with Work Cloud uses cloud coordination even when a tool runs on a connected computer. Review the data sent to the orchestrating service separately from files remaining on the device. Confirm the applicable storage, retention, residency, and audit coverage for the workflow before rollout.
 
-Local computer access with Work Cloud does not provide strict zero data retention. Data residency and inference residency cover only eligible content and supported workloads, regions, and configurations. Enterprise Key Management (EKM) covers supported stored content in eligible workspaces. Work is not supported with UAE inference residency. If your organization requires ZDR, do not enable this feature.
+Local computer access with Work Cloud does not provide strict zero data retention. For current regional availability and coverage requirements, consult the Help Center’s [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt). If your organization requires ZDR, do not enable this feature.
 
 Work Cloud follows the applicable ChatGPT workspace privacy and security protections. See [Enterprise privacy](https://openai.com/enterprise-privacy/).
 
@@ -43040,7 +43065,7 @@ Retained conversation and execution context can help Work resume interrupted tas
 
 Eligible Enterprise and Edu workspaces can use Enterprise Key Management for supported stored content, including supported hosted execution snapshots when customer-managed encryption is required. Coverage varies by data category and deployment. Rotating a key doesn't delete existing data or, by itself, deny access to earlier encrypted content. Revoking or disabling key access is a separate action that can disrupt supported workflows. Neither replaces a retention or deletion policy.
 
-Data residency and inference residency apply only to eligible content and supported workloads, subject to the organization's agreement, region, and configuration. Connected apps, external providers, and some processing or synced indexes can follow separate location rules. Verify support for the product, integration, and region. See [Data residency and inference residency](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt).
+For current regional availability, supported content, and processing coverage, consult the Help Center’s [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt). Review connected services separately before rollout.
 
 OpenAI API [Zero Data Retention](https://developers.openai.com/api/docs/guides/your-data#zero-data-retention) is an API-specific control and doesn't define retention for ChatGPT Work.
 
@@ -43255,7 +43280,7 @@ Review the connection, signed-in account, destination, and action required by th
 
 For Local computer access with Work Cloud, cloud coordination is part of the workflow even when a step runs on the computer. Review conversation data and task context separately from the local files used by a tool. Do not infer that local execution means device-only storage or that every file in a folder is uploaded.
 
-Local computer access with Work Cloud does not provide strict zero data retention. Data residency and inference residency cover only eligible content and supported workloads, regions, and configurations. Enterprise Key Management (EKM) covers supported stored content in eligible workspaces. Work is not supported with UAE inference residency. Confirm the workspace's storage, retention, and audit coverage before rollout. If your organization requires ZDR, do not enable this feature. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots.
+Local computer access with Work Cloud does not provide strict zero data retention. For current regional availability and coverage requirements, consult the Help Center’s [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt). Confirm the workspace's storage, retention, and audit coverage before rollout. If your organization requires ZDR, do not enable this feature. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots.
 
 Apply your organization's endpoint, file-access, proxy, and data-loss-prevention controls to the specific device and workflow. Confirm whether those controls can prevent sensitive information from entering the task before processing. Audit logs and compliance exports help with monitoring and investigation but do not block processing on their own.
 
@@ -43472,7 +43497,7 @@ See
 
 #### Privacy and data handling
 
-ChatGPT Work follows the privacy, security, and data-handling policies applicable to your ChatGPT workspace. Local computer access with Work Cloud does not provide strict zero data retention. Data residency and inference residency cover only eligible content and supported workloads, regions, and configurations. Enterprise Key Management (EKM) covers supported stored content in eligible workspaces. Work is not supported with UAE inference residency. Conversations, uploaded files, generated files, connected applications, and browser data can have different retention and deletion rules. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots.
+ChatGPT Work follows the privacy, security, and data-handling policies applicable to your ChatGPT workspace. Local computer access with Work Cloud does not provide strict zero data retention. For current regional availability and coverage requirements, consult the Help Center’s [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt). Conversations, uploaded files, generated files, connected applications, and browser data can have different retention and deletion rules. If `enforce_residency` is enabled in any cloud policy, **Allow local computer access** is disabled for both Work and dots. This safeguard does not configure workspace residency or, by itself, disable Work Cloud or dots.
 
 For details, see [Enterprise privacy](https://openai.com/enterprise-privacy/),
 [Chat and file retention policies](https://help.openai.com/en/articles/8983778-chat-and-file-retention-policies-in-chatgpt),
@@ -45001,7 +45026,21 @@ To configure Codex yourself, get these values from your gateway team:
 
 #### Configure the provider
 
-Open `config.toml` at `~/.codex/config.toml` on macOS or Linux, or
+In the interactive CLI, run `/config` and open **Sessions** > **Model providers**.
+Choose **Create a custom provider or gateway** and enter the name, base URL,
+and, if needed, the name of the environment variable holding the API key.
+To change an editable provider, open its details and choose **Edit configuration**.
+If you can change the default, highlight the provider, press Space, and
+start a chat with `/new`.
+
+To set up a gateway during CLI sign-in, start `codex --enable gateway_setup_wizard`
+and choose **Sign in another way** > **Use a custom provider or gateway**.
+This optional sign-in flow is off by default. It appears in a signed-out CLI
+using the embedded app server when the default provider is OpenAI, API-key
+sign-in is allowed, and no managed setting or launch override selects a provider.
+
+For manual setup or additional authentication settings, open
+`config.toml` at `~/.codex/config.toml` on macOS or Linux, or
 `%USERPROFILE%\.codex\config.toml` on Windows.
 
 Merge this example into your existing configuration, replacing the URL and model
@@ -45041,15 +45080,18 @@ Confirm with your gateway team how Codex gets the capabilities and instructions 
 
 - **Built-in name:** If the gateway accepts the exact model name bundled with your Codex version and routes it to the matching model, set `model` to that name. Codex already has its metadata.
 - **Catalog endpoint:** If the gateway serves Codex-compatible metadata, use its full catalog URL. This can be a `/v1/models` endpoint that implements the [Codex catalog response](./enterprise/roll-out-a-gateway.md#implement-the-catalog-endpoint). A response that only lists model IDs is insufficient for custom aliases.
-- **Catalog file:** If your gateway uses custom aliases and your administrator distributes a file, use the [local models.json example](./enterprise/roll-out-a-gateway.md#start-with-a-local-modelsjson-file). Use a local file when native gateway OAuth is your only credential and you need custom metadata.
+- **Catalog file:** If your gateway uses custom aliases and your administrator distributes a file, use the [local models.json example](./enterprise/roll-out-a-gateway.md#start-with-a-local-modelsjson-file).
 
-For API-key or helper authentication, if your administrator supplies a catalog
-URL, add it to the existing
+If your administrator supplies a catalog URL, add it to the existing
 `[model_providers.enterprise-gateway]` table:
 
 ```toml
 model_catalog_url = "https://gateway.example.com/codex/models.json"
 ```
+
+If gateway OAuth is your only credential, the catalog URL must use the same
+scheme, host, and port as `base_url`. Sign in to the gateway first. Codex uses
+your existing gateway session to fetch the catalog.
 
 Remove any effective `model_catalog_json` setting; it takes precedence over the
 URL. Administrators can find endpoint requirements in
@@ -45068,7 +45110,7 @@ add a catalog path unless the file exists at that location.
 
 #### Choose an authentication method
 
-Use native gateway OAuth for browser sign-in, an API key for a scoped credential, or a credential helper if your organization supplies a command.
+Use native gateway OAuth for browser or device-code sign-in, an API key for a scoped credential, or a credential helper if your organization supplies a command.
 
 {/_ prettier-ignore _/}
 
@@ -45091,6 +45133,7 @@ authorization_url = "https://login.example.com/oauth/authorize"
 token_url = "https://login.example.com/oauth/token"
 client_id = "YOUR_PUBLIC_CLIENT_ID"
 # redirect_port = 43127
+# device_authorization_url = "https://login.example.com/oauth/device"
 ```
 
 Add `scopes` and, if required, `resource` to this table using the values your
@@ -45118,27 +45161,30 @@ manage its own upstream credentials, such as its AWS credentials for Bedrock.
 
 When OAuth is your only credential, keep `requires_openai_auth = false` and remove the
 previous `env_key`, `experimental_bearer_token`, or `auth` settings used for the
-gateway credential. Use a [local model catalog](./enterprise/roll-out-a-gateway.md#start-with-a-local-modelsjson-file) if you need custom model
-metadata; OAuth alone doesn't enable remote catalog discovery.
+gateway credential.
 
 Restart the desktop app and follow its gateway sign-in prompt to open the browser.
-In the CLI, start `codex` and follow the browser sign-in when Codex first accesses
-the gateway. Complete your organization's sign-in and MFA, then return to the
-client. If the grant expires or Codex can't refresh it, sign in again when prompted.
+In the CLI, start `codex` and follow its sign-in prompt. Complete your
+organization's sign-in and MFA, then return to Codex. If the grant expires or
+Codex can't refresh it, sign in again when prompted.
 
-Native gateway OAuth requires a browser and a reachable loopback callback. It has
-no device-code fallback. If the CLI runs over SSH, set `redirect_port = 43127` in
-the OAuth table and register the matching redirect URI described above. From the
-machine with your browser, forward that port before starting Codex:
+For SSH or a terminal without a browser, set `device_authorization_url` to the
+device authorization endpoint your identity provider supplies. When you need to
+sign in, the interactive CLI shows a verification URL and a one-time code. Open
+the URL in a browser and enter the code. This flow doesn't require port forwarding.
+
+If your provider only supports browser sign-in and the CLI runs over SSH, set
+`redirect_port = 43127` and register the matching redirect URI. From the machine
+with your browser, forward the port before starting Codex:
 
 ```shell
 ssh -L 43127:127.0.0.1:43127 user@remote
 ```
 
 In that SSH session, start `codex` and open the gateway sign-in URL in your local
-browser. A CLI inside a container also needs a callback reachable from the
-browser. If you can't make the callback reachable, use an API key or credential
-helper instead.
+browser. For browser sign-in inside a container, the callback must also be
+reachable from the browser. If you can't reach it, use device authorization,
+an API key, or a credential helper.
 
 #### Use an API key
 
@@ -45177,8 +45223,8 @@ If the custom header is your only authentication mechanism, use
 
 #### Use an organization credential helper
 
-If your administrator provides command-backed authentication, use their installed
-helper and configuration instead of `env_key`. Don't configure both mechanisms.
+If the helper supplies your primary provider credential, use your administrator's
+installed helper and configuration instead of `env_key`. Don't configure both mechanisms.
 The helper must exist on your machine; Codex doesn't install it. For example,
 add this table without `env_key`, using the resolver path and
 arguments your administrator supplies:
@@ -45196,7 +45242,27 @@ defines the command, arguments, timeout, refresh interval, and token output
 contract. Ask your administrator how to renew your sign-in if the helper can no
 longer retrieve a token.
 
-With ChatGPT sign-in, run the helper before launching Codex and pass its output through a [custom gateway header](./enterprise/connect-to-a-gateway.md#use-a-custom-authentication-header) instead of configuring the `auth` table. When the key expires, get a new key and relaunch Codex.
+If your helper supplies a gateway token alongside ChatGPT sign-in, omit the
+provider's `auth` table and set `requires_openai_auth = true`. Configure a
+gateway credential export command and the header or cookie your gateway accepts:
+
+```toml
+[model_providers.enterprise-gateway.gateway_oauth]
+delivery = { kind = "cookie", name = "gateway_session" }
+
+[model_providers.enterprise-gateway.gateway_oauth.credential_export]
+command = "/usr/local/bin/fetch-codex-gateway-token"
+args = ["print-token"]
+```
+
+The command must print one access token to standard output. Codex runs it on
+first use and caches the token in memory. If the gateway rejects an inference
+request with HTTP 401, Codex runs the command again and retries once.
+When using `credential_export`, omit the OAuth client ID and endpoint settings.
+
+You can also run the helper before starting Codex and pass the token in a
+[custom gateway header](./enterprise/connect-to-a-gateway.md#use-a-custom-authentication-header).
+Renew the token and restart Codex when it expires.
 
 Use resolved absolute paths for helper executables and catalog files.
 
@@ -45207,7 +45273,7 @@ If your organization uses a ChatGPT workspace, signing in gives users access to 
 For manual setup, update the existing `[model_providers.enterprise-gateway]` table before signing in:
 
 1. Set `requires_openai_auth = true` and keep `base_url` pointing to your gateway. Remove any `env_key`, `experimental_bearer_token`, and provider `auth` settings so Codex uses your OpenAI credential for primary authentication.
-2. Send the gateway credential separately. For [native gateway OAuth](#use-native-gateway-oauth), configure `gateway_oauth.delivery` to use the cookie or custom header your gateway accepts. For an API key or credential helper, use a [custom authentication header](#use-a-custom-authentication-header). Reserve `Authorization` for the OpenAI credential.
+2. Send the gateway credential separately. For [native gateway OAuth](./enterprise/connect-to-a-gateway.md#use-native-gateway-oauth) or a [gateway credential export command](./enterprise/connect-to-a-gateway.md#use-an-organization-credential-helper), configure `gateway_oauth.delivery` to use the cookie or custom header your gateway accepts. For a static API key, use a [custom authentication header](./enterprise/connect-to-a-gateway.md#use-a-custom-authentication-header). Reserve `Authorization` for the OpenAI credential.
 
 Sign in to the ChatGPT workspace your administrator named. Complete the gateway sign-in if prompted, then [verify your connection](#verify-the-connection).
 
@@ -47029,17 +47095,18 @@ Review eligibility, data coverage, and the controls your organization relies on 
 
 #### Review Work and dots eligibility
 
-- **Work:** Residency applies only to eligible content and supported workloads, regions, and configurations. EKM covers supported stored content in eligible workspaces. Confirm coverage for your workflow rather than assuming every local-access step or connected integration is covered. Work is not supported with UAE inference residency. See [Data residency and inference residency](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt) and [Work cloud security](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention).
+Use the Help Center as the source of truth for current eligibility, regional availability, and data requirements:
 
-- **Dots residency:** During the Enterprise beta, dots do not support data residency or inference residency. Eligible workspaces can opt in after acknowledging those limitations; enabling dots does not make their data or processing residency-compliant.
+- **Work:** Review [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt) and [Work cloud security](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention).
+- **Dots:** Review [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt), along with the workspace notices shown during setup.
 
-- **Dots exclusions:** Dots are unavailable for FedRAMP workspaces, workspaces with EKM, and workspaces with inference residency set to AE (UAE). HIPAA workspaces can participate if they meet the other eligibility requirements.
+Confirm that your workspace configuration, agreement, and intended workflow meet your organization’s requirements before enabling access.
 
 #### Check data handling and the local-access safeguard
 
 - **Cloud processing:** Work with local access and dots still use cloud coordination. Conversations, tool results, and other task context do not stay exclusively on the connected computer.
 
-- **Residency safeguard:** If any cloud policy enables `enforce_residency`, **Allow local computer access** is unavailable for both Work and dots. This safeguard does not set workspace residency or, by itself, disable Work Cloud or dots. Eligible workspaces can still opt in to dots after acknowledging the beta residency limitations; local access remains blocked.
+- **Residency safeguard:** If any cloud policy enables `enforce_residency`, **Allow local computer access** is unavailable for both Work and dots. This safeguard does not set workspace residency or, by itself, disable Work Cloud or dots.
 
 - **Retention and access to data:** Neither experience provides strict zero data retention. API Zero Data Retention is a separate API control. “Eyes-off” commitments and abuse-monitoring controls are also distinct from zero retention. If a workflow requires no retained data, do not enable it for these experiences.
 
@@ -47478,7 +47545,7 @@ For cloud-browser site rules and controls still in development, see [browser, ne
 
 #### Review availability and data requirements
 
-Before enabling dots, review current availability in [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and the workspace notices shown during setup. Review the security guide's [eligibility and data requirements](./enterprise/dots-security.md#confirm-eligibility-and-data-requirements) for regional, residency, Enterprise Key Management, and HIPAA coverage. Confirm that your workspace configuration, any applicable business associate agreement (BAA), and the intended workflow meet your organization's requirements before enabling access.
+Before enabling dots, review current availability in [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and the workspace notices shown during setup. Use the Help Center’s [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt) for current regional availability and coverage; review the security guide’s [eligibility and data requirements](./enterprise/dots-security.md#confirm-eligibility-and-data-requirements) for additional rollout considerations. Confirm that your workspace configuration, any applicable business associate agreement (BAA), and the intended workflow meet your organization's requirements before enabling access.
 
 Check requirements for the dot itself, tasks it delegates to Work or Codex, and any connected computer. For cloud browser, network, and computer use, see [cloud security](./enterprise/chatgpt-work-cloud-security.md). For work on employee devices, see [local computer access](./enterprise/cloud-local-access.md).
 
@@ -49652,7 +49719,7 @@ For a local catalog, start with the [models.json example](#start-with-a-local-mo
 
 Supply a model catalog when your gateway uses a model name Codex does not recognize. The catalog supplies the instructions, reasoning options, context limits, and tool capabilities Codex uses for that name. Without a matching entry, a request can reach the intended upstream model while Codex uses generic settings.
 
-Host a remote catalog with `model_providers..model_catalog_url` to update model metadata centrally, or distribute a local file with `model_catalog_json`. Use a local catalog when native gateway OAuth is the only credential; OAuth alone doesn't enable remote catalog discovery. See the [configuration reference](./config-file/config-reference.md) for both settings.
+Host a remote catalog with `model_providers..model_catalog_url` to update model metadata centrally, or distribute a local file with `model_catalog_json`. See the [configuration reference](./config-file/config-reference.md) for both settings.
 
 Get a catalog endpoint or file compatible with your Codex version from your cloud
 or gateway provider. Make sure it includes each approved alias and its model
@@ -49681,8 +49748,9 @@ Make `CODEX_GATEWAY_API_KEY` available to the Codex process. Set `base_url`
 separately to route inference through the gateway. If you omit it, Codex uses the
 default OpenAI endpoint for the current authentication mode.
 
-Discovery requires API-key, command-backed, or Codex-backend authentication.
-Native gateway OAuth or custom headers alone don't trigger it.
+When gateway OAuth is the only credential, set an explicit catalog URL with
+the same scheme, host, and port as `base_url`. Codex uses the existing gateway
+session without prompting for sign-in or requiring API-key discovery.
 
 Coordinate catalog updates with your provider when your approved models change. Restart the client after
 changing its configuration.
@@ -49726,10 +49794,11 @@ MCP connections, plugin distribution, and their policies separately.
    OAuth](./enterprise/connect-to-a-gateway.md#use-native-gateway-oauth) to collect
    the authorization and token URLs, public client ID, scopes, optional resource,
    token delivery settings, and any fixed redirect port. Register the matching
-   loopback redirect URI with your identity provider.
+   loopback redirect URI with your identity provider. If it supports device
+   authorization, also distribute `device_authorization_url` for remote CLI users.
 4. Test browser sign-in, token refresh, and access revocation with a test user on
-   the CLI or desktop app you plan to deploy. Confirm that the browser can reach
-   the callback, including for remote CLI users.
+   the CLI or desktop app you plan to deploy. For remote CLI users, test
+   device-code sign-in or confirm the browser can reach the loopback callback.
 
 Users sign in individually. You distribute OAuth configuration, not a client
 secret, gateway API key, or helper executable. Keep upstream provider credentials
@@ -49744,9 +49813,11 @@ on the gateway.
 3. Deliver credentials through your secret manager or an installed credential
    helper. Keep upstream provider and gateway administrator credentials off
    developer machines.
-4. If you use a helper, follow the
-   [command-backed authentication contract](./config-file/config-advanced.md#custom-model-providers)
-   and test token retrieval and refresh before distribution.
+4. If a helper supplies the primary provider credential, follow the
+   [command-backed authentication contract](./config-file/config-advanced.md#custom-model-providers).
+   If it supplies a gateway credential alongside ChatGPT sign-in, configure a
+   [gateway credential export command](./enterprise/connect-to-a-gateway.md#use-an-organization-credential-helper).
+   Test token retrieval and refresh before distribution.
 5. Tell developers how to renew their credentials and whom to contact for help.
 
 #### Test Codex through the gateway
@@ -49786,7 +49857,7 @@ registration values collected above. Keep `requires_openai_auth = false` and omi
 `env_key`, `experimental_bearer_token`, and the command-backed `auth` table when
 OAuth is the only gateway credential.
 
-For a credential helper, distribute the following `config.toml` block through the
+For a helper that supplies the primary provider credential, distribute the following `config.toml` block through the
 configuration layer you chose. Use a model recognized by your Codex version, or
 supply the matching catalog described above. Install your token resolver at the
 configured command path:
@@ -50045,7 +50116,7 @@ service authorized to receive those credentials.
 Authenticate the caller, fetch the corresponding upstream defaults, apply your
 overrides, and return the complete `ModelsResponse` JSON directly. Give every
 entry a unique, nonempty `slug`. For an explicit `model_catalog_url`, Codex rejects
-redirects and responses larger than 1 MiB. Continue enforcing model access on
+redirects. Continue enforcing model access on
 inference requests.
 
 Remove any effective `model_catalog_json` setting from clients using the endpoint:

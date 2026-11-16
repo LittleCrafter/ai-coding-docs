@@ -2,9 +2,8 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-Run Codex Security in CI to review pull-request or merge-request changes, scan
-your default branch, and preserve findings and coverage. See your CI
-provider's guide for the workflow, report handling, and enforcement options.
+Run Codex Security in CI to review pull or merge requests, scan your default
+branch, and save findings and coverage reports.
 
 ## Prepare the workflow
 
@@ -35,8 +34,7 @@ for the Action settings.
 
 Use the [GitHub Actions guide](./ci/github.md) for pull-request
 checks and scheduled repository scans. The Codex Security Action installs the CLI,
-saves reports, and adds a job summary and source annotations. The guide includes
-runner setup, optional Daybreak access, SARIF upload, and severity enforcement.
+saves reports, and adds a job summary and source annotations.
 
 ### Add the GitLab CI/CD pipeline
 
@@ -59,11 +57,9 @@ revisions, report formats, state and output directories, and retry behavior.
 Start with advisory results. Review representative findings, scan coverage,
 cost, and runtime before deciding which outcomes should block a merge.
 
-Evaluate both findings and scan completeness. The severity policy evaluates
-findings from the current scan at or above the configured threshold. Earlier
-open findings in the repository summary don't affect that policy. An
-incomplete scan can leave areas without a review even when it reports no
-findings.
+The severity policy considers findings from the current scan at or above your
+threshold. Earlier open findings don't affect it. Check scan completeness
+separately, since an incomplete scan can report no findings.
 
 Configure enforcement in the [GitHub Actions
 guide](./ci/github.md#choose-a-severity-policy) or the [GitLab

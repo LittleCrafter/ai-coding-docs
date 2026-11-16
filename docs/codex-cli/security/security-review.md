@@ -35,10 +35,9 @@ You can enable reviews before running a repository scan.
 
 ## Configure Codex Security Review
 
-Repository settings are shared. Changing them affects the pull requests selected
-by the repository's **Review** policy, not just your own pull requests. Personal
-preferences apply to your pull requests when the repository follows personal
-preferences.
+Repository settings apply to all pull requests selected by the **Review** policy.
+Your personal settings apply to your pull requests when the repository follows
+personal preferences.
 
 1. Go to [Codex settings](https://chatgpt.com/settings/code-review) and choose a repository.
 2. Under **Review security vulnerabilities**, turn on **Auto security review**.
@@ -54,18 +53,16 @@ preferences.
    - **Whenever code review runs** requires Code Review and runs Codex Security
      Review alongside it.
 
-Connecting GitHub or enabling personal reviews for another contributor doesn't
-request an extra review of your pull requests. Repository and personal settings
-determine whether an automatic review runs; they don't create one review per
-connected user. Later pushes can trigger another review according to **Trigger**,
-and you can request additional reviews manually.
+Connecting another contributor's GitHub account or enabling their personal reviews
+doesn't trigger an extra review of your pull requests. Later pushes can trigger
+another review according to **Trigger**, and you can request reviews manually.
 
 ## Add threat-model context
 
 You can configure a threat model to give Codex context about your application's
 assets, trust boundaries, security assumptions, and repository-specific risks.
 If the repository has an existing Codex Security scan configuration, you can use
-its threat model. Otherwise, provide the path to a threat model file checked
+its [threat model](./threat-model.md). Otherwise, provide the path to a threat model file checked
 into the repository. If you do not specify a source, Codex regenerates the
 threat model for every review.
 
@@ -99,10 +96,3 @@ remediation guidance. If no issues meet the reporting threshold, Codex does not
 post findings to the pull request. Check the task status and full report
 before interpreting an empty comment result as a completed review with no
 findings.
-
-## Related docs
-
-- [Review GitHub pull requests with Codex](../third-party/github.md) explains Code Review and the GitHub integration.
-- [Codex Security](../security.md) gives the product overview.
-- [Daybreak Defense Factory setup](./setup.md) explains repository scans and findings review.
-- [Improving the threat model](./threat-model.md) explains how to tune repository context.

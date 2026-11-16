@@ -2,9 +2,9 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-Codex Security reviews code for vulnerabilities and reports evidence you can
-use to investigate and fix them. Choose how to run it based on where your code
-lives and how you want to review the results.
+Codex Security scans code for vulnerabilities and reports findings with supporting
+evidence. Run it in Daybreak Defense Factory, in Codex, from a terminal, or through
+the SDK.
 
 The **Overview** in Daybreak Defense Factory shows proposed fixes and tracks [open and fixed findings](./security/findings-and-fixes.md) across your repositories.
 
@@ -20,8 +20,6 @@ The **Overview** in Daybreak Defense Factory shows proposed fixes and tracks [op
 | Codex Security SDK       | Run scans and handle results in an application or developer tool.                             | [SDK guide](./security/sdk.md)                    |
 
 ## Choose the next task
-
-After a local scan, review its scope and findings before deciding what to do next.
 
 | Task                                                  | Guide                                                               |
 | ----------------------------------------------------- | ------------------------------------------------------------------- |

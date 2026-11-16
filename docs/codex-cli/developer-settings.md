@@ -151,6 +151,11 @@ settings:
 | Customize the terminal UI | `/keymap`, `/statusline`, `/title`, `/theme` | Keys under `[tui]`                             |
 | Set editing defaults      | `/vim`, `/raw`                               | `tui.vim_mode_default`, `tui.raw_output_mode`  |
 
+In the full-screen transcript, open `/config`, choose **Sessions**, and turn on
+**Collapse turn details** to fold completed activity under each prompt. Final
+answers stay visible, and transcript search includes folded output. The setting
+is off by default.
+
 Some commands apply only to the current session, while some pickers offer to
 save the choice. Set the related configuration key when you want a default for
 future sessions. For the terminal theme, editor, completions, and shortcut

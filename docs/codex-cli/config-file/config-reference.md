@@ -247,6 +247,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `features.prefer_mxc` | `boolean` | Prefer MXC for local Windows execution when native capabilities and policy allow it; otherwise retain the configured legacy sandbox and setup. Disabled by default in the standalone CLI; the desktop app can enable it through rollout configuration. Command failures don't trigger fallback. |
 | `features.unified_exec` | `boolean` | Use resumable command execution (stable; enabled on all platforms). User opt-outs are ignored. Managed requirements can disable resumable processes and `write_stdin`, leaving one-shot `exec_command` available. |
 | `features.view_image` | `boolean` | Enable the built-in `view_image` tool for opening local images. Defaults to `true`. |
+| `features.gateway_setup_wizard` | `boolean` | Offer custom gateway setup during CLI sign-in when the user can choose a provider. Defaults to `false`. See [Connect to a gateway](../enterprise/connect-to-a-gateway.md#configure-the-provider). |
 | `features.shell_snapshot` | `boolean` | Snapshot shell environment to speed up repeated commands (stable; on by default). |
 | `features.multi_agent` | `boolean` | Enable multi-agent collaboration tools (`spawn_agent`, `send_input`, `resume_agent`, `wait_agent`, and `close_agent`) (stable; on by default). |
 | `features.goals` | `boolean` | Enable persisted goals and automatic continuation (stable; on by default). |
@@ -278,13 +279,15 @@ Set `model` to one available to your signed-in account or workspace. See
 | `model_providers.<id>` | `table` | Custom provider definition. Built-in provider IDs (`openai`, `ollama`, and `lmstudio`) are reserved and cannot be overridden. |
 | `model_providers.<id>.name` | `string` | Display name for a custom model provider. |
 | `model_providers.<id>.base_url` | `string` | API base URL for the model provider. |
-| `model_providers.<id>.model_catalog_url` | `string` | Full URL for a Codex-native model catalog. Omit to keep the provider's default model discovery. |
+| `model_providers.<id>.model_catalog_url` | `string` | Full URL for a Codex-native model catalog. Codex can fetch it with existing gateway OAuth credentials when the URL has the same scheme, host, and port as `base_url`. Omit to keep the provider's default model discovery. |
 | `model_providers.<id>.capabilities.external_web_access` | `boolean` | Whether the provider's hosted web search can access the live web. Omit to keep provider defaults; model and turn settings may restrict access further. |
 | `model_providers.<id>.capabilities.remote_compaction` | `unsupported \| v2` | Provider compaction protocol. `unsupported` uses local compaction; `v2` sends compaction triggers through Responses. Omit to keep provider defaults; model and turn settings may restrict support further. |
 | `model_providers.<id>.env_key` | `string` | Environment variable supplying the provider API key. |
 | `model_providers.<id>.env_key_instructions` | `string` | Optional setup guidance for the provider API key. |
 | `model_providers.<id>.experimental_bearer_token` | `string` | Direct bearer token for the provider (discouraged; use `env_key`). |
 | `model_providers.<id>.requires_openai_auth` | `boolean` | The provider uses OpenAI authentication (defaults to false). |
+| `model_providers.<id>.gateway_oauth.device_authorization_url` | `string` | Optional device authorization endpoint for signing in to the gateway over SSH or from a terminal without a browser. |
+| `model_providers.<id>.gateway_oauth.credential_export` | `table` | Use a command as the gateway credential source. Set `command` to an executable that prints one access token. Optional fields are `args` and `timeout_ms` (default `30000`). Omit the OAuth client ID and endpoint settings when using this table. |
 | `model_providers.<id>.wire_api` | `responses` | Protocol used by the provider. `responses` is the only supported value, and it is the default when omitted. |
 | `model_providers.<id>.query_params` | `map<string,string>` | Extra query parameters appended to provider requests. |
 | `model_providers.<id>.http_headers` | `map<string,string>` | Static HTTP headers added to provider requests. |
@@ -362,6 +365,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `tui.animations` | `boolean` | Enable terminal animations (welcome screen, shimmer, spinner) (default: true). |
 | `tui.disable_paste_burst` | `boolean` | Disable burst-paste detection in the TUI (default: false). Takes precedence over the legacy top-level `disable_paste_burst` setting. |
 | `tui.alternate_screen` | `auto \| always \| never` | Control alternate screen usage for the TUI (default: auto; auto skips it in Zellij to preserve scrollback). |
+| `tui.collapse_turn_details` | `boolean` | Summarize tool calls and fold completed activity beneath each prompt in the full-screen transcript. Answers stay visible. Defaults to `false`. |
 | `tui.resume_cwd` | `current \| session` | Working directory to use when resuming or forking a session. When unset, Codex asks you to choose if your current directory differs from the session's saved directory. |
 | `tui.vim_mode_default` | `boolean` | Start the composer in Vim normal mode instead of insert mode (default: false). You can still toggle it per session with `/vim`. |
 | `tui.raw_output_mode` | `boolean` | Start the TUI in raw scrollback mode for copy-friendly terminal selection (default: false). You can toggle it with `/raw` or the default `alt-r` key binding. |

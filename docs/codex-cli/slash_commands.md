@@ -381,7 +381,7 @@ completion still works before you queue the command.
 | [`/memories`](#configure-memories-with-memories)                                            | Configure memory use and generation.                            | Turn memory injection or memory generation on or off without leaving the TUI.                              |
 | [`/skills`](#use-skills-with-skills)                                                        | Browse and use skills.                                          | Improve task-specific behavior by selecting a relevant local skill.                                        |
 | [`/import`](#import-claude-code-or-cursor-setup-with-import)                                | Import Claude Code or Cursor setup, projects, and chats.        | Migrate supported external-agent artifacts into Codex configuration and local files.                       |
-| [`/feedback`](#send-feedback-with-feedback)                                                 | Send logs to the Codex maintainers.                             | Report issues or share diagnostics with support.                                                           |
+| [`/feedback`](#send-feedback-with-feedback)                                                 | Send feedback or save a diagnostic ZIP.                         | Report issues or share diagnostics with support.                                                           |
 | [`/init`](#generate-agentsmd-with-init)                                                     | Generate an `AGENTS.md` scaffold in the current directory.      | Capture persistent instructions for the repository or subdirectory you're working in.                      |
 | [`/logout`](#sign-out-with-logout)                                                          | Sign out of Codex.                                              | Clear local credentials when using a shared machine.                                                       |
 | [`/mcp`](#list-mcp-tools-with-mcp)                                                          | List configured Model Context Protocol (MCP) tools.             | Check which external tools Codex can call during the session; add `verbose` for server details.            |
@@ -397,7 +397,7 @@ completion still works before you queue the command.
 | [`/stop`](#stop-background-terminals-with-stop)                                             | Stop all background terminals.                                  | Cancel background terminal work started by the current session.                                            |
 | [`/fork`](#fork-the-current-chat-with-fork)                                                 | Fork the current chat into a new chat.                          | Branch the active session to explore a new approach without losing the current transcript.                 |
 | [`/app`](#continue-in-the-desktop-app-with-app)                                             | Continue the current session in the ChatGPT desktop app.        | Move from the TUI to the desktop app on macOS or Windows.                                                  |
-| [`/side`, `/btw`](#start-a-side-chat-with-side)                                             | Start an ephemeral side chat.                                   | Ask a focused follow-up without disrupting the main chat's transcript.                                     |
+| [`/side`, `/btw`](#start-a-side-chat-with-side)                                             | Open a side chat.                                               | Ask a focused follow-up without disrupting the main chat's transcript.                                     |
 | [`/raw`](#toggle-raw-scrollback-with-raw)                                                   | Toggle raw scrollback mode.                                     | Make terminal selection and copying less formatted while reviewing long output.                            |
 | [`/resume`](#resume-a-saved-chat-with-resume)                                               | Resume a saved chat from your session list.                     | Continue work from a previous CLI session without starting over.                                           |
 | [`/new`](#start-a-new-chat-with-new)                                                        | Start a new chat inside the same CLI session.                   | Reset the chat context without leaving the CLI when you want a fresh prompt in the same repo.              |
@@ -553,6 +553,9 @@ migration plan for this service`).
 
 Expected: Codex enters plan mode and uses your optional inline prompt as the first planning request.
 
+Choose **Yes, clear context and implement** to start a fresh chat with the
+complete plan. If Codex can't transfer the plan, it keeps the current chat open.
+
 While Codex is already working, `/plan` is temporarily unavailable.
 
 ### Set or view a task goal with `/goal`
@@ -651,7 +654,7 @@ If a turn is running, confirming `/archive` stops that turn before archiving.
 1. Type `/delete` and press Enter.
 2. Confirm that you want to delete the current session.
 
-Expected: Codex permanently deletes the transcript and spawned descendant
+Expected: Codex permanently deletes the transcript, its saved side chats, and spawned descendant
 sessions. When connected to a local background server or remote server, Codex
 returns to the command center. Without a shared server, Codex exits.
 
@@ -911,7 +914,7 @@ Expected: The desktop app opens the same saved chat so you can continue there.
 
 ### Start a side chat with `/side`
 
-Use `/side` to start an ephemeral fork from the current chat without switching away from the main chat.
+Use `/side` to ask a follow-up in a separate chat while the main chat continues.
 
 1. Type `/side` to open a side chat.
 2. Optionally add inline text, for example `/side Check whether this plan has an obvious risk`.
@@ -920,6 +923,11 @@ Use `/side` to start an ephemeral fork from the current chat without switching a
 Expected: Codex opens a side chat whose transcript is separate from
 the parent chat. While you are in side mode, the TUI continues to show the
 parent chat's status so you can see whether the main chat is still running.
+
+Side chats are temporary by default. In a local full-screen session with
+`features.tui_workspace` enabled and saved history available, `/side` reopens
+an existing side chat and `/side <prompt>` starts a new one. You can reopen
+saved side chats from the sidebar after restarting Codex.
 
 `/side` is unavailable inside another side chat and during review mode.
 
@@ -979,13 +987,15 @@ browser.
 
 ### Manage chats with `/agents`
 
-1. Type `/agents` and press Enter.
-2. Select a chat from the command center to open it.
+1. Type `/agents` and press Enter, or run `codex agents` from your terminal.
+2. To find an older chat, press <kbd>F3</kbd> or <kbd>&nbsp;/&nbsp;</kbd> and type part of its name, prompt preview, or working directory. Search ignores case.
+3. Select a chat to open it.
 
-Expected: Codex shows an overview of chats on the connected server. You can
-inspect their status and switch between them. To open the command center
-directly from your terminal, run `codex agents`. The command center requires a
-shared local or remote server.
+On macOS and Linux, eligible local sessions signed in with ChatGPT can use an
+experimental Cloud connection. Enable `features.tui_multi_backend`, then use the
+host shortcut shown in a new chat’s composer to switch from Local to Cloud before
+sending your first prompt. In Cloud chats, you can send images, select a model
+and reasoning effort for the next turn, and archive or restore chats.
 
 <a id="switch-agent-threads-with-agent"></a>
 
@@ -1000,10 +1010,10 @@ agent's work.
 ### Send feedback with `/feedback`
 
 1. Type `/feedback` and press Enter.
-2. Follow the prompts to include logs or diagnostics.
+2. Choose a feedback category and whether to include logs.
+3. In the note editor, press <kbd>Enter</kbd> to submit feedback. On a local connection, press <kbd>Ctrl</kbd>+<kbd>&nbsp;S&nbsp;</kbd> to save a diagnostic ZIP instead.
 
-Expected: Codex collects the requested diagnostics and submits them to the
-maintainers.
+Codex shows the path to the ZIP. You can save it even if your settings block uploads.
 
 ### Sign out with `/logout`
 
