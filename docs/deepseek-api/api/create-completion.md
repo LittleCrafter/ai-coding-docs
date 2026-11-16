@@ -61,7 +61,7 @@ nullable
 
 **Default value:** `null`
 
-Up to 16 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.
+Up to 16 sequences where the API will stop generating further tokens. Each sequence must be a non-empty string of at most 512 bytes (UTF-8 encoded). The returned text will not contain the stop sequence.
 
 oneOf
 

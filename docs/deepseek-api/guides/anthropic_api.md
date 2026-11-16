@@ -100,7 +100,7 @@ mcp_servers| Ignored
 metadata| `user_id` is supported, others are ignored  
 Please refer to [Rate Limit & Isolation](<../quick_start/rate_limit.md>) for more information about `user_id` parameter.  
 service_tier| Ignored  
-stop_sequences| Fully Supported  
+stop_sequences| Fully Supported. Up to 16 sequences; each non-empty string must be at most 512 bytes (UTF-8 encoded)  
 stream| Fully Supported  
 system| Fully Supported  
 temperature| Valid range: [0.0 ~ 2.0]. Takes effect in non-thinking mode; fixed at `1.0` in thinking mode  

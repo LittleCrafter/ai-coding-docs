@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-15T18:04:35Z",
+  "last_updated": "2026-11-16T10:16:51Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -20,8 +20,8 @@
       "source_url": "https://api-docs.deepseek.com/api/create-chat-completion",
       "source_md_url": "https://api-docs.deepseek.com/api/create-chat-completion",
       "source_id": "api/create-chat-completion",
-      "hash": "2a889336407b7bfef5b2bc5be947a8f40b6d54f4837d597b52b32d6841936bae",
-      "last_updated": "2026-11-13T21:05:01Z"
+      "hash": "d2789fb29d1ff4da41bc7893140f37702df5b3d31aa36a90663684d6ac1d8f02",
+      "last_updated": "2026-11-16T10:16:51Z"
     },
     "api/create-completion": {
       "slug": "api/create-completion",
@@ -30,8 +30,8 @@
       "source_url": "https://api-docs.deepseek.com/api/create-completion",
       "source_md_url": "https://api-docs.deepseek.com/api/create-completion",
       "source_id": "api/create-completion",
-      "hash": "d266ea3a81061834f3b2ae1db476d4e6f1fc9f827dc00251a52dcb7370a06478",
-      "last_updated": "2026-11-13T21:05:01Z"
+      "hash": "b0f5c0340126c3c1df80545c279321bdc9df382db0082553ba3b9d413469ab2b",
+      "last_updated": "2026-11-16T10:16:51Z"
     },
     "api/create-file": {
       "slug": "api/create-file",
@@ -50,8 +50,8 @@
       "source_url": "https://api-docs.deepseek.com/api/create-message",
       "source_md_url": "https://api-docs.deepseek.com/api/create-message",
       "source_id": "api/create-message",
-      "hash": "d7e18a1571692faf07118edd979b362a71842fa899b7e7285b7ec22af35a9293",
-      "last_updated": "2026-11-13T21:05:01Z"
+      "hash": "224af6cd71998279c0fc28001dc7ca292cadacbd848bbd341e29152514fb52ed",
+      "last_updated": "2026-11-16T10:16:51Z"
     },
     "api/create-response": {
       "slug": "api/create-response",
@@ -160,8 +160,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/anthropic_api",
       "source_md_url": "https://api-docs.deepseek.com/guides/anthropic_api",
       "source_id": "guides/anthropic_api",
-      "hash": "d8a47aaa8a849686d098e46cf98c7aa6f8f9410a071d7dd2dd02c496802ea0d6",
-      "last_updated": "2026-11-13T21:05:01Z"
+      "hash": "5471be8d3b06c9c110efeb3e5839e165f3862b46de1cdf03d1a3e391ab73c2b7",
+      "last_updated": "2026-11-16T10:16:51Z"
     },
     "guides/asr": {
       "slug": "guides/asr",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-15T18:04:35Z",
-    "fetch_duration_seconds": 26.441,
+    "last_fetch_completed": "2026-11-16T10:16:51Z",
+    "fetch_duration_seconds": 68.364,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,

@@ -1004,7 +1004,7 @@ null
 
 **Maximum items:** `16`
 
-Up to 16 non-empty strings that stop generation. If a string is matched, `stop_reason` is `stop_sequence` and `stop_sequence` contains the matched string.
+Up to 16 non-empty strings that stop generation. Each string must be at most 512 bytes (UTF-8 encoded). If a string is matched, `stop_reason` is `stop_sequence` and `stop_sequence` contains the matched string.
 
 **temperature** numbernullable
 

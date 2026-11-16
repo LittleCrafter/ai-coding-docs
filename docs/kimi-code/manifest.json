@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.6.2",
-  "last_updated": "2026-11-13T21:05:14Z",
+  "last_updated": "2026-11-16T10:17:07Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -10,8 +10,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/config-files.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/config-files.md",
       "source_id": "docs/en/configuration/config-files.md",
-      "hash": "89b1a845c1cfa78b469f02b4294109a7c7365ce21d3cf6ff38b831483947dfb4",
-      "last_updated": "2026-11-13T13:31:26Z"
+      "hash": "fb92e7ea581ad00090421b2efaa78340d07721a3d42eafd2e49fedbd3366301b",
+      "last_updated": "2026-11-16T10:17:07Z"
     },
     "configuration/data-locations": {
       "slug": "configuration/data-locations",
@@ -50,8 +50,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/providers.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/providers.md",
       "source_id": "docs/en/configuration/providers.md",
-      "hash": "4a06b3cdcd0d18b48ac020435e26a0e0824f6910d11dd9e310dae12065684177",
-      "last_updated": "2026-11-13T13:31:26Z"
+      "hash": "7f167ddadf67d309301a8fafbe3cb2e0f02deed5ab8cb0fd49a4d0a99452c1e2",
+      "last_updated": "2026-11-16T10:17:07Z"
     },
     "customization/agents": {
       "slug": "customization/agents",
@@ -320,8 +320,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/slash-commands.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/slash-commands.md",
       "source_id": "docs/en/reference/slash-commands.md",
-      "hash": "ec6f2cf40770adde956352960c8a5103cc350af372b64acdbb08ed8d2222848b",
-      "last_updated": "2026-10-29T17:41:08Z"
+      "hash": "cbd13e4c09d334fa850ab59f08d7fb41be300fa3c4b4233bf070de2ba3f53884",
+      "last_updated": "2026-11-16T10:17:07Z"
     },
     "reference/tools": {
       "slug": "reference/tools",
@@ -345,8 +345,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-13T21:05:14Z",
-    "fetch_duration_seconds": 11.697,
+    "last_fetch_completed": "2026-11-16T10:17:07Z",
+    "fetch_duration_seconds": 11.925,
     "total_pages_discovered": 34,
     "pages_fetched_successfully": 34,
     "pages_failed": 0,

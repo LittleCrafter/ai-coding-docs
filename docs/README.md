@@ -8,8 +8,8 @@ Auto-generated mirror of documentation for several AI coding tools/CLIs.
 | [Google Antigravity CLI](./google-antigravity-cli/) | 1.2.0 | 29 | 2026-11-13T03:40:31Z | yes |
 | [Claude Code](./claude-code/) | 2.1.325 | 204 | 2026-11-14T19:33:01Z | no |
 | [Codex CLI](./codex-cli/) | 0.169.0 | 211 | 2026-11-14T03:42:23Z | no |
-| [DeepSeek API](./deepseek-api/) | — | 70 | 2026-11-15T18:04:35Z | no |
-| [Kimi Code](./kimi-code/) | 2.6.2 | 34 | 2026-11-13T21:05:14Z | no |
+| [DeepSeek API](./deepseek-api/) | — | 70 | 2026-11-16T10:16:51Z | no |
+| [Kimi Code](./kimi-code/) | 2.6.2 | 34 | 2026-11-16T10:17:07Z | no |
 | [OpenCode](./opencode/) | 1.19.5 | 33 | 2026-11-07T09:22:38Z | no |
 
 Each subfolder has its own `README.md` index and `manifest.json`.
