@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 211
-- **Version:** 0.169.0
-- **Last updated:** 2026-11-17T14:59:40Z
+- **Pages mirrored:** 213
+- **Version:** 0.169.1
+- **Last updated:** 2026-11-17T22:46:13Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -100,7 +100,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | --- | --- | --- |
 | Custom instructions with AGENTS.md | [agent-configuration/agents-md.md](./agent-configuration/agents-md.md) | [source](<https://learn.chatgpt.com/docs/agent-configuration/agents-md>) |
 | Rules | [agent-configuration/rules.md](./agent-configuration/rules.md) | [source](<https://learn.chatgpt.com/docs/agent-configuration/rules>) |
-| Speed | [agent-configuration/speed.md](./agent-configuration/speed.md) | [source](<https://learn.chatgpt.com/docs/agent-configuration/speed>) |
+| Fast and Ultrafast modes | [agent-configuration/speed.md](./agent-configuration/speed.md) | [source](<https://learn.chatgpt.com/docs/agent-configuration/speed>) |
 | Subagents | [agent-configuration/subagents.md](./agent-configuration/subagents.md) | [source](<https://learn.chatgpt.com/docs/agent-configuration/subagents>) |
 
 ## cloud
@@ -170,6 +170,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Compliance API and audit events | [enterprise/compliance-api.md](./enterprise/compliance-api.md) | [source](<https://learn.chatgpt.com/docs/enterprise/compliance-api>) |
 | Self-host Codex configuration for your team | [enterprise/configuration-server.md](./enterprise/configuration-server.md) | [source](<https://learn.chatgpt.com/docs/enterprise/configuration-server>) |
 | Connect to a gateway | [enterprise/connect-to-a-gateway.md](./enterprise/connect-to-a-gateway.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway>) |
+| Connect Codex to Google Cloud Vertex AI | [enterprise/connect-to-vertex-ai.md](./enterprise/connect-to-vertex-ai.md) | [source](<https://learn.chatgpt.com/docs/enterprise/connect-to-vertex-ai>) |
 | Desktop browser policies | [enterprise/desktop-browser-policies.md](./enterprise/desktop-browser-policies.md) | [source](<https://learn.chatgpt.com/docs/enterprise/desktop-browser-policies>) |
 | Manage dots permissions and capabilities | [enterprise/dots-admin-guide.md](./enterprise/dots-admin-guide.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-admin-guide>) |
 | Safety and security in dots | [enterprise/dots-security.md](./enterprise/dots-security.md) | [source](<https://learn.chatgpt.com/docs/enterprise/dots-security>) |
@@ -311,6 +312,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | DevDay 2026 | [whats-new/devday-2026.md](./whats-new/devday-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/devday-2026>) |
 | Text your dot | [whats-new/dots-october-28-2026.md](./whats-new/dots-october-28-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/dots-october-28-2026>) |
 | Create your dot in the ChatGPT mobile app | [whats-new/dots-october-9-2026.md](./whats-new/dots-october-9-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/dots-october-9-2026>) |
+| GPT-6.2 | [whats-new/gpt-62-astra-sol.md](./whats-new/gpt-62-astra-sol.md) | [source](<https://learn.chatgpt.com/docs/whats-new/gpt-62-astra-sol>) |
 | November 2–6, 2026 | [whats-new/november-2-6-2026.md](./whats-new/november-2-6-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/november-2-6-2026>) |
 | October 26–30, 2026 | [whats-new/october-26-30-2026.md](./whats-new/october-26-30-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/october-26-30-2026>) |
 | October 5–9, 2026 | [whats-new/october-5-9-2026.md](./whats-new/october-5-9-2026.md) | [source](<https://learn.chatgpt.com/docs/whats-new/october-5-9-2026>) |

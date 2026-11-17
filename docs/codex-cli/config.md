@@ -1180,7 +1180,7 @@ Remove the setting or choose a supported policy. Project entries with
 for examples and approval tradeoffs.
 
 Set `model` to one available to your signed-in account or workspace. See
-[GPT-6.1 Sol availability](./models.md#gpt-6.1-sol) before using the example value.
+[model availability by plan](./pricing.md#feature-availability) before using the example value.
 
 | Key | Type | Description |
 | --- | --- | --- |

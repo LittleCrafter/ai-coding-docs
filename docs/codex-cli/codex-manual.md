@@ -321,6 +321,64 @@ Source: [Glossary](./glossary.md)
 
 Use this glossary as a quick reference for Codex terms across the app, CLI, IDE extension, cloud, SDK, and related integrations.
 
+### GPT-6.2
+
+Source: [GPT-6.2](./whats-new/gpt-62-astra-sol.md)
+
+import "@styles/gpt-62-release.css";
+
+GPT-6.2 Astra and Sol launch in ChatGPT Work, Codex, and the API. Choose Astra for your hardest projects or Sol for everyday coding and writing.
+
+#### What’s new
+
+#### ChatGPT Work
+
+Use Astra or Sol in Work on the web, desktop, or mobile with Plus, Pro, Business, Enterprise, or Edu. Enterprise and Edu admins must first [enable the models in workspace settings](./enterprise/workspace-model-availability.md#gpt-62-astra-and-gpt-62-sol-in-enterprise-and-edu).
+
+On supported consumer plans, new Work chats default to Sol at **Light** reasoning effort. Enterprise workspaces with model access default to Sol at **Medium**. If you see the Power slider, open **Advanced** to [choose a model and reasoning effort](./models.md).
+
+#### Codex
+
+In the Codex app and CLI, choose Astra to trace a bug across services, fix it, and test the affected workflows. Choose Sol to review a pull request or revise code in response to feedback. Use the model picker in the app or `/model` in the CLI.
+
+Codex and Work share usage. Pro $200 subscribers can use Ultrafast with Sol. Pro $500 subscribers can use it with either model, as can eligible Enterprise and Edu workspaces once an owner enables Ultrafast. See [speed options](./agent-configuration/speed.md#gpt-62-speed-options) and [plan and client availability](./pricing.md#feature-availability).
+
+#### Chat
+
+To use GPT-6.2 Astra or Sol in ChatGPT, open Work. For the models you can select in Chat, see [models in ChatGPT](https://help.openai.com/en/articles/20001354-gpt-6-and-other-models-in-chatgpt).
+
+#### Responses API
+
+Use `gpt-6.2-astra` or `gpt-6.2-sol` in the Responses API. Both models support Ultrafast at launch.
+
+In standard, single-agent mode, you can change reasoning effort or switch from plain text to structured output between replies. Append a `configuration_update` item before the next user message and keep the request-level settings unchanged. [Keeping earlier input intact](https://developers.openai.com/api/docs/guides/keep-prefix-unchanged) helps preserve reasoning across turns and keeps that input eligible for prompt caching.
+
+If your project uses data residency, both models support US and EU regions for Standard, Fast, and Batch processing. Ultrafast supports US data residency only. See the [GPT-6.2 migration guide](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6.2-astra) and [API pricing by service tier](https://developers.openai.com/api/docs/pricing#text-tokens).
+
+#### Choose your model
+
+#### GPT-6.2 Astra
+
+Astra is the stronger choice for complex reasoning. It can work through a research question across multiple sources and check its conclusions against the data.
+
+#### Example use cases
+
+- **Diagnose a bug across services.** Give Astra the failing workflow and ask it to trace the cause, implement a fix, and run the affected tests.
+- **Build a deck from a report.** Give Astra the report and your slide template. Ask it to present the findings in your team’s layout and writing style.
+- **Investigate a research question.** Give Astra the sources and ask it to compare their findings and identify where the evidence disagrees.
+
+#### GPT-6.2 Sol
+
+Sol handles everyday coding, writing, and work that takes several steps. Compared with GPT-6.1 Sol, it lets you complete more tasks on the same paid plan.
+
+#### Example use cases
+
+- **Review a pull request.** Ask Sol to walk through a change and flag issues for the author to address.
+- **Revise code after review.** Give Sol the reviewer’s feedback and ask it to update the implementation and run the relevant tests.
+- **Turn meeting notes into a project brief.** Ask Sol to pull together decisions, next steps, and open questions from your notes.
+
+Explore the benchmarks and safety evaluations in the [release announcement](https://openai.com/index/introducing-gpt-6-2-astra-sol/).
+
 ### November 2–6, 2026
 
 Source: [November 2–6, 2026](./whats-new/november-2-6-2026.md)
@@ -815,7 +873,20 @@ a]:min-w-0 [&>a]:no-underline">
 
 Source: [What's new](./whats-new.md)
 
+import "@styles/gpt-62-release.css";
+
 For every versioned update, bug fix, and minor improvement, see the [ChatGPT and Codex changelog](https://learn.chatgpt.com/docs/changelog) and [API changelog](https://developers.openai.com/api/docs/changelog).
+
+#### [November 17, 2026](./whats-new/gpt-62-astra-sol.md)
+
+#### [GPT-6.2](./whats-new/gpt-62-astra-sol.md)
+
+GPT-6.2 Astra and Sol launch in ChatGPT Work, Codex, and the API. Use Astra
+for your hardest projects, from implementing and testing complex code
+changes to building slides that follow a template. Choose Sol for everyday
+coding, writing, and multistep workflows.
+
+[Read the full update →](./whats-new/gpt-62-astra-sol.md)
 
 #### November 9–13, 2026
 
@@ -1100,7 +1171,7 @@ for the full update and smaller improvements.
 
 #### Take on demanding work with GPT-6 Astra
 
-[GPT-6 Astra](./models.md#gpt-6-astra) combines advanced reasoning, computer
+[GPT-6 Astra](./models.md#app-gpt-6-astra) combines advanced reasoning, computer
 use, and stronger judgment for complex work across code, apps, and research in
 Codex and ChatGPT Work. Use it to carry out a workflow, check the result, and
 produce a document, spreadsheet, or presentation that fits your templates and
@@ -2023,20 +2094,17 @@ Some ChatGPT and Codex features ship behind a maturity label so you can understa
 
 Source: [Pricing](./pricing.md)
 
-ChatGPT Work and Codex share usage. ChatGPT Work usage inside
-ChatGPT uses the same pricing, credits, and usage limits as Codex.
+ChatGPT Work and Codex share pricing, credits, and usage limits.
 
-GPT-5.5 retires from Codex with ChatGPT sign-in on October 14, 2026, at noon
-PDT (19:00 UTC). The OpenAI API and Codex sessions authenticated with an API
-key aren't affected. See [GPT-5.5 retirement](./models.md#gpt-55-retirement)
-for migration guidance.
+- **Included usage:** Your ChatGPT plan includes a usage allowance. See
+  [plan options](#pricing-options) and [included usage](#included-usage).
+- **Credits and pay-as-you-go:** Eligible plans can extend usage with credits
+  or USD usage-based billing. See [token rates](#token-rates) and
+  [speed multipliers](#speed-multipliers).
+- **API-key billing:** API-key sessions use separate [API pricing](https://developers.openai.com/api/docs/pricing),
+  not your ChatGPT allowance. API prices don't estimate included tasks.
 
-See [token rates](#token-rates) for credit-based plans and
-[GPT-6.1 Sol model guidance](./models.md#gpt-61-sol) for model details.
-API token prices are separate from subscription usage; don't use them to
-estimate included tasks.
-
-Pricing options
+#### Pricing options
 
 **Free** ($0 /month):
 
@@ -2131,25 +2199,7 @@ Everything in Business and:
 
 [Contact sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_codex)
 
-#### Invite friends and coworkers
-
-Eligible users can send Codex invitations from the profile menu in the
-lower-left corner of the app. Choose **Invite a friend** on an eligible personal
-plan or **Invite a coworker** in an eligible Business workspace, enter the
-recipient's email address, and send the invitation.
-
-The invitation dialog shows the current reward, recipient requirements, invite
-limits, and when rewards expire for your plan or promotion. Personal and
-Business referral programs have separate rewards and eligibility rules.
-Referrals aren't currently available for ChatGPT Enterprise.
-
-Business referrals use separate shared-workspace credit rewards; review the
-[current terms](https://help.openai.com/en/articles/20001271) before you send an
-invitation.
-
-#### Frequently asked questions
-
-#### What are the usage limits for my plan?
+#### Included usage
 
 The number of messages you can send depends on the model used, size and
 complexity of your tasks, and whether you run them locally or in the cloud.
@@ -2161,7 +2211,8 @@ Tasks that look similar can consume different amounts of your allowance. Model
 choice, context, reasoning, tool use, retrieval, and caching all affect usage,
 so prompt length alone isn't a reliable estimate.
 
-For model recommendations, see [Models](./models.md).
+For model guidance, see [GPT-6.1 Sol](./models.md#gpt-61-sol),
+[GPT-6.2 Sol](./models.md#app-gpt-62-sol), and [Models](./models.md).
 
 The estimates below show local messages per five-hour period for Plus and
 Standard Business. Pro plans currently have no five-hour limit. Cloud tasks
@@ -2175,6 +2226,14 @@ and reset times.
         Plus
 
         Standard Business
+
+      GPT-6.2 Astra
+      6-50
+      6-50
+
+      GPT-6.2 Sol
+      17-180
+      17-180
 
       GPT-6 Astra
       5-45
@@ -2212,83 +2271,45 @@ Excel](https://help.openai.com/articles/20001063) on Plus and Pro.
 GPT-6.1 Sol usage drawn from your subscription has no long-context surcharge
 in Codex or ChatGPT Work.
 
-Fast and Ultrafast modes use included subscription limits and paid credits
-at different rates, relative to Standard mode for the same model:
+#### Speed multipliers
 
-| Speed mode            | Included subscription usage | Purchased credits and Enterprise pay-as-you-go usage |
-| --------------------- | --------------------------- | ---------------------------------------------------- |
-| Fast                  | 2.5x                        | 2x                                                   |
-| GPT-6 Astra Ultrafast | 8x                          | 6x                                                   |
-| GPT-6.1 Sol Ultrafast | 8x                          | 6x                                                   |
+Speed multipliers are relative to Standard mode for the same model, where
+available. Credits / PAYG means purchased credits and Enterprise pay-as-you-go
+usage.
+
+    Fast
+
+| Model | Included usage | Credits / PAYG |
+| ----- | -------------- | -------------- |
+
+| GPT-6.2 Astra
+GPT-6.2 Sol | 2x | 2x |
+| GPT-6.1 Sol
+GPT-6.1 Terra | 2.5x | 2x |
+| GPT-6 Astra
+GPT-6 Sol
+GPT-6 Luna | 2.5x | 2x |
+
+    Ultrafast
+
+| Model | Included usage | Credits / PAYG |
+| ----- | -------------- | -------------- |
+
+| GPT-6.2 Astra
+GPT-6.2 Sol | 6x | 3x\* / 6x |
+| GPT-6 Astra | 8x | 6x |
+| GPT-6.1 Sol | 8x | 6x |
+
+\* For GPT-6.2 Astra and GPT-6.2 Sol, eligible overages paid with purchased
+credits and eligible Enterprise pay-as-you-go usage cost 3x the Standard rate
+through February 28, 2027. Both cost 6x starting March 1, 2027 (Pacific time).
+Included usage stays at 6x throughout.
 
 Check your [usage dashboard](#where-can-i-see-my-current-usage-limits) for
 current limits and reset times. See [Speed](./agent-configuration/speed.md)
-for supported models and how speed modes affect usage.
+for supported models, plan eligibility, and administrator controls.
 
-Image generations use included limits ~3-5x faster on average, depending on
-image quality and size.
-
-For Ultrafast mode eligibility and administrator controls,
-see [Ultrafast mode](./agent-configuration/speed.md#ultrafast-mode).
-
-#### How much does Sites cost?
-
-[Sites](./sites.md) is included with eligible ChatGPT plans during public
-beta. Availability depends on your plan, region, and workspace settings.
-
-#### How much does Voice cost?
-
-Voice in Desktop uses your existing Codex usage budget at $0.05 per
-minute.
-
-GPT-Live manages the live conversation. The model handling your task is billed
-separately at its applicable token rates. Voice and tasks share your plan's usage
-limits.
-
-For Business, Edu, and Enterprise workspaces with credit-based billing, desktop
-voice costs 1.25 credits per minute. This rate also applies when Plus and Pro
-users spend additional credits. ChatGPT Voice in Desktop isn't available via API
-key.
-
-#### What happens when you hit usage limits?
-
-We want you to be able to complete work already in progress. If you reach your
-usage limits during an active turn, the agent will be able to continue working
-on that turn, subject to fair use limits.
-
-ChatGPT Plus and Pro users who reach their usage limit can purchase additional
-credits to continue working without needing to upgrade their existing plan.
-
-Business, Edu, and Enterprise plans with [flexible
-pricing](https://help.openai.com/en/articles/11487671-flexible-pricing-for-the-enterprise-edu-and-business-plans)
-can purchase additional workspace credits to continue working.
-
-All users may also run extra local chats using an API key, with usage charged at
-[standard API rates](https://platform.openai.com/docs/pricing).
-
-#### How does image generation count toward usage limits?
-
-Image generation counts toward the same general usage limits as local
-messages and cloud chats. Image generations use included limits 3-5x faster on
-average than similar turns without image generation, depending on
-image quality and size. After you reach your included limits, image generation
-also draws from [credits](#credits-overview).
-
-Image generation isn't available on the Free plan. When you use Codex with an
-API key, API pricing applies to image generation instead of included ChatGPT
-usage limits.
-
-#### Where can I see my current usage limits?
-
-You can find your current limits in the [usage
-dashboard](https://chatgpt.com/codex/settings/usage). If you want to see your
-remaining limits during an active Codex CLI session, you can use `/status`.
-
-Check the dashboard every week or two to understand your pace and remaining
-capacity. If usage is higher than expected, consider whether a smaller model or
-tighter task scope would still produce a useful result.
-
-#### What are tokens and credits?
+#### Token rates
 
 Tokens are small units of information that ChatGPT reads and writes. Your
 prompt, files, chat history, tool results, and ChatGPT's response all
@@ -2298,8 +2319,6 @@ Credits are the unit used to pay for eligible usage on credit-based plans.
 After you reach your included limits, available credits let you continue
 working. Credit purchase prices and applicable discounts depend on your plan
 or agreement.
-
-#### Token rates
 
 The rates below are for Standard speed, quoted in credits per million input
 tokens, cached input tokens, and output tokens. [Learn more about
@@ -2325,10 +2344,20 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
 
           Output Tokens
 
+        GPT-6.2 Astra
+        200 credits
+        10 credits
+        1,000 credits
+
         GPT-6 Astra
         250 credits
         25 credits
         1,250 credits
+
+        GPT-6.2 Sol
+        50 credits
+        2.5 credits
+        250 credits
 
         GPT-6.1 Sol
         50 credits
@@ -2392,10 +2421,10 @@ sales](https://chatgpt.com/contact-sales?utm_internal_source=openai_developers_c
 
           A typical GPT-5.6 Sol task may use 2-15 credits.
 
-          These are Standard credit rates. For purchased credits and Enterprise
-          pay-as-you-go usage, Fast mode uses 2x the Standard rate where
-          available, and Ultrafast mode uses 6x. Included subscription usage has
-          different multipliers. See
+          For USD usage-based billing, GPT-6.2 Astra at Standard speed costs $8
+          per million input tokens, $0.40 per million cached input tokens, and
+          $40 per million output tokens. GPT-6.2 Sol costs $2, $0.10, and $10
+          per million input, cached input, and output tokens, respectively. See
           [Speed](./agent-configuration/speed.md) for availability
           and billing details.
 
@@ -2413,6 +2442,81 @@ Pro.](https://help.openai.com/en/articles/12642688)
 Edu.](https://help.openai.com/en/articles/11487671-flexible-pricing-for-the-enterprise-edu-and-business-plans)
 
 For Business and Enterprise/Edu credit billing, use the [credit-based rate card](https://help.openai.com/en/articles/11481834-chatgpt-rate-card-business-enterpriseedu-credit-based-pricing). If your Enterprise agreement specifies usage-based billing in USD, use the [Enterprise USD rate card](https://help.openai.com/en/articles/20001415-chatgpt-rate-card-enterprise-token-based-pricing) and your agreement instead. Workspace administrators can also review [ChatGPT Work usage and cost](./enterprise/chatgpt-work-usage-and-cost.md#understand-tokens-and-credits).
+
+#### Invite friends and coworkers
+
+Eligible users can send Codex invitations from the profile menu in the
+lower-left corner of the app. Choose **Invite a friend** on an eligible personal
+plan or **Invite a coworker** in an eligible Business workspace, enter the
+recipient's email address, and send the invitation.
+
+The invitation dialog shows the current reward, recipient requirements, invite
+limits, and when rewards expire for your plan or promotion. Personal and
+Business referral programs have separate rewards and eligibility rules.
+Referrals aren't currently available for ChatGPT Enterprise.
+
+Business referrals use separate shared-workspace credit rewards; review the
+[current terms](https://help.openai.com/en/articles/20001271) before you send an
+invitation.
+
+#### Frequently asked questions
+
+#### How much does Sites cost?
+
+[Sites](./sites.md) is included with eligible ChatGPT plans during public
+beta. Availability depends on your plan, region, and workspace settings.
+
+#### How much does Voice cost?
+
+Voice in Desktop uses your existing Codex usage budget at $0.05 per
+minute.
+
+GPT-Live manages the live conversation. The model handling your task is billed
+separately at its applicable token rates. Voice and tasks share your plan's usage
+limits.
+
+For Business, Edu, and Enterprise workspaces with credit-based billing, desktop
+voice costs 1.25 credits per minute. This rate also applies when Plus and Pro
+users spend additional credits. ChatGPT Voice in Desktop isn't available via API
+key.
+
+#### What happens when you hit usage limits?
+
+We want you to be able to complete work already in progress. If you reach your
+usage limits during an active turn, the agent will be able to continue working
+on that turn, subject to fair use limits.
+
+ChatGPT Plus and Pro users who reach their usage limit can purchase additional
+credits to continue working without needing to upgrade their existing plan.
+
+Business, Edu, and Enterprise plans with [flexible
+pricing](https://help.openai.com/en/articles/11487671-flexible-pricing-for-the-enterprise-edu-and-business-plans)
+can purchase additional workspace credits to continue working.
+
+All users may also run extra local chats using an API key, with usage charged at
+[standard API rates](https://platform.openai.com/docs/pricing).
+
+#### How does image generation count toward usage limits?
+
+Image generation counts toward the same general usage limits as local
+messages and cloud chats. Image generations use included limits 3-5x faster on
+average than similar turns without image generation, depending on
+image quality and size. After you reach your included limits, image generation
+also draws from [credits](#credits-overview).
+
+Image generation isn't available on the Free plan. When you use Codex with an
+API key, API pricing applies to image generation instead of included ChatGPT
+usage limits.
+
+#### Where can I see my current usage limits?
+
+You can find your current limits in the [usage
+dashboard](https://chatgpt.com/codex/settings/usage). If you want to see your
+remaining limits during an active Codex CLI session, you can use `/status`.
+
+Check the dashboard every week or two to understand your pace and remaining
+capacity. If usage is higher than expected, consider whether a smaller model or
+tighter task scope would still produce a useful result.
 
 #### What counts as Code Review usage?
 
@@ -2444,6 +2548,11 @@ For guidance on choosing and scoping tasks, see [Use Work
 efficiently](./prompting.md#use-work-efficiently).
 
 #### Feature availability
+
+GPT-6.2 Astra and GPT-6.2 Sol are available on Plus, Pro, Business, Enterprise,
+and Edu in ChatGPT Work on web, mobile, and desktop, and in the Codex app and CLI.
+Both models are off by default in Enterprise and Edu workspaces. An administrator
+must enable them in the [workspace model settings](./enterprise/workspace-model-availability.md#gpt-62-astra-and-gpt-62-sol-in-enterprise-and-edu).
 
 In ChatGPT, GPT-6.1 Sol is available in Work and Codex, not Chat. For Enterprise
 and Edu, the model is off by default until an administrator enables it. Using
@@ -2594,7 +2703,11 @@ A good default is to include four things in your prompt:
 
 This helps Codex stay scoped, make fewer assumptions, and produce work that's easier to review.
 
-Use GPT-6.1 Sol when available to your account and client, starting with the reasoning effort available by default in your client. Start with **High** for GPT-6 Luna or **Light** for GPT-6 Astra (`low` in configuration). Adjust based on the task and the result. See [Models](./models.md) for available reasoning levels.
+If GPT-6.2 Sol is available to you, start there for most tasks. For a change
+that spans packages, choose GPT-6.2 Astra from the model picker.
+With either model, start with the reasoning effort your client selects. For GPT-6 Luna,
+start with **High**. For GPT-6 Astra, start with **Light** (`low` in
+configuration). See [Models](./models.md) for available reasoning levels.
 
 - Low for faster, well-scoped tasks
 - Medium or High for more complex changes or debugging
@@ -2801,6 +2914,147 @@ A few common mistakes to avoid when first using Codex:
 - Treating Codex like something you have to watch step by step instead of using it in parallel with your own work
 - Using one chat for an entire project instead of one chat per coherent outcome. This leads to bloated context and worse results over time
 
+### Fast and Ultrafast modes
+
+Source: [Fast and Ultrafast modes](./agent-configuration/speed.md)
+
+In ChatGPT Work and Codex, **Fast** and **Ultrafast** generate tokens faster
+than **Standard** on the same model. Both use more of your plan's allowance
+or credits.
+
+#### Choose a speed in the composer
+
+In ChatGPT Work on the web or in the Codex desktop app, open the model or
+effort picker at the bottom of the composer.
+
+- If **Ultrafast** is available to you, select the lightning bolt to open the
+  speed menu, then choose a speed.
+- If your only options are **Standard** and **Fast**, selecting the lightning
+  bolt switches between them immediately.
+
+In the advanced picker, select **Speed**. In ChatGPT Work on mobile, open the
+model picker and use the speed setting.
+
+Try switching speeds in the desktop picker below.
+
+## Fast mode
+
+Fast mode supports GPT-6.2 Astra and GPT-6.2 Sol. You can also use it with
+GPT-6.1 Sol, GPT-6.1 Terra, GPT-6 Astra, GPT-6 Sol, and GPT-6 Luna. On
+GPT-6.2 Astra and GPT-5.6, Fast generates tokens at about 1.5 times the
+speed of Standard.
+
+With ChatGPT sign-in, you can also use Fast in the Codex CLI and IDE extension.
+See [Fast pricing](./pricing.md#speed-multipliers)
+for the usage rate for your model.
+
+#### Ultrafast mode
+
+On GPT-6.2 Astra and GPT-6.2 Sol, Ultrafast generates tokens at up to
+4.5 times the speed of Standard on the same model. Choose Ultrafast in the
+[composer](#choose-a-speed-in-the-composer) in ChatGPT Work or the Codex app,
+or use the [Codex CLI](#codex-cli-controls).
+
+- **Pro.** The models you can use with Ultrafast depend on your plan. See
+  [GPT-6.2 Ultrafast availability by Pro plan](./whats-new/gpt-62-astra-sol.md).
+  On Pro $500, both models are available. Ultrafast uses your included
+  allowance first, then any available credits.
+- **Enterprise and Edu.** Both models support Ultrafast in eligible workspaces.
+  If you don't see it, ask your workspace owner to check
+  [model access and Ultrafast permissions](#ultrafast-plan-and-workspace-requirements).
+
+ChatGPT Work and Codex share pricing, credits, and usage limits. See
+[Ultrafast pricing](./pricing.md#speed-multipliers)
+for included usage, purchased credits, and eligible pay-as-you-go rates.
+
+GPT-6 Astra and GPT-6.1 Sol also support Ultrafast on Pro $500 and eligible
+Enterprise and Edu plans. In Codex, GPT-6 Astra generates tokens at up to
+eight times its Standard speed with Ultrafast.
+
+#### Ultrafast plan and workspace requirements
+
+Enterprise workspaces need a credit-based or USD usage-based agreement. Edu
+workspaces need a credit-based plan.
+
+Workspace owners must enable [the GPT-6.2 models they want members to use](./enterprise/workspace-model-availability.md#gpt-62-astra-and-gpt-62-sol-in-enterprise-and-edu).
+Ultrafast is a separate permission and is off by default. Owners can enable it
+for selected users or the whole workspace in
+[workspace permissions](./enterprise/roles-and-workspace-permissions.md).
+[Per-user spend controls](./enterprise/usage-limits.md) apply.
+
+For GPT-6.2 Astra, GPT-6.2 Sol, and GPT-6 Astra, Ultrafast supports inference
+residency only in the United States. For GPT-6.1 Sol, it also supports Europe
+(EEA and Switzerland).
+
+#### Codex CLI controls
+
+In the CLI, type `/` to see which commands are available for your model.
+Use `/fast` or `/ultrafast` to choose a speed. Repeat the active command to
+return to Standard. The CLI saves your selection. To show Fast mode in the
+footer, use `/statusline`.
+
+#### API billing
+
+When you sign in to Codex with an API key, you pay API token rates. ChatGPT credit
+multipliers apply only when you sign in with ChatGPT. See
+[Ultrafast mode in the API](https://developers.openai.com/api/docs/guides/ultrafast-mode) for supported
+models, request configuration, and pricing.
+
+#### Retirement and migration
+
+[GPT-5.5 retired from Codex](./models.md#gpt-55-retirement) for users signed
+in with ChatGPT on October 14, 2026, at noon PDT (19:00 UTC).
+
+### From concept art to editable SVGs and 3D scenes
+
+Source: [From concept art to editable SVGs and 3D scenes](https://learn.chatgpt.com/guides/svg-3d-design.md)
+
+{/_ vale alex.Condescending = NO _/}
+
+In October 2024, Simon Willison asked 16 language models to [draw a pelican riding a bicycle](https://simonwillison.net/2024/Oct/25/pelicans-on-a-bicycle/) as an SVG. Models have come a long way since then, and with GPT-6.2 Astra you can now create beautiful vector graphics and 3D models from a simple prompt.
+
+{/_ vale alex.Condescending = YES _/}
+
+To take those capabilities further, Astra can ask GPT Image for a reference suited to the medium, refine it, and use it as concept art for everything from editable app icons to detailed parametric CAD. [SVG & 3D Design](https://chatgpt.com/plugins/Plugin_13c5903473e081919917a1070fad1dd1?open_in_app) is a Codex plugin that guides Astra through this workflow so you can create richer, more ambitious assets with just a few words of direction.
+
+#### Designing app icons for light and dark mode
+
+Designing an app icon means thinking about how it will look everywhere from a high-resolution app listing to a tiny square on a home screen. You also need to consider light and dark mode, which can require rethinking the entire color palette.
+
+When asking Astra for a moth field guide icon, tell it how small the icon will get. That constraint carries through to the reference it asks GPT Image to make and helps it decide which wing markings are worth turning into curves. The light and dark themes can then share the same SVG and use different palettes.
+
+#### Creating vector illustrations for the web
+
+The tricky part of a web illustration is getting the richness of the art into a file you’d actually want to ship. When asking Astra for a tide pool in SVG, a color woodcut is a useful direction for the reference. Each area of ink has an edge Astra can draw as a path. Fine photographic texture takes many more paths to reproduce.
+
+Explore the original SVGs [without the skill](https://cdn.openai.com/devhub/docs/codex/svg-3d-design/tide-pool-without-skill.svg) and [with the skill](https://cdn.openai.com/devhub/docs/codex/svg-3d-design/tide-pool-with-skill.svg).
+
+#### Animating SVG curves and colors with code
+
+One of the other benefits of SVG is that it’s all just math. You can compose shapes in layers and animate their curves and colors with code.
+
+For a seascape that reacts to the weather, ask Astra to make wind speed a value you can set in JavaScript. That one value can change the height and speed of the waves and bend the foam along each crest. A separate daylight control lets you change the palette while the sea keeps moving.
+
+#### Building editable 3D models
+
+GPT-6 Astra can create detailed 3D models, particularly buildings. GPT-6.2 Astra builds on that strength. Organic shapes are harder to specify in words, which is where a visual reference becomes especially useful.
+
+{/_ vale alex.Condescending = NO _/}
+
+With a simple prompt like “A miniature woodland just after the rain,” Astra has a lot of details to fill in on its own. Ask GPT Image the same thing and you get a much richer picture of that little woodland. Even the moss has a pattern to it, growing thick between the wet stones and creeping into cracks in the stump. This is where a picture is worth a thousand words. It gives GPT-6.2 Astra all that detail to work from, and the model can now bring it to life in 3D.
+
+{/_ vale alex.Condescending = YES _/}
+
+Here’s Simon’s pelican on a bicycle again, this time in 3D, with and without the skill.
+
+#### Art direction for game environments and effects
+
+While you can create beautiful standalone assets with this workflow, you can also bring an entire world to life from a concept image. Here, Astra was asked to create a graphics museum on a hilltop, where visitors could explore exhibits showcasing beautiful materials and rich visual effects. GPT Image’s first concept was gorgeous, and it gave Astra a direction for everything from the layout of the gallery to the way afternoon light would fall across the polished stone floor.
+
+A little more steering pushed the exhibits further. One idea was a miniature volcano that would erupt inside a glass case. A single image could capture the most dramatic moment, but Astra also needed to work out how to get there. GPT Image was prompted to imagine the eruption in three stages, from the first flash at the vent to the plume at its peak and finally the embers cooling in the crater.
+
+Try [SVG & 3D Design](https://chatgpt.com/plugins/Plugin_13c5903473e081919917a1070fad1dd1?open_in_app) on a site or app you’re building. Pick an asset you’d love to give more personality, whether it’s an icon that changes with the theme or an illustration that moves as someone scrolls. Tell Codex where it will live and what it needs to do there, and give it room to explore the art direction.
+
 ### Multi-agent operations
 
 Source: [Subagents](./agent-configuration/subagents.md)
@@ -2925,24 +3179,23 @@ reasoning effort. To balance intelligence, speed, and price for each task,
 request a specific model or reasoning effort in your prompt,
 configure `[agents]` defaults in `config.toml`, or set `model` and
 `model_reasoning_effort` directly in the custom agent file.
-For example, use `gpt-6-luna` for fast scans or a higher-effort `gpt-6.1-sol` configuration for more demanding reasoning.
+For example, use `gpt-6-luna` for fast scans or increase Sol’s reasoning effort for a more demanding task.
 
-For most tasks in Codex, start with
-`gpt-6.1-sol` when your
-signed-in account or workspace has [access](./models.md#gpt-6.1-sol).
-Otherwise, choose a model available to you. Use `gpt-6-luna` when you want a
-faster, lower-cost option for lighter subagent work.
+Start with Sol for everyday tasks when your [plan and
+client](./pricing.md#feature-availability) support it. Otherwise, choose a
+model from your model picker. Use `gpt-6-luna` for lighter, lower-cost work.
 
 #### Model choice
 
-- **`gpt-6.1-sol`**: Start here for demanding agents. Use it for ambiguous, multi-step work that needs planning, tool use, validation, and follow-through across a larger context.
+- **`gpt-6.2-sol`**: Use Sol for everyday agents that plan, use tools, and check their work.
 - **`gpt-6-luna`**: Use for fast, narrowly scoped agents handling clear, repeatable, or high-volume work.
 
 #### Reasoning effort (`model_reasoning_effort`)
 
-For GPT-6.1 Sol, use a reasoning effort supported by your client and selected
-model. For explicit model settings, start with `high` for GPT-6 Luna or `low`
-for GPT-6 Astra. Adjust for the task using a level the selected model supports.
+When the parent agent uses GPT-6.2 Astra or GPT-6.2 Sol, start with the same
+model and reasoning effort for its subagents. Raise the effort for a subtask
+that needs deeper investigation, or lower it for a quick scan. If you select
+GPT-6 Luna explicitly, start with `high`. For GPT-6 Astra, start with `low`.
 
 - **`ultra`**: Use for the deepest reasoning when the selected model supports
   it.
@@ -3123,9 +3376,9 @@ The best custom agents are narrow and opinionated. Give each one clear job, a
 tool surface that matches that job, and instructions that keep it from
 drifting into adjacent work.
 
-The examples use [GPT-6.1 Sol](./models.md#gpt-6.1-sol) where your signed-in
-account or workspace has access. If it isn't available, choose a model you can
-use.
+The reviewer and browser debugger examples use Sol in the app or CLI. For a
+custom agent you also run in the IDE extension, choose a `model` available in
+each client, such as `gpt-6.1-sol`.
 
 #### Example 1: PR review
 
@@ -3165,7 +3418,7 @@ Prefer fast search and targeted file reads over broad scans.
 ```toml
 name = "reviewer"
 description = "PR reviewer focused on correctness, security, and missing tests."
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 developer_instructions = """
 Review code like an owner.
@@ -3230,7 +3483,7 @@ Identify entry points, state transitions, and likely files before the worker sta
 ```toml
 name = "browser_debugger"
 description = "UI debugger that uses browser tooling to reproduce issues and capture evidence."
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 developer_instructions = """
 Reproduce the issue in the browser, capture exact steps, and report what the UI actually does.
@@ -3528,84 +3781,43 @@ chat.
 - [Learn how to use ChatGPT](./use-chatgpt.md)
 - [Continue long-running work](./long-running-work.md)
 
-### Speed
+### Prompting GPT-6.2 in Codex
 
-Source: [Speed](./agent-configuration/speed.md)
+Source: [Prompting GPT-6.2 in Codex](https://learn.chatgpt.com/guides/prompting-gpt-6-2-astra.md)
 
-You can increase model speed in Codex in exchange for higher usage.
+Compared with GPT-6 Astra, GPT-6.2 Astra often gives you a first pass that’s closer to something you’d be happy to use. Its code is easier to read and review, and its writing gets to the point sooner. Its visual work is richer, too. On a slide, the layout draws your eye to the comparison that matters. In a 3D scene, details like texture and lighting give the work more character.
 
-#### Fast mode
+These prompting techniques apply across the GPT-6.2 model family, including GPT-6.2 Astra and GPT-6.2 Sol. Describe what you need the way you’d ask a colleague who knows the project, then tell Codex **what you’ll look for when you review the work**. If an icon needs to be recognizable in a 24-pixel toolbar, say so. Codex can pick up the style from the existing icons and work out how much detail will still read at that size.
 
-Fast mode speeds up supported models, including GPT-6.1 Sol, GPT-6.1 Terra,
-GPT-6 Astra, GPT-6 Sol, and GPT-6 Luna, where available. For GPT-5.6, the speed increase
-is 1.5x.
+#### Match reasoning effort to the task
 
-Use `/fast` in the CLI to toggle Fast mode. Use `/statusline` to show it in the
-footer. You can also persist the default with `service_tier = "fast"` plus
-`[features].fast_mode = true` in `config.toml`. Fast mode is available in the
-ChatGPT desktop app, Codex CLI, and IDE extension when you sign in with ChatGPT.
+Higher reasoning effort can help the model stick with a long-running task through the final checks, even when the answer you need is only a few lines. Tell it what counts as finished and where you want it to be exhaustive. If the team needs a recommendation, that might mean following a promising lead far enough to test it against competing explanations.
 
-For supported models, Fast mode uses included subscription limits at 2.5x the
-Standard rate. Purchased credits and Enterprise pay-as-you-go usage are billed
-at 2x the Standard rate.
+Choose [reasoning effort](./models.md#app-pick-a-reasoning-effort) based on the depth of the investigation. A quick survey can use **Medium**. Tracing even one suspected cause across several systems can warrant **High**. Consider **Extra High** when several causes may interact and the investigation needs to account for each one.
 
-#### Ultrafast mode
+#### Use subagents for parallel work
 
-Ultrafast supports GPT-6 Astra and GPT-6.1 Sol.
+When a task has several parts that can move ahead independently, tell Codex to [**use subagents as needed**](./agent-configuration/subagents.md#triggering-subagent-workflows). That gives Codex permission to decide when parallel work will help and how to divide the task.
 
-GPT-6 Astra Ultrafast generates tokens up to 8x faster than GPT-6 Astra in
-Standard mode in Codex.
+If the same kind of work comes up regularly, put that instruction in the relevant [skill](./build-skills.md) or `AGENTS.md` and say when it applies. For a research skill, for example, it might apply to requests with several independent questions.
 
-Ultrafast is available in Codex and ChatGPT Work on Pro $500 and eligible
-Enterprise and Edu plans. On Pro $500, Ultrafast uses your included usage first,
-then your available credits after that allowance runs out.
+With [**Ultra**](./models.md#app-know-when-to-use-max-or-ultra), Codex decides on its own when to bring in subagents. Save it for especially ambitious work that splits cleanly, such as an open-ended research project with several questions that each warrant a deep investigation. Each agent can keep its own working context as it follows one of those questions.
 
-Ultrafast mode bills purchased credits and Enterprise pay-as-you-go usage at
-6x the Standard rate. Ultrafast uses included subscription limits at 8x the
-Standard rate.
+#### Give Codex a visual reference and room to iterate
 
-For Enterprise workspaces, Ultrafast is off by default. Workspace owners can
-enable access for selected users or the workspace through
-[workspace permissions](./enterprise/roles-and-workspace-permissions.md).
-Existing [per-user spend controls](./enterprise/usage-limits.md) apply to
-eligible Ultrafast usage.
+When you have a particular look in mind, a reference image can show how the shapes fit together, which colors stand out, and where the eye should go first. Share one from your design software or ask Codex to create one with [GPT Image](./image-generation.md#generate-or-edit-an-image). Once the reference captures the look you want, ask it to build the asset, render it, and refine it against the reference.
 
-#### Availability and billing details
+Have Codex review the result **at the size people will actually see it**. Details that look good in a large render can disappear in the finished product. If the result is interactive, ask it to try the actions it’s meant to support.
 
-ChatGPT Work and Codex share usage. Both use the same
-pricing, credits, and usage limits. See [Codex pricing](./pricing.md) for
-details.
+The [SVG &amp; 3D Design plugin](https://chatgpt.com/plugins/Plugin_13c5903473e081919917a1070fad1dd1) includes a skill that guides Codex through this process for editable illustrations and 3D models.
 
-See [Models](./models.md) for model availability and
-[Pricing](./pricing.md#token-rates) for token rates.
+#### Keep your `AGENTS.md` lean
 
-#### Ultrafast plan and workspace requirements
+Use [`AGENTS.md`](./agent-configuration/agents-md.md) for project requirements and conventions that Codex can’t infer from the code, tests, or docs. Include a workflow when the project depends on it. Leave routine decisions about how to do the work to Codex.
 
-- Eligible Enterprise workspaces use credit-based or USD usage-based
-  agreements. Usage is billed according to the workspace's agreement.
-- Eligible Edu plans use credits. Legacy Enterprise plans that rely on rate
-  limits instead of usage-based billing aren't supported.
+Each task in [Codex Cloud](./environments/cloud-environments.md#start-a-task-in-codex-cloud) has a virtual machine to itself. If you keep using your computer while Codex works, use your personal `~/.codex/AGENTS.md` to steer it toward tools that let you carry on with your work. For a quick email lookup, for example, encourage Codex to use an available mail connector so your active app keeps focus.
 
-Other self-serve plans don't have access to Ultrafast at launch, even with
-purchased credits.
-
-GPT-6.1 Sol Ultrafast supports inference residency in the United States and
-Europe (EEA + Switzerland). GPT-6 Astra Ultrafast supports inference residency
-in the United States only.
-
-#### API billing
-
-With an API key, Codex uses API token pricing instead, and ChatGPT credit
-multipliers don't apply.
-
-For API availability, request configuration, and pricing, see
-[Ultrafast mode in the API](https://developers.openai.com/api/docs/guides/ultrafast-mode).
-
-#### Retirement and migration
-
-[GPT-5.5 retires](./models.md#gpt-55-retirement) from Codex with ChatGPT
-sign-in on October 14, 2026, at noon PDT (19:00 UTC). The OpenAI API and
-Codex sessions authenticated with an API key aren't affected.
+When several agents share the machine, ask each to consider how many builds or tests it needs to run at once and to leave CPU and memory available for other work where possible. Give a demanding job room to use the full machine when it needs it. When wrapping up, have each agent stop the background jobs it started and remove the temporary files it created once they’re no longer needed.
 
 ### Connect computers and apps to your dot
 
@@ -4078,12 +4290,11 @@ Learn more about [plugins](./plugins.md). To make a workflow reusable,
 
 #### Use ChatGPT Work efficiently
 
-Choose [GPT-6 Astra](./models.md#gpt-6-astra) for demanding work that needs
-careful reasoning, visual judgment, or a polished final file. Consider
-[GPT-6.1 Sol](./models.md#gpt-61-sol) for complex work at a lower cost than
-Astra, or Luna for simpler tasks. Select from the models available in your
-model selector and check [plan usage](./pricing.md) before starting a large
-task.
+For demanding work that needs careful reasoning, visual judgment, or a polished
+final file, choose [GPT-6.2 Astra](./models.md#app-gpt-62-astra)
+from the model picker. Choose [GPT-6.2 Sol](./models.md#app-gpt-62-sol)
+for everyday coding and writing, or Luna for simpler tasks.
+Check [plan usage](./pricing.md) before starting a large task.
 
 ChatGPT Work is best for substantial tasks that involve multiple steps, sources, or
 tools, or require a completed deliverable. Longer or more complex tasks may use
@@ -4551,41 +4762,16 @@ model version. Check the [models available in ChatGPT](./models.md) or the
 
 #### Find the right model for your workflow
 
-Choose your work and task and get a recommendation.
-
-#### When to consider GPT-6.1 Terra
-
-Try [GPT-6.1 Terra](https://developers.openai.com/api/docs/models/gpt-6.1-terra) for concise writing based on
-supplied material, computer-use tasks with a defined outcome, and scoped code
-fixes. Provide clear inputs, requirements, and a way to verify the result, such as
-checking saved records or running regression tests.
-
-Compare it with GPT-6.1 Sol on the same inputs and reasoning effort. For writing,
-judge audience fit, voice, and useful detail as well as accuracy and length. For
-computer use, check the saved result and the accuracy of the completion report.
-
-#### When to consider GPT-6.1 Sol
-
-Consider GPT-6.1 Sol for complex projects where cost matters, such as
-creating a board presentation from financial results or building a website
-from a product brief. Compare it with Astra on the same task to assess the
-tradeoff between quality and cost.
-
-See the [API model page](https://developers.openai.com/api/docs/models/gpt-6.1-sol) for specifications
-and API pricing, or [Codex and ChatGPT Work availability](./models.md#gpt-6.1-sol)
-for access through your ChatGPT plan.
+Choose a task and a priority to see a suggested model and reasoning effort.
 
 #### How to think about models and reasoning effort
 
-Luna is the most cost-efficient model, while Astra is our state-of-the-art,
-most powerful model. If cost and latency aren't a concern, you can default to
-Astra. To reduce costs or latency, use the guidance below to choose a model
-and reasoning effort for your needs.
+To reduce costs or latency, start with the lightest setting that meets your
+acceptance criteria. Compare the API cost per completed task, including
+retries.
 
-Luna is our most efficient model, while Astra is our state-of-the-art, most
-powerful model. If you don't need to think about usage or how long it takes to
-complete a task, you can default to Astra. To optimize usage, use the guidance
-below to choose a model and reasoning effort for your needs.
+To optimize usage, start with the suggested model and reasoning effort. Check
+which settings your plan offers and how much of your allowance the task uses.
 
 #### Experiment
 
@@ -4905,6 +5091,9 @@ Use Codex when you want ChatGPT to work with code, a codebase, or developer tool
 A useful Codex prompt names the behavior you want, points to the relevant code or
 reproduction steps, preserves important constraints, and says how to verify the
 change.
+
+For GPT-6.2 guidance on reasoning effort, subagents, and visual work, see
+[Prompting GPT-6.2 in Codex](https://learn.chatgpt.com/guides/prompting-gpt-6-2-astra).
 
 For a multi-step task, enter `/plan` in the app composer when you want Codex to
 investigate and propose an approach before editing. When [Goal mode](./long-running-work.md)
@@ -11625,7 +11814,7 @@ only after checking that the task can safely continue. If the notice says the
 task has ended or doesn't offer an option to resume, you can't resume from that
 surface.
 
-| Surface and data controls                                                                               | Findings and resume                                       |
+| GPT-6 Astra surface and data controls                                                                   | Findings and resume                                       |
 | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
 | Codex and ChatGPT Work clients with the findings and resume flow, without the data controls listed here | Review the findings before resuming.                      |
 | Codex CLI and mobile                                                                                    | Full findings and resume aren't available. The task ends. |
@@ -13683,7 +13872,7 @@ Remove the setting or choose a supported policy. Project entries with
 for examples and approval tradeoffs.
 
 Set `model` to one available to your signed-in account or workspace. See
-[GPT-6.1 Sol availability](./models.md#gpt-6.1-sol) before using the example value.
+[model availability by plan](./pricing.md#feature-availability) before using the example value.
 
 | Key                                                           | Type / Values                                                                                                                                                 | Default | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -15869,6 +16058,8 @@ steps](#gpt-55-retirement).
 
 In Work or Codex in the ChatGPT desktop app, use the model and reasoning control
 beneath the composer to choose an available model and adjust its reasoning effort.
+If you see the Power slider, open **Advanced** to choose a specific model,
+such as GPT-6.2 Astra.
 
 **Reasoning effort** guides how much work the model puts into thinking through
 your request. Higher effort can improve results for complex tasks, but it takes
@@ -15902,17 +16093,16 @@ GPT-6.1 Terra requires Codex CLI 0.159.0 or later. To use it, run
 `codex -m gpt-6.1-terra`.
 
 In an interactive CLI session, use `/model` to switch models or adjust
-reasoning effort. You can also choose a model when you launch Codex with
-`--model` or its `-m` alias:
+reasoning effort. To start Codex with Sol, use `--model` or its `-m` alias:
 
 ```bash
-codex --model gpt-6.1-sol
+codex --model gpt-6.2-sol
 ```
 
 The same option works with non-interactive runs. For example:
 
 ```bash
-codex exec -m gpt-6.1-sol "Review the current changes"
+codex exec -m gpt-6.2-sol "Review the current changes"
 ```
 
 **Reasoning effort** guides how much work the model puts into thinking through
@@ -15940,25 +16130,32 @@ beyond a single-agent run. It uses
 [subagents](./agent-configuration/subagents.md) to accelerate complex work,
 making it useful for larger tasks that can be split across subagents.
 
-In the ChatGPT desktop app and ChatGPT Work on the web, start with the default
-Power setting available to your account. Move toward **Smarter** for deeper
-reasoning or **Faster** for faster, lower-cost work. Open **Advanced** to
-choose a specific model, reasoning effort, or speed. To try GPT-6.1 Terra in
-this example, open **Advanced** and choose it from the model list.
-
-The six Power presets shown are Luna High, GPT-6 Sol Light (selected
-in this example), GPT-6 Sol Medium, Astra Light, Astra Medium, and Astra Extra
-High. Some paid plans omit Astra Extra High. Advanced controls are illustrative;
-available options and defaults vary by plan, client, workspace settings, and rollout.
+This example shows the Power slider for a ChatGPT Work account with access to
+both GPT-6.2 models. New Work chats start with GPT-6.2 Sol at **Light** on
+supported consumer plans or **Medium** in Enterprise workspaces with the model
+enabled. Move the Power slider toward **Smarter** for deeper reasoning or
+**Faster** for faster, lower-cost work. Open **Advanced** to choose a specific
+model or reasoning effort from the options available to your account.
 
 #### Recommended models
 
-Start with the kind of work you want to do. Astra suits the most demanding
-workflows. GPT-6.1 Sol offers near-Astra performance at a lower cost than Astra.
+GPT-6.2 Astra and GPT-6.2 Sol are now available in ChatGPT Work and Codex on
+[supported plans and clients](./pricing.md#feature-availability). For demanding
+work across code, apps, or research, choose GPT-6.2 Astra. In Codex, try Astra to
+trace a bug across services, fix it, and test the change. See
+[Prompting GPT-6.2 in Codex](https://learn.chatgpt.com/guides/prompting-gpt-6-2-astra).
+
+Choose GPT-6.2 Sol for
+everyday coding, writing, and work across several sources. It costs fewer credits
+per token than GPT-6.2 Astra at [Standard speed](./pricing.md#token-rates).
 GPT-6.1 Terra is a fast, efficient choice for writing, visual understanding, and
 computer use. Luna suits focused, repeatable tasks.
 
-These recommendations apply to ChatGPT Work and Codex. For Chat, see [models in ChatGPT](https://help.openai.com/en/articles/20001354-gpt-6-and-other-models-in-chatgpt) in the Help Center.
+These recommendations apply to ChatGPT Work and Codex. For Chat availability, see [models in ChatGPT](https://help.openai.com/en/articles/20001354-gpt-6-and-other-models-in-chatgpt) in the Help Center.
+
+To use a longer context window in Codex, set `model_context_window` in
+[`config.toml`](./config-file/config-advanced.md#model-reasoning-verbosity-and-limits).
+GPT-6.2 Astra and GPT-6.2 Sol each support a context window of up to 1 million tokens.
 
 GPT-6.1 Sol uses a default context window of 500,000 tokens in Codex and
 ChatGPT Work. See [pricing](./pricing.md) for subscription usage and credit rates.
@@ -15974,14 +16171,12 @@ work changes.
 
 #### Where each model shines
 
-- **Astra, for the hardest end-to-end work.** Choose Astra for complete workflows
-  across code, apps, and research that need sustained reasoning and judgment.
-  Give it the sources, templates, constraints, and checks that define a useful
-  result. Astra is better at asking focused questions and incorporating your
-  guidance while keeping the original goal and constraints in view.
-- **GPT-6.1 Sol, for repeated, long-running work.** Consider GPT-6.1 Sol for
-  work across code, apps, and documents when cost matters. Keep Astra for your
-  most demanding work.
+- **GPT-6.2 Astra or GPT-6 Astra, for the hardest end-to-end work.** Choose an
+  available Astra model for tasks that need sustained reasoning across code,
+  apps, or research. Give it the sources, constraints, and checks that define a
+  useful result.
+- **GPT-6.2 Sol, for everyday work.** Choose Sol to edit code, draft documents,
+  or turn several sources into a plan.
 - **GPT-6.1 Terra, for everyday writing and visual work.** Choose Terra for clear
   communication, interpreting images and screens, and completing tasks across
   supported apps. Try it for drafting proposals, reviewing visual materials,
@@ -15995,12 +16190,12 @@ work changes.
 Use your own materials with these prompts, and tell ChatGPT what a useful
 result should include.
 
-| Model         | Task                                           | Example prompt                                                                                                                                                                        |
-| ------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Astra         | Work through a complex decision.               | "Compare these three vendor proposals against our requirements. Explain the tradeoffs, recommend an option, and list the questions we should resolve before deciding."                |
-| GPT-6.1 Sol   | Bring several sources into a working document. | "Use this project brief, meeting notes, and timeline to draft an implementation plan. Identify dependencies, flag conflicting details, and list the decisions we still need to make." |
-| GPT-6.1 Terra | Make sense of visual information.              | "Review these dashboard screenshots and summarize the main changes. Refer to the chart labels and values, and flag anything you can't read confidently."                              |
-| Luna          | Organize information into a consistent format. | "Turn these meeting notes into a table of action items, owners, and due dates. Mark any missing owner or date as unspecified."                                                        |
+| Model                        | Task                                           | Example prompt                                                                                                                                                                        |
+| ---------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GPT-6.2 Astra or GPT-6 Astra | Work through a complex decision.               | "Compare these three vendor proposals against our requirements. Explain the tradeoffs, recommend an option, and list the questions we should resolve before deciding."                |
+| GPT-6.2 Sol                  | Bring several sources into a working document. | "Use this project brief, meeting notes, and timeline to draft an implementation plan. Identify dependencies, flag conflicting details, and list the decisions we still need to make." |
+| GPT-6.1 Terra                | Make sense of visual information.              | "Review these dashboard screenshots and summarize the main changes. Refer to the chart labels and values, and flag anything you can't read confidently."                              |
+| Luna                         | Organize information into a consistent format. | "Turn these meeting notes into a table of action items, owners, and due dates. Mark any missing owner or date as unspecified."                                                        |
 
 Review the result against your source materials, especially names, numbers,
 and details taken from images. For tasks on websites or in desktop apps, check
@@ -16012,11 +16207,10 @@ requirements first.
 For example, you might use a lower effort to rewrite a short email and a higher
 effort to compare several proposals with competing requirements.
 
-For GPT-6.1 Sol, start with the reasoning effort available by default in your
-client and adjust based on the task. Start with **High** for Luna or **Light**
-for Astra.
-In configuration, Astra's Light setting is `low`. Increase the effort for tasks
-that need more planning, analysis, or checking.
+For GPT-6.2 Astra or GPT-6.2 Sol, start with the effort your client selects
+and adjust it based on the task. For Luna, start with **High**. For GPT-6
+Astra, start with **Light** (`low` in configuration). Increase the effort for
+tasks that need more planning, analysis, or checking.
 
 - **Light** in the ChatGPT desktop app, ChatGPT Work on the web, and IDE extension, or **Low** in the
   CLI, suits quick, well-scoped tasks.
@@ -16112,9 +16306,12 @@ The ChatGPT desktop app, Codex CLI, and IDE extension use the same `config.toml`
 [configuration file](./config-file/config-basic.md). To specify a model, add a
 `model` entry to your configuration file. If you don't specify a model, the
 ChatGPT desktop app, Codex CLI, or IDE extension uses a recommended model.
+This example selects Sol in the app or CLI. When sharing a configuration with
+the IDE extension, pick a model available in every client you use,
+such as `gpt-6.1-sol`.
 
 ```toml
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 ```
 
 ### Sample Configuration
@@ -17773,7 +17970,7 @@ information.
 #### Global flags
 
 Choose a model available to your signed-in account or workspace. See
-[GPT-6.1 Sol availability](./models.md#gpt-6.1-sol) before using it with `--model`.
+[model availability by plan](./pricing.md#feature-availability) before using it with `--model`.
 
 | Key                                                  | Type / Values                                                 | Default | Details                                                                                                                                                                                                                                                    |
 | ---------------------------------------------------- | ------------------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -17788,7 +17985,7 @@ Choose a model available to your signed-in account or workspace. See
 | `--enable`                                           | `feature`                                                     |         | Force-enable a feature flag (translates to `-c features.=true`). Repeatable.                                                                                                                                                                               |
 | `--image, -i`                                        | `path[,path...]`                                              |         | Attach one or more image files to the initial prompt. Separate multiple paths with commas or repeat the flag.                                                                                                                                              |
 | `--local-provider`                                   | `lmstudio \| ollama`                                          |         | Choose the local provider used with `--oss`, overriding `oss_provider` for this run.                                                                                                                                                                       |
-| `--model, -m`                                        | `string`                                                      |         | Override the model set in configuration (for example `gpt-6.1-sol`).                                                                                                                                                                                       |
+| `--model, -m`                                        | `string`                                                      |         | Override the model set in configuration (for example `gpt-6.2-sol`).                                                                                                                                                                                       |
 | `--no-alt-screen`                                    | `boolean`                                                     | `false` | Disable alternate screen mode for the TUI (overrides `tui.alternate_screen` for this run).                                                                                                                                                                 |
 | `--no-daemon`                                        | `boolean`                                                     | `false` | Run the interactive CLI without the shared background server. Can't be combined with `--remote` or `codex agents`.                                                                                                                                         |
 | `--oss`                                              | `boolean`                                                     | `false` | Use a local open source model provider. Codex uses `--local-provider`, your configured `oss_provider`, or prompts you to choose between LM Studio and Ollama.                                                                                              |
@@ -18378,10 +18575,10 @@ on a website, or review a page you're building.
 
 Browser is available in ChatGPT on the web and in the ChatGPT desktop app.
 
-[GPT-6 Astra](./models.md#gpt-6-astra) improves visual judgment for tasks such
-as checking a page against a screenshot or completing a workflow across sites.
-Choose it when available in your model selector, and describe how to verify the
-finished result.
+For tasks that need visual judgment, choose [GPT-6.2 Astra](./models.md#recommended-models)
+from the model picker.
+For example, ask ChatGPT to check a page against a screenshot and list any
+differences.
 
 For managed desktop environments, administrators can restrict browser origins,
 uploads, downloads, and developer access. See
@@ -20836,8 +21033,9 @@ On macOS, grant:
 #### When to use Computer Use
 
 For difficult tasks that depend on screenshots or visual judgment, choose
-[GPT-6 Astra](./models.md#gpt-6-astra) when it is available in your model
-selector. The same operating-system permissions and app access controls apply.
+[GPT-6.2 Astra](./models.md#recommended-models) from the model picker. For example, ask ChatGPT to reproduce a bug in the app
+and identify the first screen where the result differs from what you expected.
+The same operating-system permissions and app access controls apply.
 
 Choose Computer Use when the task depends on a graphical user interface that's
 hard to verify through files or command output alone.
@@ -21453,7 +21651,7 @@ completion still works before you queue the command.
 | [`/logout`](#sign-out-with-logout)                                                          | Sign out of Codex.                                              | Clear local credentials when using a shared machine.                                                |
 | [`/mcp`](#list-mcp-tools-with-mcp)                                                          | List configured Model Context Protocol (MCP) tools.             | Check which external tools Codex can call during the session; add `verbose` for server details.     |
 | [`/mention`](#highlight-files-with-mention)                                                 | Attach a file to the chat.                                      | Point Codex at specific files or folders you want it to inspect next.                               |
-| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Use `gpt-6-luna` or `gpt-6.1-sol` if shown.                                                         |
+| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Select GPT-6.2 Sol for everyday coding if your workspace has access.                                |
 | [`/presets`](#reuse-prompts-and-commands-with-presets)                                      | Save and run prompts or slash commands.                         | Recall a command or prompt you use frequently.                                                      |
 | [`/fast`](#toggle-fast-mode-with-fast)                                                      | Toggle a Fast service tier when the model catalog exposes one.  | Turn the current model's Fast tier on or off and persist the selection.                             |
 | [`/daybreak`](#toggle-daybreak)                                                             | Toggle Daybreak when your account and model are eligible.       | Use an approved cyber access program for a chat.                                                    |
@@ -21566,12 +21764,12 @@ Expected: Codex shows retained warnings and their diagnostic details.
 
 #### Set the active model with `/model`
 
-The picker only shows models available to your account and workspace. If GPT-6.1
-Sol isn't listed, choose another model. See [GPT-6.1 Sol availability by plan](./models.md#gpt-6.1-sol).
+The picker shows the models available to your account and workspace. See
+[model availability by plan](./pricing.md#feature-availability).
 
 1. Start Codex and open the composer.
 2. Type `/model` and press Enter.
-3. Choose a model such as `gpt-6-luna` or `gpt-6.1-sol` from the popup.
+3. Choose a model from the list. For a complex debugging task, select GPT-6.2 Astra. For everyday coding, select GPT-6.2 Sol.
 
 Expected: Codex confirms the new model in the transcript. Run `/status` to verify the change.
 
@@ -24923,6 +25121,8 @@ Best practices:
 
 #### Decoupled example
 
+For the Ruby server, install the `mcp` gem at version `1.10.0`. Build the browser component as described below, then run the server from the project directory.
+
 Example (decoupled dice tools):
 
 ```typescript
@@ -25023,6 +25223,92 @@ server.registerTool(
 export default server;
 ```
 
+```ruby
+require "mcp"
+
+class RollDice < MCP::Tool
+  tool_name "roll_dice"
+  description "Roll a die without opening a widget."
+  input_schema(
+    properties: {
+      sides: {
+        type: "integer",
+        minimum: 2
+      }
+    }, required: ["sides"]
+  )
+
+  def self.call(sides:, server_context:)
+    MCP::Tool::Response.new(
+      [], structured_content: {
+        sides: sides,
+        value: rand(1..sides)
+      }
+    )
+  end
+end
+
+class RenderDiceWidget < MCP::Tool
+  tool_name "render_dice_widget"
+  description "Show a previously rolled die."
+  input_schema(
+    properties: {
+      sides: {
+        type: "integer",
+        minimum: 2
+      },
+      value: {
+        type: "integer",
+        minimum: 1
+      }
+    },
+    required: ["sides", "value"]
+  )
+  meta(ui: { resourceUri: "ui://widget/dice.html" })
+
+  def self.call(sides:, value:, server_context:)
+    if value > sides
+      return MCP::Tool::Response.new(
+        [
+          {
+            type: "text",
+            text: "Value exceeds the die's sides."
+          }
+        ], error: true
+      )
+    end
+
+    MCP::Tool::Response.new(
+      [], structured_content: {
+        sides: sides,
+        value: value
+      }
+    )
+  end
+end
+
+# Build the browser component first, then run this server from the project root.
+script = File.read("dice-widget.js").gsub(%r{</script}i) { '<\/script' }
+html = '<!doctype html><html lang="en"><meta charset="utf-8">' \
+       '<title>Dice</title><body><div id="root"></div>' \
+       "<script type=\"module\">#{script}</script></body></html>"
+resource = MCP::Resource.define(uri: "ui://widget/dice.html", name: "widget", mime_type: "text/html;profile=mcp-app") do
+  [
+    MCP::Resource::TextContents.new(
+      uri: "ui://widget/dice.html", mime_type: "text/html;profile=mcp-app", text: html
+    )
+  ]
+end
+
+server = MCP::Server.new(
+  name: "Decoupled dice", version: "1.0.0", tools: [RollDice, RenderDiceWidget],
+  resources: [
+    resource
+  ]
+)
+MCP::Server::Transports::StdioTransport.new(server).open
+```
+
 Install `esbuild` with the server dependencies, then save this browser code as
 `dice-widget.ts` beside the server file:
 
@@ -25079,6 +25365,8 @@ rerollButton.onclick = async () => {
 await app.connect();
 rerollButton.disabled = false;
 ```
+
+For Ruby, bundle `dice-widget.ts` into `dice-widget.js` with `npm exec -- esbuild dice-widget.ts --bundle --format=esm --outfile=dice-widget.js`. Install `esbuild` and `@modelcontextprotocol/ext-apps` with your browser dependencies. The Ruby server reads that compiled file.
 
 #### Manage state
 
@@ -25390,6 +25678,59 @@ registerAppResource(
   })
 );
 ```
+
+```ruby
+require "mcp"
+
+class OpenProjectBoard < MCP::Tool
+  tool_name "open_project_board"
+  title "Open project board"
+  input_schema(properties: {})
+  meta(ui: { resourceUri: "ui://project-board/v1.html" })
+
+  def self.call(server_context:)
+    MCP::Tool::Response.new(
+      [
+        {
+          type: "text",
+          text: "Review the tasks in the project board."
+        }
+      ]
+    )
+  end
+end
+
+# Build the browser component first, then run this server from the project root.
+script = File.read("web/dist/component.js").gsub(%r{</script}i) { '<\/script' }
+html = '<!doctype html><html lang="en"><meta charset="utf-8">' \
+       '<title>Project board</title><body><div id="root"></div>' \
+       "<script type=\"module\">#{script}</script></body></html>"
+resource = MCP::Resource.define(uri: "ui://project-board/v1.html", name: "widget", mime_type: "text/html;profile=mcp-app") do
+  [
+    MCP::Resource::TextContents.new(
+      uri: "ui://project-board/v1.html", mime_type: "text/html;profile=mcp-app", text: html,
+      meta: {
+        ui: {
+          prefersBorder: true,
+
+          domain: "https://example.com",
+          csp: {
+            connectDomains: ["https://api.example.com"],
+            resourceDomains: ["https://static.example.com"]
+          }
+        }
+      }
+    )
+  ]
+end
+
+server = MCP::Server.new(
+  name: "docs-example", version: "1.0.0", tools: [OpenProjectBoard], resources: [resource]
+)
+MCP::Server::Transports::StdioTransport.new(server).open
+```
+
+For Ruby, install the `mcp` gem at version `1.10.0` and run the server from the project root after building `web/dist/component.js` in the preceding steps.
 
 Associate the resource URI with only the tools that should render the
 component. For broader MCP Apps compatibility, use `_meta.ui.resourceUri`.
@@ -26835,7 +27176,11 @@ Alex — Moonwaffle work:     prf_8d7e4b19
 
 These example IDs do not encode profile labels or internal relationships. They are persisted once per profile and reused across reconnection, token refresh, and changes to email or display name.
 
-**Build the response from the authenticated profile.** This TypeScript example shows handler logic you can connect to your MCP SDK. `loadAuthenticatedProfile` is your application’s integration code: it validates the request credentials, enforces their permissions, and retrieves the corresponding profile’s persisted ID and display metadata. `requestContext` comes from your server’s request handling; it is not a model-supplied tool argument.
+**Build the response from the authenticated profile.** These examples show handler logic you can connect to your MCP SDK.
+
+`loadAuthenticatedProfile` is your application’s integration code: it validates the request credentials, enforces the permissions associated with those credentials, and retrieves the corresponding profile’s persisted ID and display metadata. `requestContext` comes from your server’s request handling; it is not a model-supplied tool argument.
+
+`load_authenticated_profile` is your application’s integration code: it validates the request credentials, enforces the permissions associated with those credentials, and retrieves the corresponding profile’s persisted ID and display metadata. `request_context` comes from your server’s request handling; it is not a model-supplied tool argument.
 
 ```typescript
 async function getProfile(requestContext: { token: string }) {
@@ -26869,7 +27214,43 @@ async function getProfile(requestContext: { token: string }) {
 }
 ```
 
-Register this handler with the metadata declaration and input/output schemas above. `loadAuthenticatedProfile` must resolve the same stored profile for equivalent credentials and after reconnection. It must not create a fresh profile ID for each OAuth grant or session. All other tools must use the request’s credentials to enforce the same profile’s permissions.
+```ruby
+require "json"
+
+def get_profile(request_context)
+  account = load_authenticated_profile(request_context.fetch(:token))
+  id = account["profileId"]
+  unless id.is_a?(String) && !id.strip.empty?
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text",
+          text: "Profile identity unavailable."
+        }
+      ]
+    }
+  end
+
+  # Return the persisted ID unchanged, including across repeated requests.
+  profile = { id: id }
+  %w[name email nickname].each do |field|
+    profile[field.to_sym] = account[field] if account[field].is_a?(String)
+  end
+  {
+    isError: false,
+    structuredContent: profile,
+    content: [
+      {
+        type: "text",
+        text: JSON.generate(profile)
+      }
+    ]
+  }
+end
+```
+
+Register this handler with the metadata declaration and input/output schemas above. Your profile lookup must resolve the same stored profile for equivalent credentials and after reconnection. It must not create a fresh profile ID for each OAuth grant or session. All other tools must use the request’s credentials to enforce the same profile’s permissions.
 
 **Verify identity behavior:**
 
@@ -27146,6 +27527,8 @@ npm install @modelcontextprotocol/sdk zod
 pip install mcp
 ```
 
+For the Ruby examples, use Ruby 3.3 and install `mcp` version `1.10.0`, `rackup` version `2.3`, and `webrick`. Save one complete server example as `main.rb`, then run `ruby main.rb`. It listens for Streamable HTTP requests at `http://localhost:3000/mcp`.
+
 #### Create the server
 
 Create an MCP server with a stable name and version:
@@ -27157,6 +27540,23 @@ const server = new McpServer({
   name: "acme-projects",
   version: "1.0.0",
 });
+```
+
+```ruby
+require "mcp"
+require "rackup"
+require "rackup/handler/webrick"
+
+server = MCP::Server.new(
+  name: "acme-projects",
+  version: "1.0.0"
+)
+transport = MCP::Server::Transports::StreamableHTTPTransport.new(server, stateless: true, enable_json_response: true)
+app = Rack::URLMap.new("/mcp" => transport)
+Rackup::Handler::WEBrick.run(app, Host: "127.0.0.1", Port: Integer(ENV.fetch("PORT", "3000"))) do |http_server|
+  trap("INT") { http_server.shutdown }
+  trap("TERM") { http_server.shutdown }
+end
 ```
 
 MCP servers can also return an
@@ -27177,6 +27577,24 @@ const server = new McpServer(
       "Before updating a project, call get_project to confirm its ID and current status.",
   }
 );
+```
+
+```ruby
+require "mcp"
+require "rackup"
+require "rackup/handler/webrick"
+
+server = MCP::Server.new(
+  name: "acme-projects",
+  version: "1.0.0",
+  instructions: "Before updating a project, call get_project to confirm its ID and current status."
+)
+transport = MCP::Server::Transports::StreamableHTTPTransport.new(server, stateless: true, enable_json_response: true)
+app = Rack::URLMap.new("/mcp" => transport)
+Rackup::Handler::WEBrick.run(app, Host: "127.0.0.1", Port: Integer(ENV.fetch("PORT", "3000"))) do |http_server|
+  trap("INT") { http_server.shutdown }
+  trap("TERM") { http_server.shutdown }
+end
 ```
 
 #### Define tools from user goals
@@ -27248,6 +27666,77 @@ server.registerTool(
     };
   }
 );
+```
+
+```ruby
+require "mcp"
+require "rackup"
+require "rackup/handler/webrick"
+
+class ListProjects < MCP::Tool
+  tool_name "list_projects"
+  description "Use this when the user wants to find or review projects in their Acme workspace."
+  input_schema(
+    properties: {
+      status: {
+        type: "string",
+        enum: ["active", "archived"]
+      }
+    }
+  )
+  output_schema(
+    type: "object",
+    properties: {
+      projects: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            id: { type: "string" },
+            name: { type: "string" },
+            status: { type: "string" }
+          },
+          required: ["id", "name", "status"]
+        }
+      }
+    },
+    required: ["projects"]
+  )
+  annotations(read_only_hint: true, open_world_hint: false, destructive_hint: false, idempotent_hint: nil)
+
+  def self.call(server_context:, status: nil)
+    # Local example data; replace this with your application data.
+    projects = [
+      {
+        id: "project-1",
+        name: "Website",
+        status: "active"
+      },
+      {
+        id: "project-2",
+        name: "Launch",
+        status: "archived"
+      }
+    ].select { |project| status.nil? || project[:status] == status }
+    MCP::Tool::Response.new(
+      [
+        {
+          type: "text",
+          text: "Found #{projects.length} projects."
+        }
+      ],
+      structured_content: { projects: projects }
+    )
+  end
+end
+
+server = MCP::Server.new(name: "docs-example", version: "1.0.0", tools: [ListProjects])
+transport = MCP::Server::Transports::StreamableHTTPTransport.new(server, stateless: true, enable_json_response: true)
+app = Rack::URLMap.new("/mcp" => transport)
+Rackup::Handler::WEBrick.run(app, Host: "127.0.0.1", Port: Integer(ENV.fetch("PORT", "3000"))) do |http_server|
+  trap("INT") { http_server.shutdown }
+  trap("TERM") { http_server.shutdown }
+end
 ```
 
 #### Return useful results without UI
@@ -28931,35 +29420,39 @@ Hooks run at different points in a conversation:
 
 #### Where Codex looks for hooks
 
-Codex discovers hooks next to active config layers in either of these forms:
+Local Codex looks for `hooks.json` in the locations below. In each directory,
+you can also declare hooks inline under `[hooks]` in `config.toml`.
 
-- `hooks.json`
-- inline `[hooks]` tables inside `config.toml`
+| Scope                    | `hooks.json` location                   |
+| ------------------------ | --------------------------------------- |
+| System (macOS and Linux) | `/etc/codex/hooks.json`                 |
+| System (Windows)         | `%ProgramData%\OpenAI\Codex\hooks.json` |
+| User                     | `$CODEX_HOME/hooks.json`                |
+| Trusted project          | `.codex/hooks.json`                     |
 
-Installed plugins can also bundle lifecycle config through their plugin
-manifest or a default `hooks/hooks.json` file. See [Build
+If `CODEX_HOME` is unset, the user file is `~/.codex/hooks.json` on macOS and
+Linux and `%USERPROFILE%\.codex\hooks.json` on Windows.
+
+Codex discovers a standalone `hooks.json` without a sibling `config.toml` or a
+reference in `requirements.toml`. If you move or remove the system file, Codex
+skips that source the next time it loads hooks. Use file and directory
+permissions to control who can edit or move it. Administrators can also declare
+hooks directly in [`requirements.toml`](#managed-hooks-in-local-codex).
+
+Codex checks `.codex` directories from the project root to the working directory
+and loads hooks only from trusted project layers. In a linked Git worktree, a
+project layer can read hooks from the corresponding directory in the main
+checkout. User and system hooks can still load in untrusted projects.
+
+Enabled plugins can also supply [bundled hooks](#plugin-bundled-hooks) through
+their manifest or, by default, `hooks/hooks.json` in the plugin root. See [Build
 plugins](https://developers.openai.com/plugins/build/plugins#bundled-mcp-servers-and-lifecycle-hooks) for the
 plugin packaging rules.
 
-In practice, the four most useful locations are:
-
-- `~/.codex/hooks.json`
-- `~/.codex/config.toml`
-- `/.codex/hooks.json`
-- `/.codex/config.toml`
-
-If more than one hook source exists, Codex loads all matching hooks.
-Higher-precedence config layers don't replace lower-precedence hooks.
-If a single layer contains both `hooks.json` and inline `[hooks]`, Codex
-merges them and warns at startup. Prefer one representation per layer.
-
-Codex can also discover hooks bundled with enabled plugins. Plugin-bundled
-hooks load alongside other hook sources and use the same trust-review flow as
-other non-managed hooks.
-
-Project-local hooks load only when the project `.codex/` layer is trusted. In
-untrusted projects, Codex still loads user and system hooks from their own
-active config layers.
+Codex combines matching hooks across sources. If two files register the same
+command for an event, Codex can run it twice when that event occurs. When a
+layer declares hooks in both `hooks.json` and `config.toml`, Codex loads both
+and warns at startup. Prefer one format per layer.
 
 #### Review and trust hooks
 
@@ -29267,8 +29760,9 @@ statusMessage = "Checking managed Bash command"
 
 Notes for managed hooks:
 
-- `managed_dir` is used on macOS and Linux.
-- `windows_managed_dir` is used on Windows.
+- `managed_dir` (macOS and Linux) and `windows_managed_dir` (Windows) describe
+  where you install scripts for the hooks declared in `requirements.toml`.
+  Setting either directory doesn't add a `hooks.json` search location.
 - Codex doesn't distribute the scripts in `managed_dir`; your enterprise
   tooling must install and update them separately.
 - Managed hook commands should use absolute script paths under the configured
@@ -30323,6 +30817,44 @@ export async function sendEvent(
 }
 ```
 
+```ruby
+require "standardwebhooks"
+require "net/http"
+require "json"
+require "uri"
+
+def send_event(subscription, event)
+  body = JSON.generate(event)
+  raise ArgumentError, "Event payload exceeds 256 KiB" if body.bytesize > 256 * 1024
+
+  signed_at = Time.now
+  event_id = event.fetch(:eventId)
+  signer = StandardWebhooks::Webhook.new(subscription.fetch(:secret))
+  uri = URI.parse(subscription.fetch(:url))
+  raise ArgumentError, "Expected an HTTP or HTTPS subscription URL" unless uri.is_a?(URI::HTTP)
+
+  request = Net::HTTP::Post.new(uri)
+  request["Content-Type"] = "application/json"
+  request["webhook-id"] = event_id
+  request["webhook-timestamp"] = signed_at.to_i.to_s
+  request["webhook-signature"] = signer.sign(event_id, signed_at.to_i, body)
+  request["X-MCP-Subscription-Id"] = subscription.fetch(:id)
+  request.body = body
+  response = Net::HTTP.start(
+    uri.host, uri.port, use_ssl: uri.scheme == "https",
+    open_timeout: 10, read_timeout: 10, write_timeout: 10
+  ) do |http|
+    http.request(request)
+  end
+  raise "Webhook redirects are not allowed" if response.is_a?(Net::HTTPRedirection)
+
+  {
+    accepted: response.is_a?(Net::HTTPSuccess),
+    status: response.code.to_i
+  }
+end
+```
+
 Set `subscription.url` and `subscription.secret` from the subscription request’s `delivery` object.
 
 #### Handle delivery responses
@@ -30811,11 +31343,15 @@ server](https://developers.openai.com/plugins/build/chatgpt-ui#layer-on-chatgpt-
 
 #### Build an MCP server
 
-Install the official Python or TypeScript MCP SDK to create a server and expose a `/mcp` endpoint.
+Use an MCP SDK to create a server and expose a `/mcp` endpoint.
 
-In this quickstart, we'll use the [TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk).
+Both server implementations use the same HTML page.
+
+For Ruby 3.3, install the `mcp` (1.10.0), `rackup` (2.3.1), and `webrick` (1.9.2) gems.
 
 If you're using Python, refer to our [examples repository on GitHub](https://github.com/openai/openai-apps-sdk-examples) to see an example MCP server with the Python SDK.
+
+The TypeScript setup uses the [TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk).
 
 Use Node.js 22.6 or later. Install the TypeScript SDK, MCP Apps helpers, and the `zod` package with:
 
@@ -30827,7 +31363,11 @@ npm install @modelcontextprotocol/sdk @modelcontextprotocol/ext-apps zod
 
 Register a resource for your component bundle and the tools the model can call (for example, `add_todo` and `complete_todo`) so ChatGPT can drive the UI.
 
-Create a file named `server.ts` and paste the following example that uses the TypeScript SDK:
+Save the TypeScript example as `server.ts`.
+
+Save the Ruby example as `server.rb`.
+
+Keep `public/todo-widget.html` in the same project directory:
 
 ```typescript
 import { createServer } from "node:http";
@@ -31008,6 +31548,163 @@ httpServer.listen(port, () => {
 });
 ```
 
+```ruby
+require "mcp"
+require "rackup"
+require "rackup/handler/webrick"
+
+todo_html = File.read("public/todo-widget.html")
+TODO_OUTPUT_SCHEMA = {
+  type: "object",
+
+  properties: {
+    tasks: {
+      type: "array",
+
+      items: {
+        type: "object",
+
+        properties: {
+          id: { type: "string" },
+          title: { type: "string" },
+          completed: { type: "boolean" }
+        },
+        required: ["id", "title", "completed"],
+
+        additionalProperties: false
+      }
+    }
+  },
+  required: ["tasks"],
+
+  additionalProperties: false
+}.freeze
+
+class TodoList
+  def initialize
+    @tasks = []
+    @next_id = 1
+    @mutex = Mutex.new
+  end
+
+  def add(title)
+    @mutex.synchronize do
+      title = title.strip
+      next reply("Missing title.") if title.empty?
+
+      @tasks << {
+        id: "todo-#{@next_id}",
+        title: title,
+        completed: false
+      }
+      @next_id += 1
+      reply("Added #{title.inspect}.")
+    end
+  end
+
+  def complete(id)
+    @mutex.synchronize do
+      task = @tasks.find { |item| item[:id] == id }
+      next reply("Todo #{id} was not found.") unless task
+
+      task[:completed] = true
+      reply("Completed #{task[:title].inspect}.")
+    end
+  end
+
+  private
+
+  def reply(message)
+    MCP::Tool::Response.new(
+      [
+        {
+          type: "text",
+          text: message
+        }
+      ],
+      structured_content: { tasks: @tasks.map(&:dup) }
+    )
+  end
+end
+
+class AddTodo < MCP::Tool
+  tool_name "add_todo"
+  title "Add todo"
+  description "Creates a todo item with the given title."
+  input_schema(
+    properties: {
+      title: {
+        type: "string",
+        minLength: 1
+      }
+    }, required: ["title"], additionalProperties: false
+  )
+  output_schema(TODO_OUTPUT_SCHEMA)
+  meta(ui: { resourceUri: "ui://widget/todo.html" })
+
+  def self.call(title:, server_context:)
+    server_context.fetch(:todos).add(title)
+  end
+end
+
+class CompleteTodo < MCP::Tool
+  tool_name "complete_todo"
+  title "Complete todo"
+  description "Marks a todo as done by id."
+  input_schema(
+    properties: {
+      id: {
+        type: "string",
+        minLength: 1
+      }
+    }, required: ["id"], additionalProperties: false
+  )
+  output_schema(TODO_OUTPUT_SCHEMA)
+  meta(ui: { resourceUri: "ui://widget/todo.html" })
+
+  def self.call(id:, server_context:)
+    server_context.fetch(:todos).complete(id)
+  end
+end
+
+widget = MCP::Resource.define(uri: "ui://widget/todo.html", name: "todo-widget", mime_type: "text/html;profile=mcp-app") do
+  [MCP::Resource::TextContents.new(uri: "ui://widget/todo.html", mime_type: "text/html;profile=mcp-app", text: todo_html)]
+end
+server = MCP::Server.new(
+  name: "todo-plugin-server", version: "0.1.0", tools: [AddTodo, CompleteTodo],
+  resources: [widget], server_context: { todos: TodoList.new }
+)
+transport = MCP::Server::Transports::StreamableHTTPTransport.new(server, stateless: true, enable_json_response: true)
+mcp_app = Rack::URLMap.new("/mcp" => transport)
+app = lambda do |environment|
+  path, method = environment.values_at("PATH_INFO", "REQUEST_METHOD")
+  headers = {
+    "access-control-allow-origin" => "*",
+    "access-control-expose-headers" => "Mcp-Session-Id"
+  }
+  if path == "/mcp" && method == "OPTIONS"
+    [
+      204, headers.merge(
+        "access-control-allow-methods" => "POST, GET, OPTIONS",
+        "access-control-allow-headers" => "content-type, mcp-session-id"
+      ), []
+    ]
+  elsif path == "/" && method == "GET"
+    [200, { "content-type" => "text/plain" }, ["Todo MCP server"]]
+  elsif path == "/mcp" && ["POST", "GET", "DELETE"].include?(method)
+    status, response_headers, body = mcp_app.call(environment)
+    [status, response_headers.merge(headers), body]
+  else
+    [404, { "content-type" => "text/plain" }, ["Not Found"]]
+  end
+end
+
+Rackup::Handler::WEBrick.run(app, Host: "127.0.0.1", Port: Integer(ENV.fetch("PORT", "8787"))) do |http_server|
+  trap("INT") { http_server.shutdown }
+  trap("TERM") { http_server.shutdown }
+end
+```
+
 This snippet also responds to `GET /` for health checks, handles CORS preflight for `/mcp`, and returns `404 Not Found` for OAuth discovery routes you are not using yet. That keeps ChatGPT from surfacing 502 errors while you iterate without authentication.
 
 #### Run locally
@@ -31017,9 +31714,9 @@ Usually, you can run a build command such as `npm run build` to produce a `dist`
 
 In this quickstart, since we're using vanilla HTML, no build step is required.
 
-Start the MCP server on `http://localhost:/mcp` from the directory that contains `server.ts`.
+Start the MCP server on `http://localhost:/mcp` from the directory that contains your server file.
 
-Make sure you have `"type": "module"` in your `package.json` file:
+For TypeScript, make sure you have `"type": "module"` in your `package.json` file:
 
 ```json
 {
@@ -31032,13 +31729,17 @@ Make sure you have `"type": "module"` in your `package.json` file:
 }
 ```
 
-Then run the server with the following command:
+Run the TypeScript server with the following command:
 
 ```bash
 node --experimental-strip-types server.ts
 ```
 
-The server should print `Todo MCP server listening on http://localhost:8787/mcp` once it is ready.
+Run the Ruby version with `ruby server.rb`. The Ruby server accepts a `PORT` environment variable and reports startup through WEBrick.
+
+By default, both versions serve `http://localhost:8787/mcp`.
+
+The TypeScript server prints `Todo MCP server listening on http://localhost:8787/mcp` when ready.
 
 #### Test with MCP Inspector
 
@@ -31081,7 +31782,7 @@ From there, you can iterate on the UI/UX, prompts, tool metadata, and the overal
 
 Refresh the plugin connection after each change to the MCP server (tools,
 metadata, and related configuration). You can do this from the detail page at
-[chatgpt.com/plugins](https://chatgpt.com/plugins).
+[ChatGPT plugins](https://chatgpt.com/plugins).
 
 When you're preparing for public distribution, review
 [Submit plugins](https://developers.openai.com/plugins/deploy/submission), the
@@ -33360,6 +34061,22 @@ function partSelectionSchema(parts: OpenAIFormOption[]): OpenAIForm {
 }
 ```
 
+```ruby
+def part_selection_schema(parts)
+  {
+    type: "object",
+    properties: {
+      part: {
+        type: "string",
+        title: "Part",
+        oneOf: parts
+      }
+    },
+    required: ["part"]
+  }
+end
+```
+
 Pass this schema as `requestedSchema` in your form request. Each option uses
 `const` and `title`, with an optional `x-openai-thumbnail` icon.
 OpenAI-registered MCP servers require
@@ -34637,6 +35354,8 @@ OpenAI-specific metadata for compatibility and optional extensions.
 | `_meta["openai/toolInvocation/invoked"]`  | Tool descriptor | string       | ≤ 64 chars                                      | Short status text after the tool completes.                                                                                                                                                                                                                                                 |
 | `_meta["openai/fileParams"]`              | Tool descriptor | string[]     | None                                            | List of top-level input fields that represent files. Each field receives `{ download_url, file_id, mime_type?, file_name? }`.                                                                                                                                                               |
 
+The Ruby resource examples require the `mcp` gem at version `1.10.0` and your bundled MCP Apps browser component saved as `widget.js` in the project directory. Run the Ruby server from that directory.
+
 Example:
 
 ```typescript
@@ -34699,6 +35418,86 @@ registerAppTool(
 );
 ```
 
+```ruby
+require "mcp"
+
+class PublicSearch < MCP::Tool
+  tool_name "search"
+  title "Public Search"
+  description "Search public documents."
+  input_schema(properties: { q: { type: "string" } }, required: ["q"])
+  output_schema(
+    type: "object", properties: {
+      results: {
+        type: "array",
+
+        items: {
+          type: "object",
+
+          properties: {
+            id: { type: "string" },
+            title: { type: "string" },
+            url: { type: "string" }
+          },
+          required: ["id", "title", "url"]
+        }
+      }
+    }, required: ["results"]
+  )
+  meta(
+    securitySchemes: [
+      { type: "noauth" }, {
+        type: "oauth2",
+        scopes: ["search.read"]
+      }
+    ],
+    ui: { resourceUri: "ui://widget/story.html" },
+    "openai/toolInvocation/invoking": "Searching…",
+    "openai/toolInvocation/invoked": "Results ready"
+  )
+
+  def self.call(q:, server_context:)
+    # Local example data; replace this with your application data.
+    documents = [
+      {
+        id: "intro",
+        title: "Introduction to Acme",
+        url: "https://example.com/intro"
+      }
+    ]
+    results = documents.select { |document| document.fetch(:title).downcase.include?(q.downcase) }
+    MCP::Tool::Response.new(
+      [
+        {
+          type: "text",
+          text: "Found #{results.length} results."
+        }
+      ],
+      structured_content: { results: results }
+    )
+  end
+end
+
+# Build the browser component first, then run this server from the project root.
+script = File.read("widget.js").gsub(%r{</script}i) { '<\/script' }
+html = '<!doctype html><html lang="en"><meta charset="utf-8">' \
+       '<title>Tool result</title><body><div id="root"></div>' \
+       "<script type=\"module\">#{script}</script></body></html>"
+resource = MCP::Resource.define(uri: "ui://widget/story.html", name: "widget", mime_type: "text/html;profile=mcp-app") do
+  [
+    MCP::Resource::TextContents.new(
+      uri: "ui://widget/story.html", mime_type: "text/html;profile=mcp-app", text: html
+    )
+  ]
+end
+
+server = MCP::Server.new(
+  name: "docs-example", version: "1.0.0", tools: [PublicSearch],
+  resources: [resource]
+)
+MCP::Server::Transports::StdioTransport.new(server).open
+```
+
 #### Annotations
 
 To label a tool as "read-only," use the following
@@ -34750,6 +35549,51 @@ server.registerTool(
     structuredContent: { recipes: await fetchSavedRecipes() },
   })
 );
+```
+
+```ruby
+require "mcp"
+
+class ListSavedRecipes < MCP::Tool
+  tool_name "list_saved_recipes"
+  description "Returns the user's saved recipes without modifying them."
+  input_schema(properties: {})
+  output_schema(
+    type: "object",
+    properties: {
+      recipes: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            id: { type: "string" },
+            title: { type: "string" }
+          },
+          required: ["id", "title"]
+        }
+      }
+    },
+    required: ["recipes"]
+  )
+  annotations(read_only_hint: true, destructive_hint: nil, idempotent_hint: nil, open_world_hint: nil)
+
+  def self.call(server_context:)
+    # Local example data; replace this with your application data.
+    MCP::Tool::Response.new(
+      [], structured_content: {
+        recipes: [
+          {
+            id: "pasta",
+            title: "Tomato pasta"
+          }
+        ]
+      }
+    )
+  end
+end
+
+server = MCP::Server.new(name: "docs-example", version: "1.0.0", tools: [ListSavedRecipes])
+MCP::Server::Transports::StdioTransport.new(server).open
 ```
 
 #### Component resource `_meta` fields
@@ -34878,6 +35722,82 @@ registerAppTool(
 );
 ```
 
+```ruby
+require "mcp"
+
+class ZooAnimals < MCP::Tool
+  tool_name "get_zoo_animals"
+  input_schema(
+    properties: {
+      count: {
+        type: "integer",
+        minimum: 1,
+        maximum: 20
+      }
+    }
+  )
+  output_schema(
+    type: "object", properties: {
+      animals: {
+        type: "array",
+
+        items: {
+          type: "object",
+
+          properties: {
+            id: { type: "string" },
+            name: { type: "string" },
+            species: { type: "string" }
+          },
+          required: ["id", "name", "species"]
+        }
+      }
+    }, required: ["animals"]
+  )
+  meta(ui: { resourceUri: "ui://widget/widget.html" })
+
+  def self.call(server_context:, count: 10)
+    # Local example data; replace this with your application data.
+    animals = Array.new(count) do |index|
+      {
+        id: "animal-#{index + 1}",
+        name: "Penguin #{index + 1}",
+        species: "Penguin"
+      }
+    end
+    MCP::Tool::Response.new(
+      [
+        {
+          type: "text",
+          text: "Here are #{animals.length} animals."
+        }
+      ],
+      structured_content: { animals: animals },
+      meta: { allAnimalsById: animals.to_h { |animal| [animal.fetch(:id), animal] } }
+    )
+  end
+end
+
+# Build the browser component first, then run this server from the project root.
+script = File.read("widget.js").gsub(%r{</script}i) { '<\/script' }
+html = '<!doctype html><html lang="en"><meta charset="utf-8">' \
+       '<title>Tool result</title><body><div id="root"></div>' \
+       "<script type=\"module\">#{script}</script></body></html>"
+resource = MCP::Resource.define(uri: "ui://widget/widget.html", name: "widget", mime_type: "text/html;profile=mcp-app") do
+  [
+    MCP::Resource::TextContents.new(
+      uri: "ui://widget/widget.html", mime_type: "text/html;profile=mcp-app", text: html
+    )
+  ]
+end
+
+server = MCP::Server.new(
+  name: "docs-example", version: "1.0.0", tools: [ZooAnimals],
+  resources: [resource]
+)
+MCP::Server::Transports::StdioTransport.new(server).open
+```
+
 #### Error tool result
 
 To return an error on the tool result, use the following `_meta` key:
@@ -34950,6 +35870,59 @@ server.registerTool(
     };
   }
 );
+```
+
+```ruby
+require "mcp"
+
+class RecommendCafe < MCP::Tool
+  tool_name "recommend_cafe"
+  input_schema(properties: {})
+  output_schema(
+    type: "object",
+    properties: {
+      cafes: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            name: { type: "string" },
+            address: { type: "string" }
+          },
+          required: ["name", "address"]
+        }
+      }
+    },
+    required: ["cafes"]
+  )
+
+  def self.call(server_context:)
+    metadata = server_context[:_meta] || {}
+    locale = metadata[:"openai/locale"] || "en"
+    location = metadata[:"openai/userLocation"]
+    city = location[:city] if location.is_a?(Hash)
+    city = "your area" unless city.is_a?(String)
+    # Local example data; replace this with your application data.
+    cafes = (city == "San Francisco") ? [
+      {
+        name: "Example Cafe",
+        address: "123 Example Street, San Francisco"
+      }
+    ] : []
+    text = (locale == "es") ? "Cafés en #{city}" : "Cafes in #{city}"
+    MCP::Tool::Response.new(
+      [
+        {
+          type: "text",
+          text: text
+        }
+      ], structured_content: { cafes: cafes }
+    )
+  end
+end
+
+server = MCP::Server.new(name: "docs-example", version: "1.0.0", tools: [RecommendCafe], server_context: {})
+MCP::Server::Transports::StdioTransport.new(server).open
 ```
 
 ### Remote MCP server review requirements
@@ -37510,6 +38483,7 @@ Extend what ChatGPT and Codex can do, for example:
 - Install the Google Drive plugin to work across Drive, Docs, Sheets, and
   Slides.
 - Install the Slack plugin to summarize channels or draft replies.
+- Use the SVG & 3D Design plugin to [create editable SVG graphics and 3D scenes](https://learn.chatgpt.com/guides/svg-3d-design).
 
 A plugin can contain one or more of these parts:
 
@@ -37954,7 +38928,7 @@ increasing delay and jitter.
 
 Requests include `method`, `params`, and `id`.
 
-The examples use [GPT-6.1 Sol](./models.md#gpt-6.1-sol), which requires access
+The request examples use [GPT-6.1 Sol](./models.md#gpt-6.1-sol), which requires access
 for the signed-in account or workspace. Use [`model/list`](#list-models-modellist)
 to select an available model if needed.
 
@@ -37993,9 +38967,9 @@ codex app-server generate-json-schema --out ./schemas
 2. Connect a client over the selected transport, then send `initialize` followed by the `initialized` notification.
 3. Start a thread and a turn, then keep reading notifications from the active transport stream.
 
-Example (Node.js / TypeScript):
+The following examples use the `stdio` transport:
 
-```ts
+```typescript
 import { spawn } from "node:child_process";
 import readline from "node:readline";
 const proc = spawn("codex", ["app-server"], {
@@ -38062,6 +39036,77 @@ proc.on("error", (error) => {
 proc.on("exit", (code) => {
   if (code !== 0) process.exitCode = code ?? 1;
 });
+```
+
+```ruby
+require "json"
+require "open3"
+require "tmpdir"
+
+# Use an owned repository for this runnable example.
+Dir.mktmpdir("codex-app-server-") do |directory|
+  File.write(File.join(directory, "README.md"), "A small Ruby project with a greeting program.\n")
+  File.write(File.join(directory, "hello.rb"), 'puts "Hello, world!"' + "\n")
+  system("git", "init", "--quiet", directory, exception: true)
+  Dir.chdir(directory) do
+    Open3.popen3("codex", "app-server") do |stdin, stdout, stderr, process|
+      errors = Thread.new { IO.copy_stream(stderr, $stderr) }
+      state = {}
+      state[:failed] = false
+      state[:completed] = false
+      send_message = lambda do |message|
+        stdin.puts(JSON.generate(message))
+        stdin.flush
+      end
+      send_message.call(
+        method: "initialize", id: 0,
+        params: {
+          clientInfo: {
+            name: "my_product",
+            title: "My Product",
+            version: "0.1.0"
+          }
+        }
+      )
+      stdout.each_line do |line|
+        message = JSON.parse(line)
+        puts JSON.generate(message)
+        if message["error"]
+          warn JSON.generate(message["error"])
+          state[:failed] = true
+          break
+        elsif message["id"] == 0
+          send_message.call(method: "initialized", params: {})
+          send_message.call(method: "thread/start", id: 1, params: { model: "gpt-6.1-sol" })
+        elsif message["id"] == 1 && state[:thread_id].nil?
+          state[:thread_id] = message.fetch("result").fetch("thread").fetch("id")
+          send_message.call(
+            method: "turn/start", id: 2,
+            params: {
+              threadId: state[:thread_id],
+              input: [
+                {
+                  type: "text",
+                  text: "Summarize this repo."
+                }
+              ]
+            }
+          )
+        elsif message["method"] == "turn/completed"
+          state[:completed] = message.fetch("params").fetch("turn").fetch("status") == "completed"
+          state[:failed] = !state[:completed]
+          break
+        end
+      end
+      stdin.close
+      errors.join
+      status = process.value
+      raise "App-server turn did not complete" if state[:failed] || !state[:completed] || !status.success?
+    ensure
+      stdin.close unless stdin.closed?
+    end
+  end
+end
 ```
 
 #### Core primitives
@@ -40559,7 +41604,7 @@ in to newer prerelease builds.
 
 Start Codex, create a thread, and run a prompt. The examples use GPT-6.1 Sol,
 which must be available to your signed-in account. Otherwise, omit `model` to
-use your configured default. See [GPT-6.1 Sol availability by plan](./models.md#gpt-6.1-sol).
+use your configured default. See [model availability by plan](./pricing.md#feature-availability).
 
 ```python
 from openai_codex import Codex, Sandbox
@@ -44796,9 +45841,13 @@ timeout = 30
 statusMessage = "Checking managed Bash command"
 ```
 
-The requirement registers the hook but does not install it. For a local macOS integration test, save the following as `pre_tool_use_policy.py` and have an administrator install it with the commands below.
+The requirement registers the hook but does not install it. Have an administrator install the selected file with the commands below.
 
-It blocks only the synthetic marker; replace it with a reviewed organization-specific policy before relying on it. Confirm that `/usr/bin/python3` exists on the target and adjust the interpreter path if necessary:
+For a local macOS integration test, save the Python version as `pre_tool_use_policy.py`.
+
+For a local macOS integration test, save the Ruby version as `pre_tool_use_policy.rb`. Set the hook `command` to `/usr/bin/ruby /etc/codex/hooks/pre_tool_use_policy.rb`, replacing `/usr/bin/ruby` with the absolute path to your Ruby interpreter if needed. The Ruby hook uses only the standard library.
+
+It blocks only the synthetic marker; replace it with a reviewed organization-specific policy before relying on it. Confirm that the configured interpreter exists on the target. The filename and interpreter must match the selected language:
 
 ```python
 import json
@@ -44811,10 +45860,23 @@ if "CODEX_HOOK_TEST_DENY" in command:
     sys.exit(2)
 ```
 
+```ruby
+require "json"
+
+event = JSON.parse($stdin.read)
+command = event.fetch("tool_input", {}).fetch("command", "")
+if command.include?("CODEX_HOOK_TEST_DENY")
+  warn "Synthetic test command blocked by managed hook."
+  exit 2
+end
+```
+
 ```bash
 sudo install -d -o root -g wheel -m 755 /etc/codex/hooks
 sudo install -o root -g wheel -m 644 ./pre_tool_use_policy.py /etc/codex/hooks/pre_tool_use_policy.py
 ```
+
+For Ruby, replace both `pre_tool_use_policy.py` paths in the installation commands with `pre_tool_use_policy.rb`; keep the same root ownership and permissions.
 
 Restart the local client, then:
 
@@ -44992,6 +46054,79 @@ This page doesn't duplicate that contract.
 - [Admin rollout guide](./enterprise/admin-setup.md)
 - [Governance](./enterprise/governance.md)
 - [Analytics API](./enterprise/analytics-api.md)
+
+### Connect Codex to Google Cloud Vertex AI
+
+Source: [Connect Codex to Google Cloud Vertex AI](./enterprise/connect-to-vertex-ai.md)
+
+{"OpenAI models on Google Cloud are in "}
+private preview
+{". To use them in your project, "}
+[{"request access"}](https://openai.com/form/openai-on-google-cloud/)
+{"."}
+
+#### Before you begin
+
+Ask your administrator for the project ID, model name, and Vertex AI location to use with Codex. Your user or service account needs permission to invoke the model in that project. For help setting up billing, accepting a Marketplace private offer, and enabling the model, see the [Google Cloud prerequisites](https://developers.openai.com/api/docs/guides/google-cloud#before-you-begin).
+
+With the default location, `global`, Google Cloud can process model requests in more than one region. If your organization requires regional processing, confirm which supported location to use with your administrator before you send a request.
+
+#### Authenticate on the Codex host
+
+Install the Google Cloud CLI on the machine where Codex runs. For local development, run this command to sign in and set up Application Default Credentials (ADC).
+
+```sh
+gcloud auth application-default login
+```
+
+If your administrator has provided an ADC file, skip the interactive sign-in and use the file during setup. Codex runs `gcloud auth application-default print-access-token` to get an access token.
+
+#### Set up Google Cloud in Codex
+
+Use Codex CLI 0.167.0 or later, or Codex desktop app 26.1103.32239 or later.
+
+If you’re already signed in to Codex or don’t see Google Cloud in the sign-in options, [authenticate on the Codex host](#authenticate-on-the-codex-host), then [configure the provider manually](#configure-the-provider). Start a new CLI session or desktop task and [verify a model request](#verify-a-model-request).
+
+1. Start `codex`. Select **Sign in another way**, then **Use Google Cloud Vertex AI**.
+
+2. Enter the Google Cloud project ID from your administrator.
+
+3. Enter the Vertex AI location, or press Enter to use `global`.
+4. Enter the absolute path to your credential JSON file, or press Enter to use ADC on this computer. Codex checks that it can get a token before it saves your settings.
+5. [Verify a model request](#verify-a-model-request).
+
+6. On **Sign in another way**, select **Use Google Cloud**.
+
+7. On **Set up Google Cloud**, enter the **Project ID** from your administrator.
+
+8. Enter a **Location**, or leave it blank to use `global`.
+9. In **Credential file**, enter the absolute path to your credential JSON file or select **Browse…** to choose it. Leave the field blank to use ADC on this computer.
+10. Select **Continue**, then [verify a model request](#verify-a-model-request).
+
+#### Configure the provider manually
+
+In `~/.codex/config.toml`, set `model_provider` to `"gcp"` above any table headers. Set your project ID and location under `[model_providers.gcp]`.
+
+```toml
+model_provider = "gcp"
+
+[model_providers.gcp]
+project_id = "my-project"
+location = "global"
+```
+
+If you use an ADC file, add `credential_file = "/absolute/path/to/credentials.json"` under `[model_providers.gcp]`. Codex sets `GOOGLE_APPLICATION_CREDENTIALS` for the authentication command.
+
+You can omit `project_id` if you set `GOOGLE_CLOUD_PROJECT` on the Codex host. If you omit `location`, Codex uses `GOOGLE_CLOUD_LOCATION` when set and otherwise uses `global`.
+
+#### Verify a model request
+
+1. Start a new session with `codex` and enter `/model`, or start a new task in the desktop app and open the model picker.
+2. Select a model your administrator has enabled for your project and ask it to reply with a short greeting. A reply confirms that Codex can authenticate and call that model.
+
+If credential validation fails, check that the machine running Codex can run `gcloud` and read your credential file, if you specified one. To sign in again with local user credentials, run `gcloud auth application-default login` on that machine.
+
+If authentication succeeds but the model request fails, check that your project ID and location match the model deployment. Ask your administrator to confirm that your user or group has access to the project and that the account running Codex can invoke the model.
 
 ### Connect to a gateway
 
@@ -47455,7 +48590,7 @@ For current availability, supported plans, and workspace settings, see [Manage d
 
 During the preview, admins in eligible ChatGPT Enterprise, Edu, and Healthcare workspaces can enable dots for selected roles. Starting November 18, 2026, members have access by default unless the workspace opts out. Each member chooses whether to create a personal dot.
 
-Eligible Enterprise workspaces can pay a flat rate based on the type of work a dot does or pay based on consumption. The preview is free. Billing for enabled dots begins November 18, 2026. Tasks a dot delegates to ChatGPT Work or Codex threads incur separate charges at the standard rates. See [Dots pricing in the Help Center](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot).
+Workspace access and billing are separate. Eligible Enterprise workspaces can pay a flat rate based on the type of work a dot does or pay based on consumption. The preview is free. Tasks a dot delegates to ChatGPT Work or Codex threads incur separate charges at the standard rates. For billing details, see [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) in the Help Center.
 
 #### Set up dots for work
 
@@ -50248,7 +51383,7 @@ Dots can provide value even if you turn off access to the cloud browser, cloud c
 
 Proactive research is one way dots differ from a typical user-directed ChatGPT Work task. A dot can look for useful information in permitted connected apps without waiting for a new request from its user. For example, it might review connected information for an update relevant to ongoing work.
 
-During proactive research, a dot can read permitted information and save private notes. Its research tools can’t directly send messages to other people, change content through connected apps, or control a browser or computer. Other dot activities, such as tasks a user explicitly schedules, follow their applicable permissions and action rules.
+During proactive research, a dot can read permitted information and save private notes. Its research tools can’t directly send messages to other people, change content through connected apps, or control a browser or computer. Personal dots will not perform write actions proactively without the user’s instructions. Other dot activities, such as tasks a user explicitly schedules, follow their applicable permissions and action rules.
 
 We’re developing additional rules in Agent Security so admins can choose which sites a dot’s cloud browser can visit.
 
@@ -50270,18 +51405,18 @@ We’re developing additional rules in Agent Security so admins can choose which
 
 #### Confirm eligibility and data requirements
 
-| **Category**                                                                                                                                                               | **Eligibility and data requirements**                                                                                                                                                                                                                   |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Data and inference residency**                                                                                                                                           | Data storage residency in Australia, Canada, Europe (EEA and Switzerland), India, Japan, Singapore, South Korea, the UK, and the US is supported. UAE is not included.                                                                                  |
-| Dots inference residency is supported for the US and Europe but not UAE. Inference residency covers model inference, not every processing step or third-party integration. |
-| **Enterprise Key Management (EKM)**                                                                                                                                        | Enterprise Key Management (EKM) supported for eligible workspaces. Customer-managed keys protect supported customer content at rest and allow customers to rotate or revoke their keys. Identify which data your agreement requires the key to protect. |
-| **HIPAA**                                                                                                                                                                  | HIPAA supported for eligible workspaces. Confirm that your business associate agreement (BAA) and configuration cover the intended workflow.                                                                                                            |
-| **Zero data retention**                                                                                                                                                    | Neither dots nor Work with local computer access provides strict zero data retention.                                                                                                                                                                   |
-| **FedRAMP**                                                                                                                                                                | Dots are unavailable in FedRAMP workspaces.                                                                                                                                                                                                             |
+| **Category**                                                                                                                                                          | **Eligibility and data requirements**                                                                                                                                                                                                                                                                                                                         |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Data and inference residency**                                                                                                                                      | Personal dots support data storage residency in Australia, Canada, Europe (EEA and Switzerland), India, Japan, Singapore, South Korea, the United Arab Emirates (UAE), the UK, and the US. Dots created during beta in workspaces with data residency will be migrated to the workspace’s designated region within 30 days of the GA date (November 4, 2026). |
+| Dots inference residency is supported for the US and Europe but not UAE. Inference calls made by dots adhere to your workspace’s inference residency setting, if any. |
+| **Enterprise Key Management (EKM)**                                                                                                                                   | Enterprise Key Management (EKM) is supported for eligible workspaces.                                                                                                                                                                                                                                                                                         |
+| **HIPAA**                                                                                                                                                             | HIPAA supported for eligible workspaces. Confirm that your business associate agreement (BAA) and configuration cover the intended workflow.                                                                                                                                                                                                                  |
+| **Zero data retention**                                                                                                                                               | Neither dots nor Work with local computer access provides strict zero data retention.                                                                                                                                                                                                                                                                         |
+| **FedRAMP**                                                                                                                                                           | Dots are unavailable in FedRAMP workspaces.                                                                                                                                                                                                                                                                                                                   |
 
-#### EKM coverage for the dot’s cloud computer
+#### Data residency and EKM
 
-For eligible workspaces with EKM enabled, your workspace’s customer-managed key protects saved cloud computer snapshots and saved browser cookies at rest.
+Customer data at rest is stored in accordance with the workspace’s [data residency](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt) and [Enterprise Key Management (EKM)](https://help.openai.com/en/articles/20000943-openai-enterprise-key-management-ekm-overview) settings.
 
 The same access controls that protect other OpenAI services handling customer data also apply to the running cloud computer.
 
@@ -50432,7 +51567,7 @@ The cloud browser keeps its own cookies, separate from the browser on your devic
 | Space files                                            | Saved files follow the Enterprise workspace retention policy. Opening, downloading or reattaching an existing Space file [does not restart its retention period](https://help.openai.com/en/articles/20001052-using-library-to-manage-files-in-chatgpt).                                                                            | The member deletes the file in Space. Compliance admins can delete it through the Space API. The file can also expire under workspace policy.                                                                                                                                                                                                                                         | The Space file survives dot deletion. After Space deletion, permanent removal is scheduled within 30 days, with exceptions for data already de-identified and disassociated, or retained for security or legal obligations. See Backups below.                                                                                                                                                                                                              |
 | Cached files and Outputs                               | The dot chat can keep a separate copy of a Space file. Space’s retention and deletion controls apply to the Space copy.                                                                                                                                                                                                             | Deleting the Space file, even from Trash, does not trigger deletion of the dot-chat cache. No separate self-service removal procedure is confirmed.                                                                                                                                                                                                                                   | A file may remain listed in Outputs after the Space copy is deleted. The dot-owned cached copy is deleted within 30 days of dot deletion. A separate way to clear the listing remains unconfirmed.                                                                                                                                                                                                                                                          |
 | Cloud computer files and browser state                 | The dot’s cloud disk can retain files and browser state. Snapshot expiry depends on workspace configuration.                                                                                                                                                                                                                        | Deleting a dot deletes its cloud browser and computer.                                                                                                                                                                                                                                                                                                                                | The dot’s cloud-computer data, disk, browser state, snapshots, and backups are deleted within 30 days of dot deletion. Copies saved elsewhere follow their destination’s policy.                                                                                                                                                                                                                                                                            |
-| Cloud computer snapshots                               | For eligible workspaces with data residency, Enterprise Key Management (EKM), or both, the enabled control wipes snapshots on a five-day cycle, with a seven-day maximum.                                                                                                                                                           | The platform expires snapshots automatically. Deleting the dot separately starts the cloud-computer deletion process.                                                                                                                                                                                                                                                                 | For workspaces without data residency or EKM, there is no maximum age for an active dot’s snapshots. They may remain for as long as the dot exists, and customers cannot currently request an early purge. Snapshots are deleted within 30 days after the dot is deleted.                                                                                                                                                                                   |
+| Cloud computer snapshots                               | In eligible workspaces with data residency or Enterprise Key Management (EKM), snapshots are short-lived. In other workspaces, snapshots may remain for as long as the dot exists.                                                                                                                                                  | OpenAI automatically expires snapshots in eligible workspaces. Deleting the dot also starts deletion of its cloud computer and snapshots.                                                                                                                                                                                                                                             | In workspaces without automatic expiry, customers can’t request an early purge. Snapshots are deleted within 30 days after the dot is deleted.                                                                                                                                                                                                                                                                                                              |
 | Backups                                                | Space backups have a separate documented window. Dot-owned backups are deleted within 30 days of dot deletion.                                                                                                                                                                                                                      | When a Space file is deleted, expires or becomes inactive, the active Compliance API stops returning it. The platform manages backup expiry.                                                                                                                                                                                                                                          | A Space backup may remain for up to 30 additional days, or longer for security or legal obligations. Dot-owned backups are deleted within 30 days of dot deletion.                                                                                                                                                                                                                                                                                          |
 | Delegated Work and Codex threads                       | Hosted [Work](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention) and [Codex](./auth.md#openai-authentication) threads follow the workspace’s retention policy. [Device-only records](./enterprise/chatgpt-work-local-security.md#data-handling-and-retention) follow local storage and backup policies. | The workspace policy governs when hosted threads expire. For Codex Cloud, see the [workspace retention guidance](./auth.md#openai-authentication). Deleting a dot leaves its delegated Codex and Work threads intact.                                                                                                                                                               | When a Codex chat is deleted in the desktop app, OpenAI schedules it for permanent deletion from its systems within 30 days, subject to [published exceptions](https://help.openai.com/en/articles/20001333-archiving-and-deleting-codex-chats-in-the-chatgpt-app). Work Cloud schedules deleted chats for permanent deletion within 30 days, subject to [published exceptions](./enterprise/chatgpt-work-cloud-security.md#data-handling-and-retention). |
 | Pages in Spaces                                        | Space pages persist until someone deletes them; the workspace chat retention period does not expire them.                                                                                                                                                                                                                           | A page’s [creator or owner](https://help.openai.com/en/articles/20001544-chatgpt-space-sharing-data-and-controls) can move it and its subpages to Trash. Delete separately saved attachments in their own location. Members can delete their own saved Space files. Compliance admins with the [required API permissions](./enterprise/chatgpt-space.md) can delete eligible files. | Space purges a page on permanent deletion or after 30 days in Trash. Pages trashed before the October 1 rollout require manual deletion. Deleting the page leaves separately stored attachments in place.                                                                                                                                                                                                                                                   |
@@ -52511,6 +53646,14 @@ If the page reports that it couldn't save all changes, some changes may
 already be saved. Follow the on-screen guidance to review and save the
 remaining changes.
 
+#### GPT-6.2 Astra and GPT-6.2 Sol in Enterprise and Edu
+
+Both models are off by default at launch. To give members access, enable the
+models in your [workspace model settings](https://help.openai.com/en/articles/8411955).
+Members also need access to ChatGPT Work or Codex to select a model there.
+Eligible workspaces can separately enable
+[Ultrafast](./agent-configuration/speed.md#gpt-62-speed-options).
+
 #### GPT-6 Sol and Luna in Enterprise
 
 GPT-6 Sol and GPT-6 Luna are off by default in Enterprise workspaces at
@@ -52626,7 +53769,7 @@ Source: [Administration](./administration.md)
 
 Set access and policy boundaries for ChatGPT, Codex developer tools, APIs, plugins, and connected systems.
 
-Start with the rollout guide, then set up identity and access. Use Configuration for app installation, updates, and workspace policies. Use Advanced deployment for Amazon Bedrock, Bedrock in GovCloud, or an organization gateway. Browse the sections for feature controls, usage, and security.
+Start with the rollout guide, then set up identity and access. Use Configuration for app installation, updates, and workspace policies. Use Advanced deployment to connect through a cloud provider or an organization gateway. Browse the sections for feature controls, usage, and security.
 
 [Start your rollout](./enterprise/admin-setup.md)
 
@@ -52698,9 +53841,11 @@ Manage app installation, updates, runtime settings, remote connections, and work
 
 #### Advanced deployment
 
-Connect directly to Amazon Bedrock, configure Bedrock in GovCloud, or deploy an organizational gateway that routes requests to your inference provider.
+Configure a direct cloud connection or an organization gateway, then choose which models your users can access.
 
 - [Amazon Bedrock](./amazon-bedrock.md): Configure supported local clients to use models available through Bedrock.
+
+- [Google Cloud](./enterprise/connect-to-vertex-ai.md): Configure Codex CLI for the Vertex AI preview using your Google Cloud project and credentials.
 
 - [GovCloud deployment](https://learn.chatgpt.com/docs/enterprise/govcloud-configuration): Configure local Codex workflows with Amazon Bedrock in AWS GovCloud.
 

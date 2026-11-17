@@ -138,13 +138,11 @@ reasoning effort. To balance intelligence, speed, and price for each task,
 request a specific model or reasoning effort in your prompt,
 configure `[agents]` defaults in `config.toml`, or set `model` and
 `model_reasoning_effort` directly in the custom agent file.
-For example, use `gpt-6-luna` for fast scans or a higher-effort `gpt-6.1-sol` configuration for more demanding reasoning.
+For example, use `gpt-6-luna` for fast scans or increase Sol’s reasoning effort for a more demanding task.
 
-For most tasks in Codex, start with 
-  `gpt-6.1-sol` when your
-  signed-in account or workspace has [access](../models.md#gpt-6.1-sol).
-  Otherwise, choose a model available to you. Use `gpt-6-luna` when you want a
-  faster, lower-cost option for lighter subagent work.
+Start with Sol for everyday tasks when your [plan and
+  client](../pricing.md#feature-availability) support it. Otherwise, choose a
+  model from your model picker. Use `gpt-6-luna` for lighter, lower-cost work.
 
 <a id="app-model-choice"></a>
 <a id="cli-model-choice"></a>
@@ -152,7 +150,7 @@ For most tasks in Codex, start with
 
 ### Model choice
 
-- **`gpt-6.1-sol`**: Start here for demanding agents. Use it for ambiguous, multi-step work that needs planning, tool use, validation, and follow-through across a larger context.
+- **`gpt-6.2-sol`**: Use Sol for everyday agents that plan, use tools, and check their work.
 - **`gpt-6-luna`**: Use for fast, narrowly scoped agents handling clear, repeatable, or high-volume work.
 
 <a id="app-reasoning-effort-model_reasoning_effort"></a>
@@ -161,9 +159,10 @@ For most tasks in Codex, start with
 
 ### Reasoning effort (`model_reasoning_effort`)
 
-For GPT-6.1 Sol, use a reasoning effort supported by your client and selected
-model. For explicit model settings, start with `high` for GPT-6 Luna or `low`
-for GPT-6 Astra. Adjust for the task using a level the selected model supports.
+When the parent agent uses GPT-6.2 Astra or GPT-6.2 Sol, start with the same
+model and reasoning effort for its subagents. Raise the effort for a subtask
+that needs deeper investigation, or lower it for a quick scan. If you select
+GPT-6 Luna explicitly, start with `high`. For GPT-6 Astra, start with `low`.
 
 - **`ultra`**: Use for the deepest reasoning when the selected model supports
   it.
@@ -382,9 +381,9 @@ The best custom agents are narrow and opinionated. Give each one clear job, a
 tool surface that matches that job, and instructions that keep it from
 drifting into adjacent work.
 
-The examples use [GPT-6.1 Sol](../models.md#gpt-6.1-sol) where your signed-in
-account or workspace has access. If it isn't available, choose a model you can
-use.
+The reviewer and browser debugger examples use Sol in the app or CLI. For a
+custom agent you also run in the IDE extension, choose a `model` available in
+each client, such as `gpt-6.1-sol`.
 
 <a id="app-example-1-pr-review"></a>
 <a id="cli-example-1-pr-review"></a>
@@ -428,7 +427,7 @@ Prefer fast search and targeted file reads over broad scans.
 ```toml
 name = "reviewer"
 description = "PR reviewer focused on correctness, security, and missing tests."
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 developer_instructions = """
 Review code like an owner.
@@ -497,7 +496,7 @@ Identify entry points, state transitions, and likely files before the worker sta
 ```toml
 name = "browser_debugger"
 description = "UI debugger that uses browser tooling to reproduce issues and capture evidence."
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 developer_instructions = """
 Reproduce the issue in the browser, capture exact steps, and report what the UI actually does.

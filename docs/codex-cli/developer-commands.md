@@ -491,7 +491,7 @@ completion still works before you queue the command.
 | [`/logout`](#sign-out-with-logout)                                                          | Sign out of Codex.                                              | Clear local credentials when using a shared machine.                                                       |
 | [`/mcp`](#list-mcp-tools-with-mcp)                                                          | List configured Model Context Protocol (MCP) tools.             | Check which external tools Codex can call during the session; add `verbose` for server details.            |
 | [`/mention`](#highlight-files-with-mention)                                                 | Attach a file to the chat.                                      | Point Codex at specific files or folders you want it to inspect next.                                      |
-| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Use `gpt-6-luna` or `gpt-6.1-sol` if shown.            |
+| [`/model`](#set-the-active-model-with-model)                                                | Choose the active model (and reasoning effort, when available). | Select GPT-6.2 Sol for everyday coding if your workspace has access.                                       |
 | [`/presets`](#reuse-prompts-and-commands-with-presets)                                      | Save and run prompts or slash commands.                         | Recall a command or prompt you use frequently.                                                             |
 | [`/fast`](#toggle-fast-mode-with-fast)                                                      | Toggle a Fast service tier when the model catalog exposes one.  | Turn the current model's Fast tier on or off and persist the selection.                                    |
 | [`/daybreak`](#toggle-daybreak)                                                             | Toggle Daybreak when your account and model are eligible.       | Use an approved cyber access program for a chat.                                                           |
@@ -624,12 +624,12 @@ Expected: Codex shows retained warnings and their diagnostic details.
 
 ### Set the active model with `/model`
 
-The picker only shows models available to your account and workspace. If GPT-6.1
-Sol isn't listed, choose another model. See [GPT-6.1 Sol availability by plan](./models.md#gpt-6.1-sol).
+The picker shows the models available to your account and workspace. See
+[model availability by plan](./pricing.md#feature-availability).
 
 1. Start Codex and open the composer.
 2. Type `/model` and press Enter.
-3. Choose a model such as `gpt-6-luna` or `gpt-6.1-sol` from the popup.
+3. Choose a model from the list. For a complex debugging task, select GPT-6.2 Astra. For everyday coding, select GPT-6.2 Sol.
 
 Expected: Codex confirms the new model in the transcript. Run `/status` to verify the change.
 

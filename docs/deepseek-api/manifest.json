@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-17T15:00:20Z",
+  "last_updated": "2026-11-17T22:46:39Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -505,13 +505,13 @@
     },
     "news/news251201": {
       "slug": "news/news251201",
-      "title": "Your First API Call",
+      "title": "DeepSeek-V3.2 Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news251201",
       "source_md_url": "https://api-docs.deepseek.com/news/news251201",
       "source_id": "news/news251201",
-      "hash": "797f9be82834a62714dc4cf6bc451539ab173bb5992f0644ea2991c0ce0b840c",
-      "last_updated": "2026-11-17T15:00:20Z"
+      "hash": "1dde37d7022544d6bcf564985906d485c3837a22a96ccd9e67f679dd8829d6ec",
+      "last_updated": "2026-11-17T22:46:39Z"
     },
     "news/news260424": {
       "slug": "news/news260424",
@@ -665,13 +665,13 @@
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
-      "title": "Your First API Call",
+      "title": "Models & Pricing",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "60b10d0ab8dfea7bd8d4585ab1248408dcbf41a2eb94ab1b7001277c990ddfb9",
-      "last_updated": "2026-11-17T05:21:11Z"
+      "hash": "2b9e0d511b21ba3b6d9af818c3d17e80fd845d9d79114b4ff78bf5b491c18aad",
+      "last_updated": "2026-11-17T22:46:39Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-17T15:00:20Z",
-    "fetch_duration_seconds": 39.538,
+    "last_fetch_completed": "2026-11-17T22:46:39Z",
+    "fetch_duration_seconds": 25.219,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,

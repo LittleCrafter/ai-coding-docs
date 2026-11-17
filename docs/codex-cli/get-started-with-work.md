@@ -156,12 +156,11 @@ Learn more about [plugins](./plugins.md). To make a workflow reusable,
 
 ## Use ChatGPT Work efficiently
 
-Choose [GPT-6 Astra](./models.md#gpt-6-astra) for demanding work that needs
-careful reasoning, visual judgment, or a polished final file. Consider
-[GPT-6.1 Sol](./models.md#gpt-61-sol) for complex work at a lower cost than
-Astra, or Luna for simpler tasks. Select from the models available in your
-model selector and check [plan usage](./pricing.md) before starting a large
-task.
+For demanding work that needs careful reasoning, visual judgment, or a polished
+final file, choose [GPT-6.2 Astra](./models.md#app-gpt-62-astra)
+from the model picker. Choose [GPT-6.2 Sol](./models.md#app-gpt-62-sol)
+for everyday coding and writing, or Luna for simpler tasks.
+Check [plan usage](./pricing.md) before starting a large task.
 
 ChatGPT Work is best for substantial tasks that involve multiple steps, sources, or
 tools, or require a completed deliverable. Longer or more complex tasks may use

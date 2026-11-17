@@ -116,7 +116,7 @@ in to newer prerelease builds.
 
 Start Codex, create a thread, and run a prompt. The examples use GPT-6.1 Sol,
 which must be available to your signed-in account. Otherwise, omit `model` to
-use your configured default. See [GPT-6.1 Sol availability by plan](./models.md#gpt-6.1-sol).
+use your configured default. See [model availability by plan](./pricing.md#feature-availability).
 
 ```python
 from openai_codex import Codex, Sandbox
