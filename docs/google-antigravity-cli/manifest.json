@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-11-13T03:40:31Z",
+  "last_updated": "2026-11-17T05:17:37Z",
   "files": {
     "cli/acp": {
       "slug": "cli/acp",
@@ -43,16 +43,6 @@
       "hash": "d84b324f3e54cd2522380900cf81202a35e3d313eb8e085210702e31f40381c9",
       "last_updated": "2026-10-27T08:24:33Z"
     },
-    "cli/commands/btw": {
-      "slug": "cli/commands/btw",
-      "title": "Side question command (/btw)",
-      "group": "cli/commands",
-      "source_url": "https://antigravity.google/docs/cli/commands/btw",
-      "source_md_url": "https://antigravity.google/docs/cli/commands/btw.md",
-      "source_id": "cli/commands/btw",
-      "hash": "c7d4ad63df3c19dbfa5c0492da27f63c427d270cd5d933722e06250dfcbc10f1",
-      "last_updated": "2026-10-22T14:08:50Z"
-    },
     "cli/commands/changelog": {
       "slug": "cli/commands/changelog",
       "title": "Changelog command (/changelog)",
@@ -80,8 +70,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/context",
       "source_md_url": "https://antigravity.google/docs/cli/commands/context.md",
       "source_id": "cli/commands/context",
-      "hash": "bce7ae6dddfd13a1b7a2ed6c83fbfa52bf44ea11dc266e58d05b5570488322f3",
-      "last_updated": "2026-10-22T14:08:50Z"
+      "hash": "d96f5502ccd72148935c1679878f9c50cf245e2b08739472f0b4db81c88adf67",
+      "last_updated": "2026-11-17T05:17:37Z"
     },
     "cli/commands/credits": {
       "slug": "cli/commands/credits",
@@ -240,8 +230,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "abb59d8a5f8061e7c1a2da780fe2746f53c4c5be5e8285ba4015ff9c955479d2",
-      "last_updated": "2026-11-12T21:37:20Z"
+      "hash": "7dd2be74f90545386bfb4795a9b231762634b7273e1861361952a9823230bb7e",
+      "last_updated": "2026-11-17T05:17:37Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -295,10 +285,10 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-13T03:40:31Z",
-    "fetch_duration_seconds": 9.849,
-    "total_pages_discovered": 29,
-    "pages_fetched_successfully": 29,
+    "last_fetch_completed": "2026-11-17T05:17:37Z",
+    "fetch_duration_seconds": 9.519,
+    "total_pages_discovered": 28,
+    "pages_fetched_successfully": 28,
     "pages_failed": 0,
     "failed_pages": []
   }

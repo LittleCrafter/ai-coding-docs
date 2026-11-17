@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.169.0",
-  "last_updated": "2026-11-16T21:19:26Z",
+  "last_updated": "2026-11-17T05:20:12Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "0d9b8e57d69b5a1ebf197aee37a44f9115483beb51b87887dca4ff9e7228ba2e",
-      "last_updated": "2026-11-16T21:19:26Z"
+      "hash": "80504aad3b8e26a284339a536443b810fc67694b8a3fe9dca76af6f2c3943152",
+      "last_updated": "2026-11-17T05:20:12Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -1570,8 +1570,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/faq",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/faq.md",
       "source_id": "llms:security/cli/faq",
-      "hash": "3f24d4d2399ab5ff50fb5106617d123128acc1a11915a445f4019df42fc1262d",
-      "last_updated": "2026-11-16T21:19:26Z"
+      "hash": "f3a1cc51de08b694640f0eeade213823f279926a22a4ee7c0d73bf45cb81ceee",
+      "last_updated": "2026-11-17T05:20:12Z"
     },
     "security/cli/reference": {
       "slug": "security/cli/reference",
@@ -1580,8 +1580,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/cli/reference",
       "source_md_url": "https://learn.chatgpt.com/docs/security/cli/reference.md",
       "source_id": "llms:security/cli/reference",
-      "hash": "20a5408201619ec8ae330fcf7d06dd02f649462616c0ff79163ff47a51d239d5",
-      "last_updated": "2026-11-12T21:39:51Z"
+      "hash": "be3f7754579e120e33efcd29cc45b90f542c40fdefe06bdf83c079624d28db6c",
+      "last_updated": "2026-11-17T05:20:12Z"
     },
     "security/faq": {
       "slug": "security/faq",
@@ -1740,8 +1740,8 @@
       "source_url": "https://learn.chatgpt.com/docs/security/sdk",
       "source_md_url": "https://learn.chatgpt.com/docs/security/sdk.md",
       "source_id": "llms:security/sdk",
-      "hash": "a26ce722746add584f74ebf0c923c91fc27f84655f5b19bc12b6d7abbcc8043b",
-      "last_updated": "2026-11-11T21:39:35Z"
+      "hash": "33c1b84f44fae0b0c7c4bbb391655ed944824cfe741754372fd94cdcca8c66b5",
+      "last_updated": "2026-11-17T05:20:12Z"
     },
     "security/security-review": {
       "slug": "security/security-review",
@@ -2115,8 +2115,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-16T21:19:26Z",
-    "fetch_duration_seconds": 73.576,
+    "last_fetch_completed": "2026-11-17T05:20:12Z",
+    "fetch_duration_seconds": 73.653,
     "total_pages_discovered": 211,
     "pages_fetched_successfully": 211,
     "pages_failed": 0,

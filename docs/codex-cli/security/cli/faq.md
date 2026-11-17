@@ -168,14 +168,10 @@ can show how findings changed, but a missing finding alone doesn't verify a fix.
 
 ### What does incomplete coverage mean
 
-In `scan-manifest.json`, check `scan.status` to see whether the scan finished.
-`scan.scope` records the configured scope. `scan.review.excludedPaths` lists
-path patterns the scan excluded from review. Check `scan.scope.limitations` for recorded
-gaps, such as a deep scan reaching its deadline before any review finished.
-
-Coverage gaps don't change a completed scan's exit code. Exit `0` doesn't mean
-every file was reviewed. A later scan can't establish that an earlier finding
-no longer exists when it doesn't cover that finding's original path.
+A scan can exit with code `0` without reviewing every file. Check
+`scan.scope.limitations` in `scan-manifest.json` for recorded coverage gaps.
+If you're checking an earlier finding, make sure the new scan covers its
+original path.
 
 ## Automation and cost
 

@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 29
+- **Pages mirrored:** 28
 - **Version:** 1.2.0
-- **Last updated:** 2026-11-13T03:40:31Z
+- **Last updated:** 2026-11-17T05:17:37Z
 - **Official docs:** https://antigravity.google/docs/cli/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -33,7 +33,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Page | Local | Source |
 | --- | --- | --- |
 | Agents command (/agents) | [cli/commands/agents.md](./cli/commands/agents.md) | [source](<https://antigravity.google/docs/cli/commands/agents>) |
-| Side question command (/btw) | [cli/commands/btw.md](./cli/commands/btw.md) | [source](<https://antigravity.google/docs/cli/commands/btw>) |
 | Changelog command (/changelog) | [cli/commands/changelog.md](./cli/commands/changelog.md) | [source](<https://antigravity.google/docs/cli/commands/changelog>) |
 | Code search command (/codesearch) | [cli/commands/codesearch.md](./cli/commands/codesearch.md) | [source](<https://antigravity.google/docs/cli/commands/codesearch>) |
 | Context command (/context) | [cli/commands/context.md](./cli/commands/context.md) | [source](<https://antigravity.google/docs/cli/commands/context>) |

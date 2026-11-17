@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-16T10:16:51Z",
+  "last_updated": "2026-11-17T05:21:11Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -665,13 +665,13 @@
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
-      "title": "Models & Pricing",
+      "title": "Your First API Call",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "2b9e0d511b21ba3b6d9af818c3d17e80fd845d9d79114b4ff78bf5b491c18aad",
-      "last_updated": "2026-11-13T21:05:01Z"
+      "hash": "60b10d0ab8dfea7bd8d4585ab1248408dcbf41a2eb94ab1b7001277c990ddfb9",
+      "last_updated": "2026-11-17T05:21:11Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-16T10:16:51Z",
-    "fetch_duration_seconds": 68.364,
+    "last_fetch_completed": "2026-11-17T05:21:11Z",
+    "fetch_duration_seconds": 57.971,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,

@@ -5790,14 +5790,10 @@ can show how findings changed, but a missing finding alone doesn't verify a fix.
 
 #### What does incomplete coverage mean
 
-In `scan-manifest.json`, check `scan.status` to see whether the scan finished.
-`scan.scope` records the configured scope. `scan.review.excludedPaths` lists
-path patterns the scan excluded from review. Check `scan.scope.limitations` for recorded
-gaps, such as a deep scan reaching its deadline before any review finished.
-
-Coverage gaps don't change a completed scan's exit code. Exit `0` doesn't mean
-every file was reviewed. A later scan can't establish that an earlier finding
-no longer exists when it doesn't cover that finding's original path.
+A scan can exit with code `0` without reviewing every file. Check
+`scan.scope.limitations` in `scan-manifest.json` for recorded coverage gaps.
+If you're checking an earlier finding, make sure the new scan covers its
+original path.
 
 #### Automation and cost
 
@@ -6159,6 +6155,7 @@ usage: codex-security scan [-h] [--auth {auto,chatgpt,api-key}]
                            [--cyber-access-program PROGRAM]
                            [--provider {openai,openrouter,fireworks,amazon-bedrock}]
                            [--path PATH | --diff BASE | --working-tree]
+                           [--exclude-path PATH]
                            [--head HEAD] [--base BASE]
                            [--knowledge-base PATH] [--scan-prompt-file FILE]
                            [--validation-prompt-file FILE] [--rubric FILE]
@@ -6329,6 +6326,7 @@ Choose one target type for each scan.
 | Argument                 | Description                                                                     |
 | ------------------------ | ------------------------------------------------------------------------------- |
 | `--path PATH`            | Scan a path relative to the repository. Repeat the flag for more paths.         |
+| `--exclude-path PATH`    | Exclude a literal repository-relative file or directory. Repeat for more paths. |
 | `--diff BASE`            | Scan committed changes from `BASE` to `--head`. The head defaults to `HEAD`.    |
 | `--head HEAD`            | Set the head revision for `--diff`.                                             |
 | `--working-tree`         | Scan staged and unstaged changes against `--base`. The base defaults to `HEAD`. |
@@ -6338,6 +6336,10 @@ Choose one target type for each scan.
 `--path`, `--diff`, and `--working-tree` are mutually exclusive. `--head`
 requires `--diff`, and `--base` requires `--working-tree`. Deep mode supports
 repository and path targets.
+
+To skip a directory, pass `--exclude-path examples/`. In a project config, add
+`exclude_paths: [examples/]` under `scan`. CLI exclusions replace the configured
+list.
 
 Diff and working-tree scans require the repository argument to be the Git
 worktree root. The selected refs must exist in that checkout.
@@ -8508,6 +8510,9 @@ directory.
 
 The SDK supports repository, path, committed-diff, and working-tree targets.
 The default target is the complete repository.
+
+To skip files or directories, set `excludePaths: ["examples/"]` in the scan
+options.
 
 #### Scan selected paths
 

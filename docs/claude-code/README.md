@@ -3,8 +3,8 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 204
-- **Version:** 2.1.325
-- **Last updated:** 2026-11-16T21:18:12Z
+- **Version:** 2.1.326
+- **Last updated:** 2026-11-17T05:18:58Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -182,7 +182,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Work with sessions | [agent-sdk/sessions.md](./agent-sdk/sessions.md) | [source](<https://code.claude.com/docs/en/agent-sdk/sessions>) |
 | Extend agents with skills | [agent-sdk/skills.md](./agent-sdk/skills.md) | [source](<https://code.claude.com/docs/en/agent-sdk/skills>) |
 | Stream responses in real-time | [agent-sdk/streaming-output.md](./agent-sdk/streaming-output.md) | [source](<https://code.claude.com/docs/en/agent-sdk/streaming-output>) |
-| Streaming Input | [agent-sdk/streaming-vs-single-mode.md](./agent-sdk/streaming-vs-single-mode.md) | [source](<https://code.claude.com/docs/en/agent-sdk/streaming-vs-single-mode>) |
+| Send messages to a running agent | [agent-sdk/streaming-vs-single-mode.md](./agent-sdk/streaming-vs-single-mode.md) | [source](<https://code.claude.com/docs/en/agent-sdk/streaming-vs-single-mode>) |
 | Get structured output from agents | [agent-sdk/structured-outputs.md](./agent-sdk/structured-outputs.md) | [source](<https://code.claude.com/docs/en/agent-sdk/structured-outputs>) |
 | Subagents in the SDK | [agent-sdk/subagents.md](./agent-sdk/subagents.md) | [source](<https://code.claude.com/docs/en/agent-sdk/subagents>) |
 | Track todos | [agent-sdk/todo-tracking.md](./agent-sdk/todo-tracking.md) | [source](<https://code.claude.com/docs/en/agent-sdk/todo-tracking>) |
