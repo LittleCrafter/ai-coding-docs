@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.169.0",
-  "last_updated": "2026-11-17T05:20:12Z",
+  "last_updated": "2026-11-17T14:59:40Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "80504aad3b8e26a284339a536443b810fc67694b8a3fe9dca76af6f2c3943152",
-      "last_updated": "2026-11-17T05:20:12Z"
+      "hash": "034a87156c2c443dfe1e8c00848edac958a89c71760c56ecfa2be66a7b48ff1f",
+      "last_updated": "2026-11-17T14:59:40Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -300,8 +300,8 @@
       "source_url": "https://github.com/openai/codex/blob/main/docs/config.md",
       "source_md_url": "https://raw.githubusercontent.com/openai/codex/main/docs/config.md",
       "source_id": "docs/config.md",
-      "hash": "e2dbda20d7127935a0787ca3ec9bdf864c0cc64832843147255efef75a22fcfe",
-      "last_updated": "2026-11-16T21:19:26Z"
+      "hash": "b4ad24e04acb2f58adb814df600e95501bfa61085dfd448eea89c6530c7329d8",
+      "last_updated": "2026-11-17T14:59:40Z"
     },
     "config-file/config-advanced": {
       "slug": "config-file/config-advanced",
@@ -330,8 +330,8 @@
       "source_url": "https://learn.chatgpt.com/docs/config-file/config-reference",
       "source_md_url": "https://learn.chatgpt.com/docs/config-file/config-reference.md",
       "source_id": "llms:config-file/config-reference",
-      "hash": "550bcbe5b1727687a968bb22ce786105f2ea100d40198c35262a076577d3fadf",
-      "last_updated": "2026-11-16T21:19:26Z"
+      "hash": "cc24c9fe5169ab99fb6ad3614fc170a6d01dac352266b49c55038b8f5f25e640",
+      "last_updated": "2026-11-17T14:59:40Z"
     },
     "config-file/config-sample": {
       "slug": "config-file/config-sample",
@@ -800,8 +800,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/managed-configuration.md",
       "source_id": "llms:enterprise/managed-configuration",
-      "hash": "5e66aeb38a682d0ab3385c9092503cbd39a9f0f3e91a410cfa4c983619464038",
-      "last_updated": "2026-11-12T21:39:51Z"
+      "hash": "369b4a9ad8457a1869418122f7a992645cc3d6277f1c5052e75fb03d0ff10e9d",
+      "last_updated": "2026-11-17T14:59:40Z"
     },
     "enterprise/plugin-management": {
       "slug": "enterprise/plugin-management",
@@ -2115,8 +2115,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-17T05:20:12Z",
-    "fetch_duration_seconds": 73.653,
+    "last_fetch_completed": "2026-11-17T14:59:40Z",
+    "fetch_duration_seconds": 73.588,
     "total_pages_discovered": 211,
     "pages_fetched_successfully": 211,
     "pages_failed": 0,

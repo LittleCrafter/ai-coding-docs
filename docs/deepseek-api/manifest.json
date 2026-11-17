@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-17T05:21:11Z",
+  "last_updated": "2026-11-17T15:00:20Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -505,13 +505,13 @@
     },
     "news/news251201": {
       "slug": "news/news251201",
-      "title": "DeepSeek-V3.2 Release",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news251201",
       "source_md_url": "https://api-docs.deepseek.com/news/news251201",
       "source_id": "news/news251201",
-      "hash": "1dde37d7022544d6bcf564985906d485c3837a22a96ccd9e67f679dd8829d6ec",
-      "last_updated": "2026-11-07T09:22:14Z"
+      "hash": "797f9be82834a62714dc4cf6bc451539ab173bb5992f0644ea2991c0ce0b840c",
+      "last_updated": "2026-11-17T15:00:20Z"
     },
     "news/news260424": {
       "slug": "news/news260424",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-17T05:21:11Z",
-    "fetch_duration_seconds": 57.971,
+    "last_fetch_completed": "2026-11-17T15:00:20Z",
+    "fetch_duration_seconds": 39.538,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,
