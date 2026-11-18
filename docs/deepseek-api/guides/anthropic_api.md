@@ -234,8 +234,6 @@ A successful response to this request contained `server_tool_use`, `web_search_t
 
 With the web tools, the `name` of a `server_tool_use` block is `deepseek_web_search` or `deepseek_read_url`, and the block carries `input.action` and `kind`; results also include `web_fetch_tool_result`. A response refused by model content safety ends with `stop_reason: "refusal"`. See [Web Tools](<./web_tools.md#response-blocks>) and [Model Content Safety](<./safety.md#handling-refusals>).
 
-With the web tools, `usage.server_tool_use` also returns `web_fetch_requests`, `tool_fetch` and `tool_image_search`. See [Web Tools](<./web_tools.md#billing>) for their meaning and for billing.
-
 ## Streaming and token usage
 
 Set `stream` to `true` to receive server-sent events (SSE). A normal response starts with `message_start`, emits `content_block_start`, `content_block_delta`, and `content_block_stop` for its content blocks, then ends with `message_delta` and `message_stop`. `ping` events may appear between these events. The stream does not send `data: [DONE]`.

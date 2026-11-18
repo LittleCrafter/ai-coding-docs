@@ -1538,7 +1538,7 @@ Number of server-side web search attempts, including failed attempts and attempt
 
 **Possible values:** `>= 0`
 
-Number of successful server-side web searches that returned nonempty results. Failed attempts and empty results are not counted. This field can be used as a basis for billing.
+Number of successful server-side web searches that returned nonempty results.
 
 **web_fetch_requests** integer
 
@@ -1550,13 +1550,13 @@ With the web tools. Number of fetch result blocks in the response, including err
 
 **Possible values:** `>= 0`
 
-With the web tools. Number of billed page fetches.
+With the web tools. Number of page fetches.
 
 **tool_image_search** integer
 
 **Possible values:** `>= 0`
 
-With the web tools. Number of billed image searches.
+With the web tools. Number of image searches.
 
 **Example**
 
@@ -2069,7 +2069,7 @@ Number of server-side web search attempts, including failed attempts and attempt
 
 **Possible values:** `>= 0`
 
-Number of successful server-side web searches that returned nonempty results. Failed attempts and empty results are not counted. This field can be used as a basis for billing.
+Number of successful server-side web searches that returned nonempty results.
 
 **web_fetch_requests** integer
 
@@ -2081,13 +2081,13 @@ With the web tools. Number of fetch result blocks in the response, including err
 
 **Possible values:** `>= 0`
 
-With the web tools. Number of billed page fetches.
+With the web tools. Number of page fetches.
 
 **tool_image_search** integer
 
 **Possible values:** `>= 0`
 
-With the web tools. Number of billed image searches.
+With the web tools. Number of image searches.
 
 **content_block_start**
 
@@ -2651,7 +2651,7 @@ Number of server-side web search attempts, including failed attempts and attempt
 
 **Possible values:** `>= 0`
 
-Number of successful server-side web searches that returned nonempty results. Failed attempts and empty results are not counted. This field can be used as a basis for billing.
+Number of successful server-side web searches that returned nonempty results.
 
 **web_fetch_requests** integer
 
@@ -2663,13 +2663,13 @@ With the web tools. Number of fetch result blocks in the response, including err
 
 **Possible values:** `>= 0`
 
-With the web tools. Number of billed page fetches.
+With the web tools. Number of page fetches.
 
 **tool_image_search** integer
 
 **Possible values:** `>= 0`
 
-With the web tools. Number of billed image searches.
+With the web tools. Number of image searches.
 
 **message_stop**
 

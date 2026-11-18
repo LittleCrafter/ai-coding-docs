@@ -299,25 +299,25 @@ server_tool_use
 
 object
 
-With the web tools. The numbers of billed searches and fetches; omitted when all counts are zero. See the [Web Tools Guide](<../guides/web_tools.md#chat-completions-api>).
+With the web tools. The numbers of searches and fetches; omitted when all counts are zero. See the [Web Tools Guide](<../guides/web_tools.md#chat-completions-api>).
 
 **tool_search** integer
 
 **Possible values:** `>= 0`
 
-Number of billed searches, excluding image searches.
+Number of searches, excluding image searches.
 
 **tool_fetch** integer
 
 **Possible values:** `>= 0`
 
-Number of billed page fetches.
+Number of page fetches.
 
 **tool_image_search** integer
 
 **Possible values:** `>= 0`
 
-Number of billed image searches.
+Number of image searches.
 
 **Example**
 
@@ -509,25 +509,25 @@ server_tool_use
 
 object
 
-With the web tools. The numbers of billed searches and fetches; omitted when all counts are zero. See the [Web Tools Guide](<../guides/web_tools.md#chat-completions-api>).
+With the web tools. The numbers of searches and fetches; omitted when all counts are zero. See the [Web Tools Guide](<../guides/web_tools.md#chat-completions-api>).
 
 **tool_search** integer
 
 **Possible values:** `>= 0`
 
-Number of billed searches, excluding image searches.
+Number of searches, excluding image searches.
 
 **tool_fetch** integer
 
 **Possible values:** `>= 0`
 
-Number of billed page fetches.
+Number of page fetches.
 
 **tool_image_search** integer
 
 **Possible values:** `>= 0`
 
-Number of billed image searches.
+Number of image searches.
 
   * ]
 

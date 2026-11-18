@@ -238,7 +238,7 @@ Field| Description
   
 ### Web Search
 
-With Alpha Search, Codex can search the web, open a page and find text on that page. Each query that returns results counts as one Search request. Opening a page or finding text on it counts as one Fetch request when the page is successfully retrieved. See [Search and Fetch billing](<../../guides/search.md#billing>).
+With Alpha Search, Codex uses the standalone Search and Fetch APIs to search the web, open a page and find text on that page. Each query that returns results counts as one Search request. Opening a page or finding text on it counts as one Fetch request when the page is successfully retrieved. These standalone requests are billed per successful request. See [Search and Fetch billing](<../../guides/search.md#billing>).
 
 To turn off Alpha Search, add `web_search = "disabled"` at the top level of `~/.codex/config.toml` (before the first `[section]`) and restart Codex. This turns off web search in Codex, so no Search or Fetch requests are made. Note: selecting option 1 or 2 in the setup script again removes this setting and turns Alpha Search back on.
 

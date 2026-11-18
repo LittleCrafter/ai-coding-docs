@@ -180,7 +180,7 @@ Type| Support Status
 `deepseek_web_search` / `deepseek_read_url`| Supported. Cannot be declared together with `web_search`; see [Web Tools](<./web_tools.md#responses-api>)  
 `file_search` / `code_interpreter` / `computer_use` / `mcp` / other built-in tools| Ignored  
   
-The `web_search` tool above runs on the server through the Responses API. Codex's Alpha Search uses a standalone search endpoint and supports both `deepseek-flash` and `deepseek-v4-pro`; the model restriction above does not apply to it. See [Integrate with Codex](<../quick_start/agent_integrations/codex.md>) for setup instructions.
+The `web_search` tool above runs on the server through the Responses API and is not charged. Codex's Alpha Search uses a standalone search endpoint and supports both `deepseek-flash` and `deepseek-v4-pro`; the model restriction above does not apply to it. See [Integrate with Codex](<../quick_start/agent_integrations/codex.md>) for setup instructions.
 
 ### Response Fields
 

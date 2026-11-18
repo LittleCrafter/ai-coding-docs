@@ -4760,18 +4760,23 @@ Availability, tools, reasoning settings, and usage limits differ by product and
 model version. Check the [models available in ChatGPT](./models.md) or the
 [API model catalog](https://developers.openai.com/api/docs/models).
 
+#### How to think about models and reasoning effort
+
+- For most API workflows, start with **GPT-6.2 Sol** at medium reasoning effort.
+- Choose **GPT-6.2 Astra** for demanding engineering or analysis.
+- Use **GPT-6 Luna** for small, repeatable tasks.
+- Choose **GPT-6.1 Terra** to interpret visual information, such as charts and screenshots.
+
+- For most tasks in ChatGPT Work or Codex, start with **GPT-6.2 Sol**.
+- Choose **GPT-6.2 Astra** for complex projects.
+- Use **GPT-6 Luna** for small, repeatable tasks, especially simple automations that run frequently.
+- Choose **GPT-6.1 Terra** when the task requires visual reasoning, such as navigating browser or desktop apps.
+
+You can find more details on recommended tasks per model and reasoning effort below.
+
 #### Find the right model for your workflow
 
 Choose a task and a priority to see a suggested model and reasoning effort.
-
-#### How to think about models and reasoning effort
-
-To reduce costs or latency, start with the lightest setting that meets your
-acceptance criteria. Compare the API cost per completed task, including
-retries.
-
-To optimize usage, start with the suggested model and reasoning effort. Check
-which settings your plan offers and how much of your allowance the task uses.
 
 #### Experiment
 
@@ -4793,19 +4798,11 @@ Start by considering:
 If you can, experiment using the same inputs to compare results and keep the
 lightest setting that meets your quality bar.
 
-Choose acceptance criteria before comparing models:
+Try the same model at two reasoning settings on a few tasks you do often.
+Which setting gets you to a usable result sooner, including the time you spend
+checking and editing it?
 
-- **Writing:** check required facts, qualifications, audience, and voice. Review
-  both outputs before deciding whether the shorter one is more useful.
-- **Computer use:** reopen the affected record or page to verify saved changes,
-  confirm that the workflow preserved unrelated data, and compare the completion
-  report with the actual result.
-- **Code and interfaces:** run regression tests. For an interactive application,
-  also inspect the rendered result on desktop and mobile.
-
-Repeat the comparison across representative tasks. Measure completion time
-alongside quality, including time spent reviewing or repairing the result. Then
-vary reasoning effort while keeping the model and inputs fixed.
+Whenever a new model comes out, try revisiting your previous settings.
 
 ### Prompting
 
@@ -16218,8 +16215,7 @@ tasks that need more planning, analysis, or checking.
 - **High** and **Extra High** suit difficult work with multiple steps, sources,
   or tradeoffs.
 
-Reasoning efforts don't map exactly between model generations. Try a familiar task
-at a lower setting and adjust based on the result.
+Learn more in our Model selection guide
 
 #### Know when to use Max or Ultra
 

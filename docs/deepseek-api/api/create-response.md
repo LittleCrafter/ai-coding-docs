@@ -683,19 +683,19 @@ Successful server-side web search and page-fetch counts, separate from token usa
 
 **Possible values:** `>= 0`
 
-Number of successful web search queries. A search with multiple queries can add more than one; failed queries and queries with no results are not counted. This field can be used as a basis for billing.
+Number of successful web search queries. A search with multiple queries can add more than one.
 
 **tool_fetch** integerrequired
 
 **Possible values:** `>= 0`
 
-Number of successful page fetches performed by open_page or find_in_page. Failed attempts are not counted. With the web tools, finding text in a page is not counted. This field can be used as a basis for billing.
+Number of successful page fetches performed by open_page or find_in_page. With the web tools, finding text in a page is not counted.
 
 **tool_image_search** integer
 
 **Possible values:** `>= 0`
 
-With the web tools. Number of successful image searches. This field can be used as a basis for billing.
+With the web tools. Number of successful image searches.
 
 **Example**
 

@@ -300,8 +300,7 @@ tasks that need more planning, analysis, or checking.
 - **High** and **Extra High** suit difficult work with multiple steps, sources,
   or tradeoffs.
 
-Reasoning efforts don't map exactly between model generations. Try a familiar task
-at a lower setting and adjust based on the result.
+  [Learn more in our Model selection guide](./model-selection.md#how-to-think-about-models-and-reasoning-effort)
 
 <a id="app-know-when-to-use-max-or-ultra"></a>
 <a id="web-know-when-to-use-max-or-ultra"></a>
