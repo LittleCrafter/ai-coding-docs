@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 34
+- **Pages mirrored:** 30
 - **Version:** 2.6.3
-- **Last updated:** 2026-11-18T14:41:19Z
+- **Last updated:** 2026-11-18T22:27:10Z
 - **Official docs:** https://moonshotai.github.io/kimi-code/en
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -44,12 +44,13 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Using Kimi Code CLI in IDEs | [guides/ides.md](./guides/ides.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/ides.html>) |
 | Interaction and input | [guides/interaction.md](./guides/interaction.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/interaction.html>) |
 | Migrating from kimi-cli | [guides/migration.md](./guides/migration.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/migration.html>) |
-| Remote Control | [guides/remote-control.md](./guides/remote-control.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/remote-control.html>) |
+| Using in Other Agents | [guides/other-agents.md](./guides/other-agents.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/other-agents.html>) |
+| Using in Scripts and CI | [guides/print.md](./guides/print.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/print.html>) |
 | Remote environments | [guides/remote-environment.md](./guides/remote-environment.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/remote-environment.html>) |
 | Sessions and context | [guides/sessions.md](./guides/sessions.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/sessions.html>) |
 | Tower multi-agent collaboration | [guides/tower.md](./guides/tower.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/tower.html>) |
 | Common use cases | [guides/use-cases.md](./guides/use-cases.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/use-cases.html>) |
-| Using Kimi Code in the browser | [guides/web.md](./guides/web.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/web.html>) |
+| Using in the Browser | [guides/web.md](./guides/web.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/web.html>) |
 
 ## reference
 
@@ -58,11 +59,6 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Keyboard Shortcuts | [reference/keyboard.md](./reference/keyboard.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/keyboard.html>) |
 | \`kimi acp\` Subcommand | [reference/kimi-acp.md](./reference/kimi-acp.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/kimi-acp.html>) |
 | \`kimi\` Command | [reference/kimi-command.md](./reference/kimi-command.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/kimi-command.html>) |
-| Server API (Beta) | [reference/server-api.md](./reference/server-api.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api.html>) |
-| Sessions and conversations | [reference/server-api-conversation.md](./reference/server-api-conversation.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api-conversation.html>) |
-| File endpoints | [reference/server-api-files.md](./reference/server-api-files.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api-files.html>) |
-| Service and configuration endpoints | [reference/server-api-service.md](./reference/server-api-service.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api-service.html>) |
-| Session endpoints | [reference/server-api-sessions.md](./reference/server-api-sessions.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/server-api-sessions.html>) |
 | Slash Commands | [reference/slash-commands.md](./reference/slash-commands.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/slash-commands.html>) |
 | Built-in Tools | [reference/tools.md](./reference/tools.md) | [source](<https://moonshotai.github.io/kimi-code/en/reference/tools.html>) |
 

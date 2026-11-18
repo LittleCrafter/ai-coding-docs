@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-11-17T22:43:41Z",
+  "last_updated": "2026-11-18T22:23:55Z",
   "files": {
     "cli/acp": {
       "slug": "cli/acp",
@@ -200,8 +200,8 @@
       "source_url": "https://antigravity.google/docs/cli/headless",
       "source_md_url": "https://antigravity.google/docs/cli/headless.md",
       "source_id": "cli/headless",
-      "hash": "ae117be61b49c027db5556bd3794e3cfac4554ae7927ea28987d93f00d2512c9",
-      "last_updated": "2026-11-13T03:40:31Z"
+      "hash": "5b44862b42c4b5c354aa046ee7ebd12e6d7d55fffbf32a5db38f585283c08adc",
+      "last_updated": "2026-11-18T22:23:55Z"
     },
     "cli/modes": {
       "slug": "cli/modes",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-17T22:43:41Z",
-    "fetch_duration_seconds": 9.504,
+    "last_fetch_completed": "2026-11-18T22:23:55Z",
+    "fetch_duration_seconds": 9.509,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,

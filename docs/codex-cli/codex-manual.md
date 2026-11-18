@@ -3968,6 +3968,8 @@ and when. Asking your dot to draft replies doesn't give it permission to send
 them. A specific instruction can cover future actions within that scope; an
 action outside it needs another decision.
 
+If you use Wallet, you’ll review and approve each payment using biometrics.
+
 Your dot can also research information from apps you've connected to look for
 ways to help. The tools it uses for that research can't send messages, change
 app content, or control your browser or computer. Any follow-up action is
@@ -6241,6 +6243,7 @@ The CLI provides these commands:
 | ---------------------------------- | ------------------------------------------------------------------- |
 | `codex-security scan`              | Run a Codex Security scan.                                          |
 | `codex-security scan import`       | [Save CSV or JSON findings as a scan](#codex-security-scan-import). |
+| `codex-security import continuum`  | [Collect AWS Continuum findings](#codex-security-import-continuum). |
 | `codex-security import github`     | [Read GitHub code scanning alerts](#codex-security-import-github).  |
 | `codex-security policy`            | Draft or update a repository security policy.                       |
 | `codex-security init`              | Create a YAML or JSON project configuration.                        |
@@ -6523,9 +6526,14 @@ Choose one target type for each scan.
 requires `--diff`, and `--base` requires `--working-tree`. Deep mode supports
 repository and path targets.
 
-To skip a directory, pass `--exclude-path examples/`. In a project config, add
-`exclude_paths: [examples/]` under `scan`. CLI exclusions replace the configured
-list.
+To exclude a directory and everything under it from review, pass
+`--exclude-path examples/`. To save that exclusion in your project config,
+add `exclude_paths: [examples/]` under `scan`. CLI exclusions replace the
+configured list.
+
+Exclusions apply to Standard, Deep, and diff scans and take precedence over
+`--path`. The scanner can still read excluded files for context. Exclusions
+filter out a finding only when all its locations fall under excluded paths.
 
 Diff and working-tree scans require the repository argument to be the Git
 worktree root. The selected refs must exist in that checkout.
@@ -6861,6 +6869,28 @@ source was reviewed. `scans rerun SCAN_ID` imports the retained input again.
 
 To scan a repository named `import`, use `scan ./import`.
 
+#### `codex-security import continuum`
+
+Use AWS CLI v2.38.5 or later and sign in to the account and Region that own
+the Continuum environment. Run `codex-security import continuum ENVIRONMENT_ID --format json` with the
+short environment ID and save the output outside the checkout.
+The command collects code issues, linked findings, and supporting evidence.
+It requires one configured Git repository. If the environment also has S3
+sources, check which repository supplied the code before importing the report.
+
+**Migrating from `collect_continuum.py`.** To collect one finding and its
+matching validation evidence and patches, add `--finding-id FINDING_ID` and
+`--source-root /absolute/path/to/checkout` to the command above. Use the short
+finding ID. If the environment has more than one Git repository or any S3
+sources, also pass the AWS source name with `--repository-name`.
+You can still import saved finding exports and patch captures.
+
+For a local preview, pass the report to [`publish findings`](#codex-security-publish-findings)
+with `--provider continuum --to local --dry-run`. Set `--repository` to the
+matching checkout and use a stable `--source-key` for that environment and repository.
+For a finding capture, also pass the verified Git URL with `--source-repository-url`.
+See the [Continuum import guide](https://github.com/openai/codex-security/blob/main/docs/scanner-imports/continuum.md) for AWS permissions and collection commands.
+
 #### `codex-security import github`
 
 Read GitHub code scanning alerts without changing GitHub or checking out code:
@@ -7033,8 +7063,9 @@ scan, including scans that return errors. It doesn't run after
 cancellation or when a scan reaches its cost limit.
 
 `--workers` limits simultaneous repository scans and defaults to `4`. `--mode`
-defaults to `standard`, and `--max-attempts` defaults to `1`. Set
-`--max-attempts` to retry repository or scan errors. Exclusions and follow-up
+defaults to `standard`. `--max-attempts` limits attempts per unfinished CSV
+row on each run and defaults to `1`. See [Retry repository errors](./security/cli/bulk-scans.md#retry-repository-errors)
+for an example across two runs. Exclusions and follow-up
 notes don't trigger retries of completed scans. Remaining execution failures
 return `2`; completed severity-policy violations return `1`.
 
@@ -7119,6 +7150,10 @@ and reuses saved matches. To save matches explicitly, use `scans match`:
 ```bash
 npx @openai/codex-security scans match PREVIOUS_SCAN_ID CURRENT_SCAN_ID
 ```
+
+When Standard and Deep scans ran in linked Git worktrees, Codex can use saved
+evidence to match findings across corresponding paths if both scans recorded
+the same repository generation, revision, and snapshot digest.
 
 A finding is unknown when its path is excluded or its match is uncertain. If
 the later scan doesn't find it in the code it scanned, it is not observed.
@@ -7310,6 +7345,9 @@ from an unfinished or failed scan. If no model was saved, the command returns
 an error. Review any provisional or recovered content identified in the
 document before reusing it.
 
+When a route appears in a test or in deleted code, Codex Security checks
+whether the application still serves it before including it as an entry point.
+
 To provide the exported model as context for another scan, pass its path to
 [`--knowledge-base`](#add-security-context).
 
@@ -7450,9 +7488,17 @@ are excluded, the preview exits with `0` and the import saves the accepted
 records and exits with `1`. A valid report with no findings exits with `0`.
 If all records are excluded, both commands exit with `2`.
 
+To import a CrowdStrike Falcon Cloud Security infrastructure-as-code report,
+use the JSON output of `fcs scan iac` from FCS CLI 4.x. Pass the report to
+`publish findings` with `--provider crowdstrike --to local`. Set `--repository`
+to the directory where you ran FCS so the reported paths resolve correctly.
+The importer checks the files against their recorded hashes. If a file has changed, use the scanned revision
+or generate a new report. CrowdStrike imports are local only.
+The [CrowdStrike import guide](https://github.com/openai/codex-security/blob/main/docs/scanner-imports/crowdstrike.md) shows how to generate the report and read back the saved findings.
+
 #### Publish a report to Cloud
 
-Keep the file, provider, and source key from the local preview. Set `--to cloud`,
+For providers that support Cloud, keep the file, provider, and source key from the local preview. Set `--to cloud`,
 pass the connected repository URL or Cloud ID to `--repository`, and preview again
 with `--dry-run --format json`. To publish, rerun without `--dry-run` and confirm.
 
@@ -7477,6 +7523,11 @@ These commands work with existing findings:
 `verify-fix` returns `2` if any check is inconclusive or fails. Otherwise, it
 returns `1` if any finding remains vulnerable, or `0` if all findings are fixed.
 Use each command's `--help` for selectors, model settings, and output options.
+
+Hosts that use `classify-severity --records` can opt in to diagnostic records
+on review requests and on the final result or error. Each record identifies the
+event and when it occurred.
+See the [host protocol guide](https://github.com/openai/codex-security/blob/main/sdk/typescript/docs/classify-severity-records.md#cli-diagnostic-records) for the Node.js condition and record format.
 
 #### `codex-security feedback`
 
@@ -9674,6 +9725,10 @@ You can import a saved scanner export with `codex-security publish findings`. Pr
 
 Inspect the preview before removing `--dry-run` and confirming. A `privateImport` entry saves the findings to your private inbox. Entries in `requests` publish to the repository environments listed there. Check the receipt for exclusions, failures, and unprocessed rows. See the [CLI reference](./security/cli/reference.md#codex-security-publish-findings) for local and cloud import examples and the [scanner import guides](https://github.com/openai/codex-security/blob/main/docs/scanner-imports/README.md) for CLI formats and commands.
 
+For AWS Continuum, [collect code issues or an individual finding](./security/cli/reference.md#codex-security-import-continuum), then preview the saved report with the CLI. Codex Security can use validation evidence from the tested target to assess whether an attacker can reach the affected code.
+
+For CrowdStrike Falcon Cloud Security infrastructure-as-code scans, [import the saved JSON report into your local workbench](./security/cli/reference.md#preview-and-save-a-local-report).
+
 #### Reopen an import
 
 Open **My recent imports** from **Settings → Integrations** or **Findings → Import** in the workspace where you made the import. You can also reopen a private import from its row in **Scans**. The summary accounts for each row, including rejected inputs and their reasons. Open an accepted row to see its scanner ID and saved evidence, along with any assessment or published finding. Disconnecting the scanner stops new reads through that connection. You can still reopen your saved imports.
@@ -10356,6 +10411,8 @@ existing scan.
 - If a wait ends while the scan is still active, return to
   the same scan or conversation and ask Codex to continue it. A response ending
   or a wait timing out doesn't cancel the scan.
+- If Codex blocks a worker request because of a misalignment policy violation,
+  Deep Scan reports the refusal and stops without retrying the request.
 - If the scan reports a terminal failure or was canceled, keep the error and
   saved scan directory. Review saved findings separately from pending
   candidates, which haven't been confirmed. Coverage is incomplete, so an
@@ -10609,9 +10666,13 @@ npx @openai/codex-security bulk-scan repositories.csv \
   --max-attempts 3
 ```
 
-The default is one attempt per repository. Each attempt has its own result
-record and artifact directory. Retries cover checkout errors, scan failures,
-and missing or invalid required artifacts. Completed scans aren't retried
+The default is one attempt per unfinished CSV row each time you run the
+command. In the example above, if a row fails on attempts 1 through 3,
+resuming with the same command gives it up to three more attempts, numbered
+4 through 6. The CLI skips completed rows.
+
+Each attempt has its own result record and artifact directory. Retries cover
+checkout errors, scan failures, and missing or invalid required artifacts. Completed scans aren't retried
 because of coverage gaps or severity-policy violations.
 
 Bulk scans use these exit codes:
@@ -13634,6 +13695,30 @@ every MCP server and UI component as production software:
 - **Storage:** Decide how long you keep user data and publish a retention policy. Respect deletion requests.
 - **Logging:** Redact PII before writing to logs. Store correlation IDs for debugging but avoid storing raw prompt text unless necessary.
 
+#### Input schemas and task context
+
+- Design the input schema to limit data collection by default, rather than a funnel for optional context.
+
+- Input fields must be directly related to the tool’s stated purpose.
+
+- Do not request the full conversation history, raw chat transcripts, or broad contextual fields “just in case.” A tool may request a brief, task-specific user intent field only when it meaningfully improves execution and does not expand data collection beyond what is reasonably necessary to respond to the user’s request and for the purposes described in your privacy policy.
+
+- Do not request accumulated conversation context or prior-turn arrays.
+
+#### Response payloads
+
+Tool responses must return only data that is directly relevant to the user’s request and the tool’s stated purpose. Do not include diagnostic, telemetry, or internal identifiers—such as session IDs, trace IDs, request IDs, timestamps, or logging metadata—unless they are strictly required to fulfill the user’s query.
+
+#### Chat-context boundaries
+
+Your MCP server must not pull, reconstruct, or infer the full chat log from the client or elsewhere. Operate only on the explicit snippets and resources the client or model chooses to send. This separation can help prevent covert data expansion and keep analysis limited to intentionally shared content.
+
+#### Location
+
+If needed, rely on the coarse geographic location shared by the system. Do not request precise user location data (for example, GPS coordinates or addresses).
+
+Avoid requesting raw location fields (for example, city or coordinates) in your input schema. When location is needed, obtain it through the client’s controlled side channel (such as environment metadata or a referenced resource) so appropriate policy and consent controls can be applied. This reduces accidental PII capture, enforces least-privilege access, and keeps location handling auditable and revocable.
+
 #### Prompt injection and write actions
 
 Custom MCP servers enable full MCP access, including write tools. Mitigate risk by:
@@ -13653,7 +13738,7 @@ standard `fetch` requests. Nested frames are unavailable by default; enable
 specific origins in resource CSP metadata such as
 `_meta.ui.csp.frameDomains`. Plugins can embed pages from their MCP server's
 own registrable domain, including existing editors and admin interfaces. See
-the [iframe policy](https://developers.openai.com/plugins/plugin-guidelines#iframes-and-embedded-pages) for
+the [iframe requirements](https://developers.openai.com/plugins/build/chatgpt-ui#content-security-policy-csp) for
 domain ownership, required justifications, and review requirements.
 
 The widget CSP restricts which iframe destinations can load. An embedded
@@ -25747,12 +25832,13 @@ Declare the exact domains the component connects to or loads resources from:
 Nested frames are blocked by default. Keep each allowlist as narrow as possible.
 The plugin review process checks the declared policy against the UI behavior.
 
-You can embed an existing editor or admin interface from your MCP server's own
-registrable domain. For example, a server at `https://api.example.com/mcp` can
-declare `https://app.example.com` in `frameDomains`. Provide the required
-justification at submission and follow the
-[iframe policy](https://developers.openai.com/plugins/plugin-guidelines#iframes-and-embedded-pages), including
-its restrictions on shared hosting and its review requirements.
+Plugins with UI can embed pages from their MCP server’s own registrable domain, including full existing editors and admin interfaces. For example, a server at `https://api.example.com/mcp` can embed `https://app.example.com`: both use the registrable domain `example.com`. Separate tenants on a shared hosting service count as different domains; using the same hosting provider does not establish ownership.
+
+Declare each required iframe origin in the resource CSP using `_meta.ui.csp.frameDomains` (or the legacy `_meta["openai/widgetCSP"].frame_domains`). For third-party domains, iframe embeds should be limited to cases where the embedded experience is essential.
+
+You must still provide a justification [when submitting a plugin that uses iframes](https://developers.openai.com/plugins/deploy/submission#complete-review-information). Explain what each embedded page does, why the plugin embeds it, and who controls its domain. Iframe use can require additional review or escalation and may lead to slower approval or rejection if the content cannot be assessed. Sharing the MCP server’s domain does not guarantee approval.
+
+All other plugin requirements still apply to embedded pages, including the [checkout](https://developers.openai.com/plugins/plugin-guidelines#5.3) and [privacy](https://developers.openai.com/plugins/plugin-guidelines#4) requirements.
 
 Component UI templates are the recommended path for production.
 
@@ -34107,11 +34193,9 @@ See how plugins you already know are building with extensions.
 
 Source: [Plugin guidelines](https://developers.openai.com/plugins/plugin-guidelines.md)
 
-These guidelines cover all plugins listed in the ChatGPT Directory, including
-MCP and skills-only plugins. Requirements specific to MCP servers, tools, and
-optional UI apply only to plugins that include those components. For the
-complete submission flow, including skills, portal steps, review, approval,
-and publishing, see [Submit plugins](https://developers.openai.com/plugins/deploy/submission).
+import "../../styles/plugin-guidelines.css";
+
+These guidelines cover all plugins listed in the ChatGPT Directory, including MCP and skills-only plugins. For the complete submission flow, including skills, portal steps, review, approval, and publishing, see [Submit plugins](https://developers.openai.com/plugins/deploy/submission).
 
 #### Overview
 
@@ -34119,84 +34203,125 @@ The plugin ecosystem is built on trust. People come to ChatGPT and Codex expecti
 
 You can also read the principles in [what makes a great experience in ChatGPT](https://developers.openai.com/blog/what-makes-a-great-chatgpt-app).
 
-The guidelines below outline the minimum standard a published plugin must meet to remain available in the universal directory shared by ChatGPT and Codex. Plugins that demonstrate strong real-world utility and high user satisfaction may be eligible for enhanced distribution opportunities, such as directory placement or proactive suggestions.
+The guidelines below outline the minimum standard a published plugin must meet to remain available in the universal directory shared by ChatGPT and Codex. Failure to follow these guidelines may result in your plugin being rejected or removed. Plugins that demonstrate strong real-world utility and high user satisfaction may be eligible for enhanced distribution opportunities, such as directory placement or proactive suggestions.
 
-#### How to use these guidelines
+#### Which guidelines apply
 
-Start with [Plugin fundamentals](#plugin-fundamentals), which apply to every plugin. Then read [MCP requirements](#mcp-requirements) for plugins with MCP servers, tools, or optional UI, and [Skills](#skills) for plugins that include skills. If your plugin contains both MCP tools and skills, read both sections.
+Requirements apply according to what your plugin includes:
 
-#### Plugin fundamentals
+- **All plugins** must meet the applicable quality, safety, privacy, commerce, developer verification, and listing requirements.
+- **Plugins with MCP servers, tools, or UI** must also meet the requirements specific to those components.
+- **Plugins with skills** must ensure their skills comply with our security, privacy, and usage policies. Skills are automatically scanned. Skills-only plugins must meet metadata and listing requirements and may be subject to additional Directory eligibility requirements.
 
-#### Purpose and originality
+#### 1. Plugin fundamentals
 
-Plugins should serve a clear purpose and reliably do what they promise. In particular, they should provide functionality or workflows that are not natively supported by the products’ built-in capabilities and that meaningfully help satisfy common user intents expressed in conversation.
+#### 1.1. Purpose and originality
 
-Only use intellectual property that you own or have permission to use. Do not engage in misleading or copycat designs, impersonation, spam, or static frames with no meaningful interaction. Plugins should not imply that they are made or endorsed by OpenAI.
+- a. Plugins should serve a clear purpose and reliably do what they promise. In particular, they should provide functionality or workflows that are not natively supported by the products’ built-in capabilities and that meaningfully help satisfy common user intents expressed in conversation.
 
-#### Quality and reliability
+- b. Only use content or intellectual property that you own or have permission to use. Do not engage in misleading or copycat designs, impersonation, spam, or static frames with no meaningful interaction.
 
-Plugins must behave predictably and reliably. Results should be accurate and relevant to user input. Errors, including unexpected ones, must be handled with clear messaging or fallback behaviors.
+- c. Plugins should not imply that they are made or endorsed by OpenAI.
 
-Plugins should be stable, responsive, and complete. Trial or demo plugins will not be accepted.
+#### 1.2. Quality and reliability
 
-#### Plugin name, description, and prompts
+- a. Plugins must behave predictably and reliably. Results should be accurate and relevant to user input. Errors, including unexpected ones, must be handled with clear messaging or fallback behaviors.
+
+- b. Plugins should be stable, responsive, and complete. Trial or demo plugins will not be accepted.
+
+- c. Plugins must function reliably in ChatGPT on both desktop and mobile, including any UI components.
+
+- d. Tools should behave exactly as their names, descriptions, and inputs indicate.
+  - Side effects should never be hidden or implicit.
+  - Tools should be safe to retry where possible, or explicitly indicate when retries may cause repeated effects.
+
+#### 1.3. Plugin name, description, and prompts
 
 Plugin names and descriptions must be clear, accurate, and straightforward. Provide example prompts that help users get started with your plugin.
 
 - **Names:** Avoid overly generic names, especially single-word dictionary terms that aren’t explicitly tied to your brand. Do not append “MCP,” “MCP Server,” or “Plugin” to a company or product name.
 - **Subtitles and descriptions:** Describe the plugin’s functionality without comparing it with other products, disparaging alternatives, or making unverifiable claims. Do not advertise pricing, subscriptions, free trials, discounts, or promotions.
+- **Category:** Select a category that accurately reflects your plugin’s primary purpose and functionality.
 
-#### Safety
+#### 1.4. Test credentials
 
-#### Usage policies
+When submitting a plugin with an authenticated MCP server, provide a login and password for a fully featured demo account that includes sample data. Plugins that require additional login steps, such as a new account sign-up or 2FA through an inaccessible account, will be rejected.
+
+#### 1.5. Ongoing compliance
+
+Stay current with evolving policy requirements and ensure ongoing compliance. Previously approved plugins may be removed for policy violations or failure to respond promptly to our communications.
+
+#### 2. Developer verification
+
+#### 2.1. Verification
+
+All plugin submissions must come from verified individuals or organizations. Inside the [OpenAI Platform Dashboard general settings](https://platform.openai.com/settings/organization/general), we provide a way to confirm your identity and affiliation with any business you wish to publish on behalf of. Misrepresentation, hidden behavior, or attempts to game the system may result in removal from the program.
+
+#### 2.2. Support contact details
+
+You must provide customer support contact details where end users can reach you for help. Keep this information accurate and up to date.
+
+#### 3. Safety
+
+#### 3.1. Usage policies
 
 Do not engage in or facilitate activities prohibited under [OpenAI usage policies](https://openai.com/policies/usage-policies/). Plugins must avoid high-risk behaviors that could expose users to harm, fraud, or misuse.
 
-Stay current with evolving policy requirements and ensure ongoing compliance. Previously approved plugins that are later found in violation may be removed.
-
-#### Appropriateness
+#### 3.2. Appropriateness
 
 Plugins must be suitable for general audiences, including users aged 13–17. Plugins may not explicitly target children under 13. Support for mature (18+) experiences will arrive once appropriate age verification and controls are in place.
 
-#### Respect user intent
+#### 3.3. Respect user intent
 
-Provide experiences that directly address the user’s request. Do not insert unrelated content, attempt to redirect the interaction, or collect data beyond what is reasonably necessary to fulfill the user’s request and what is consistent with your privacy policy.
+- a. Provide experiences that directly address the user’s request. Do not insert unrelated content, attempt to redirect the interaction, or collect data beyond what is reasonably necessary to fulfill the user’s request and what is consistent with your privacy policy.
 
-Act only within the user-authorized task. Plugin and tool metadata must not seek secrets or protected context, direct unauthorized data transfers or actions, override platform instructions or safeguards, conceal behavior, or impersonate another party. Encoded or obfuscated instructions do not exempt a plugin from these requirements.
+- b. Act only within the user-authorized task. Plugin and tool metadata must not seek secrets or protected context, direct unauthorized data transfers or actions, override platform instructions or safeguards, conceal behavior, or impersonate another party. Encoded or obfuscated instructions do not exempt a plugin from these requirements.
 
-#### Fair play
+#### 3.4. Fair play
 
-Plugins must not include descriptions, titles, tool annotations, or other model-readable fields, at either the tool or plugin level, that manipulate how the model selects or uses other plugins or their tools (for example, instructing the model to prefer one plugin over others) or interfere with fair discovery. All descriptions must accurately reflect the plugin’s value without disparaging alternatives.
+Plugins must not manipulate how the model selects or uses other plugins or their tools (for example, instructing the model to prefer one plugin over others), interfere with fair discovery, or otherwise negatively impact ChatGPT or our users.
 
-#### Third-party content and integrations
+#### 3.5. Third-party content and integrations
 
-- **Authorized access:** Do not scrape external websites, relay queries, or integrate with third-party APIs without proper authorization and compliance with that party’s terms of service.
-- **Unofficial connectors:** We cannot approve plugins that primarily function as unofficial connectors to third-party services, including pass-through intermediary software layers.
-- **Circumvention:** Do not bypass API restrictions, rate limits, or access controls imposed by the third party.
+- a. **Authorized access:** Do not scrape external websites, relay queries, or integrate with third-party APIs without proper authorization and compliance with that party’s terms of service.
 
-#### Privacy
+- b. **Unofficial connectors:** We cannot approve plugins that primarily function as unofficial connectors to third-party services, including pass-through intermediary software layers.
 
-#### Privacy policy
+- c. **Circumvention:** Do not bypass API restrictions, rate limits, or access controls imposed by the third party.
+
+#### 4. Privacy
+
+#### 4.1. Privacy policy
 
 Plugin submissions must include a clear, published privacy policy explaining, at minimum, the categories of personal data collected, the purposes of use, the categories of recipients, data retention timelines, and any controls offered to your users. Follow this policy at all times. Users can review your privacy policy before installing the plugin.
 
-#### Data collection
+#### 4.2. Data collection
 
-- **Collection minimization:** Gather only the minimum data required to perform the plugin’s function. Inputs should be specific, narrowly scoped, and explicitly linked to the task. Avoid “just in case” fields or broad profile data.
-- **Restricted data:** Do not collect, solicit, or process the following categories of Restricted Data:
+- a. **Collection minimization:** Gather only the minimum data required to perform the plugin’s function. Inputs should be specific, narrowly scoped, and explicitly linked to the task. Avoid “just in case” fields or broad profile data.
+
+- b. **Restricted data:** Do not collect, solicit, or process the following categories of Restricted Data:
   - Information subject to Payment Card Information Data Security Standards (PCI DSS)
   - Protected health information (PHI)
   - Government identifiers (such as social security numbers)
   - Access credentials and authentication secrets (such as API keys, MFA/OTP codes, or passwords).
-- **Regulated Sensitive Data:** Do not collect personal data considered “sensitive” or “special category” in the jurisdiction in which the data is collected unless collection is strictly necessary to perform the plugin’s stated function; the user has provided legally adequate consent; and the collection and use is explicitly and prominently disclosed at or before the point of collection.
 
-#### Transparency and user control
+- c. **Regulated Sensitive Data:** Do not collect personal data considered “sensitive” or “special category” in the jurisdiction in which the data is collected unless collection is strictly necessary to perform the plugin’s stated function; the user has provided legally adequate consent; and the collection and use is explicitly and prominently disclosed at or before the point of collection.
 
-- **Data practices:** Do not engage in surveillance, tracking, or behavioral profiling—including metadata collection such as timestamps, IP addresses, or query patterns—unless explicitly disclosed, narrowly scoped, subject to meaningful user control, and aligned with [OpenAI’s usage policies](https://openai.com/policies/usage-policies/).
+#### 4.3. Transparency and user control
 
-#### Commerce and monetization
+**Data practices:** Do not engage in surveillance, tracking, or behavioral profiling—including metadata collection such as timestamps, IP addresses, or query patterns—unless explicitly disclosed, narrowly scoped, subject to meaningful user control, and aligned with [OpenAI’s usage policies](https://openai.com/policies/usage-policies/).
 
-{/_ vale off _/}
+#### 4.4. Authentication and permissions
+
+If your MCP server requires authentication, the flow must be transparent and explicit. Users must be informed of all requested permissions, and those requests must be limited to what is necessary for the plugin to function.
+
+#### 5. Commerce and monetization
+
+#### 5.1. Commerce and monetization
+
+{/_ vale Vale.Spelling = NO _/}
+{/_ vale Vale.Terms = NO _/}
+{/_ vale Microsoft.Foreign = NO _/}
 
 Currently, plugins may conduct commerce only for physical goods. Selling digital products or services—including subscriptions, digital content, tokens, or credits—is not allowed, whether offered directly or indirectly (for example, through freemium upsells).
 
@@ -34216,59 +34341,61 @@ Plugins may not:
 
 Plugins should provide a high quality experience in ChatGPT. If the same feature in your plugin is also available through your external website or application, you must not provide a worse version through your plugin. Plugins must not apply ChatGPT-specific fees, surcharges, or other pricing that penalizes users for accessing a service through ChatGPT. Temporary discounts and promotional offers on other platforms are permitted.
 
+#### 5.2. Prohibited goods and services
+
 In addition, plugins may not be used to sell, promote, facilitate, or meaningfully enable the following goods or services:
 
-#### Prohibited goods
+- a. Prohibited goods
+  1. Adult content & sexual services
+     1. Pornography, explicit sexual media, live-cam services, adult subscriptions
+     2. Sex toys, sex dolls, BDSM gear, fetish products
+  2. Gambling
+     1. Real-money gambling services, casino credits, sportsbook wagers, crypto-casino tokens
+  3. Illegal or regulated drugs
+     1. Marijuana/THC products, psilocybin, illegal substances
+     2. CBD products exceeding legal THC limits
+  4. Drug paraphernalia
+     1. Bongs, dab rigs, drug-use scales, cannabis grow equipment marketed for drugs
+  5. Prescription & age-restricted medications
+     1. Prescription-only drugs (for example, insulin, antibiotics, Ozempic, opioids)
+     2. Age-restricted Rx products (for example, testosterone, HGH, fertility hormones)
+  6. Illicit goods
+     1. Counterfeit or replica products
+     2. Stolen goods or items without clear provenance
+     3. Financial-fraud tools (skimmers, fake POS devices)
+     4. Piracy tools or cracked software
+     5. Wildlife or environmental contraband (ivory, endangered species products)
+  7. Malware, spyware & surveillance
+     1. Malware, ransomware, keyloggers, stalkerware
+     2. Covert surveillance devices (spy cameras, IMSI catchers, hidden trackers)
+  8. Tobacco & nicotine
+     1. Tobacco products
+     2. Nicotine products (vapes, e-liquids, nicotine pouches)
+  9. Weapons & harmful materials
+     1. Firearms, ammunition, firearm parts
+     2. Explosives, fireworks, bomb-making materials
+     3. Illegal or age-restricted weapons (switchblades, brass knuckles, crossbows where banned)
+     4. Self-defense weapons (pepper spray, stun guns, tasers)
+     5. Extremist merchandise or propaganda
 
-- Adult content & sexual services
-  - Pornography, explicit sexual media, live-cam services, adult subscriptions
-  - Sex toys, sex dolls, BDSM gear, fetish products
-- Gambling
-  - Real-money gambling services, casino credits, sportsbook wagers, crypto-casino tokens
-- Illegal or regulated drugs
-  - Marijuana/THC products, psilocybin, illegal substances
-  - CBD products exceeding legal THC limits
-- Drug paraphernalia
-  - Bongs, dab rigs, drug-use scales, cannabis grow equipment marketed for drugs
-- Prescription & age-restricted medications
-  - Prescription-only drugs (for example, insulin, antibiotics, Ozempic, opioids)
-  - Age-restricted Rx products (for example, testosterone, HGH, fertility hormones)
-- Illicit goods
-  - Counterfeit or replica products
-  - Stolen goods or items without clear provenance
-  - Financial-fraud tools (skimmers, fake POS devices)
-  - Piracy tools or cracked software
-  - Wildlife or environmental contraband (ivory, endangered species products)
-- Malware, spyware & surveillance
-  - Malware, ransomware, keyloggers, stalkerware
-  - Covert surveillance devices (spy cameras, IMSI catchers, hidden trackers)
-- Tobacco & nicotine
-  - Tobacco products
-  - Nicotine products (vapes, e-liquids, nicotine pouches)
-- Weapons & harmful materials
-  - Firearms, ammunition, firearm parts
-  - Explosives, fireworks, bomb-making materials
-  - Illegal or age-restricted weapons (switchblades, brass knuckles, crossbows where banned)
-  - Self-defense weapons (pepper spray, stun guns, tasers)
-  - Extremist merchandise or propaganda
+- b. Prohibited fraudulent, deceptive, or high-risk services
+  1. Fake IDs, forged documents, or document falsification services
+  2. Debt relief, credit repair, or credit-score manipulation schemes
+  3. Unregulated, deceptive, or abusive financial services
+  4. Lending, advance-fee, or credit-building schemes designed to exploit users
+  5. Crypto or NFT offerings involving speculation, consumer deception, or financial abuse
+  6. Execution of money transfers, crypto transfers, or investment trades
+  7. Government-service abuse, impersonation, or benefit manipulation
+  8. Identity theft, impersonation, or identity-monitoring services that enable misuse
+  9. Certain legal or quasi-legal services that facilitate fraud, evasion, or misrepresentation
+  10. Negative-option billing, telemarketing, or consent-bypass schemes
+  11. High-chargeback, fraud-prone, or abusive travel services
 
-#### Prohibited fraudulent, deceptive, or high-risk services
+{/_ vale Vale.Spelling = YES _/}
+{/_ vale Vale.Terms = YES _/}
+{/_ vale Microsoft.Foreign = YES _/}
 
-- Fake IDs, forged documents, or document falsification services
-- Debt relief, credit repair, or credit-score manipulation schemes
-- Unregulated, deceptive, or abusive financial services
-- Lending, advance-fee, or credit-building schemes designed to exploit users
-- Crypto or NFT offerings involving speculation, consumer deception, or financial abuse
-- Execution of money transfers, crypto transfers, or investment trades
-- Government-service abuse, impersonation, or benefit manipulation
-- Identity theft, impersonation, or identity-monitoring services that enable misuse
-- Certain legal or quasi-legal services that facilitate fraud, evasion, or misrepresentation
-- Negative-option billing, telemarketing, or consent-bypass schemes
-- High-chargeback, fraud-prone, or abusive travel services
-
-{/_ vale on _/}
-
-#### Checkout
+#### 5.3. Checkout
 
 Plugins should use external checkout, directing users to complete purchases on your own domain.
 
@@ -34276,29 +34403,17 @@ Instant Checkout, which is currently in beta, is currently available only to sel
 
 Until then, standard external checkout is the required approach. No other third-party checkout solutions may be embedded or hosted within the plugin UI. To learn more, see our [docs on agentic commerce](https://developers.openai.com/commerce).
 
-#### Advertising
+#### 5.4. Advertising
 
 Plugins must not serve advertisements and must not exist primarily as an advertising vehicle. Every plugin must deliver clear, legitimate functionality that provides standalone value to users.
 
-#### Developer verification
-
-#### Verification
-
-All plugin submissions must come from verified individuals or organizations. Inside the [OpenAI Platform Dashboard general settings](https://platform.openai.com/settings/organization/general), we provide a way to confirm your identity and affiliation with any business you wish to publish on behalf of. Misrepresentation, hidden behavior, or attempts to game the system may result in removal from the program.
-
-#### Support contact details
-
-You must provide customer support contact details where end users can reach you for help. Keep this information accurate and up to date.
-
-#### MCP requirements
-
-These requirements apply to plugins that include MCP servers, tools, or optional UI.
-
-#### Tools
+#### 6. Tools
 
 MCP tools tell ChatGPT and Codex how to use your server’s capabilities. Clear, accurate tool definitions make the plugin safer, easier for the model to understand, and easier for users to trust.
 
-#### Clear and accurate tool names
+Carefully designed tools help reduce surprises, protect users, and speed up the review process.
+
+#### 6.1. Clear and accurate tool names and descriptions
 
 Tool names should be human-readable, specific, and descriptive of what the tool actually does.
 
@@ -34307,21 +34422,19 @@ Tool names should be human-readable, specific, and descriptive of what the tool 
 - Avoid misleading, overly promotional, or comparative language (for example, `pick_me`, `best`, `official`).
 - Avoid internal jargon, unexplained acronyms, and opaque identifiers.
 
-#### Descriptions that match behavior
-
-Each tool must have a nonempty description that explicitly and accurately explains its purpose and behavior, when to use it, and any relevant limitations or side effects. Descriptions must match the tool’s schema and actual behavior. If a tool’s behavior is unclear or incomplete from its description, the plugin may be rejected.
+Each tool must have a nonempty description that explicitly and accurately explains its purpose and behavior, when to use it, and any relevant limitations or side effects. Descriptions must match the tool’s schema and actual behavior.
 
 Descriptions must not favor or disparage other plugins or services or attempt to influence the model to select them over another plugin’s tools. They must not recommend overly broad triggering beyond the explicit user intent and purpose the plugin fulfills.
 
-#### Tool independence and exposure
+#### 6.2. Tool independence and exposure
 
-Each public tool must operate independently. Do not instruct the model to invoke another plugin or connector to complete its operation; implement required dependencies within your plugin.
+- a. Each public tool must operate independently. Do not instruct the model to invoke another plugin or connector to complete its operation; implement required dependencies within your plugin.
 
-Expose each model-callable operation as a separate tool with a clear description, input schema, and annotations. Do not use discovery, operation selection, or schema fetching with a generic executor to enable operations not individually exposed for review.
+- b. Expose each model-callable operation as a separate tool with a clear description, input schema, and annotations. Do not use discovery, operation selection, or schema fetching with a generic executor to enable operations not individually exposed for review.
 
-#### Correct annotation
+#### 6.3. Correct annotation
 
-Set `readOnlyHint`, `destructiveHint`, and `openWorldHint` to [explicit boolean values](https://developers.openai.com/plugins/reference) (`true` or `false`) in each tool’s `annotations` object. Annotation justifications are no longer required. If our automated review flags an annotation issue, you can submit an appeal with clarification or additional information.
+Set `readOnlyHint`, `destructiveHint`, and `openWorldHint` to the appropriate [explicit boolean values](https://developers.openai.com/plugins/reference) (`true` or `false`) in each tool’s `annotations` object. Annotation justifications are no longer required.
 
 - `readOnlyHint`**:** Use `true` for retrieval, computation, or previews that do not modify the environment. Use `false` for external-state changes, persisting artifacts, starting stateful jobs or workflows, queuing work, or write-style outbound actions such as posting messages, sending emails, or uploading files.
 - `destructiveHint`**:** Use `false` for read-only tools. For writes, use `true` for potentially destructive or irreversible effects, such as deletion, overwriting, cancellation, access revocation, or [irreversible sends or transactions](https://developers.openai.com/plugins/guides/security-privacy#prompt-injection-and-write-actions). Use `false` only for additive writes without destructive or irreversible effects. Being able to undo an action does not, by itself, justify setting `destructiveHint` to `false`.
@@ -34329,65 +34442,21 @@ Set `readOnlyHint`, `destructiveHint`, and `openWorldHint` to [explicit boolean 
 
 Annotations inform client safeguards; they do not grant permission or replace authentication, authorization and scope checks, input validation, or [human confirmation for irreversible operations](https://developers.openai.com/plugins/guides/security-privacy).
 
-#### Minimal and purpose-driven inputs
+#### 6.4. Minimal and purpose-driven data handling
 
-Tools should request the minimum information necessary to complete their task.
+Tools should request only information necessary for their task. Tool responses must contain only data directly relevant to the user’s request and the tool’s stated purpose.
 
-- Input fields must be directly related to the tool’s stated purpose.
-- Do not request the full conversation history, raw chat transcripts, or broad contextual fields “just in case.” A tool may request a brief, task-specific user intent field only when it meaningfully improves execution and does not expand data collection beyond what is reasonably necessary to respond to the user’s request and for the purposes described in your privacy policy.
-- Do not request accumulated conversation context or prior-turn arrays.
-- If needed, rely on the coarse geographic location shared by the system. Do not request precise user location data (for example, GPS coordinates or addresses).
+Do not request or reconstruct full conversation histories or collect broad context “just in case.” Use only chat context explicitly supplied by the client or model.
 
-#### Predictable, auditable behavior
+When location is needed, rely on system-shared coarse location. Do not request precise user location.
 
-Tools should behave exactly as their names, descriptions, and inputs indicate.
+Follow the implementation guidance in [Security & Privacy—Data handling](https://developers.openai.com/plugins/guides/security-privacy#data-handling).
 
-- Side effects should never be hidden or implicit.
-- Tools should be safe to retry where possible, or explicitly indicate when retries may cause repeated effects.
+#### 6.5. UI
 
-Carefully designed tools help reduce surprises, protect users, and speed up the review process.
+Plugins with UI should follow the [UI guidelines](https://developers.openai.com/plugins/concepts/ui-guidelines). Configure a content security policy (CSP) with domain allowlists limited to what your plugin needs.
 
-#### Tool data handling
-
-Design the input schema to limit data collection by default, rather than a funnel for optional context.
-
-- **Response minimization:** Tool responses must return only data that is directly relevant to the user’s request and the tool’s stated purpose. Do not include diagnostic, telemetry, or internal identifiers—such as session IDs, trace IDs, request IDs, timestamps, or logging metadata—unless they are strictly required to fulfill the user’s query.
-- **Data boundaries:**
-  - Avoid requesting raw location fields (for example, city or coordinates) in your input schema. When location is needed, obtain it through the client’s controlled side channel (such as environment metadata or a referenced resource) so appropriate policy and consent controls can be applied. This reduces accidental PII capture, enforces least-privilege access, and keeps location handling auditable and revocable.
-  - Your MCP server must not pull, reconstruct, or infer the full chat log from the client or elsewhere. Operate only on the explicit snippets and resources the client or model chooses to send. This separation can help prevent covert data expansion and keep analysis limited to intentionally shared content.
-- **Action safeguards:** Follow [Correct annotation](#correct-annotation) for write and destructive-action labels, confirmations, and outbound-data safeguards.
-
-#### Authentication and permissions
-
-If your MCP server requires authentication, the flow must be transparent and explicit. Users must be informed of all requested permissions, and those requests must be limited to what is necessary for the plugin to function.
-
-#### UI
-
-Before getting into specifics, review the [optional UI guidelines](https://developers.openai.com/plugins/concepts/ui-guidelines) for interaction, layout, and design patterns that help plugin UI feel intuitive, trustworthy, and consistent within ChatGPT.
-
-#### Iframes and embedded pages
-
-Plugins with UI can embed pages from their MCP server’s own registrable domain, including full existing editors and admin interfaces. For example, a server at `https://api.example.com/mcp` can embed `https://app.example.com`: both use the registrable domain `example.com`. Separate tenants on a shared hosting service count as different domains; using the same hosting provider does not establish ownership.
-
-Declare each required iframe origin in the resource CSP using `_meta.ui.csp.frameDomains` (or the legacy `_meta["openai/widgetCSP"].frame_domains`). For third-party domains, iframe embeds should be limited to cases where the embedded experience is essential.
-
-You must still provide a justification when submitting a plugin that uses iframes. Explain what each embedded page does, why the plugin embeds it, and who controls its domain. Iframe use can require additional review or escalation and may lead to slower approval or rejection if the content cannot be assessed. Sharing the MCP server’s domain does not guarantee approval.
-
-All other plugin requirements still apply to embedded pages, including the [checkout](#checkout) and [privacy](#privacy) requirements.
-
-#### Testing
-
-Before submitting a plugin, thoroughly test its MCP server, tools, and optional UI across a wide range of scenarios.
-
-Plugins must function reliably in ChatGPT on both desktop and mobile, including any UI components.
-
-#### Test credentials
-
-When submitting a plugin with an authenticated MCP server, provide a login and password for a fully featured demo account that includes sample data. Plugins that require additional login steps, such as a new account sign-up or 2FA through an inaccessible account, will be rejected.
-
-#### Skills
-
-Skills are automatically scanned and must comply with our security, privacy, and usage policies. Plugins that contain only skills must meet all metadata and listing requirements above. Skills-only plugins may be subject to additional eligibility requirements for listing in the Directory.
+- **Iframes and embedded pages:** Third-party iframe embeds should be limited to cases where the embedded experience is essential. Plugins using iframes must provide a justification at submission. See the [iframe requirements](https://developers.openai.com/plugins/build/chatgpt-ui#content-security-policy-csp) and [submission instructions](https://developers.openai.com/plugins/deploy/submission#complete-review-information).
 
 ### Plugin submission errors
 
@@ -37146,7 +37215,7 @@ Immersive experiences that expand beyond the inline card, giving users space for
 **Rules of thumb**
 
 - **Design your UX to work with the system composer**. The composer is always present in fullscreen, so make sure your experience supports conversational prompts that can trigger tool calls and feel natural for users.
-- **Use fullscreen for work that benefits from more space.** Existing editors and admin interfaces can be embedded when they meet the [iframe policy](https://developers.openai.com/plugins/plugin-guidelines#iframes-and-embedded-pages).
+- **Use fullscreen for work that benefits from more space.** Existing editors and admin interfaces can be embedded when they meet the [iframe requirements](https://developers.openai.com/plugins/build/chatgpt-ui#content-security-policy-csp).
 
 #### Picture-in-picture (PiP)
 
@@ -37237,6 +37306,10 @@ Accessibility should be a core consideration when you are building apps for Chat
 - Text and background must maintain a minimum contrast ratio (WCAG AA).
 - Provide alt text for all images.
 - Support text resizing without breaking layouts.
+
+#### Content security policy (CSP)
+
+Configure a content security policy (CSP) covering the domains your component uses for network requests, loaded resources, and embedded frames. Keep each allowlist as narrow as possible for your plugin’s functionality, and avoid broadly permissive sources that introduce material security risk. Follow the [CSP configuration guidance](https://developers.openai.com/plugins/build/chatgpt-ui#content-security-policy-csp) for implementation details.
 
 ### Upload and submit your plugin
 
@@ -37402,6 +37475,10 @@ In **Metadata &amp; Skills**, open **Review information → Review details** to 
 
 Credentials stay outside the public package. Keep the test account and sample data available for subsequent reviews. If credentials or sign-in steps change, submit an updated draft with the new details.
 
+If your plugin uses iframes, explain what each embedded page does, why it is needed, and who controls its domain. See the [iframe requirements](https://developers.openai.com/plugins/build/chatgpt-ui#content-security-policy-csp) for technical details.
+
+Before submitting a plugin, thoroughly test its MCP server, tools, and optional UI across a wide range of scenarios.
+
 #### Submit the draft
 
 Select the draft, choose **Submit for review**, and complete the required policy attestations. After submitting, track progress under **Review status** on the Plugins page. Feedback from the review team is sent by email.
@@ -37459,6 +37536,8 @@ Tool changes are evaluated independently. A flagged change does not necessarily 
 Keep your MCP server compatible with the currently approved tool schemas until the updated metadata is live.
 
 #### Appeal an automated finding
+
+If our automated review flags an annotation issue, you can submit an appeal with clarification or additional information.
 
 If you believe a tool finding is incorrect, select **Appeal** and explain why the review team should reconsider the findings. The review team considers the held tool changes from that scan together. If the finding is valid, correcting it on the server and rescanning is usually faster.
 
@@ -48616,7 +48695,9 @@ For role creation, assignment, and access checks, see the [role-based access con
 
 5. Under Workspace capabilities, set Use password manager according to your workspace policy.
 
-6. Save, then check access for an intended member.
+6. Wallet is off by default for Enterprise workspaces. Once the setting is available, go to **Admin Console → Permissions → Workspace capabilities → Use Wallet** to give eligible members access. Members must review and approve each Wallet payment using biometrics.
+
+7. Save, then check access for an intended member.
 
 When you enable dots, you may be asked to turn on cloud computer capabilities that are still off. Dots, Work Cloud, and team automations share these permissions. Choose the capabilities your organization's policies allow.
 
@@ -48674,6 +48755,7 @@ Compare the result with the requirements approved by your security team. Resolve
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | Access to dots                      | Grant or revoke dots access through workspace permissions.                                                             |
 | Cloud and connected local computers | Control Use a browser, Allow network access, Allow computer use, Use password manager, and local-computer access.      |
+| Wallet                              | Give eligible members access to Wallet. Off by default for Enterprise workspaces.                                      |
 | Messaging and participation         | Enable or disable Slack participation.                                                                                 |
 | Connected apps                      | Set available apps and allowed actions through [Plugin controls](./enterprise/apps-and-connectors.md).               |
 | Custom dot rules                    | When disabled, members cannot add or edit custom rules, and saved rules do not apply.                                  |
@@ -51487,6 +51569,8 @@ When authorizing a recurring task, name the action, recipients, trigger, and sch
 | Distinguish member-editable rules from enterprise requirements in [Agent Security](./enterprise/agent-security.md) and from the permissions enforced by the connected service. See [Manage dots in ChatGPT workspaces](https://help.openai.com/en/articles/20001554-manage-dots-in-chatgpt-workspaces) for custom-rule settings. |
 
 - **Delegated work on a local computer.** The delegated thread uses the member’s connected computer. When Computer Use is enabled and the app is approved, selecting “Always allow” lets ChatGPT use the app without asking for access again.
+
+- **Wallet payments.** Even when an admin enables Wallet and a member gives their dot an ongoing instruction, the member must review and approve each Wallet payment using biometrics.
 
 #### Example: Sending the same external email through three routes
 

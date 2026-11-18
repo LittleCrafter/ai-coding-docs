@@ -254,7 +254,7 @@ Fetch API| Per 1,000 successful requests| $0.75
   
 A standalone request is billable only when it returns HTTP 200 and produces a result (Search must return a non-empty `results` array, and Fetch must return page content). Failed requests, empty search results, and timeouts are not billed. `count` only controls how many results are returned and does not affect the per-request price.
 
-Searches performed by the model through server-side tools are not billed (text search, image search and page fetch). Only model token usage is billed. Server-side tools include the [web tools](<./web_tools.md#billing>), the `web_search` tool in the Responses API, Web Search in Claude Code, and search in DeepSeek Harness when **Web search provider** is set to **DeepSeek (Legacy)**.
+Searches performed by the model through server-side tools are not billed (text search, image search and page fetch). Only model token usage is billed. Server-side tools include the [web tools](<./web_tools.md#billing>), the `web_search` tool in the Responses API, Web Search in Claude Code, and search in DeepSeek Harness when **Web search provider** is set to **DeepSeek server-side search** or **Auto** (the default).
 
 Searches that call the Search and Fetch APIs directly from the client are billed at the prices above, such as search in DeepSeek Harness when **Web search provider** is **DeepSeek Search API** , and [Codex Alpha Search](<../quick_start/agent_integrations/codex.md>).
 
