@@ -4519,13 +4519,13 @@ Create and talk to your dot in the ChatGPT mobile app, desktop app, or a desktop
 
 You can message your dot or call it to discuss work, change priorities, or make a decision. In ChatGPT, select the phone button in your dot’s conversation to start a call. You can also type messages while you’re talking. Work you’ve assigned can continue after the call ends.
 
-You reach the same dot in ChatGPT, Slack, Teams, or a call. Changing where you talk to it doesn’t start a new dot or reset its memory. Messages stay in their respective channels, while your dot can use relevant context across them. Before sharing information from a private conversation with other people, your dot checks that you’ve allowed it.
+You reach the same dot in ChatGPT, Slack, or a call. Changing where you talk to it doesn’t start a new dot or reset its memory. Messages stay in their respective channels, while your dot can use relevant context across them. Before sharing information from a private conversation with other people, your dot checks that you’ve allowed it.
 
 Tell your dot where to send different kinds of updates. For example, ask it to keep routine progress in ChatGPT and bring decisions to you in Slack. Explain which changes need your attention, such as a deadline at risk.
 
 Open your dot's profile and select **Add** to connect an available contact method. Texting is rolling out in beta to ChatGPT Pro users in the U.S. See how to [set up texting](./dots/channels.md#texting) with iMessage or RCS on Android. See [Message your dot](./dots/channels.md) for other ways to reach it.
 
-In Slack, you can DM your dot or mention it in a channel you’ve added it to. By default, it responds to you; you can instruct it to engage with others. Existing permissions and safeguards still apply to what it shares and does. Tell it which channels and events to watch for. Adding it to a channel alone doesn’t start monitoring. You can also message your dot in Microsoft Teams. See [Slack and Teams](./dots/channels.md#slack-and-teams).
+In Slack, you can DM your dot or mention it in a channel you’ve added it to. By default, it responds to you; you can instruct it to engage with others. Existing permissions and safeguards still apply to what it shares and does. Tell it which channels and events to watch for. Adding it to a channel alone doesn’t start monitoring. See [Message your dot in Slack](./dots/channels.md#slack) for setup instructions.
 
 #### How dots work
 
@@ -4589,12 +4589,12 @@ You can add instructions for how you want your dot to work, such as asking it to
 
 Here's how dots compare with ChatGPT Work and Codex, and how they can work together.
 
-| Experience   | When to use it                                                                                                                                                                                                                                   |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Chat         | When you want an answer, an explanation, ideas, or help drafting something in conversation.                                                                                                                                                      |
-| ChatGPT Work | When you have a task to delegate, such as research, analysis, or creating a file, either now or on a schedule.                                                                                                                                   |
-| Codex        | When you want to build, debug, test, or review software and work directly with code and developer tools.                                                                                                                                         |
-| Your dot     | When you want an agent to keep track of an ongoing responsibility, figure out next steps as things change, and follow up between conversations. It can keep you updated in ChatGPT, Slack, or Teams and delegate tasks to ChatGPT Work or Codex. |
+| Experience   | When to use it                                                                                                                                                                                                                           |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Chat         | When you want an answer, an explanation, ideas, or help drafting something in conversation.                                                                                                                                              |
+| ChatGPT Work | When you have a task to delegate, such as research, analysis, or creating a file, either now or on a schedule.                                                                                                                           |
+| Codex        | When you want to build, debug, test, or review software and work directly with code and developer tools.                                                                                                                                 |
+| Your dot     | When you want an agent to keep track of an ongoing responsibility, figure out next steps as things change, and follow up between conversations. It can keep you updated in ChatGPT or Slack and delegate tasks to ChatGPT Work or Codex. |
 
 #### Work with your dot
 
@@ -4649,7 +4649,7 @@ You can create your dot in the ChatGPT mobile app, desktop app, or a desktop bro
 | Guide                                                | Covers                                                           |
 | ---------------------------------------------------- | ---------------------------------------------------------------- |
 | [Getting started](./dots/getting-started.md)       | Setup, your first conversation, and assigning work.              |
-| [Messaging](./dots/channels.md)                    | ChatGPT, calls, texting, Slack, and Teams.                       |
+| [Messaging](./dots/channels.md)                    | ChatGPT, calls, texting, and Slack.                              |
 | [Tasks and memory](./dots/tasks-and-memory.md)     | Assigned work, recurring tasks, context, and proactive research. |
 | [Computers and apps](./dots/computers-and-apps.md) | Cloud work, local access, plugins, and website sign-in.          |
 | [Controls](./dots/controls.md)                     | Review activity, manage permissions, and stop work.              |
@@ -4658,7 +4658,7 @@ You can create your dot in the ChatGPT mobile app, desktop app, or a desktop bro
 
 Source: [Message your dot](./dots/channels.md)
 
-You reach the same dot through each connected contact method. Changing channels doesn’t reset its memory. Slack and Teams conversations show the messages exchanged there; they don’t mirror every message from other channels. Your dot can use relevant context across those conversations. Before sharing information from a private conversation with other people, it checks that you’ve allowed it. See [Context and memory](./dots/tasks-and-memory.md#context-and-memory).
+You reach the same dot through each connected contact method. Changing channels doesn’t reset its memory. Slack conversations show the messages exchanged there; they don’t mirror every message from other channels. Your dot can use relevant context across those conversations. Before sharing information from a private conversation with other people, it checks that you’ve allowed it. See [Context and memory](./dots/tasks-and-memory.md#context-and-memory).
 
 Open your dot's profile and select **Add** to see and connect the contact methods available to you. Connect apps and your computer separately to make them available for your dot’s work.
 
@@ -4668,9 +4668,9 @@ Create, message, or call your dot in the ChatGPT mobile app, desktop app, or a d
 
 To call your dot, open its conversation and select the phone button. In the desktop app, you can also select **Call** in its profile. Talk through a request, clarify a decision, or ask for a progress update. You can type messages while you’re talking, and your dot can also message you with progress or a question. Ending a call ends the voice conversation; work you've assigned can continue. Calls initiated by your dot are planned for after launch.
 
-#### Slack and Teams
+#### Slack
 
-You can message your dot in Slack and Microsoft Teams. Connect the contact method in your dot’s profile. In Slack, you can send a direct message or add your dot to a channel and mention it in a thread.
+Connect Slack in your dot’s profile. You can then send your dot a direct message or add it to a channel and mention it in a thread.
 
 By default, your dot responds to you in Slack. You can instruct it to engage with others. Existing permissions and safeguards still apply to what it shares and does. Your dot can message you privately to ask what you're comfortable sharing before it replies in a channel.
 
@@ -5584,7 +5584,7 @@ necessarily change the notes your dot has already made.
 
 #### Across messaging channels
 
-ChatGPT, Slack, and Teams are ways to reach the same dot. Switching
+You can reach the same dot in ChatGPT and Slack. Switching
 between them doesn't create a separate dot or reset its saved notes. Information
 you share through one contact method can inform its work and replies through
 another.
@@ -48602,7 +48602,7 @@ Review these permissions in **Permissions**:
 
 - **Use dots**: Allow members to use dots.
 
-- **Add dots to Slack and Microsoft Teams**: Allow members to connect their dots to supported messaging channels where available.
+- Allow members to connect their dots to Slack where available.
 
 - **Allow local computer access**: Allow dots to use a member’s local computer.
 
@@ -48653,7 +48653,7 @@ Turning off a dot's Slack identity doesn't remove its access through the member'
 
 **Before members connect their dots to Slack**
 
-- **ChatGPT workspace owner:** Enable Use dots and Add dots to Slack and Microsoft Teams for the intended members through workspace defaults or custom roles.
+- **ChatGPT workspace owner:** Enable **Use dots** and the permission to connect dots to Slack for the intended members through workspace defaults or custom roles.
 
 - **Slack workspace owner or app manager:** Ensure the ChatGPT app is installed in Slack. Approve app requests if required by your workspace. See [Slack’s app approval guidance](https://slack.com/help/articles/360024269514-Manage-app-requests-for-your-workspace).
 
@@ -48697,7 +48697,7 @@ Open **Admin Console** > **Dots** to see the personal dots created in your works
 
 #### Review a dot's details
 
-The details include the member who created the dot, its active or paused status, its identity, and its Slack or Microsoft Teams connection status. The identity is the dot's service account, or its dot ID when a service account isn't available. Connection status shows whether a messaging service is connected; the [messaging permission](#3-configure-communication-channels) controls who can set up that connection.
+The details include the member who created the dot, its active or paused status, its identity, and its Slack connection status. The identity is the dot's service account, or its dot ID when a service account isn't available. Connection status shows whether Slack is connected; the [messaging permission](#3-configure-communication-channels) controls who can set up that connection.
 
 #### Pause and resume a dot
 

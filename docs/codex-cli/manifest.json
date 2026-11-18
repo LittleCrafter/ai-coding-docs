@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "0.169.1",
-  "last_updated": "2026-11-17T22:46:13Z",
+  "version": "0.170.0",
+  "last_updated": "2026-11-18T04:48:11Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "86b225722b702ebd4cbab78e2c9ec677d0c8d9559c82812be7467aac783befc6",
-      "last_updated": "2026-11-17T22:46:13Z"
+      "hash": "6e85ce00d0e4569e512823b4607cdbf706f36edfe21f935007198a5d8d26d219",
+      "last_updated": "2026-11-18T04:48:11Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -470,8 +470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots",
       "source_md_url": "https://learn.chatgpt.com/docs/dots.md",
       "source_id": "llms:dots",
-      "hash": "00e0aa033a98e725293b9cdda59c37d5ce82fb55556702a0e6ec4a7de4434109",
-      "last_updated": "2026-11-16T21:19:26Z"
+      "hash": "a4334932533ea02f847b82d68deb17f078366c53ae9804f607788b9220ed74ba",
+      "last_updated": "2026-11-18T04:48:11Z"
     },
     "dots/channels": {
       "slug": "dots/channels",
@@ -480,8 +480,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/channels",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/channels.md",
       "source_id": "llms:dots/channels",
-      "hash": "2a1f32b1f9d71bc79072e2d0b22388c938b863735262afd8f1752335f87fea2e",
-      "last_updated": "2026-11-05T19:08:38Z"
+      "hash": "9863677ddb4a1cd926d9910b77008e87078427f9e0871baf1bc753f86ab1fec7",
+      "last_updated": "2026-11-18T04:48:11Z"
     },
     "dots/computers-and-apps": {
       "slug": "dots/computers-and-apps",
@@ -520,8 +520,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots/tasks-and-memory",
       "source_md_url": "https://learn.chatgpt.com/docs/dots/tasks-and-memory.md",
       "source_id": "llms:dots/tasks-and-memory",
-      "hash": "c49763e79e751d3dc91224c1b626c67eed973006dc89079c31051af2f1e8f627",
-      "last_updated": "2026-10-20T02:14:38Z"
+      "hash": "16a265bbcff6625a58fe030c06183e5f65dbae58f3e28dd2abefc00cc02b9e66",
+      "last_updated": "2026-11-18T04:48:11Z"
     },
     "enterprise/access-tokens": {
       "slug": "enterprise/access-tokens",
@@ -710,8 +710,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/dots-admin-guide",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/dots-admin-guide.md",
       "source_id": "llms:enterprise/dots-admin-guide",
-      "hash": "918a9877078e780467f5de01cade7b17e4c6fca84aee19dfba64e55ca40867ca",
-      "last_updated": "2026-11-17T22:46:13Z"
+      "hash": "2f4b2b99579a9cdcaa7a153416e4336edb653cb788dd7265ef4cbf067a5af942",
+      "last_updated": "2026-11-18T04:48:11Z"
     },
     "enterprise/dots-security": {
       "slug": "enterprise/dots-security",
@@ -720,8 +720,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/dots-security",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/dots-security.md",
       "source_id": "llms:enterprise/dots-security",
-      "hash": "3fb6ba3aa09a42554947ca834778865f89dde6cd5670eed9b311ded757739cdb",
-      "last_updated": "2026-11-17T22:46:13Z"
+      "hash": "06fb502015e17aac7265c08a01d54f7e65e67e23fa6fc4d609a882c7c52adbbd",
+      "last_updated": "2026-11-18T04:48:11Z"
     },
     "enterprise/dynamic-groups": {
       "slug": "enterprise/dynamic-groups",
@@ -2135,7 +2135,7 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-17T22:46:13Z",
+    "last_fetch_completed": "2026-11-18T04:48:11Z",
     "fetch_duration_seconds": 74.281,
     "total_pages_discovered": 213,
     "pages_fetched_successfully": 213,

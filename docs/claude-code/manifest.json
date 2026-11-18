@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "2.1.326",
-  "last_updated": "2026-11-17T22:44:58Z",
+  "version": "2.1.327",
+  "last_updated": "2026-11-18T04:46:55Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -20,8 +20,8 @@
       "source_url": "https://code.claude.com/docs/en/admin-setup",
       "source_md_url": "https://code.claude.com/docs/en/admin-setup.md",
       "source_id": "admin-setup",
-      "hash": "ff258a7aa3b3f6e7cb72e4d47ba324719df61c3f6787a35934eeba5e0d37ec87",
-      "last_updated": "2026-11-17T05:18:58Z"
+      "hash": "54a57c46a55cd83128f9ac39b2a9a5261c59b5a3c4e33642d81c5c354c2d4284",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "advisor": {
       "slug": "advisor",
@@ -440,8 +440,8 @@
       "source_url": "https://code.claude.com/docs/en/auto-mode-config",
       "source_md_url": "https://code.claude.com/docs/en/auto-mode-config.md",
       "source_id": "auto-mode-config",
-      "hash": "5bebabed32aaf91a2a271930be6b0c7042f9490e53936e6a5d0ee2decdd343a1",
-      "last_updated": "2026-11-17T22:44:58Z"
+      "hash": "2bc9fc997cb3a6917c267197c45a8b72ca4a0046b5757e0dd2ae3634b33d328e",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "best-practices": {
       "slug": "best-practices",
@@ -470,8 +470,8 @@
       "source_url": "https://code.claude.com/docs/en/changelog",
       "source_md_url": "https://code.claude.com/docs/en/changelog.md",
       "source_id": "changelog",
-      "hash": "61784a9266bfd6ab8ba8a65bf557c8457a14589e4289cc5d77fb54f6143a8022",
-      "last_updated": "2026-11-17T05:18:58Z"
+      "hash": "a0a87a5b8f1d20a9b1bc9e5b6dba49210ad835f333b56d6c5f23afd045b0644b",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "channels": {
       "slug": "channels",
@@ -480,8 +480,8 @@
       "source_url": "https://code.claude.com/docs/en/channels",
       "source_md_url": "https://code.claude.com/docs/en/channels.md",
       "source_id": "channels",
-      "hash": "7a38c1b3e98789b34090b97891b798b0fbd6cf74ff11773be875820e18993c2f",
-      "last_updated": "2026-11-06T01:12:29Z"
+      "hash": "027537644226c1592215c992c6091cc8bd333768c1e222c5ef036f0db126dd8b",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "channels-reference": {
       "slug": "channels-reference",
@@ -850,8 +850,8 @@
       "source_url": "https://code.claude.com/docs/en/desktop",
       "source_md_url": "https://code.claude.com/docs/en/desktop.md",
       "source_id": "desktop",
-      "hash": "35b77248f3f513e476f979a6a86109b504604e0e74be08a29c16b7cd0d941033",
-      "last_updated": "2026-11-17T05:18:58Z"
+      "hash": "bc0295df18527ebbe49c842536670f0859624991d6ed6be0b5475e982bc31816",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "desktop-ios-simulator": {
       "slug": "desktop-ios-simulator",
@@ -1080,8 +1080,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks",
       "source_md_url": "https://code.claude.com/docs/en/hooks.md",
       "source_id": "hooks",
-      "hash": "6c005074f3071bd99e72f868d6c171a97fa57eab6bff682d9991acb7b98b3a3f",
-      "last_updated": "2026-11-17T22:44:58Z"
+      "hash": "61d2ae011a15fd883b528f3055a7840050fa9a5f9acb1b776480e65ff4b430a3",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "hooks-guide": {
       "slug": "hooks-guide",
@@ -1280,8 +1280,8 @@
       "source_url": "https://code.claude.com/docs/en/monitoring-usage",
       "source_md_url": "https://code.claude.com/docs/en/monitoring-usage.md",
       "source_id": "monitoring-usage",
-      "hash": "fb807c2d38b74c639a1da41b5af26f7442de78f0c8adc058f95f5a00fa3fdfaf",
-      "last_updated": "2026-11-17T22:44:58Z"
+      "hash": "d8502a5ac7a4948337d90fca35a2637d66643cf401400308aca288fdf3c0cd4b",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "network-config": {
       "slug": "network-config",
@@ -1320,8 +1320,8 @@
       "source_url": "https://code.claude.com/docs/en/permission-modes",
       "source_md_url": "https://code.claude.com/docs/en/permission-modes.md",
       "source_id": "permission-modes",
-      "hash": "4d9b899983c7098c25994316e4cf2ab4177a47e23ddf15bbe0aa869656ad390c",
-      "last_updated": "2026-11-17T22:44:58Z"
+      "hash": "a2d1efd9cbf3c35abad17513086768c2a53f3d810f3aeb2fac0ed6bec98d7940",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "permissions": {
       "slug": "permissions",
@@ -1380,8 +1380,8 @@
       "source_url": "https://code.claude.com/docs/en/plugins/cli-reference",
       "source_md_url": "https://code.claude.com/docs/en/plugins/cli-reference.md",
       "source_id": "plugins/cli-reference",
-      "hash": "9895633ed04233afdf433557b2e8346725b2ddd3ed108347676d288e6a1d224b",
-      "last_updated": "2026-11-17T05:18:58Z"
+      "hash": "e4ddf7b89e048836fe18f024049e70feee377c99d779b87a702e3665531cec60",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "plugins/code-intelligence": {
       "slug": "plugins/code-intelligence",
@@ -1870,8 +1870,8 @@
       "source_url": "https://code.claude.com/docs/en/settings-reference",
       "source_md_url": "https://code.claude.com/docs/en/settings-reference.md",
       "source_id": "settings-reference",
-      "hash": "e21f35b55e3e99112b30ec19c0b426c4e86c87f05d9cd91566e6d0c46a9e0093",
-      "last_updated": "2026-11-17T22:44:58Z"
+      "hash": "7b7b9dde44e60d9bea9d2072202e4e452cb3a34cd9adf9adbda6af4f838effbe",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "setup": {
       "slug": "setup",
@@ -1880,8 +1880,8 @@
       "source_url": "https://code.claude.com/docs/en/setup",
       "source_md_url": "https://code.claude.com/docs/en/setup.md",
       "source_id": "setup",
-      "hash": "dc409d98be351f99616c9f19e8ea4d762b3f2925c56d6763615bf5e328502975",
-      "last_updated": "2026-11-17T05:18:58Z"
+      "hash": "27ddc5d3a7664856523f8f2d98861ffe6f091f825fd233dcb2d24d8da2a38294",
+      "last_updated": "2026-11-18T04:46:55Z"
     },
     "skills": {
       "slug": "skills",
@@ -2045,8 +2045,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-17T22:44:58Z",
-    "fetch_duration_seconds": 71.124,
+    "last_fetch_completed": "2026-11-18T04:46:55Z",
+    "fetch_duration_seconds": 71.139,
     "total_pages_discovered": 204,
     "pages_fetched_successfully": 204,
     "pages_failed": 0,
