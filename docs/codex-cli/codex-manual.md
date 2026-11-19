@@ -21293,6 +21293,157 @@ pane until they're saved to disk and tracked by the project. Your ChatGPT data
 controls apply to content processed through ChatGPT, including screenshots taken
 by Computer Use.
 
+### Developer settings
+
+Source: [Developer settings](./developer-settings.md)
+
+ChatGPT web stores product and workspace preferences in ChatGPT settings. ChatGPT Work
+chats run in a managed environment and don't read local Codex
+configuration files. Use the controls your workspace exposes in ChatGPT
+settings; workspace administrators may manage some settings for you.
+
+The general [Settings](./reference/settings.md) page covers app preferences,
+including profile, keyboard shortcuts, notifications, appearance,
+personalization, memories, and archived chats.
+
+#### Project and terminal behavior
+
+Choose where files open, how much command output appears in chats, and where
+terminal tabs open by default.
+
+#### Code review
+
+Under **Settings > Git**, use **Review delivery** to choose **Inline** to run
+`/review` in the current chat when possible or **Detached** to start a separate
+review chat.
+
+#### IDE extension sync
+
+When the ChatGPT desktop app and IDE extension are open in the same project,
+they share active chats and editor context. Turn on **IDE context** from the app
+composer to let Codex use files currently open in your editor. Turn it off when
+you want the app prompt to exclude that editor context.
+
+You can open an app chat from the IDE extension and continue an IDE chat in the
+app. Both surfaces use the same project to determine which chats and context to
+share.
+
+#### Agent configuration
+
+Codex agents in the app inherit the same configuration as the IDE extension and
+CLI. Use the in-app controls for common settings, or edit `config.toml` for
+advanced options. See [Agent approvals and security](./agent-approvals-security.md)
+and [Config basics](./config-file/config-basic.md) for details.
+
+#### Git
+
+Use Git settings to standardize branch naming and choose whether Codex uses
+force pushes. You can also set prompts that Codex uses to generate commit
+messages and pull request descriptions.
+
+#### Integrations and MCP
+
+Connect external tools through Model Context Protocol (MCP). Enable recommended
+servers or add your own. If a server requires OAuth, the app starts the
+authentication flow. These settings also apply to the Codex CLI and IDE
+extension because MCP configuration lives in `config.toml`. See
+[Model Context Protocol](./extend/mcp.md) for details.
+
+#### Browser developer mode
+
+Under **Developer mode**, turn on **Enable full CDP access** to let ChatGPT use
+the Chrome DevTools Protocol for performance profiling and deeper browser
+debugging. If your organization has disabled full CDP access, you can't enable
+it locally. See [Developer mode](./browser.md#app-developer-mode) for setup,
+risk, approval, and administrator requirements.
+
+Codex CLI reads your personal defaults from `~/.codex/config.toml`. Add a
+`.codex/config.toml` file to a trusted project or subfolder when you need
+project-specific overrides. The CLI and IDE extension share these configuration
+layers.
+
+#### Inspect your settings
+
+Use these commands to understand the effective settings for the current
+session:
+
+- Run `/status` to see the active model, approval policy, writable roots, and
+  token usage.
+- Run `/debug-config` to see the configuration layers in precedence order and
+  the source of managed policy requirements.
+- Start Codex with `--strict-config` to treat unrecognized `config.toml` keys as
+  errors instead of ignoring them.
+
+See [Developer commands](./developer-commands.md) for the full
+interactive command reference.
+
+#### Change settings for one run
+
+Use a dedicated flag when one exists. Common examples include `--model`,
+`--sandbox`, `--ask-for-approval`, `--profile`, and `--search`. Use `-c` or
+`--config` to override any supported configuration key for one run.
+
+The model override below requires GPT-6.2 Sol access. If it isn't available to
+your account or workspace, omit `--model` or choose a model listed by `/model`.
+See [model availability by plan](./pricing.md#feature-availability).
+
+```shell
+codex --model gpt-6.2-sol
+codex --profile deep-review
+codex --config model_reasoning_effort='"medium"'
+```
+
+Command-line flags and `--config` values have the highest precedence. For the
+complete flag list, see [Developer commands](./developer-commands.md).
+
+#### Configuration layers
+
+The CLI applies command-line flags and `--config` overrides before project,
+profile, user, system, and built-in settings. Use that precedence to keep shared
+defaults in configuration files and one-off changes on the command line.
+
+For the complete order and common options, see [Config basics](./config-file/config-basic.md).
+
+#### Change settings in the TUI
+
+The interactive terminal UI provides pickers for common session and display
+settings:
+
+| Goal                      | Command                                      | Related configuration                          |
+| ------------------------- | -------------------------------------------- | ---------------------------------------------- |
+| Choose a terminal mode    | `/tui`                                       | `tui.fullscreen_transcript` (restart required) |
+| Choose a model            | `/model`                                     | `model`, `model_reasoning_effort`              |
+| Change permissions        | `/permissions`                               | Approval and sandbox settings                  |
+| Configure optional tools  | `/experimental`, `/memories`                 | Feature-specific `config.toml` keys            |
+| Customize the terminal UI | `/keymap`, `/statusline`, `/title`, `/theme` | Keys under `[tui]`                             |
+| Set editing defaults      | `/vim`, `/raw`                               | `tui.vim_mode_default`, `tui.raw_output_mode`  |
+
+In the full-screen transcript, open `/config`, choose **Sessions**, and turn on
+**Collapse turn details** to fold completed activity under each prompt. Final
+answers stay visible, and transcript search includes folded output. The setting
+is off by default.
+
+Some commands apply only to the current session, while some pickers offer to
+save the choice. Set the related configuration key when you want a default for
+future sessions. For the terminal theme, editor, completions, and shortcut
+workflows, see [CLI customization](./cli-customization.md).
+
+#### Settings references
+
+- [Advanced configuration](./config-file/config-advanced.md) covers profiles, one-off overrides, and other advanced workflows.
+- [Configuration reference](./config-file/config-reference.md) lists the available keys and values.
+- [Sample configuration](./config-file/config-sample.md) provides a complete example file.
+- [Environment variables](./config-file/environment-variables.md) documents variables used by the CLI and installer.
+
+The Codex IDE extension has two settings layers:
+
+- **Codex settings** control agent behavior shared with Codex CLI, including the
+  model, reasoning effort, permissions, sandbox, MCP servers, and
+  personalization. Codex reads these settings from `config.toml`.
+- **Editor settings** control how the extension behaves inside VS Code and
+  compatible editors. These settings use `chatgpt.*` keys in the editor's
+  settings system.
+
 ### Integrated terminal
 
 Source: [Integrated terminal](./integrated-terminal.md)
@@ -35081,11 +35232,9 @@ If your organization manages Codex with `requirements.toml`, the
 
 Source: [Reference](https://developers.openai.com/plugins/reference.md)
 
-Start with the open standard. Use the
-[MCP Apps specification](https://modelcontextprotocol.io/docs/extensions/apps)
-for shared UI fields and bridge methods.
-OpenAI extensions are optional and live in `window.openai`
-when you want ChatGPT-specific capabilities.
+**For new MCP apps, follow the [MCP Apps UI](https://modelcontextprotocol.io/docs/extensions/apps) and [OpenAI MCP extensions](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md) specifications.** ChatGPT supports and endorses both specifications as the official way to add UI to your MCP server.
+
+This page documents the legacy `window.openai` API, which predates these specifications. Use these APIs only for capabilities these specifications don't cover.
 
 #### `window.openai` component bridge
 
