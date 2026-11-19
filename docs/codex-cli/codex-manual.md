@@ -25353,6 +25353,8 @@ Best practices:
 
 #### Decoupled example
 
+For Go, use `github.com/modelcontextprotocol/go-sdk/mcp` at version `v1.8.0`. Install `esbuild` and `@modelcontextprotocol/ext-apps` with your browser dependencies. Bundle the browser component below with `npm exec -- esbuild dice-widget.ts --bundle --format=esm --outfile=dice-widget.js`, then run the Go server from that directory.
+
 For the Ruby server, install the `mcp` gem at version `1.10.0`. Build the browser component as described below, then run the server from the project directory.
 
 Example (decoupled dice tools):
@@ -25453,6 +25455,54 @@ server.registerTool(
 );
 
 export default server;
+```
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"log"
+	"math/rand/v2"
+	"os"
+	"regexp"
+)
+
+type rollInput struct {
+	Sides int `json:"sides"`
+}
+type die struct {
+	Sides int `json:"sides"`
+	Value int `json:"value"`
+}
+
+func main() {
+	server := mcp.NewServer(&mcp.Implementation{Name: "Decoupled dice", Version: "1.0.0"}, nil)
+	mcp.AddTool(server, &mcp.Tool{Name: "roll_dice", Description: "Roll a die without opening a widget.", InputSchema: map[string]any{"type": "object", "properties": map[string]any{"sides": map[string]any{"type": "integer", "minimum": 2}}, "required": []string{"sides"}}}, func(_ context.Context, _ *mcp.CallToolRequest, input rollInput) (*mcp.CallToolResult, die, error) {
+		return &mcp.CallToolResult{Content: []mcp.Content{}}, die{Sides: input.Sides, Value: rand.IntN(input.Sides) + 1}, nil
+	})
+	mcp.AddTool(server, &mcp.Tool{Name: "render_dice_widget", Description: "Show a previously rolled die.", Meta: mcp.Meta{"ui": map[string]any{"resourceUri": "ui://widget/dice.html"}}, InputSchema: map[string]any{"type": "object", "properties": map[string]any{"sides": map[string]any{"type": "integer", "minimum": 2}, "value": map[string]any{"type": "integer", "minimum": 1}}, "required": []string{"sides", "value"}}}, func(_ context.Context, _ *mcp.CallToolRequest, input die) (*mcp.CallToolResult, die, error) {
+		if input.Value > input.Sides {
+			return nil, die{}, fmt.Errorf("value exceeds the die's sides")
+		}
+		return &mcp.CallToolResult{Content: []mcp.Content{}}, input, nil
+	})
+	// Build the browser component first, then run from the project root.
+	script, err := os.ReadFile("dice-widget.js")
+	if err != nil {
+		log.Fatal(err)
+	}
+	escaped := regexp.MustCompile(`(?i)</script`).ReplaceAllLiteralString(string(script), `<\/script`)
+	html := `<!doctype html><html lang="en"><meta charset="utf-8"><title>Dice</title><body><div id="root"></div><script type="module">` + escaped + `</script></body></html>`
+	server.AddResource(&mcp.Resource{URI: "ui://widget/dice.html", Name: "widget", MIMEType: "text/html;profile=mcp-app"}, func(context.Context, *mcp.ReadResourceRequest) (*mcp.ReadResourceResult, error) {
+		return &mcp.ReadResourceResult{Contents: []*mcp.ResourceContents{{URI: "ui://widget/dice.html", MIMEType: "text/html;profile=mcp-app", Text: html}}}, nil
+	})
+	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
+		log.Fatal(err)
+	}
+}
 ```
 
 ```ruby
@@ -25911,6 +25961,39 @@ registerAppResource(
 );
 ```
 
+```go
+package main
+
+import (
+	"context"
+	"log"
+	"os"
+	"regexp"
+
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+)
+
+func main() {
+	server := mcp.NewServer(&mcp.Implementation{Name: "docs-example", Version: "1.0.0"}, nil)
+	mcp.AddTool(server, &mcp.Tool{Name: "open_project_board", Title: "Open project board", Meta: mcp.Meta{"ui": map[string]any{"resourceUri": "ui://project-board/v1.html"}}}, func(context.Context, *mcp.CallToolRequest, struct{}) (*mcp.CallToolResult, any, error) {
+		return &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: "Review the tasks in the project board."}}}, nil, nil
+	})
+	// Build the browser component first, then run from the project root.
+	script, err := os.ReadFile("web/dist/component.js")
+	if err != nil {
+		log.Fatal(err)
+	}
+	escaped := regexp.MustCompile(`(?i)</script`).ReplaceAllLiteralString(string(script), `<\/script`)
+	html := `<!doctype html><html lang="en"><meta charset="utf-8"><title>Project board</title><body><div id="root"></div><script type="module">` + escaped + `</script></body></html>`
+	server.AddResource(&mcp.Resource{URI: "ui://project-board/v1.html", Name: "widget", MIMEType: "text/html;profile=mcp-app"}, func(context.Context, *mcp.ReadResourceRequest) (*mcp.ReadResourceResult, error) {
+		return &mcp.ReadResourceResult{Contents: []*mcp.ResourceContents{{URI: "ui://project-board/v1.html", MIMEType: "text/html;profile=mcp-app", Text: html, Meta: mcp.Meta{"ui": map[string]any{"prefersBorder": true, "domain": "https://example.com", "csp": map[string]any{"connectDomains": []string{"https://api.example.com"}, "resourceDomains": []string{"https://static.example.com"}}}}}}}, nil
+	})
+	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
 ```ruby
 require "mcp"
 
@@ -25961,6 +26044,8 @@ server = MCP::Server.new(
 )
 MCP::Server::Transports::StdioTransport.new(server).open
 ```
+
+For Go, use `github.com/modelcontextprotocol/go-sdk/mcp` at version `v1.8.0`. Build `web/dist/component.js` in the preceding steps, then run the Go server from the project root.
 
 For Ruby, install the `mcp` gem at version `1.10.0` and run the server from the project root after building `web/dist/component.js` in the preceding steps.
 
@@ -27415,6 +27500,8 @@ These example IDs do not encode profile labels or internal relationships. They a
 
 `load_authenticated_profile` is your application’s integration code: it validates the request credentials, enforces the permissions associated with those credentials, and retrieves the corresponding profile’s persisted ID and display metadata. `request_context` comes from your server’s request handling; it is not a model-supplied tool argument.
 
+`loadAuthenticatedProfile` validates the request credentials and loads the corresponding persisted profile. Pass the token from your server's request context, not from model-supplied tool arguments. The complete local example uses `github.com/golang-jwt/jwt/v5` and a temporary profile file; connect your production handler to your auth provider and persistent storage.
+
 ```typescript
 async function getProfile(requestContext: { token: string }) {
   // Your auth/provider integration validates credentials and loads
@@ -27444,6 +27531,31 @@ async function getProfile(requestContext: { token: string }) {
     structuredContent: profile,
     content: [{ type: "text", text: JSON.stringify(profile) }],
   };
+}
+```
+
+```go
+func (service profileService) getProfile(token string) (map[string]any, error) {
+	account, err := service.loadAuthenticatedProfile(token)
+	if err != nil {
+		return nil, err
+	}
+	id, ok := account["profileId"].(string)
+	if !ok || strings.TrimSpace(id) == "" {
+		return map[string]any{"isError": true, "content": []map[string]string{{"type": "text", "text": "Profile identity unavailable."}}}, nil
+	}
+	// Return the persisted ID unchanged, including across repeated requests.
+	profile := map[string]string{"id": id}
+	for _, field := range []string{"name", "email", "nickname"} {
+		if value, ok := account[field].(string); ok {
+			profile[field] = value
+		}
+	}
+	text, err := json.Marshal(profile)
+	if err != nil {
+		return nil, err
+	}
+	return map[string]any{"isError": false, "structuredContent": profile, "content": []map[string]string{{"type": "text", "text": string(text)}}}, nil
 }
 ```
 
@@ -27523,7 +27635,7 @@ Triggering the tool-level OAuth flow requires both metadata (`securitySchemes` a
 
    If you omit the array entirely, the tool inherits whatever default the server advertises. Declaring both `noauth` and `oauth2` tells ChatGPT it can start with anonymous calls but that linking unlocks privileged behavior. Regardless of what you signal to the client, your server must still verify the token, scopes, and audience on every invocation.
 
-   Example (public + optional auth)—TypeScript SDK
+   Example: public tool with optional authentication
 
    ```typescript
    import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -27558,7 +27670,7 @@ structuredContent: {},
 
 ````
 
-   Example (auth required)—TypeScript SDK
+   Example: tool that requires authentication
 
    ```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -27762,6 +27874,8 @@ pip install mcp
 
 For the Ruby examples, use Ruby 3.3 and install `mcp` version `1.10.0`, `rackup` version `2.3`, and `webrick`. Save one complete server example as `main.rb`, then run `ruby main.rb`. It listens for Streamable HTTP requests at `http://localhost:3000/mcp`.
 
+For the Go examples, use Go 1.26 or later and install `github.com/modelcontextprotocol/go-sdk` version `v1.8.0` in your Go module. Save one complete server example as `main.go`, then run `go run .`. It listens for Streamable HTTP requests at `http://localhost:3000/mcp`.
+
 #### Create the server
 
 Create an MCP server with a stable name and version:
@@ -27773,6 +27887,54 @@ const server = new McpServer({
   name: "acme-projects",
   version: "1.0.0",
 });
+```
+
+```go
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"log"
+	"net"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func main() {
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer cancel()
+	server := mcp.NewServer(&mcp.Implementation{Name: "acme-projects", Version: "1.0.0"}, nil)
+	handler := mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, &mcp.StreamableHTTPOptions{Stateless: true, JSONResponse: true})
+	mux := http.NewServeMux()
+	mux.Handle("/mcp", handler)
+	port := "3000"
+	listener, err := net.Listen("tcp", "127.0.0.1:"+port)
+	if err != nil {
+		log.Fatal(err)
+	}
+	httpServer := &http.Server{Handler: mux, ReadHeaderTimeout: 5 * time.Second}
+	fmt.Println("Listening on http://" + listener.Addr().String())
+	shutdownDone := make(chan struct{})
+	go func() {
+		defer close(shutdownDone)
+		<-ctx.Done()
+		shutdownCtx, stop := context.WithTimeout(context.Background(), 5*time.Second)
+		defer stop()
+		if err := httpServer.Shutdown(shutdownCtx); err != nil {
+			log.Print(err)
+		}
+	}()
+	if err := httpServer.Serve(listener); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Fatal(err)
+	}
+	<-shutdownDone
+}
 ```
 
 ```ruby
@@ -27810,6 +27972,54 @@ const server = new McpServer(
       "Before updating a project, call get_project to confirm its ID and current status.",
   }
 );
+```
+
+```go
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"log"
+	"net"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func main() {
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer cancel()
+	server := mcp.NewServer(&mcp.Implementation{Name: "acme-projects", Version: "1.0.0"}, &mcp.ServerOptions{Instructions: "Before updating a project, call get_project to confirm its ID and current status."})
+	handler := mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, &mcp.StreamableHTTPOptions{Stateless: true, JSONResponse: true})
+	mux := http.NewServeMux()
+	mux.Handle("/mcp", handler)
+	port := "3000"
+	listener, err := net.Listen("tcp", "127.0.0.1:"+port)
+	if err != nil {
+		log.Fatal(err)
+	}
+	httpServer := &http.Server{Handler: mux, ReadHeaderTimeout: 5 * time.Second}
+	fmt.Println("Listening on http://" + listener.Addr().String())
+	shutdownDone := make(chan struct{})
+	go func() {
+		defer close(shutdownDone)
+		<-ctx.Done()
+		shutdownCtx, stop := context.WithTimeout(context.Background(), 5*time.Second)
+		defer stop()
+		if err := httpServer.Shutdown(shutdownCtx); err != nil {
+			log.Print(err)
+		}
+	}()
+	if err := httpServer.Serve(listener); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Fatal(err)
+	}
+	<-shutdownDone
+}
 ```
 
 ```ruby
@@ -27899,6 +28109,86 @@ server.registerTool(
     };
   }
 );
+```
+
+```go
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"log"
+	"net"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+type listProjectsInput struct {
+	Status string `json:"status,omitempty"`
+}
+type project struct {
+	ID     string `json:"id"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
+}
+type listProjectsOutput struct {
+	Projects []project `json:"projects"`
+}
+
+func main() {
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer cancel()
+	server := mcp.NewServer(&mcp.Implementation{Name: "docs-example", Version: "1.0.0"}, nil)
+	closed := false
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "list_projects",
+		Description: "Use this when the user wants to find or review projects in their Acme workspace.",
+		InputSchema: map[string]any{"type": "object", "properties": map[string]any{
+			"status": map[string]any{"type": "string", "enum": []string{"active", "archived"}},
+		}},
+		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true, OpenWorldHint: &closed, DestructiveHint: &closed},
+	}, func(_ context.Context, _ *mcp.CallToolRequest, input listProjectsInput) (*mcp.CallToolResult, listProjectsOutput, error) {
+		// Local example data; replace this with your application data.
+		projects := []project{{ID: "project-1", Name: "Website", Status: "active"}, {ID: "project-2", Name: "Launch", Status: "archived"}}
+		selected := []project{}
+		for _, p := range projects {
+			if input.Status == "" || input.Status == p.Status {
+				selected = append(selected, p)
+			}
+		}
+		result := &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("Found %d projects.", len(selected))}}}
+		return result, listProjectsOutput{Projects: selected}, nil
+	})
+	handler := mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, &mcp.StreamableHTTPOptions{Stateless: true, JSONResponse: true})
+	mux := http.NewServeMux()
+	mux.Handle("/mcp", handler)
+	port := "3000"
+	listener, err := net.Listen("tcp", "127.0.0.1:"+port)
+	if err != nil {
+		log.Fatal(err)
+	}
+	httpServer := &http.Server{Handler: mux, ReadHeaderTimeout: 5 * time.Second}
+	fmt.Println("Listening on http://" + listener.Addr().String())
+	shutdownDone := make(chan struct{})
+	go func() {
+		defer close(shutdownDone)
+		<-ctx.Done()
+		shutdownCtx, stop := context.WithTimeout(context.Background(), 5*time.Second)
+		defer stop()
+		if err := httpServer.Shutdown(shutdownCtx); err != nil {
+			log.Print(err)
+		}
+	}()
+	if err := httpServer.Serve(listener); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Fatal(err)
+	}
+	<-shutdownDone
+}
 ```
 
 ```ruby
@@ -31050,6 +31340,165 @@ export async function sendEvent(
 }
 ```
 
+```go
+package main
+
+import (
+	"bytes"
+	"context"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/base64"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"net"
+	"net/http"
+	"net/netip"
+	"net/url"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+)
+
+type Subscription struct{ ID, URL, Secret string }
+type DeliveryResult struct {
+	Accepted bool `json:"accepted"`
+	Status   int  `json:"status"`
+}
+
+func sendEvent(ctx context.Context, subscription Subscription, event map[string]any) (DeliveryResult, error) {
+	body, err := json.Marshal(event)
+	if err != nil {
+		return DeliveryResult{}, err
+	}
+	if len(body) > 256*1024 {
+		return DeliveryResult{}, errors.New("Event payload exceeds 256 KiB")
+	}
+	id, ok := event["eventId"].(string)
+	if !ok || id == "" {
+		return DeliveryResult{}, errors.New("Missing eventId")
+	}
+	target, err := url.Parse(subscription.URL)
+	if err != nil || target.Host == "" || target.Scheme != "https" || target.User != nil || target.Fragment != "" {
+		return DeliveryResult{}, errors.New("Expected an HTTPS subscription URL without credentials or a fragment")
+	}
+	key, err := base64.StdEncoding.Strict().DecodeString(strings.TrimPrefix(subscription.Secret, "whsec_"))
+	if err != nil || len(key) == 0 {
+		return DeliveryResult{}, errors.New("Invalid webhook secret")
+	}
+	timestamp := strconv.FormatInt(time.Now().Unix(), 10)
+	mac := hmac.New(sha256.New, key)
+	mac.Write([]byte(id + "." + timestamp + "."))
+	mac.Write(body)
+	request, err := http.NewRequestWithContext(ctx, http.MethodPost, target.String(), bytes.NewReader(body))
+	if err != nil {
+		return DeliveryResult{}, err
+	}
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("webhook-id", id)
+	request.Header.Set("webhook-timestamp", timestamp)
+	request.Header.Set("webhook-signature", "v1,"+base64.StdEncoding.EncodeToString(mac.Sum(nil)))
+	request.Header.Set("X-MCP-Subscription-Id", subscription.ID)
+	response, err := webhookClient.Do(request)
+	if err != nil {
+		return DeliveryResult{}, err
+	}
+	defer response.Body.Close()
+	if response.StatusCode >= 300 && response.StatusCode < 400 {
+		return DeliveryResult{}, errors.New("Webhook redirects are not allowed")
+	}
+	return DeliveryResult{Accepted: response.StatusCode >= 200 && response.StatusCode < 300, Status: response.StatusCode}, nil
+}
+
+// Resolve and validate at connection time, then dial that exact IP. TLS still
+// verifies the original URL hostname. Proxies and redirects are not permitted.
+func publicAddress(ip netip.Addr) bool {
+	ip = ip.Unmap()
+	if !ip.IsGlobalUnicast() || ip.IsPrivate() || ip.IsLoopback() || ip.IsLinkLocalUnicast() {
+		return false
+	}
+	for _, cidr := range []string{"0.0.0.0/8", "100.64.0.0/10", "192.0.0.0/24", "192.0.2.0/24", "192.88.99.0/24", "198.18.0.0/15", "198.51.100.0/24", "203.0.113.0/24", "240.0.0.0/4", "2001::/23", "2001:db8::/32", "2002::/16", "3fff::/20"} {
+		if netip.MustParsePrefix(cidr).Contains(ip) {
+			return false
+		}
+	}
+	return ip.Is4() || netip.MustParsePrefix("2000::/3").Contains(ip)
+}
+
+type lookupIPs func(context.Context, string, string) ([]netip.Addr, error)
+type dialIP func(context.Context, string, string) (net.Conn, error)
+
+func validatedDial(lookup lookupIPs, dial dialIP) dialIP {
+	return func(ctx context.Context, network, address string) (net.Conn, error) {
+		host, port, err := net.SplitHostPort(address)
+		if err != nil {
+			return nil, err
+		}
+		ips, err := lookup(ctx, "ip", host)
+		if err != nil {
+			return nil, err
+		}
+		if len(ips) == 0 {
+			return nil, errors.New("Webhook hostname has no addresses")
+		}
+		for _, ip := range ips {
+			if !publicAddress(ip) {
+				return nil, errors.New("Webhook destination is not public")
+			}
+		}
+		// Do not resolve the hostname again in the dialer (DNS rebinding).
+		var failures []error
+		for _, ip := range ips {
+			connection, err := dial(ctx, network, net.JoinHostPort(ip.String(), port))
+			if err == nil {
+				return connection, nil
+			}
+			failures = append(failures, err)
+			if ctx.Err() != nil {
+				break
+			}
+		}
+		return nil, errors.Join(failures...)
+	}
+}
+
+var webhookClient = &http.Client{
+	Timeout:       10 * time.Second,
+	CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse },
+	Transport: &http.Transport{
+		Proxy:               nil,
+		DialContext:         validatedDial(net.DefaultResolver.LookupNetIP, (&net.Dialer{Timeout: 5 * time.Second}).DialContext),
+		TLSHandshakeTimeout: 5 * time.Second,
+	},
+}
+
+// Supply one JSON object on standard input with subscription (ID, URL, Secret)
+// and event fields. Keep the secret out of command-line arguments and logs.
+func run() error {
+	var input struct {
+		Subscription Subscription   `json:"subscription"`
+		Event        map[string]any `json:"event"`
+	}
+	if err := json.NewDecoder(io.LimitReader(os.Stdin, 2*1024*1024)).Decode(&input); err != nil {
+		return err
+	}
+	result, err := sendEvent(context.Background(), input.Subscription, input.Event)
+	if err != nil {
+		return err
+	}
+	return json.NewEncoder(os.Stdout).Encode(result)
+}
+func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+```
+
 ```ruby
 require "standardwebhooks"
 require "net/http"
@@ -31578,7 +32027,9 @@ server](https://developers.openai.com/plugins/build/chatgpt-ui#layer-on-chatgpt-
 
 Use an MCP SDK to create a server and expose a `/mcp` endpoint.
 
-Both server implementations use the same HTML page.
+The server implementations use the same HTML page.
+
+With Go 1.26 or later, initialize a module and add `github.com/modelcontextprotocol/go-sdk/mcp` at version `v1.8.0`. Save the example as `main.go`, keep `public/todo-widget.html` in the same project directory, and run `go run .`. Edit the `port` literal to choose another port.
 
 For Ruby 3.3, install the `mcp` (1.10.0), `rackup` (2.3.1), and `webrick` (1.9.2) gems.
 
@@ -31781,6 +32232,130 @@ httpServer.listen(port, () => {
 });
 ```
 
+```go
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"log"
+	"net"
+	"net/http"
+	"os"
+	"os/signal"
+	"strings"
+	"sync"
+	"syscall"
+	"time"
+)
+
+type task struct {
+	ID        string `json:"id"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
+}
+type todoOutput struct {
+	Tasks []task `json:"tasks"`
+}
+type addInput struct {
+	Title string `json:"title"`
+}
+type completeInput struct {
+	ID string `json:"id"`
+}
+
+func main() {
+	html, err := os.ReadFile("public/todo-widget.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	server := mcp.NewServer(&mcp.Implementation{Name: "todo-plugin-server", Version: "0.1.0"}, nil)
+	// This local demonstration keeps tasks in memory until the server exits.
+	var mu sync.Mutex
+	tasks := []task{}
+	nextID := 1
+	reply := func(message string) (*mcp.CallToolResult, todoOutput, error) {
+		snapshot := append([]task{}, tasks...)
+		return &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: message}}}, todoOutput{Tasks: snapshot}, nil
+	}
+	schema := func(field string) map[string]any {
+		return map[string]any{"type": "object", "properties": map[string]any{field: map[string]any{"type": "string", "minLength": 1}}, "required": []string{field}, "additionalProperties": false}
+	}
+	meta := mcp.Meta{"ui": map[string]any{"resourceUri": "ui://widget/todo.html"}}
+	mcp.AddTool(server, &mcp.Tool{Name: "add_todo", Title: "Add todo", Description: "Creates a todo item with the given title.", InputSchema: schema("title"), Meta: meta}, func(_ context.Context, _ *mcp.CallToolRequest, input addInput) (*mcp.CallToolResult, todoOutput, error) {
+		mu.Lock()
+		defer mu.Unlock()
+		title := strings.TrimSpace(input.Title)
+		if title == "" {
+			return reply("Missing title.")
+		}
+		tasks = append(tasks, task{ID: fmt.Sprintf("todo-%d", nextID), Title: title})
+		nextID++
+		return reply(fmt.Sprintf("Added %q.", title))
+	})
+	mcp.AddTool(server, &mcp.Tool{Name: "complete_todo", Title: "Complete todo", Description: "Marks a todo as done by id.", InputSchema: schema("id"), Meta: meta}, func(_ context.Context, _ *mcp.CallToolRequest, input completeInput) (*mcp.CallToolResult, todoOutput, error) {
+		mu.Lock()
+		defer mu.Unlock()
+		for i := range tasks {
+			if tasks[i].ID == input.ID {
+				tasks[i].Completed = true
+				return reply(fmt.Sprintf("Completed %q.", tasks[i].Title))
+			}
+		}
+		return reply(fmt.Sprintf("Todo %s was not found.", input.ID))
+	})
+	server.AddResource(&mcp.Resource{URI: "ui://widget/todo.html", Name: "todo-widget", MIMEType: "text/html;profile=mcp-app"}, func(context.Context, *mcp.ReadResourceRequest) (*mcp.ReadResourceResult, error) {
+		return &mcp.ReadResourceResult{Contents: []*mcp.ResourceContents{{URI: "ui://widget/todo.html", MIMEType: "text/html;profile=mcp-app", Text: string(html)}}}, nil
+	})
+	transport := mcp.NewStreamableHTTPHandler(func(*http.Request) *mcp.Server { return server }, &mcp.StreamableHTTPOptions{Stateless: true, JSONResponse: true})
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" && r.Method == http.MethodGet {
+			w.Header().Set("Content-Type", "text/plain")
+			fmt.Fprint(w, "Todo MCP server")
+			return
+		}
+		if r.URL.Path != "/mcp" {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Expose-Headers", "Mcp-Session-Id")
+		if r.Method == http.MethodOptions {
+			w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "content-type, mcp-session-id, mcp-protocol-version")
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		transport.ServeHTTP(w, r)
+	})
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer cancel()
+	port := "8787"
+	listener, err := net.Listen("tcp", "127.0.0.1:"+port)
+	if err != nil {
+		log.Fatal(err)
+	}
+	httpServer := &http.Server{Handler: handler, ReadHeaderTimeout: 5 * time.Second}
+	fmt.Println("Listening on http://" + listener.Addr().String())
+	shutdownDone := make(chan struct{})
+	go func() {
+		defer close(shutdownDone)
+		<-ctx.Done()
+		shutdownCtx, stop := context.WithTimeout(context.Background(), 5*time.Second)
+		defer stop()
+		if err := httpServer.Shutdown(shutdownCtx); err != nil {
+			log.Print(err)
+		}
+	}()
+	if err := httpServer.Serve(listener); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Fatal(err)
+	}
+	<-shutdownDone
+}
+```
+
 ```ruby
 require "mcp"
 require "rackup"
@@ -31970,7 +32545,7 @@ node --experimental-strip-types server.ts
 
 Run the Ruby version with `ruby server.rb`. The Ruby server accepts a `PORT` environment variable and reports startup through WEBrick.
 
-By default, both versions serve `http://localhost:8787/mcp`.
+By default, the servers serve `http://localhost:8787/mcp`.
 
 The TypeScript server prints `Todo MCP server listening on http://localhost:8787/mcp` when ready.
 
@@ -34294,6 +34869,12 @@ function partSelectionSchema(parts: OpenAIFormOption[]): OpenAIForm {
 }
 ```
 
+```go
+func partSelectionSchema(parts []map[string]string) map[string]any {
+	return map[string]any{"type": "object", "properties": map[string]any{"part": map[string]any{"type": "string", "title": "Part", "oneOf": parts}}, "required": []string{"part"}}
+}
+```
+
 ```ruby
 def part_selection_schema(parts)
   {
@@ -35568,6 +36149,8 @@ OpenAI-specific metadata for compatibility and optional extensions.
 | `_meta["openai/toolInvocation/invoked"]`  | Tool descriptor | string       | ≤ 64 chars                                      | Short status text after the tool completes.                                                                                                                                                                                                                                                 |
 | `_meta["openai/fileParams"]`              | Tool descriptor | string[]     | None                                            | List of top-level input fields that represent files. Each field receives `{ download_url, file_id, mime_type?, file_name? }`.                                                                                                                                                               |
 
+The Go resource examples use `github.com/modelcontextprotocol/go-sdk/mcp` at version `v1.8.0`. Save your bundled MCP Apps browser component as `widget.js` in the project directory, then run the Go server from that directory.
+
 The Ruby resource examples require the `mcp` gem at version `1.10.0` and your bundled MCP Apps browser component saved as `widget.js` in the project directory. Run the Ruby server from that directory.
 
 Example:
@@ -35630,6 +36213,63 @@ registerAppTool(
     };
   }
 );
+```
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"log"
+	"os"
+	"regexp"
+	"strings"
+)
+
+type searchInput struct {
+	Q string `json:"q"`
+}
+type document struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	URL   string `json:"url"`
+}
+type searchOutput struct {
+	Results []document `json:"results"`
+}
+
+func main() {
+	server := mcp.NewServer(&mcp.Implementation{Name: "docs-example", Version: "1.0.0"}, nil)
+	mcp.AddTool(server, &mcp.Tool{Name: "search", Title: "Public Search", Description: "Search public documents.", Meta: mcp.Meta{
+		"securitySchemes": []map[string]any{{"type": "noauth"}, {"type": "oauth2", "scopes": []string{"search.read"}}},
+		"ui":              map[string]any{"resourceUri": "ui://widget/story.html"}, "openai/toolInvocation/invoking": "Searching…", "openai/toolInvocation/invoked": "Results ready",
+	}}, func(_ context.Context, _ *mcp.CallToolRequest, input searchInput) (*mcp.CallToolResult, searchOutput, error) {
+		// Local example data; replace this with your application data.
+		documents := []document{{ID: "intro", Title: "Introduction to Acme", URL: "https://example.com/intro"}}
+		found := []document{}
+		for _, item := range documents {
+			if strings.Contains(strings.ToLower(item.Title), strings.ToLower(input.Q)) {
+				found = append(found, item)
+			}
+		}
+		return &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("Found %d results.", len(found))}}}, searchOutput{Results: found}, nil
+	})
+	// Build the browser component first, then run from the project root.
+	script, err := os.ReadFile("widget.js")
+	if err != nil {
+		log.Fatal(err)
+	}
+	escaped := regexp.MustCompile(`(?i)</script`).ReplaceAllLiteralString(string(script), `<\/script`)
+	html := `<!doctype html><html lang="en"><meta charset="utf-8"><title>Tool result</title><body><div id="root"></div><script type="module">` + escaped + `</script></body></html>`
+	server.AddResource(&mcp.Resource{URI: "ui://widget/story.html", Name: "widget", MIMEType: "text/html;profile=mcp-app"}, func(context.Context, *mcp.ReadResourceRequest) (*mcp.ReadResourceResult, error) {
+		return &mcp.ReadResourceResult{Contents: []*mcp.ResourceContents{{URI: "ui://widget/story.html", MIMEType: "text/html;profile=mcp-app", Text: html}}}, nil
+	})
+	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
+		log.Fatal(err)
+	}
+}
 ```
 
 ```ruby
@@ -35763,6 +36403,35 @@ server.registerTool(
     structuredContent: { recipes: await fetchSavedRecipes() },
   })
 );
+```
+
+```go
+package main
+
+import (
+	"context"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"log"
+)
+
+type recipe struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+}
+type recipeOutput struct {
+	Recipes []recipe `json:"recipes"`
+}
+
+func main() {
+	server := mcp.NewServer(&mcp.Implementation{Name: "docs-example", Version: "1.0.0"}, nil)
+	mcp.AddTool(server, &mcp.Tool{Name: "list_saved_recipes", Description: "Returns the user's saved recipes without modifying them.", Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true}}, func(context.Context, *mcp.CallToolRequest, struct{}) (*mcp.CallToolResult, recipeOutput, error) {
+		// Local example data; replace this with your application data.
+		return nil, recipeOutput{Recipes: []recipe{{ID: "pasta", Title: "Tomato pasta"}}}, nil
+	})
+	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
+		log.Fatal(err)
+	}
+}
 ```
 
 ```ruby
@@ -35936,6 +36605,64 @@ registerAppTool(
 );
 ```
 
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"os"
+	"regexp"
+
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+)
+
+type zooInput struct {
+	Count *int `json:"count,omitempty"`
+}
+type animal struct {
+	ID      string `json:"id"`
+	Name    string `json:"name"`
+	Species string `json:"species"`
+}
+type zooOutput struct {
+	Animals []animal `json:"animals"`
+}
+
+func main() {
+	server := mcp.NewServer(&mcp.Implementation{Name: "docs-example", Version: "1.0.0"}, nil)
+	mcp.AddTool(server, &mcp.Tool{Name: "get_zoo_animals", Meta: mcp.Meta{"ui": map[string]any{"resourceUri": "ui://widget/widget.html"}}, InputSchema: map[string]any{"type": "object", "properties": map[string]any{"count": map[string]any{"type": "integer", "minimum": 1, "maximum": 20}}}}, func(_ context.Context, _ *mcp.CallToolRequest, input zooInput) (*mcp.CallToolResult, zooOutput, error) {
+		count := 10
+		if input.Count != nil {
+			count = *input.Count
+		}
+		// Local example data; replace this with your application data.
+		animals := []animal{}
+		byID := map[string]animal{}
+		for i := 1; i <= count; i++ {
+			value := animal{ID: fmt.Sprintf("animal-%d", i), Name: fmt.Sprintf("Penguin %d", i), Species: "Penguin"}
+			animals = append(animals, value)
+			byID[value.ID] = value
+		}
+		return &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("Here are %d animals.", count)}}, Meta: mcp.Meta{"allAnimalsById": byID}}, zooOutput{Animals: animals}, nil
+	})
+	// Build the browser component first, then run from the project root.
+	script, err := os.ReadFile("widget.js")
+	if err != nil {
+		log.Fatal(err)
+	}
+	escaped := regexp.MustCompile(`(?i)</script`).ReplaceAllLiteralString(string(script), `<\/script`)
+	html := `<!doctype html><html lang="en"><meta charset="utf-8"><title>Tool result</title><body><div id="root"></div><script type="module">` + escaped + `</script></body></html>`
+	server.AddResource(&mcp.Resource{URI: "ui://widget/widget.html", Name: "widget", MIMEType: "text/html;profile=mcp-app"}, func(context.Context, *mcp.ReadResourceRequest) (*mcp.ReadResourceResult, error) {
+		return &mcp.ReadResourceResult{Contents: []*mcp.ResourceContents{{URI: "ui://widget/widget.html", MIMEType: "text/html;profile=mcp-app", Text: html}}}, nil
+	})
+	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
 ```ruby
 require "mcp"
 
@@ -36084,6 +36811,51 @@ server.registerTool(
     };
   }
 );
+```
+
+```go
+package main
+
+import (
+	"context"
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"log"
+)
+
+type cafe struct {
+	Name    string `json:"name"`
+	Address string `json:"address"`
+}
+type cafeOutput struct {
+	Cafes []cafe `json:"cafes"`
+}
+
+func main() {
+	server := mcp.NewServer(&mcp.Implementation{Name: "docs-example", Version: "1.0.0"}, nil)
+	mcp.AddTool(server, &mcp.Tool{Name: "recommend_cafe"}, func(_ context.Context, request *mcp.CallToolRequest, _ struct{}) (*mcp.CallToolResult, cafeOutput, error) {
+		meta := request.Params.Meta
+		locale, _ := meta["openai/locale"].(string)
+		city := "your area"
+		if location, ok := meta["openai/userLocation"].(map[string]any); ok {
+			if value, ok := location["city"].(string); ok {
+				city = value
+			}
+		}
+		// Local example data; replace this with your application data.
+		cafes := []cafe{}
+		if city == "San Francisco" {
+			cafes = append(cafes, cafe{Name: "Example Cafe", Address: "123 Example Street, San Francisco"})
+		}
+		text := "Cafes in " + city
+		if locale == "es" {
+			text = "Cafés en " + city
+		}
+		return &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: text}}}, cafeOutput{Cafes: cafes}, nil
+	})
+	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
+		log.Fatal(err)
+	}
+}
 ```
 
 ```ruby
@@ -39260,6 +40032,154 @@ proc.on("error", (error) => {
 proc.on("exit", (code) => {
   if (code !== 0) process.exitCode = code ?? 1;
 });
+```
+
+```go
+package main
+
+import (
+	"bufio"
+	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"time"
+)
+
+func run() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	defer cancel()
+	directory, err := os.MkdirTemp("", "codex-app-server-")
+	if err != nil {
+		return err
+	}
+	defer os.RemoveAll(directory)
+	for name, content := range map[string]string{"README.md": "A small Go project with a greeting program.\n", "hello.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"Hello, world!\")}\n"} {
+		if err := os.WriteFile(filepath.Join(directory, name), []byte(content), 0600); err != nil {
+			return err
+		}
+	}
+	if output, err := exec.CommandContext(ctx, "git", "init", "--quiet", directory).CombinedOutput(); err != nil {
+		return fmt.Errorf("git init: %w: %s", err, output)
+	}
+	command := exec.CommandContext(ctx, "codex", "app-server")
+	command.Dir = directory
+	command.Stderr = os.Stderr
+	stdin, err := command.StdinPipe()
+	if err != nil {
+		return err
+	}
+	stdout, err := command.StdoutPipe()
+	if err != nil {
+		return err
+	}
+	if err := command.Start(); err != nil {
+		return err
+	}
+	defer func() {
+		stdin.Close()
+		if command.ProcessState == nil {
+			command.Process.Kill()
+			command.Wait()
+		}
+	}()
+	encoder := json.NewEncoder(stdin)
+	send := func(message map[string]any) error { return encoder.Encode(message) }
+	if err := send(map[string]any{"method": "initialize", "id": 0, "params": map[string]any{"clientInfo": map[string]string{"name": "my_product", "title": "My Product", "version": "0.1.0"}}}); err != nil {
+		return err
+	}
+	scanner := bufio.NewScanner(stdout)
+	scanner.Buffer(make([]byte, 4096), 8<<20)
+	var threadID, turnID string
+	completed := false
+	for scanner.Scan() {
+		line := scanner.Bytes()
+		var message struct {
+			ID     *int            `json:"id"`
+			Method string          `json:"method"`
+			Error  json.RawMessage `json:"error"`
+			Result struct {
+				Thread struct {
+					ID string `json:"id"`
+				} `json:"thread"`
+				Turn struct {
+					ID string `json:"id"`
+				} `json:"turn"`
+			} `json:"result"`
+			Params struct {
+				ThreadID string `json:"threadId"`
+				Turn     struct {
+					ID     string          `json:"id"`
+					Status string          `json:"status"`
+					Error  json.RawMessage `json:"error"`
+				} `json:"turn"`
+			} `json:"params"`
+		}
+		if err := json.Unmarshal(line, &message); err != nil {
+			return err
+		}
+		fmt.Println(string(line))
+		if len(message.Error) > 0 && string(message.Error) != "null" {
+			return fmt.Errorf("app-server error: %s", message.Error)
+		}
+		switch {
+		case message.Method != "" && message.ID != nil:
+			return fmt.Errorf("this minimal client cannot handle server request %q", message.Method)
+		case message.ID != nil && *message.ID == 0:
+			if err := send(map[string]any{"method": "initialized", "params": map[string]any{}}); err != nil {
+				return err
+			}
+			if err := send(map[string]any{"method": "thread/start", "id": 1, "params": map[string]any{"model": "gpt-6.1-sol"}}); err != nil {
+				return err
+			}
+		case message.ID != nil && *message.ID == 1:
+			threadID = message.Result.Thread.ID
+			if threadID == "" {
+				return fmt.Errorf("missing thread ID")
+			}
+			if err := send(map[string]any{"method": "turn/start", "id": 2, "params": map[string]any{"threadId": threadID, "effort": "low", "input": []map[string]string{{"type": "text", "text": "Summarize this repo."}}}}); err != nil {
+				return err
+			}
+		case message.ID != nil && *message.ID == 2:
+			turnID = message.Result.Turn.ID
+			if turnID == "" {
+				return fmt.Errorf("missing turn ID")
+			}
+		case message.Method == "turn/completed":
+			if message.Params.ThreadID != threadID || turnID == "" || message.Params.Turn.ID != turnID {
+				return fmt.Errorf("expected matching completed turn")
+			}
+			if message.Params.Turn.Status != "completed" {
+				return fmt.Errorf("app-server turn %s: %s", message.Params.Turn.Status, message.Params.Turn.Error)
+			}
+			completed = true
+		}
+		if completed {
+			break
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+	if err := stdin.Close(); err != nil {
+		return err
+	}
+	if err := command.Wait(); err != nil {
+		return err
+	}
+	if !completed {
+		return fmt.Errorf("app-server closed before the turn completed")
+	}
+	return nil
+}
+func main() {
+	if err := run(); err != nil {
+		log.Fatal(err)
+	}
+}
 ```
 
 ```ruby
@@ -46069,9 +46989,11 @@ The requirement registers the hook but does not install it. Have an administrato
 
 For a local macOS integration test, save the Python version as `pre_tool_use_policy.py`.
 
+Save the Go version as `main.go` in a Go module and build it with `go build -o pre_tool_use_policy .`. Have an administrator install the executable as `/etc/codex/hooks/pre_tool_use_policy` with root ownership and mode `755`, and set the hook `command` to that absolute path. It uses only the standard library and does not need an interpreter.
+
 For a local macOS integration test, save the Ruby version as `pre_tool_use_policy.rb`. Set the hook `command` to `/usr/bin/ruby /etc/codex/hooks/pre_tool_use_policy.rb`, replacing `/usr/bin/ruby` with the absolute path to your Ruby interpreter if needed. The Ruby hook uses only the standard library.
 
-It blocks only the synthetic marker; replace it with a reviewed organization-specific policy before relying on it. Confirm that the configured interpreter exists on the target. The filename and interpreter must match the selected language:
+It blocks only the synthetic marker; replace it with a reviewed organization-specific policy before relying on it. Confirm that the configured executable and any required interpreter exist on the target. The command must match the selected language:
 
 ```python
 import json
@@ -46082,6 +47004,35 @@ command = event.get("tool_input", {}).get("command", "")
 if "CODEX_HOOK_TEST_DENY" in command:
     print("Synthetic test command blocked by managed hook.", file=sys.stderr)
     sys.exit(2)
+```
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+	"strings"
+)
+
+func main() {
+	var event struct {
+		ToolInput struct {
+			Command string `json:"command"`
+		} `json:"tool_input"`
+	}
+	decoder := json.NewDecoder(io.LimitReader(os.Stdin, 1<<20))
+	if err := decoder.Decode(&event); err != nil {
+		fmt.Fprintln(os.Stderr, "Invalid hook event.")
+		os.Exit(2)
+	}
+	if strings.Contains(event.ToolInput.Command, "CODEX_HOOK_TEST_DENY") {
+		fmt.Fprintln(os.Stderr, "Synthetic test command blocked by managed hook.")
+		os.Exit(2)
+	}
+}
 ```
 
 ```ruby

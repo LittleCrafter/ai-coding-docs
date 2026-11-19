@@ -1091,13 +1091,19 @@ For a local macOS integration test, save the Python version as `pre_tool_use_pol
 
 </CodeSampleNote>
 
+<CodeSampleNote client:load language="go" languages={Object.keys(samples.all.codexSecurityCookbook.installAndEnforceAdministratorManagedHooks())}>
+
+Save the Go version as `main.go` in a Go module and build it with `go build -o pre_tool_use_policy .`. Have an administrator install the executable as `/etc/codex/hooks/pre_tool_use_policy` with root ownership and mode `755`, and set the hook `command` to that absolute path. It uses only the standard library and does not need an interpreter.
+
+</CodeSampleNote>
+
 <CodeSampleNote client:load language="ruby" languages={Object.keys(samples.all.codexSecurityCookbook.installAndEnforceAdministratorManagedHooks())}>
 
 For a local macOS integration test, save the Ruby version as `pre_tool_use_policy.rb`. Set the hook `command` to `/usr/bin/ruby /etc/codex/hooks/pre_tool_use_policy.rb`, replacing `/usr/bin/ruby` with the absolute path to your Ruby interpreter if needed. The Ruby hook uses only the standard library.
 
 </CodeSampleNote>
 
-It blocks only the synthetic marker; replace it with a reviewed organization-specific policy before relying on it. Confirm that the configured interpreter exists on the target. The filename and interpreter must match the selected language:
+It blocks only the synthetic marker; replace it with a reviewed organization-specific policy before relying on it. Confirm that the configured executable and any required interpreter exist on the target. The command must match the selected language:
 
 Define a managed hook policy
 
@@ -1110,6 +1116,35 @@ command = event.get("tool_input", {}).get("command", "")
 if "CODEX_HOOK_TEST_DENY" in command:
     print("Synthetic test command blocked by managed hook.", file=sys.stderr)
     sys.exit(2)
+```
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+	"strings"
+)
+
+func main() {
+	var event struct {
+		ToolInput struct {
+			Command string `json:"command"`
+		} `json:"tool_input"`
+	}
+	decoder := json.NewDecoder(io.LimitReader(os.Stdin, 1<<20))
+	if err := decoder.Decode(&event); err != nil {
+		fmt.Fprintln(os.Stderr, "Invalid hook event.")
+		os.Exit(2)
+	}
+	if strings.Contains(event.ToolInput.Command, "CODEX_HOOK_TEST_DENY") {
+		fmt.Fprintln(os.Stderr, "Synthetic test command blocked by managed hook.")
+		os.Exit(2)
+	}
+}
 ```
 
 ```ruby

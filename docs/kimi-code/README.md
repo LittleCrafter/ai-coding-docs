@@ -3,8 +3,8 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 30
-- **Version:** 2.6.3
-- **Last updated:** 2026-11-18T22:27:10Z
+- **Version:** 1.4.0
+- **Last updated:** 2026-11-19T14:48:05Z
 - **Official docs:** https://moonshotai.github.io/kimi-code/en
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -44,7 +44,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Using Kimi Code CLI in IDEs | [guides/ides.md](./guides/ides.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/ides.html>) |
 | Interaction and input | [guides/interaction.md](./guides/interaction.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/interaction.html>) |
 | Migrating from kimi-cli | [guides/migration.md](./guides/migration.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/migration.html>) |
-| Using in Other Agents | [guides/other-agents.md](./guides/other-agents.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/other-agents.html>) |
+| Using in Other Agents (Agent to Agent) | [guides/other-agents.md](./guides/other-agents.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/other-agents.html>) |
 | Using in Scripts and CI | [guides/print.md](./guides/print.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/print.html>) |
 | Remote environments | [guides/remote-environment.md](./guides/remote-environment.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/remote-environment.html>) |
 | Sessions and context | [guides/sessions.md](./guides/sessions.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/sessions.html>) |

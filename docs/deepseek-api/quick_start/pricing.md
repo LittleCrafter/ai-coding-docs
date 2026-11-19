@@ -52,7 +52,7 @@ Fetch API| Per 1,000 successful requests| $0.75
   
 For the billing rules, see [Search & Fetch](<../guides/search.md>).
 
-Starting 12:00 on November 18, 2026 (Beijing Time, UTC+8), server-side search and web fetch triggered when calling the model are no longer billed; only model token usage is billed. Server-side search is triggered when you use the [web tools](<../guides/web_tools.md>), the [`web_search` tool in the Anthropic API](<../guides/anthropic_api.md#server-tool-usage>) or the [`web_search` tool in the Responses API](<../guides/responses_api.md#tools>).
+Starting 12:00 on November 18, 2026 (Beijing Time, UTC+8), the server-side search and web fetch tool calls triggered when calling the model are no longer billed; the results they return are appended to the model context and billed as model token usage. Server-side search is triggered when you use the [web tools](<../guides/web_tools.md>), the [`web_search` tool in the Anthropic API](<../guides/anthropic_api.md#server-tool-usage>) or the [`web_search` tool in the Responses API](<../guides/responses_api.md#tools>).
 
 * * *
 

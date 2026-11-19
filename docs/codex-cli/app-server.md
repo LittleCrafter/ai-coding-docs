@@ -216,6 +216,154 @@ proc.on("exit", (code) => {
 });
 ```
 
+```go
+package main
+
+import (
+	"bufio"
+	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"time"
+)
+
+func run() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	defer cancel()
+	directory, err := os.MkdirTemp("", "codex-app-server-")
+	if err != nil {
+		return err
+	}
+	defer os.RemoveAll(directory)
+	for name, content := range map[string]string{"README.md": "A small Go project with a greeting program.\n", "hello.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"Hello, world!\")}\n"} {
+		if err := os.WriteFile(filepath.Join(directory, name), []byte(content), 0600); err != nil {
+			return err
+		}
+	}
+	if output, err := exec.CommandContext(ctx, "git", "init", "--quiet", directory).CombinedOutput(); err != nil {
+		return fmt.Errorf("git init: %w: %s", err, output)
+	}
+	command := exec.CommandContext(ctx, "codex", "app-server")
+	command.Dir = directory
+	command.Stderr = os.Stderr
+	stdin, err := command.StdinPipe()
+	if err != nil {
+		return err
+	}
+	stdout, err := command.StdoutPipe()
+	if err != nil {
+		return err
+	}
+	if err := command.Start(); err != nil {
+		return err
+	}
+	defer func() {
+		stdin.Close()
+		if command.ProcessState == nil {
+			command.Process.Kill()
+			command.Wait()
+		}
+	}()
+	encoder := json.NewEncoder(stdin)
+	send := func(message map[string]any) error { return encoder.Encode(message) }
+	if err := send(map[string]any{"method": "initialize", "id": 0, "params": map[string]any{"clientInfo": map[string]string{"name": "my_product", "title": "My Product", "version": "0.1.0"}}}); err != nil {
+		return err
+	}
+	scanner := bufio.NewScanner(stdout)
+	scanner.Buffer(make([]byte, 4096), 8<<20)
+	var threadID, turnID string
+	completed := false
+	for scanner.Scan() {
+		line := scanner.Bytes()
+		var message struct {
+			ID     *int            `json:"id"`
+			Method string          `json:"method"`
+			Error  json.RawMessage `json:"error"`
+			Result struct {
+				Thread struct {
+					ID string `json:"id"`
+				} `json:"thread"`
+				Turn struct {
+					ID string `json:"id"`
+				} `json:"turn"`
+			} `json:"result"`
+			Params struct {
+				ThreadID string `json:"threadId"`
+				Turn     struct {
+					ID     string          `json:"id"`
+					Status string          `json:"status"`
+					Error  json.RawMessage `json:"error"`
+				} `json:"turn"`
+			} `json:"params"`
+		}
+		if err := json.Unmarshal(line, &message); err != nil {
+			return err
+		}
+		fmt.Println(string(line))
+		if len(message.Error) > 0 && string(message.Error) != "null" {
+			return fmt.Errorf("app-server error: %s", message.Error)
+		}
+		switch {
+		case message.Method != "" && message.ID != nil:
+			return fmt.Errorf("this minimal client cannot handle server request %q", message.Method)
+		case message.ID != nil && *message.ID == 0:
+			if err := send(map[string]any{"method": "initialized", "params": map[string]any{}}); err != nil {
+				return err
+			}
+			if err := send(map[string]any{"method": "thread/start", "id": 1, "params": map[string]any{"model": "gpt-6.1-sol"}}); err != nil {
+				return err
+			}
+		case message.ID != nil && *message.ID == 1:
+			threadID = message.Result.Thread.ID
+			if threadID == "" {
+				return fmt.Errorf("missing thread ID")
+			}
+			if err := send(map[string]any{"method": "turn/start", "id": 2, "params": map[string]any{"threadId": threadID, "effort": "low", "input": []map[string]string{{"type": "text", "text": "Summarize this repo."}}}}); err != nil {
+				return err
+			}
+		case message.ID != nil && *message.ID == 2:
+			turnID = message.Result.Turn.ID
+			if turnID == "" {
+				return fmt.Errorf("missing turn ID")
+			}
+		case message.Method == "turn/completed":
+			if message.Params.ThreadID != threadID || turnID == "" || message.Params.Turn.ID != turnID {
+				return fmt.Errorf("expected matching completed turn")
+			}
+			if message.Params.Turn.Status != "completed" {
+				return fmt.Errorf("app-server turn %s: %s", message.Params.Turn.Status, message.Params.Turn.Error)
+			}
+			completed = true
+		}
+		if completed {
+			break
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+	if err := stdin.Close(); err != nil {
+		return err
+	}
+	if err := command.Wait(); err != nil {
+		return err
+	}
+	if !completed {
+		return fmt.Errorf("app-server closed before the turn completed")
+	}
+	return nil
+}
+func main() {
+	if err := run(); err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
 ```ruby
 require "json"
 require "open3"
