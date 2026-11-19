@@ -1,5 +1,7 @@
 # CLI commands
 
+Available on: Antigravity CLI
+
 Review tables listing all TUI slash commands, default keyboard shortcuts, command-line flags, and JSON configuration parameters.
 
 ## Core slash commands

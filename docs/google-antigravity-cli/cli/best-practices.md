@@ -1,5 +1,7 @@
 # CLI best practices
 
+Available on: Antigravity CLI
+
 Master the workflows, prompt architectures, and local configuration choices to maximize agent velocity while maintaining robust control.
 
 ## Establish verification loops

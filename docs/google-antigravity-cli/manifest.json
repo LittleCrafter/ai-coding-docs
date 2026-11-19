@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-11-18T22:23:55Z",
+  "last_updated": "2026-11-19T22:29:21Z",
   "files": {
     "cli/acp": {
       "slug": "cli/acp",
@@ -30,8 +30,8 @@
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "f7b747e4f654a55598c6383ddc80d2ccde9e7981df329833d70ca4fe92892040",
-      "last_updated": "2026-11-11T21:37:00Z"
+      "hash": "44bb783caee300ffc65e63dfdaf828b4230cf276c8ec3f837daebd52920e865e",
+      "last_updated": "2026-11-19T22:29:21Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -230,8 +230,8 @@
       "source_url": "https://antigravity.google/docs/cli/reference",
       "source_md_url": "https://antigravity.google/docs/cli/reference.md",
       "source_id": "cli/reference",
-      "hash": "515ff592e8d77c39ab5cd582443e8643953d7b4fb2aecd977d12da339c00624b",
-      "last_updated": "2026-11-17T22:43:41Z"
+      "hash": "927ee6054cc5b881112901a51513a71f0d0fc6e13e3020234a18b9da91b92b3e",
+      "last_updated": "2026-11-19T22:29:21Z"
     },
     "cli/statusline": {
       "slug": "cli/statusline",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-18T22:23:55Z",
-    "fetch_duration_seconds": 9.509,
+    "last_fetch_completed": "2026-11-19T22:29:21Z",
+    "fetch_duration_seconds": 9.52,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,
