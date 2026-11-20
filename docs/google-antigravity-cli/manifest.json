@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-11-19T22:29:21Z",
+  "last_updated": "2026-11-20T04:26:27Z",
   "files": {
     "cli/acp": {
       "slug": "cli/acp",
@@ -200,8 +200,8 @@
       "source_url": "https://antigravity.google/docs/cli/headless",
       "source_md_url": "https://antigravity.google/docs/cli/headless.md",
       "source_id": "cli/headless",
-      "hash": "5b44862b42c4b5c354aa046ee7ebd12e6d7d55fffbf32a5db38f585283c08adc",
-      "last_updated": "2026-11-18T22:23:55Z"
+      "hash": "bd22c2fc62224bf2c951741990628e271e026ba2f46b8f1001e0d927fb70a25f",
+      "last_updated": "2026-11-20T04:26:27Z"
     },
     "cli/modes": {
       "slug": "cli/modes",
@@ -210,8 +210,8 @@
       "source_url": "https://antigravity.google/docs/cli/modes",
       "source_md_url": "https://antigravity.google/docs/cli/modes.md",
       "source_id": "cli/modes",
-      "hash": "9c8bcbbbdd159fe72f37fe07ba49b607fe559c9b2f982c602c7451cb464feac2",
-      "last_updated": "2026-11-17T22:43:41Z"
+      "hash": "74a8949e767f4cf02a2af0fad5c7e1d86ab95a6b555653066d996e0e17e977b3",
+      "last_updated": "2026-11-20T04:26:27Z"
     },
     "cli/prompting": {
       "slug": "cli/prompting",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-19T22:29:21Z",
-    "fetch_duration_seconds": 9.52,
+    "last_fetch_completed": "2026-11-20T04:26:27Z",
+    "fetch_duration_seconds": 9.51,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,

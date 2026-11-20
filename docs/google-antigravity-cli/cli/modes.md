@@ -39,7 +39,7 @@ When Antigravity CLI pauses for a pending file edit confirmation in `default` mo
 
 ## Review modifications in default mode
 
-In `default` mode (`request-review`), Antigravity CLI pauses before applying any file writes to disk and renders an inline, syntax-highlighted diff preview. Since `v1.5.7`, `agy` starts in `auto` mode where Auto mode is available for your account and platform, and in `default` mode otherwise. To switch to `default` mode during a session, press Shift + Tab until the mode indicator in the status bar clears, or set **Agent Mode** to `default` in `/config`.
+In `default` mode (`request-review`), Antigravity CLI pauses before applying any file writes to disk and renders an inline, syntax-highlighted diff preview. Since `v1.5.7`, `agy` starts in `auto` mode where `auto` mode is available for your account and platform, and in `default` mode otherwise. To switch to `default` mode during a session, press Shift + Tab until the mode indicator in the status bar clears, or set **Agent Mode** to `default` in `/config`.
 
 The following example shows a pending file edit, with the diff and the prompt to accept or reject it:
 

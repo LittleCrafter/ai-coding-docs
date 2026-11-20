@@ -456,7 +456,7 @@ Unlike the interactive UI, headless mode doesn’t silently fall back when `--mo
 
 There is no interactive prompt in headless mode, so tools that would normally ask for confirmation are handled by policy.
 
-By default, the CLI respects the execution and permission modes in your settings. In `default` mode, actions such as shell commands default to **Ask**; in `auto` mode, workspace file edits and sandboxed or safe, reversible commands run automatically, while risky or irreversible actions still require approval. Any tool action that requires approval it can’t obtain in headless mode is soft-denied: the run continues, exits `0`, and prints a notice to `stderr` naming the tool and how to allow it.
+By default, the CLI respects the execution and permission modes in your settings. Since `v1.5.7`, if `agentMode` isn’t set, `agy -p` runs in `auto` mode where `auto` mode is available, and in `default` mode otherwise; pass `--mode` or set `agentMode` to pin a mode in CI pipelines. In `default` mode, actions such as shell commands default to **Ask**; in `auto` mode, workspace file edits and sandboxed or safe, reversible commands run automatically, while risky or irreversible actions still require approval. Any tool action that requires approval it can’t obtain in headless mode is soft-denied: the run continues, exits `0`, and prints a notice to `stderr` naming the tool and how to allow it.
 
 Grant a tool ahead of time by adding an `action(target)` rule under `permissions.allow` in `~/.gemini/antigravity-cli/settings.json`:
 
