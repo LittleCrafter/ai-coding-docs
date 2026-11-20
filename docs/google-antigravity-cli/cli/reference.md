@@ -21,6 +21,7 @@ Type `/` inside the prompt box to open the typeahead command selection menu.
 | **[`/changelog`](./commands/changelog.md)** | Utilities | — | Open the [interactive release notes viewer](./commands/changelog.md) or print CLI changes in headless mode. |
 | **`/clear`** | Utilities | `/new` | Clear the terminal and reset active conversation contexts. |
 | **[`/codesearch`](./commands/codesearch.md) `<query>`** | Utilities | `/cs`, `/search` | Open the [interactive Code Search panel](./commands/codesearch.md) to search code across the workspace. |
+| **[`/compact`](https://antigravity.google/docs/commands/compact) `[message]`** | Conversations | — | Summarize the conversation so far into a [compaction checkpoint](https://antigravity.google/docs/commands/compact) to free up context, and optionally continue with `<message>`. |
 | **`/config`** | Configurations | `/settings` | Open the interactive Settings Editor overlay. |
 | **[`/context`](./commands/context.md)** | Utilities | — | Open the [context usage visualization panel](./commands/context.md). |
 | **`/copy [n|btw]`** | Utilities | — | Copy the last agent response, the n-th most recent response, or the latest [`/btw`](https://antigravity.google/docs/commands/btw) answer. |

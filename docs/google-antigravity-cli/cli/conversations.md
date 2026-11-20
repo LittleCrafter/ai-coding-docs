@@ -43,6 +43,16 @@ Note
 
 **Branching filesystems**: Forking clones the _conversation thread_, not your local Git checkout. To fully isolate files during parallel forks, use Git branches or stash local changes before testing contrasting approaches.
 
+## Compacting long sessions with `/compact`
+
+When a long session accumulates large search outputs or completed milestones, run [`/compact`](https://antigravity.google/docs/commands/compact) to summarize the conversation so far into a checkpoint without starting over:
+
+```text
+/compact
+```
+
+You can also pass instructions after `/compact` (for example, `/compact Now add unit tests for the new handler`) to compact first and immediately continue working on the compacted context. Run [`/context`](./commands/context.md) afterward to inspect your updated token breakdown.
+
 ## Next steps
 
 Explore how the agent handles complex, asynchronous operations and parallel tasks:

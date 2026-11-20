@@ -72,6 +72,64 @@ To identify threads created by your integration, set `threadSource` when you cre
 For example, `codex.startThread({ threadSource: "ci" })` labels the thread
 as `ci`. Resuming a thread preserves its original source.
 
+Set the model and sandbox when creating a thread:
+
+```typescript
+import { Codex } from "@openai/codex-sdk";
+
+const codex = new Codex();
+const thread = codex.startThread({
+  model: "gpt-6.1-sol",
+  modelReasoningEffort: "low",
+  sandboxMode: "workspace-write",
+});
+const result = await thread.run(
+  "Make a plan to diagnose and fix the CI failures"
+);
+console.log(result.finalResponse);
+```
+
+```python
+from openai_codex import Codex, Sandbox
+
+with Codex() as codex:
+    thread = codex.thread_start(
+        model="gpt-6.1-sol",
+        sandbox=Sandbox.workspace_write,
+    )
+    result = thread.run("Make a plan to diagnose and fix the CI failures")
+    print(result.final_response)
+```
+
+The TypeScript SDK is asynchronous. Await the result inside your application's async function:
+
+```typescript
+import { Codex } from "@openai/codex-sdk";
+
+async function main(): Promise<void> {
+  const codex = new Codex();
+  const thread = codex.startThread();
+  const result = await thread.run("Implement the plan");
+  console.log(result.finalResponse);
+}
+await main();
+```
+
+```python
+import asyncio
+from openai_codex import AsyncCodex
+
+
+async def main() -> None:
+    async with AsyncCodex() as codex:
+        thread = await codex.thread_start(model="gpt-6.1-sol")
+        result = await thread.run("Implement the plan")
+        print(result.final_response)
+
+
+asyncio.run(main())
+```
+
 ### Configuration overrides
 
 Pass `config` to set structured Codex configuration. For keys that can't be
@@ -118,6 +176,21 @@ Start Codex, create a thread, and run a prompt. The examples use GPT-6.1 Sol,
 which must be available to your signed-in account. Otherwise, omit `model` to
 use your configured default. See [model availability by plan](./pricing.md#feature-availability).
 
+```typescript
+import { Codex } from "@openai/codex-sdk";
+
+const codex = new Codex();
+const thread = codex.startThread({
+  model: "gpt-6.1-sol",
+  modelReasoningEffort: "low",
+  sandboxMode: "workspace-write",
+});
+const result = await thread.run(
+  "Make a plan to diagnose and fix the CI failures"
+);
+console.log(result.finalResponse);
+```
+
 ```python
 from openai_codex import Codex, Sandbox
 
@@ -131,6 +204,18 @@ with Codex() as codex:
 ```
 
 Use `AsyncCodex` when your application is already asynchronous:
+
+```typescript
+import { Codex } from "@openai/codex-sdk";
+
+async function main(): Promise<void> {
+  const codex = new Codex();
+  const thread = codex.startThread();
+  const result = await thread.run("Implement the plan");
+  console.log(result.finalResponse);
+}
+await main();
+```
 
 ```python
 import asyncio

@@ -66,6 +66,7 @@ As a conversation grows, Antigravity automatically compacts older turns into che
 
 To keep your context window lean and responsive during long sessions, consider these practices:
 
+*   **Compact on demand with `/compact`**: run [`/compact`](https://antigravity.google/docs/commands/compact) (or `/compact <message>`) right after finishing research or completing a milestone to summarize earlier turns into a checkpoint on your schedule.
 *   **Ask side questions with `/btw`**: use [`/btw`](https://antigravity.google/docs/commands/btw) for quick tangential questions so the question and answer aren’t added to your main conversation history.
 *   **Reset between unrelated tasks**: run `/clear` (alias `/new`) when switching to a new task that doesn’t require prior conversation context.
 *   **Branch conversations**: run `/fork` (alias `/branch`) or `/rewind` to explore an alternative approach from an earlier checkpoint.
@@ -75,6 +76,7 @@ To keep your context window lean and responsive during long sessions, consider t
 
 Explore related commands for managing conversation history and workspace state:
 
+*   **[Compact command (`/compact`)](https://antigravity.google/docs/commands/compact)**: summarize earlier turns into a checkpoint to free up space in the context window.
 *   **[Side question command (`/btw`)](https://antigravity.google/docs/commands/btw)**: ask background questions without adding tokens to your active trajectory.
 *   **[Resume command (`/resume`)](./resume.md)**: switch between saved conversation threads.
 *   **[CLI reference](../reference.md)**: view all available slash commands and keyboard shortcuts.

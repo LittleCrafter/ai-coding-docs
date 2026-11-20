@@ -78,6 +78,10 @@ If you watch an agent execute an incorrect search pattern or write code that dev
 
 If an agent has made several successive changes that introduce build errors, you don’t need to discard the session. Type `/rewind` (or `/undo`) to roll back your conversation thread to a previous stable checkout.
 
+### Compact between milestones with `/compact`
+
+After finishing an exploration phase or completing a subtask in a long session, run [`/compact`](https://antigravity.google/docs/commands/compact) (or `/compact <next-step>`) to summarize earlier turns into a checkpoint so subsequent turns run with a leaner context window.
+
 ### Branch experiments with `/fork`
 
 If you’re unsure of the best implementation path, follow these steps:
