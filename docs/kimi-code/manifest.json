@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "1.4.0",
-  "last_updated": "2026-11-19T14:48:05Z",
+  "version": "1.4.2",
+  "last_updated": "2026-11-20T14:28:31Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -10,8 +10,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/config-files.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/config-files.md",
       "source_id": "docs/en/configuration/config-files.md",
-      "hash": "9a2ddf0eb7c74e7cc1a0dbc11d89761cf9002087a8888ee0eb9da2d7d12e5ad8",
-      "last_updated": "2026-11-19T14:48:05Z"
+      "hash": "2682ddf84ec13630a8d2271063500abefaf87a145270952d34d82922cc92b443",
+      "last_updated": "2026-11-20T14:28:31Z"
     },
     "configuration/data-locations": {
       "slug": "configuration/data-locations",
@@ -150,8 +150,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/interaction.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/interaction.md",
       "source_id": "docs/en/guides/interaction.md",
-      "hash": "bb4ae59677456c5f9ea889347c6ff54b25c1166d490fd60dc3d5a8bf58e8f607",
-      "last_updated": "2026-11-13T13:31:26Z"
+      "hash": "88aa304c5d94f6d3ee931ca664ca386e8e1702817a5069eadc4d455c3851ba13",
+      "last_updated": "2026-11-20T14:28:31Z"
     },
     "guides/migration": {
       "slug": "guides/migration",
@@ -170,18 +170,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/other-agents.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/other-agents.md",
       "source_id": "docs/en/guides/other-agents.md",
-      "hash": "b6a5aca27c9903b8e5b87a5a9350e907eb5bec9d7e23555f1be73b3e8ecdb347",
-      "last_updated": "2026-11-19T14:48:05Z"
-    },
-    "guides/print": {
-      "slug": "guides/print",
-      "title": "Using in Scripts and CI",
-      "group": "guides",
-      "source_url": "https://moonshotai.github.io/kimi-code/en/guides/print.html",
-      "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/print.md",
-      "source_id": "docs/en/guides/print.md",
-      "hash": "5688124b34ca7d58d6e3b3e3d2ceef61f4b23c80d96140b1e9d9a870fe0dafd6",
-      "last_updated": "2026-11-19T14:48:05Z"
+      "hash": "68b80c11637f9b99822416a2767ec806cbf7422bb827c3d2ad2b00a3f61cc3f0",
+      "last_updated": "2026-11-20T14:28:31Z"
     },
     "guides/remote-environment": {
       "slug": "guides/remote-environment",
@@ -210,8 +200,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/tower.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/tower.md",
       "source_id": "docs/en/guides/tower.md",
-      "hash": "48dc2256b442f9d91b121e9cb54ed690b510547f663f324b2bb1cb7fd78e0535",
-      "last_updated": "2026-11-19T14:48:05Z"
+      "hash": "285730ad03fd2f93fb7106e2e7e0ffa81cc7174f2b1b341b23dbe63503c1b3ad",
+      "last_updated": "2026-11-20T14:28:31Z"
     },
     "guides/use-cases": {
       "slug": "guides/use-cases",
@@ -230,8 +220,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/web.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/web.md",
       "source_id": "docs/en/guides/web.md",
-      "hash": "2ae73f75b17ac461096b4512ed48fb66cd079ce9354b71bb61beb933da77c5fd",
-      "last_updated": "2026-11-19T14:48:05Z"
+      "hash": "05721336a1f201c233ed9c58b52a0f546ec54c83ae8a76c1ccecd558d855ab89",
+      "last_updated": "2026-11-20T14:28:31Z"
     },
     "index": {
       "slug": "index",
@@ -270,8 +260,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/kimi-command.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/kimi-command.md",
       "source_id": "docs/en/reference/kimi-command.md",
-      "hash": "369b092937ca3b85e51dac62aa5da6039ad05ab073fe12c2f91e54da6981cd16",
-      "last_updated": "2026-11-19T14:48:05Z"
+      "hash": "26b43cde4fd59c98794da2dfd278ae5721c8fa95aadb02fa4d1e1f421e2a8809",
+      "last_updated": "2026-11-20T14:28:31Z"
     },
     "reference/slash-commands": {
       "slug": "reference/slash-commands",
@@ -290,8 +280,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/tools.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/tools.md",
       "source_id": "docs/en/reference/tools.md",
-      "hash": "7c36d50b5f5db6280d11b0984ced9f711f2d9735621dc52722ba42dc33958253",
-      "last_updated": "2026-11-18T14:41:19Z"
+      "hash": "cbcd39f7c0a33ba2f75ff86aba6d1576c8132527dbad447d5a54ba737b0536bf",
+      "last_updated": "2026-11-20T14:28:31Z"
     },
     "release-notes/changelog": {
       "slug": "release-notes/changelog",
@@ -300,15 +290,15 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/release-notes/changelog.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/release-notes/changelog.md",
       "source_id": "docs/en/release-notes/changelog.md",
-      "hash": "9a3b1ba05d3ec6bd6b138d41102df87a267346dc91f5b859b372d034e46227af",
-      "last_updated": "2026-11-19T14:48:05Z"
+      "hash": "1206393896640fd7477f28aa51263693de9ad07a7c1faf771975ce59c9666dd6",
+      "last_updated": "2026-11-20T14:28:31Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-19T14:48:05Z",
-    "fetch_duration_seconds": 10.305,
-    "total_pages_discovered": 30,
-    "pages_fetched_successfully": 30,
+    "last_fetch_completed": "2026-11-20T14:28:31Z",
+    "fetch_duration_seconds": 9.88,
+    "total_pages_discovered": 29,
+    "pages_fetched_successfully": 29,
     "pages_failed": 0,
     "failed_pages": []
   }

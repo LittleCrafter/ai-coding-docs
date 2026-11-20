@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.171.0",
-  "last_updated": "2026-11-20T04:29:00Z",
+  "last_updated": "2026-11-20T14:27:54Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -470,8 +470,8 @@
       "source_url": "https://learn.chatgpt.com/docs/dots",
       "source_md_url": "https://learn.chatgpt.com/docs/dots.md",
       "source_id": "llms:dots",
-      "hash": "a4334932533ea02f847b82d68deb17f078366c53ae9804f607788b9220ed74ba",
-      "last_updated": "2026-11-18T04:48:11Z"
+      "hash": "aa18bdd41bd71252b8ef1b23360fcab9fdf33b4d8c9a9138d151241829f32ec8",
+      "last_updated": "2026-11-20T14:27:54Z"
     },
     "dots/channels": {
       "slug": "dots/channels",
@@ -2135,8 +2135,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-20T04:29:00Z",
-    "fetch_duration_seconds": 74.305,
+    "last_fetch_completed": "2026-11-20T14:27:54Z",
+    "fetch_duration_seconds": 74.278,
     "total_pages_discovered": 213,
     "pages_fetched_successfully": 213,
     "pages_failed": 0,

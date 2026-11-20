@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-20T04:29:38Z",
+  "last_updated": "2026-11-20T14:28:20Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -665,13 +665,13 @@
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
-      "title": "Your First API Call",
+      "title": "Models & Pricing",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "60b10d0ab8dfea7bd8d4585ab1248408dcbf41a2eb94ab1b7001277c990ddfb9",
-      "last_updated": "2026-11-19T22:32:23Z"
+      "hash": "7e007cc5234abc589cb4895fcb1ba2130c993078bd728e1e2a1d4658b56784db",
+      "last_updated": "2026-11-20T14:28:20Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -690,8 +690,8 @@
       "source_url": "https://api-docs.deepseek.com/quick_start/token_usage",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/token_usage",
       "source_id": "quick_start/token_usage",
-      "hash": "55096baf3869b23bf4c7eee540b5ec46d249536ceaf65e08d827f7a26f67b746",
-      "last_updated": "2026-09-11T03:51:37Z"
+      "hash": "6e6a99a384e9493896a8ff09b09ef4d79c6908341bfb2a0263a6fa7fe57a9a47",
+      "last_updated": "2026-11-20T14:28:20Z"
     },
     "updates": {
       "slug": "updates",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-20T04:29:38Z",
-    "fetch_duration_seconds": 36.916,
+    "last_fetch_completed": "2026-11-20T14:28:20Z",
+    "fetch_duration_seconds": 25.478,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,

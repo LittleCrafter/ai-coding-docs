@@ -11,7 +11,7 @@ However, due to the different tokenization methods used by different models, the
 
 ## Calculate token usage offline
 
-You can run the demo tokenizer code in the following zip package to calculate the token usage for your intput/output.
+You can run the demo tokenizer code in the following zip package to calculate the token usage for your input/output.
 
 [deepseek_tokenizer.zip](<https://cdn.deepseek.com/api-docs/deepseek_v4_tokenizer.zip>)
 
