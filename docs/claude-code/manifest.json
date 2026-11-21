@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.330",
-  "last_updated": "2026-11-21T04:21:46Z",
+  "last_updated": "2026-11-21T20:42:21Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -110,8 +110,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/hooks",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/hooks.md",
       "source_id": "agent-sdk/hooks",
-      "hash": "0b2c9a218508ae08aa03a1d9bfe5916d39a56028c80699d2264a63c27a851f84",
-      "last_updated": "2026-11-20T04:27:45Z"
+      "hash": "d055ebbee0f3a1cdab3346db84fb9649c85a2d675f6558ee8bd6172004024053",
+      "last_updated": "2026-11-21T20:42:21Z"
     },
     "agent-sdk/hosting": {
       "slug": "agent-sdk/hosting",
@@ -200,8 +200,8 @@
       "source_url": "https://code.claude.com/docs/en/agent-sdk/python",
       "source_md_url": "https://code.claude.com/docs/en/agent-sdk/python.md",
       "source_id": "agent-sdk/python",
-      "hash": "a658fde43f021fe438986ed2b6a6e539fe2f2baa74fce42d6db51ce979b01742",
-      "last_updated": "2026-11-20T04:27:45Z"
+      "hash": "bf6e154f31f555fec9024985f37e2a83d2ee268abde1bfb7fef7f308062838bf",
+      "last_updated": "2026-11-21T20:42:21Z"
     },
     "agent-sdk/quickstart": {
       "slug": "agent-sdk/quickstart",
@@ -920,8 +920,8 @@
       "source_url": "https://code.claude.com/docs/en/env-vars",
       "source_md_url": "https://code.claude.com/docs/en/env-vars.md",
       "source_id": "env-vars",
-      "hash": "8a8395c69d9fcdc4686e00307982de9bd426365ba4081a66ffb57db99cfc78ae",
-      "last_updated": "2026-11-21T04:21:46Z"
+      "hash": "0462aa012ee88a27de92fa6d36e3156490d3c7b95c35562becb55516e8e612b0",
+      "last_updated": "2026-11-21T20:42:21Z"
     },
     "errors": {
       "slug": "errors",
@@ -1080,8 +1080,8 @@
       "source_url": "https://code.claude.com/docs/en/hooks",
       "source_md_url": "https://code.claude.com/docs/en/hooks.md",
       "source_id": "hooks",
-      "hash": "c965bef25c3939c80d8c3f125c454ebba2fa591396e76c266f0aa6ac7a4dfbec",
-      "last_updated": "2026-11-21T04:21:46Z"
+      "hash": "25d2965671d61cb82779cc38069108fbf6f34cfdfda521494d8019ab9e1f2162",
+      "last_updated": "2026-11-21T20:42:21Z"
     },
     "hooks-guide": {
       "slug": "hooks-guide",
@@ -1320,8 +1320,8 @@
       "source_url": "https://code.claude.com/docs/en/permission-modes",
       "source_md_url": "https://code.claude.com/docs/en/permission-modes.md",
       "source_id": "permission-modes",
-      "hash": "2194979f3a1d488be2532759cac9f29be511ce2a88ba1f465ffe24bb96c591b1",
-      "last_updated": "2026-11-20T04:27:45Z"
+      "hash": "b0f772cd9d2db2068933a67e0f711474f84f442fb7d37f7e0e82789a625e5f08",
+      "last_updated": "2026-11-21T20:42:21Z"
     },
     "permissions": {
       "slug": "permissions",
@@ -1920,8 +1920,8 @@
       "source_url": "https://code.claude.com/docs/en/sub-agents",
       "source_md_url": "https://code.claude.com/docs/en/sub-agents.md",
       "source_id": "sub-agents",
-      "hash": "0391a8fbdc9d5cd47c77088b4f8b650bd5038313a9629065c6eb334e797c6cdb",
-      "last_updated": "2026-11-21T04:21:46Z"
+      "hash": "5009da9098bc24888b27a387643a68e7c08b472f7d6e210d6cffe2c556ae4c7a",
+      "last_updated": "2026-11-21T20:42:21Z"
     },
     "terminal-config": {
       "slug": "terminal-config",
@@ -1950,8 +1950,8 @@
       "source_url": "https://code.claude.com/docs/en/tools-reference",
       "source_md_url": "https://code.claude.com/docs/en/tools-reference.md",
       "source_id": "tools-reference",
-      "hash": "b70a0f34f42a2adc0e99e9442dcf08c4ac58e9dd5e60f4a16e79bad9f5d37304",
-      "last_updated": "2026-11-20T04:27:45Z"
+      "hash": "19cf315b78dd83c63f1cebf477881823e4e79fcd081306f08334c3b9e6e2c1ca",
+      "last_updated": "2026-11-21T20:42:21Z"
     },
     "troubleshoot-install": {
       "slug": "troubleshoot-install",
@@ -2000,8 +2000,8 @@
       "source_url": "https://code.claude.com/docs/en/vs-code",
       "source_md_url": "https://code.claude.com/docs/en/vs-code.md",
       "source_id": "vs-code",
-      "hash": "c2b77651d1130d6cf7abf4d0ed3bd131166a17f52b2ace2cdced032aff1cf065",
-      "last_updated": "2026-11-21T04:21:46Z"
+      "hash": "e7c49925d3bc9fca48c1839007b7b7e8f0f460d51328f25089b3efa7ff16b193",
+      "last_updated": "2026-11-21T20:42:21Z"
     },
     "web-quickstart": {
       "slug": "web-quickstart",
@@ -2045,8 +2045,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-21T04:21:46Z",
-    "fetch_duration_seconds": 71.121,
+    "last_fetch_completed": "2026-11-21T20:42:21Z",
+    "fetch_duration_seconds": 71.139,
     "total_pages_discovered": 204,
     "pages_fetched_successfully": 204,
     "pages_failed": 0,
