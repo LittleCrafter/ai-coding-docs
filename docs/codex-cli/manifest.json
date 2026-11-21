@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "0.171.0",
-  "last_updated": "2026-11-20T22:02:29Z",
+  "last_updated": "2026-11-21T04:23:01Z",
   "files": {
     "CLA": {
       "slug": "CLA",
@@ -250,8 +250,8 @@
       "source_url": "https://learn.chatgpt.com/docs/codex-manual",
       "source_md_url": "https://learn.chatgpt.com/docs/codex-manual.md",
       "source_id": "llms:codex-manual",
-      "hash": "0fc0ec4612a9d182fe7e28a162fffe74e96d01be157890ec419ee36327a39057",
-      "last_updated": "2026-11-20T22:02:29Z"
+      "hash": "6cce333c54a5a26b29f481c7549b9ec02619476bc5e1ea88895792eb17bbae14",
+      "last_updated": "2026-11-21T04:23:01Z"
     },
     "codex-sdk": {
       "slug": "codex-sdk",
@@ -680,8 +680,8 @@
       "source_url": "https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway",
       "source_md_url": "https://learn.chatgpt.com/docs/enterprise/connect-to-a-gateway.md",
       "source_id": "llms:enterprise/connect-to-a-gateway",
-      "hash": "2f80c10430d5c68e5d8b2ae09093413348e292e6e92b32dfa91c48eaaf51a9d8",
-      "last_updated": "2026-11-16T21:19:26Z"
+      "hash": "78742c132c1fd1921589e2f05d1479bc26798f8509156191d446336344091b81",
+      "last_updated": "2026-11-21T04:23:01Z"
     },
     "enterprise/connect-to-vertex-ai": {
       "slug": "enterprise/connect-to-vertex-ai",
@@ -2135,8 +2135,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-20T22:02:29Z",
-    "fetch_duration_seconds": 74.354,
+    "last_fetch_completed": "2026-11-21T04:23:01Z",
+    "fetch_duration_seconds": 74.298,
     "total_pages_discovered": 213,
     "pages_fetched_successfully": 213,
     "pages_failed": 0,

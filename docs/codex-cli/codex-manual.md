@@ -47476,18 +47476,32 @@ To configure Codex yourself, get these values from your gateway team:
 
 #### Configure the provider
 
-In the interactive CLI, run `/config` and open **Sessions** > **Model providers**.
-Choose **Create a custom provider or gateway** and enter the name, base URL,
-and, if needed, the name of the environment variable holding the API key.
-To change an editable provider, open its details and choose **Edit configuration**.
-If you can change the default, highlight the provider, press Space, and
-start a chat with `/new`.
+1. Run `/config` and open **Sessions** > **Model providers**.
+
+2. If you don't see your gateway, select **Create a custom provider or gateway**. Enter its **Name** and **Base URL**. If the gateway uses an API key, enter the environment variable name in **API key variable**. Select **Save**.
+
+3. If your organization lets you change the default, highlight your gateway and press Space.
+4. Start a chat with `/new` and [verify the connection](#verify-the-connection).
+
+To edit a saved gateway, open its details and select **Edit configuration** if available.
 
 To set up a gateway during CLI sign-in, start `codex --enable gateway_setup_wizard`
 and choose **Sign in another way** > **Use a custom provider or gateway**.
 This optional sign-in flow is off by default. It appears in a signed-out CLI
 using the embedded app server when the default provider is OpenAI, API-key
 sign-in is allowed, and no managed setting or launch override selects a provider.
+
+Open **Settings** and select **Model Providers**. If your gateway is listed, open its menu and select **Switch provider** if available. Skip this step if the gateway is already your current provider. Then start a new chat and [verify the connection](#verify-the-connection).
+
+If you don't see your gateway and you can add providers, follow these steps.
+
+1. On **Model Providers & Gateways**, select **Add** > **Gateway or custom provider**.
+
+2. Enter a **Name** for the gateway and the **Base URL** from your administrator, including the API path.
+3. Under **Authentication**, choose the method your administrator specified. For **Environment variable**, enter the variable name (for example, `COMPANY_GATEWAY_API_KEY`) in **API key environment variable**.
+4. To use the gateway for new chats, turn on **Set as current provider** if available. Select **Save**.
+
+5. Start a new chat with the gateway and [verify the connection](#verify-the-connection).
 
 For manual setup or additional authentication settings, open
 `config.toml` at `~/.codex/config.toml` on macOS or Linux, or
@@ -47761,7 +47775,7 @@ Only model-provider requests use this gateway route. [Voice sessions](./features
 
 With ChatGPT sign-in, start the client and sign in to the workspace that provides the managed configuration. If you use native gateway OAuth, also complete your organization's gateway sign-in when prompted. Then [verify the connection](#verify-the-connection).
 
-For a locally configured provider, follow the instructions for your client.
+If you edited `config.toml` manually, follow the instructions for your client.
 
 #### Configure the CLI
 
@@ -47801,8 +47815,7 @@ authorize access to your tools or connected systems.
 
 Use the provider ID and model alias in your administrator's handoff. The provider identifies the configured connection; the model alias identifies a model routed through that connection. ChatGPT sign-in and gateway authentication control access and may both be required.
 
-Restart the client after changing the configuration. In the CLI, start `codex`
-and use `/status` to inspect the active model and provider. In the desktop app,
+In the CLI, use `/status` to inspect the active model and provider. In the desktop app,
 check the selected model and configuration.
 
 Send this prompt in a new task:
