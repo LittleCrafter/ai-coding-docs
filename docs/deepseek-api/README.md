@@ -3,7 +3,7 @@
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
 - **Pages mirrored:** 70
-- **Last updated:** 2026-11-22T10:26:50Z
+- **Last updated:** 2026-11-22T18:45:59Z
 - **Official docs:** https://api-docs.deepseek.com
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -79,7 +79,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Introducing DeepSeek-V3.2-Exp | [news/news250929.md](./news/news250929.md) | [source](<https://api-docs.deepseek.com/news/news250929>) |
 | DeepSeek-V3.2 Release | [news/news251201.md](./news/news251201.md) | [source](<https://api-docs.deepseek.com/news/news251201>) |
 | DeepSeek V4 Preview Release | [news/news260424.md](./news/news260424.md) | [source](<https://api-docs.deepseek.com/news/news260424>) |
-| Your First API Call | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
+| DeepSeek-V4-Pro GA Release | [news/news260813.md](./news/news260813.md) | [source](<https://api-docs.deepseek.com/news/news260813>) |
 | DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live | [news/news260821.md](./news/news260821.md) | [source](<https://api-docs.deepseek.com/news/news260821>) |
 | DeepSeek-V4.1-Flash: Smarter, Faster, More Efficient | [news/news260910.md](./news/news260910.md) | [source](<https://api-docs.deepseek.com/news/news260910>) |
 | DeepSeek-V4.1-Flash-1017: Wish-Driven Programming Made Real | [news/news261017.md](./news/news261017.md) | [source](<https://api-docs.deepseek.com/news/news261017>) |
@@ -93,11 +93,11 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Integrate with Codex | [quick_start/agent_integrations/codex.md](./quick_start/agent_integrations/codex.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/codex>) |
 | Integrate with Hermes Agent | [quick_start/agent_integrations/hermes.md](./quick_start/agent_integrations/hermes.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/hermes>) |
 | Integrate with OpenClaw | [quick_start/agent_integrations/openclaw.md](./quick_start/agent_integrations/openclaw.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/openclaw>) |
-| Your First API Call | [quick_start/agent_integrations/opencode.md](./quick_start/agent_integrations/opencode.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/opencode>) |
+| Integrate with OpenCode | [quick_start/agent_integrations/opencode.md](./quick_start/agent_integrations/opencode.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/opencode>) |
 | Integrate with Qoder | [quick_start/agent_integrations/qoder.md](./quick_start/agent_integrations/qoder.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/qoder>) |
 | Integrate with Reasonix | [quick_start/agent_integrations/reasonix.md](./quick_start/agent_integrations/reasonix.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/reasonix>) |
 | Integrate with WorkBuddy/CodeBuddy | [quick_start/agent_integrations/workbuddy.md](./quick_start/agent_integrations/workbuddy.md) | [source](<https://api-docs.deepseek.com/quick_start/agent_integrations/workbuddy>) |
 | Error Codes | [quick_start/error_codes.md](./quick_start/error_codes.md) | [source](<https://api-docs.deepseek.com/quick_start/error_codes>) |
-| Your First API Call | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
+| Models &amp; Pricing | [quick_start/pricing.md](./quick_start/pricing.md) | [source](<https://api-docs.deepseek.com/quick_start/pricing>) |
 | Rate Limit &amp; Isolation | [quick_start/rate_limit.md](./quick_start/rate_limit.md) | [source](<https://api-docs.deepseek.com/quick_start/rate_limit>) |
 | Token &amp; Token Usage | [quick_start/token_usage.md](./quick_start/token_usage.md) | [source](<https://api-docs.deepseek.com/quick_start/token_usage>) |

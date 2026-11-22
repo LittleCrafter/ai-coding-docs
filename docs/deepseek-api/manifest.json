@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-22T10:26:50Z",
+  "last_updated": "2026-11-22T18:45:59Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -525,13 +525,13 @@
     },
     "news/news260813": {
       "slug": "news/news260813",
-      "title": "Your First API Call",
+      "title": "DeepSeek-V4-Pro GA Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news260813",
       "source_md_url": "https://api-docs.deepseek.com/news/news260813",
       "source_id": "news/news260813",
-      "hash": "797f9be82834a62714dc4cf6bc451539ab173bb5992f0644ea2991c0ce0b840c",
-      "last_updated": "2026-11-22T10:26:50Z"
+      "hash": "262556c37cf1be0e93c540262388601962b467946dcd2d07846cacdcb37bc133",
+      "last_updated": "2026-11-22T18:45:59Z"
     },
     "news/news260821": {
       "slug": "news/news260821",
@@ -615,13 +615,13 @@
     },
     "quick_start/agent_integrations/opencode": {
       "slug": "quick_start/agent_integrations/opencode",
-      "title": "Your First API Call",
+      "title": "Integrate with OpenCode",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/opencode",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/opencode",
       "source_id": "quick_start/agent_integrations/opencode",
-      "hash": "b01559df9539da2baf699a52fcedd71c99db2a311e728204dab7d2e8da77d956",
-      "last_updated": "2026-11-22T10:26:50Z"
+      "hash": "8644d72c38b02b9d4cc12226fb23591afa11a6481998dea0ec74fd32e3d54d45",
+      "last_updated": "2026-11-22T18:45:59Z"
     },
     "quick_start/agent_integrations/qoder": {
       "slug": "quick_start/agent_integrations/qoder",
@@ -665,13 +665,13 @@
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
-      "title": "Your First API Call",
+      "title": "Models & Pricing",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "60b10d0ab8dfea7bd8d4585ab1248408dcbf41a2eb94ab1b7001277c990ddfb9",
-      "last_updated": "2026-11-22T00:46:26Z"
+      "hash": "7e007cc5234abc589cb4895fcb1ba2130c993078bd728e1e2a1d4658b56784db",
+      "last_updated": "2026-11-22T18:45:59Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-22T10:26:50Z",
-    "fetch_duration_seconds": 47.24,
+    "last_fetch_completed": "2026-11-22T18:45:59Z",
+    "fetch_duration_seconds": 29.415,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,
