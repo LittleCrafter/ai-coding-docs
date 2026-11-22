@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-22T00:46:26Z",
+  "last_updated": "2026-11-22T10:26:50Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -525,13 +525,13 @@
     },
     "news/news260813": {
       "slug": "news/news260813",
-      "title": "DeepSeek-V4-Pro GA Release",
+      "title": "Your First API Call",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news260813",
       "source_md_url": "https://api-docs.deepseek.com/news/news260813",
       "source_id": "news/news260813",
-      "hash": "262556c37cf1be0e93c540262388601962b467946dcd2d07846cacdcb37bc133",
-      "last_updated": "2026-11-21T13:48:06Z"
+      "hash": "797f9be82834a62714dc4cf6bc451539ab173bb5992f0644ea2991c0ce0b840c",
+      "last_updated": "2026-11-22T10:26:50Z"
     },
     "news/news260821": {
       "slug": "news/news260821",
@@ -615,13 +615,13 @@
     },
     "quick_start/agent_integrations/opencode": {
       "slug": "quick_start/agent_integrations/opencode",
-      "title": "Integrate with OpenCode",
+      "title": "Your First API Call",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/opencode",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/opencode",
       "source_id": "quick_start/agent_integrations/opencode",
-      "hash": "8644d72c38b02b9d4cc12226fb23591afa11a6481998dea0ec74fd32e3d54d45",
-      "last_updated": "2026-09-10T07:34:19Z"
+      "hash": "b01559df9539da2baf699a52fcedd71c99db2a311e728204dab7d2e8da77d956",
+      "last_updated": "2026-11-22T10:26:50Z"
     },
     "quick_start/agent_integrations/qoder": {
       "slug": "quick_start/agent_integrations/qoder",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-22T00:46:26Z",
-    "fetch_duration_seconds": 27.652,
+    "last_fetch_completed": "2026-11-22T10:26:50Z",
+    "fetch_duration_seconds": 47.24,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,

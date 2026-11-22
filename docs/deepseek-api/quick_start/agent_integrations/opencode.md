@@ -1,35 +1,100 @@
-# Integrate with OpenCode
+# Your First API Call
 
-OpenCode is an open-source AI coding assistant available in terminal, web, and other forms.
+The DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.
 
-## Migrate from Existing Installation to DeepSeek
-
-If you already have OpenCode installed (version >= v1.18.30 recommended), simply run OpenCode and switch to the DeepSeek provider:
-
-  1. Execute the `opencode` command
-  2. Type `/connect` in the input box, then enter `deepseek` and select the provider
-
+PARAM| VALUE  
+---|---  
+base_url (OpenAI)| `https://api.deepseek.com`  
+base_url (Anthropic)| `https://api.deepseek.com/anthropic`  
+api_key| apply for an [API key](<https://platform.deepseek.com/api_keys>)  
+model| `deepseek-flash`(1)  
+`deepseek-v4-pro`  
   
+(1) Use `deepseek-flash` as the model name. It is now served by DeepSeek-V4.1-Flash-1017, and the calling method remains unchanged. The legacy names `deepseek-v4-flash` and `deepseek-v4-flash-vision-exp` are still accepted, but the corresponding models have been retired; their requests are served by DeepSeek-V4.1-Flash-1017 and billed at the Flash price.
 
-  3. Enter your [DeepSeek API Key](<https://platform.deepseek.com/api_keys>)
+## Integrate with Agent Tools
 
-  
+DeepSeek Harness is now in developer preview for agent harness developers worldwide. See the [DeepSeek Harness Guide](<https://deepseek-harness.github.io/deepseek-harness/en/guide/quickstart>) for details.
 
-  4. Select the DeepSeek-V4-Flash model
+The DeepSeek API is supported by many popular AI agent and coding assistant tools. If you use tools like Claude Code, GitHub Copilot, or OpenCode, you can use DeepSeek as the backend model directly — no code required.
 
-* * *
+See the [Agent Integrations Guide](<./claude_code.md>) for details.
 
-## Install OpenCode from Scratch
+## Invoke The Chat API
 
-#### 1\. Install OpenCode
+Once you have obtained an API key, you can access the DeepSeek model using the following example scripts in the OpenAI API format. This is a non-stream example, you can set the `stream` parameter to `true` to get stream response.
 
-For installation instructions, please refer to the [OpenCode download page](<https://opencode.ai/download>).
+For examples using the Anthropic API format, please refer to [Anthropic API](<../../guides/anthropic_api.md>).
 
-To avoid compatibility issues, it is strongly recommended to upgrade OpenCode to the latest version, ensuring the version number is >= v1.18.30.
+Before running these examples, set the `DEEPSEEK_API_KEY` environment variable in your terminal to your API key.
 
-#### 2\. Run and Configure
+**curl**
 
-  * Execute the `opencode` command
-  * Type `/connect` in the input box, then enter `deepseek` and select the provider
-  * Enter your [DeepSeek API Key](<https://platform.deepseek.com/api_keys>)
-  * Select the DeepSeek-V4-Flash model
+```bash
+curl https://api.deepseek.com/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" \
+  -d '{
+        "model": "deepseek-flash",
+        "messages": [
+          {"role": "system", "content": "You are a helpful assistant."},
+          {"role": "user", "content": "Hello!"}
+        ],
+        "thinking": {"type": "enabled"},
+        "reasoning_effort": "high",
+        "stream": false
+      }'
+```
+
+**python**
+
+```python
+# Please install OpenAI SDK first: `pip3 install openai`
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get('DEEPSEEK_API_KEY'),
+    base_url="https://api.deepseek.com",
+)
+
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant"},
+        {"role": "user", "content": "Hello"},
+    ],
+    stream=False,
+    reasoning_effort="high",
+    extra_body={"thinking": {"type": "enabled"}},
+)
+
+print(response.choices[0].message.content)
+```
+
+**nodejs**
+
+```javascript
+// Please install OpenAI SDK first: `npm install openai`
+
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+        baseURL: 'https://api.deepseek.com',
+        apiKey: process.env.DEEPSEEK_API_KEY,
+});
+
+async function main() {
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: "system", content: "You are a helpful assistant." }],
+    model: "deepseek-flash",
+    thinking: {"type": "enabled"},
+    reasoning_effort: "high",
+    stream: false,
+  });
+
+  console.log(completion.choices[0].message.content);
+}
+
+main();
+```
