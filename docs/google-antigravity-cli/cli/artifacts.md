@@ -46,7 +46,7 @@ Keyboard: ↑/↓ Navigate  y/n Approve/reject  shift+a Approve all  p Preview  
 Audit the file checklist using the following dedicated panel controls:
 
 | Key | TUI Command | Action Behavior |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | ↑ / ↓ | `navigation.up` / `navigation.down` | Scrolls highlighted selections up and down through the list of entries. |
 | h / l | `navigation.left` / `navigation.right` | Focuses and toggles between inline row buttons: **open**, **approve**, and **reject** (← / → also work). |
 | p | `—` | Toggles a **quick inline file preview**. This opens a 12-line truncated and indented code block preview directly under the selected row. |

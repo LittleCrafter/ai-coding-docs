@@ -7,7 +7,7 @@ Edit prompts with modal Vim keybindings instead of the default flat text editor.
 Vim editor mode replaces the editing model in every multi-line input surface of the CLI:
 
 | Surface | What you edit there |
-| :-- | :-- |
+| --- | --- |
 | The prompt box | Your message to the agent, including multi-line prompts and slash commands. |
 | The comment editor in [`/diff`](./commands/diff.md) | Review comments you leave on a changed file. |
 | The comment editor in the artifact review panel | Feedback on a generated [artifact](./artifacts.md) before you accept it. |
@@ -48,7 +48,7 @@ The CLI loads this file from `~/.gemini/antigravity-cli/settings.json` at startu
 Vim editor mode starts in NORMAL. Press `i` to type, and Esc to return to NORMAL.
 
 | Command | Action | From mode |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | Esc / Ctrl + C | Enter NORMAL mode | INSERT, VISUAL |
 | `i` | Insert before the cursor | NORMAL |
 | `I` | Insert at the first non-blank character | NORMAL |
@@ -62,7 +62,7 @@ Vim editor mode starts in NORMAL. Press `i` to type, and Esc to return to NORMAL
 The status line reports the current mode:
 
 | Mode | Badge |
-| :-- | :-- |
+| --- | --- |
 | NORMAL | none |
 | INSERT | `-- INSERT --` |
 | VISUAL | `-- VISUAL --` |
@@ -77,7 +77,7 @@ An empty badge area means you’re in NORMAL mode. If you run a [custom status l
 Enter behaves differently in each mode, so you can compose multi-line prompts without accidental submits.
 
 | Context | Enter | Ctrl + S / Ctrl + Enter | `ZZ` |
-| :-- | :-- | :-- | :-- |
+| --- | --- | --- | --- |
 | NORMAL mode | Submit | Submit | Submit |
 | INSERT mode | Insert a newline | Submit | — |
 | INSERT mode, insert-first on | Submit | Submit | — |
@@ -102,7 +102,7 @@ The **Editor Mode** > **Insert First** option appears in `/settings` only when *
 All motions work on their own in NORMAL and VISUAL mode, and as targets for an operator.
 
 | Key | Motion |
-| :-- | :-- |
+| --- | --- |
 | `h` `l` | Left, right |
 | `j` `k` | Down, up |
 | `0` `$` | Start of line, end of line |
@@ -121,7 +121,7 @@ Editing commands fall into three groups: single keys that act immediately, opera
 ### Single-key commands
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | `x` | Delete the character under the cursor |
 | `r{char}` | Replace the character under the cursor with `{char}` |
 | `D` `C` | Delete or change from the cursor to the end of the line |
@@ -140,7 +140,7 @@ Paste is linewise-aware. Text yanked with `dd` or `yy` pastes onto a new line be
 Combine an operator with any motion to act on the span it covers.
 
 | Operator | Action | Word forms | Whole line |
-| :-- | :-- | :-- | :-- |
+| --- | --- | --- | --- |
 | `d` | Delete | `dw` `de` `db` | `dd` |
 | `c` | Change (delete, then enter INSERT mode) | `cw` `ce` `cb` | `cc` |
 | `y` | Yank | `yw` `ye` `yb` | `yy` |
@@ -160,7 +160,7 @@ dfx    Delete forward through the next "x"
 Pair an operator with `i` (inside) or `a` (around) and a delimiter.
 
 | Object | Selects |
-| :-- | :-- |
+| --- | --- |
 | `iw` `aw` | A word, with or without surrounding whitespace |
 | `iW` `aW` | A whitespace-delimited chunk |
 | `i"` `a"` `i'` `a'` | Text in single or double quotes |
@@ -181,7 +181,7 @@ yiw    Yank the word under the cursor
 Press `v` or `V` to select, move with any motion, then apply a command. Press `v` or `V` again, or Esc, to leave.
 
 | Key | Action on the selection |
-| :-- | :-- |
+| --- | --- |
 | `d` `x` | Delete |
 | `c` | Change |
 | `y` | Yank |

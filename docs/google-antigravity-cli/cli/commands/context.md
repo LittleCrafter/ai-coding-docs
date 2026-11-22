@@ -53,7 +53,7 @@ Below the summary grid, the `/context` panel lists active session state:
 Use the following keyboard shortcuts inside the **Context Usage** panel:
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | ↑ / ↓ (or k / j) | Scroll up or down by one line. |
 | PgUp / PgDn | Scroll up or down by one page. |
 | Ctrl + U / Ctrl + D | Scroll up or down by half a page. |

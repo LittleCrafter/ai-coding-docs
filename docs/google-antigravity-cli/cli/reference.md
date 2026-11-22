@@ -9,7 +9,7 @@ Review tables listing all TUI slash commands, default keyboard shortcuts, comman
 Type `/` inside the prompt box to open the typeahead command selection menu.
 
 | Command | Category | Alias | Execution Purpose |
-| :-- | :-- | :-- | :-- |
+| --- | --- | --- | --- |
 | **`/add-dir <path>`** | Utilities | — | Add a directory path to the active workspace. |
 | **[`/agents`](./commands/agents.md)** | Tools & Tasks | — | Open the [Agent Manager panel](./commands/agents.md) to switch custom agents and monitor background subagents. |
 | **[`/agy-customizations`](https://antigravity.google/docs/commands/agy-customizations)** `[request]` | Tools & Tasks | — | Load the [customization reference](https://antigravity.google/docs/commands/agy-customizations) so the agent can create, fix, or explain rules, skills, plugins, hooks, and MCP servers. |
@@ -68,7 +68,7 @@ The following tables list the keyboard shortcut commands mapping global, prompt,
 These hotkeys are always active regardless of which panel, overlay, or prompt is currently focused.
 
 | Key | TUI Command | Action Behavior |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | Esc | `cli.escape` | Closes active panels, halts active streams, or clears empty prompts. |
 | Ctrl + C | `cli.escape` | Interrupts the agent’s current turn. When nothing is running, press it twice to exit the CLI. |
 | Ctrl + D | `cli.exit` | Exits the CLI session (only when the prompt box is empty). |
@@ -79,7 +79,7 @@ These hotkeys are always active regardless of which panel, overlay, or prompt is
 These keys are active when writing instructions inside the prompt box.
 
 | Key | TUI Command | Action Behavior |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | Enter | `cli.enter` | Submits your prompt or active menu selection to the agent. |
 | Shift + Enter / Ctrl + J | `prompt.insert_newline` | Inserts a clean newline without submitting. |
 | Shift + Tab | `cli.cycle_mode` | Cycles between execution modes (`default` > `accept-edits` > `auto` > `plan`; `auto` only where available). |
@@ -103,7 +103,7 @@ These keys are active when writing instructions inside the prompt box.
 These keys are active inside select panels, menus, and scrollable text boxes.
 
 | Key | TUI Command | Action Behavior |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | ↑ / ↓ | `navigation.up` / `navigation.down` | Scrolls highlighted selections up or down by one item. |
 | PgUp / Shift + ↑ | `navigation.page_up` / `navigation.half_page_up` | PgUp scrolls the active text viewport up one page; Shift + ↑ scrolls up half a page. |
 | PgDn / Shift + ↓ | `navigation.page_down` / `navigation.half_page_down` | PgDn scrolls the active text viewport down one page; Shift + ↓ scrolls down half a page. |
@@ -115,7 +115,7 @@ These keys are active inside select panels, menus, and scrollable text boxes.
 These keys are active during confirmation prompts.
 
 | Key | TUI Command | Action Behavior |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | y | `confirm.yes` | Authorizes the proposed tool, command, or active artifact. |
 | n | `confirm.no` | Rejects the proposed tool, command, or active artifact. |
 | Shift + A | `—` | (Inside Review panel) Approves all generated artifacts in one action (built-in shortcut). |
@@ -125,7 +125,7 @@ These keys are active during confirmation prompts.
 Pass startup flags when launching `agy` to configure the session or run non-interactively:
 
 | Flag | Default | Description |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | **`--mode`** | `""` | Set the agent [execution mode](./modes.md) for this session: `accept-edits`, `auto` (`v1.3.5+` on macOS and Linux, `v1.4.4+` on Windows; requires the terminal sandbox; not available for business or enterprise accounts; if it isn’t available, the CLI runs in `default` mode and `auto` is hidden from Shift+Tab and `/config`), or `plan`. |
 | **`--model`** | — | Select the model for the current CLI session (refer to `agy models`). |
 | **`--effort`** | — | Set the [reasoning effort](./commands/effort.md) for the current CLI session (`low` through `max`, depending on the model). |
@@ -168,7 +168,7 @@ This section lists every key you can set in `~/.gemini/antigravity-cli/settings.
 To get autocomplete and validation in editors such as VS Code, add `"$schema": "https://antigravity.google/schemas/v1/settings.json"` at the top of the file. For details, refer to [Editor autocomplete and validation](https://antigravity.google/docs/settings?tab=cli#editor-autocomplete-and-validation).
 
 | Option Key Name | Value Type | System Default | Parameter Characteristics & Options |
-| :-- | :-- | :-- | :-- |
+| --- | --- | --- | --- |
 | **`agentMode`** | string | `"auto"` where available (`v1.5.7+`), otherwise `""` (default mode) | Default startup [execution mode](./modes.md): `""` (standard `default` mode), `"accept-edits"` (auto-approve workspace file edits), `"auto"` (`v1.3.5+` on macOS and Linux, `v1.4.4+` on Windows; requires the terminal sandbox; auto-approves edits, runs commands in the terminal sandbox by default, and automatically checks any command that needs to run outside the sandbox so safe, reversible commands run without prompting while irreversible actions still prompt; not available for business or enterprise accounts; if it isn’t available, the CLI runs in `default` mode and `auto` is hidden from Shift+Tab and `/config`), or `"plan"` (research and outline steps before writing code). Can be overridden per session with `--mode`. |
 | **`colorScheme`** | string | `"terminal"` | Color theme: `"light"`, `"solarized light"`, `"colorblind-friendly light"`, `"dark"`, `"solarized dark"`, `"colorblind-friendly dark"`, `"tokyo night"`, or `"terminal"` (inherits native shell colors). |
 | **`altScreenMode`** | string | `"default"` | Screen buffer usage: `"default"` (renders the conversation inline and opens full-screen views in the alternate screen), `"always"` (runs the whole TUI in the alternate screen), or `"never"` (never uses the alternate screen; available only in `settings.json`). |

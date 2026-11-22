@@ -109,7 +109,7 @@ If a subagent attempts a protected operation (such as modifying a file or runnin
 When focused inside the `/agents` panel, the following keyboard shortcuts apply:
 
 | Key | Action | Behavior |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | ↑ / ↓ | Navigate | Move the cursor between headers, subagents, and available agents. |
 | Enter | Select / Toggle | Expand/collapse groups, open Subagent Detail View, or select a custom agent. |
 | K | Kill Active Subagent | Instantly cancel (`CancelSubagent`) the highlighted running subagent. |
@@ -120,7 +120,7 @@ When focused inside the `/agents` panel, the following keyboard shortcuts apply:
 ## Common mistakes
 
 | Mistake | Why it fails | Fix |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | Expecting custom agent switches to modify turn history | Switching agents forks the conversation to preserve historical integrity | Continue your workflow in the newly forked session |
 | Placing agent files directly in config root | Scanner looks specifically inside `agents/` directories | Move definition to `.agents/agents/<name>/agent.md` |
 | Pressing K on completed subagents | Only targets active (`running`) subagent processes | Press Enter to inspect completed logs instead |

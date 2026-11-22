@@ -37,7 +37,7 @@ Run `/effort` without arguments to open the interactive **Set Effort** timeline 
 Use the following keys to adjust the timeline gauge:
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | ← / → | Slide the selector between the effort levels available for your model. |
 | Enter | Confirm the highlighted effort level and save it as your default. |
 | Esc | Cancel and return to the prompt without changing the effort level. |

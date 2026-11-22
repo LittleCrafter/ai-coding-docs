@@ -95,7 +95,7 @@ Highlight any commit and press Enter to list the files it changed in the **All C
 ### File list view (All Changes and Per Turn views)
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | ← / → (or Tab) | Switch views (All Changes > Per Turn > Commit Tree) |
 | ↑ / ↓ (or K / J) | Navigate file list |
 | Enter | Open selected file’s Detail View |
@@ -105,7 +105,7 @@ Highlight any commit and press Enter to list the files it changed in the **All C
 ### File detail view
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | ↑ / ↓ (or K / J) | Move the cursor up or down one line |
 | Shift + ↑ / ↓ (or Ctrl + U / Ctrl + D) | Scroll diff by half a page |
 | PgUp / PgDn | Scroll diff by page |
@@ -121,7 +121,7 @@ Highlight any commit and press Enter to list the files it changed in the **All C
 ### Commit Tree view
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | ↑ / ↓ (or K / J) | Navigate commit history |
 | ← / → (or Tab) | Switch views |
 | Enter | List the files that the selected commit changed in the **All Changes** view |
@@ -130,7 +130,7 @@ Highlight any commit and press Enter to list the files it changed in the **All C
 ### Unsent Comments screen
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | Y | Send comments to the agent and exit |
 | N | Exit without sending comments |
 | Esc | Return to File List View |

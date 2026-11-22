@@ -7,7 +7,7 @@ Diagnose and resolve common anomalies with installation PATHs, local self-updati
 Scan the following lookup table to identify symptoms and access immediate solutions:
 
 | Error Symptom | Potential Cause | Target Resolution |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | **`agy: command not found`** | Binary directory missing from shell environments. | [Configure your shell PATH](#configure-your-shell-path) |
 | **`keyring: secure lock out`** | Missing system service permissions or active lockouts. | [Authorize keyring permissions](#authorize-keyring-permissions) |
 | **`SSH Clipboard paste failures`** | Protocol streams blocked or missing forward configurations. | [Enable emulator clipboard forwarding](#enable-emulator-clipboard-forwarding) |

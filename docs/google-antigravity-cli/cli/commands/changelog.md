@@ -33,7 +33,7 @@ The viewer renders the release notes organized by version heading, with the most
 Use the following keyboard shortcuts to scroll through the release history:
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | ↑ / ↓ (or k / j) | Scroll up or down by one line. |
 | PgUp / PgDn | Scroll up or down by one page. |
 | Ctrl + U / Ctrl + D | Scroll up or down by half a page. |

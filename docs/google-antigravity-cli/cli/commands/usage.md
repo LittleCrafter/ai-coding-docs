@@ -33,7 +33,7 @@ The panel displays the following details:
 Use the following keyboard shortcuts to navigate the panel:
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | ↑ / ↓ (or J / K) | Scroll up or down by one line. |
 | PgUp / PgDn | Scroll up or down by one page. |
 | G / Shift + G | Jump to the top or bottom of the list. |

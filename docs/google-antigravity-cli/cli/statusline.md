@@ -50,7 +50,7 @@ The CLI runs your script at most once every 300 ms and stops any run that takes 
 The JSON payload piped to your script contains the following top-level fields:
 
 | Field | Type | Description |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | `cwd` | string | Directory the CLI was started in. |
 | `session_id` | string | Same value as `conversation_id`, kept for compatibility. |
 | `conversation_id` | string | ID of the active conversation (empty before the first one starts). |

@@ -17,7 +17,7 @@ Antigravity CLI provides a flexible configuration system to customize workspace 
 The following table summarizes common shortcuts and commands:
 
 | Action/Feature | Tip/Command |
-| :-- | :-- |
+| --- | --- |
 | **Auto-complete to file paths** | `@` triggers path suggestions |
 | **Clear prompt** | Press Esc twice to clear your prompt box (when no streaming is active) |
 | **Terminal commands** | Use `!` at the start of your prompt to run terminal commands directly |
@@ -42,7 +42,7 @@ Antigravity CLI supports custom keybindings. You can edit them by typing `/keybi
 These keybindings apply to Antigravity CLI only. They don’t work in the Antigravity App.
 
 | Action/Command | Keys | Purpose |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | **Clear TUI screen** | Ctrl + L | Clear terminal output |
 | **Enter / submit** | Enter | Submit prompts or choices |
 | **Submit (alternate)** | Alt + M | Send one message the opposite way from your **Queued Messages** setting: right away instead of queued, or queued instead of right away (`prompt.submit_alternate`) |

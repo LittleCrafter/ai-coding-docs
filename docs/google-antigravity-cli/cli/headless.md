@@ -397,7 +397,7 @@ Slash commands that the CLI can respond to directly (such as `/model` and `/usag
 ### Common mistakes
 
 | Mistake | Why it fails | How to fix it |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | **Pairing with `--output-format json` or `text`** | Those formats only emit a single output envelope when the process exits, causing every turn except the last one to be lost. | Always use `--output-format stream-json` with this input mode. |
 | **Passing a prompt with the `-p` flag** | Streaming mode exclusively listens for prompts on `stdin`. Any prompt passed through a command-line flag is dropped. | Send the prompt into `stdin` as a `user` message instead. |
 | **Sending `/model` or `/usage` into the stream** | The CLI handles these commands internally outside of the event stream, breaking the JSON flow. | Run `agy -p /model` as an entirely separate, standalone command. |

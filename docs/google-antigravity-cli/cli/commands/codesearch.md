@@ -30,7 +30,7 @@ The **Code Search** panel opens with the results grouped by file. The header sho
 The panel is keyboard-driven:
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | ↑ / ↓ | Move between individual matches |
 | ← / → | Jump to the previous / next file group |
 | Enter | Open the highlighted result in the file viewer at the matching line |

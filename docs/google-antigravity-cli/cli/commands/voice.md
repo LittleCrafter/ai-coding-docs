@@ -39,7 +39,7 @@ While a recording session is active, the status line below the prompt displays t
 The following keyboard shortcuts control active dictation sessions. All other keystrokes are ignored during recording to prevent accidental input:
 
 | Key | Action |
-| :-- | :-- |
+| --- | --- |
 | Enter (or F5) | Stop recording and insert the transcript into the prompt. |
 | Esc | Discard the recording and restore previous prompt contents. |
 | Ctrl + \_ _(after)_ | Revert the entire dictation as a single undo operation. |

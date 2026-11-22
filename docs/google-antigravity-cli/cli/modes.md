@@ -16,7 +16,7 @@ Make sure you meet the following prerequisites:
 Each execution mode makes a different tradeoff between conversational autonomy and developer oversight. The following table shows how Antigravity CLI handles file operations, command execution, and planning in each mode:
 
 | Mode | Behavior | Best for |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | `default` | Pauses for interactive diff review before modifying or creating files, and asks before running terminal commands. | Standard development, reviewing sensitive code changes, and careful refactoring. |
 | `auto` _(default where available)_ | Automatically approves workspace file edits, runs terminal commands in the sandbox by default, and automatically evaluates commands outside the sandbox so safe, reversible commands run without prompting. Available in `v1.3.5+` on macOS and Linux and `v1.4.4+` on Windows; requires the terminal sandbox and a personal account. | Autonomous workflows where safe edits and commands proceed without interruption while irreversible actions still prompt for confirmation. |
 | `accept-edits` | Automatically approves file creations and edits inside your workspace, but still asks before running terminal commands. | Iterating on trusted code when you still want to approve every shell command manually. |
@@ -184,7 +184,7 @@ agy --mode=plan
 ## Common mistakes
 
 | Mistake | Why it fails | Fix |
-| :-- | :-- | :-- |
+| --- | --- | --- |
 | Expecting `sandbox` in Shift + Tab cycling | `sandbox` is an OS containment permission setting, not an execution mode (`auto` mode enables the terminal sandbox automatically) | Use `--mode=auto`, pass `--sandbox`, or enable **Sandbox Mode** in `/config` |
 | Using legacy `/planning` or `/fast` commands | These vestigial commands were removed in `1.1.0` | Press Shift + Tab to cycle modes or type `/plan` before your prompt |
 | Passing `--permission-mode` | `agy` uses `--mode` (`--mode=accept-edits`, `--mode=auto`, or `--mode=plan`) for execution overrides | Run `agy --mode=accept-edits`, `agy --mode=auto`, or check `agy --help` |
