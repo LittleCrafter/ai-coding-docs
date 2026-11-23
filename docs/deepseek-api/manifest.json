@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-23T01:13:51Z",
+  "last_updated": "2026-11-23T11:26:20Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -500,8 +500,8 @@
       "source_url": "https://api-docs.deepseek.com/news/news250929",
       "source_md_url": "https://api-docs.deepseek.com/news/news250929",
       "source_id": "news/news250929",
-      "hash": "4b161eafda6b42b3461f6b2a5c451355c649af3ecc33ab76ac222329b55576f0",
-      "last_updated": "2026-10-30T11:45:47Z"
+      "hash": "2ba249e0031dd1ceef60575fc2a7054a1dbb4cdc4aa3dc21dfa0307fd20b9a38",
+      "last_updated": "2026-11-23T11:26:20Z"
     },
     "news/news251201": {
       "slug": "news/news251201",
@@ -525,13 +525,13 @@
     },
     "news/news260813": {
       "slug": "news/news260813",
-      "title": "Your First API Call",
+      "title": "DeepSeek-V4-Pro GA Release",
       "group": "news",
       "source_url": "https://api-docs.deepseek.com/news/news260813",
       "source_md_url": "https://api-docs.deepseek.com/news/news260813",
       "source_id": "news/news260813",
-      "hash": "797f9be82834a62714dc4cf6bc451539ab173bb5992f0644ea2991c0ce0b840c",
-      "last_updated": "2026-11-23T01:13:51Z"
+      "hash": "262556c37cf1be0e93c540262388601962b467946dcd2d07846cacdcb37bc133",
+      "last_updated": "2026-11-23T11:26:20Z"
     },
     "news/news260821": {
       "slug": "news/news260821",
@@ -665,13 +665,13 @@
     },
     "quick_start/pricing": {
       "slug": "quick_start/pricing",
-      "title": "Your First API Call",
+      "title": "Models & Pricing",
       "group": "quick_start",
       "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_md_url": "https://api-docs.deepseek.com/quick_start/pricing",
       "source_id": "quick_start/pricing",
-      "hash": "60b10d0ab8dfea7bd8d4585ab1248408dcbf41a2eb94ab1b7001277c990ddfb9",
-      "last_updated": "2026-11-23T01:13:51Z"
+      "hash": "7e007cc5234abc589cb4895fcb1ba2130c993078bd728e1e2a1d4658b56784db",
+      "last_updated": "2026-11-23T11:26:20Z"
     },
     "quick_start/rate_limit": {
       "slug": "quick_start/rate_limit",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-23T01:13:51Z",
-    "fetch_duration_seconds": 28.566,
+    "last_fetch_completed": "2026-11-23T11:26:20Z",
+    "fetch_duration_seconds": 50.663,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,

@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.4.2",
-  "last_updated": "2026-11-20T14:28:31Z",
+  "last_updated": "2026-11-23T11:26:31Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -30,8 +30,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/configuration/env-vars.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/configuration/env-vars.md",
       "source_id": "docs/en/configuration/env-vars.md",
-      "hash": "c903092eedcbafee5fcbb2688c96c18f13cdbf9316ae9bf782915a62f03a085e",
-      "last_updated": "2026-11-13T13:31:26Z"
+      "hash": "df4c88c3eb7de5b585f7572c159c70a02a396851580e31472556955fc5605bbb",
+      "last_updated": "2026-11-23T11:26:31Z"
     },
     "configuration/overrides": {
       "slug": "configuration/overrides",
@@ -90,8 +90,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/customization/mcp.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/customization/mcp.md",
       "source_id": "docs/en/customization/mcp.md",
-      "hash": "b3715fdb8227a22c0da1b8b133d8457909d14e03b9cbcb47ba22ba95abf266fc",
-      "last_updated": "2026-11-13T13:31:26Z"
+      "hash": "d07b34397baa746f6942033ffc8da73523af8e483404ce002ae3ea57168d9e47",
+      "last_updated": "2026-11-23T11:26:31Z"
     },
     "customization/plugins": {
       "slug": "customization/plugins",
@@ -295,8 +295,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-20T14:28:31Z",
-    "fetch_duration_seconds": 9.88,
+    "last_fetch_completed": "2026-11-23T11:26:31Z",
+    "fetch_duration_seconds": 9.9,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,
