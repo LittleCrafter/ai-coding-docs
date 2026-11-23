@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 204
-- **Version:** 2.1.330
-- **Last updated:** 2026-11-23T11:24:13Z
+- **Pages mirrored:** 220
+- **Version:** 2.1.331
+- **Last updated:** 2026-11-23T22:58:14Z
 - **Official docs:** https://code.claude.com/docs/en/overview
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -20,6 +20,13 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Run agents in parallel | [agents.md](./agents.md) | [source](<https://code.claude.com/docs/en/agents>) |
 | Claude Code on Amazon Bedrock | [amazon-bedrock.md](./amazon-bedrock.md) | [source](<https://code.claude.com/docs/en/amazon-bedrock>) |
 | Track team usage with analytics | [analytics.md](./analytics.md) | [source](<https://code.claude.com/docs/en/analytics>) |
+| Claude Approvals | [approvals.md](./approvals.md) | [source](<https://code.claude.com/docs/en/approvals>) |
+| Claude Approvals classifiers | [approvals-classifiers.md](./approvals-classifiers.md) | [source](<https://code.claude.com/docs/en/approvals-classifiers>) |
+| Claude Approvals and your GitHub rules | [approvals-github-rules.md](./approvals-github-rules.md) | [source](<https://code.claude.com/docs/en/approvals-github-rules>) |
+| Claude Approvals policy file reference | [approvals-policy.md](./approvals-policy.md) | [source](<https://code.claude.com/docs/en/approvals-policy>) |
+| Work with Claude Approvals on a pull request | [approvals-pull-requests.md](./approvals-pull-requests.md) | [source](<https://code.claude.com/docs/en/approvals-pull-requests>) |
+| Set up Claude Approvals | [approvals-setup.md](./approvals-setup.md) | [source](<https://code.claude.com/docs/en/approvals-setup>) |
+| Troubleshoot Claude Approvals | [approvals-troubleshooting.md](./approvals-troubleshooting.md) | [source](<https://code.claude.com/docs/en/approvals-troubleshooting>) |
 | Share session output as artifacts | [artifacts.md](./artifacts.md) | [source](<https://code.claude.com/docs/en/artifacts>) |
 | Authentication | [authentication.md](./authentication.md) | [source](<https://code.claude.com/docs/en/authentication>) |
 | Auto mode classifier request charges | [auto-mode-classifier-billing.md](./auto-mode-classifier-billing.md) | [source](<https://code.claude.com/docs/en/auto-mode-classifier-billing>) |
@@ -43,6 +50,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Claude Code on Claude Platform on AWS | [claude-platform-on-aws.md](./claude-platform-on-aws.md) | [source](<https://code.claude.com/docs/en/claude-platform-on-aws>) |
 | Let Claude coordinate ongoing work with Projects | [claude-projects.md](./claude-projects.md) | [source](<https://code.claude.com/docs/en/claude-projects>) |
 | Scan your codebase for vulnerabilities | [claude-security.md](./claude-security.md) | [source](<https://code.claude.com/docs/en/claude-security>) |
+| Claude Ship | [claude-ship.md](./claude-ship.md) | [source](<https://code.claude.com/docs/en/claude-ship>) |
 | CLI reference | [cli-reference.md](./cli-reference.md) | [source](<https://code.claude.com/docs/en/cli-reference>) |
 | Configure cloud environments | [cloud-environments.md](./cloud-environments.md) | [source](<https://code.claude.com/docs/en/cloud-environments>) |
 | Run tool calls from code with Code Mode | [code-mode.md](./code-mode.md) | [source](<https://code.claude.com/docs/en/code-mode>) |
@@ -115,6 +123,11 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Configure permissions | [permissions.md](./permissions.md) | [source](<https://code.claude.com/docs/en/permissions>) |
 | Platforms and integrations | [platforms.md](./platforms.md) | [source](<https://code.claude.com/docs/en/platforms>) |
 | Test plugins with evals | [plugin-evals.md](./plugin-evals.md) | [source](<https://code.claude.com/docs/en/plugin-evals>) |
+| PR Steward | [pr-steward.md](./pr-steward.md) | [source](<https://code.claude.com/docs/en/pr-steward>) |
+| Work with PR Steward on a pull request | [pr-steward-pull-requests.md](./pr-steward-pull-requests.md) | [source](<https://code.claude.com/docs/en/pr-steward-pull-requests>) |
+| What PR Steward can access | [pr-steward-security.md](./pr-steward-security.md) | [source](<https://code.claude.com/docs/en/pr-steward-security>) |
+| Set up PR Steward | [pr-steward-setup.md](./pr-steward-setup.md) | [source](<https://code.claude.com/docs/en/pr-steward-setup>) |
+| Troubleshoot PR Steward | [pr-steward-troubleshooting.md](./pr-steward-troubleshooting.md) | [source](<https://code.claude.com/docs/en/pr-steward-troubleshooting>) |
 | How Claude Code uses prompt caching | [prompt-caching.md](./prompt-caching.md) | [source](<https://code.claude.com/docs/en/prompt-caching>) |
 | Prompt library | [prompt-library.md](./prompt-library.md) | [source](<https://code.claude.com/docs/en/prompt-library>) |
 | Quickstart | [quickstart.md](./quickstart.md) | [source](<https://code.claude.com/docs/en/quickstart>) |
@@ -138,6 +151,9 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Example settings files | [settings-example.md](./settings-example.md) | [source](<https://code.claude.com/docs/en/settings-example>) |
 | All settings | [settings-reference.md](./settings-reference.md) | [source](<https://code.claude.com/docs/en/settings-reference>) |
 | Advanced setup | [setup.md](./setup.md) | [source](<https://code.claude.com/docs/en/setup>) |
+| Share a cloud or Remote Control session | [share-sessions.md](./share-sessions.md) | [source](<https://code.claude.com/docs/en/share-sessions>) |
+| Get a pull request ready with /ship and /steward | [ship-command.md](./ship-command.md) | [source](<https://code.claude.com/docs/en/ship-command>) |
+| Troubleshoot /ship and /steward | [ship-command-troubleshooting.md](./ship-command-troubleshooting.md) | [source](<https://code.claude.com/docs/en/ship-command-troubleshooting>) |
 | Extend Claude with skills | [skills.md](./skills.md) | [source](<https://code.claude.com/docs/en/skills>) |
 | Claude Code in Slack | [slack.md](./slack.md) | [source](<https://code.claude.com/docs/en/slack>) |
 | Customize your status line | [statusline.md](./statusline.md) | [source](<https://code.claude.com/docs/en/statusline>) |

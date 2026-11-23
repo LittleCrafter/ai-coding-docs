@@ -1,0 +1,45 @@
+<svg width="760" height="244" viewBox="0 0 760 244" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#757575"/></marker></defs>
+<rect width="760" height="244" rx="6" fill="#F9F9F7"/>
+
+
+<text x="380" y="32" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#1E1E1E">How PR Steward works on a pull request</text>
+<text x="88" y="66" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">On GitHub</text>
+<text x="380" y="66" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">In a cloud session</text>
+<text x="672" y="66" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">On GitHub</text>
+
+
+<rect x="188" y="80" width="384" height="140" rx="8" fill="#FAFAFA" stroke="#E0E0E0" stroke-width="1.5"/>
+<text x="380" y="104" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">PR Steward</text>
+
+
+<rect x="18" y="96" width="140" height="34" rx="4" fill="#E8E8E4"/>
+<text x="88" y="117" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">A check fails</text>
+<rect x="18" y="138" width="140" height="34" rx="4" fill="#E8E8E4"/>
+<text x="88" y="159" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">A review comment</text>
+<rect x="18" y="180" width="140" height="34" rx="4" fill="#E8E8E4"/>
+<text x="88" y="201" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">A merge conflict</text>
+
+
+<rect x="204" y="127" width="160" height="56" rx="4" fill="#FFF8E1"/>
+<text x="284" y="151" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">1. Checks the problem</text>
+<text x="284" y="169" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="400" fill="#757575">against the code</text>
+<rect x="396" y="127" width="160" height="56" rx="4" fill="#FFF8E1"/>
+<text x="476" y="151" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">2. Works on a fix</text>
+<text x="476" y="169" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="400" fill="#757575">on your branch</text>
+
+
+<rect x="602" y="117" width="140" height="34" rx="4" fill="#E8E8E4"/>
+<text x="672" y="138" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Commits</text>
+<rect x="602" y="159" width="140" height="34" rx="4" fill="#E8E8E4"/>
+<text x="672" y="180" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Comments and replies</text>
+
+
+<path d="M158 113 L202 148" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M158 155 L202 155" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M158 197 L202 162" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M364 155 L394 155" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M556 155 L600 134" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M556 155 L600 176" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+
+</svg>

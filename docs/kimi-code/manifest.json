@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "1.4.2",
-  "last_updated": "2026-11-23T11:26:31Z",
+  "version": "1.4.3",
+  "last_updated": "2026-11-23T23:00:10Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -90,8 +90,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/customization/mcp.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/customization/mcp.md",
       "source_id": "docs/en/customization/mcp.md",
-      "hash": "d07b34397baa746f6942033ffc8da73523af8e483404ce002ae3ea57168d9e47",
-      "last_updated": "2026-11-23T11:26:31Z"
+      "hash": "98d112eacc6f19456d6eb1ba6e22f6aeb76a81b88a84843a60bcc59312efe0b8",
+      "last_updated": "2026-11-23T23:00:10Z"
     },
     "customization/plugins": {
       "slug": "customization/plugins",
@@ -150,8 +150,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/interaction.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/interaction.md",
       "source_id": "docs/en/guides/interaction.md",
-      "hash": "88aa304c5d94f6d3ee931ca664ca386e8e1702817a5069eadc4d455c3851ba13",
-      "last_updated": "2026-11-20T14:28:31Z"
+      "hash": "04282c590e0ced9d2737294194dd54b7ef9413d43fdd726932e353aef5b85c15",
+      "last_updated": "2026-11-23T23:00:10Z"
     },
     "guides/migration": {
       "slug": "guides/migration",
@@ -290,13 +290,13 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/release-notes/changelog.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/release-notes/changelog.md",
       "source_id": "docs/en/release-notes/changelog.md",
-      "hash": "1206393896640fd7477f28aa51263693de9ad07a7c1faf771975ce59c9666dd6",
-      "last_updated": "2026-11-20T14:28:31Z"
+      "hash": "2968ad908ad28e9206ce7901cfa152b7901e9e3178cfea73a33601c89e77f4c0",
+      "last_updated": "2026-11-23T23:00:10Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-23T11:26:31Z",
-    "fetch_duration_seconds": 9.9,
+    "last_fetch_completed": "2026-11-23T23:00:10Z",
+    "fetch_duration_seconds": 9.97,
     "total_pages_discovered": 29,
     "pages_fetched_successfully": 29,
     "pages_failed": 0,

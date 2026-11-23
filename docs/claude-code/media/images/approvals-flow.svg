@@ -1,0 +1,36 @@
+<svg width="760" height="240" viewBox="0 0 760 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#757575"/></marker></defs>
+<rect width="760" height="240" rx="6" fill="#F9F9F7"/>
+<text x="380" y="32" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600" fill="#1E1E1E">How Claude Approvals evaluates a pull request</text>
+<text x="66" y="66" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">GitHub</text>
+<text x="361" y="66" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">Claude Approvals</text>
+<text x="679" y="66" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">On the pull request</text>
+<rect x="136" y="84" width="450" height="132" rx="8" fill="#FAFAFA" stroke="#E0E0E0" stroke-width="1.5"/>
+<rect x="16" y="130" width="100" height="56" rx="4" fill="#E8E8E4"/>
+<text x="66" y="154" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Pull request</text>
+<text x="66" y="172" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="400" fill="#757575">new or updated</text>
+<text x="215" y="112" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">1. Policy</text>
+<rect x="150" y="130" width="130" height="56" rx="4" fill="#EDE8F4"/>
+<text x="215" y="154" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Reads the policy</text>
+<text x="215" y="172" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="400" fill="#757575">on the default branch</text>
+<text x="361" y="112" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">2. Rules</text>
+<rect x="296" y="130" width="130" height="56" rx="4" fill="#EDE8F4"/>
+<text x="361" y="154" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Finds the rules</text>
+<text x="361" y="172" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="400" fill="#757575">takes the strictest</text>
+<text x="507" y="112" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#757575">3. People</text>
+<rect x="442" y="130" width="130" height="56" rx="4" fill="#D4E4D8"/>
+<text x="507" y="162" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Counts approvals</text>
+<rect x="616" y="84" width="128" height="36" rx="4" fill="#E8E8E4"/>
+<text x="680" y="106" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Check</text>
+<rect x="616" y="132" width="128" height="36" rx="4" fill="#E8E8E4"/>
+<text x="680" y="154" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Comment</text>
+<rect x="616" y="180" width="128" height="44" rx="4" fill="#E8E8E4"/>
+<text x="680" y="198" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#1E1E1E">Approving review</text>
+<text x="680" y="216" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="400" fill="#757575">if the policy allows</text>
+<path d="M116 158 L148 158" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M280 158 L294 158" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M426 158 L440 158" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M586 158 L614 104" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M586 158 L614 152" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+<path d="M586 158 L614 200" stroke="#757575" stroke-width="1.5" marker-end="url(#a)"/>
+</svg>

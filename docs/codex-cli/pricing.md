@@ -373,8 +373,7 @@ invitation.
 
 ### How much does Sites cost?
 
-[Sites](./sites.md) is included with eligible ChatGPT plans during public
-beta. Availability depends on your plan, region, and workspace settings.
+Sites is available in public beta on eligible plans. Availability depends on your region and workspace settings. Hosting is free through December 31, 2026. See [Sites usage and cost](./sites/usage-and-cost.md) for plan allowances, hosting rates, and a monthly cost estimate.
 
 ### How much does Voice cost?
 

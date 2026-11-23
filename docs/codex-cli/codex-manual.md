@@ -273,6 +273,8 @@ Build, connect, publish, and manage websites in ChatGPT.
 
 - [Manage a site](./sites/managing-a-site.md): Review analytics, change settings, and manage site versions.
 
+- [Usage and cost](./sites/usage-and-cost.md): Check hosting allowances, rates, and estimated monthly costs.
+
 #### ChatGPT dots
 
 Set up your dot and manage its ongoing work.
@@ -2463,8 +2465,7 @@ invitation.
 
 #### How much does Sites cost?
 
-[Sites](./sites.md) is included with eligible ChatGPT plans during public
-beta. Availability depends on your plan, region, and workspace settings.
+Sites is available in public beta on eligible plans. Availability depends on your region and workspace settings. Hosting is free through December 31, 2026. See [Sites usage and cost](./sites/usage-and-cost.md) for plan allowances, hosting rates, and a monthly cost estimate.
 
 #### How much does Voice cost?
 
@@ -23507,6 +23508,15 @@ When a site needs to remember records or uploaded files, include that in your re
 Add player scores and avatar uploads to this game. Keep the scores and uploaded avatars between visits.
 ```
 
+#### Guided projects
+
+Try a walkthrough for a site you can build with your team.
+
+- [Manage creative requests from brief to delivery](https://developers.openai.com/use-cases/collect-and-schedule-team-requests)
+- [Build an onboarding portal](https://developers.openai.com/use-cases/build-personal-onboarding-plan)
+- [See which campaigns bring in leads](https://developers.openai.com/use-cases/compare-campaign-performance)
+- [Build a hackathon site](https://developers.openai.com/use-cases/build-workshop-practice-site)
+
 ### Data and connections
 
 Source: [Data and connections](./sites/data-and-connections.md)
@@ -24468,34 +24478,17 @@ For current sharing and editor permissions, see [Creating and using ChatGPT Site
 
 Source: [Sites](./sites.md)
 
-import {
-TextPrompt,
-Globe,
-Mcp,
-Folder,
-} from "@components/react/oai/platform/ui/Icon.react";
+Describe a website, web app, or game in ChatGPT or Codex, then use Sites to publish it. You can start with an idea, remix a coworker's site, or bring a compatible project you've already built.
 
-Sites lets you build, host, and share a website by describing it in ChatGPT or Codex. You can get started without writing any code. You can also host web apps, games, or a compatible project you've already built, without a separate deployment setup.
+#### Get started
 
-If you're part of an organization, Sites can give your team a place to find answers, explore results from a spreadsheet, or walk through a project kickoff. Start with the documents and data you already have, and ask for changes as you go.
-
-{
-"For current availability, pricing, plan information, and usage limits, visit our "
-}
-[{"Help Center"}](https://help.openai.com/en/articles/20001339)
-{"."}
+- [Create a site](./sites/creating-a-site.md) from a prompt or [remix an existing site](./sites/creating-a-site.md#start-from-an-existing-site-with-remix).
+- [Add data and connections](./sites/data-and-connections.md) to save records, connect apps, or let visitors sign in.
+- [Publish and share](./sites/publishing-and-sharing.md) your site with your audience or invite someone to edit.
+- [Manage a site](./sites/managing-a-site.md) to review analytics, change its domain, or inspect saved versions.
+- Check [Usage and cost](./sites/usage-and-cost.md) for your hosting allowance, rates, and a monthly cost estimate.
 
 #### Explore ways to use sites
-
-The examples below are just inspiration for what you can build with Sites. Explore a few common patterns, combine their features, or try an idea of your own.
-
-#### Sites use cases
-
-Here are some example use cases you can try with Sites.
-
-To build your first site, follow [Create a site](./sites/creating-a-site.md) to describe what you need, review the result, and refine it.
-
-You can also use **Remix** to build on a useful site a coworker has already made. Keep the parts that fit your task and adapt the content and experience for your team. Learn how to [start from an existing site with Remix](./sites/creating-a-site.md#start-from-an-existing-site-with-remix).
 
 #### Understand limits and unsupported uses
 
@@ -24512,17 +24505,21 @@ For current residency coverage and workspace requirements, see [Managing ChatGPT
 
 You can sell goods or services and collect payments through a third-party payment processor. Payment-card data must be collected and processed solely by that provider, not by your site or OpenAI. Other financial transactions remain prohibited. You're responsible for the integration, fulfillment, refunds, customer support, and applicable taxes. See the [Sites Terms](https://openai.com/policies/chatgpt-sites-terms/) for requirements.
 
-Don't use sites to process Protected Health Information; target children under 13 or the applicable age of digital consent; distribute malware; enable phishing; impersonate people or organizations; or otherwise violate OpenAI policies.
+Don't use sites to process Protected Health Information, target children under 13 or the applicable age of digital consent, distribute malware, enable phishing, impersonate people or organizations, or otherwise violate OpenAI policies.
 
-See [Creating and managing ChatGPT sites](https://help.openai.com/en/articles/20001339) for current limits and policy links.
+For availability and usage limits, see [Creating and managing ChatGPT sites](https://help.openai.com/en/articles/20001339) in the Help Center.
 
-#### Pricing
+### Usage and cost
 
-You can create as many Sites as you want. Once a Site is running, its traffic and storage count toward hosting usage. Building and editing a Site count toward your plan’s [Codex usage](./pricing.md).
+Source: [Usage and cost](./sites/usage-and-cost.md)
 
-#### What will my plan cover?
+Hosting is free through **December 31, 2026**. Starting **January 1, 2027**, Plus, Pro, and Business customers pay for hosting usage above their monthly allowance. Enterprise billing follows your organization’s agreement.
 
-On Plus, Pro, and Business, all your Sites share one monthly hosting allowance. It covers traffic and storage, regardless of how many Sites you publish.
+You can create as many sites as you want. Building and editing them count toward your plan’s [Codex usage](./pricing.md). Hosting covers the traffic your sites receive and the storage they use.
+
+#### Monthly hosting allowances
+
+On Plus, Pro, and Business, all your sites share one monthly hosting allowance.
 
 | Plan                      | Monthly hosting allowance                             |
 | ------------------------- | ----------------------------------------------------- |
@@ -24531,64 +24528,31 @@ On Plus, Pro, and Business, all your Sites share one monthly hosting allowance. 
 | Business                  | 125 credits per seat                                  |
 | Enterprise (credit-based) | Draws from your organization’s contracted credit pool |
 
-For Enterprise customers with a dollar commitment, the proposed billing model prices Codex tokens and Sites hosting separately. Both charges would draw from the same commitment. For example, $10 of Codex usage and $2 of hosting would use $12 of the commitment.
-
-Traffic and storage contribute to hosting usage in the following ways.
-
-- **Traffic** is measured by the requests your Site handles, such as loading a page, image, or other resource. A page visit can generate multiple requests, typically 30–50, though the number varies by Site.
-- **Database storage** holds saved records, such as form responses. A Site with a database has a monthly base fee, even when the database is empty, plus usage for the data it stores.
-- **File storage** holds uploaded files, such as images or PDFs. Usage depends on how much you store and for how long.
-
-Hosting is free through December 31, 2026. Starting **January 1, 2027**, Plus,
-Pro, and Business customers will pay for hosting usage above their monthly
-allowance. Enterprise billing follows your organization’s agreement.
-
-Starting **December 1, 2026**, you’ll be able to view traffic and storage usage for each Site. Workspace admins will be able to compare usage across their workspace.
+If your Enterprise agreement uses a dollar commitment, Codex tokens and Sites hosting have separate rates. Both draw from the same commitment. For example, $10 of Codex usage and $2 of hosting use $12 of the commitment. Ask your account team for your hosting rates.
 
 #### Hosting usage rates
 
-The following rates are proposed to take effect on January 1, 2027. They show approximate usage in credits. For Enterprise agreements billed in dollars, ask your account team for hosting rates.
+Use these approximate credit rates to estimate hosting costs starting January 1, 2027.
 
-| What you use                                                       | Billing unit             | Approx. credits |
-| ------------------------------------------------------------------ | ------------------------ | --------------- |
-| Site without storage                                               | 1 Site per month         | 0               |
-| Site with storage, including an empty database                     | 1 Site per month         | 25              |
-| Traffic                                                            | 100,000 requests         | 16              |
-| Database storage (saved records, such as form responses)           | 1 GiB stored for a month | 150             |
-| File storage (uploaded files, such as images or PDFs)              | 1 GiB stored for a month | 3.75            |
-| Custom domain (domain registration costs extra)                    | 1 domain per month       | 25              |
-| Private connection (Enterprise only; a tunnel to a private system) | 1 tunnel per month       | 125             |
+| What you use                                             | Billing unit             | Approx. credits |
+| -------------------------------------------------------- | ------------------------ | --------------- |
+| Site without storage                                     | 1 Site per month         | 0               |
+| Site with storage, including an empty database           | 1 Site per month         | 25              |
+| Traffic                                                  | 100,000 requests         | 16              |
+| Database storage (saved records, such as form responses) | 1 GiB stored for a month | 150             |
+| File storage (uploaded files, such as images or PDFs)    | 1 GiB stored for a month | 3.75            |
+| Custom domain (domain registration costs extra)          | 1 domain per month       | 25              |
+| Tunnel to a private system (Enterprise only)             | 1 tunnel per month       | 125             |
 
-For example, a Site with an empty database uses approximately 25 credits per month before traffic. With 1 GiB of saved records for a full month, its base fee and database storage use approximately 175 credits, excluding traffic and files. One GiB is about 1.07 GB.
+A request loads a page, image, or other resource. One page visit typically generates 30–50 requests, depending on the site.
+
+A site with an empty database uses about 25 credits per month before traffic. If it stores 1 GiB of records for the full month, the base fee and database storage together use about 175 credits. One GiB is about 1.07 GB.
 
 #### Estimate your monthly cost
 
-Choose an example Site or adjust monthly requests, saved records, and uploaded files. Select your plan to compare this Site’s estimated hosting usage with your monthly allowance.
+Choose an example site or enter your monthly requests, database storage, and file storage. Select your plan to see how much of your hosting allowance the site would use.
 
-Estimates assume a full month of storage. Select **This Site has a database** to include its base fee even when saved records are zero. Custom domains and private connections cost extra, as listed in [Hosting usage rates](#hosting-usage-rates).
-
-#### Next up
-
-[
-
-      Describe, build, and refine a website in ChatGPT or Codex.
-
-](./sites/creating-a-site.md)
-[
-
-      Choose storage, add sign-in, and connect apps to your site.
-
-](./sites/data-and-connections.md)
-[
-
-      Review your site, choose its audience, and collaborate with editors.
-
-](./sites/publishing-and-sharing.md)
-[
-
-      Review analytics, change domains and settings, and manage site versions.
-
-](./sites/managing-a-site.md)
+Estimates assume a full month of storage. Select **This Site has a database** to include its base fee even when saved records are zero. For custom domains and private connections, add the charges listed under [Hosting usage rates](#hosting-usage-rates).
 
 ### Visualizations
 

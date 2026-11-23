@@ -48,6 +48,7 @@ Build, connect, publish, and manage websites in ChatGPT.
 - [Data and connections](./sites/data-and-connections.md) — Save records, connect apps, and add sign-in to your site.
 - [Publish and share](./sites/publishing-and-sharing.md) — Review your site, choose its audience, and invite editors.
 - [Manage a site](./sites/managing-a-site.md) — Review analytics, change settings, and manage site versions.
+- [Usage and cost](./sites/usage-and-cost.md) — Check hosting allowances, rates, and estimated monthly costs.
 
 ## ChatGPT dots
 

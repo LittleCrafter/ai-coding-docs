@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 213
+- **Pages mirrored:** 214
 - **Version:** 0.171.0
-- **Last updated:** 2026-11-21T04:23:01Z
+- **Last updated:** 2026-11-23T22:59:30Z
 - **Official docs:** https://github.com/openai/codex
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -286,6 +286,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Data and connections | [sites/data-and-connections.md](./sites/data-and-connections.md) | [source](<https://learn.chatgpt.com/docs/sites/data-and-connections>) |
 | Manage a site | [sites/managing-a-site.md](./sites/managing-a-site.md) | [source](<https://learn.chatgpt.com/docs/sites/managing-a-site>) |
 | Publish and share | [sites/publishing-and-sharing.md](./sites/publishing-and-sharing.md) | [source](<https://learn.chatgpt.com/docs/sites/publishing-and-sharing>) |
+| Usage and cost | [sites/usage-and-cost.md](./sites/usage-and-cost.md) | [source](<https://learn.chatgpt.com/docs/sites/usage-and-cost>) |
 
 ## space
 
