@@ -333,6 +333,8 @@ Set `model` to one available to your signed-in account or workspace. See
 | `otel.exporter` | `none \| otlp-http \| otlp-grpc` | Select the OpenTelemetry exporter and provide any endpoint metadata. |
 | `otel.trace_exporter` | `none \| otlp-http \| otlp-grpc` | Select the OpenTelemetry trace exporter and provide any endpoint metadata. |
 | `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Select the OpenTelemetry metrics exporter. The default, `statsig`, follows `analytics.enabled`. Explicit OTLP exporters work independently of that setting. Set to `none` to disable metrics export. |
+| `otel.headers_helper` | `string` | Command that returns OTLP/HTTP headers as JSON. Project settings and managed exporters can't use this user setting. |
+| `otel.headers_helper_refresh_interval_ms` | `integer (positive)` | Header helper refresh interval in milliseconds. Defaults to 1740000 (29 minutes). |
 | `otel.log_sse_deltas` | `boolean` | Log successful server-sent events whose names end in `.delta`. Defaults to `true`. Set to `false` to skip those log entries. Codex still records errors, completion events, and metrics. |
 | `otel.log_user_prompt` | `boolean` | Opt in to exporting raw user prompts with OpenTelemetry logs. |
 | `otel.log_agent_responses` | `boolean` | Export final response text from the main agent and spawned subagents to the configured OTLP log exporter. Defaults to `false`. Response text can contain sensitive data and is capped at 64 KiB per response. |
@@ -633,6 +635,8 @@ from either one wins.
 | `otel.exporter` | `none \| otlp-http \| otlp-grpc` | Enforce the log exporter, including its endpoint, headers, and TLS settings. |
 | `otel.trace_exporter` | `none \| otlp-http \| otlp-grpc` | Enforce the trace exporter, including its endpoint, headers, and TLS settings. |
 | `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Enforce the metrics exporter. The Statsig exporter follows `analytics.enabled`. Explicit OTLP metrics exporters run independently of that setting. |
+| `otel.headers_helper` | `string` | Absolute path to an OTLP/HTTP header helper in system requirements or MDM. Configure its exporters in the same requirements layer. |
+| `otel.headers_helper_refresh_interval_ms` | `integer (positive)` | Managed header helper refresh interval in milliseconds. Defaults to 1740000 (29 minutes). |
 | `otel.log_sse_deltas` | `boolean` | Control whether logs include successful server-sent events whose names end in `.delta`. |
 | `otel.log_user_prompt` | `boolean` | Control whether exported logs include user prompt text. |
 | `otel.log_agent_responses` | `boolean` | Control whether OTLP logs include final response text from the main agent and spawned subagents. |

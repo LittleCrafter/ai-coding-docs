@@ -681,6 +681,29 @@ exporter = { otlp-grpc = {
 
 If `exporter = "none"` Codex records events but sends nothing. Exporters batch asynchronously and flush on shutdown. Event metadata includes service name, CLI version, env tag, conversation id, model, sandbox/approval settings, and per-event fields (see [Config Reference](./config-file/config-reference.md)).
 
+#### Refresh collector credentials
+To refresh OTLP/HTTP collector credentials, configure a helper command in
+`~/.codex/config.toml`.
+
+```toml
+[otel]
+exporter = { otlp-http = { endpoint = "https://otel.example.com/v1/logs", protocol = "binary" } }
+headers_helper = "/opt/company/bin/otel-auth"
+```
+
+The helper must print a JSON object of string header names and values to standard
+output, such as `{"Authorization":"Bearer example-token"}`.
+
+Codex runs the helper at startup and every 29 minutes. To change the refresh
+interval, set `headers_helper_refresh_interval_ms` to a positive number of
+milliseconds. Helper headers override matching static headers. If a refresh fails or the helper returns invalid headers, affected exports
+pause until the helper succeeds.
+
+The helper supports OTLP/HTTP logs, traces, and metrics. It can't be set in
+project configuration or modify managed exporters. See
+[Managed collector credentials](./enterprise/managed-configuration.md#managed-collector-credentials)
+for system and MDM deployment.
+
 #### What gets emitted
 Codex emits structured log events for runs and tool usage. Representative event types include:
 
@@ -1452,6 +1475,8 @@ Set `model` to one available to your signed-in account or workspace. See
 | `otel.exporter` | `none \| otlp-http \| otlp-grpc` | Select the OpenTelemetry exporter and provide any endpoint metadata. |
 | `otel.trace_exporter` | `none \| otlp-http \| otlp-grpc` | Select the OpenTelemetry trace exporter and provide any endpoint metadata. |
 | `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Select the OpenTelemetry metrics exporter. The default, `statsig`, follows `analytics.enabled`. Explicit OTLP exporters work independently of that setting. Set to `none` to disable metrics export. |
+| `otel.headers_helper` | `string` | Command that returns OTLP/HTTP headers as JSON. Project settings and managed exporters can't use this user setting. |
+| `otel.headers_helper_refresh_interval_ms` | `integer (positive)` | Header helper refresh interval in milliseconds. Defaults to 1740000 (29 minutes). |
 | `otel.log_sse_deltas` | `boolean` | Log successful server-sent events whose names end in `.delta`. Defaults to `true`. Set to `false` to skip those log entries. Codex still records errors, completion events, and metrics. |
 | `otel.log_user_prompt` | `boolean` | Opt in to exporting raw user prompts with OpenTelemetry logs. |
 | `otel.log_agent_responses` | `boolean` | Export final response text from the main agent and spawned subagents to the configured OTLP log exporter. Defaults to `false`. Response text can contain sensitive data and is capped at 64 KiB per response. |
@@ -1751,6 +1776,8 @@ from either one wins.
 | `otel.exporter` | `none \| otlp-http \| otlp-grpc` | Enforce the log exporter, including its endpoint, headers, and TLS settings. |
 | `otel.trace_exporter` | `none \| otlp-http \| otlp-grpc` | Enforce the trace exporter, including its endpoint, headers, and TLS settings. |
 | `otel.metrics_exporter` | `none \| statsig \| otlp-http \| otlp-grpc` | Enforce the metrics exporter. The Statsig exporter follows `analytics.enabled`. Explicit OTLP metrics exporters run independently of that setting. |
+| `otel.headers_helper` | `string` | Absolute path to an OTLP/HTTP header helper in system requirements or MDM. Configure its exporters in the same requirements layer. |
+| `otel.headers_helper_refresh_interval_ms` | `integer (positive)` | Managed header helper refresh interval in milliseconds. Defaults to 1740000 (29 minutes). |
 | `otel.log_sse_deltas` | `boolean` | Control whether logs include successful server-sent events whose names end in `.delta`. |
 | `otel.log_user_prompt` | `boolean` | Control whether exported logs include user prompt text. |
 | `otel.log_agent_responses` | `boolean` | Control whether OTLP logs include final response text from the main agent and spawned subagents. |

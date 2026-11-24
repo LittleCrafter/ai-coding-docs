@@ -14191,6 +14191,8 @@ Set `model` to one available to your signed-in account or workspace. See
 | `otel.exporter..tls.ca-certificate`                           | `string`                                                                                                                                                      |         | CA certificate path for OTEL exporter TLS.                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `otel.exporter..tls.client-certificate`                       | `string`                                                                                                                                                      |         | Client certificate path for OTEL exporter TLS.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `otel.exporter..tls.client-private-key`                       | `string`                                                                                                                                                      |         | Client private key path for OTEL exporter TLS.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `otel.headers_helper`                                         | `string`                                                                                                                                                      |         | Command that returns OTLP/HTTP headers as JSON. Project settings and managed exporters can't use this user setting.                                                                                                                                                                                                                                                                                                                                                                         |
+| `otel.headers_helper_refresh_interval_ms`                     | `integer (positive)`                                                                                                                                          |         | Header helper refresh interval in milliseconds. Defaults to 1740000 (29 minutes).                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `otel.log_agent_responses`                                    | `boolean`                                                                                                                                                     |         | Export final response text from the main agent and spawned subagents to the configured OTLP log exporter. Defaults to `false`. Response text can contain sensitive data and is capped at 64 KiB per response.                                                                                                                                                                                                                                                                               |
 | `otel.log_guardian_assessments`                               | `boolean`                                                                                                                                                     |         | Export completed automatic approval reviews to the configured OTLP log exporter. Defaults to `false`. Review rationales can contain sensitive data and are capped at 64 KiB each.                                                                                                                                                                                                                                                                                                           |
 | `otel.log_sse_deltas`                                         | `boolean`                                                                                                                                                     |         | Log successful server-sent events whose names end in `.delta`. Defaults to `true`. Set to `false` to skip those log entries. Codex still records errors, completion events, and metrics.                                                                                                                                                                                                                                                                                                    |
@@ -14527,6 +14529,8 @@ from either one wins.
 | `otel`                                                       | `table`                                     |         | Enforce the specified OpenTelemetry settings. Each exporter replaces the entire corresponding exporter definition. Span attributes and tracestate fields override only matching entries.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `otel.environment`                                           | `string`                                    |         | Enforce the environment label on telemetry.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `otel.exporter`                                              | `none \| otlp-http \| otlp-grpc`            |         | Enforce the log exporter, including its endpoint, headers, and TLS settings.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `otel.headers_helper`                                        | `string`                                    |         | Absolute path to an OTLP/HTTP header helper in system requirements or MDM. Configure its exporters in the same requirements layer.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `otel.headers_helper_refresh_interval_ms`                    | `integer (positive)`                        |         | Managed header helper refresh interval in milliseconds. Defaults to 1740000 (29 minutes).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `otel.log_agent_responses`                                   | `boolean`                                   |         | Control whether OTLP logs include final response text from the main agent and spawned subagents.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `otel.log_guardian_assessments`                              | `boolean`                                   |         | Control whether OTLP logs include completed automatic approval assessments and their rationales.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `otel.log_sse_deltas`                                        | `boolean`                                   |         | Control whether logs include successful server-sent events whose names end in `.delta`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
@@ -15146,6 +15150,30 @@ exporter = { otlp-grpc = {
 ```
 
 If `exporter = "none"` Codex records events but sends nothing. Exporters batch asynchronously and flush on shutdown. Event metadata includes service name, CLI version, env tag, conversation id, model, sandbox/approval settings, and per-event fields (see [Config Reference](./config-file/config-reference.md)).
+
+#### Refresh collector credentials
+
+To refresh OTLP/HTTP collector credentials, configure a helper command in
+`~/.codex/config.toml`.
+
+```toml
+[otel]
+exporter = { otlp-http = { endpoint = "https://otel.example.com/v1/logs", protocol = "binary" } }
+headers_helper = "/opt/company/bin/otel-auth"
+```
+
+The helper must print a JSON object of string header names and values to standard
+output, such as `{"Authorization":"Bearer example-token"}`.
+
+Codex runs the helper at startup and every 29 minutes. To change the refresh
+interval, set `headers_helper_refresh_interval_ms` to a positive number of
+milliseconds. Helper headers override matching static headers. If a refresh fails or the helper returns invalid headers, affected exports
+pause until the helper succeeds.
+
+The helper supports OTLP/HTTP logs, traces, and metrics. It can't be set in
+project configuration or modify managed exporters. See
+[Managed collector credentials](./enterprise/managed-configuration.md#managed-collector-credentials)
+for system and MDM deployment.
 
 #### What gets emitted
 
@@ -18698,18 +18726,40 @@ before sharing sensitive information or allowing ChatGPT to act.
 
 #### Inspect a web app in Codex Cloud
 
-When a [Codex Cloud](./cloud.md) task has browser access, Codex can use a
-browser inside the cloud task to inspect your web app, reproduce a bug, or
-verify a fix. Give Codex the command to start the app in the task, the port,
-and the behavior you want it to check.
+#### Use the cloud browser or computer
 
-For example, ask Codex to open your app's settings page, change and save a
-preference, and reload the page to check whether the change persists. Ask it
-to report what happened and include a screenshot if it helps show the result.
+In a [Codex Cloud](./cloud.md) task with Browser Use access, ask Codex to
+open a URL, interact with the page, and check the result in the cloud browser.
+If Computer Use is available to the task, you can ask Codex to interact with
+apps on the cloud computer. Both tools run in the cloud. You don't need to
+install Playwright to use either one.
 
-Install the app's dependencies when you [prepare the Cloud environment](./environments/cloud-environments.md).
-If the page needs an external service, check the environment's network settings
+For example, ask Codex to start your app on port 3000, open
+`http://localhost:3000`, turn on email reminders, and reload the page to
+check that the setting persists. Here, `localhost` refers to the task's
+cloud computer.
+
+If **Desktop** appears in the task's side panel, open it to watch Codex
+work. Select **Take over** to use the mouse and keyboard yourself, then
+**Return control** when you're done. To open just the app in your own
+browser, use a [private HTTP preview](./environments/cloud-environments.md#preview-an-app-or-connect-over-ssh).
+
+In Enterprise workspaces, Browser Use and Computer Use in Codex Cloud inherit the applicable Global Agent Security requirements. Admins can customize supported execution requirements for Codex Cloud in the policy's `requirements.toml` under **Admin Console** > **Agent Security** > **Codex Cloud** without changing the Global baseline. See [Where Agent Security settings apply](./enterprise/agent-security.md#where-settings-apply).
+
+#### Run Playwright tests
+
+For repeatable browser tests, you can also ask Codex to run Playwright in
+headless mode. These tests run without opening an interactive browser window
+and don't use Browser Use or Computer Use.
+
+If you choose Playwright, install it in the cloud environment along with its
+browser binaries, system dependencies, and your app's dependencies. If the script needs an external
+service, [check the environment's network settings](./environments/cloud-environments.md#connect-to-services)
 or use local test data.
+
+Give Codex the command to start the app, the port it listens on, and the test
+command or behavior to verify. For example, ask Codex to run a Playwright test
+that changes a setting, reloads the page, and checks that the change persists.
 
 #### Use the desktop browser
 
@@ -19649,7 +19699,7 @@ environments for these workflows.
 #### Start a task in Codex Cloud
 
 On the web or in the [desktop app](./app.md), choose **Work in** > **Cloud**.
-On mobile, open **Codex**. If the default environment appears in the picker,
+On mobile, open **Codex**. If **Default environment** appears in the picker,
 select it and describe your task.
 
 - **Without a project**, you can start without a repository. For example, ask
@@ -19669,6 +19719,19 @@ on the web or in the desktop app.
 To use a setup you've already prepared or one shared with you, select the
 published environment instead. In Enterprise workspaces, use a published
 environment you have access to. Admins can [review workspace access](./enterprise/admin-setup.md#step-5-configure-codex-cloud).
+
+#### Reuse settings from a running task
+
+If **Edit** appears next to **Cloud** under **Environment** in the desktop
+app, you can configure the task without leaving the chat.
+
+1. Select **Edit** and review the repositories, scripts, and access settings.
+2. Select **Apply to this chat** to use your changes in the current task.
+3. To reuse the settings from **Default environment**, select **Save for future
+   chats**, enter a name, and select **Save environment**.
+
+Choose the named environment when you start another task. Reopen the original
+chat to continue working with that task's files.
 
 #### Create and publish an environment
 
@@ -19707,6 +19770,14 @@ Codex can record the tested setup in two fields:
 
 - **Install script:** commands to install dependencies and prepare development assets.
 - **Start skill:** instructions to start services and check that they're ready.
+
+When [Browser Use or Computer Use](./browser.md#use-the-cloud-browser-or-computer)
+is available, ask Codex to interact with websites or apps on the cloud computer.
+Neither tool requires you to install Playwright.
+
+For repeatable browser tests, you can also [run Playwright tests](./browser.md#run-playwright-tests).
+If you choose Playwright, install it along with its browser binaries, system
+dependencies, and your app's dependencies.
 
 #### Reuse and update saved state
 
@@ -19981,6 +20052,26 @@ on the web or in the desktop app.
 Reopen the same task to continue its work across devices. Each new task starts in its own workspace. Tasks in Codex Cloud can keep working while
 your computer is asleep.
 
+#### Preview an app or connect over SSH
+
+The controls you see depend on your app version, workspace, and environment.
+To [watch Codex interact with an app](./browser.md#use-the-cloud-browser-or-computer),
+open **Desktop**. To try the app in your own browser, use **HTTP Previews**
+if available:
+
+1. Ask Codex to start the server and tell you which port it uses.
+2. If the port isn't listed, edit the task's environment. Under **HTTP
+   Previews**, add the port, press Enter, select **Apply**, then select
+   **Apply to this chat**.
+3. Open the port under **HTTP Previews** in the task. Only you can access
+   the private HTTPS link. Remove the port to block new requests to the link.
+
+To connect from a local terminal or editor when **SSH access** is enabled,
+select **Set up SSH** next to **SSH** in the desktop app. Choose a profile
+name and select **Create and copy command**. Codex adds a profile to your
+local SSH configuration. Run the copied command in your terminal or select
+the profile in your editor. Turning off SSH access may leave existing connections active.
+
 #### Start tasks from Slack or Microsoft Teams
 
 In an Enterprise workspace with Cloud delegation enabled, ask `@ChatGPT` in
@@ -20020,11 +20111,11 @@ OpenAI account team for available configurations and pricing.
 
 #### Current limitations
 
-The following capabilities aren't currently supported in cloud environments
-and are on our roadmap:
+[Browser Use and Computer Use](./browser.md#use-the-cloud-browser-or-computer)
+aren't available in every cloud task. Access to the **Desktop** viewer can
+also vary by app version and workspace.
 
-- Computer use
-- Self-hosted GitHub Enterprise Server
+Cloud environments don't support self-hosted GitHub Enterprise Server.
 
 Skills stored in your repository are available in cloud tasks. Personal skills
 from your local computer aren't synced to cloud environments.
@@ -24534,25 +24625,33 @@ If your Enterprise agreement uses a dollar commitment, Codex tokens and Sites ho
 
 Use these approximate credit rates to estimate hosting costs starting January 1, 2027.
 
-| What you use                                             | Billing unit             | Approx. credits |
-| -------------------------------------------------------- | ------------------------ | --------------- |
-| Site without storage                                     | 1 Site per month         | 0               |
-| Site with storage, including an empty database           | 1 Site per month         | 25              |
-| Traffic                                                  | 100,000 requests         | 16              |
-| Database storage (saved records, such as form responses) | 1 GiB stored for a month | 150             |
-| File storage (uploaded files, such as images or PDFs)    | 1 GiB stored for a month | 3.75            |
-| Custom domain (domain registration costs extra)          | 1 domain per month       | 25              |
-| Tunnel to a private system (Enterprise only)             | 1 tunnel per month       | 125             |
+| What you use                                                       | Billing unit             | Approx. credits |
+| ------------------------------------------------------------------ | ------------------------ | --------------- |
+| Site without storage                                               | 1 Site per month         | 0               |
+| Site with storage, including an empty database                     | 1 Site per month         | 25              |
+| Traffic                                                            | 100,000 requests         | 15              |
+| Database storage (saved records, such as form responses)           | 1 GiB stored for a month | 150             |
+| File storage (uploaded files, such as images or PDFs)              | 1 GiB stored for a month | 3.75            |
+| Custom domain (domain registration costs extra)                    | 1 domain per month       | 25              |
+| Site–tunnel connection to a private system (Enterprise plans only) | 1 connection for 30 days | 125             |
 
 A request loads a page, image, or other resource. One page visit typically generates 30–50 requests, depending on the site.
 
 A site with an empty database uses about 25 credits per month before traffic. If it stores 1 GiB of records for the full month, the base fee and database storage together use about 175 credits. One GiB is about 1.07 GB.
 
+#### Private connections on Enterprise
+
+A Site–tunnel connection costs approximately 125 credits for 30 days, prorated daily. Each Site–tunnel pair counts once per UTC day, even if the Site is unpublished or sends no traffic. A tunnel with no Sites attached during the day counts as zero connections.
+
+- Three Sites that share one tunnel count as three connections, even if they attach at different times that day.
+- One Site attached to two tunnels counts as two connections, including when it switches from one tunnel to the other.
+- Disconnecting and reconnecting the same Site to the same tunnel on the same UTC day counts as one connection.
+
 #### Estimate your monthly cost
 
 Choose an example site or enter your monthly requests, database storage, and file storage. Select your plan to see how much of your hosting allowance the site would use.
 
-Estimates assume a full month of storage. Select **This Site has a database** to include its base fee even when saved records are zero. For custom domains and private connections, add the charges listed under [Hosting usage rates](#hosting-usage-rates).
+Estimates assume a full month of storage. Select **This Site has a database** to include its base fee even when saved records are zero. For custom domains and Enterprise Site–tunnel connections, add the charges listed under [Hosting usage rates](#hosting-usage-rates).
 
 ### Visualizations
 
@@ -51350,6 +51449,28 @@ and field name. Higher-priority values win for matching entries. Other
 entries remain available, and an empty metadata table doesn't clear them.
 See [Observability and telemetry](./config-file/config-advanced.md#observability-and-telemetry)
 for exporter options and log contents.
+
+#### Managed collector credentials
+
+Use a managed header helper to refresh OTLP/HTTP collector credentials.
+
+Install the helper in an administrator-controlled directory and grant Codex
+users permission to execute it. Codex runs it directly from that directory.
+Set its absolute path and the exporters that use it in the same requirements
+layer, either system `requirements.toml` or macOS MDM.
+
+```toml
+[otel]
+headers_helper = "/opt/company/bin/otel-auth"
+exporter = { otlp-http = { endpoint = "https://otel.example.com/v1/logs", protocol = "binary" } }
+```
+
+The helper can supply headers for `exporter`, `trace_exporter`, and
+`metrics_exporter`. If another layer replaces an exporter, the replacement
+uses its own headers. OTLP/gRPC exporters don't use the helper.
+
+See [Refresh collector credentials](./config-file/config-advanced.md#refresh-collector-credentials)
+for the helper's output format, refresh interval, and failure behavior.
 
 #### Migrate SQLite databases on NFS
 
