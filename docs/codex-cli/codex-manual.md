@@ -4637,13 +4637,15 @@ Give your dot access to the relevant sources and tell it what to keep track of. 
 
 **For workspace admins:** See [Set up dots for work](./enterprise/dots-admin-guide.md) for workspace setup, permissions, and security and governance guidance.
 
-Access depends on your plan, region, and workspace settings. Dots are rolling out gradually to eligible Pro and Business Premium accounts.
+Access depends on your plan, region, and workspace settings. Dots are rolling out gradually to select Plus users and Business Premium accounts.
 
-- **Pro 100, Pro 200, and Pro 500:** For users aged 18 and older outside the European Economic Area, United Kingdom, and Switzerland.
+- **Pro 100, Pro 200, and Pro 500:** Available to users aged 18 and older outside the European Economic Area, United Kingdom, and Switzerland.
+- **Plus:** Rolling out to select users aged 18 and older outside the European Economic Area, United Kingdom, and Switzerland.
 - **Business Premium:** Available in supported ChatGPT regions, subject to workspace eligibility.
+- **Business Standard:** Dots are available to eligible ChatGPT Business Standard members in supported regions. Each member can create one personal dot in their Business workspace. Usage limits apply.
 - **Enterprise, Edu, and Healthcare:** Generally available in eligible workspaces. For current workspace eligibility and regional availability, see [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) and [Data residency and inference residency for ChatGPT](https://help.openai.com/en/articles/9903489-data-residency-and-inference-residency-for-chatgpt). During the admin preview, your admin can enable access for your role. Starting November 18, 2026, access is on by default unless your workspace opts out.
 
-For Pro and Business Premium, conversations with your dot don’t count toward your ChatGPT usage limits. Tasks your dot starts or manages in Work or Codex count toward those products’ usage limits as usual. Your plan includes an allowance for deeper work, with extended limits for the first month after launch. For Enterprise pricing and delegated task charges, see [Enterprise preview and billing](./enterprise/dots-admin-guide.md#enterprise-preview-and-billing).
+For Pro and Business Premium, conversations with your dot don’t count toward your ChatGPT usage limits. Tasks your dot starts or manages in Work or Codex count toward those products’ usage limits as usual. Your plan includes an allowance for deeper work. For Enterprise pricing and delegated task charges, see [Enterprise preview and billing](./enterprise/dots-admin-guide.md#enterprise-preview-and-billing).
 
 You can create your dot in the ChatGPT mobile app, desktop app, or a desktop browser. Use the latest version of the mobile app for mobile setup. Mobile web is not supported.
 
@@ -13991,6 +13993,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `apps..omit_tools_from`                                       | `array`                                                                                                                                                       |         | Omit this app's tools from the `direct`, `deferred`, or `code_mode` surfaces. App and MCP server omissions apply together.                                                                                                                                                                                                                                                                                                                                                                  |
 | `apps..open_world_enabled`                                    | `boolean`                                                                                                                                                     |         | Allow or block tools in this app that advertise `open_world_hint = true`.                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `apps..tools..approval_mode`                                  | `auto \| prompt \| writes \| approve`                                                                                                                         |         | Per-tool approval behavior override for a single app tool.                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `apps..tools..approvals_reviewer`                             | `user \| auto_review`                                                                                                                                         |         | Choose who reviews approval prompts for this tool. Overrides the app's reviewer, subject to managed requirements.                                                                                                                                                                                                                                                                                                                                                                           |
 | `apps..tools..enabled`                                        | `boolean`                                                                                                                                                     |         | Per-tool enabled override for an app tool (for example `repos/list`).                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `auto_review.policy`                                          | `string`                                                                                                                                                      |         | Markdown text that replaces the default Auto-review policy. Managed `guardian_policy_config` takes precedence. Blank values are ignored.                                                                                                                                                                                                                                                                                                                                                    |
 | `background_terminal_max_timeout`                             | `number`                                                                                                                                                      |         | Maximum poll window in milliseconds for empty `write_stdin` polls (background terminal polling). Default: `300000` (5 minutes). Replaces the older `background_terminal_timeout` key.                                                                                                                                                                                                                                                                                                       |
@@ -14028,6 +14031,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `features.gateway_setup_wizard`                               | `boolean`                                                                                                                                                     |         | Offer custom gateway setup during CLI sign-in when the user can choose a provider. Defaults to `false`. See [Connect to a gateway](./enterprise/connect-to-a-gateway.md#configure-the-provider).                                                                                                                                                                                                                                                                                          |
 | `features.goals`                                              | `boolean`                                                                                                                                                     |         | Enable persisted goals and automatic continuation (stable; on by default).                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `features.hooks`                                              | `boolean`                                                                                                                                                     |         | Enable lifecycle hooks loaded from `hooks.json` or inline `[hooks]` config. `features.codex_hooks` is a deprecated alias.                                                                                                                                                                                                                                                                                                                                                                   |
+| `features.mcp_lazy_stdio_startup`                             | `boolean`                                                                                                                                                     |         | Start eligible stdio MCP servers on the first tool call when their tool list is cached. Defaults to `true`. Set to `false` to start them when the thread starts.                                                                                                                                                                                                                                                                                                                            |
 | `features.memories`                                           | `boolean`                                                                                                                                                     |         | Enable [Memories](./customization/memories.md) (off by default).                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | `features.multi_agent`                                        | `boolean`                                                                                                                                                     |         | Enable multi-agent collaboration tools (`spawn_agent`, `send_input`, `resume_agent`, `wait_agent`, and `close_agent`) (stable; on by default).                                                                                                                                                                                                                                                                                                                                              |
 | `features.network_proxy`                                      | `boolean \| table`                                                                                                                                            |         | Start the network proxy for sandboxed commands (experimental; off by default). Required to enforce permission-profile domain rules unless enabled administrator-managed `network_proxy` requirements start the proxy. Use a table when setting feature-level policy options such as `domains`. Does not filter web search, apps, MCP, or other hosted tools.                                                                                                                                |
@@ -14107,7 +14111,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `mcp_servers..omit_tools_from`                                | `array`                                                                                                                                                       |         | Omit this server’s tools from selected model-facing surfaces. Choose `direct` (initial tools), `deferred` (tool search), or `code_mode` (Code Mode scripts). Use `disabled_tools` to block a tool. An empty list clears inherited omissions.                                                                                                                                                                                                                                                |
 | `mcp_servers..required`                                       | `boolean`                                                                                                                                                     |         | Require this enabled server to be ready at startup. With `startup_readiness = "catalog"`, a valid cached catalog can satisfy that requirement.                                                                                                                                                                                                                                                                                                                                              |
 | `mcp_servers..scopes`                                         | `array`                                                                                                                                                       |         | OAuth scopes to request at login. If omitted, Codex uses the initial authentication challenge's scopes, falling back to the protected resource's metadata.                                                                                                                                                                                                                                                                                                                                  |
-| `mcp_servers..startup_readiness`                              | `connection \| catalog`                                                                                                                                       |         | Use a live connection to establish startup readiness (`connection`, the default), or let a valid cached tool catalog satisfy startup while the connection opens (`catalog`). Calling a tool still requires a live connection.                                                                                                                                                                                                                                                               |
+| `mcp_servers..startup_readiness`                              | `connection \| catalog`                                                                                                                                       |         | Use a live connection to establish startup readiness (`connection`, the default) or accept a valid cached tool catalog (`catalog`). Tool calls still require a live connection.                                                                                                                                                                                                                                                                                                             |
 | `mcp_servers..startup_timeout_ms`                             | `number`                                                                                                                                                      |         | Alias for `startup_timeout_sec` in milliseconds.                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `mcp_servers..startup_timeout_sec`                            | `number`                                                                                                                                                      |         | Override the default 10s startup timeout for an MCP server.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `mcp_servers..supports_parallel_tool_calls`                   | `boolean`                                                                                                                                                     |         | Mark every tool on this server as safe to run in parallel. Enable only when the server can handle concurrent calls to all its tools. Defaults to `false`.                                                                                                                                                                                                                                                                                                                                   |
@@ -17262,6 +17266,8 @@ prefer_mxc = true
 
 # skill_mcp_dependency_install = true
 
+# mcp_lazy_stdio_startup = true # start eligible stdio servers on first use when their tool list is cached
+
 # prevent_idle_sleep = false
 
 # Code mode namespaces. This feature is under development and off by default.
@@ -17380,7 +17386,7 @@ prefer_mxc = true
 
 # disabled_tools = ["slow-tool"] # optional deny-list (applied after allow-list)
 
-# startup_readiness = "catalog" # use a valid cached tool catalog while connecting
+# startup_readiness = "catalog" # a cached tool list can satisfy the startup check for a required server
 
 # tool_input_schema_max_bytes = 8000 # default 5000 UTF-8 bytes
 
@@ -17639,6 +17645,12 @@ prefer_mxc = true
 # enabled = false
 
 # approval_mode = "approve"
+
+# [apps.calendar.tools."events/create"]
+
+# approval_mode = "prompt"
+
+# approvals_reviewer = "user" # ask the user to review this tool's approval prompts
 
 # Optional tool suggestion allowlist for connectors or plugins Codex can offer to install.
 
@@ -33107,8 +33119,7 @@ OAuth login.
 - Set `required = true` to make startup fail if this enabled server isn't
   ready. By default, `startup_readiness = "connection"` requires a live connection.
   Set `startup_readiness = "catalog"` to let a valid cached tool catalog
-  satisfy startup while the server connects. Tool calls still need a live
-  connection.
+  satisfy that requirement. Tool calls still need a live connection.
 - `enabled_tools` (optional): Tool allow list.
 - `disabled_tools` (optional): Tool deny list (applied after `enabled_tools`).
 - `default_tools_approval_mode` (optional): Default approval behavior for
@@ -33118,6 +33129,12 @@ OAuth login.
 - `tools..output_token_limit` (optional): Positive token budget for one
   tool's output, before the standard 20% serialization allowance. Overrides the
   model's default output truncation budget for that tool.
+
+By default, Codex can wait until the first tool call to start an optional
+stdio server if it already has a usable tool list for that server. A required
+stdio server can also start on first use if you set `startup_readiness = "catalog"`.
+Without a cached tool list, Codex starts the server when the thread starts.
+Set `features.mcp_lazy_stdio_startup = false` to start these servers with the thread.
 
 The top-level `mcp_optional_startup_grace_ms` setting controls how long Codex
 waits for optional MCP servers when building the initial tool catalog. It
@@ -38879,7 +38896,7 @@ These fields describe the package itself. Keep them at the root of either manife
 | `homepage`    | Optional                                            | Optional HTTPS project homepage, at most 2048 characters. Set the listing’s `interface.websiteURL` separately.                                                                                                                                     |
 | `repository`  | Optional                                            | Optional source repository URL.                                                                                                                                                                                                                    |
 | `license`     | Optional                                            | Optional license identifier, such as MIT.                                                                                                                                                                                                          |
-| `keywords`    | Optional                                            | Optional array of discovery terms.                                                                                                                                                                                                                 |
+| `keywords`    | Optional                                            | Array of discovery terms. Include at most 25 keywords when submitting a plugin or an update for public distribution.                                                                                                                               |
 | `extensions`  | Optional                                            | Settings grouped by namespace. Put OpenAI-specific settings under `com.openai`.                                                                                                                                                                    |
 | `skills`      | For Codex packages with skills                      | Codex only: a relative directory path or array of paths containing skills, such as `"./skills/"`. Portable packages discover `skills/` automatically.                                                                                              |
 | `mcpServers`  | For Codex packages with MCP servers                 | Codex only: `"./.mcp.json"` for bundled MCP server configuration. Portable packages discover root `mcp.json` automatically.                                                                                                                        |
@@ -41992,7 +42009,8 @@ Read the effective app config shape (including `_default` and per-tool overrides
 
 `apps._default.approvals_reviewer` sets the reviewer for all apps unless a
 per-app value overrides it. When both are omitted, the app inherits the
-top-level `approvals_reviewer` value. `apps._default.default_tools_approval_mode`
+top-level `approvals_reviewer` value. Use `apps..tools..approvals_reviewer`
+to choose the reviewer for one tool. `apps._default.default_tools_approval_mode`
 sets the fallback approval mode for tools without a per-app or per-tool
 override. Managed approval-mode requirements override tool approval-mode
 settings.
@@ -42161,7 +42179,8 @@ Codex supports these authentication modes. `account/updated.authMode` shows the 
 #### API overview
 
 - `account/read` - fetch current account info; optionally refresh tokens.
-- `account/login/start` - begin login (`apiKey`, `chatgpt`, `chatgptDeviceCode`, or experimental `chatgptAuthTokens`).
+- `account/login/start` - begin login with `apiKey`, `chatgpt`, or `chatgptDeviceCode`. Experimental login types include `chatgptAuthTokens`, `amazonBedrock`, and `amazonBedrockAccessKeys`.
+- `account/bedrock/setup` (experimental) - configure Amazon Bedrock with an AWS profile or environment credentials.
 - `account/login/completed` (notify) - emitted when a login attempt finishes (success or error).
 - `account/login/cancel` - cancel a pending managed ChatGPT login by `loginId`.
 - `account/logout` - sign out; triggers `account/updated`.
@@ -42175,6 +42194,13 @@ Codex supports these authentication modes. `account/updated.authMode` shows the 
 - `account/workspaceMessages/read` - fetch active workspace messages, including notification headlines when available.
 - `mcpServer/oauthLogin/completed` (notify) - emitted after a `mcpServer/oauth/login` flow finishes; payload includes `{ name, threadId, loginId?, success, error? }`. Older servers omit `loginId`. `threadId` can be `null` for app-scoped or plugin OAuth flows.
 - `mcpServer/startupStatus/updated` (notify) - emitted when a configured MCP server's startup status changes; payload includes `{ threadId, name, status, error, failureReason }`. `threadId` is `null` for app-scoped startup. On failed startup, `failureReason: "reauthenticationRequired"` means stored OAuth credentials expired and couldn't be refreshed, so the client should offer to reconnect the server.
+
+#### Select Amazon Bedrock Runtime
+
+Set `capabilities.experimentalApi` to `true` during initialization. Pass
+`providerId: "amazon-bedrock-runtime"` to `account/bedrock/setup` or to
+`account/login/start` with type `amazonBedrock` or `amazonBedrockAccessKeys`.
+Omitting `providerId` or passing `null` selects Bedrock Mantle (`amazon-bedrock`).
 
 #### Sign in to a configured gateway
 
@@ -43198,6 +43224,10 @@ codex exec resume --last "fix the race conditions you found"
 ```
 
 You can also target a specific session ID with `codex exec resume <SESSION_ID>`.
+Codex reuses the session's working directory, workspace roots, and sandbox
+permissions. To override the working directory or sandbox, pass `-C` or
+`--sandbox` before `resume`. Use `--add-dir` before `resume` to add a
+workspace root to the saved set.
 
 #### Git repository required
 

@@ -453,7 +453,9 @@ This guide shows you how to:
 ## Built-in slash commands
 
 Codex ships with the following commands. Open the slash popup and start typing
-the command name to filter the list.
+the command name to filter the list. When a command suggests an argument,
+press <kbd>Tab</kbd> to complete the highlighted argument. For example, type
+`/mcp lo` and press <kbd>Tab</kbd> to fill in `/mcp login`.
 
 When a chat is already running, you can type a slash command and press `Tab` to
 queue it for the next turn. Codex parses queued slash commands when they run, so
@@ -1085,6 +1087,10 @@ Expected: Codex updates the saved chat name without changing its transcript.
 Expected: Codex reloads the selected chat's transcript so you can pick
 up where you left off, keeping the original history intact.
 
+To preview the selected chat, press <kbd>Ctrl</kbd>+<kbd>&nbsp;T&nbsp;</kbd> in the picker.
+Click a thread link in the preview to read the linked chat's transcript.
+Clicking a thread link in an open chat switches to the linked chat.
+
 <a id="fork-the-current-conversation-with-fork"></a>
 
 <a id="cli-fork-the-current-chat-with-fork"></a>
@@ -1207,6 +1213,9 @@ browser.
 1. Type `/agents` and press Enter, or run `codex agents` from your terminal.
 2. To find an older chat, press <kbd>F3</kbd> or <kbd>&nbsp;/&nbsp;</kbd> and type part of its name, prompt preview, or working directory. Search ignores case.
 3. Select a chat to open it.
+
+In the task list, press <kbd>Shift</kbd>+<kbd>&nbsp;↓&nbsp;</kbd> or <kbd>Shift</kbd>+<kbd>&nbsp;↑&nbsp;</kbd>
+to jump to the first task in the next or previous group.
 
 On macOS and Linux, eligible local sessions signed in with ChatGPT can use an
 experimental Cloud connection. Enable `features.tui_multi_backend`, then use the

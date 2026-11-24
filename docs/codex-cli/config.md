@@ -1310,6 +1310,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `apps.<id>.omit_tools_from` | `array<string>` | Omit this app's tools from the `direct`, `deferred`, or `code_mode` surfaces. App and MCP server omissions apply together. |
 | `apps.<id>.tools.<tool>.enabled` | `boolean` | Per-tool enabled override for an app tool (for example `repos/list`). |
 | `apps.<id>.tools.<tool>.approval_mode` | `auto \| prompt \| writes \| approve` | Per-tool approval behavior override for a single app tool. |
+| `apps.<id>.tools.<tool>.approvals_reviewer` | `user \| auto_review` | Choose who reviews approval prompts for this tool. Overrides the app's reviewer, subject to managed requirements. |
 | `tool_suggest.discoverables` | `array<table>` | Allow tool suggestions for additional discoverable connectors or plugins. Each entry uses `type = "connector"` or `"plugin"` and an `id`. |
 | `tool_suggest.disabled_tools` | `array<table>` | Disable suggestions for specific discoverable connectors or plugins. Each entry uses `type = "connector"` or `"plugin"` and an `id`. |
 | `features.apps` | `boolean` | Enable app (connector) integrations (stable; on by default). App and connector traffic is not controlled by the sandboxed-command network proxy or its domain allowlist. |
@@ -1348,7 +1349,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `mcp_servers.<id>.env_http_headers` | `map<string,string>` | HTTP headers populated from environment variables for an MCP HTTP server. |
 | `mcp_servers.<id>.enabled` | `boolean` | Disable an MCP server without removing its configuration. |
 | `mcp_servers.<id>.required` | `boolean` | Require this enabled server to be ready at startup. With `startup_readiness = "catalog"`, a valid cached catalog can satisfy that requirement. |
-| `mcp_servers.<id>.startup_readiness` | `connection \| catalog` | Use a live connection to establish startup readiness (`connection`, the default), or let a valid cached tool catalog satisfy startup while the connection opens (`catalog`). Calling a tool still requires a live connection. |
+| `mcp_servers.<id>.startup_readiness` | `connection \| catalog` | Use a live connection to establish startup readiness (`connection`, the default) or accept a valid cached tool catalog (`catalog`). Tool calls still require a live connection. |
 | `mcp_servers.<id>.startup_timeout_sec` | `number` | Override the default 10s startup timeout for an MCP server. |
 | `mcp_servers.<id>.startup_timeout_ms` | `number` | Alias for `startup_timeout_sec` in milliseconds. |
 | `mcp_servers.<id>.tool_timeout_sec` | `number` | Override the default 60s per-tool timeout for an MCP server. |
@@ -1413,6 +1414,7 @@ Set `model` to one available to your signed-in account or workspace. See
 | `features.web_search_request` | `boolean` | Deprecated legacy toggle. When `web_search` is unset, true maps to `web_search = "live"`. |
 | `features.shell_tool` | `boolean` | Enable command execution tools (stable; on by default). |
 | `features.enable_request_compression` | `boolean` | Compress streaming request bodies with zstd when supported (stable; on by default). |
+| `features.mcp_lazy_stdio_startup` | `boolean` | Start eligible stdio MCP servers on the first tool call when their tool list is cached. Defaults to `true`. Set to `false` to start them when the thread starts. |
 | `features.skill_mcp_dependency_install` | `boolean` | Allow prompting and installing missing MCP dependencies for skills (stable; on by default). |
 | `features.fast_mode` | `boolean` | Enable Fast mode controls advertised by the active model (stable; on by default), independently of `features.ultrafast_mode`. Availability still depends on the model and account. |
 | `features.ultrafast_mode` | `boolean` | Enable Ultrafast mode controls (stable; on by default), independently of `features.fast_mode`. Availability still depends on the model and account. |
