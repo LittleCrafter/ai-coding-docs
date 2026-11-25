@@ -76,6 +76,7 @@ To keep your context window lean and responsive during long sessions, consider t
 
 Explore related commands for managing conversation history and workspace state:
 
+*   **[Context windows and tokens](https://antigravity.google/docs/learn/context-and-tokens)**: understand token budgets, active working sets, and context hygiene across surfaces.
 *   **[Compact command (`/compact`)](https://antigravity.google/docs/commands/compact)**: summarize earlier turns into a checkpoint to free up space in the context window.
 *   **[Side question command (`/btw`)](https://antigravity.google/docs/commands/btw)**: ask background questions without adding tokens to your active trajectory.
 *   **[Resume command (`/resume`)](./resume.md)**: switch between saved conversation threads.

@@ -2,7 +2,7 @@
 
 > For the complete documentation index, see [llms.txt](https://learn.chatgpt.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to the page URL.
 
-Hosting is free through **December 31, 2026**. Starting **January 1, 2027**, Plus, Pro, and Business customers pay for hosting usage above their monthly allowance. Enterprise billing follows your organization’s agreement.
+We plan to show your Sites hosting usage in the app starting **January 1, 2027**. Hosting is free through **January 31, 2027**. We plan to start charging Plus, Pro, and Business customers for hosting usage above their monthly allowance on **February 1, 2027**. Enterprise billing follows your organization’s agreement.
 
 You can create as many sites as you want. Building and editing them count toward your plan’s [Codex usage](../pricing.md). Hosting covers the traffic your sites receive and the storage they use.
 
@@ -21,7 +21,7 @@ If your Enterprise agreement uses a dollar commitment, Codex tokens and Sites ho
 
 ## Hosting usage rates
 
-Use these approximate credit rates to estimate hosting costs starting January 1, 2027.
+Use these approximate credit rates to estimate hosting costs.
 
 | What you use                                                       | Billing unit             | Approx. credits |
 | ------------------------------------------------------------------ | ------------------------ | --------------- |

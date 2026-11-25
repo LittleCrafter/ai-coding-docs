@@ -1085,6 +1085,12 @@ statusMessage = "Checking managed Bash command"
 
 The requirement registers the hook but does not install it. Have an administrator install the selected file with the commands below.
 
+<CodeSampleNote client:load language="java" languages={Object.keys(samples.all.codexSecurityCookbook.installAndEnforceAdministratorManagedHooks())}>
+
+The Java tab implements the same hook protocol. To use it, compile the class and configure the hook command to run the class with your Java runtime and dependencies. The installation commands here use the Python version.
+
+</CodeSampleNote>
+
 <CodeSampleNote client:load language="python" languages={Object.keys(samples.all.codexSecurityCookbook.installAndEnforceAdministratorManagedHooks())}>
 
 For a local macOS integration test, save the Python version as `pre_tool_use_policy.py`.
@@ -1169,6 +1175,17 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Synthetic test command blocked by managed hook.")
 		os.Exit(2)
 	}
+}
+```
+
+```java
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+var event = new ObjectMapper().readTree(System.in);
+String command = event.path("tool_input").path("command").asText("");
+if (command.contains("CODEX_HOOK_TEST_DENY")) {
+  System.err.println("Synthetic test command blocked by managed hook.");
+  System.exit(2);
 }
 ```
 

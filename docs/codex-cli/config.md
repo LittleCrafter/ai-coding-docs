@@ -1607,10 +1607,6 @@ Some managed requirements enforce an exact configuration value instead of an
 allowlist. Users can't override an enforced path, update preference, login-shell
 policy, or feedback setting.
 
-Managed permission-profile allowlists require Codex 0.138.0 or later. Codex
-0.137.0 and earlier ignore `allowed_permission_profiles` and managed
-`default_permissions`.
-
 Use `allowed_sandbox_modes` with `sandbox_mode`. For permission-profile
 deployments, use `allowed_permission_profiles` with managed
 `default_permissions`.
@@ -1788,7 +1784,7 @@ from either one wins.
 | `otel.tool_result.max_bytes` | `integer (nonnegative)` | Maximum UTF-8 bytes of tool-result text before the truncation notice in logs. Defaults to `2048` when the managed table is present. |
 | `otel.span_attributes` | `map<string,string>` | Enforce individual string attributes on exported spans. Higher-priority requirements win for the same attribute. |
 | `otel.tracestate` | `map<string,map<string,string>>` | Enforce individual fields within W3C tracestate members. Higher-priority requirements win for the same member and field. |
-| `network_proxy` | `table` | Administrator-managed network requirements for sandboxed local commands. Codex 0.166.0 accepts `[network_proxy]` and its alias `[experimental_network]`. Use one name per requirements layer. Keep the alias in published policies until every client and policy validator supports the new name. When enabled, these requirements can start the command network proxy without `features.network_proxy`. Browser tools separately check managed network denies and exclusive allowlists. These requirements do not route browser traffic through the proxy or control web search, apps, MCP servers, native-app traffic, or other capability-specific traffic. On supported managed Codex Cloud paths, these requirements constrain command networking alongside separate Cloud environment internet settings. Approved full sandbox escalation can bypass the command proxy where policy permits it. Work Cloud does not inherit these requirements. |
+| `network_proxy` | `table` | Administrator-managed network requirements for sandboxed local commands. Codex accepts `[network_proxy]` and its alias `[experimental_network]`. Use one name per requirements layer. When enabled, these requirements can start the command network proxy without `features.network_proxy`. Browser tools separately check managed network denies and exclusive allowlists. These requirements do not route browser traffic through the proxy or control web search, apps, MCP servers, native-app traffic, or other capability-specific traffic. On supported managed Codex Cloud paths, these requirements constrain command networking alongside separate Cloud environment internet settings. Approved full sandbox escalation can bypass the command proxy where policy permits it. Work Cloud does not inherit these requirements. |
 | `network_proxy.enabled` | `boolean` | Enable sandboxed networking requirements. This does not grant network access when the active sandbox keeps command networking off. |
 | `network_proxy.http_port` | `integer` | Loopback HTTP listener port to use for `[network_proxy]` requirements. |
 | `network_proxy.socks_port` | `integer` | Loopback SOCKS5 listener port to use for `[network_proxy]` requirements. |

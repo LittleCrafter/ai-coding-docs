@@ -64,8 +64,11 @@ The prompt box supports the following media file formats:
 
 ## Next steps
 
-After mastering interaction patterns, explore how the agent presents actions and requests verification:
+After mastering interaction patterns, explore prompting fundamentals and verification workflows:
 
+*   **[Prompting and instructions](https://antigravity.google/docs/learn/prompting)**: Turn broad requests into clear specifications with goals, constraints, and checks.
+*   **[Context windows and tokens](https://antigravity.google/docs/learn/context-and-tokens)**: Keep active context lean with `@`\-mentions and `/compact`.
+*   **[Verification and guardrails](https://antigravity.google/docs/learn/verification-and-guardrails)**: Pair fast tests, browser checks, and sandbox rules before accepting diffs.
 *   **[Reviewing artifacts](./artifacts.md)**: Learn to inspect and manage file edits, plans, and test executions.
 *   **[Managing conversations](./conversations.md)**: Resume prior threads and fork active sessions.
 *   **[Background tasks and subagents](https://antigravity.google/docs/cli/subagents)**: Monitor asynchronous background agents.

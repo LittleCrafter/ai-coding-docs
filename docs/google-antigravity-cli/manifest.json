@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "1.2.0",
-  "last_updated": "2026-11-22T00:43:24Z",
+  "last_updated": "2026-11-25T03:50:07Z",
   "files": {
     "cli/acp": {
       "slug": "cli/acp",
@@ -30,8 +30,8 @@
       "source_url": "https://antigravity.google/docs/cli/best-practices",
       "source_md_url": "https://antigravity.google/docs/cli/best-practices.md",
       "source_id": "cli/best-practices",
-      "hash": "72796f9e23d2abd7ba5e62b777e26469198a49f233839e26ca1f88eb49660fae",
-      "last_updated": "2026-11-20T21:59:52Z"
+      "hash": "b882e7f42abee398e107756afadd849aa6fc5dbf9fbf64da079a877b2911568f",
+      "last_updated": "2026-11-25T03:50:07Z"
     },
     "cli/commands/agents": {
       "slug": "cli/commands/agents",
@@ -70,8 +70,8 @@
       "source_url": "https://antigravity.google/docs/cli/commands/context",
       "source_md_url": "https://antigravity.google/docs/cli/commands/context.md",
       "source_id": "cli/commands/context",
-      "hash": "78c508ac691d62adeec291e06d676a7a270da73308e3e3975374a91b83987ef8",
-      "last_updated": "2026-11-22T00:43:24Z"
+      "hash": "c47d3b7c3d3d3f67461733503cbcc4addac2d26fc70b1f80112a591ae7a7b0d8",
+      "last_updated": "2026-11-25T03:50:07Z"
     },
     "cli/commands/credits": {
       "slug": "cli/commands/credits",
@@ -220,8 +220,8 @@
       "source_url": "https://antigravity.google/docs/cli/prompting",
       "source_md_url": "https://antigravity.google/docs/cli/prompting.md",
       "source_id": "cli/prompting",
-      "hash": "1f6ba0973a66eb785cbb9c635911d54b319117a80f7b2b5a9f61587f9727ba91",
-      "last_updated": "2026-11-11T21:37:00Z"
+      "hash": "f67cb6ab04ab28fdfce05c4dfaf9d1e6b5ffeff288835a9d7eb011eb6f82f9be",
+      "last_updated": "2026-11-25T03:50:07Z"
     },
     "cli/reference": {
       "slug": "cli/reference",
@@ -285,8 +285,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-22T00:43:24Z",
-    "fetch_duration_seconds": 9.497,
+    "last_fetch_completed": "2026-11-25T03:50:07Z",
+    "fetch_duration_seconds": 9.503,
     "total_pages_discovered": 28,
     "pages_fetched_successfully": 28,
     "pages_failed": 0,
