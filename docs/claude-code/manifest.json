@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.332",
-  "last_updated": "2026-11-25T16:13:41Z",
+  "last_updated": "2026-11-26T01:13:20Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -1290,8 +1290,8 @@
       "source_url": "https://code.claude.com/docs/en/managed-settings",
       "source_md_url": "https://code.claude.com/docs/en/managed-settings.md",
       "source_id": "managed-settings",
-      "hash": "0a81cdc4a819653f561c50c1f1a1647034edcf27f65dc29e2883655334aad302",
-      "last_updated": "2026-11-25T03:51:29Z"
+      "hash": "7f76166ee12247535a27c4c596db827752bd7b160850defbcdf07f8dbaa5fca9",
+      "last_updated": "2026-11-26T01:13:20Z"
     },
     "mcp": {
       "slug": "mcp",
@@ -2205,8 +2205,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-25T16:13:41Z",
-    "fetch_duration_seconds": 76.73,
+    "last_fetch_completed": "2026-11-26T01:13:20Z",
+    "fetch_duration_seconds": 76.744,
     "total_pages_discovered": 220,
     "pages_fetched_successfully": 220,
     "pages_failed": 0,

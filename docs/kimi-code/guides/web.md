@@ -68,6 +68,8 @@ The terminal prints the access link (`https://code-rc.kimi.com/devices/<device I
 
 The web UI and the CLI share the same login state, configuration (`config.toml`), and session data.
 
+When Web shows **Checking project trust…**, your draft and attachments stay in the composer. You can send the message once the project is trusted.
+
 ### Common slash commands
 
 | Slash command | Description |
