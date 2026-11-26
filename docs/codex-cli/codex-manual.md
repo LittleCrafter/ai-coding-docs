@@ -15486,6 +15486,203 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
+```go
+package main
+
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"os"
+	"os/exec"
+	"strings"
+)
+
+type notificationEvent struct {
+	Type                 string   `json:"type"`
+	LastAssistantMessage *string  `json:"last-assistant-message"`
+	InputMessages        []string `json:"input-messages"`
+	ThreadID             string   `json:"thread-id"`
+}
+
+func run(arguments []string) error {
+	if len(arguments) != 1 {
+		return errors.New("Pass the Codex notification JSON as one argument")
+	}
+	var notification *notificationEvent
+	if err := json.Unmarshal([]byte(arguments[0]), &notification); err != nil {
+		return fmt.Errorf("parse Codex notification: %w", err)
+	}
+	if notification == nil {
+		return errors.New("Codex notification must be a JSON object")
+	}
+	if notification.Type != "agent-turn-complete" {
+		return nil
+	}
+	command := notificationCommand(notification)
+	command.Stdin = os.Stdin
+	command.Stdout = os.Stdout
+	command.Stderr = os.Stderr
+	return command.Run()
+}
+
+// notificationCommand builds an argument vector without invoking a shell.
+func notificationCommand(notification *notificationEvent) *exec.Cmd {
+	lastMessage := "Turn Complete!"
+	if notification.LastAssistantMessage != nil {
+		lastMessage = *notification.LastAssistantMessage
+	}
+	return exec.Command(
+		"terminal-notifier",
+		"-title", "Codex: "+lastMessage,
+		"-message", strings.Join(notification.InputMessages, " "),
+		"-group", "codex-"+notification.ThreadID,
+		"-activate", "com.googlecode.iterm2",
+	)
+}
+
+func main() {
+	if err := run(os.Args[1:]); err != nil {
+		var exitError *exec.ExitError
+		if errors.As(err, &exitError) && exitError.ExitCode() >= 0 {
+			os.Exit(exitError.ExitCode())
+		}
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+```
+
+```java
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.StringJoiner;
+
+if (args.length != 1) {
+  throw new IllegalArgumentException("Pass the Codex notification JSON as one argument");
+}
+JsonNode notification =
+    new ObjectMapper().enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS).readTree(args[0]);
+if (notification == null || !notification.isObject()) {
+  throw new IllegalArgumentException("Codex notification must be a JSON object");
+}
+if (notification.path("type").asText("").equals("agent-turn-complete")) {
+  StringJoiner message = new StringJoiner(" ");
+  JsonNode inputs = notification.path("input-messages");
+  if (!inputs.isMissingNode() && !inputs.isNull()) {
+    if (!inputs.isArray()) {
+      throw new IllegalArgumentException("input-messages must be an array");
+    }
+    for (JsonNode input : inputs) {
+      if (!input.isTextual() && !input.isNull()) {
+        throw new IllegalArgumentException("input-messages must contain strings or null");
+      }
+      message.add(input.asText(""));
+    }
+  }
+  Process process =
+      new ProcessBuilder(
+              "terminal-notifier",
+              "-title",
+              "Codex: " + notification.path("last-assistant-message").asText("Turn Complete!"),
+              "-message",
+              message.toString(),
+              "-group",
+              "codex-" + notification.path("thread-id").asText(""),
+              "-activate",
+              "com.googlecode.iterm2")
+          .inheritIO()
+          .start();
+  System.exit(process.waitFor());
+}
+```
+
+```csharp
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+string[] arguments = Environment.GetCommandLineArgs();
+if (arguments.Length < 2)
+{
+    throw new ArgumentException("Pass the Codex notification JSON as one argument");
+}
+
+using JsonDocument document = JsonDocument.Parse(arguments[^1]);
+JsonElement notification = document.RootElement;
+if (notification.TryGetProperty("type", out JsonElement type)
+    && type.GetString() == "agent-turn-complete")
+{
+    string lastMessage = notification.TryGetProperty("last-assistant-message", out JsonElement last)
+        ? last.GetString() ?? "Turn Complete!"
+        : "Turn Complete!";
+    string message = notification.TryGetProperty("input-messages", out JsonElement inputs)
+        && inputs.ValueKind != JsonValueKind.Null
+        ? string.Join(" ", inputs.EnumerateArray().Select(item => item.GetString() ?? ""))
+        : "";
+    string threadId = notification.TryGetProperty("thread-id", out JsonElement thread)
+        ? thread.GetString() ?? ""
+        : "";
+
+    ProcessStartInfo startInfo = new("terminal-notifier")
+    {
+        UseShellExecute = false,
+    };
+    foreach (string argument in new[]
+    {
+        "-title", $"Codex: {lastMessage}",
+        "-message", message,
+        "-group", $"codex-{threadId}",
+        "-activate", "com.googlecode.iterm2",
+    })
+    {
+        startInfo.ArgumentList.Add(argument);
+    }
+
+    using Process process = Process.Start(startInfo)
+        ?? throw new InvalidOperationException("Could not start terminal-notifier");
+    await process.WaitForExitAsync();
+    if (process.ExitCode != 0)
+    {
+        Environment.Exit(process.ExitCode);
+    }
+}
+```
+
+```ruby
+require "json"
+
+raise ArgumentError, "Pass the Codex notification JSON as one argument" unless ARGV.length == 1
+
+notification = JSON.parse(ARGV.fetch(0))
+raise ArgumentError, "Codex notification must be a JSON object" unless notification.is_a?(Hash)
+
+if notification["type"] == "agent-turn-complete"
+  inputs = notification["input-messages"]
+  inputs = [] if inputs.nil?
+  raise ArgumentError, "input-messages must be an array of strings or null" unless inputs.is_a?(Array)
+
+  unless inputs.all? { |input| input.nil? || input.is_a?(String) }
+    raise ArgumentError, "input-messages must be an array of strings or null"
+  end
+
+  pid = Process.spawn(
+    "terminal-notifier",
+    "-title", "Codex: #{notification["last-assistant-message"] || "Turn Complete!"}",
+    "-message", inputs.join(" "),
+    "-group", "codex-#{notification["thread-id"] || ""}",
+    "-activate", "com.googlecode.iterm2"
+  )
+  _, status = Process.wait2(pid)
+  raise "Notification child status unavailable" unless status
+
+  exit(status.exitstatus || 128 + status.termsig)
+end
+```
+
 The script receives a single JSON argument. Common fields include:
 
 - `type` (currently `agent-turn-complete`)
@@ -25571,6 +25768,138 @@ server.registerTool(
 export default server;
 ```
 
+```python
+# From src/content/platform/python-examples, after installing TypeScript dependencies
+# ../typescript-examples/node_modules/.bin/esbuild \
+#   ../typescript-examples/apps-sdk-chatgpt-ui/dice-widget.ts \
+#   --bundle --format=esm --outfile=dice-widget.js
+import re
+from pathlib import Path
+from secrets import randbelow
+from typing import Any
+
+import uvicorn
+from mcp import types
+from mcp.server.lowlevel import Server
+from mcp.server.lowlevel.helper_types import ReadResourceContents
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+from mcp.server.transport_security import TransportSecuritySettings
+from pydantic import AnyUrl
+from starlette.applications import Starlette
+from starlette.routing import Route
+
+server = Server("Decoupled dice", version="1.0.0")
+RESOURCE_URI = "ui://widget/dice.html"
+MIME_TYPE = "text/html;profile=mcp-app"
+
+
+def component_html() -> str:
+    script = Path("dice-widget.js").read_text(encoding="utf-8")
+    script = re.sub(r"</script", lambda _: r"<\/script", script, flags=re.IGNORECASE)
+    return (
+        '<!doctype html><html lang="en"><meta charset="utf-8">'
+        '<title>Dice</title><body><div id="root"></div>'
+        '<script type="module">' + script + "</script></body></html>"
+    )
+
+
+@server.list_resources()
+async def list_resources() -> list[types.Resource]:
+    return [types.Resource(uri=AnyUrl(RESOURCE_URI), name="widget", mimeType=MIME_TYPE)]
+
+
+@server.read_resource()
+async def read_resource(uri: AnyUrl) -> list[ReadResourceContents]:
+    if str(uri) != RESOURCE_URI:
+        raise ValueError("Unknown component resource")
+    return [ReadResourceContents(content=component_html(), mime_type=MIME_TYPE)]
+
+
+@server.list_tools()
+async def list_tools() -> list[types.Tool]:
+    sides = {"type": "integer", "minimum": 2, "maximum": 2147483647}
+    return [
+        types.Tool(
+            name="roll_dice",
+            description="Roll a die without opening a widget.",
+            inputSchema={
+                "type": "object",
+                "properties": {"sides": sides},
+                "required": ["sides"],
+            },
+        ),
+        types.Tool(
+            name="render_dice_widget",
+            description="Show a previously rolled die.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "sides": sides,
+                    "value": {"type": "integer", "minimum": 1},
+                },
+                "required": ["sides", "value"],
+            },
+            _meta={"ui": {"resourceUri": RESOURCE_URI}},
+        ),
+    ]
+
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict[str, Any]) -> types.CallToolResult:
+    if name not in {"roll_dice", "render_dice_widget"}:
+        raise ValueError("Unknown tool")
+    sides = arguments.get("sides")
+    if type(sides) is not int or not 2 <= sides <= 2147483647:
+        raise ValueError("sides must be an integer between 2 and 2147483647")
+    if name == "roll_dice":
+        value = randbelow(sides) + 1
+    else:
+        value = arguments.get("value")
+        if type(value) is not int or not 1 <= value <= sides:
+            raise ValueError("value must be an integer between 1 and sides")
+    return types.CallToolResult(
+        content=[], structuredContent={"sides": sides, "value": value}
+    )
+
+
+# For an HTTPS tunnel, stop this server and append your tunnel's exact
+# hostname to allowed_hosts below, for example "your-tunnel.ngrok.app".
+# Use only the hostname, without https://, a path, or a wildcard. Keep the
+# loopback entries for local testing. Update the hostname if the tunnel changes.
+# Restart from src/content/platform/python-examples with:
+# python apps-sdk-chatgpt-ui/decoupled.py
+# Connect ChatGPT to the tunnel's HTTPS URL with /mcp appended.
+# Keep allowed_origins restricted to trusted browser origins. ChatGPT's server
+# connection does not require adding the tunnel URL to allowed_origins.
+# Keep DNS-rebinding protection enabled; other hostnames must stay rejected.
+sessions = StreamableHTTPSessionManager(
+    server,
+    json_response=True,
+    stateless=True,
+    security_settings=TransportSecuritySettings(
+        allowed_hosts=["127.0.0.1:*", "localhost:*"],
+        allowed_origins=["http://localhost:6274", "http://127.0.0.1:6274"],
+    ),
+)
+
+
+class McpEndpoint:
+    async def __call__(self, scope, receive, send):
+        await sessions.handle_request(scope, receive, send)
+
+
+app = Starlette(
+    lifespan=lambda app: sessions.run(),
+    routes=[Route("/mcp", McpEndpoint(), methods=["GET", "POST", "DELETE"])],
+)
+
+
+if __name__ == "__main__":
+    # Fail before transport startup if the required built browser asset is missing.
+    component_html()
+    uvicorn.run(app, host="127.0.0.1", port=3000)
+```
+
 ```go
 package main
 
@@ -25786,6 +26115,151 @@ public final class AppsSdkDecoupledDice {
         .build();
   }
 }
+```
+
+```csharp
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Server;
+
+// From ../typescript-examples, run npm ci, then
+// npx --no-install esbuild apps-sdk-chatgpt-ui/dice-widget.ts --bundle --format=esm \
+//   --outfile=../dotnet-examples/dice-widget.js
+// Run this program from the dotnet-examples directory.
+string script = await File.ReadAllTextAsync("dice-widget.js");
+script = Regex.Replace(script, "</script", _ => "<\\/script", RegexOptions.IgnoreCase);
+string html = "<!doctype html><html lang=\"en\"><meta charset=\"utf-8\">"
+    + "<title>Dice</title><body><div id=\"root\"></div><script type=\"module\">"
+    + script + "</script></body></html>";
+const string resourceUri = "ui://widget/dice.html";
+const string mimeType = "text/html;profile=mcp-app";
+WebApplicationBuilder builder = WebApplication.CreateBuilder();
+builder.WebHost.UseUrls("http://127.0.0.1:3000");
+builder.Logging.ClearProviders();
+builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new Implementation { Name = "Decoupled dice", Version = "1.0.0" };
+})
+.WithHttpTransport(options => options.Stateless = true)
+.WithListToolsHandler((_, _) => ValueTask.FromResult(new ListToolsResult
+{
+    Tools =
+    [
+        new Tool
+        {
+            Name = "roll_dice",
+            Description = "Roll a die without opening a widget.",
+            InputSchema = JsonSerializer.Deserialize<JsonElement>("""
+                {"type":"object","properties":{"sides":{"type":"integer","minimum":2,"maximum":2147483647}},"required":["sides"]}
+                """),
+        },
+        new Tool
+        {
+            Name = "render_dice_widget",
+            Description = "Show a previously rolled die.",
+            InputSchema = JsonSerializer.Deserialize<JsonElement>("""
+                {"type":"object","properties":{"sides":{"type":"integer","minimum":2,"maximum":2147483647},"value":{"type":"integer","minimum":1}},"required":["sides","value"]}
+                """),
+            Meta = new JsonObject { ["ui"] = new JsonObject { ["resourceUri"] = resourceUri } },
+        },
+    ],
+}))
+.WithCallToolHandler((request, _) =>
+{
+    var parameters = request.Params ?? throw new ArgumentException("Missing tool parameters");
+    if (parameters.Name is not ("roll_dice" or "render_dice_widget"))
+    {
+        throw new ArgumentException("Unknown tool");
+    }
+    var arguments = parameters.Arguments;
+    if (arguments is null || !arguments.TryGetValue("sides", out var sidesJson)
+        || sidesJson.ValueKind != JsonValueKind.Number || !sidesJson.TryGetInt32(out int sides) || sides < 2)
+    {
+        return ValueTask.FromResult(Error("sides must be an integer between 2 and 2147483647"));
+    }
+    int value;
+    if (parameters.Name == "roll_dice")
+    {
+        value = Random.Shared.Next(sides) + 1;
+    }
+    else if (!arguments.TryGetValue("value", out var valueJson)
+        || valueJson.ValueKind != JsonValueKind.Number || !valueJson.TryGetInt32(out value) || value < 1 || value > sides)
+    {
+        return ValueTask.FromResult(Error("value must be an integer between 1 and sides"));
+    }
+    return ValueTask.FromResult(new CallToolResult
+    {
+        Content = [],
+        StructuredContent = JsonSerializer.SerializeToElement(new { sides, value }),
+    });
+})
+.WithListResourcesHandler((_, _) => ValueTask.FromResult(new ListResourcesResult
+{
+    Resources = [new Resource { Uri = resourceUri, Name = "widget", MimeType = mimeType }],
+}))
+.WithReadResourceHandler((request, _) =>
+{
+    if (request.Params?.Uri != resourceUri) throw new ArgumentException("Unknown component resource");
+    return ValueTask.FromResult(new ReadResourceResult
+    {
+        Contents = [new TextResourceContents
+        {
+            Uri = resourceUri,
+            MimeType = mimeType,
+            Text = html,
+        }],
+    });
+});
+WebApplication app = builder.Build();
+app.Use(async (context, next) =>
+{
+    if (context.Request.Host.Host is not ("localhost" or "127.0.0.1"))
+    {
+        context.Response.StatusCode = StatusCodes.Status421MisdirectedRequest;
+        return;
+    }
+    var origin = context.Request.Headers.Origin;
+    if (origin.Count > 0 && (origin.Count != 1 || origin[0] is not
+        ("http://localhost:6274" or "http://127.0.0.1:6274")))
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return;
+    }
+    context.Response.Headers.Vary = "Origin";
+    if (origin.Count == 1)
+    {
+        context.Response.Headers.AccessControlAllowOrigin = origin[0];
+        context.Response.Headers.AccessControlExposeHeaders = "Mcp-Session-Id";
+    }
+    if (HttpMethods.IsOptions(context.Request.Method))
+    {
+        context.Response.Headers.AccessControlAllowMethods = "GET, POST, DELETE, OPTIONS";
+        context.Response.Headers.AccessControlAllowHeaders =
+            "Content-Type, Mcp-Session-Id, Mcp-Protocol-Version";
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+    await next(context);
+});
+app.MapMcp("/mcp");
+
+await using (app)
+{
+    await app.RunAsync();
+}
+
+static CallToolResult Error(string message) => new()
+{
+    IsError = true,
+    Content = [new TextContentBlock { Text = message }],
+};
 ```
 
 ```ruby
@@ -26244,6 +26718,130 @@ registerAppResource(
 );
 ```
 
+```python
+# From src/content/platform/python-examples, after installing TypeScript dependencies
+# ../typescript-examples/node_modules/.bin/esbuild \
+#   ../typescript-examples/apps-sdk-chatgpt-ui/keep-temporary-ui-state-in-the-ui.tsx \
+#   --bundle --format=esm --outfile=web/dist/component.js
+import re
+from pathlib import Path
+from typing import Any
+
+import uvicorn
+from mcp import types
+from mcp.server.lowlevel import Server
+from mcp.server.lowlevel.helper_types import ReadResourceContents
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+from mcp.server.transport_security import TransportSecuritySettings
+from pydantic import AnyUrl
+from starlette.applications import Starlette
+from starlette.routing import Route
+
+server = Server("docs-example", version="1.0.0")
+RESOURCE_URI = "ui://project-board/v1.html"
+MIME_TYPE = "text/html;profile=mcp-app"
+
+
+def component_html() -> str:
+    script = Path("web/dist/component.js").read_text(encoding="utf-8")
+    script = re.sub(r"</script", lambda _: r"<\/script", script, flags=re.IGNORECASE)
+    return (
+        '<!doctype html><html lang="en"><meta charset="utf-8">'
+        '<title>Project board</title><body><div id="root"></div>'
+        '<script type="module">' + script + "</script></body></html>"
+    )
+
+
+@server.list_resources()
+async def list_resources() -> list[types.Resource]:
+    return [types.Resource(uri=AnyUrl(RESOURCE_URI), name="widget", mimeType=MIME_TYPE)]
+
+
+@server.read_resource()
+async def read_resource(uri: AnyUrl) -> list[ReadResourceContents]:
+    if str(uri) != RESOURCE_URI:
+        raise ValueError("Unknown component resource")
+    return [
+        ReadResourceContents(
+            content=component_html(),
+            mime_type=MIME_TYPE,
+            meta={
+                "ui": {
+                    "prefersBorder": True,
+                    "domain": "https://example.com",
+                    "csp": {
+                        "connectDomains": ["https://api.example.com"],
+                        "resourceDomains": ["https://static.example.com"],
+                    },
+                }
+            },
+        )
+    ]
+
+
+@server.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="open_project_board",
+            title="Open project board",
+            inputSchema={"type": "object", "properties": {}},
+            _meta={"ui": {"resourceUri": RESOURCE_URI}},
+        )
+    ]
+
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict[str, Any]) -> types.CallToolResult:
+    if name != "open_project_board":
+        raise ValueError("Unknown tool")
+    return types.CallToolResult(
+        content=[
+            types.TextContent(
+                type="text", text="Review the tasks in the project board."
+            )
+        ]
+    )
+
+
+# For an HTTPS tunnel, stop this server and append your tunnel's exact
+# hostname to allowed_hosts below, for example "your-tunnel.ngrok.app".
+# Use only the hostname, without https://, a path, or a wildcard. Keep the
+# loopback entries for local testing. Update the hostname if the tunnel changes.
+# Restart from src/content/platform/python-examples with:
+# python apps-sdk-chatgpt-ui/embed-the-component-in-the-server-response.py
+# Connect ChatGPT to the tunnel's HTTPS URL with /mcp appended.
+# Keep allowed_origins restricted to trusted browser origins. ChatGPT's server
+# connection does not require adding the tunnel URL to allowed_origins.
+# Keep DNS-rebinding protection enabled; other hostnames must stay rejected.
+sessions = StreamableHTTPSessionManager(
+    server,
+    json_response=True,
+    stateless=True,
+    security_settings=TransportSecuritySettings(
+        allowed_hosts=["127.0.0.1:*", "localhost:*"],
+        allowed_origins=["http://localhost:6274", "http://127.0.0.1:6274"],
+    ),
+)
+
+
+class McpEndpoint:
+    async def __call__(self, scope, receive, send):
+        await sessions.handle_request(scope, receive, send)
+
+
+app = Starlette(
+    lifespan=lambda app: sessions.run(),
+    routes=[Route("/mcp", McpEndpoint(), methods=["GET", "POST", "DELETE"])],
+)
+
+
+if __name__ == "__main__":
+    # Fail before transport startup if the required built browser asset is missing.
+    component_html()
+    uvicorn.run(app, host="127.0.0.1", port=3000)
+```
+
 ```go
 package main
 
@@ -26383,6 +26981,130 @@ public final class AppsSdkProjectBoard {
       }
     }
   }
+}
+```
+
+```csharp
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Server;
+
+// From ../typescript-examples, run npm ci, then
+// npx --no-install esbuild apps-sdk-chatgpt-ui/keep-temporary-ui-state-in-the-ui.tsx --bundle --format=esm \
+//   --outfile=../dotnet-examples/web/dist/component.js
+// Run this program from the dotnet-examples directory.
+string script = await File.ReadAllTextAsync("web/dist/component.js");
+script = Regex.Replace(script, "</script", _ => "<\\/script", RegexOptions.IgnoreCase);
+string html = "<!doctype html><html lang=\"en\"><meta charset=\"utf-8\">"
+    + "<title>Project board</title><body><div id=\"root\"></div><script type=\"module\">"
+    + script + "</script></body></html>";
+const string resourceUri = "ui://project-board/v1.html";
+const string mimeType = "text/html;profile=mcp-app";
+WebApplicationBuilder builder = WebApplication.CreateBuilder();
+builder.WebHost.UseUrls("http://127.0.0.1:3000");
+builder.Logging.ClearProviders();
+builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new Implementation { Name = "docs-example", Version = "1.0.0" };
+})
+.WithHttpTransport(options => options.Stateless = true)
+.WithListToolsHandler((_, _) => ValueTask.FromResult(new ListToolsResult
+{
+    Tools =
+    [
+        new Tool
+        {
+            Name = "open_project_board",
+            Title = "Open project board",
+            InputSchema = JsonSerializer.SerializeToElement(new { type = "object", properties = new { } }),
+            Meta = new JsonObject { ["ui"] = new JsonObject { ["resourceUri"] = resourceUri } },
+        },
+    ],
+}))
+.WithCallToolHandler((request, _) =>
+{
+    if (request.Params?.Name != "open_project_board")
+    {
+        throw new ArgumentException("Unknown tool");
+    }
+    return ValueTask.FromResult(new CallToolResult
+    {
+        Content = [new TextContentBlock { Text = "Review the tasks in the project board." }],
+    });
+})
+.WithListResourcesHandler((_, _) => ValueTask.FromResult(new ListResourcesResult
+{
+    Resources = [new Resource { Uri = resourceUri, Name = "widget", MimeType = mimeType }],
+}))
+.WithReadResourceHandler((request, _) =>
+{
+    if (request.Params?.Uri != resourceUri) throw new ArgumentException("Unknown component resource");
+    return ValueTask.FromResult(new ReadResourceResult
+    {
+        Contents = [new TextResourceContents
+        {
+            Uri = resourceUri,
+            MimeType = mimeType,
+            Text = html,
+            Meta = new JsonObject
+            {
+                ["ui"] = new JsonObject
+                {
+                    ["prefersBorder"] = true,
+                    ["domain"] = "https://example.com",
+                    ["csp"] = new JsonObject
+                    {
+                        ["connectDomains"] = new JsonArray("https://api.example.com"),
+                        ["resourceDomains"] = new JsonArray("https://static.example.com"),
+                    },
+                },
+            },
+        }],
+    });
+});
+WebApplication app = builder.Build();
+app.Use(async (context, next) =>
+{
+    if (context.Request.Host.Host is not ("localhost" or "127.0.0.1"))
+    {
+        context.Response.StatusCode = StatusCodes.Status421MisdirectedRequest;
+        return;
+    }
+    var origin = context.Request.Headers.Origin;
+    if (origin.Count > 0 && (origin.Count != 1 || origin[0] is not
+        ("http://localhost:6274" or "http://127.0.0.1:6274")))
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return;
+    }
+    context.Response.Headers.Vary = "Origin";
+    if (origin.Count == 1)
+    {
+        context.Response.Headers.AccessControlAllowOrigin = origin[0];
+        context.Response.Headers.AccessControlExposeHeaders = "Mcp-Session-Id";
+    }
+    if (HttpMethods.IsOptions(context.Request.Method))
+    {
+        context.Response.Headers.AccessControlAllowMethods = "GET, POST, DELETE, OPTIONS";
+        context.Response.Headers.AccessControlAllowHeaders =
+            "Content-Type, Mcp-Session-Id, Mcp-Protocol-Version";
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+    await next(context);
+});
+app.MapMcp("/mcp");
+
+await using (app)
+{
+    await app.RunAsync();
 }
 ```
 
@@ -27928,6 +28650,52 @@ async function getProfile(requestContext: { token: string }) {
 }
 ```
 
+```python
+import json
+from pathlib import Path
+
+import jwt
+
+
+def load_authenticated_profile(token: str, key: bytes, profile_path: Path) -> dict:
+    identity = jwt.decode(
+        token,
+        key,
+        algorithms=["HS256"],
+        issuer="docs-example",
+        audience="profile-tool",
+        options={"require": ["iss", "aud", "sub", "exp"]},
+    )
+    if not isinstance(identity["sub"], str) or not identity["sub"].strip():
+        raise ValueError("Authenticated subject unavailable")
+    account = json.loads(profile_path.read_text(encoding="utf-8"))
+    if account.get("subject") != identity["sub"]:
+        raise ValueError("Authenticated profile not found")
+    return account
+
+
+def get_profile(token: str, key: bytes, profile_path: Path) -> dict:
+    # Authentication failures propagate to the server's normal MCP auth handling.
+    account = load_authenticated_profile(token, key, profile_path)
+    profile_id = account.get("profileId")
+    if not isinstance(profile_id, str) or not profile_id.strip():
+        return {
+            "isError": True,
+            "content": [{"type": "text", "text": "Profile identity unavailable."}],
+        }
+    profile = {"id": profile_id}
+    for field in ("name", "email", "nickname"):
+        if isinstance(account.get(field), str):
+            profile[field] = account[field]
+    return {
+        "isError": False,
+        "structuredContent": profile,
+        "content": [
+            {"type": "text", "text": json.dumps(profile, separators=(",", ":"))}
+        ],
+    }
+```
+
 ```go
 func (service profileService) getProfile(token string) (map[string]any, error) {
 	account, err := service.loadAuthenticatedProfile(token)
@@ -27990,6 +28758,76 @@ static Map<String, Object> getProfile(String token) throws Exception {
       profile,
       "content",
       List.of(Map.of("type", "text", "text", JSON.writeValueAsString(profile))));
+}
+```
+
+```csharp
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text.Json;
+using Microsoft.IdentityModel.Tokens;
+
+internal static async Task<JsonElement> LoadAuthenticatedProfileAsync(
+    string token, byte[] key, string profilePath)
+{
+    var handler = new JwtSecurityTokenHandler { MapInboundClaims = false };
+    ClaimsPrincipal identity = handler.ValidateToken(token, new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidAlgorithms = [SecurityAlgorithms.HmacSha256],
+        ValidateIssuer = true,
+        ValidIssuer = "docs-example",
+        ValidateAudience = true,
+        ValidAudience = "profile-tool",
+        ValidateLifetime = true,
+        RequireExpirationTime = true,
+        RequireSignedTokens = true,
+        ClockSkew = TimeSpan.Zero,
+    }, out _);
+    string? subject = identity.FindFirst("sub")?.Value;
+    if (string.IsNullOrWhiteSpace(subject))
+    {
+        throw new SecurityTokenValidationException("Authenticated subject unavailable");
+    }
+    var account = JsonSerializer.Deserialize<JsonElement>(await File.ReadAllTextAsync(profilePath));
+    if (account.ValueKind != JsonValueKind.Object ||
+        !account.TryGetProperty("subject", out JsonElement owner) ||
+        owner.ValueKind != JsonValueKind.String ||
+        !string.Equals(owner.GetString(), subject, StringComparison.Ordinal))
+    {
+        throw new UnauthorizedAccessException("Authenticated profile not found");
+    }
+    return account;
+}
+
+internal static async Task<object> GetProfileAsync(string token, byte[] key, string profilePath)
+{
+    var account = await LoadAuthenticatedProfileAsync(token, key, profilePath);
+    if (!account.TryGetProperty("profileId", out JsonElement identity) ||
+        identity.ValueKind != JsonValueKind.String || string.IsNullOrWhiteSpace(identity.GetString()))
+    {
+        return new
+        {
+            isError = true,
+            content = new[] { new { type = "text", text = "Profile identity unavailable." } },
+        };
+    }
+    var profile = new Dictionary<string, string> { ["id"] = identity.GetString()! };
+    foreach (string field in new[] { "name", "email", "nickname" })
+    {
+        if (account.TryGetProperty(field, out JsonElement value) && value.ValueKind == JsonValueKind.String)
+        {
+            profile[field] = value.GetString()!;
+        }
+    }
+    return new
+    {
+        isError = false,
+        structuredContent = profile,
+        content = new[] { new { type = "text", text = JsonSerializer.Serialize(profile) } },
+    };
 }
 ```
 
@@ -28104,6 +28942,58 @@ structuredContent: {},
 
 ````
 
+```python
+import asyncio
+from typing import Any
+
+from mcp import types
+from mcp.server.lowlevel import Server
+from mcp.server.stdio import stdio_server
+
+server = Server("auth-example", version="1.0.0")
+
+
+@server.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="search",
+            title="Public Search",
+            description="Search public documents.",
+            inputSchema={
+                "type": "object",
+                "properties": {"q": {"type": "string"}},
+                "required": ["q"],
+            },
+            outputSchema={"type": "object", "properties": {}},
+            _meta={
+                "securitySchemes": [
+                    {"type": "noauth"},
+                    {"type": "oauth2", "scopes": ["search.read"]},
+                ]
+            },
+        )
+    ]
+
+
+# Descriptor demonstration only. This response performs no document storage or
+# authorization. A hosted app needs an authenticated HTTP transport and an OAuth
+# provider enforcing these scopes; security metadata alone does not enforce them.
+
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict[str, Any]) -> types.CallToolResult:
+    if name != "search":
+        raise ValueError(f"Unknown tool: {name}")
+    value = arguments.get("q")
+    if not isinstance(value, str):
+        raise ValueError("q must be a string")
+    return types.CallToolResult(
+        content=[types.TextContent(type="text", text=f"Results for {value}")],
+        structuredContent={},
+    )
+````
+
 ```go
 // Descriptor-only fixture; tool responses illustrate results without storage.
 
@@ -28156,7 +29046,7 @@ func main() {
 		log.Fatal(err)
 	}
 }
-````
+```
 
 ```java
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -28239,6 +29129,94 @@ public final class AppsSdkAuthTriggeringAuthenticationUiExample {
     }
   }
 }
+```
+
+```csharp
+using System;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Server;
+
+// Keep stdout exclusively for the native SDK's MCP stdio messages.
+var builder = Host.CreateApplicationBuilder();
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(options => options.LogToStandardErrorThreshold = LogLevel.Trace);
+
+// JSON uses the MCP wire names explicitly, including _meta.securitySchemes.
+var jsonOptions = new JsonSerializerOptions
+{
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+};
+var tool = JsonSerializer.Deserialize<Tool>("""
+    {
+      "name": "search",
+      "title": "Public Search",
+      "description": "Search public documents.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "q"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "_meta": {
+        "securitySchemes": [
+          {
+            "type": "noauth"
+          },
+          {
+            "type": "oauth2",
+            "scopes": [
+              "search.read"
+            ]
+          }
+        ]
+      }
+    }
+    """, jsonOptions) ?? throw new InvalidOperationException("Invalid tool descriptor.");
+
+builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new Implementation { Name = "auth-example", Version = "1.0.0" };
+})
+.WithStdioServerTransport()
+.WithListToolsHandler((request, cancellationToken) =>
+    ValueTask.FromResult(new ListToolsResult { Tools = [tool] }))
+.WithCallToolHandler((request, cancellationToken) =>
+{
+    var arguments = request.Params?.Arguments;
+    if (request.Params?.Name != "search"
+        || arguments is null
+        || !arguments.TryGetValue("q", out var value)
+        || value.ValueKind != JsonValueKind.String)
+    {
+        return ValueTask.FromResult(new CallToolResult
+        {
+            IsError = true,
+            Content = [new TextContentBlock { Text = "Expected search with a string q." }]
+        });
+    }
+
+    // Serializing the result preserves the explicit structuredContent: {}.
+    var result = JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text = "Results for " + value.GetString() } },
+        structuredContent = new { }
+    }), jsonOptions) ?? throw new InvalidOperationException("Invalid tool result.");
+    return ValueTask.FromResult(result);
+});
 ```
 
 ```ruby
@@ -28326,6 +29304,53 @@ server.registerTool(
     };
   }
 );
+```
+
+```python
+import asyncio
+from typing import Any
+
+from mcp import types
+from mcp.server.lowlevel import Server
+from mcp.server.stdio import stdio_server
+
+server = Server("auth-example", version="1.0.0")
+
+
+@server.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="create_doc",
+            title="Create Document",
+            description="Make a new doc in your account.",
+            inputSchema={
+                "type": "object",
+                "properties": {"title": {"type": "string"}},
+                "required": ["title"],
+            },
+            outputSchema={"type": "object", "properties": {}},
+            _meta={"securitySchemes": [{"type": "oauth2", "scopes": ["docs.write"]}]},
+        )
+    ]
+
+
+# Descriptor demonstration only. This response performs no document storage or
+# authorization. A hosted app needs an authenticated HTTP transport and an OAuth
+# provider enforcing these scopes; security metadata alone does not enforce them.
+
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict[str, Any]) -> types.CallToolResult:
+    if name != "create_doc":
+        raise ValueError(f"Unknown tool: {name}")
+    value = arguments.get("title")
+    if not isinstance(value, str):
+        raise ValueError("title must be a string")
+    return types.CallToolResult(
+        content=[types.TextContent(type="text", text=f"Created doc: {value}")],
+        structuredContent={},
+    )
 ```
 
 ```go
@@ -28453,6 +29478,91 @@ public final class AppsSdkAuthTriggeringAuthenticationUi2Example {
     }
   }
 }
+```
+
+```csharp
+using System;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Server;
+
+// Keep stdout exclusively for the native SDK's MCP stdio messages.
+var builder = Host.CreateApplicationBuilder();
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(options => options.LogToStandardErrorThreshold = LogLevel.Trace);
+
+// JSON uses the MCP wire names explicitly, including _meta.securitySchemes.
+var jsonOptions = new JsonSerializerOptions
+{
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+};
+var tool = JsonSerializer.Deserialize<Tool>("""
+    {
+      "name": "create_doc",
+      "title": "Create Document",
+      "description": "Make a new doc in your account.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "_meta": {
+        "securitySchemes": [
+          {
+            "type": "oauth2",
+            "scopes": [
+              "docs.write"
+            ]
+          }
+        ]
+      }
+    }
+    """, jsonOptions) ?? throw new InvalidOperationException("Invalid tool descriptor.");
+
+builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new Implementation { Name = "auth-example", Version = "1.0.0" };
+})
+.WithStdioServerTransport()
+.WithListToolsHandler((request, cancellationToken) =>
+    ValueTask.FromResult(new ListToolsResult { Tools = [tool] }))
+.WithCallToolHandler((request, cancellationToken) =>
+{
+    var arguments = request.Params?.Arguments;
+    if (request.Params?.Name != "create_doc"
+        || arguments is null
+        || !arguments.TryGetValue("title", out var value)
+        || value.ValueKind != JsonValueKind.String)
+    {
+        return ValueTask.FromResult(new CallToolResult
+        {
+            IsError = true,
+            Content = [new TextContentBlock { Text = "Expected create_doc with a string title." }]
+        });
+    }
+
+    // Serializing the result preserves the explicit structuredContent: {}.
+    var result = JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text = "Created doc: " + value.GetString() } },
+        structuredContent = new { }
+    }), jsonOptions) ?? throw new InvalidOperationException("Invalid tool result.");
+    return ValueTask.FromResult(result);
+});
 ```
 
 ```ruby
@@ -28748,6 +29858,75 @@ func main() {
 }
 ```
 
+```csharp
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Server;
+
+// From src/content/platform/dotnet-examples:
+// dotnet run -- apps-sdk-mcp-server-create-the-server
+// MCP endpoint: http://localhost:3000/mcp
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder();
+builder.WebHost.UseUrls("http://127.0.0.1:3000");
+builder.Logging.ClearProviders();
+
+builder.Services
+    .AddMcpServer(options =>
+    {
+        options.ServerInfo = new Implementation
+        {
+            Name = "acme-projects",
+            Version = "1.0.0",
+        };
+    })
+    .WithHttpTransport(options => options.Stateless = true)
+    .WithListToolsHandler((request, cancellationToken) =>
+        ValueTask.FromResult(new ListToolsResult { Tools = [] }));
+
+WebApplication app = builder.Build();
+app.Use(async (context, next) =>
+{
+    if (context.Request.Host.Host is not ("localhost" or "127.0.0.1"))
+    {
+        context.Response.StatusCode = StatusCodes.Status421MisdirectedRequest;
+        return;
+    }
+    var origin = context.Request.Headers.Origin;
+    if (origin.Count > 0 && (origin.Count != 1 || origin[0] is not
+        ("http://localhost:6274" or "http://127.0.0.1:6274")))
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return;
+    }
+    context.Response.Headers.Vary = "Origin";
+    if (origin.Count == 1)
+    {
+        context.Response.Headers.AccessControlAllowOrigin = origin[0];
+        context.Response.Headers.AccessControlExposeHeaders = "Mcp-Session-Id";
+    }
+    if (HttpMethods.IsOptions(context.Request.Method))
+    {
+        context.Response.Headers.AccessControlAllowMethods = "GET, POST, DELETE, OPTIONS";
+        context.Response.Headers.AccessControlAllowHeaders =
+            "Content-Type, Mcp-Session-Id, Mcp-Protocol-Version";
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+    await next(context);
+});
+app.MapMcp("/mcp");
+
+await using (app)
+{
+    await app.RunAsync();
+}
+```
+
 ```ruby
 require "mcp"
 require "rackup"
@@ -28830,6 +30009,76 @@ func main() {
 		log.Fatal(err)
 	}
 	<-shutdownDone
+}
+```
+
+```csharp
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Server;
+
+// From src/content/platform/dotnet-examples:
+// dotnet run -- apps-sdk-mcp-server-create-the-server-2
+// MCP endpoint: http://localhost:3000/mcp
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder();
+builder.WebHost.UseUrls("http://127.0.0.1:3000");
+builder.Logging.ClearProviders();
+
+builder.Services
+    .AddMcpServer(options =>
+    {
+        options.ServerInfo = new Implementation
+        {
+            Name = "acme-projects",
+            Version = "1.0.0",
+        };
+        options.ServerInstructions = "Before updating a project, call get_project to confirm its ID and current status.";
+    })
+    .WithHttpTransport(options => options.Stateless = true)
+    .WithListToolsHandler((request, cancellationToken) =>
+        ValueTask.FromResult(new ListToolsResult { Tools = [] }));
+
+WebApplication app = builder.Build();
+app.Use(async (context, next) =>
+{
+    if (context.Request.Host.Host is not ("localhost" or "127.0.0.1"))
+    {
+        context.Response.StatusCode = StatusCodes.Status421MisdirectedRequest;
+        return;
+    }
+    var origin = context.Request.Headers.Origin;
+    if (origin.Count > 0 && (origin.Count != 1 || origin[0] is not
+        ("http://localhost:6274" or "http://127.0.0.1:6274")))
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return;
+    }
+    context.Response.Headers.Vary = "Origin";
+    if (origin.Count == 1)
+    {
+        context.Response.Headers.AccessControlAllowOrigin = origin[0];
+        context.Response.Headers.AccessControlExposeHeaders = "Mcp-Session-Id";
+    }
+    if (HttpMethods.IsOptions(context.Request.Method))
+    {
+        context.Response.Headers.AccessControlAllowMethods = "GET, POST, DELETE, OPTIONS";
+        context.Response.Headers.AccessControlAllowHeaders =
+            "Content-Type, Mcp-Session-Id, Mcp-Protocol-Version";
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+    await next(context);
+});
+app.MapMcp("/mcp");
+
+await using (app)
+{
+    await app.RunAsync();
 }
 ```
 
@@ -28999,6 +30248,149 @@ func main() {
 		log.Fatal(err)
 	}
 	<-shutdownDone
+}
+```
+
+```csharp
+using System.Text.Json;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Server;
+
+// From src/content/platform/dotnet-examples:
+// dotnet run -- apps-sdk-mcp-server-define-tools-from-user-goals
+// MCP endpoint: http://localhost:3000/mcp
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder();
+builder.WebHost.UseUrls("http://127.0.0.1:3000");
+builder.Logging.ClearProviders();
+
+builder.Services
+    .AddMcpServer(options =>
+    {
+        options.ServerInfo = new Implementation
+        {
+            Name = "docs-example",
+            Version = "1.0.0",
+        };
+    })
+    .WithHttpTransport(options => options.Stateless = true)
+    .WithListToolsHandler((request, cancellationToken) =>
+        ValueTask.FromResult(new ListToolsResult
+        {
+            Tools =
+            [
+                new Tool
+                {
+                    Name = "list_projects",
+                    Description = "Use this when the user wants to find or review projects in their Acme workspace.",
+                    InputSchema = JsonSerializer.SerializeToElement(new
+                    {
+                        type = "object",
+                        properties = new
+                        {
+                            status = new
+                            {
+                                type = "string",
+                                @enum = new List<string> { "active", "archived" },
+                            },
+                        },
+                    }),
+                    Annotations = JsonSerializer.Deserialize<ToolAnnotations>(
+                        """
+                        {"readOnlyHint":true,"openWorldHint":false,"destructiveHint":false}
+                        """)!,
+                },
+            ],
+        }))
+    .WithCallToolHandler((request, cancellationToken) =>
+    {
+        if (request.Params is not { Name: "list_projects" } parameters)
+        {
+            throw new ArgumentException("Unknown tool.", nameof(request));
+        }
+
+        string? status = null;
+        if (parameters.Arguments is { } arguments
+            && arguments.TryGetValue("status", out JsonElement value))
+        {
+            if (value.ValueKind != JsonValueKind.String
+                || value.GetString() is not ("active" or "archived"))
+            {
+                return ValueTask.FromResult(new CallToolResult
+                {
+                    IsError = true,
+                    Content = [new TextContentBlock
+                    {
+                        Text = "status must be active or archived when provided",
+                    }],
+                });
+            }
+            status = value.GetString();
+        }
+
+        // Local example data; replace this with your application data.
+        var projects = new[]
+        {
+            new { id = "project-1", name = "Website", status = "active" },
+            new { id = "project-2", name = "Launch", status = "archived" },
+        };
+        var selected = projects
+            .Where(project => status is null || project.status == status)
+            .ToArray();
+        return ValueTask.FromResult(new CallToolResult
+        {
+            Content = [new TextContentBlock
+            {
+                Text = $"Found {selected.Length} projects.",
+            }],
+            StructuredContent = JsonSerializer.SerializeToElement(new
+            {
+                projects = selected,
+            }),
+        });
+    });
+
+WebApplication app = builder.Build();
+app.Use(async (context, next) =>
+{
+    if (context.Request.Host.Host is not ("localhost" or "127.0.0.1"))
+    {
+        context.Response.StatusCode = StatusCodes.Status421MisdirectedRequest;
+        return;
+    }
+    var origin = context.Request.Headers.Origin;
+    if (origin.Count > 0 && (origin.Count != 1 || origin[0] is not
+        ("http://localhost:6274" or "http://127.0.0.1:6274")))
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return;
+    }
+    context.Response.Headers.Vary = "Origin";
+    if (origin.Count == 1)
+    {
+        context.Response.Headers.AccessControlAllowOrigin = origin[0];
+        context.Response.Headers.AccessControlExposeHeaders = "Mcp-Session-Id";
+    }
+    if (HttpMethods.IsOptions(context.Request.Method))
+    {
+        context.Response.Headers.AccessControlAllowMethods = "GET, POST, DELETE, OPTIONS";
+        context.Response.Headers.AccessControlAllowHeaders =
+            "Content-Type, Mcp-Session-Id, Mcp-Protocol-Version";
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+    await next(context);
+});
+app.MapMcp("/mcp");
+
+await using (app)
+{
+    await app.RunAsync();
 }
 ```
 
@@ -32151,6 +33543,84 @@ export async function sendEvent(
 }
 ```
 
+```python
+import base64
+import hashlib
+import hmac
+import json
+import time
+from collections.abc import Callable
+from dataclasses import dataclass
+from urllib.parse import urlsplit
+
+
+@dataclass(frozen=True)
+class Subscription:
+    id: str
+    url: str
+    secret: str
+
+
+def encode_event(event: dict[str, object]) -> bytes:
+    body = json.dumps(
+        event, ensure_ascii=False, separators=(",", ":"), allow_nan=False
+    ).encode("utf-8")
+    if len(body) > 256 * 1024:
+        raise ValueError("Event payload exceeds 256 KiB")
+    return body
+
+
+def prepare_event(
+    subscription: Subscription, event: dict[str, object]
+) -> tuple[bytes, dict[str, str]]:
+    event_id = event.get("eventId")
+    if not isinstance(event_id, str) or not event_id or not subscription.id:
+        raise ValueError(
+            "Event ID must be a nonempty string and subscription ID must not be empty"
+        )
+    body = encode_event(event)
+    timestamp = str(int(time.time()))
+    secret = subscription.secret.removeprefix("whsec_")
+    key = base64.b64decode(secret, validate=True)
+    if not key:
+        raise ValueError("Webhook signing key must not be empty")
+    signed = f"{event_id}.{timestamp}.".encode() + body
+    signature = base64.b64encode(hmac.digest(key, signed, hashlib.sha256)).decode(
+        "ascii"
+    )
+    return body, {
+        "Content-Type": "application/json",
+        "webhook-id": event_id,
+        "webhook-timestamp": timestamp,
+        "webhook-signature": f"v1,{signature}",
+        "X-MCP-Subscription-Id": subscription.id,
+    }
+
+
+# The caller supplies a transport that validates public destination addresses on
+# every connection, preserves TLS hostname verification, and refuses redirects.
+# No default transport can safely make this decision for arbitrary subscribers.
+ValidatedTransport = Callable[[str, bytes, dict[str, str]], int]
+
+
+def send_event(
+    subscription: Subscription,
+    event: dict[str, object],
+    *,
+    validated_transport: ValidatedTransport,
+) -> dict[str, object]:
+    target = urlsplit(subscription.url)
+    if target.scheme != "https" or not target.hostname:
+        raise ValueError("Subscription URL must be an absolute HTTPS URL")
+    if target.username is not None or target.password is not None or target.fragment:
+        raise ValueError("Subscription URL must not contain credentials or a fragment")
+    body, headers = prepare_event(subscription, event)
+    status = validated_transport(subscription.url, body, headers)
+    if 300 <= status < 400:
+        raise RuntimeError("Webhook redirects are not allowed")
+    return {"accepted": 200 <= status < 300, "status": status}
+```
+
 ```go
 package main
 
@@ -33092,6 +34562,187 @@ httpServer.listen(port, () => {
 });
 ```
 
+```python
+# From src/content/platform/python-examples
+# mkdir -p public
+# cp ../html-examples/apps-sdk-app-quickstart/build-a-web-component.html \
+#   public/todo-widget.html
+import asyncio
+from contextlib import asynccontextmanager
+from pathlib import Path
+
+import uvicorn
+from mcp import types
+from mcp.server.lowlevel import Server
+from mcp.server.lowlevel.helper_types import ReadResourceContents
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+from mcp.server.transport_security import TransportSecuritySettings
+from starlette.applications import Starlette
+from starlette.middleware.cors import CORSMiddleware
+from starlette.responses import PlainTextResponse
+from starlette.routing import Route
+
+RESOURCE_URI = "ui://widget/todo.html"
+MIME_TYPE = "text/html;profile=mcp-app"
+OUTPUT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "tasks": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string"},
+                    "title": {"type": "string"},
+                    "completed": {"type": "boolean"},
+                },
+                "required": ["id", "title", "completed"],
+            },
+        }
+    },
+    "required": ["tasks"],
+}
+
+
+def create_app(widget_path: Path = Path("public/todo-widget.html")):
+    # Fail at startup if the authored browser asset has not been built/copied.
+    todo_html = widget_path.read_text(encoding="utf-8")
+    server = Server("todo-plugin-server", version="0.1.0")
+    todos: list[dict] = []
+    next_id = 1
+    lock = asyncio.Lock()
+
+    @server.list_resources()
+    async def list_resources():
+        return [
+            types.Resource(uri=RESOURCE_URI, name="todo-widget", mimeType=MIME_TYPE)
+        ]
+
+    @server.read_resource()
+    async def read_resource(uri):
+        if str(uri) != RESOURCE_URI:
+            raise ValueError("Unknown resource URI")
+        return [ReadResourceContents(content=todo_html, mime_type=MIME_TYPE)]
+
+    @server.list_tools()
+    async def list_tools():
+        return [
+            types.Tool(
+                name=name,
+                title=title,
+                description=description,
+                inputSchema={
+                    "type": "object",
+                    "properties": {field: {"type": "string", "minLength": 1}},
+                    "required": [field],
+                },
+                outputSchema=OUTPUT_SCHEMA,
+                _meta={"ui": {"resourceUri": RESOURCE_URI}},
+            )
+            for name, title, description, field in [
+                (
+                    "add_todo",
+                    "Add todo",
+                    "Creates a todo item with the given title.",
+                    "title",
+                ),
+                (
+                    "complete_todo",
+                    "Complete todo",
+                    "Marks a todo as done by id.",
+                    "id",
+                ),
+            ]
+        ]
+
+    @server.call_tool()
+    async def call_tool(name: str, arguments: dict):
+        nonlocal next_id
+        if name not in {"add_todo", "complete_todo"}:
+            raise ValueError("Unknown tool")
+        # The SDK validates the input schema before calling this handler.
+        async with lock:
+            if name == "add_todo":
+                title = arguments["title"].strip()
+                if title:
+                    todos.append(
+                        {"id": f"todo-{next_id}", "title": title, "completed": False}
+                    )
+                    next_id += 1
+                message = f"Added {title}" if title else "A title is required."
+            else:
+                todo_id = arguments["id"]
+                found = next((todo for todo in todos if todo["id"] == todo_id), None)
+                if found is not None:
+                    found["completed"] = True
+                message = (
+                    f"Completed {todo_id}"
+                    if found is not None
+                    else f"Todo {todo_id} not found."
+                )
+            return types.CallToolResult(
+                content=[types.TextContent(type="text", text=message)],
+                structuredContent={"tasks": [dict(todo) for todo in todos]},
+                isError=False,
+            )
+
+    # For the guide's HTTPS tunnel, stop this server and append your tunnel's exact
+    # hostname to allowed_hosts below, for example "your-tunnel.ngrok.app".
+    # Use only the hostname, without https://, a path, or a wildcard. Keep the
+    # loopback entries for local testing. Update the hostname if the tunnel changes.
+    # Restart from src/content/platform/python-examples with:
+    # python apps-sdk-app-quickstart/mcp-server-with-ui-resources.py
+    # Connect ChatGPT to the tunnel's HTTPS URL with /mcp appended.
+    # Keep origins restricted to trusted browser origins. ChatGPT's server
+    # connection does not require adding the tunnel URL to origins.
+    # Keep DNS-rebinding protection enabled; other hostnames must stay rejected.
+    origins = ["http://localhost:6274", "http://127.0.0.1:6274"]
+    sessions = StreamableHTTPSessionManager(
+        app=server,
+        json_response=True,
+        stateless=True,
+        security_settings=TransportSecuritySettings(
+            allowed_hosts=["localhost:*", "127.0.0.1:*"],
+            allowed_origins=origins,
+        ),
+    )
+
+    @asynccontextmanager
+    async def lifespan(app):
+        async with sessions.run():
+            yield
+
+    async def home(request):
+        return PlainTextResponse("Todo MCP server")
+
+    # An ASGI callable preserves streaming and MCP session lifecycle handling.
+    class McpEndpoint:
+        async def __call__(self, scope, receive, send):
+            await sessions.handle_request(scope, receive, send)
+
+    app = Starlette(
+        lifespan=lifespan,
+        routes=[
+            Route("/", home),
+            Route("/mcp", McpEndpoint(), methods=["GET", "POST", "DELETE"]),
+        ],
+    )
+    return CORSMiddleware(
+        app,
+        allow_origins=origins,
+        allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
+        allow_headers=["Content-Type", "Mcp-Session-Id", "Mcp-Protocol-Version"],
+        expose_headers=["Mcp-Session-Id"],
+    )
+
+
+app = create_app()
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8787)
+```
+
 ```go
 package main
 
@@ -33404,6 +35055,210 @@ var mapper = new JacksonMcpJsonMapper(JsonMapper.builder().build());
       server.closeGracefully();
       httpServer.stop();
     }
+```
+
+```csharp
+using System.Text.Json;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using ModelContextProtocol;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Server;
+
+
+// Requires ModelContextProtocol.AspNetCore and Microsoft.AspNetCore.App.
+// Run through the example registry from a directory containing the guide's
+// public/todo-widget.html. This local in-memory server listens on port 8787.
+// Configure trusted public hosts/origins and authentication before hosting it.
+
+const string resourceUri = "ui://widget/todo.html";
+const string mimeType = "text/html;profile=mcp-app";
+// Build/copy the browser asset from the preceding guide step first.
+string todoHtml = await File.ReadAllTextAsync("public/todo-widget.html");
+var todos = new List<Dictionary<string, object>>();
+int nextId = 1;
+var gate = new object();
+string[] origins = ["http://localhost:6274", "http://127.0.0.1:6274"];
+var outputSchema = new
+{
+    type = "object",
+    properties = new
+    {
+        tasks = new
+        {
+            type = "array",
+            items = new
+            {
+                type = "object",
+                properties = new
+                {
+                    id = new { type = "string" },
+                    title = new { type = "string" },
+                    completed = new { type = "boolean" },
+                },
+                required = new[] { "id", "title", "completed" },
+            },
+        },
+    },
+    required = new[] { "tasks" },
+};
+
+// Deserialize the SDK protocol types with their wire names so _meta,
+// resourceUri and structuredContent keep their exact MCP spelling.
+Tool MakeTool(string name, string title, string description, string field) =>
+    ProtocolValue<Tool>(new
+    {
+        name,
+        title,
+        description,
+        inputSchema = new
+        {
+            type = "object",
+            properties = new Dictionary<string, object>
+            {
+                [field] = new { type = "string", minLength = 1 },
+            },
+            required = new[] { field },
+        },
+        outputSchema,
+        _meta = new { ui = new { resourceUri } },
+    });
+
+var builder = WebApplication.CreateBuilder();
+builder.WebHost.UseUrls("http://127.0.0.1:8787");
+builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new Implementation
+    {
+        Name = "todo-plugin-server",
+        Version = "0.1.0",
+    };
+})
+    .WithHttpTransport()
+    .WithListResourcesHandler((_, _) => ValueTask.FromResult(
+        ProtocolValue<ListResourcesResult>(new
+        {
+            resources = new[]
+            {
+                new { uri = resourceUri, name = "todo-widget", mimeType },
+            },
+        })))
+    .WithReadResourceHandler((request, _) =>
+    {
+        if (request.Params?.Uri != resourceUri)
+        {
+            throw new McpException("Unknown resource URI");
+        }
+        return ValueTask.FromResult(ProtocolValue<ReadResourceResult>(new
+        {
+            contents = new[] { new { uri = resourceUri, mimeType, text = todoHtml } },
+        }));
+    })
+    .WithListToolsHandler((_, _) => ValueTask.FromResult(new ListToolsResult
+    {
+        Tools =
+        [
+            MakeTool("add_todo", "Add todo", "Creates a todo item with the given title.", "title"),
+            MakeTool("complete_todo", "Complete todo", "Marks a todo as done by id.", "id"),
+        ],
+    }))
+    .WithCallToolHandler((request, _) =>
+    {
+        var parameters = request.Params;
+        string? name = parameters?.Name;
+        if (name is not ("add_todo" or "complete_todo"))
+        {
+            throw new McpException("Unknown tool");
+        }
+        string field = name == "add_todo" ? "title" : "id";
+        if (parameters?.Arguments is null ||
+            !parameters.Arguments.TryGetValue(field, out JsonElement value) ||
+            value.ValueKind != JsonValueKind.String || value.GetString()!.Length == 0)
+        {
+            return ValueTask.FromResult(ProtocolValue<CallToolResult>(new
+            {
+                isError = true,
+                content = new[] { new { type = "text", text = $"A {field} string is required." } },
+            }));
+        }
+        lock (gate)
+        {
+            string text = value.GetString()!;
+            string message;
+            if (name == "add_todo")
+            {
+                string title = text.Trim();
+                if (title.Length > 0)
+                {
+                    todos.Add(new Dictionary<string, object>
+                    {
+                        ["id"] = $"todo-{nextId++}",
+                        ["title"] = title,
+                        ["completed"] = false,
+                    });
+                }
+                message = title.Length > 0 ? $"Added {title}" : "A title is required.";
+            }
+            else
+            {
+                var todo = todos.Find(item => (string)item["id"] == text);
+                if (todo is not null)
+                {
+                    todo["completed"] = true;
+                }
+                message = todo is null ? $"Todo {text} not found." : $"Completed {text}";
+            }
+            // Serialize the snapshot while holding the lock.
+            return ValueTask.FromResult(ProtocolValue<CallToolResult>(new
+            {
+                isError = false,
+                content = new[] { new { type = "text", text = message } },
+                structuredContent = new { tasks = todos },
+            }));
+        }
+    });
+
+var app = builder.Build();
+app.Use(async (context, next) =>
+{
+    // Restrict local hostnames and browser origins, including preflight.
+    var origin = context.Request.Headers["Origin"];
+    if (context.Request.Host.Host is not ("localhost" or "127.0.0.1") ||
+        (origin.Count > 0 &&
+         (origin.Count != 1 || !origins.Contains(origin.ToString(), StringComparer.Ordinal))))
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return;
+    }
+    context.Response.Headers["Vary"] = "Origin";
+    if (context.Request.Headers.ContainsKey("Origin"))
+    {
+        context.Response.Headers["Access-Control-Allow-Origin"] = origin.ToString();
+    }
+    context.Response.Headers["Access-Control-Expose-Headers"] = "Mcp-Session-Id";
+    if (HttpMethods.IsOptions(context.Request.Method))
+    {
+        context.Response.Headers["Access-Control-Allow-Methods"] = "GET, POST, DELETE, OPTIONS";
+        context.Response.Headers["Access-Control-Allow-Headers"] =
+            "content-type, mcp-session-id, mcp-protocol-version";
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+    await next(context);
+});
+app.MapGet("/", () => Results.Text("Todo MCP server"));
+app.MapMcp("/mcp");
+
+await using (app)
+{
+    await app.RunAsync();
+}
+
+static T ProtocolValue<T>(object value) =>
+    JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(value))
+    ?? throw new JsonException("An MCP protocol value was null.");
 ```
 
 ```ruby
@@ -35981,6 +37836,27 @@ public final class AppsSdkExtendedForms {
 }
 ```
 
+```csharp
+using System.Text.Json;
+
+PartChoice[] parts = [new("gear", "Gear")];
+Console.WriteLine(JsonSerializer.Serialize(PartSelectionSchema(parts)));
+
+static object PartSelectionSchema(IReadOnlyList<PartChoice> parts) => new
+{
+    type = "object",
+    properties = new
+    {
+        part = new { type = "string", title = "Part", oneOf = parts },
+    },
+    required = new[] { "part" },
+};
+
+internal sealed record PartChoice(
+    [property: System.Text.Json.Serialization.JsonPropertyName("const")] string Value,
+    [property: System.Text.Json.Serialization.JsonPropertyName("title")] string Title);
+```
+
 ```ruby
 def part_selection_schema(parts)
   {
@@ -37321,6 +39197,142 @@ registerAppTool(
 );
 ```
 
+```python
+# From src/content/platform/python-examples, after installing TypeScript dependencies
+# ../typescript-examples/node_modules/.bin/esbuild \
+#   ../typescript-examples/support/result-widget.ts \
+#   --bundle --format=esm --outfile=widget.js
+import re
+from pathlib import Path
+
+import uvicorn
+from mcp import types
+from mcp.server.lowlevel import Server
+from mcp.server.lowlevel.helper_types import ReadResourceContents
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+from mcp.server.transport_security import TransportSecuritySettings
+from pydantic import AnyUrl
+from starlette.applications import Starlette
+from starlette.routing import Route
+
+server = Server("docs-example", version="1.0.0")
+
+WIDGET_URI = "ui://widget/story.html"
+MIME_TYPE = "text/html;profile=mcp-app"
+
+
+@server.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="search",
+            title="Public Search",
+            description="Search public documents.",
+            inputSchema={
+                "type": "object",
+                "properties": {"q": {"type": "string"}},
+                "required": ["q"],
+                "additionalProperties": False,
+            },
+            _meta={
+                "securitySchemes": [
+                    {"type": "noauth"},
+                    {"type": "oauth2", "scopes": ["search.read"]},
+                ],
+                "ui": {"resourceUri": WIDGET_URI},
+                "openai/toolInvocation/invoking": "Searching…",
+                "openai/toolInvocation/invoked": "Results ready",
+            },
+        )
+    ]
+
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict) -> types.CallToolResult:
+    if name != "search":
+        raise ValueError(f"Unknown tool: {name}")
+    query = arguments.get("q")
+    if not isinstance(query, str):
+        raise ValueError("q must be a string")
+    # Public example data; these security scheme hints do not implement OAuth.
+    documents = [
+        {
+            "id": "intro",
+            "title": "Introduction to Acme",
+            "url": "https://example.com/intro",
+        }
+    ]
+    results = [
+        item for item in documents if query.casefold() in item["title"].casefold()
+    ]
+    return types.CallToolResult(
+        content=[types.TextContent(type="text", text=f"Found {len(results)} results.")],
+        structuredContent={"results": results},
+    )
+
+
+# Build support/result-widget.ts as widget.js in the working directory first.
+def load_widget() -> str:
+    script = Path("widget.js").read_text(encoding="utf-8")
+    if not script.strip():
+        raise ValueError("widget.js must contain the built browser component")
+    escaped = re.sub(r"</script", lambda _: r"<\/script", script, flags=re.IGNORECASE)
+    return (
+        '<!doctype html><html lang="en"><meta charset="utf-8">'
+        '<title>Tool result</title><body><div id="root"></div>'
+        f'<script type="module">{escaped}</script></body></html>'
+    )
+
+
+@server.list_resources()
+async def list_resources() -> list[types.Resource]:
+    return [types.Resource(name="widget", uri=AnyUrl(WIDGET_URI), mimeType=MIME_TYPE)]
+
+
+@server.read_resource()
+async def read_resource(uri: AnyUrl) -> list[ReadResourceContents]:
+    if str(uri) != WIDGET_URI:
+        raise ValueError(f"Unknown resource: {uri}")
+    return [ReadResourceContents(content=load_widget(), mime_type=MIME_TYPE)]
+
+
+# For an HTTPS tunnel, stop this server and append your tunnel's exact
+# hostname to allowed_hosts below, for example "your-tunnel.ngrok.app".
+# Use only the hostname, without https://, a path, or a wildcard. Keep the
+# loopback entries for local testing. Update the hostname if the tunnel changes.
+# Restart from src/content/platform/python-examples with:
+# python apps-sdk-reference/meta-fields-on-tool-descriptor.py
+# Connect ChatGPT to the tunnel's HTTPS URL with /mcp appended.
+# Keep allowed_origins restricted to trusted browser origins. ChatGPT's server
+# connection does not require adding the tunnel URL to allowed_origins.
+# Keep DNS-rebinding protection enabled; other hostnames must stay rejected.
+sessions = StreamableHTTPSessionManager(
+    server,
+    json_response=True,
+    stateless=True,
+    security_settings=TransportSecuritySettings(
+        allowed_hosts=["127.0.0.1:*", "localhost:*"],
+        allowed_origins=["http://localhost:6274", "http://127.0.0.1:6274"],
+    ),
+)
+
+
+class McpEndpoint:
+    async def __call__(self, scope, receive, send):
+        await sessions.handle_request(scope, receive, send)
+
+
+app = Starlette(
+    lifespan=lambda app: sessions.run(),
+    routes=[Route("/mcp", McpEndpoint(), methods=["GET", "POST", "DELETE"])],
+)
+
+
+if __name__ == "__main__":
+    load_widget()  # Fail before serving if the browser asset is missing.
+    uvicorn.run(app, host="127.0.0.1", port=3000)
+```
+
 ```go
 package main
 
@@ -37523,6 +39535,127 @@ public final class AppsSdkReferenceToolDescriptorExample {
     }
   }
 }
+```
+
+```csharp
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+
+var builder = Host.CreateApplicationBuilder();
+// Reserve stdout for the MCP transport.
+builder.Logging.ClearProviders();
+// From ../typescript-examples, run npm ci, then
+// npx --no-install esbuild support/result-widget.ts --bundle --format=esm \
+//   --outfile=../dotnet-examples/widget.js
+// Run this program from the dotnet-examples directory.
+string script = await File.ReadAllTextAsync("widget.js");
+if (string.IsNullOrWhiteSpace(script))
+{
+    throw new InvalidOperationException("widget.js must contain the built browser component.");
+}
+string escaped = Regex.Replace(
+    script,
+    "</script",
+    _ => @"<\/script",
+    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant,
+    TimeSpan.FromSeconds(1));
+string html = "<!doctype html><html lang=\"en\"><meta charset=\"utf-8\">"
+    + "<title>Tool result</title><body><div id=\"root\"></div>"
+    + "<script type=\"module\">" + escaped + "</script></body></html>";
+// Native MCP DTO parsing preserves the schema and exact _meta wire names.
+Tool tool = JsonSerializer.Deserialize<Tool>("""
+    {
+      "name": "search",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "q"
+        ],
+        "additionalProperties": false
+      },
+      "title": "Public Search",
+      "description": "Search public documents.",
+      "_meta": {
+        "securitySchemes": [
+          {
+            "type": "noauth"
+          },
+          {
+            "type": "oauth2",
+            "scopes": [
+              "search.read"
+            ]
+          }
+        ],
+        "ui": {
+          "resourceUri": "ui://widget/story.html"
+        },
+        "openai/toolInvocation/invoking": "Searching…",
+        "openai/toolInvocation/invoked": "Results ready"
+      }
+    }
+    """) ?? throw new InvalidOperationException("Unable to construct the tool descriptor.");
+var mcp = builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new() { Name = "docs-example", Version = "1.0.0" };
+}).WithStdioServerTransport()
+.WithListToolsHandler((request, cancellationToken) => ValueTask.FromResult(new ListToolsResult { Tools = [tool] }))
+.WithCallToolHandler((request, cancellationToken) =>
+{
+    if (request.Params?.Name != "search")
+    {
+        return ValueTask.FromResult(Error("Unknown tool."));
+    }
+    if (request.Params.Arguments is not { } arguments ||
+        !arguments.TryGetValue("q", out JsonElement query) || query.ValueKind != JsonValueKind.String)
+    {
+        return ValueTask.FromResult(Error("q must be a string"));
+    }
+    // Public example data; the security scheme hints do not implement OAuth.
+    var documents = new[] { new { id = "intro", title = "Introduction to Acme", url = "https://example.com/intro" } };
+    var results = documents.Where(item => item.title.Contains(query.GetString()!, StringComparison.OrdinalIgnoreCase)).ToArray();
+    return ValueTask.FromResult(Result(new { results }, $"Found {results.Length} results."));
+});
+Resource resource = new() { Name = "widget", Uri = "ui://widget/story.html", MimeType = "text/html;profile=mcp-app" };
+mcp.WithListResourcesHandler((request, cancellationToken) => ValueTask.FromResult(new ListResourcesResult { Resources = [resource] }))
+    .WithReadResourceHandler((request, cancellationToken) =>
+    {
+        if (request.Params?.Uri != resource.Uri)
+        {
+            throw new ArgumentException("Unknown widget resource.");
+        }
+        return ValueTask.FromResult(new ReadResourceResult
+        {
+            Contents = [new TextResourceContents { Uri = resource.Uri, MimeType = resource.MimeType, Text = html }],
+        });
+    });
+using IHost host = builder.Build();
+await host.RunAsync();
+
+// Use the SDK's protocol DTOs; the SDK owns serialization and stdio framing.
+static CallToolResult Result(object output, string text) =>
+    JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text } },
+        structuredContent = output,
+        isError = false,
+    })) ?? throw new InvalidOperationException("Unable to construct the tool result.");
+
+static CallToolResult Error(string text) =>
+    JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text } },
+        isError = true,
+    })) ?? throw new InvalidOperationException("Unable to construct the error result.");
 ```
 
 ```ruby
@@ -37742,6 +39875,145 @@ func main() {
 }
 ```
 
+```java
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.modelcontextprotocol.json.jackson2.JacksonMcpJsonMapper;
+import io.modelcontextprotocol.server.McpServer;
+import io.modelcontextprotocol.server.McpSyncServer;
+import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
+import io.modelcontextprotocol.spec.McpSchema;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+
+public final class AppsSdkReferenceAnnotationsExample {
+  public static McpSyncServer createServer(InputStream input) throws Exception {
+    var json = JsonMapper.builder().build();
+    var mapper = new JacksonMcpJsonMapper(json);
+    var transport = new StdioServerTransportProvider(mapper, input, System.out);
+    var tool =
+        McpSchema.Tool.builder()
+            .name("list_saved_recipes")
+            .title("List saved recipes")
+            .description("Returns the user's saved recipes without modifying them.")
+            .inputSchema(
+                mapper,
+                """
+                {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+                """)
+            .outputSchema(
+                mapper,
+                """
+                {
+                  "type": "object",
+                  "properties": {
+                    "recipes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {"type": "string"},
+                          "title": {"type": "string"}
+                        },
+                        "required": ["id", "title"]
+                      }
+                    }
+                  },
+                  "required": ["recipes"]
+                }
+                """)
+            .annotations(
+                json.readValue(
+                    """
+                    {"readOnlyHint": true}
+                    """,
+                    McpSchema.ToolAnnotations.class))
+            .build();
+    return McpServer.sync(transport)
+        .serverInfo("docs-example", "1.0.0")
+        .capabilities(McpSchema.ServerCapabilities.builder().tools(false).build())
+        .toolCall(
+            tool,
+            (exchange, request) -> {
+              // Local example data; replace with your application's saved recipes.
+              var output =
+                  Map.of("recipes", List.of(Map.of("id", "pasta", "title", "Tomato pasta")));
+              return McpSchema.CallToolResult.builder()
+                  .structuredContent(output)
+                  .addTextContent(json.valueToTree(output).toString())
+                  .isError(false)
+                  .build();
+            })
+        .build();
+  }
+
+}
+```
+
+```csharp
+using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+
+var builder = Host.CreateApplicationBuilder();
+// Reserve stdout for the MCP transport.
+builder.Logging.ClearProviders();
+// Native MCP DTO parsing preserves the schema and exact _meta wire names.
+Tool tool = JsonSerializer.Deserialize<Tool>("""
+    {
+      "name": "list_saved_recipes",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "description": "Returns the user's saved recipes without modifying them.",
+      "annotations": {
+        "readOnlyHint": true
+      }
+    }
+    """) ?? throw new InvalidOperationException("Unable to construct the tool descriptor.");
+var mcp = builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new() { Name = "docs-example", Version = "1.0.0" };
+}).WithStdioServerTransport()
+.WithListToolsHandler((request, cancellationToken) => ValueTask.FromResult(new ListToolsResult { Tools = [tool] }))
+.WithCallToolHandler((request, cancellationToken) =>
+{
+    if (request.Params?.Name != "list_saved_recipes")
+    {
+        return ValueTask.FromResult(Error("Unknown tool."));
+    }
+    // Local example data; replace with your application's saved recipes.
+    var output = new { recipes = new[] { new { id = "pasta", title = "Tomato pasta" } } };
+    return ValueTask.FromResult(Result(output, JsonSerializer.Serialize(output)));
+});
+using IHost host = builder.Build();
+await host.RunAsync();
+
+// Use the SDK's protocol DTOs; the SDK owns serialization and stdio framing.
+static CallToolResult Result(object output, string text) =>
+    JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text } },
+        structuredContent = output,
+        isError = false,
+    })) ?? throw new InvalidOperationException("Unable to construct the tool result.");
+
+static CallToolResult Error(string text) =>
+    JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text } },
+        isError = true,
+    })) ?? throw new InvalidOperationException("Unable to construct the error result.");
+```
+
 ```ruby
 require "mcp"
 
@@ -37911,6 +40183,129 @@ registerAppTool(
     };
   }
 );
+```
+
+```python
+# From src/content/platform/python-examples, after installing TypeScript dependencies
+# ../typescript-examples/node_modules/.bin/esbuild \
+#   ../typescript-examples/support/result-widget.ts \
+#   --bundle --format=esm --outfile=widget.js
+import re
+from pathlib import Path
+
+import uvicorn
+from mcp import types
+from mcp.server.lowlevel import Server
+from mcp.server.lowlevel.helper_types import ReadResourceContents
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+from mcp.server.transport_security import TransportSecuritySettings
+from pydantic import AnyUrl
+from starlette.applications import Starlette
+from starlette.routing import Route
+
+server = Server("docs-example", version="1.0.0")
+
+WIDGET_URI = "ui://widget/widget.html"
+MIME_TYPE = "text/html;profile=mcp-app"
+
+
+@server.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="get_zoo_animals",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "count": {"type": "integer", "minimum": 1, "maximum": 20}
+                },
+                "additionalProperties": False,
+            },
+            _meta={"ui": {"resourceUri": WIDGET_URI}},
+        )
+    ]
+
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict) -> types.CallToolResult:
+    if name != "get_zoo_animals":
+        raise ValueError(f"Unknown tool: {name}")
+    count = arguments.get("count", 10)
+    if type(count) is not int or not 1 <= count <= 20:
+        raise ValueError("count must be an integer between 1 and 20")
+    # Local example data; replace with your application's zoo data.
+    animals = [
+        {"id": f"animal-{i}", "name": f"Penguin {i}", "species": "Penguin"}
+        for i in range(1, count + 1)
+    ]
+    return types.CallToolResult(
+        content=[types.TextContent(type="text", text=f"Here are {count} animals.")],
+        structuredContent={"animals": animals},
+        # Only the component receives this metadata; the model sees content above.
+        _meta={"allAnimalsById": {animal["id"]: animal for animal in animals}},
+    )
+
+
+# Build support/result-widget.ts as widget.js in the working directory first.
+def load_widget() -> str:
+    script = Path("widget.js").read_text(encoding="utf-8")
+    if not script.strip():
+        raise ValueError("widget.js must contain the built browser component")
+    escaped = re.sub(r"</script", lambda _: r"<\/script", script, flags=re.IGNORECASE)
+    return (
+        '<!doctype html><html lang="en"><meta charset="utf-8">'
+        '<title>Tool result</title><body><div id="root"></div>'
+        f'<script type="module">{escaped}</script></body></html>'
+    )
+
+
+@server.list_resources()
+async def list_resources() -> list[types.Resource]:
+    return [types.Resource(name="widget", uri=AnyUrl(WIDGET_URI), mimeType=MIME_TYPE)]
+
+
+@server.read_resource()
+async def read_resource(uri: AnyUrl) -> list[ReadResourceContents]:
+    if str(uri) != WIDGET_URI:
+        raise ValueError(f"Unknown resource: {uri}")
+    return [ReadResourceContents(content=load_widget(), mime_type=MIME_TYPE)]
+
+
+# For an HTTPS tunnel, stop this server and append your tunnel's exact
+# hostname to allowed_hosts below, for example "your-tunnel.ngrok.app".
+# Use only the hostname, without https://, a path, or a wildcard. Keep the
+# loopback entries for local testing. Update the hostname if the tunnel changes.
+# Restart from src/content/platform/python-examples with:
+# python apps-sdk-reference/tool-results.py
+# Connect ChatGPT to the tunnel's HTTPS URL with /mcp appended.
+# Keep allowed_origins restricted to trusted browser origins. ChatGPT's server
+# connection does not require adding the tunnel URL to allowed_origins.
+# Keep DNS-rebinding protection enabled; other hostnames must stay rejected.
+sessions = StreamableHTTPSessionManager(
+    server,
+    json_response=True,
+    stateless=True,
+    security_settings=TransportSecuritySettings(
+        allowed_hosts=["127.0.0.1:*", "localhost:*"],
+        allowed_origins=["http://localhost:6274", "http://127.0.0.1:6274"],
+    ),
+)
+
+
+class McpEndpoint:
+    async def __call__(self, scope, receive, send):
+        await sessions.handle_request(scope, receive, send)
+
+
+app = Starlette(
+    lifespan=lambda app: sessions.run(),
+    routes=[Route("/mcp", McpEndpoint(), methods=["GET", "POST", "DELETE"])],
+)
+
+
+if __name__ == "__main__":
+    load_widget()  # Fail before serving if the browser asset is missing.
+    uvicorn.run(app, host="127.0.0.1", port=3000)
 ```
 
 ```go
@@ -38112,6 +40507,115 @@ public final class AppsSdkReferenceToolResultsExample {
     }
   }
 }
+```
+
+```csharp
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+
+var builder = Host.CreateApplicationBuilder();
+// Reserve stdout for the MCP transport.
+builder.Logging.ClearProviders();
+// From ../typescript-examples, run npm ci, then
+// npx --no-install esbuild support/result-widget.ts --bundle --format=esm \
+//   --outfile=../dotnet-examples/widget.js
+// Run this program from the dotnet-examples directory.
+string script = await File.ReadAllTextAsync("widget.js");
+if (string.IsNullOrWhiteSpace(script))
+{
+    throw new InvalidOperationException("widget.js must contain the built browser component.");
+}
+string escaped = Regex.Replace(
+    script,
+    "</script",
+    _ => @"<\/script",
+    RegexOptions.IgnoreCase | RegexOptions.CultureInvariant,
+    TimeSpan.FromSeconds(1));
+string html = "<!doctype html><html lang=\"en\"><meta charset=\"utf-8\">"
+    + "<title>Tool result</title><body><div id=\"root\"></div>"
+    + "<script type=\"module\">" + escaped + "</script></body></html>";
+// Native MCP DTO parsing preserves the schema and exact _meta wire names.
+Tool tool = JsonSerializer.Deserialize<Tool>("""
+    {
+      "name": "get_zoo_animals",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "additionalProperties": false
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://widget/widget.html"
+        }
+      }
+    }
+    """) ?? throw new InvalidOperationException("Unable to construct the tool descriptor.");
+var mcp = builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new() { Name = "docs-example", Version = "1.0.0" };
+}).WithStdioServerTransport()
+.WithListToolsHandler((request, cancellationToken) => ValueTask.FromResult(new ListToolsResult { Tools = [tool] }))
+.WithCallToolHandler((request, cancellationToken) =>
+{
+    if (request.Params?.Name != "get_zoo_animals")
+    {
+        return ValueTask.FromResult(Error("Unknown tool."));
+    }
+    int count = 10;
+    if (request.Params.Arguments is { } arguments && arguments.TryGetValue("count", out JsonElement value) &&
+        (value.ValueKind != JsonValueKind.Number || !value.TryGetInt32(out count) || count < 1 || count > 20))
+    {
+        return ValueTask.FromResult(Error("count must be an integer between 1 and 20"));
+    }
+    // Local example data; replace with your application's zoo data.
+    var animals = Enumerable.Range(1, count)
+        .Select(i => new { id = $"animal-{i}", name = $"Penguin {i}", species = "Penguin" }).ToArray();
+    // Component-only metadata stays separate from model-visible content.
+    var metadata = new { allAnimalsById = animals.ToDictionary(animal => animal.id) };
+    return ValueTask.FromResult(Result(new { animals }, $"Here are {count} animals.", metadata));
+});
+Resource resource = new() { Name = "widget", Uri = "ui://widget/widget.html", MimeType = "text/html;profile=mcp-app" };
+mcp.WithListResourcesHandler((request, cancellationToken) => ValueTask.FromResult(new ListResourcesResult { Resources = [resource] }))
+    .WithReadResourceHandler((request, cancellationToken) =>
+    {
+        if (request.Params?.Uri != resource.Uri)
+        {
+            throw new ArgumentException("Unknown widget resource.");
+        }
+        return ValueTask.FromResult(new ReadResourceResult
+        {
+            Contents = [new TextResourceContents { Uri = resource.Uri, MimeType = resource.MimeType, Text = html }],
+        });
+    });
+using IHost host = builder.Build();
+await host.RunAsync();
+
+// Use the SDK's protocol DTOs; the SDK owns serialization and stdio framing.
+static CallToolResult Result(object output, string text, object? metadata = null) =>
+    JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text } },
+        structuredContent = output,
+        _meta = metadata,
+        isError = false,
+    })) ?? throw new InvalidOperationException("Unable to construct the tool result.");
+
+static CallToolResult Error(string text) =>
+    JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text } },
+        isError = true,
+    })) ?? throw new InvalidOperationException("Unable to construct the error result.");
 ```
 
 ```ruby
@@ -38374,6 +40878,168 @@ func main() {
 		log.Fatal(err)
 	}
 }
+```
+
+```java
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.modelcontextprotocol.json.jackson2.JacksonMcpJsonMapper;
+import io.modelcontextprotocol.server.McpServer;
+import io.modelcontextprotocol.server.McpSyncServer;
+import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
+import io.modelcontextprotocol.spec.McpSchema;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Map;
+
+public final class AppsSdkReferenceClientMetadataExample {
+  public static McpSyncServer createServer(InputStream input) {
+    var json = JsonMapper.builder().build();
+    var mapper = new JacksonMcpJsonMapper(json);
+    var transport = new StdioServerTransportProvider(mapper, input, System.out);
+    var tool =
+        McpSchema.Tool.builder()
+            .name("recommend_cafe")
+            .title("Recommend a cafe")
+            .inputSchema(
+                mapper,
+                """
+                {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                }
+                """)
+            .outputSchema(
+                mapper,
+                """
+                {
+                  "type": "object",
+                  "properties": {
+                    "cafes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {"type": "string"},
+                          "address": {"type": "string"}
+                        },
+                        "required": ["name", "address"]
+                      }
+                    }
+                  },
+                  "required": ["cafes"]
+                }
+                """)
+            .build();
+    return McpServer.sync(transport)
+        .serverInfo("docs-example", "1.0.0")
+        .capabilities(McpSchema.ServerCapabilities.builder().tools(false).build())
+        .toolCall(
+            tool,
+            (exchange, request) -> {
+              Map<String, Object> meta = request.meta() == null ? Map.of() : request.meta();
+              // Client locale and location are hints, never authorization inputs.
+              String city = "your area";
+              if (meta.get("openai/userLocation") instanceof Map<?, ?> location
+                  && location.get("city") instanceof String value
+                  && !value.isBlank()) {
+                city = value;
+              }
+              String prefix = "es".equals(meta.get("openai/locale")) ? "Cafés en " : "Cafes in ";
+              // Local example data; replace with your application's cafe search.
+              var cafes = new ArrayList<Map<String, String>>();
+              if ("San Francisco".equals(city)) {
+                cafes.add(
+                    Map.of("name", "Example Cafe", "address", "123 Example Street, San Francisco"));
+              }
+              return McpSchema.CallToolResult.builder()
+                  .structuredContent(Map.of("cafes", cafes))
+                  .addTextContent(prefix + city)
+                  .isError(false)
+                  .build();
+            })
+        .build();
+  }
+
+}
+```
+
+```csharp
+using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Protocol;
+
+var builder = Host.CreateApplicationBuilder();
+// Reserve stdout for the MCP transport.
+builder.Logging.ClearProviders();
+// Native MCP DTO parsing preserves the schema and exact _meta wire names.
+Tool tool = JsonSerializer.Deserialize<Tool>("""
+    {
+      "name": "recommend_cafe",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    }
+    """) ?? throw new InvalidOperationException("Unable to construct the tool descriptor.");
+var mcp = builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new() { Name = "docs-example", Version = "1.0.0" };
+}).WithStdioServerTransport()
+.WithListToolsHandler((request, cancellationToken) => ValueTask.FromResult(new ListToolsResult { Tools = [tool] }))
+.WithCallToolHandler((request, cancellationToken) =>
+{
+    if (request.Params?.Name != "recommend_cafe")
+    {
+        return ValueTask.FromResult(Error("Unknown tool."));
+    }
+    // Treat locale and location as untrusted hints, never as authorization.
+    JsonElement parameters = JsonSerializer.SerializeToElement(request.Params);
+    string city = "your area";
+    string locale = "en";
+    if (parameters.TryGetProperty("_meta", out JsonElement meta) && meta.ValueKind == JsonValueKind.Object)
+    {
+        if (meta.TryGetProperty("openai/locale", out JsonElement value) && value.ValueKind == JsonValueKind.String)
+        {
+            locale = value.GetString()!;
+        }
+        if (meta.TryGetProperty("openai/userLocation", out JsonElement location) && location.ValueKind == JsonValueKind.Object &&
+            location.TryGetProperty("city", out JsonElement name) && name.ValueKind == JsonValueKind.String &&
+            !string.IsNullOrWhiteSpace(name.GetString()))
+        {
+            city = name.GetString()!;
+        }
+    }
+    // Local example data; replace with your application's cafe search.
+    var cafes = new List<object>();
+    if (city == "San Francisco")
+    {
+        cafes.Add(new { name = "Example Cafe", address = "123 Example Street, San Francisco" });
+    }
+    string prefix = locale == "es" ? "Cafés en " : "Cafes in ";
+    return ValueTask.FromResult(Result(new { cafes }, prefix + city));
+});
+using IHost host = builder.Build();
+await host.RunAsync();
+
+// Use the SDK's protocol DTOs; the SDK owns serialization and stdio framing.
+static CallToolResult Result(object output, string text) =>
+    JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text } },
+        structuredContent = output,
+        isError = false,
+    })) ?? throw new InvalidOperationException("Unable to construct the tool result.");
+
+static CallToolResult Error(string text) =>
+    JsonSerializer.Deserialize<CallToolResult>(JsonSerializer.Serialize(new
+    {
+        content = new[] { new { type = "text", text } },
+        isError = true,
+    })) ?? throw new InvalidOperationException("Unable to construct the error result.");
 ```
 
 ```ruby

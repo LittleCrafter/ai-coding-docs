@@ -994,6 +994,203 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
+```go
+package main
+
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"os"
+	"os/exec"
+	"strings"
+)
+
+type notificationEvent struct {
+	Type                 string   `json:"type"`
+	LastAssistantMessage *string  `json:"last-assistant-message"`
+	InputMessages        []string `json:"input-messages"`
+	ThreadID             string   `json:"thread-id"`
+}
+
+func run(arguments []string) error {
+	if len(arguments) != 1 {
+		return errors.New("Pass the Codex notification JSON as one argument")
+	}
+	var notification *notificationEvent
+	if err := json.Unmarshal([]byte(arguments[0]), &notification); err != nil {
+		return fmt.Errorf("parse Codex notification: %w", err)
+	}
+	if notification == nil {
+		return errors.New("Codex notification must be a JSON object")
+	}
+	if notification.Type != "agent-turn-complete" {
+		return nil
+	}
+	command := notificationCommand(notification)
+	command.Stdin = os.Stdin
+	command.Stdout = os.Stdout
+	command.Stderr = os.Stderr
+	return command.Run()
+}
+
+// notificationCommand builds an argument vector without invoking a shell.
+func notificationCommand(notification *notificationEvent) *exec.Cmd {
+	lastMessage := "Turn Complete!"
+	if notification.LastAssistantMessage != nil {
+		lastMessage = *notification.LastAssistantMessage
+	}
+	return exec.Command(
+		"terminal-notifier",
+		"-title", "Codex: "+lastMessage,
+		"-message", strings.Join(notification.InputMessages, " "),
+		"-group", "codex-"+notification.ThreadID,
+		"-activate", "com.googlecode.iterm2",
+	)
+}
+
+func main() {
+	if err := run(os.Args[1:]); err != nil {
+		var exitError *exec.ExitError
+		if errors.As(err, &exitError) && exitError.ExitCode() >= 0 {
+			os.Exit(exitError.ExitCode())
+		}
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+```
+
+```java
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.StringJoiner;
+
+if (args.length != 1) {
+  throw new IllegalArgumentException("Pass the Codex notification JSON as one argument");
+}
+JsonNode notification =
+    new ObjectMapper().enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS).readTree(args[0]);
+if (notification == null || !notification.isObject()) {
+  throw new IllegalArgumentException("Codex notification must be a JSON object");
+}
+if (notification.path("type").asText("").equals("agent-turn-complete")) {
+  StringJoiner message = new StringJoiner(" ");
+  JsonNode inputs = notification.path("input-messages");
+  if (!inputs.isMissingNode() && !inputs.isNull()) {
+    if (!inputs.isArray()) {
+      throw new IllegalArgumentException("input-messages must be an array");
+    }
+    for (JsonNode input : inputs) {
+      if (!input.isTextual() && !input.isNull()) {
+        throw new IllegalArgumentException("input-messages must contain strings or null");
+      }
+      message.add(input.asText(""));
+    }
+  }
+  Process process =
+      new ProcessBuilder(
+              "terminal-notifier",
+              "-title",
+              "Codex: " + notification.path("last-assistant-message").asText("Turn Complete!"),
+              "-message",
+              message.toString(),
+              "-group",
+              "codex-" + notification.path("thread-id").asText(""),
+              "-activate",
+              "com.googlecode.iterm2")
+          .inheritIO()
+          .start();
+  System.exit(process.waitFor());
+}
+```
+
+```csharp
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+string[] arguments = Environment.GetCommandLineArgs();
+if (arguments.Length < 2)
+{
+    throw new ArgumentException("Pass the Codex notification JSON as one argument");
+}
+
+using JsonDocument document = JsonDocument.Parse(arguments[^1]);
+JsonElement notification = document.RootElement;
+if (notification.TryGetProperty("type", out JsonElement type)
+    && type.GetString() == "agent-turn-complete")
+{
+    string lastMessage = notification.TryGetProperty("last-assistant-message", out JsonElement last)
+        ? last.GetString() ?? "Turn Complete!"
+        : "Turn Complete!";
+    string message = notification.TryGetProperty("input-messages", out JsonElement inputs)
+        && inputs.ValueKind != JsonValueKind.Null
+        ? string.Join(" ", inputs.EnumerateArray().Select(item => item.GetString() ?? ""))
+        : "";
+    string threadId = notification.TryGetProperty("thread-id", out JsonElement thread)
+        ? thread.GetString() ?? ""
+        : "";
+
+    ProcessStartInfo startInfo = new("terminal-notifier")
+    {
+        UseShellExecute = false,
+    };
+    foreach (string argument in new[]
+    {
+        "-title", $"Codex: {lastMessage}",
+        "-message", message,
+        "-group", $"codex-{threadId}",
+        "-activate", "com.googlecode.iterm2",
+    })
+    {
+        startInfo.ArgumentList.Add(argument);
+    }
+
+    using Process process = Process.Start(startInfo)
+        ?? throw new InvalidOperationException("Could not start terminal-notifier");
+    await process.WaitForExitAsync();
+    if (process.ExitCode != 0)
+    {
+        Environment.Exit(process.ExitCode);
+    }
+}
+```
+
+```ruby
+require "json"
+
+raise ArgumentError, "Pass the Codex notification JSON as one argument" unless ARGV.length == 1
+
+notification = JSON.parse(ARGV.fetch(0))
+raise ArgumentError, "Codex notification must be a JSON object" unless notification.is_a?(Hash)
+
+if notification["type"] == "agent-turn-complete"
+  inputs = notification["input-messages"]
+  inputs = [] if inputs.nil?
+  raise ArgumentError, "input-messages must be an array of strings or null" unless inputs.is_a?(Array)
+
+  unless inputs.all? { |input| input.nil? || input.is_a?(String) }
+    raise ArgumentError, "input-messages must be an array of strings or null"
+  end
+
+  pid = Process.spawn(
+    "terminal-notifier",
+    "-title", "Codex: #{notification["last-assistant-message"] || "Turn Complete!"}",
+    "-message", inputs.join(" "),
+    "-group", "codex-#{notification["thread-id"] || ""}",
+    "-activate", "com.googlecode.iterm2"
+  )
+  _, status = Process.wait2(pid)
+  raise "Notification child status unavailable" unless status
+
+  exit(status.exitstatus || 128 + status.termsig)
+end
+```
+
 The script receives a single JSON argument. Common fields include:
 
 - `type` (currently `agent-turn-complete`)

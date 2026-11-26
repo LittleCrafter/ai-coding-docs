@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "2.1.332",
-  "last_updated": "2026-11-26T01:13:20Z",
+  "last_updated": "2026-11-26T11:35:42Z",
   "files": {
     "accessibility": {
       "slug": "accessibility",
@@ -700,8 +700,8 @@
       "source_url": "https://code.claude.com/docs/en/claude-security",
       "source_md_url": "https://code.claude.com/docs/en/claude-security.md",
       "source_id": "claude-security",
-      "hash": "5b7324657a5045492c3be3097a95f55262051e1e53356c1cc09882258e1e8757",
-      "last_updated": "2026-11-25T03:51:29Z"
+      "hash": "8cc2ed048d551f7f3e3e12e8b13e0c17562ff43b6e20da6d8d8c92023d03cbce",
+      "last_updated": "2026-11-26T11:35:42Z"
     },
     "claude-ship": {
       "slug": "claude-ship",
@@ -2205,8 +2205,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-26T01:13:20Z",
-    "fetch_duration_seconds": 76.744,
+    "last_fetch_completed": "2026-11-26T11:35:42Z",
+    "fetch_duration_seconds": 76.735,
     "total_pages_discovered": 220,
     "pages_fetched_successfully": 220,
     "pages_failed": 0,

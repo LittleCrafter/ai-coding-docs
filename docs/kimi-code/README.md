@@ -2,9 +2,9 @@
 
 Auto-generated mirror. Each entry links to the local Markdown copy and to the official page.
 
-- **Pages mirrored:** 29
+- **Pages mirrored:** 30
 - **Version:** 1.5.0
-- **Last updated:** 2026-11-26T01:15:19Z
+- **Last updated:** 2026-11-26T11:37:54Z
 - **Official docs:** https://moonshotai.github.io/kimi-code/en
 - **Machine-readable index:** [`manifest.json`](./manifest.json)
 
@@ -50,6 +50,7 @@ Auto-generated mirror. Each entry links to the local Markdown copy and to the of
 | Tower multi-agent collaboration | [guides/tower.md](./guides/tower.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/tower.html>) |
 | Common use cases | [guides/use-cases.md](./guides/use-cases.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/use-cases.html>) |
 | Using in the Browser | [guides/web.md](./guides/web.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/web.html>) |
+| Git worktrees | [guides/worktrees.md](./guides/worktrees.md) | [source](<https://moonshotai.github.io/kimi-code/en/guides/worktrees.html>) |
 
 ## reference
 
