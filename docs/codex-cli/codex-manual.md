@@ -33827,6 +33827,93 @@ static Map<String, Object> sendEvent(Subscription subscription, Map<String, Stri
 }
 ```
 
+```csharp
+using System.Globalization;
+using System.Net.Http.Headers;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+internal sealed record Subscription(string Id, Uri Url, string Secret);
+internal sealed record DeliveryResult(
+    [property: JsonPropertyName("accepted")] bool Accepted,
+    [property: JsonPropertyName("status")] int Status);
+
+// Supply an application-owned transport that requires HTTPS and validates public
+// destination addresses at every connection, including DNS changes, while preserving
+// TLS hostname verification. Never follow redirects or use an unrestricted client.
+// Honor the cancellation token and complete after response headers. The sender owns
+// and disposes the request and returned response. The caller owns the transport.
+internal delegate Task<HttpResponseMessage> WebhookTransport(
+    HttpRequestMessage request, CancellationToken cancellationToken);
+
+private static readonly JsonSerializerOptions JsonOptions = new()
+{
+    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+};
+
+internal static byte[] EncodeEvent(IReadOnlyDictionary<string, object?> eventData)
+{
+    byte[] body = JsonSerializer.SerializeToUtf8Bytes(eventData, JsonOptions);
+    if (body.Length > 256 * 1024)
+        throw new ArgumentException("Event payload exceeds 256 KiB");
+    return body;
+}
+
+internal static async Task<DeliveryResult> SendEventAsync(
+    Subscription subscription, IReadOnlyDictionary<string, object?> eventData,
+    WebhookTransport validatedTransport, CancellationToken cancellationToken = default)
+{
+    ArgumentNullException.ThrowIfNull(validatedTransport);
+    byte[] body = EncodeEvent(eventData);
+    if (!eventData.TryGetValue("eventId", out object? identity) || identity is not string eventId)
+        throw new ArgumentException("Event eventId must be a nonempty string.", nameof(eventData));
+    ArgumentException.ThrowIfNullOrWhiteSpace(eventId);
+    ArgumentException.ThrowIfNullOrWhiteSpace(subscription.Id);
+    if (!subscription.Url.IsAbsoluteUri
+        || subscription.Url.Scheme != "https"
+        || subscription.Url.UserInfo.Length != 0 || subscription.Url.Fragment.Length != 0)
+        throw new ArgumentException("Subscription URL must be an absolute HTTPS URL without credentials or a fragment");
+    string encodedSecret = subscription.Secret.StartsWith("whsec_", StringComparison.Ordinal)
+        ? subscription.Secret[6..] : subscription.Secret;
+    byte[] key = Convert.FromBase64String(encodedSecret);
+    if (key.Length == 0)
+        throw new ArgumentException("Webhook signing key must not be empty");
+    string timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture);
+    byte[] prefix = Encoding.UTF8.GetBytes($"{eventId}.{timestamp}.");
+    byte[] signature;
+    try
+    {
+        using IncrementalHash signer = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, key);
+        signer.AppendData(prefix);
+        signer.AppendData(body);
+        signature = signer.GetHashAndReset();
+    }
+    finally
+    {
+        CryptographicOperations.ZeroMemory(key);
+    }
+
+    using HttpRequestMessage request = new(HttpMethod.Post, subscription.Url);
+    request.Content = new ByteArrayContent(body);
+    request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+    request.Headers.Add("webhook-id", eventId);
+    request.Headers.Add("webhook-timestamp", timestamp);
+    request.Headers.Add("webhook-signature", $"v1,{Convert.ToBase64String(signature)}");
+    request.Headers.Add("X-MCP-Subscription-Id", subscription.Id);
+    // Headers-only completion avoids buffering an untrusted response body.
+    using CancellationTokenSource timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+    timeout.CancelAfter(TimeSpan.FromSeconds(10));
+    using HttpResponseMessage response = await validatedTransport(request, timeout.Token);
+    int status = (int)response.StatusCode;
+    if (status is >= 300 and < 400)
+        throw new InvalidOperationException("Webhook redirects are not allowed");
+    return new DeliveryResult(status is >= 200 and < 300, status);
+}
+```
+
 ```ruby
 require "standardwebhooks"
 require "net/http"
@@ -51348,6 +51435,44 @@ String command = event.path("tool_input").path("command").asText("");
 if (command.contains("CODEX_HOOK_TEST_DENY")) {
   System.err.println("Synthetic test command blocked by managed hook.");
   System.exit(2);
+}
+```
+
+```csharp
+using System;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+try
+{
+    using JsonDocument document = JsonDocument.Parse(await Console.In.ReadToEndAsync());
+    JsonElement eventData = document.RootElement;
+    if (eventData.ValueKind != JsonValueKind.Object)
+        throw new JsonException("Expected an event object.");
+    string command = "";
+    if (eventData.TryGetProperty("tool_input", out JsonElement toolInput))
+    {
+        if (toolInput.ValueKind != JsonValueKind.Object)
+            throw new JsonException("Expected tool_input to be an object.");
+        if (toolInput.TryGetProperty("command", out JsonElement commandValue))
+        {
+            if (commandValue.ValueKind != JsonValueKind.String)
+                throw new JsonException("Expected command to be a string.");
+            command = commandValue.GetString()!;
+        }
+    }
+
+    // This synthetic sentinel exercises the hook contract, not a general command policy.
+    if (command.Contains("CODEX_HOOK_TEST_DENY", StringComparison.Ordinal))
+    {
+        await Console.Error.WriteAsync("Synthetic test command blocked by managed hook.\n");
+        Environment.Exit(2);
+    }
+}
+catch (JsonException)
+{
+    await Console.Error.WriteAsync("Invalid hook event.\n");
+    Environment.Exit(2);
 }
 ```
 

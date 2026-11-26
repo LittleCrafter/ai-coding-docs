@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
-  "version": "1.5.0",
-  "last_updated": "2026-11-26T11:37:54Z",
+  "version": "1.5.1",
+  "last_updated": "2026-11-26T20:38:40Z",
   "files": {
     "configuration/config-files": {
       "slug": "configuration/config-files",
@@ -80,8 +80,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/customization/hooks.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/customization/hooks.md",
       "source_id": "docs/en/customization/hooks.md",
-      "hash": "b3b9faed9c1a4496176bb92808e9b4205f84afa841b0f469dab1e33cb764f7e1",
-      "last_updated": "2026-11-17T22:46:52Z"
+      "hash": "8ba435b2f3613b8dce1dab04a409d9f8e07e47ae1bd75a1aabc9c27fb6e06df5",
+      "last_updated": "2026-11-26T20:38:40Z"
     },
     "customization/mcp": {
       "slug": "customization/mcp",
@@ -230,8 +230,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/guides/worktrees.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/guides/worktrees.md",
       "source_id": "docs/en/guides/worktrees.md",
-      "hash": "429967bc6181cb5c4566af5e05cc8aff681a0344cf7d5603f7adf0026aca3a6d",
-      "last_updated": "2026-11-26T11:37:54Z"
+      "hash": "f84ff915029339d12e3ad0e64057c474712315e0e85b7ec54f4e61a56e51d92b",
+      "last_updated": "2026-11-26T20:38:40Z"
     },
     "index": {
       "slug": "index",
@@ -250,8 +250,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/keyboard.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/keyboard.md",
       "source_id": "docs/en/reference/keyboard.md",
-      "hash": "42710e5880928ee05271ed4e725297024b3e9cafc8a1820a5d3917f379bbac10",
-      "last_updated": "2026-11-13T13:31:26Z"
+      "hash": "71421764994b70a9fd1b2ad8f1bb9d3c74506cebee6b2a8ba7f6a66853a7c0f1",
+      "last_updated": "2026-11-26T20:38:40Z"
     },
     "reference/kimi-acp": {
       "slug": "reference/kimi-acp",
@@ -260,8 +260,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/kimi-acp.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/kimi-acp.md",
       "source_id": "docs/en/reference/kimi-acp.md",
-      "hash": "dd6de9da3f5e6c8dfeb9bbc1ca49a4849c30d44b8704c72333ab3141fcc008ee",
-      "last_updated": "2026-11-26T01:15:19Z"
+      "hash": "93d8f420ce82173c00f9012db0134d7c9bc8e04f0ef65179221e7d8b5728d593",
+      "last_updated": "2026-11-26T20:38:40Z"
     },
     "reference/kimi-command": {
       "slug": "reference/kimi-command",
@@ -280,8 +280,8 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/reference/slash-commands.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/reference/slash-commands.md",
       "source_id": "docs/en/reference/slash-commands.md",
-      "hash": "c2352567925ef93f7d99e0fdebc21f72225c521314ea7cf1c5cefb3d2a219b75",
-      "last_updated": "2026-11-26T11:37:54Z"
+      "hash": "1b857a1e092ad9c12832e8369185b3b5e438fbfaa728daceb20bb7fcd3c906a0",
+      "last_updated": "2026-11-26T20:38:40Z"
     },
     "reference/tools": {
       "slug": "reference/tools",
@@ -300,13 +300,13 @@
       "source_url": "https://moonshotai.github.io/kimi-code/en/release-notes/changelog.html",
       "source_md_url": "https://raw.githubusercontent.com/MoonshotAI/kimi-code/main/docs/en/release-notes/changelog.md",
       "source_id": "docs/en/release-notes/changelog.md",
-      "hash": "e6dca54e1554647aed291a31e7854b8bc98d573c69991a99fc22a3c51c6f1c1a",
-      "last_updated": "2026-11-25T16:15:48Z"
+      "hash": "10b87dbdf769c85b994f231c0edb631793ed69ff8f0691fb4fb4e26cb4cfbc3a",
+      "last_updated": "2026-11-26T20:38:40Z"
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-26T11:37:54Z",
-    "fetch_duration_seconds": 10.286,
+    "last_fetch_completed": "2026-11-26T20:38:40Z",
+    "fetch_duration_seconds": 10.292,
     "total_pages_discovered": 30,
     "pages_fetched_successfully": 30,
     "pages_failed": 0,
