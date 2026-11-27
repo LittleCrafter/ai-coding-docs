@@ -1,7 +1,7 @@
 {
   "description": "Mirror of a coding-tool's documentation. Keys are slugs (the path under this folder). See the sibling README.md for a human-readable index.",
   "version": "—",
-  "last_updated": "2026-11-23T11:26:20Z",
+  "last_updated": "2026-11-27T15:42:45Z",
   "files": {
     "api/asr": {
       "slug": "api/asr",
@@ -50,8 +50,8 @@
       "source_url": "https://api-docs.deepseek.com/api/create-message",
       "source_md_url": "https://api-docs.deepseek.com/api/create-message",
       "source_id": "api/create-message",
-      "hash": "0d5a628650f17fb50aa6b09a159f9aa3bba58da0d514b9bd731a58d865308ddf",
-      "last_updated": "2026-11-18T14:41:04Z"
+      "hash": "1e83ed4de732c6a94af62e6247f1f8a08c6ef064af1d6008fd9f32757ca20085",
+      "last_updated": "2026-11-27T15:42:45Z"
     },
     "api/create-response": {
       "slug": "api/create-response",
@@ -60,8 +60,8 @@
       "source_url": "https://api-docs.deepseek.com/api/create-response",
       "source_md_url": "https://api-docs.deepseek.com/api/create-response",
       "source_id": "api/create-response",
-      "hash": "beea6f25d783496d1fe6dbdc3d378b3b5052ec8c7d0b67c46f94fbc1caa85b42",
-      "last_updated": "2026-11-18T14:41:04Z"
+      "hash": "aa11cc48d589ac1fd8e883a2ea36556ed5897b6f523312fc306222d7cf50645f",
+      "last_updated": "2026-11-27T15:42:45Z"
     },
     "api/delete-file": {
       "slug": "api/delete-file",
@@ -110,8 +110,8 @@
       "source_url": "https://api-docs.deepseek.com/api/list-models",
       "source_md_url": "https://api-docs.deepseek.com/api/list-models",
       "source_id": "api/list-models",
-      "hash": "5d2e3130d1c8b4b63fe21b8929ef49985e85c776c7ebf3b96521d200e2185914",
-      "last_updated": "2026-10-30T11:45:47Z"
+      "hash": "379c11c7668fa01b4960e644eecda2e3302afb4bb51f39fe8bb8c0a0f76a694c",
+      "last_updated": "2026-11-27T15:42:45Z"
     },
     "api/ocr": {
       "slug": "api/ocr",
@@ -160,8 +160,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/anthropic_api",
       "source_md_url": "https://api-docs.deepseek.com/guides/anthropic_api",
       "source_id": "guides/anthropic_api",
-      "hash": "bd9f4db2feafc1f2bc4770dce8e9208eb5793e75138d9d49129be13e14231c12",
-      "last_updated": "2026-11-18T14:41:04Z"
+      "hash": "1e5d2a4aeb78b9b0090041fb920d95959079044c7dd58865d3256fbf05723bea",
+      "last_updated": "2026-11-27T15:42:45Z"
     },
     "guides/asr": {
       "slug": "guides/asr",
@@ -290,8 +290,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/responses_api",
       "source_md_url": "https://api-docs.deepseek.com/guides/responses_api",
       "source_id": "guides/responses_api",
-      "hash": "7eba6c24eeeb7e3f17f234cbdf72f6ff13d7c17785cf3fd07ce7fb3b36cce694",
-      "last_updated": "2026-11-18T14:41:04Z"
+      "hash": "fe672bbb3b4692d842d94457272860174e684a352674a7f91e4101e8a0fa429f",
+      "last_updated": "2026-11-27T15:42:45Z"
     },
     "guides/safety": {
       "slug": "guides/safety",
@@ -330,8 +330,8 @@
       "source_url": "https://api-docs.deepseek.com/guides/tool_calls",
       "source_md_url": "https://api-docs.deepseek.com/guides/tool_calls",
       "source_id": "guides/tool_calls",
-      "hash": "8ba9dcb63f20a786738985fb625f3f0dbdf22ea5b635d99b792dcb80e2c7c85f",
-      "last_updated": "2026-10-16T13:37:24Z"
+      "hash": "2494bc400ac845231e200975d73eac6e6fb690c9219a09f966ddbed8ac506361",
+      "last_updated": "2026-11-27T15:42:45Z"
     },
     "guides/tts": {
       "slug": "guides/tts",
@@ -705,8 +705,8 @@
     }
   },
   "fetch_metadata": {
-    "last_fetch_completed": "2026-11-23T11:26:20Z",
-    "fetch_duration_seconds": 50.663,
+    "last_fetch_completed": "2026-11-27T15:42:45Z",
+    "fetch_duration_seconds": 26.002,
     "total_pages_discovered": 70,
     "pages_fetched_successfully": 70,
     "pages_failed": 0,

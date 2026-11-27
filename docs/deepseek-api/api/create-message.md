@@ -58,7 +58,7 @@ required
 
 **Minimum items:** `1`
 
-The conversation history. At least one message is required. This API is stateless: include the messages needed for the current turn in every request. Use the top-level `system` field for the system prompt. When continuing after a tool call, pass back the complete assistant content, including thinking and tool-use blocks, followed by the matching tool results. The service may restore omitted thinking content from tool-call IDs; if recovery is required but fails, the request returns `400`. Preserve the complete content for reliable replay.
+The conversation history. At least one message is required. This API is stateless: include the messages needed for the current turn in every request. Use the top-level `system` field for the system prompt. A `system` message may also appear between turns; its content may include `tool_addition` blocks to load deferred tools. When continuing after a tool call, pass back the complete assistant content, including thinking and tool-use blocks, followed by the matching tool results. The service may restore omitted thinking content from tool-call IDs; if recovery is required but fails, the request returns `400`. Preserve the complete content for reliable replay.
 
   * Array [
 
@@ -236,7 +236,7 @@ Optional. The file name shown to the model for a `text` source.
 
 **Tool-result block**
 
-Only valid in user messages. Return one result for every pending tool-use ID, with no duplicates, before any text or image blocks.
+Only valid in user messages. Return one result for every pending tool-use ID, with no duplicates, before any text or image blocks. The `content` may also contain `tool_reference` blocks to load deferred tools.
 
 **type** stringrequired
 
@@ -250,7 +250,7 @@ The ID of the corresponding `tool_use` block in the immediately preceding assist
 
 nullable
 
-The tool output as a string or a list of text and image blocks. If omitted or `null`, the result is empty.
+The tool output as a string or a list of text, image, and `tool_reference` blocks. If omitted or `null`, the result is empty.
 
 oneOf
 
@@ -363,6 +363,18 @@ Requires the request header `anthropic-beta: files-api-2025-04-14`.
 **file_id** stringrequired
 
 The ID of an uploaded image file. See the [Files API Guide](<../guides/files_api.md#anthropic-compatible-files-api>).
+
+**Tool-reference block**
+
+Loads a deferred tool that is declared in the request's top-level `tools`. Only valid inside `tool_result.content`. List each tool returned by a client-side tool search as a `tool_reference` block. See [Deferred Tool Loading](<../guides/tool_calls.md#deferred-tool-loading>).
+
+**type** stringrequired
+
+**Possible values:** `tool_reference`
+
+**tool_name** stringrequired
+
+The name of a tool declared in the request's top-level `tools`.
 
   * ]
 
@@ -704,6 +716,112 @@ DeepSeek extension. Present on successful `read_link` results: the page that was
 
   * ]
 
+**System message**
+
+A system message placed between turns in the conversation history. Its content may include `tool_addition` blocks to load deferred tools. A system message cannot appear between an assistant `tool_use` block and its `tool_result`. See [Deferred Tool Loading](<../guides/tool_calls.md#deferred-tool-loading>).
+
+**role** stringrequired
+
+**Possible values:** `system`
+
+**content** string | object[]
+
+required
+
+The message content, either a string or a list of text and `tool_addition` blocks.
+
+oneOf
+
+**Text content**
+
+string
+
+**System message blocks**
+
+**Minimum items:** `1`
+
+  * Array [
+
+oneOf
+
+**Text block**
+
+Each text block must have `type: "text"`, with its content in the `text` field. On input, additional `cache_control` and `citations` fields are ignored.
+
+**type** stringrequired
+
+**Possible values:** `text`
+
+**text** stringrequired
+
+The text content.
+
+**
+
+citations
+
+**
+
+object[]
+
+nullable
+
+Sources cited by this text. Returned when the answer cites results of the web tools; ignored on input.
+
+A source cited by the answer. Returned with the web tools.
+
+  * Array [
+
+**type** stringrequired
+
+**Possible values:** `web_search_result_location`
+
+**url** stringrequired
+
+The URL of the cited source.
+
+**title** stringnullable
+
+The title of the cited source, or `null` when unknown.
+
+**encrypted_index** string
+
+Always an empty string.
+
+**cited_text** string
+
+The answer text of the current text block up to this citation. Unlike the Anthropic API, it is not text quoted from the source.
+
+  * ]
+
+**Tool-addition block**
+
+Loads a deferred tool that is declared in the request's top-level `tools`. Only valid in a mid-conversation `system` message. Only additions are supported: `tool_removal` and inline `tool_definition` blocks are not supported.
+
+**type** stringrequired
+
+**Possible values:** `tool_addition`
+
+**
+
+tool
+
+**
+
+object
+
+required
+
+**type** stringrequired
+
+**Possible values:** `tool_reference`
+
+**name** stringrequired
+
+The name of a tool declared in the request's top-level `tools`.
+
+  * ]
+
 **Latest reminder message**
 
 DeepSeek extension. Gives the model the current date, location, platform and language, like DeepSeek Chat. Place it directly before the `user` message it belongs to; anywhere else it returns `400`. Works with or without the web tools. See the [User Metadata Marker Guide](<../guides/latest_reminder.md>).
@@ -852,7 +970,7 @@ object[]
 
 nullable
 
-Tools available to the model. Supports client-defined tools, the web search server tool, and the `deepseek_web_search` and `deepseek_read_url` server tools. Tool names must be unique. An empty list is treated as no tools. `cache_control` is ignored.
+Tools available to the model. Supports client-defined tools, the web search server tool, and the `deepseek_web_search` and `deepseek_read_url` server tools. Client tools may set `defer_loading` to keep their definitions out of the prompt until they are loaded. Tool names must be unique. An empty list is treated as no tools. `cache_control` is ignored. See [Deferred Tool Loading](<../guides/tool_calls.md#deferred-tool-loading>).
 
   * Array [
 
@@ -889,6 +1007,10 @@ required
 A valid JSON Schema describing the tool arguments. Its top-level `type` must be `object`.
 
 **property name*** anynullable
+
+**defer_loading** booleannullable
+
+If `true`, the tool is declared but not shown to the model until it is loaded by a `tool_reference` block (in a `tool_result`) or a `tool_addition` block (in a mid-conversation `system` message). Supported with `deepseek-flash`; ignored with `deepseek-v4-pro`. At least one tool in the request must not be deferred. See [Deferred Tool Loading](<../guides/tool_calls.md#deferred-tool-loading>).
 
 **Web search server tool**
 

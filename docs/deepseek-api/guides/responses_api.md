@@ -132,7 +132,7 @@ Parameter| Support Status
 `deepseek-v4-pro`: ignored in thinking mode (fixed at `0.95` when tool calling is enabled, otherwise `1.0`); takes effect in non-thinking mode. Setting `tool_choice` to `none` disables tool calling even when `tools` is provided  
 `max_output_tokens`| Supported  
 `top_logprobs`| Supported (range [0, 20])  
-`tools`| Partially supported. `function` supported; `web_search` supported with `deepseek-v4-pro`; other types ignored, see the Tools table below  
+`tools`| Partially supported. `function` supported; `web_search` supported with `deepseek-v4-pro`; client-executed `tool_search` supported with `deepseek-flash`; other types ignored, see the Tools table below  
 `tool_choice`| Supported. `none` / `auto` / `required` / a specific tool (`{"type": "function", "name": ...}`)  
 `reasoning`| Partially supported. `effort` supported; `summary` accepted but no summary is generated  
 `text`| Partially supported. `format` fully supported; `verbosity` accepted but has no effect  
@@ -166,6 +166,7 @@ Type| Support Status
 `function_call_output`| Supported. The `output` may be a string or a list of content parts; `input_image` parts in the output are processed as real images  
 `reasoning`| Supported. Plain-text `content` is merged into the adjacent assistant message; `summary` and `encrypted_content` are not supported  
 `custom_tool_call` / `custom_tool_call_output`| Supported (for the `apply_patch` custom tool, with `call_id` pairing validation). `input_image` parts in the `output` are processed as real images  
+`tool_search_call` / `tool_search_output`| Supported with `deepseek-flash`. Loads tools returned by a client-executed `tool_search` call. See [Deferred Tool Loading](<./tool_calls.md#deferred-tool-loading>)  
 Other types| Ignored  
   
 Note: `web_search_call` items returned by a previous response can be passed back in `input`; their search results are restored and concatenated into the context.
@@ -177,6 +178,7 @@ Type| Support Status
 `function`| Supported  
 `custom`| Only `{"type": "custom", "name": "apply_patch"}` is supported (for Codex compatibility); other names return a `400` error  
 `web_search`| Supported with `deepseek-v4-pro`. The API runs the search on the server, adds the results to the context, and continues the response. Ignored with `deepseek-flash`  
+`tool_search`| Supported with `deepseek-flash` when `execution` is `client`. The model returns a `tool_search_call`; reply with a `tool_search_output` item containing the tool definitions to load. `execution: "server"` is not supported. See [Deferred Tool Loading](<./tool_calls.md#deferred-tool-loading>)  
 `deepseek_web_search` / `deepseek_read_url`| Supported. Cannot be declared together with `web_search`; see [Web Tools](<./web_tools.md#responses-api>)  
 `file_search` / `code_interpreter` / `computer_use` / `mcp` / other built-in tools| Ignored  
   

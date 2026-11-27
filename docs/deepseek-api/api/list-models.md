@@ -131,7 +131,16 @@ Capabilities that apply when the model is used through the [Anthropic Messages A
 How the model picks up an updated system prompt during a conversation.
 
     * `leading-only`: only the system prompt at the start of the conversation takes effect. To change the system prompt, modify that leading system prompt; system messages appearing later in the history are not treated as system prompt updates.
-    * `in-history`: a `system` message may be appended to the conversation history. The latest `system` message in the history provides the complete effective system prompt and replaces all earlier ones.
+    * `in-history`: a `system` message may be appended to the conversation history. The latest `system` message updates the effective system prompt; when instructions conflict, later `system` messages take precedence over earlier ones (earlier messages remain in the history, and non-conflicting instructions can still apply).
+
+**tool_update** stringrequired
+
+**Possible values:** `leading-only`, `addition-only`
+
+How the model handles tool changes during a conversation.
+
+    * `leading-only`: only the tools declared at the top level of the request are used. `defer_loading`, `tool_addition`, and `tool_reference` loading effects are ignored (`tool_reference` is rendered as plain text). When the available tools change, resend the complete `tools` array in every request.
+    * `addition-only`: tools declared with `defer_loading: true` are loaded when a later `system` message contains a `tool_addition` block, or when a `tool_result` contains a `tool_reference` block. `tool_removal` blocks are not supported.
 
   * ]
 
@@ -156,7 +165,8 @@ How the model picks up an updated system prompt during a conversation.
       },
       "api_capabilities": {
         "anthropic_messages": {
-          "system_prompt_update": "in-history"
+          "system_prompt_update": "in-history",
+          "tool_update": "addition-only"
         }
       }
     },
@@ -175,7 +185,8 @@ How the model picks up an updated system prompt during a conversation.
       },
       "api_capabilities": {
         "anthropic_messages": {
-          "system_prompt_update": "leading-only"
+          "system_prompt_update": "leading-only",
+          "tool_update": "leading-only"
         }
       }
     }
